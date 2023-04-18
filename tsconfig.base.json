@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "es2017",
+    "module": "es2015",
+    "declaration": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "moduleResolution": "nodenext",
+    "importHelpers": true,
+    "types": ["jest", "node"]
+  }
+}

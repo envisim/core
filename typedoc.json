@@ -1,0 +1,22 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+
+  "plugin": "typedoc-plugin-markdown",
+
+  "excludeNotDocumented": false,
+  "excludeInternal": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "disableSources": true,
+  "readme": "none",
+
+  "hideGenerator": true,
+
+  "commentStyle": "jsdoc",
+
+  "externalSymbolLinkMappings": {
+    "@envisim/random": {
+      "*": "https://github.com/envisim/core/packages/random/docs"
+    }
+  }
+}

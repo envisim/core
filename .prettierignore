@@ -1,0 +1,9 @@
+dist
+*.md
+node_modules
+yarn.lock
+.yarn
+.git
+.vscode
+LICENSE
+.pnp*

@@ -1,0 +1,227 @@
+// @ts-ignore
+import turfBuffer from '@turf/buffer'; // correct? //now assumes access to global turf
+import {Random} from '@envisim/random';
+
+import {area} from './area.js';
+import {bbox} from './bbox.js';
+import {distance} from './distance.js';
+import {pointInPolygon} from './pointInPolygon.js';
+import {geomEach} from './geomEach.js';
+import {convertPointCirclesToPolygons} from './convertPointCirclesToPolygons.js';
+
+interface IsamplePointsOnAreasOpts {
+  method: 'uniform' | 'systematic';
+  sampleSize: number;
+  buffer?: number;
+  ratio?: number;
+  rand?: Random;
+}
+
+/**
+ * Selects points on areas (if features have bbox, it is used in pointInPolygon
+ * to reject point outside bbox if buffer is zero). Does not work for sampling of
+ * points within nested (level >= 2) GeometryCollections.
+ *
+ * @param geoJSON - A GeeoJSON object to select points on Polygon/MultiPolygon features
+ * @param opts - An object containing method, sampleSize, buffer, ratio (dx/dy)
+ * @param opts.method - The method to use "uniform" or "systematic"
+ * @param opts.sampleSize - The expected sample size as integer > 0.
+ * @param opts.buffer - Internal optional buffer in meters (default 0).
+ * @param opts.ratio - The ratio (dx/dy) for systematic sampling.
+ * @returns - Resulting GeoJSON or an object containing geoJSON and designWeight.
+ */
+export const samplePointsOnAreas = (
+  geoJSON: GeoJSON.Feature | GeoJSON.FeatureCollection,
+  opts: IsamplePointsOnAreasOpts,
+): GeoJSON.FeatureCollection => {
+  // Set options.
+  const radius = opts.buffer || 0;
+  const sampleSize = opts.sampleSize || 1;
+  const method = opts.method || 'uniform';
+  const ratio = opts.ratio || 1;
+  const rand = opts.rand ?? new Random();
+
+  // filter out Polygons and Multipolygons
+  // store featureIndex as that might be needed to transfer
+  // properties such as designWeights later.
+  const features: GeoJSON.Feature[] = [];
+  const featureIndex: number[] = [];
+
+  geomEach(geoJSON, (geom: GeoJSON.Geometry, fi: number) => {
+    if (geom.type === 'Polygon' || geom.type === 'MultiPolygon') {
+      features.push({
+        type: 'Feature',
+        geometry: geom,
+        properties: {
+          _designWeight: 1,
+        },
+      });
+      featureIndex.push(fi);
+    }
+    if (
+      (geom.type === 'Point' || geom.type === 'MultiPoint') &&
+      geoJSON.type === 'FeatureCollection'
+    ) {
+      let feature = geoJSON.features[fi];
+      if (feature.properties?._radius) {
+        features.push(
+          convertPointCirclesToPolygons({
+            type: 'Feature',
+            geometry: geom,
+            properties: {
+              _radius: feature.properties._radius,
+            },
+          }),
+        );
+        featureIndex.push(fi);
+      }
+    }
+  });
+
+  if (features.length === 0) {
+    throw new Error('samplePointsOnAreas: No Polygon or MultiPolygon found.');
+  }
+  // Filtering done. Make FeatureCollection.
+  const featureCollection: GeoJSON.FeatureCollection = {
+    type: 'FeatureCollection',
+    features: features,
+  };
+  // Buffer the Collection if needed.
+  let buffered: GeoJSON.FeatureCollection;
+  if (radius > 0) {
+    buffered = turfBuffer(featureCollection, radius / 1000, {
+      units: 'kilometers',
+    });
+    if (!buffered) {
+      throw new Error('samplePointsOnAreas: Buffering failed.');
+    }
+    // Make FeatureCollection if Feature
+    /*if (buffered.type == "Feature") {
+            buffered = { type: "FeatureCollection", features: [buffered] };
+        }*/
+    // Maybe add bboxes to all features here?
+  } else {
+    buffered = featureCollection;
+  }
+  // Pre-calculations for both metods 'uniform' and 'systematic'.
+  const A = area(buffered);
+  let designWeight = A / sampleSize;
+  const box = bbox(buffered);
+  const pointFeatures = [];
+  const parentIndex: number[] = [];
+  const toRad = Math.PI / 180;
+  const toDeg = 180 / Math.PI;
+  let pointLngLat = [];
+  switch (method) {
+    case 'uniform':
+      let iterations = 0;
+      let hits = 0;
+      // Generate uniform points on a sphere conditioned
+      // on beeing in the bounding box and then accept
+      // points that fall inside a polygon.
+      // See e.g. https://mathworld.wolfram.com/SpherePointPicking.html
+      // for generating uniform points on a sphere.
+      let y1 = (Math.cos((90 - box[1]) * toRad) + 1) / 2;
+      let y2 = (Math.cos((90 - box[3]) * toRad) + 1) / 2;
+      while (hits < sampleSize && iterations < 1e7) {
+        let yRand = y1 + (y2 - y1) * rand.float();
+        pointLngLat = [
+          box[0] + (box[2] - box[0]) * rand.float(),
+          90 - Math.acos(2 * yRand - 1) * toDeg,
+        ];
+        let pointFeature: GeoJSON.Feature = {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: pointLngLat,
+          },
+          properties: {
+            _designWeight: designWeight,
+          },
+        };
+        // Check if point is in any feature.
+        for (let i = 0; i < buffered.features.length; i++) {
+          if (pointInPolygon(pointFeature, buffered.features[i])) {
+            pointFeatures.push(pointFeature);
+            parentIndex.push(featureIndex[i]);
+            hits += 1;
+            break;
+          }
+        }
+        iterations += 1;
+      }
+      break;
+    case 'systematic':
+      // Precalculations for systematic sampling.
+      const boxHeight = distance([box[0], box[1]], [box[0], box[3]]);
+      const latPerMeter = (box[3] - box[1]) / boxHeight;
+      // ratio = dx/dy
+      // Compute distances in x (longitude) and y (latitude) between points in meters.
+      const dy = Math.sqrt(A / (sampleSize * ratio));
+      const dx = ratio * dy;
+      designWeight = dx * dy;
+      // generate random offset in x and y
+      const xoff = rand.float() * dx;
+      const yoff = rand.float() * dy;
+      const centerLng = box[0] + (box[2] - box[0]) / 2;
+      // Compute maximum number of points in latitude direction.
+      const ny = Math.ceil(boxHeight / dy);
+      // Generate the points.
+      for (let j = 0; j < ny; j++) {
+        let latCoord = box[1] + (yoff + j * dy) * latPerMeter;
+        let dLng = distance([box[0], latCoord], [box[2], latCoord]);
+        let lngPerMeter = (box[2] - box[0]) / dLng;
+        let nx = Math.ceil(dLng / dx);
+        if (nx % 2 == 1) {
+          nx += 1;
+        }
+        for (let i = 0; i <= nx; i++) {
+          let lngCoord = centerLng + (xoff + dx * (i - nx / 2)) * lngPerMeter;
+          pointLngLat = [lngCoord, latCoord];
+          let pointFeature: GeoJSON.Feature = {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: pointLngLat,
+            },
+            properties: {
+              _designWeight: designWeight,
+            },
+          };
+          // Check if point is in any feature and then store.
+          for (let k = 0; k < buffered.features.length; k++) {
+            if (pointInPolygon(pointFeature, buffered.features[k])) {
+              pointFeatures.push(pointFeature);
+              parentIndex.push(featureIndex[k]);
+              break;
+            }
+          }
+        }
+      }
+      break;
+    default:
+      throw new Error('samplePointsOnAreas: Unknown method.');
+  }
+
+  if (geoJSON.type === 'FeatureCollection' && radius === 0) {
+    // Transfer design weights here.
+    pointFeatures.forEach((pf: GeoJSON.Feature, i) => {
+      let dw = 1;
+      let feature = geoJSON.features[parentIndex[i]];
+      if (feature.properties?._designWeight) {
+        dw = feature.properties._designWeight;
+        if (pf.properties) {
+          pf.properties._designWeight *= dw;
+        }
+      }
+    });
+  }
+  // Construct and return object.
+  // parentIndex refer to buffered features, so
+  // may not be used to transfer design weights
+  // from parents unless buffer is 0.
+  return {
+    type: 'FeatureCollection',
+    features: pointFeatures,
+  };
+};
