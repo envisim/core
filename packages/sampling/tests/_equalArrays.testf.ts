@@ -1,31 +1,3 @@
-import {Random} from '@envisim/random';
-
-export class RandomMock extends Random {
-  i = 0;
-  arr: number[];
-
-  constructor(arr: number | number[] = 0.1) {
-    super();
-
-    if (typeof arr === 'number') {
-      this.arr = [arr];
-      return this;
-    }
-
-    this.arr = [...arr];
-    return this;
-  }
-
-  float() {
-    if (this.i === this.arr.length) this.i = 0;
-    return this.arr[this.i++];
-  }
-
-  resetCounter() {
-    this.i = 0;
-  }
-}
-
 export const arraysAreEqual = (a: number[], b: number[]): boolean => {
   if (a === b) return true;
   if (a == null || b == null) return false;

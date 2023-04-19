@@ -198,7 +198,7 @@ export class KDTree {
     throw new Error('Something went wrong in splitting');
   }
 
-  findNode(id: number): KDNode | null {
+  protected findNode(id: number): KDNode | null {
     let node: KDNode | null = this.topNode;
 
     while (node != null && !node.terminal)
@@ -235,7 +235,7 @@ export class KDTree {
     return distance;
   }
 
-  distanceBetweenUnits(u1: RowVector, u2: RowVector): number {
+  protected distanceBetweenUnits(u1: RowVector, u2: RowVector): number {
     if (u1.length !== u2.length)
       throw new RangeError('RowVectors does not match');
 
@@ -263,7 +263,7 @@ export class KDTree {
     this.traverseNodesForNeighbours(store, -1, id, this.topNode);
   }
 
-  traverseNodesForNeighbours(
+  protected traverseNodesForNeighbours(
     store: KDStore,
     id: number,
     unit: RowVector,
@@ -294,7 +294,7 @@ export class KDTree {
       this.traverseNodesForNeighbours(store, id, unit, nextNode2);
   }
 
-  searchNodeForNeighbour1(
+  protected searchNodeForNeighbour1(
     store: KDStore,
     id: number,
     unit: RowVector,
@@ -330,7 +330,7 @@ export class KDTree {
     }
   }
 
-  searchNodeForNeighbours(
+  protected searchNodeForNeighbours(
     store: KDStore,
     id: number,
     unit: RowVector,
@@ -425,7 +425,7 @@ export class KDTree {
     this.traverseNodesForNeighboursCps(store, probabilities, id, this.topNode);
   }
 
-  traverseNodesForNeighboursCps(
+  protected traverseNodesForNeighboursCps(
     store: KDStore,
     probabilities: number[],
     id: number,
@@ -451,7 +451,7 @@ export class KDTree {
       this.traverseNodesForNeighboursCps(store, probabilities, id, nextNode2);
   }
 
-  searchNodeForNeighboursCps(
+  protected searchNodeForNeighboursCps(
     store: KDStore,
     probabilities: number[],
     id: number,

@@ -20,7 +20,7 @@ export class Pivotal {
   setRun: boolean = false;
 
   draw: () => void = () => {};
-  run: () => void = () => {};
+  runInternal: () => void = () => {};
 
   method: PivotalMethod;
   N: number;
@@ -33,7 +33,7 @@ export class Pivotal {
 
   probabilities: number[];
 
-  pair: [number, number] = [-1, -1];
+  pair: [number, number] = [0, 1];
   history: number[] = [];
 
   sample: number[] = [];
@@ -113,7 +113,7 @@ export class Pivotal {
       }
     }
 
-    this.run = this.runDouble;
+    this.runInternal = this.runDouble;
     this.setRun = true;
   }
 
@@ -131,7 +131,7 @@ export class Pivotal {
     this.idx.fill();
     this.probabilities.fill(probability);
 
-    this.run = this.runInt;
+    this.runInternal = this.runInt;
     this.setRun = true;
   }
 
@@ -314,44 +314,48 @@ export class Pivotal {
     return;
   }
 
+  resolveDouble(): void {
+    const [id1, id2] = this.pair;
+
+    const psum = this.probabilities[id1] + this.probabilities[id2];
+
+    if (psum > 1.0) {
+      if (1.0 - this.probabilities[id2] > this.rand.float() * (2.0 - psum)) {
+        this.probabilities[id1] = 1.0;
+        this.probabilities[id2] = psum - 1.0;
+      } else {
+        this.probabilities[id1] = psum - 1.0;
+        this.probabilities[id2] = 1.0;
+      }
+    } else {
+      if (this.probabilities[id2] > this.rand.float() * psum) {
+        this.probabilities[id1] = 0.0;
+        this.probabilities[id2] = psum;
+      } else {
+        this.probabilities[id1] = psum;
+        this.probabilities[id2] = 0.0;
+      }
+    }
+
+    if (probability01(this.probabilities[id1], this.eps)) {
+      this.eraseUnit(id1);
+
+      if (probability1(this.probabilities[id1], this.eps))
+        this.addUnitToSample(id1);
+    }
+
+    if (probability01(this.probabilities[id2], this.eps)) {
+      this.eraseUnit(id2);
+
+      if (probability1(this.probabilities[id2], this.eps))
+        this.addUnitToSample(id2);
+    }
+  }
+
   runDouble(): void {
     while (this.idx.length() > 1) {
       this.draw();
-      const [id1, id2] = this.pair;
-
-      const psum = this.probabilities[id1] + this.probabilities[id2];
-
-      if (psum > 1.0) {
-        if (1.0 - this.probabilities[id2] > this.rand.float() * (2.0 - psum)) {
-          this.probabilities[id1] = 1.0;
-          this.probabilities[id2] = psum - 1.0;
-        } else {
-          this.probabilities[id1] = psum - 1.0;
-          this.probabilities[id2] = 1.0;
-        }
-      } else {
-        if (this.probabilities[id2] > this.rand.float() * psum) {
-          this.probabilities[id1] = 0.0;
-          this.probabilities[id2] = psum;
-        } else {
-          this.probabilities[id1] = psum;
-          this.probabilities[id2] = 0.0;
-        }
-      }
-
-      if (probability01(this.probabilities[id1], this.eps)) {
-        this.eraseUnit(id1);
-
-        if (probability1(this.probabilities[id1], this.eps))
-          this.addUnitToSample(id1);
-      }
-
-      if (probability01(this.probabilities[id2], this.eps)) {
-        this.eraseUnit(id2);
-
-        if (probability1(this.probabilities[id2], this.eps))
-          this.addUnitToSample(id2);
-      }
+      this.resolveDouble();
     }
 
     if (this.idx.length() === 1) {
@@ -364,45 +368,49 @@ export class Pivotal {
     }
   }
 
+  resolveInt(): void {
+    const [id1, id2] = this.pair;
+
+    const psum = this.probabilities[id1] + this.probabilities[id2];
+
+    if (psum > this.N) {
+      if (
+        this.N - this.probabilities[id2] >
+        this.rand.intn(2 * this.N - psum)
+      ) {
+        this.probabilities[id1] = this.N;
+        this.probabilities[id2] = psum - this.N;
+      } else {
+        this.probabilities[id1] = psum - this.N;
+        this.probabilities[id2] = this.N;
+      }
+    } else {
+      if (this.probabilities[id2] > this.rand.intn(psum)) {
+        this.probabilities[id1] = 0;
+        this.probabilities[id2] = psum;
+      } else {
+        this.probabilities[id1] = psum;
+        this.probabilities[id2] = 0;
+      }
+    }
+
+    if (this.probabilities[id1] === 0 || this.probabilities[id1] === this.N) {
+      this.eraseUnit(id1);
+
+      if (this.probabilities[id1] === this.N) this.addUnitToSample(id1);
+    }
+
+    if (this.probabilities[id2] === 0 || this.probabilities[id2] === this.N) {
+      this.eraseUnit(id2);
+
+      if (this.probabilities[id2] === this.N) this.addUnitToSample(id2);
+    }
+  }
+
   runInt(): void {
     while (this.idx.length() > 1) {
       this.draw();
-      const [id1, id2] = this.pair;
-
-      const psum = this.probabilities[id1] + this.probabilities[id2];
-
-      if (psum > this.N) {
-        if (
-          this.N - this.probabilities[id2] >
-          this.rand.intn(2 * this.N - psum)
-        ) {
-          this.probabilities[id1] = this.N;
-          this.probabilities[id2] = psum - this.N;
-        } else {
-          this.probabilities[id1] = psum - this.N;
-          this.probabilities[id2] = this.N;
-        }
-      } else {
-        if (this.probabilities[id2] > this.rand.intn(psum)) {
-          this.probabilities[id1] = 0;
-          this.probabilities[id2] = psum;
-        } else {
-          this.probabilities[id1] = psum;
-          this.probabilities[id2] = 0;
-        }
-      }
-
-      if (this.probabilities[id1] === 0 || this.probabilities[id1] === this.N) {
-        this.eraseUnit(id1);
-
-        if (this.probabilities[id1] === this.N) this.addUnitToSample(id1);
-      }
-
-      if (this.probabilities[id2] === 0 || this.probabilities[id2] === this.N) {
-        this.eraseUnit(id2);
-
-        if (this.probabilities[id2] === this.N) this.addUnitToSample(id2);
-      }
+      this.resolveInt();
     }
 
     if (this.idx.length() === 1) {
@@ -413,5 +421,13 @@ export class Pivotal {
 
       this.eraseUnit(id1);
     }
+  }
+
+  run(): void {
+    if (this.setRun !== true) throw new Error('run-type is not set');
+    if (this.setDraw !== true) throw new Error('draw-type is not set');
+
+    this.runInternal();
+    this.sample.sort();
   }
 }
