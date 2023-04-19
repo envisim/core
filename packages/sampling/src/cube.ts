@@ -1,11 +1,7 @@
 import {arrayLikeToArray, Matrix, TArrayLike} from '@envisim/matrix';
-import {
-  IOptions,
-  optionsDefaultDistfun,
-  optionsDefaultEps,
-  optionsDefaultRand,
-} from './types.js';
+import {IOptions, optionsDefaultEps, optionsDefaultRand} from './types.js';
 import {numberInOpen01} from './utils.js';
+import {distanceEuclidean2} from './distances.js';
 
 /**
  * Subroutine for the cube method.
@@ -229,7 +225,7 @@ export const cube = (
  * @param xs N*p Matrix of variables to spread the sample, where N is equal to
  *   size of `prob`.
  * @param options - Available:
- *   {@link IOptions.rand}, {@link IOptions.eps}, {@link IOptions.distfun}, {@link IOptions.categorical}
+ *   {@link IOptions.rand}, {@link IOptions.eps}
  * @returns An array of indices of the sample.
  */
 export const localcube = (
@@ -238,10 +234,9 @@ export const localcube = (
   xs: Matrix,
   options: IOptions = {},
 ): number[] => {
-  const distfun = options.distfun ?? optionsDefaultDistfun;
+  const distfun = distanceEuclidean2;
   const rand = options.rand ?? optionsDefaultRand;
   const eps = options.eps ?? optionsDefaultEps;
-  const cat = options.categorical;
 
   const p = arrayLikeToArray(prob);
   const pr = p.slice();
@@ -295,7 +290,7 @@ export const localcube = (
       }
 
       for (let i = 0; i < nr; i++) {
-        const d = distfun(xs, left[one], left[i], cat);
+        const d = distfun(xs, left[one], left[i]);
         // check if candidate
         if (d >= dists[howmany - 1][1]) continue;
 

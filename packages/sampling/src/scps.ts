@@ -1,15 +1,11 @@
 import {
+  arrayLikeToColumnVector,
+  ColumnVector,
   Matrix,
   TArrayLike,
-  ColumnVector,
-  arrayLikeToColumnVector,
 } from '@envisim/matrix';
-import {
-  IOptions,
-  optionsDefaultDistfun,
-  optionsDefaultEps,
-  optionsDefaultRand,
-} from './types.js';
+import {distanceEuclidean2} from './distances.js';
+import {IOptions, optionsDefaultEps, optionsDefaultRand} from './types.js';
 import {maxWeight} from './utils.js';
 
 /**
@@ -22,7 +18,7 @@ import {maxWeight} from './utils.js';
  * @param prob - an {@link matrix.TArrayLike} of inclusion probabilities.
  * @param xm N*p Matrix of auxilliary variables, where N is equal to size of `prob`.
  * @param options - Available:
- *   {@link IOptions.rand}, {@link IOptions.eps}, {@link IOptions.distfun}, {@link IOptions.categorical}
+ *   {@link IOptions.rand}, {@link IOptions.eps}
  * @returns An array of indices of the sample.
  */
 export const scps = (
@@ -30,10 +26,9 @@ export const scps = (
   xm: Matrix,
   options: IOptions = {},
 ): number[] => {
-  const distfun = options.distfun ?? optionsDefaultDistfun;
+  const distfun = distanceEuclidean2;
   const rand = options.rand ?? optionsDefaultRand;
   const eps = options.eps ?? optionsDefaultEps;
-  const cat = options.categorical;
 
   const pr = arrayLikeToColumnVector(prob);
   const N = pr.length;
@@ -72,7 +67,7 @@ export const scps = (
     const o2s = new Array(unresolvedObjects);
     o2sLen = unresolvedObjects;
     for (let i = 0; i < o2sLen; i++) {
-      o2s[i] = [indices.at(i), distfun(xm, id, indices.at(i), cat)];
+      o2s[i] = [indices.at(i), distfun(xm, id, indices.at(i))];
     }
     // Sort o2s according to distance, with smallest distance first
     o2s.sort((a, b) => a[1] - b[1]);

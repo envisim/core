@@ -56,21 +56,3 @@ export const srswr = (
 
   return s;
 };
-
-/**
- * Selects a simple random sampling with and without replacement.
- * If `variant = 1`, {@link srswr} is run, otherwise {@link srswor}
- *
- * @param n - Sample size.
- * @param N - Population size.
- * @param options - Available: {@link IOptions.rand}, {@link IOptions.variant}
- * @returns The sample.
- */
-export const srs = (
-  n: number,
-  N: number,
-  {rand = optionsDefaultRand, variant = 0}: IOptions = {},
-): number[] => {
-  if (variant === 1) return srswr(n, N, {rand});
-  return srswor(n, N, {rand});
-};

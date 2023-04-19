@@ -1,5 +1,5 @@
 import {RandomMock} from './sampling.testf';
-import {srs, srswor, srswr} from '../src/index';
+import {srswor, srswr} from '../src/index';
 
 describe('srs', () => {
   const rand = new RandomMock();
@@ -8,15 +8,11 @@ describe('srs', () => {
     expect(srswr(5, 10, {rand})).arrayToEqual([1, 1, 1, 1, 1]);
     expect(srswr(2, 10, {rand})).arrayToEqual([1, 1]);
     expect(srswr(1, 10, {rand})).arrayToEqual([1]);
-
-    expect(srs(5, 10, {rand, variant: 1})).arrayToEqual([1, 1, 1, 1, 1]);
   });
 
   test('srs wor', () => {
     expect(srswor(5, 10, {rand})).arrayToEqual([0, 1, 2, 3, 4]);
     expect(srswor(2, 10, {rand})).arrayToEqual([0, 1]);
     expect(srswor(1, 10, {rand})).arrayToEqual([1]);
-
-    expect(srs(5, 10, {rand, variant: 0})).arrayToEqual([0, 1, 2, 3, 4]);
   });
 });

@@ -1,10 +1,10 @@
-import type {Random} from '@envisim/random';
 import {
   arrayLikeToColumnVector,
   ColumnVector,
   IIteratorReturn,
   TArrayLike,
 } from '@envisim/matrix';
+import type {Random} from '@envisim/random';
 import {optionsDefaultEps} from './types.js';
 
 /**
@@ -111,3 +111,24 @@ export const selectOneOfTwo = (
   if (rand.float() * (o1 + o2) < o1) return o1;
   return o2;
 };
+
+export function arrayBack<T>(arr: T[]): T {
+  if (arr.length === 0) throw new RangeError('array is empty');
+  return arr[arr.length - 1];
+}
+
+export function swap<T>(arr: T[], a: number, b: number): void {
+  if (a === b) return;
+
+  const t = arr[a];
+  arr[a] = arr[b];
+  arr[b] = t;
+}
+
+export function probability1(p: number, eps: number): boolean {
+  return p >= 1.0 - eps;
+}
+
+export function probability01(p: number, eps: number): boolean {
+  return p <= eps || p >= 1.0 - eps;
+}
