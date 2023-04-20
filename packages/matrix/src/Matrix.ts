@@ -1,12 +1,13 @@
 import {randomArray} from '@envisim/random';
+import {reducedRowEchelonForm} from './array-fns/reducedRowEchelonForm.js';
 import {BaseMatrix} from './BaseMatrix.js';
 import {ColumnVector} from './ColumnVector.js';
 import {RowVector} from './RowVector.js';
 import type {
   IDimensions,
+  TArrayLike,
   TMatrixLike,
   TVectorLike,
-  TArrayLike,
 } from './types.js';
 import {arrayLikeToArray, isInteger} from './utils.js';
 
@@ -527,52 +528,15 @@ class Matrix extends BaseMatrix {
    * @returns the matrix in reduced row echelon format
    * @group Linear algebra
    */
-  reducedRowEchelon(eps: number = 1e-9): Matrix {
-    const s = this.copy();
-
-    let lead = 0;
-
-    for (let r = 0; r < s.nrow && lead < s.ncol; r++) {
-      let i = r;
-
-      while (Math.abs(s.atRC(i, lead)) < eps) {
-        s.edRC(i, lead, 0);
-        i++;
-
-        if (i === s.nrow) {
-          i = r;
-          lead++;
-
-          if (lead == s.ncol) {
-            return s;
-          }
-        }
-      }
-
-      let tmp: number;
-      for (let c = 0; c < s.ncol; c++) {
-        tmp = s.atRC(i, c);
-        s.edRC(i, c, s.atRC(r, c));
-        s.edRC(r, c, tmp);
-      }
-
-      let val = s.atRC(r, lead);
-      for (let j = 0; j < s.ncol; j++) {
-        s.fnRC(r, j, (e) => e / val);
-      }
-
-      for (i = 0; i < s.nrow; i++) {
-        if (i === r) continue;
-        val = s.atRC(i, lead);
-        for (let j = 0; j < s.ncol; j++) {
-          s.fnRC(i, j, (e) => e - val * s.atRC(r, j));
-        }
-      }
-
-      lead++;
+  reducedRowEchelon(eps: number = 1e-9, inPlace: boolean = false): Matrix {
+    if (inPlace === true) {
+      reducedRowEchelonForm(this._e, this.nrow, this.ncol, eps);
+      return this;
     }
 
-    return s;
+    const s = this.internal;
+    reducedRowEchelonForm(s, this.nrow, this.ncol, eps);
+    return new Matrix(s, this.nrow, this.ncol);
   }
 
   /**

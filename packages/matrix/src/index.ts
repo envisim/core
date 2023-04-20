@@ -1,5 +1,3 @@
-/** @module matrix */
-
 export {Matrix} from './Matrix.js';
 export {ColumnVector} from './ColumnVector.js';
 export {RowVector} from './RowVector.js';
@@ -8,6 +6,7 @@ export {
   arrayLikeToColumnVector,
   isArrayLike,
 } from './utils.js';
+export {reducedRowEchelonForm} from './array-fns/reducedRowEchelonForm.js';
 
 export type {
   // Interfaces
