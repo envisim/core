@@ -3,7 +3,7 @@ import {
   effectiveRadius,
   halfNormalDetectionFunction,
   uniformDetectionFunction,
-} from '@envisim/geosampling';
+} from '../src/sampleDistanceUtils.js';
 
 describe('sampleDistanceUtils', () => {
   const f1 = (x: number) => x;

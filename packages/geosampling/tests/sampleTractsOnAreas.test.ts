@@ -1,9 +1,6 @@
 import {toFeatureCollection} from '@envisim/geojson-utils';
-import {
-  sampleTractsOnAreas,
-  squareAreaTract,
-  pointTract,
-} from '@envisim/geosampling';
+import {sampleTractsOnAreas} from '../src/sampleTractsOnAreas.js';
+import {squareAreaTract, pointTract} from '../src/modelTract.js';
 
 describe('sampleTractsOnAreas', () => {
   const polygon: GeoJSON.Geometry = {

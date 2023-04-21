@@ -1,5 +1,5 @@
 import {toFeatureCollection} from '@envisim/geojson-utils';
-import {samplePointsOnAreas} from '@envisim/geosampling';
+import {samplePointsOnAreas} from '../src/samplePointsOnAreas.js';
 
 describe('samplePointsOnAreas', () => {
   const polygon: GeoJSON.Geometry = {
