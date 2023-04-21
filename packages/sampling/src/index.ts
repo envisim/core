@@ -8,16 +8,8 @@ export {lcps, scps, scpsCoord} from './scps.js';
 export {srswor, srswr} from './srs.js';
 export {systematic, randomSystematic} from './systematic.js';
 
-// Distances
-export {
-  distanceEuclidean,
-  distanceEuclidean2,
-  distanceGS,
-} from './distances.js';
-
 // Types
 export {
-  IDistance,
   IOptions,
   optionsDefaultEps,
   optionsDefaultRand,
