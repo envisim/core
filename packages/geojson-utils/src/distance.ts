@@ -1,5 +1,4 @@
 // @ts-ignore
-//import {geodesic} from './geographiclib-geodesic.js';
 import geodesic from 'geographiclib-geodesic';
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
