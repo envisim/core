@@ -29,19 +29,19 @@ const segmentInGeometry = (
       break;
     case 'MultiLineString':
     case 'Polygon':
-      geometry.coordinates.forEach(ring => {
+      geometry.coordinates.forEach((ring) => {
         segmentInLineString(ring, geometry, featureIndex, callback);
       });
       break;
     case 'MultiPolygon':
-      geometry.coordinates.forEach(polygon => {
-        polygon.forEach(ring => {
+      geometry.coordinates.forEach((polygon) => {
+        polygon.forEach((ring) => {
           segmentInLineString(ring, geometry, featureIndex, callback);
         });
       });
       break;
     case 'GeometryCollection':
-      geometry.geometries.forEach(geometry => {
+      geometry.geometries.forEach((geometry) => {
         segmentInGeometry(geometry, featureIndex, callback);
       });
       break;
@@ -62,8 +62,9 @@ export const segmentEach = (
   geoJSON: GeoJSON.GeoJSON,
   callback: Function,
 ): void => {
-  const gj = toFeatureCollection(geoJSON, {copy: false});
-  gj.features.forEach((feature, featureIndex) => {
-    segmentInGeometry(feature.geometry, featureIndex, callback);
-  });
+  toFeatureCollection(geoJSON, {copy: false}).features.forEach(
+    (feature, featureIndex) => {
+      segmentInGeometry(feature.geometry, featureIndex, callback);
+    },
+  );
 };
