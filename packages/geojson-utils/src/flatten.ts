@@ -8,7 +8,7 @@ const flattenFeature = (feature: GeoJSON.Feature): GeoJSON.Feature[] => {
   if (feature.type === 'Feature') {
     switch (feature.geometry.type) {
       case 'MultiPoint':
-        feature.geometry.coordinates.forEach(coord => {
+        feature.geometry.coordinates.forEach((coord) => {
           features.push({
             type: 'Feature',
             geometry: {
@@ -20,7 +20,7 @@ const flattenFeature = (feature: GeoJSON.Feature): GeoJSON.Feature[] => {
         });
         return features;
       case 'MultiLineString':
-        feature.geometry.coordinates.forEach(coords => {
+        feature.geometry.coordinates.forEach((coords) => {
           features.push({
             type: 'Feature',
             geometry: {
@@ -32,7 +32,7 @@ const flattenFeature = (feature: GeoJSON.Feature): GeoJSON.Feature[] => {
         });
         return features;
       case 'MultiPolygon':
-        feature.geometry.coordinates.forEach(coords => {
+        feature.geometry.coordinates.forEach((coords) => {
           features.push({
             type: 'Feature',
             geometry: {
@@ -72,10 +72,10 @@ const flattenFeature = (feature: GeoJSON.Feature): GeoJSON.Feature[] => {
 export const flatten = (
   geoJSON: GeoJSON.GeoJSON,
 ): GeoJSON.FeatureCollection => {
-  const gj = toFeatureCollection(geoJSON, {copy: false}); // objects are copied in flattenFeature
+  const g = toFeatureCollection(geoJSON, {copy: false}); // objects are copied in flattenFeature
   let features: GeoJSON.Feature[] = [];
-  for (let i = 0; i < gj.features.length; i++) {
-    features = features.concat(flattenFeature(gj.features[i]));
+  for (let i = 0; i < g.features.length; i++) {
+    features = features.concat(flattenFeature(g.features[i]));
   }
   return {
     type: 'FeatureCollection',
