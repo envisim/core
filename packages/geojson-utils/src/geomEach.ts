@@ -4,7 +4,7 @@ const geomInCollection = (
   callback: Function,
   featureIndex: number,
 ): void => {
-  gc.geometries.forEach(geometry => {
+  gc.geometries.forEach((geometry) => {
     switch (geometry.type) {
       case 'Point':
       case 'MultiPoint':
