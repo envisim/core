@@ -18,7 +18,7 @@ const countInGeometry = (
       }
       break;
     case 'GeometryCollection':
-      geometry.geometries.forEach(geometry => {
+      geometry.geometries.forEach((geometry) => {
         size += countInGeometry(geometry, opts);
       });
       break;
@@ -36,15 +36,13 @@ const countInGeometry = (
  * @returns - The number of (single) points in Point/MultiPoint geometries.
  */
 export const count = (geoJSON: GeoJSON.GeoJSON): number => {
-  const gj = toFeatureCollection(geoJSON, {copy: false});
   let size = 0;
-  gj.features.forEach(feature => {
+  toFeatureCollection(geoJSON, {copy: false}).features.forEach((feature) => {
     const opts = {_radius: 0};
     if (feature.properties?._radius) {
       opts._radius = feature.properties._radius;
     }
     size += countInGeometry(feature.geometry, opts);
   });
-
   return size;
 };
