@@ -67,7 +67,16 @@ export function lcube(
     throw new RangeError('Rows in xb must match length of prob');
   if (xs.nrow !== N) throw new RangeError('Rows in xb must match rows in xs');
 
-  const cb = new Cube(CubeMethod.CUBE, p, xb, N, xs, treeBucketSize, eps, rand);
+  const cb = new Cube(
+    CubeMethod.LCUBE,
+    p,
+    xb,
+    N,
+    xs,
+    treeBucketSize,
+    eps,
+    rand,
+  );
   cb.run();
 
   return cb.sample;

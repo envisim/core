@@ -74,7 +74,7 @@ export class Cube extends SamplingBase {
           xxbalance.atRC(i, k) / this.probabilities[i];
   }
 
-  protected maxSize(): number {
+  maxSize(): number {
     const il = this.idx.length();
     return this.pbalance + 1 <= il ? this.pbalance + 1 : il;
   }
@@ -132,9 +132,19 @@ export class Cube extends SamplingBase {
     }
   }
 
+  drawLanding(): void {
+    const maxSize = this.idx.length();
+    this.drawUnits.length = 0;
+
+    for (let i = 0; i < maxSize; i++) {
+      const id = this.idx.getId(i);
+      this.drawUnits.push(id);
+    }
+  }
+
   runUpdate() {
     const maxSize = this.maxSize();
-    reducedRowEchelonForm(this.bmat, maxSize - 1, maxSize);
+    reducedRowEchelonForm(this.bmat, maxSize - 1, maxSize, this.eps);
 
     let lambda1 = Number.MAX_VALUE;
     let lambda2 = Number.MAX_VALUE;
@@ -172,6 +182,14 @@ export class Cube extends SamplingBase {
     }
   }
 
+  prepareBMat(): void {
+    const maxSize = this.drawUnits.length;
+    for (let i = 0; i < maxSize; i++)
+      for (let k = 0; k < maxSize - 1; k++)
+        this.bmat[this.mIdxR(k, i, maxSize)] =
+          this.amat[this.mIdxC(this.drawUnits[i], k)];
+  }
+
   runFlight(): void {
     if (this.setDraw !== true) throw new Error('draw-type is not set');
 
@@ -179,13 +197,7 @@ export class Cube extends SamplingBase {
 
     while (this.idx.length() >= maxSize) {
       this.draw();
-
-      // Prepare bmat
-      for (let i = 0; i < maxSize; i++)
-        for (let k = 0; k < maxSize - 1; k++)
-          this.bmat[this.mIdxR(k, i, maxSize)] =
-            this.amat[this.mIdxC(this.drawUnits[i], k)];
-
+      this.prepareBMat();
       this.runUpdate();
     }
   }
@@ -197,17 +209,8 @@ export class Cube extends SamplingBase {
       throw new RangeError('landingphase committed early');
 
     while (this.idx.length() > 1) {
-      const maxSize = this.idx.length();
-      this.drawUnits.length = 0;
-
-      for (let i = 0; i < maxSize; i++) {
-        const id = this.idx.getId(i);
-        this.drawUnits.push(id);
-
-        for (let k = 0; k < maxSize - 1; k++)
-          this.bmat[this.mIdxR(k, i, maxSize)] = this.amat[this.mIdxC(id, k)];
-      }
-
+      this.drawLanding();
+      this.prepareBMat();
       this.runUpdate();
     }
 

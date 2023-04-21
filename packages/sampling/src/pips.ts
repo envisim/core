@@ -77,7 +77,7 @@ export const pareto = (
   const n = Math.round(psum);
 
   return p
-    .map((e: number, i: number) => {
+    .map((e: number, i: number): [number, number] => {
       const u = rand.float();
       if (eps < e && e < 1 - eps) return [i, u / (1 - u) / (p[i] / (1 - p[i]))];
       if (e <= eps) return [i, Infinity];
