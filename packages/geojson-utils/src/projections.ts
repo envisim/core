@@ -8,16 +8,6 @@ const toDeg = 180 / Math.PI;
 const toRad = Math.PI / 180;
 const PI_4 = Math.PI / 4;
 
-// Internal
-const coordToWebMercator = (coord: GeoJSON.Position): GeoJSON.Position => {
-  return [coord[0], Math.log(Math.tan((coord[1] / 90 + 1) * PI_4)) * toDeg];
-};
-
-// Internal
-const coordFromWebMercator = (coord: GeoJSON.Position): GeoJSON.Position => {
-  return [coord[0], (Math.atan(Math.exp(coord[1] / toDeg)) / PI_4 - 1) * 90];
-};
-
 type Projection = {
   project: Function;
   unproject: Function;
@@ -25,20 +15,27 @@ type Projection = {
 
 /**
  * Web Mercator projection.
- * @returns Web Mercator projection.
+ * @returns - Web Mercator projection.
  */
 export const webMercator = (): Projection => {
   return {
-    project: coordToWebMercator,
-    unproject: coordFromWebMercator,
+    project: (coord: GeoJSON.Position): GeoJSON.Position => {
+      return [coord[0], Math.log(Math.tan((coord[1] / 90 + 1) * PI_4)) * toDeg];
+    },
+    unproject: (coord: GeoJSON.Position): GeoJSON.Position => {
+      return [
+        coord[0],
+        (Math.atan(Math.exp(coord[1] / toDeg)) / PI_4 - 1) * 90,
+      ];
+    },
   };
 };
 
 /**
  * Azimuthal Equidistant projection based on the reference coordinate
  * provided as argument.
- * @param refCoord
- * @returns Azimuthal Equidistant projection.
+ * @param refCoord - A GeoJSON.Position
+ * @returns - Azimuthal Equidistant projection.
  */
 export const azimuthalEquidistant = (
   refCoord: GeoJSON.Position,
@@ -68,37 +65,23 @@ export const azimuthalEquidistant = (
 
 type Cartesian = [number, number, number];
 
-// Internal.
-// Helper function to convert from lonLat coordinates to
-// cartesian coordinates on unit sphere.
-const lonLatToCartesian = (coord: GeoJSON.Position): Cartesian => {
-  const sinLon = Math.sin(coord[0] * toRad);
-  const cosLon = Math.cos(coord[0] * toRad);
-  const sinLat = Math.sin((90 - coord[1]) * toRad);
-  const cosLat = Math.cos((90 - coord[1]) * toRad);
-  return [sinLat * cosLon, sinLat * sinLon, cosLat];
-};
-
-// Internal.
-// Helper function to convert from cartesian coordinates on unit sphere
-// to lonLat.
-const cartesianToLonLat = (coord: Cartesian): GeoJSON.Position => {
-  const lon = Math.atan2(coord[1], coord[0]) * toDeg;
-  const lat = 90 - Math.acos(coord[2]) * toDeg;
-  return [lon, lat];
-};
-
 /**
  * Project [lon,lat] to/from cartesian [x,y,z] on unit sphere
- * @returns Cartesian projection
+ * @returns - Cartesian projection
  */
 export const cartesian = (): Projection => {
   return {
     project: (coord: GeoJSON.Position): Cartesian => {
-      return lonLatToCartesian(coord);
+      const sinLon = Math.sin(coord[0] * toRad);
+      const cosLon = Math.cos(coord[0] * toRad);
+      const sinLat = Math.sin((90 - coord[1]) * toRad);
+      const cosLat = Math.cos((90 - coord[1]) * toRad);
+      return [sinLat * cosLon, sinLat * sinLon, cosLat];
     },
     unproject: (coord: Cartesian): GeoJSON.Position => {
-      return cartesianToLonLat(coord);
+      const lon = Math.atan2(coord[1], coord[0]) * toDeg;
+      const lat = 90 - Math.acos(coord[2]) * toDeg;
+      return [lon, lat];
     },
   };
 };
