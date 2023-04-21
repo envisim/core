@@ -3,24 +3,25 @@ import {
   arrayLikeToColumnVector,
   TArrayLike,
 } from '@envisim/matrix';
-import {discrete} from './pps.js';
 import {conditionalPoisson} from './poisson.js';
-import {IOptions, optionsDefaultEps, optionsDefaultRand} from './types.js';
+import {discrete} from './pps.js';
+import {
+  IOptions,
+  optionsDefaultEps,
+  optionsDefaultRand,
+  PartialPick,
+} from './types.js';
 
 /**
  * Selects a Sampford (pips) sample using the rejective method.
- * @see Sampford, M. R. (1967).
- * On sampling without replacement with unequal probabilities of selection.
- * Biometrika, 54(3-4), 499-513.
- * [DOI:10.1093/biomet/54.3-4.499](https://doi.org/10.1093/biomet/54.3-4.499)
  *
- * @param prob - a {@link matrix.TArrayLike} of inclusion probabilities.
- * @param options - Available: {@link IOptions.rand}
- * @returns An array of indices of the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param options
+ * @returns sample indices.
  */
 export const sampford = (
   prob: TArrayLike,
-  {rand = optionsDefaultRand}: IOptions = {},
+  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
   const p = arrayLikeToColumnVector(prob);
   const psum = p.sum();
@@ -60,52 +61,54 @@ export const sampford = (
 /**
  * Selects a Pareto (pips) sample without replacement.
  *
- * - opts.eps defaults to 1e-9.
- *
- * @param prob - a {@link matrix.TArrayLike} of inclusion probabilities.
- * @param options - Available: {@link IOptions.rand}, {@link IOptions.eps}
- * @returns An array of indices of the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param options
+ * @returns sample indices.
  */
 export const pareto = (
   prob: TArrayLike,
-  {rand = optionsDefaultRand, eps = optionsDefaultEps}: IOptions = {},
+  {
+    rand = optionsDefaultRand,
+    eps = optionsDefaultEps,
+  }: PartialPick<IOptions, 'rand' | 'eps'> = {},
 ): number[] => {
   const p = arrayLikeToArray(prob);
-  const psum = p.reduce((t, c) => t + c);
+  const psum = p.reduce((t: number, c: number) => t + c);
   const n = Math.round(psum);
 
   return p
-    .map((e, i) => {
+    .map((e: number, i: number) => {
       const u = rand.float();
       if (eps < e && e < 1 - eps) return [i, u / (1 - u) / (p[i] / (1 - p[i]))];
       if (e <= eps) return [i, Infinity];
       return [i, 0];
     })
-    .sort((a, b) => a[1] - b[1])
+    .sort((a: [number, number], b: [number, number]) => a[1] - b[1])
     .slice(0, n)
-    .map((e) => e[0])
-    .sort((a, b) => a - b);
+    .map((e: [number, number]) => e[0])
+    .sort((a: number, b: number) => a - b);
 };
 
 /**
  * Selects a (pips) sample without replacement using Brewers method.
  *
- * - opts.eps defaults to 1e-9.
- *
- * @param prob - a {@link matrix.TArrayLike} of inclusion probabilities.
- * @param options - Available: {@link IOptions.rand}, {@link IOptions.eps}
- * @returns An array of indices of the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param options
+ * @returns sample indices.
  */
 export const brewer = (
   prob: TArrayLike,
-  {rand = optionsDefaultRand, eps = optionsDefaultEps}: IOptions = {},
+  {
+    rand = optionsDefaultRand,
+    eps = optionsDefaultEps,
+  }: PartialPick<IOptions, 'rand' | 'eps'> = {},
 ): number[] => {
   const pr = arrayLikeToArray(prob);
   const N = pr.length;
 
   const s = [];
   const I = new Array(N);
-  let psum = pr.reduce((t, c) => t + c);
+  let psum = pr.reduce((t: number, c: number) => t + c);
   let n = Math.round(psum);
 
   for (let i = 0; i < N; i++) {
@@ -125,12 +128,12 @@ export const brewer = (
 
   for (let i = 1; i <= n; i++) {
     psum = 0.0;
-    pr.forEach((e, j) => {
+    pr.forEach((e: number, j: number) => {
       pk[j] = ((1 - I[j]) * e * (n - del1 - e)) / (n - del1 - e * (n - i + 1));
       psum += pk[j];
     });
 
-    pk.forEach((_, j) => {
+    pk.forEach((_: any, j: number) => {
       pk[j] /= psum;
     });
 

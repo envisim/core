@@ -3,19 +3,19 @@ import {
   arrayLikeToColumnVector,
   TArrayLike,
 } from '@envisim/matrix';
-import {IOptions, optionsDefaultRand} from './types.js';
+import {IOptions, optionsDefaultRand, PartialPick} from './types.js';
 
 /**
  * Generation of a random number between 0 and length of prob according to prob
  * a discrete random variable on 0,2,...,length-1.
  *
- * @param prob - an {@link matrix.TArrayLike} of inclusion probabilities.
- * @param options - Available: {@link IOptions.rand}
- * @returns The selected index.
+ * @param prob - inclusion probabilities of size N.
+ * @param options
+ * @returns the selected index.
  */
 export const discrete = (
   prob: TArrayLike,
-  {rand = optionsDefaultRand}: IOptions = {},
+  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number => {
   const p = arrayLikeToArray(prob);
   const N = p.length;
@@ -34,15 +34,15 @@ export const discrete = (
  * Generation of an array of random numbers between 0 and length of prob,
  * according to prob.
  *
- * @param prob - an {@link matrix.TArrayLike} of inclusion probabilities.
+ * @param prob - inclusion probabilities of size N.
  * @param n - the number of elements in the returning array
- * @param options - Available: {@link IOptions.rand}
- * @returns An array of size `n` of selected indices.
+ * @param options
+ * @returns sample indices.
  */
 export const discreteArr = (
   prob: TArrayLike,
   n: number,
-  {rand = optionsDefaultRand}: IOptions = {},
+  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
   const p = arrayLikeToArray(prob);
   const N = p.length;
@@ -68,15 +68,15 @@ export const discreteArr = (
 /**
  * Selects a pps sample with replacement.
  *
- * @param prob - an {@link matrix.TArrayLike} of inclusion probabilities.
- * @param n - The sample size.
- * @param options - Available: {@link IOptions.rand}
- * @returns An array of indices of the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param n - sample size.
+ * @param options
+ * @returns sample indices.
  */
 export const ppswr = (
   prob: TArrayLike,
   n: number,
-  {rand = optionsDefaultRand}: IOptions = {},
+  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
   const p = arrayLikeToColumnVector(prob);
   const psum = p.sum();

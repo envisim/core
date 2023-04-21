@@ -1,5 +1,7 @@
 import {Random} from '@envisim/random';
 
+export type PartialPick<T, K extends keyof T> = Partial<Pick<T, K>>;
+
 export interface IOptions {
   /**
    * Epsilon, used during comparisons of floats

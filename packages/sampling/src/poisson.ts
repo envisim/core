@@ -1,16 +1,16 @@
 import {TArrayLike, arrayLikeToColumnVector} from '@envisim/matrix';
-import {IOptions, optionsDefaultRand} from './types.js';
+import {IOptions, optionsDefaultRand, PartialPick} from './types.js';
 
 /**
  * Selects a Poisson sample.
  *
- * @param prob - Array or column vector of inclusion probabilities.
- * @param options - Available: {@link IOptions.rand}
- * @returns An array of indices of the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param options
+ * @returns sample indices.
  */
 export const poisson = (
   prob: TArrayLike,
-  {rand = optionsDefaultRand}: IOptions = {},
+  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
   const p = arrayLikeToColumnVector(prob);
   const N = p.length;
@@ -28,16 +28,16 @@ export const poisson = (
 /**
  * Selects a conditional Poisson sample using the rejective method.
  *
- * @param prob - Array or column vector of inclusion probabilities.
- * @param n - The sample size.
- * @param options - Available: {@link IOptions.rand}
- * @returns An array of indices of the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param n - sample size.
+ * @param options
+ * @returns sample indices.
  * @throws `Error` if a solution is not found in `1e5` iterations
  */
 export const conditionalPoisson = (
   prob: TArrayLike,
   n: number,
-  {rand = optionsDefaultRand}: IOptions = {},
+  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
   // depends on poisson
   // sum(p) should be n or close to n

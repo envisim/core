@@ -5,17 +5,16 @@ import {
   optionsDefaultEps,
   optionsDefaultRand,
   optionsDefaultTreeBucketSize,
+  PartialPick,
 } from './types.js';
 
 /**
  * Selects a balanced (pips) sample using the cube method.
  *
- * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities,
- *   or a number `n` indicating equal inclusion probabilities `n / N`.
- * @param xm - N*p Matrix of balancing variables,
- *   where N is equal to size of `prob`.
- * @param options - See {@link IOptions}
- * @returns An array of indices of the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param xm - matrix of balancing variables of size N*p.
+ * @param options
+ * @returns sample indices.
  */
 export function cube(
   prob: TArrayLike,
@@ -23,7 +22,7 @@ export function cube(
   {
     rand = optionsDefaultRand,
     eps = optionsDefaultEps,
-  }: Omit<IOptions, 'treeBucketSize'> = {},
+  }: PartialPick<IOptions, 'rand' | 'eps'> = {},
 ): number[] {
   if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
 
@@ -42,18 +41,11 @@ export function cube(
 /**
  * Selects a doubly balanced sample using the local cube method.
  *
- * - opts.distfun defaults to [euclideanSquared]{@link sampling.euclideanSquared}.
- * - opts.eps defaults to 1e-9.
- *
- * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities,
- *   or a number `n` indicating equal inclusion probabilities `n / N`.
- * @param xb - N*p Matrix of balancing variables,
- *   where N is equal to size of `prob`.
- * @param xm - N*p Matrix of auxilliary variables,
- *   where N is equal to size of `prob`.
- * @param options - See {@link IOptions}
- * @returns An array of indices of the sample.
- * @returns An array of indices of the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param xb - matrix of balancing variables of size N*p,
+ * @param xm - matrix of auxilliary variables of size N*q,
+ * @param options
+ * @returns sample indices.
  */
 export function lcube(
   prob: TArrayLike,
