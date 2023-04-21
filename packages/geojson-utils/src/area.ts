@@ -69,9 +69,8 @@ const areaOfGeometry = (
  * @returns - The sum of area in square meters.
  */
 export const area = (geoJSON: GeoJSON.GeoJSON): number => {
-  const gj = toFeatureCollection(geoJSON, {copy: false});
   let A = 0; // aggregate area to A
-  gj.features.forEach((feature) => {
+  toFeatureCollection(geoJSON, {copy: false}).features.forEach((feature) => {
     const opts = {_radius: 0};
     if (feature.properties?._radius) {
       opts._radius = feature.properties._radius;
