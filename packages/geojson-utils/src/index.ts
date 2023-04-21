@@ -49,7 +49,6 @@ export {
 export {webMercator, azimuthalEquidistant, cartesian} from './projections.js';
 export {rotateCoord} from './rotateCoord.js';
 export {segmentEach} from './segmentEach.js';
-export {summaryOfTypes} from './summaryOfTypes.js';
 export {toFeature} from './toFeature.js';
 export {toFeatureCollection} from './toFeatureCollection.js';
 export {unionOfPolygons} from './unionOfPolygons.js';
