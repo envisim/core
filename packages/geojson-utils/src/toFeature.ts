@@ -60,6 +60,12 @@ export const toFeature = (
   return feature;
 };
 
+/**
+ * Makes a Feature with geometry type Point from a GeoJSON.Position
+ * @param coord - A GeoJSON.Position
+ * @param opts
+ * @returns - A GeoJSON Feature
+ */
 export const toPoint = (
   coord: GeoJSON.Position,
   opts: ToFeatureOpts = {},
@@ -71,6 +77,12 @@ export const toPoint = (
   return toFeature(geometry, opts);
 };
 
+/**
+ * Makes a Feature with geometry type MultiPoint from a GeoJSON.Position[]
+ * @param coord - A GeoJSON.Position[]
+ * @param opts
+ * @returns - A GeoJSON Feature
+ */
 export const toMultiPoint = (
   coord: GeoJSON.Position[],
   opts: ToFeatureOpts = {},
@@ -82,6 +94,12 @@ export const toMultiPoint = (
   return toFeature(geometry, opts);
 };
 
+/**
+ * Makes a Feature with geometry type LineString from a GeoJSON.Position[]
+ * @param coord - A GeoJSON.Position[]
+ * @param opts
+ * @returns - A GeoJSON Feature
+ */
 export const toLine = (
   coord: GeoJSON.Position[],
   opts: ToFeatureOpts = {},
@@ -93,6 +111,12 @@ export const toLine = (
   return toFeature(geometry, opts);
 };
 
+/**
+ * Makes a Feature with geometry type MultiLineString from a GeoJSON.Position[][]
+ * @param coord - A GeoJSON.Position[][]
+ * @param opts
+ * @returns - A GeoJSON Feature
+ */
 export const toMultiLine = (
   coord: GeoJSON.Position[][],
   opts: ToFeatureOpts = {},
@@ -104,6 +128,12 @@ export const toMultiLine = (
   return toFeature(geometry, opts);
 };
 
+/**
+ * Makes a Feature with geometry type Polygon from a GeoJSON.Position[][]
+ * @param coord - A GeoJSON.Position[][]
+ * @param opts
+ * @returns - A GeoJSON Feature
+ */
 export const toPolygon = (
   coord: GeoJSON.Position[][],
   opts: ToFeatureOpts = {},
@@ -115,6 +145,12 @@ export const toPolygon = (
   return toFeature(geometry, opts);
 };
 
+/**
+ * Makes a Feature with geometry type MultiPolygon from a GeoJSON.Position[][][]
+ * @param coord - A GeoJSON.Position[][][]
+ * @param opts
+ * @returns - A GeoJSON Feature
+ */
 export const toMultiPolygon = (
   coord: GeoJSON.Position[][][],
   opts: ToFeatureOpts = {},
