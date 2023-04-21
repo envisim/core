@@ -1,14 +1,18 @@
-// import { ColumnVector, Matrix } from '../../matrix/index.js';
-// import { RandomMock } from './sampling.testf.js';
-// import { lpm, lpm1, lpm2, randomPivotal } from '../index.js';
+import {cube, lcube} from '../src/index';
+import {data} from './_data.testf';
+import './_equalArrays.testf';
+import {RandomMock} from './_Random.testf';
 
-describe('cube', () => {
-  // const rand01 = new RandomMock(0.1);
-  // const rand99 = new RandomMock(0.9999);
-  // const xm_arr = [1, 2, 3, 4, 5, 6];
-  // const xm = new Matrix(xm_arr, 6, 1);
-  // const ps = new ColumnVector(1 / 3, 6);
+describe('Cube', () => {
+  const rand01 = new RandomMock(0.01);
+  const rand99 = new RandomMock(0.99);
+  const probs = new Array<number>(10).fill(0.2);
 
-  test.todo('cube');
-  test.todo('local cube');
+  test('length', () => {
+    expect(cube(probs, data).length).toBe(2);
+    expect(lcube(probs, data, data).length).toBe(2);
+  });
+
+  test.todo('cube proper');
+  test.todo('lcube proper');
 });

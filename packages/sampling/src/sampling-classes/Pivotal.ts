@@ -1,10 +1,11 @@
 import {Matrix} from '@envisim/matrix';
 import {Random} from '@envisim/random';
-import {optionsDefaultEps} from '../types.js';
+import {optionsDefaultEps, optionsDefaultTreeBucketSize} from '../types.js';
 import {IndexList} from '../util-classes/IndexList.js';
 import {KDStore} from '../util-classes/KDStore.js';
 import {KDTree} from '../util-classes/KDTree.js';
-import {arrayBack, probability01, probability1, swap} from '../utils.js';
+import {arrayBack, swap} from '../utils.js';
+import {SamplingBase} from './SamplingBase.js';
 
 export enum PivotalMethod {
   LPM1,
@@ -14,44 +15,30 @@ export enum PivotalMethod {
   SPM,
 }
 
-export class Pivotal {
+export class Pivotal extends SamplingBase {
   setDirect: boolean = false;
-  setDraw: boolean = false;
   setRun: boolean = false;
 
-  draw: () => void = () => {};
   runInternal: () => void = () => {};
 
   method: PivotalMethod;
-  N: number;
-  eps: number = optionsDefaultEps;
-  rand: Random;
-
-  idx!: IndexList;
-  tree!: KDTree;
-  store!: KDStore;
-
-  probabilities: number[];
 
   pair: [number, number] = [0, 1];
   history: number[] = [];
-
-  sample: number[] = [];
 
   constructor(
     method: PivotalMethod,
     probabilities: number | number[],
     xx: Matrix | undefined,
     N: number,
-    treeBucketSize: number,
+    treeBucketSize: number = optionsDefaultTreeBucketSize,
     eps: number = optionsDefaultEps,
     rand: Random = new Random(),
   ) {
+    super(xx, N, treeBucketSize, eps, rand);
+
     this.setDirect = true;
-    this.N = N;
     this.method = method;
-    this.eps = eps;
-    this.rand = rand;
     this.probabilities = new Array<number>(N);
 
     switch (this.method) {
@@ -76,11 +63,6 @@ export class Pivotal {
 
     this.setDraw = true;
 
-    if (Matrix.isMatrix(xx)) {
-      this.tree = new KDTree(xx, treeBucketSize);
-      this.store = new KDStore(N, 1);
-    }
-
     switch (this.method) {
       case PivotalMethod.LPM1:
       case PivotalMethod.LPM2:
@@ -91,59 +73,32 @@ export class Pivotal {
     }
 
     if (Array.isArray(probabilities)) {
-      this.initDouble(probabilities, N);
+      this.init(probabilities);
+      this.runInternal = this.runDouble;
+      this.setRun = true;
     } else if (typeof probabilities === 'number') {
-      this.initInt(probabilities, N);
+      this.initInt(probabilities);
     } else {
       throw new Error('wrong types of probabilities');
     }
   }
 
-  initDouble(probabilities: number[], N: number): void {
-    this.idx = new IndexList(N);
-
-    for (let i = N; i-- > 0; ) {
-      this.probabilities[i] = probabilities[i];
-      this.idx.setId(i);
-
-      if (probability01(this.probabilities[i], this.eps)) {
-        this.eraseUnit(i);
-        if (probability1(this.probabilities[i], this.eps))
-          this.addUnitToSample(i);
-      }
-    }
-
-    this.runInternal = this.runDouble;
-    this.setRun = true;
-  }
-
-  initInt(probability: number, N: number): void {
-    if (N === 0 || probability === 0) {
+  initInt(probability: number): void {
+    if (this.N === 0 || probability === 0) {
       this.idx = new IndexList(0);
       return;
-    } else if (probability === N) {
+    } else if (probability === this.N) {
       this.idx = new IndexList(0);
-      for (let i = 0; i < N; i++) this.addUnitToSample(i);
+      for (let i = 0; i < this.N; i++) this.addUnitToSample(i);
       return;
     }
 
-    this.idx = new IndexList(N);
+    this.idx = new IndexList(this.N);
     this.idx.fill();
     this.probabilities.fill(probability);
 
     this.runInternal = this.runInt;
     this.setRun = true;
-  }
-
-  addUnitToSample(id: number): void {
-    this.sample.push(id);
-  }
-
-  eraseUnit(id: number): void {
-    this.idx.erase(id);
-
-    // Needed like this as tree might be nullptr during landing
-    if (this.tree) this.tree.removeUnit(id);
   }
 
   drawLpm1(): void {
@@ -314,6 +269,14 @@ export class Pivotal {
     return;
   }
 
+  resolveUnitInt(id: number): void {
+    if (this.probabilities[id] === 0 || this.probabilities[id] === this.N) {
+      this.eraseUnit(id);
+
+      if (this.probabilities[id] === this.N) this.addUnitToSample(id);
+    }
+  }
+
   resolveDouble(): void {
     const [id1, id2] = this.pair;
 
@@ -337,19 +300,8 @@ export class Pivotal {
       }
     }
 
-    if (probability01(this.probabilities[id1], this.eps)) {
-      this.eraseUnit(id1);
-
-      if (probability1(this.probabilities[id1], this.eps))
-        this.addUnitToSample(id1);
-    }
-
-    if (probability01(this.probabilities[id2], this.eps)) {
-      this.eraseUnit(id2);
-
-      if (probability1(this.probabilities[id2], this.eps))
-        this.addUnitToSample(id2);
-    }
+    this.resolveUnit(id1);
+    this.resolveUnit(id2);
   }
 
   runDouble(): void {
@@ -359,12 +311,10 @@ export class Pivotal {
     }
 
     if (this.idx.length() === 1) {
-      const id1 = this.idx.getId(0);
-
-      if (this.rand.float() < this.probabilities[id1])
-        this.addUnitToSample(id1);
-
-      this.eraseUnit(id1);
+      const id = this.idx.getId(0);
+      this.probabilities[id] =
+        this.rand.float() < this.probabilities[id] ? 1.0 : 0.0;
+      this.resolveUnit(id);
     }
   }
 
@@ -394,17 +344,8 @@ export class Pivotal {
       }
     }
 
-    if (this.probabilities[id1] === 0 || this.probabilities[id1] === this.N) {
-      this.eraseUnit(id1);
-
-      if (this.probabilities[id1] === this.N) this.addUnitToSample(id1);
-    }
-
-    if (this.probabilities[id2] === 0 || this.probabilities[id2] === this.N) {
-      this.eraseUnit(id2);
-
-      if (this.probabilities[id2] === this.N) this.addUnitToSample(id2);
-    }
+    this.resolveUnitInt(id1);
+    this.resolveUnitInt(id2);
   }
 
   runInt(): void {
@@ -414,12 +355,10 @@ export class Pivotal {
     }
 
     if (this.idx.length() === 1) {
-      const id1 = this.idx.getId(0);
-
-      if (this.rand.intn(this.N) < this.probabilities[id1])
-        this.addUnitToSample(id1);
-
-      this.eraseUnit(id1);
+      const id = this.idx.getId(0);
+      this.probabilities[id] =
+        this.rand.intn(this.N) < this.probabilities[id] ? this.N : 0;
+      this.resolveUnitInt(id);
     }
   }
 

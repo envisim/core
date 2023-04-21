@@ -413,7 +413,7 @@ export class KDTree {
       if (store.getDistance(i - 1) < store.getDistance(i)) break;
     }
 
-    store.neighbours.splice(i, -1);
+    store.neighbours.splice(i);
     return;
   }
 
@@ -514,7 +514,7 @@ export class KDTree {
     // - The node minimum is larger than the current maximum
     // - The node minimum is somewhere inbetween
     let i;
-    if (originalSize === 0 || nodeMinimum < store.minimumDistance()) {
+    if (originalSize === 0 || nodeMinimum < store.getDistance(0)) {
       i = 0;
       store.totalWeight = 0.0;
       // } else if (nodeMinDistance >= currentMaxDistance) {
@@ -527,6 +527,9 @@ export class KDTree {
       }
 
       i += 1;
+      // "i" is now pointing to the biggest unit removed from totalWeight
+      // Remember that the loop must have been break:ed, since otherwise
+      // it would have chosen the other if-else path
     }
 
     // Sort the range [i, neighbours.size())
@@ -534,17 +537,17 @@ export class KDTree {
 
     // When this loop breaks, we have an i that is at least as large as needed
     // 'i' will then be the smallest unit that is not to be included
-    for (i += 1; i < storeSize; i++) {
-      if (
-        store.totalWeight >= 1.0 &&
-        store.getDistance(i - 1) < store.getDistance(i)
-      )
-        break;
+    let prevDist = i === 0 ? -1.0 : store.getDistance(i - 1);
+    while (i < storeSize) {
+      const thisDist = store.getDistance(i);
+      if (store.totalWeight >= 1.0 && prevDist < thisDist) break;
 
+      prevDist = thisDist;
       store.totalWeight += store.getWeight(i);
+      i += 1;
     }
 
-    store.neighbours.splice(i, -1);
+    store.neighbours.splice(i);
     return;
   }
 }

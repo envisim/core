@@ -80,26 +80,6 @@ export const numberInOpen01 = (
 };
 
 /**
- * Calculates the maximum weight of a unit (2) when deciding a unit (1).
- *
- * @ignore
- * @param p1 - Probability 1.
- * @param p2 - Probability 2.
- * @returns The maximum weight which can be provided by p2 to p1.
- */
-export const maxWeight = (p1: number, p2: number): number => {
-  if (p1 <= 0.0 || 1.0 <= p1) {
-    return 0.0;
-  }
-
-  if (p1 + p2 <= 1.0) {
-    return p2 / (1.0 - p1);
-  }
-
-  return (1.0 - p2) / p1;
-};
-
-/**
  * Randomly returns `o1` or `o2`, proportionally
  * @ignore
  */

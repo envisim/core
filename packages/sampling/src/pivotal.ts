@@ -10,7 +10,7 @@ import {
 /**
  * Selects a (pips) sample using the local pivotal method 1.
  *
- * @param prob - an {@link matrix.TArrayLike} of inclusion probabilities,
+ * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities,
  *   or a number `n` indicating equal inclusion probabilities `n / N`.
  * @param xm - N*p Matrix of auxilliary variables,
  *   where N is equal to size of `prob`.
@@ -57,7 +57,7 @@ export function lpm1(
 /**
  * Selects a (pips) sample using the local pivotal method 2.
  *
- * @param prob - an {@link matrix.TArrayLike} of inclusion probabilities,
+ * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities,
  *   or a number `n` indicating equal inclusion probabilities `n / N`.
  * @param xm - N*p Matrix of auxilliary variables,
  *   where N is equal to size of `prob`.
@@ -104,7 +104,7 @@ export function lpm2(
 /**
  * Selects a (pips) sample using the local pivotal method 1 search.
  *
- * @param prob - an {@link matrix.TArrayLike} of inclusion probabilities,
+ * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities,
  *   or a number `n` indicating equal inclusion probabilities `n / N`.
  * @param xm - N*p Matrix of auxilliary variables,
  *   where N is equal to size of `prob`.
@@ -151,7 +151,7 @@ export function lpm1s(
 /**
  * Selects a (pips) sample using the random pivotal method.
  *
- * @param prob - an {@link matrix.TArrayLike} of inclusion probabilities.
+ * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities.
  * @param options - See {@link IOptions}
  * @returns An array of indices of chosen units, the sample.
  */
@@ -174,7 +174,7 @@ export function rpm(
 /**
  * Selects a (pips) sample using the sequential pivotal method.
  *
- * @param prob - an {@link matrix.TArrayLike} of inclusion probabilities.
+ * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities.
  * @param options - See {@link IOptions}
  * @returns An array of indices of chosen units, the sample.
  */
