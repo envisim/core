@@ -100,7 +100,7 @@ export const toMultiPoint = (
  * @param opts
  * @returns - A GeoJSON Feature
  */
-export const toLine = (
+export const toLineString = (
   coord: GeoJSON.Position[],
   opts: ToFeatureOpts = {},
 ): GeoJSON.Feature => {
@@ -117,7 +117,7 @@ export const toLine = (
  * @param opts
  * @returns - A GeoJSON Feature
  */
-export const toMultiLine = (
+export const toMultiLineString = (
   coord: GeoJSON.Position[][],
   opts: ToFeatureOpts = {},
 ): GeoJSON.Feature => {
