@@ -59,17 +59,3 @@ export const toFeature = (
   }
   return feature;
 };
-
-
-
-export const toPoint = (
-  coord:GeoJSON.Position,
-  opts: ToFeatureOpts = {},
-): GeoJSON.Feature => {
-  const geometry = {
-    type:"Point",
-    coordinates:coord,
-  }
-return toFeature(geometry,opts);
-};
-
