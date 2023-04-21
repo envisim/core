@@ -16,7 +16,7 @@ type ToFeatureOpts = {
   properties?: Object;
   copy?: Boolean;
   addBbox?: Boolean;
-  addID?: Boolean;
+  addId?: Boolean;
 };
 
 /**
@@ -26,7 +26,7 @@ type ToFeatureOpts = {
  * @param opts.properties - The properties object to add.
  * @param opts.copy - Boolean, default true. If true, then input is copied.
  * @param opts.addBbox - Boolean, default false. If true, then a bbox is added to the feature.
- * @param opts.addID - Boolean, default false. If true, then a unique id is added to the feature.
+ * @param opts.addId - Boolean, default false. If true, then a unique id is added to the feature.
  * @returns - A GeoJSON Feature.
  */
 export const toFeature = (
@@ -39,7 +39,7 @@ export const toFeature = (
   const copyObjects = opts.copy ?? true;
   const addBbox = opts.addBbox ?? false;
   const properties = opts.properties ?? {};
-  const addID = opts.addID ?? false;
+  const addID = opts.addId ?? false;
 
   let feature: GeoJSON.Feature;
   if (copyObjects) {
@@ -58,4 +58,70 @@ export const toFeature = (
     feature.id = uuidv4();
   }
   return feature;
+};
+
+export const toPoint = (
+  coord: GeoJSON.Position,
+  opts: ToFeatureOpts = {},
+): GeoJSON.Feature => {
+  const geometry: GeoJSON.Geometry = {
+    type: 'Point',
+    coordinates: coord,
+  };
+  return toFeature(geometry, opts);
+};
+
+export const toMultiPoint = (
+  coord: GeoJSON.Position[],
+  opts: ToFeatureOpts = {},
+): GeoJSON.Feature => {
+  const geometry: GeoJSON.Geometry = {
+    type: 'MultiPoint',
+    coordinates: coord,
+  };
+  return toFeature(geometry, opts);
+};
+
+export const toLine = (
+  coord: GeoJSON.Position[],
+  opts: ToFeatureOpts = {},
+): GeoJSON.Feature => {
+  const geometry: GeoJSON.Geometry = {
+    type: 'LineString',
+    coordinates: coord,
+  };
+  return toFeature(geometry, opts);
+};
+
+export const toMultiLine = (
+  coord: GeoJSON.Position[][],
+  opts: ToFeatureOpts = {},
+): GeoJSON.Feature => {
+  const geometry: GeoJSON.Geometry = {
+    type: 'MultiLineString',
+    coordinates: coord,
+  };
+  return toFeature(geometry, opts);
+};
+
+export const toPolygon = (
+  coord: GeoJSON.Position[][],
+  opts: ToFeatureOpts = {},
+): GeoJSON.Feature => {
+  const geometry: GeoJSON.Geometry = {
+    type: 'Polygon',
+    coordinates: coord,
+  };
+  return toFeature(geometry, opts);
+};
+
+export const toMultiPolygon = (
+  coord: GeoJSON.Position[][][],
+  opts: ToFeatureOpts = {},
+): GeoJSON.Feature => {
+  const geometry: GeoJSON.Geometry = {
+    type: 'MultiPolygon',
+    coordinates: coord,
+  };
+  return toFeature(geometry, opts);
 };
