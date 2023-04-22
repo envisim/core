@@ -34,10 +34,7 @@ export {intermediate} from './intermediate.js';
 export {intersectLineLineFeatures} from './intersectLineLineFeatures.js';
 export {intersectLinePolygonFeatures} from './intersectLinePolygonFeatures.js';
 export {intersectPolygonPolygonFeatures} from './intersectPolygonPolygonFeatures.js';
-export {
-  intersectSegments,
-  intersectGreatCircleSegments,
-} from './intersectSegments.js';
+export {intersectSegments} from './intersectSegments.js';
 export {length} from './length.js';
 export {maxSegmentLength} from './maxSegmentLength.js';
 export {pointInPolygon, pointInSinglePolygon} from './pointInPolygon.js';
