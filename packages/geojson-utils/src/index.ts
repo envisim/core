@@ -40,12 +40,7 @@ export {
 } from './intersectSegments.js';
 export {length} from './length.js';
 export {maxSegmentLength} from './maxSegmentLength.js';
-export {
-  pointInPolygon,
-  pointInSinglePolygon,
-  pointInPolygonSpherical,
-  pointInSinglePolygonSpherical,
-} from './pointInPolygon.js';
+export {pointInPolygon, pointInSinglePolygon} from './pointInPolygon.js';
 export {webMercator, azimuthalEquidistant, cartesian} from './projections.js';
 export {rotateCoord} from './rotateCoord.js';
 export {segmentEach} from './segmentEach.js';
