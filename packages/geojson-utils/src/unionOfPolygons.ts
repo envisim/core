@@ -2,6 +2,11 @@ import polygonClipping from 'polygon-clipping';
 import {geomEach} from './geomEach.js';
 import {toFeatureCollection} from './toFeatureCollection.js';
 
+/**
+ * Computes the union of the polygons in a GeoJSON FeatureCollection
+ * @param polygons - A FeatureCollection
+ * @returns - A FeatureCollection
+ */
 export const unionOfPolygons = (
   polygons: GeoJSON.FeatureCollection,
 ): GeoJSON.FeatureCollection => {
