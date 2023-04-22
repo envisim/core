@@ -1,7 +1,7 @@
 import {IPropertyRecord} from '@envisim/geojson-utils';
 
-import {samplePointsOnAreas} from 'samplePointsOnAreas.js';
-import {samplePointsOnLines} from 'samplePointsOnLines.js';
+import {samplePointsOnAreas} from '../samplePointsOnAreas.js';
+import {samplePointsOnLines} from '../samplePointsOnLines.js';
 import {ISampleOptionsContinuous} from './types.js';
 
 export function sampleFromLine(
