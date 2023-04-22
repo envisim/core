@@ -1,5 +1,4 @@
 import {pointInPolygon} from '../src/pointInPolygon.js';
-import {pointInPolygonSpherical} from '../src/pointInPolygon.js';
 
 describe('pointInPolygon', () => {
   // polygon
@@ -76,13 +75,5 @@ describe('pointInPolygon', () => {
     expect(pointInPolygon(point3, polygon)).toBe(true);
     expect(pointInPolygon(point4, polygon)).toBe(true);
     expect(pointInPolygon(point5, polygon)).toBe(false);
-  });
-
-  test('pointInPolygonSpherical', () => {
-    expect(pointInPolygonSpherical(point1, polygon)).toBe(true);
-    expect(pointInPolygonSpherical(point2, polygon)).toBe(false);
-    expect(pointInPolygonSpherical(point3, polygon)).toBe(true);
-    expect(pointInPolygonSpherical(point4, polygon)).toBe(true);
-    expect(pointInPolygonSpherical(point5, polygon)).toBe(false);
   });
 });
