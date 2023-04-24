@@ -88,7 +88,7 @@ const lengthOfGeometry = (
  * a larger number of distance computations.
  *
  * @param geoJSON - A GeoJSON object.
- * @param maxDist - Optional max distance for start using interpolated segment points, default to 100000 (meters).
+ * @param maxDist - Optional max distance for start using interpolated segment points, defaults to 100000 (meters).
  * @returns - The length in meters.
  */
 export const length = (geoJSON: GeoJSON.GeoJSON, maxDist = 100000): number => {
