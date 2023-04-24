@@ -30,7 +30,25 @@ describe('area', () => {
     coordinates: [coords],
   };
 
+  const polygon2: GeoJSON.Geometry = {
+    type: 'Polygon',
+    coordinates: [
+      [
+        [0, 0],
+        [0, 1],
+        [1, 1],
+        [1, 0],
+        [0, 0],
+      ],
+    ],
+  };
+  const area0 = area(polygon2, 100); // add points roughly every 100 meters
+  const area1 = area(polygon2); // add pointsroughly every 100000 meters (default)
+  //console.log(area0);
+  //console.log(area1);
   test('area', () => {
-    expect(area(polygon)).toBeCloseTo(13662703680020.13, 1);
+    // increase maxDist here as the area is for geodesic paths
+    expect(area(polygon, 100000000)).toBeCloseTo(13662703680020.13, 1);
+    expect(area0 / area1).toBeCloseTo(1, 4);
   });
 });
