@@ -17,20 +17,12 @@ describe('sampleTractsOnAreas', () => {
   };
   const frame = toFeatureCollection(polygon);
   const tract = squareAreaTract(10);
-  const sample = sampleTractsOnAreas(frame, {
-    method: 'uniform',
-    sampleSize: 10,
-    modelTract: tract,
-  });
-  //console.log(JSON.stringify(sample, null, 2));
+  const sample = sampleTractsOnAreas(frame, 'uniform', 10, tract);
+  console.log(JSON.stringify(sample, null, 2));
 
   const tract2 = pointTract();
-  const sample2 = sampleTractsOnAreas(frame, {
-    method: 'uniform',
-    sampleSize: 10,
-    modelTract: tract2,
-  });
-  //console.log(JSON.stringify(sample2, null, 2));
+  const sample2 = sampleTractsOnAreas(frame, 'uniform', 10, tract2);
+  console.log(JSON.stringify(sample2, null, 2));
 
   test('sampleTractsOnAreas', () => {
     expect(sample.features.length).toBe(10);
