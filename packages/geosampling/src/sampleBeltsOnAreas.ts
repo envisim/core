@@ -4,25 +4,25 @@ import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
 import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
 
 interface IsampleBeltsOnAreasOpts {
-  distBetween: number;
   rotation?: number;
-  halfWidth: number;
   rand?: Random;
 }
 /**
  * Selects a systematic sample of belts (or lines) on areas.
  *
  * @param geoJSON - A GeoJSON FeatureCollection containing Polygon/MultiPolygon.
+ * @param distBetween - Distance > 0 in meters between center lines.
+ * @param halfWidth - Half the width of the belt (= 0 for line sampling).
  * @param opts - An options object.
- * @param opts.distBetween - Distance > 0 in meters between center lines.
- * @param opts.halfWidth - Half the width of the belt (= 0 for line sampling).
  * @param opts.rotation - Rotation angle in degrees.
  * @param opts.rand - An optional instance of Random.
  * @returns - A GeoJSON FeatureCollection of Polygon/MultiPolygon.
  */
 export const sampleBeltsOnAreas = (
   geoJSON: GeoJSON.FeatureCollection,
-  opts: IsampleBeltsOnAreasOpts = {halfWidth: 0, distBetween: 100, rotation: 0},
+  distBetween: number,
+  halfWidth: number,
+  opts: IsampleBeltsOnAreasOpts = {rotation: 0},
 ): GeoJSON.FeatureCollection => {
   if (geoJSON.type !== 'FeatureCollection') {
     throw new Error(
@@ -31,8 +31,12 @@ export const sampleBeltsOnAreas = (
         '.',
     );
   }
-  const halfWidth = opts.halfWidth || 0;
-  const distBetween = opts.distBetween || 100;
+  if (typeof distBetween !== 'number' || distBetween <= 0) {
+    throw new Error('Input distBetween must be a positive number.');
+  }
+  if (typeof halfWidth !== 'number' || halfWidth < 0) {
+    throw new Error('Input halfWidth must be a number >= 0.');
+  }
   const rotation = opts.rotation || 0;
   const rand = opts.rand ?? new Random();
   const numPointsPerLine = 20;
