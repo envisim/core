@@ -38,7 +38,8 @@ const randomPointInCluster = (
  * @param intensityOfParents - Number of parent points / clusters per square meter.
  * @param meanOfCluster - Mean number of points per cluster.
  * @param radiusOfCluster - Radius in meters of a (circular) cluster.
- * @param rand - An optional instance of Random.
+ * @param opts - An optional options object.
+ * @param opts.rand - An optional instance of Random.
  * @returns - A GeoJSON FeatureCollection of generated points.
  */
 export const maternClusterProcess = (
@@ -46,7 +47,7 @@ export const maternClusterProcess = (
   intensityOfParents: number,
   meanOfCluster: number,
   radiusOfCluster: number,
-  rand?: Random,
+  opts: {rand?: Random} = {},
 ): GeoJSON.FeatureCollection => {
   if (geoJSON.type !== 'FeatureCollection') {
     throw new Error(
@@ -76,15 +77,15 @@ export const maternClusterProcess = (
     {copy: false},
   );
   // Generate parents in expanded box.
-  const rand1 = rand ?? new Random();
+  const rand = opts.rand ?? new Random();
   const A = area(expandedBoxPolygon);
   const muParents = intensityOfParents * A;
-  const nrOfParents = Poisson.random(1, {rate: muParents}, {rand: rand1})[0];
+  const nrOfParents = Poisson.random(1, {rate: muParents}, {rand: rand})[0];
 
   const parentsInBox = uniformBinomialPointProcess(
     toFeatureCollection(expandedBoxPolygon, {copy: false}),
     nrOfParents,
-    rand1,
+    {rand: rand},
   );
   // To store new features.
   const features: GeoJSON.Feature[] = [];
@@ -102,7 +103,7 @@ export const maternClusterProcess = (
         const coordinates = randomPointInCluster(
           feature.geometry.coordinates,
           radiusOfCluster,
-          rand1,
+          rand,
         );
         const child = toFeature(
           {
