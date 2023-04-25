@@ -2,10 +2,10 @@ import {bbox, geomEach, geodesic} from '@envisim/geojson-utils';
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
 
-interface IdistCoord {
+type TdistCoord = {
   dist: number;
   type: 'start' | 'end';
-}
+};
 
 const toRad = Math.PI / 180;
 
@@ -14,7 +14,7 @@ const distCoordsForLineString = (
   lineString: GeoJSON.Position[],
   refPointLonLat: GeoJSON.Position,
   azimuth: number,
-): IdistCoord[] => {
+): TdistCoord[] => {
   let minDist = Infinity;
   let maxDist = -Infinity;
   lineString.forEach((coord) => {
@@ -43,8 +43,8 @@ const distCoordsForMultiLineString = (
   multiLineString: GeoJSON.Position[][],
   refPointLonLat: GeoJSON.Position,
   azimuth: number,
-): IdistCoord[] => {
-  let distCoords: IdistCoord[] = [];
+): TdistCoord[] => {
+  let distCoords: TdistCoord[] = [];
   multiLineString.forEach((lineString) => {
     distCoords = distCoords.concat(
       distCoordsForLineString(lineString, refPointLonLat, azimuth),
@@ -54,7 +54,7 @@ const distCoordsForMultiLineString = (
 };
 
 // Internal, used for computing projected length.
-const lengthFromDistCoords = (distCoords: IdistCoord[]) => {
+const lengthFromDistCoords = (distCoords: TdistCoord[]): number => {
   // Sort distCoords by dist first
   // then loop over all to find length of
   // union.
@@ -62,14 +62,14 @@ const lengthFromDistCoords = (distCoords: IdistCoord[]) => {
   let start = 0; // Number of start points passed.
   let end = 0; // Number of endpoints passed.
   let L = 0; // Length of union.
-  let p1 = 0;
-  let p2 = 0;
-  let intervals: number[][] = [];
+  let p1 = 0; // start point of an interval
+  let p2 = 0; // end point of an interval
+  //let intervals: number[][] = [];
   distCoords.forEach((e) => {
     if (e.type == 'start') {
       if (start == end) {
         p1 = e.dist;
-        intervals.push([e.dist]);
+        //intervals.push([e.dist]);
       }
       start++;
     } else {
@@ -77,11 +77,11 @@ const lengthFromDistCoords = (distCoords: IdistCoord[]) => {
       if (end == start) {
         p2 = e.dist;
         L += p2 - p1;
-        intervals[intervals.length - 1].push(e.dist);
+        //intervals[intervals.length - 1].push(e.dist);
       }
     }
   });
-  return {L: L, intervals: intervals};
+  return L; //{L: L, intervals: intervals};
 };
 
 /**
@@ -123,9 +123,6 @@ export const projectedLengthOfFeature = (
     }
   });
   // 2. Compute reference coordinate as center of box
-  // (ok for not very large features)
-  // A better reference coordinate might be a point
-  // of intersection between sample line and feature.
   // Assumes feature do not cross antimeridean -180/+180
   const box = feature.bbox || bbox(feature);
   const refCoord = [
@@ -134,5 +131,5 @@ export const projectedLengthOfFeature = (
   ];
   return lengthFromDistCoords(
     distCoordsForMultiLineString(coords, refCoord, azimuth),
-  ).L;
+  );
 };
