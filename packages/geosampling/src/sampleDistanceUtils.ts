@@ -2,14 +2,13 @@
 // E.g. uniform, halfnormal(sigma),...
 
 /**
- * Returns a uniform detection function on [0, cutoff], i.e. the
- * detection probability is 1 if 0 <= distance <= cutoff and 0 otherwise.
- * @param cutoff - The maximum detection distance in meters.
+ * Returns a uniform detection function on [0, Infinity), i.e. the
+ * detection probability is 1 if distance >= 0 and 0 otherwise.
  * @returns - The uniform detection function.
  */
-export const uniformDetectionFunction = (cutoff: number): Function => {
+export const uniformDetectionFunction = (): Function => {
   const g = (dist: number) => {
-    if (dist < 0 || dist > cutoff) {
+    if (dist < 0) {
       return 0;
     } else {
       return 1;
@@ -19,17 +18,13 @@ export const uniformDetectionFunction = (cutoff: number): Function => {
 };
 
 /**
- * Returns a half normal detection function on [0, cutoff].
+ * Returns a half normal detection function on [0, Infinity).
  * @param sigma - The sigma parameter.
- * @param cutoff - The maximum detection distance in meters.
  * @returns - The half normal detection function.
  */
-export const halfNormalDetectionFunction = (
-  sigma: number,
-  cutoff: number,
-): Function => {
+export const halfNormalDetectionFunction = (sigma: number): Function => {
   const g = (dist: number) => {
-    if (dist < 0 || dist > cutoff) {
+    if (dist < 0) {
       return 0;
     } else {
       return Math.exp(-(dist ** 2 / (2 * sigma ** 2)));
