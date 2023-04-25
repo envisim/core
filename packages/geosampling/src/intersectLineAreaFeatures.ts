@@ -89,17 +89,14 @@ export const intersectLineAreaFeatures = (
       ),
     };
   }
-  if (lines.length > 1) {
-    return {
-      intersection: true,
-      geoJSON: toFeature(
-        {
-          type: 'MultiLineString',
-          coordinates: lines,
-        },
-        {copy: false},
-      ),
-    };
-  }
-  return {intersection: false};
+  return {
+    intersection: true,
+    geoJSON: toFeature(
+      {
+        type: 'MultiLineString',
+        coordinates: lines,
+      },
+      {copy: false},
+    ),
+  };
 };
