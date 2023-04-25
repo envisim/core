@@ -33,7 +33,7 @@ export const samplePointsOnAreas = (
   geoJSON: GeoJSON.FeatureCollection,
   method: 'uniform' | 'systematic',
   sampleSize: number,
-  opts: TsamplePointsOnAreasOpts,
+  opts: TsamplePointsOnAreasOpts = {},
 ): GeoJSON.FeatureCollection => {
   if (geoJSON.type !== 'FeatureCollection') {
     throw new Error('Input GeoJSON must be a FeatureCollection.');
