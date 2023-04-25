@@ -10,13 +10,14 @@ import {Random} from '@envisim/random';
  *
  * @param geoJSON - A GeoJSON FeatureCollection containing area.
  * @param intensity - Number of points per square meter.
- * @param rand - An optional instance of Random.
+ * @param opts - An optional options object.
+ * @param opts.rand - An optional instance of Random.
  * @returns - A GeoJSON FeatureCollection of generated points.
  */
 export const uniformPoissonPointProcess = (
   geoJSON: GeoJSON.FeatureCollection,
   intensity: number,
-  rand?: Random,
+  opts: {rand?: Random} = {},
 ): GeoJSON.FeatureCollection => {
   if (geoJSON.type !== 'FeatureCollection') {
     throw new Error(
@@ -25,9 +26,9 @@ export const uniformPoissonPointProcess = (
         '.',
     );
   }
-  const rand1 = rand ?? new Random();
+  const rand = opts.rand ?? new Random();
   const A = area(geoJSON);
   const mu = intensity * A;
-  const sampleSize = Poisson.random(1, {rate: mu}, {rand: rand1})[0];
-  return uniformBinomialPointProcess(geoJSON, sampleSize, rand1);
+  const sampleSize = Poisson.random(1, {rate: mu}, {rand: rand})[0];
+  return uniformBinomialPointProcess(geoJSON, sampleSize, {rand: rand});
 };
