@@ -1,11 +1,18 @@
 import {Random} from '@envisim/random';
 import {
   toFeature,
-  distance,
   intermediate,
   destination,
   length,
+  lengthOfSegment,
 } from '@envisim/geojson-utils';
+
+// Comment: For now, length is computed with default dist,
+// for entire line and individual segments, but
+// intermediate places new points on fraction of distance on a
+// geodesic path between points instead of on the segment line.
+// This is ok in applications, which are unlikely to use very long segments.
+// We may consider creating intermediateOnSegment function.
 
 type Track = {
   dt: number;
@@ -64,7 +71,10 @@ const samplePointsOnGeometry = (
     case 'LineString':
       let lineStringCoords = geoJSON.coordinates;
       for (let i = 0; i < lineStringCoords.length - 1; i++) {
-        segmentLength = distance(lineStringCoords[i], lineStringCoords[i + 1]);
+        segmentLength = lengthOfSegment(
+          lineStringCoords[i],
+          lineStringCoords[i + 1],
+        );
         for (let l = track.currentIndex; l < distances.length; l++) {
           if (distances[l] < track.dt + segmentLength) {
             fraction = (distances[l] - track.dt) / segmentLength;
@@ -86,7 +96,7 @@ const samplePointsOnGeometry = (
       let mlsCoords = geoJSON.coordinates;
       for (let i = 0; i < mlsCoords.length; i++) {
         for (let j = 0; j < mlsCoords[i].length - 1; j++) {
-          segmentLength = distance(mlsCoords[i][j], mlsCoords[i][j + 1]);
+          segmentLength = lengthOfSegment(mlsCoords[i][j], mlsCoords[i][j + 1]);
           for (let l = track.currentIndex; l < distances.length; l++) {
             if (distances[l] < track.dt + segmentLength) {
               fraction = (distances[l] - track.dt) / segmentLength;
@@ -105,7 +115,10 @@ const samplePointsOnGeometry = (
       for (let i = 0; i < mpCoords.length; i++) {
         for (let j = 0; j < mpCoords[i].length; j++) {
           for (let k = 0; k < mpCoords[i][j].length - 1; k++) {
-            segmentLength = distance(mpCoords[i][j][k], mpCoords[i][j][k + 1]);
+            segmentLength = lengthOfSegment(
+              mpCoords[i][j][k],
+              mpCoords[i][j][k + 1],
+            );
             for (let l = track.currentIndex; l < distances.length; l++) {
               if (distances[l] < track.dt + segmentLength) {
                 fraction = (distances[l] - track.dt) / segmentLength;
