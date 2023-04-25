@@ -33,6 +33,8 @@ export const halfNormalDetectionFunction = (sigma: number): Function => {
   return g;
 };
 
+// maybe remove this one?
+
 /**
  * Constructs a detection function on the interval [0,cutoff] given
  * an array of breakValues (probabilities).
