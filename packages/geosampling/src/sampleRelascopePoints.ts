@@ -9,10 +9,6 @@ import {Random} from '@envisim/random';
 // if we do not add the correction.
 
 export type TsampleRelascopePoints = {
-  sizeProperty: string;
-  factor: number;
-  method: 'uniform' | 'systematic';
-  sampleSize: number;
   buffer?: number;
   ratio?: number;
   rand?: Random;
@@ -28,12 +24,12 @@ export type TsampleRelascopePoints = {
  * quantities.
  *
  * @param frame - A GeoJSON FeatureCollection of Polygon/MultiPolygon features.
+ * @param method - The method to use "uniform" or "systematic"
+ * @param sampleSize - The expected number of points as integer > 0.
  * @param base - A GeoJSON FeatureCollection of single Point features.
- * @param opts - An object containing sizeProperty, factor, method, sampleSize, buffer, ratio (dx/dy)
- * @param opts.sizeProperty - The name of the size property in base which has numeric value in meters (e.g. diameter at breast hight).
- * @param opts.factor - Positive number, the relascope factor.
- * @param opts.method - The method to use "uniform" or "systematic"
- * @param opts.sampleSize - The expected number of points as integer > 0.
+ * @param sizeProperty - The name of the size property in base which has numeric value in meters (e.g. diameter at breast hight).
+ * @param factor - Positive number, the relascope factor.
+ * @param opts - An object containing buffer, ratio (dx/dy), rand
  * @param opts.buffer - Optional buffer in meters (default 0).
  * @param opts.ratio - The ratio (dx/dy) for systematic sampling (default 1).
  * @param opts.rand - An optional instance of Random.
@@ -41,7 +37,11 @@ export type TsampleRelascopePoints = {
  */
 export const sampleRelascopePoints = (
   frame: GeoJSON.FeatureCollection,
+  method: 'uniform' | 'systematic',
+  sampleSize: number,
   base: GeoJSON.FeatureCollection,
+  sizeProperty: string,
+  factor: number,
   opts: TsampleRelascopePoints,
 ): GeoJSON.FeatureCollection => {
   // Check types first
@@ -57,12 +57,12 @@ export const sampleRelascopePoints = (
   }
 
   // Square root of relascope factor
-  const sqrtRf = Math.sqrt(opts.factor);
+  const sqrtRf = Math.sqrt(factor);
   // Set buffer
   const buffer = opts.buffer || 0;
   opts.buffer = buffer;
   // Select sample of points (optional buffer via opts)
-  const pointSample = samplePointsOnAreas(frame, opts);
+  const pointSample = samplePointsOnAreas(frame, method, sampleSize, opts);
   // To store sampled features
   const sampledFeatures: GeoJSON.Feature[] = [];
 
@@ -73,7 +73,7 @@ export const sampleRelascopePoints = (
       const basePointCoords = pointFeature.geometry.coordinates;
       let sizePropertyValue = 0;
       if (pointFeature.properties) {
-        sizePropertyValue = pointFeature.properties[opts.sizeProperty] || 0;
+        sizePropertyValue = pointFeature.properties[sizeProperty] || 0;
       }
       // Radius of inclusion zone
       const radius = (50 * sizePropertyValue) / sqrtRf;
