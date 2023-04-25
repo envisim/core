@@ -1,10 +1,7 @@
-import {Random} from '@envisim/random';
-import {sampleBeltsOnAreas} from './sampleBeltsOnAreas.js';
-
-export type TsampleLinesOnAreasOpts = {
-  rotation?: number;
-  rand?: Random;
-};
+import {
+  sampleBeltsOnAreas,
+  TsampleBeltsOnAreasOpts,
+} from './sampleBeltsOnAreas.js';
 
 /**
  * Selects a sample of lines systematically over all areas.
@@ -19,7 +16,7 @@ export type TsampleLinesOnAreasOpts = {
 export const sampleLinesOnAreas = (
   geoJSON: GeoJSON.FeatureCollection,
   distBetween: number,
-  opts: TsampleLinesOnAreasOpts,
+  opts: TsampleBeltsOnAreasOpts,
 ): GeoJSON.FeatureCollection => {
   return sampleBeltsOnAreas(geoJSON, distBetween, 0, opts);
 };
