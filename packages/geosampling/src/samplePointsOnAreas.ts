@@ -11,8 +11,6 @@ import {
 import {convertPointCirclesToPolygons} from './convertPointCirclesToPolygons.js';
 
 export type TsamplePointsOnAreasOpts = {
-  method: 'uniform' | 'systematic';
-  sampleSize: number;
   buffer?: number;
   ratio?: number;
   rand?: Random;
@@ -23,25 +21,35 @@ export type TsamplePointsOnAreasOpts = {
  * to reject point outside bbox if buffer is zero).
  *
  * @param geoJSON - A GeoJSON object to select points on Polygon/MultiPolygon features
- * @param opts - An object containing method, sampleSize, buffer, ratio (dx/dy)
- * @param opts.method - The method to use "uniform" or "systematic"
- * @param opts.sampleSize - The expected sample size as integer > 0.
- * @param opts.buffer - Internal optional buffer in meters (default 0).
- * @param opts.ratio - The ratio (dx/dy) for systematic sampling (default 1).
+ * @param method - The method to use "uniform" or "systematic"
+ * @param sampleSize - The expected sample size as integer > 0.
+ * @param opts - An optional options object.
+ * @param opts.buffer - An optional buffer in meters (default 0).
+ * @param opts.ratio - An optional ratio (dx/dy) for systematic sampling (default 1).
  * @param opts.rand - An optional instance of Random.
  * @returns - Resulting GeoJSON FeatureCollection.
  */
 export const samplePointsOnAreas = (
   geoJSON: GeoJSON.FeatureCollection,
+  method: 'uniform' | 'systematic',
+  sampleSize: number,
   opts: TsamplePointsOnAreasOpts,
 ): GeoJSON.FeatureCollection => {
   if (geoJSON.type !== 'FeatureCollection') {
     throw new Error('Input GeoJSON must be a FeatureCollection.');
   }
+  if (method !== 'systematic' && method !== 'uniform') {
+    throw new Error("Input method must be either'uniform' or 'systematic'");
+  }
+  if (
+    typeof sampleSize !== 'number' ||
+    sampleSize !== Math.round(sampleSize) ||
+    sampleSize <= 0
+  ) {
+    throw new Error('Input sampleSize must be a positive integer.');
+  }
   // Set options.
   const radius = opts.buffer || 0;
-  const sampleSize = opts.sampleSize || 1;
-  const method = opts.method || 'uniform';
   const ratio = opts.ratio || 1;
   const rand = opts.rand ?? new Random();
 
