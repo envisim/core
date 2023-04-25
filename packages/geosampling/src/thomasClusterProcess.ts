@@ -43,7 +43,8 @@ const randomPointInCluster = (
  * @param intensityOfParents - Number of parent points / clusters per square meter.
  * @param meanOfCluster - Mean number of points per cluster.
  * @param sigmaOfCluster - Standard deviation in meters in Normal distributions for generating points offset in cluster.
- * @param rand - An optional instance of Random.
+ * @param opts - An optional options object.
+ * @param opts.rand - An optional instance of Random.
  * @returns - A GeoJSON FeatureCollection of generated points.
  */
 export const thomasClusterProcess = (
@@ -51,7 +52,7 @@ export const thomasClusterProcess = (
   intensityOfParents: number,
   meanOfCluster: number,
   sigmaOfCluster: number,
-  rand?: Random,
+  opts: {rand?: Random} = {},
 ): GeoJSON.FeatureCollection => {
   if (geoJSON.type !== 'FeatureCollection') {
     throw new Error(
@@ -60,7 +61,7 @@ export const thomasClusterProcess = (
         '.',
     );
   }
-  const rand1 = rand ?? new Random();
+  const rand = opts.rand ?? new Random();
   const box = bbox(geoJSON);
   // Extend box by 4 * sigmaOfCluster to avoid edge effects.
   // Same as spatstat default in R.
@@ -84,12 +85,12 @@ export const thomasClusterProcess = (
   // Generate parents in expanded box.
   const A = area(expandedBoxPolygon);
   const muParents = intensityOfParents * A;
-  const nrOfParents = Poisson.random(1, {rate: muParents}, {rand: rand1})[0];
+  const nrOfParents = Poisson.random(1, {rate: muParents}, {rand: rand})[0];
 
   const parentsInBox = uniformBinomialPointProcess(
     toFeatureCollection(expandedBoxPolygon, {copy: false}),
     nrOfParents,
-    rand1,
+    {rand: rand},
   );
   // To store new features.
   const features: GeoJSON.Feature[] = [];
@@ -99,7 +100,7 @@ export const thomasClusterProcess = (
     {
       rate: meanOfCluster,
     },
-    {rand: rand1},
+    {rand: rand},
   );
 
   parentsInBox.features.forEach((feature: GeoJSON.Feature, index: number) => {
@@ -111,7 +112,7 @@ export const thomasClusterProcess = (
         const coordinates = randomPointInCluster(
           feature.geometry.coordinates,
           sigmaOfCluster,
-          rand1,
+          rand,
         );
         const child = toFeature(
           {
