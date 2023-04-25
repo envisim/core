@@ -14,9 +14,6 @@ import {intersectPointSampleAreaFrame} from './intersectPointSampleAreaFrame.js'
 import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
 
 export type TsampleTractsOnAreasOpts = {
-  method: 'uniform' | 'systematic';
-  sampleSize: number;
-  modelTract: GeoJSON.Feature;
   rotation?: number;
   randomRotation?: boolean;
   ratio?: number;
@@ -26,17 +23,21 @@ export type TsampleTractsOnAreasOpts = {
  * Select a sample of tracts on areas.
  *
  * @param geoJSON - A GeoJSON FeatureCollection containing area.
+ * @param method - The method to use "uniform" or "systematic".
+ * @param sampleSize - Expected sample size integer > 0.
+ * @param modelTract - A GeoJSON model tract.
  * @param opts - An options object.
- * @param opts.modelTract - A GeoJSON model tract.
- * @param opts.method - The method to use "uniform" or "systematic".
- * @param opts.sampleSize - Expected sample size integer > 0.
  * @param opts.rotation - The rotation angle in degrees.
  * @param opts.randomRotation - Boolean true/false for random rotation of individual tract (always true for line tract).
+ * @param opts.ratio - An optional ratio for systematic sampling.
  * @param opts.rand - An optional instance of Random.
  * @returns - Resulting GeoJSON.
  */
 export const sampleTractsOnAreas = (
   geoJSON: GeoJSON.FeatureCollection,
+  method: 'uniform' | 'systematic',
+  sampleSize: number,
+  modelTract: GeoJSON.Feature,
   opts: TsampleTractsOnAreasOpts,
 ): GeoJSON.FeatureCollection => {
   if (geoJSON.type !== 'FeatureCollection') {
@@ -48,10 +49,8 @@ export const sampleTractsOnAreas = (
   }
   const point = pointTract();
   // Set default options.
-  const tract = opts.modelTract ?? point;
+  const tract = modelTract ?? point;
   const rotation = opts.rotation ?? 0;
-  const sampleSize = opts.sampleSize ?? 1;
-  const method = opts.method ?? 'uniform';
   let randomRotation = opts.randomRotation ?? false;
   const rand = opts.rand ?? new Random();
 
@@ -76,9 +75,8 @@ export const sampleTractsOnAreas = (
   const sizeOfTract = sizeOfModelTract(tract);
 
   // Select first a sample of points and use radius as buffer.
-  const featureCollection = samplePointsOnAreas(geoJSON, {
-    sampleSize: sampleSize,
-    method: method,
+  const featureCollection = samplePointsOnAreas(geoJSON, method, sampleSize, {
+    ratio: opts.ratio ?? 1,
     buffer: radius,
     rand: rand,
   });
