@@ -3,6 +3,12 @@ import geodesic from 'geographiclib-geodesic';
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
 
+// TODO?: Add interpolation for long distance or create new function
+// intermediateOnSegment which uses interpolation. This would place the
+// point on the segment, but precision would depend on dist. Alternative
+// can be to put point proportional on segment. Should use the same as length
+// in sampling on lines.
+
 /**
  * Computes an intermediate point on a geodesic path given a start point,
  * an end point and the fraction of the distance.
