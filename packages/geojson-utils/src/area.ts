@@ -95,17 +95,17 @@ const areaOfGeometry = (
  * According to the GeoJSON specification, segments are straight cartesian
  * lines in longitude and latitude. Interpolated points will be added
  * (in the computation) if the distance between the segment endpoints
- * exceeds maxDist. This can inrease precision in area for long segments,
+ * exceeds dist. This can inrease precision in area for long segments,
  * at the cost of a larger number of computations.
  *
  * @param geoJSON - A geoJSON.
- * @param maxDist - Optional max distance for start using interpolated segment points, defaults to 100000 (meters).
+ * @param dist - Optional distance for start using interpolated segment points, defaults to 100000 (meters).
  * @returns - The sum of area in square meters.
  */
-export const area = (geoJSON: GeoJSON.GeoJSON, maxDist = 100000): number => {
+export const area = (geoJSON: GeoJSON.GeoJSON, dist = 100000): number => {
   let A = 0; // aggregate area to A
   toFeatureCollection(geoJSON, {copy: false}).features.forEach((feature) => {
-    const opts = {_radius: 0, maxDist: maxDist};
+    const opts = {_radius: 0, maxDist: dist};
     if (feature.properties?._radius) {
       opts._radius = feature.properties._radius;
     }

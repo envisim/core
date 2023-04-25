@@ -84,18 +84,18 @@ const lengthOfGeometry = (
  * segments as geodesic paths. According to the GeoJSON specification, segments
  * are straight cartesian lines in longitude and latitude. Interpolated points
  * will be added (in the computation) if the distance between the segment endpoints
- * exceeds maxDist. This can inrease precision for long segments, at the cost of
+ * exceeds dist. This can inrease precision for long segments, at the cost of
  * a larger number of distance computations.
  *
  * @param geoJSON - A GeoJSON object.
- * @param maxDist - Optional max distance for start using interpolated segment points, defaults to 100000 (meters).
+ * @param dist - Optional distance for start using interpolated segment points, defaults to 100000 (meters).
  * @returns - The length in meters.
  */
-export const length = (geoJSON: GeoJSON.GeoJSON, maxDist = 100000): number => {
+export const length = (geoJSON: GeoJSON.GeoJSON, dist = 100000): number => {
   const gj = toFeatureCollection(geoJSON, {copy: false});
   let L = 0; // Aggregate length to L
   gj.features.forEach((feature) => {
-    const opts = {_radius: 0, maxDist: maxDist};
+    const opts = {_radius: 0, maxDist: dist};
     if (feature.properties?._radius) {
       opts._radius = feature.properties._radius;
     }
