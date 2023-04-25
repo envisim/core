@@ -3,10 +3,10 @@ import {bbox, destination, distance, rotateCoord} from '@envisim/geojson-utils';
 import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
 import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
 
-interface IsampleBeltsOnAreasOpts {
+export type TsampleBeltsOnAreasOpts = {
   rotation?: number;
   rand?: Random;
-}
+};
 /**
  * Selects a systematic sample of belts (or lines) on areas.
  *
@@ -22,7 +22,7 @@ export const sampleBeltsOnAreas = (
   geoJSON: GeoJSON.FeatureCollection,
   distBetween: number,
   halfWidth: number,
-  opts: IsampleBeltsOnAreasOpts = {rotation: 0},
+  opts: TsampleBeltsOnAreasOpts = {rotation: 0},
 ): GeoJSON.FeatureCollection => {
   if (geoJSON.type !== 'FeatureCollection') {
     throw new Error(
