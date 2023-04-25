@@ -1,18 +1,14 @@
-import {samplePointsOnAreas} from './samplePointsOnAreas.js';
+import {
+  samplePointsOnAreas,
+  TsamplePointsOnAreasOpts,
+} from './samplePointsOnAreas.js';
 import {typeOfFrame} from './typeOfFrame.js';
 import {copy, distance} from '@envisim/geojson-utils';
 import {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
-import {Random} from '@envisim/random';
 
 // TODO: Decide if we should implement correction by adding the correct buffer.
 // Probably deviates from common use to add buffer, but estimates will be biased
 // if we do not add the correction.
-
-export type TsampleRelascopePoints = {
-  buffer?: number;
-  ratio?: number;
-  rand?: Random;
-};
 
 /**
  * Selects a point sample on an area frame and collect point objects from a base
@@ -42,7 +38,7 @@ export const sampleRelascopePoints = (
   base: GeoJSON.FeatureCollection,
   sizeProperty: string,
   factor: number,
-  opts: TsampleRelascopePoints,
+  opts: TsamplePointsOnAreasOpts,
 ): GeoJSON.FeatureCollection => {
   // Check types first
   const frameType = typeOfFrame(frame);
