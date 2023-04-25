@@ -14,6 +14,8 @@ import {
 // This is ok in applications, which are unlikely to use very long segments.
 // We may consider creating intermediateOnSegment function.
 
+// Type for keeping track of distance travelled (dt) and index of sample point
+// to be placed next (currentIndex).
 type Track = {
   dt: number;
   currentIndex: number;
