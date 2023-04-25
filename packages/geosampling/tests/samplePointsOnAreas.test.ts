@@ -15,10 +15,7 @@ describe('samplePointsOnAreas', () => {
     ],
   };
   const frame = toFeatureCollection(polygon);
-  const sample = samplePointsOnAreas(frame, {
-    method: 'uniform',
-    sampleSize: 10,
-  });
+  const sample = samplePointsOnAreas(frame, 'uniform', 10);
   //console.log(JSON.stringify(sample, null, 2));
 
   test('samplePointsOnAreas', () => {
