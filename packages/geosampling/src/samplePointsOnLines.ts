@@ -176,19 +176,17 @@ const samplePointsOnGeometryCollection = (
  * which has a positive length.
  *
  * @param geoJSON - A GeoJSON FeatureCollection.
+ * @param method - The method to use. Either 'uniform' or 'systematic'.
+ * @param sampleSize - An integer > 0 for number of points to sample.
  * @param opts - An options object.
- * @param opts.sampleSize - An integer > 0 for number of points to sample.
- * @param opts.method - The method to use. Either 'uniform' or 'systematic'.
  * @param opts.rand - An optional instance of Random.
  * @returns A GeoJSON FeatureCollection of Point Features.
  */
 export const samplePointsOnLines = (
   geoJSON: GeoJSON.FeatureCollection,
-  opts: {
-    method?: 'uniform' | 'systematic';
-    sampleSize?: number;
-    rand?: Random;
-  } = {},
+  method: 'uniform' | 'systematic',
+  sampleSize: number,
+  opts: {rand?: Random} = {},
 ): GeoJSON.FeatureCollection => {
   if (geoJSON.type !== 'FeatureCollection') {
     throw new Error(
@@ -197,11 +195,19 @@ export const samplePointsOnLines = (
         '.',
     );
   }
-  const method = opts.method || 'uniform';
-  const sampleSize = opts.sampleSize || 1;
+  if (method !== 'systematic' && method !== 'uniform') {
+    throw new Error("Input method must be either 'uniform' or 'systematic'.");
+  }
+  if (
+    typeof sampleSize !== 'number' ||
+    sampleSize !== Math.round(sampleSize) ||
+    sampleSize <= 0
+  ) {
+    throw new Error('Input sampleSize must be a positive integer.');
+  }
   const rand = opts.rand ?? new Random();
-  const L = length(geoJSON); // total length of input geoJSON
 
+  const L = length(geoJSON); // total length of input geoJSON
   if (L === 0) {
     throw new Error('Input GeoJSON has zero length.');
   }
