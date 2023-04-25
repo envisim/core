@@ -12,7 +12,7 @@ export {sampleRelascopePoints} from './sampleRelascopePoints.js';
 export {sampleDistancePoints} from './sampleDistancePoints.js';
 export {sampleDistanceLines} from './sampleDistanceLines.js';
 
-// Distance sampling utils. Maybe these should only be internal.
+// Distance sampling utils.
 export {
   integrate,
   effectiveRadius,
