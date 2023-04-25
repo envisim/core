@@ -9,8 +9,8 @@ describe('sampleDistanceUtils', () => {
   const f1 = (x: number) => x;
   const f2 = () => 1;
   const f3 = () => 0.5;
-  const halfNormal = halfNormalDetectionFunction(2, 5);
-  const uniform = uniformDetectionFunction(5);
+  const halfNormal = halfNormalDetectionFunction(2);
+  const uniform = uniformDetectionFunction();
 
   test('integrate', () => {
     expect(integrate(f1, 0, 1)).toBeCloseTo(0.5, 4);
@@ -24,12 +24,11 @@ describe('sampleDistanceUtils', () => {
     expect(uniform(-1)).toBe(0);
     expect(uniform(0)).toBe(1);
     expect(uniform(5)).toBe(1);
-    expect(uniform(6)).toBe(0);
+    expect(uniform(6)).toBe(1);
   });
   test('halfNormalDetectionFunction', () => {
     expect(halfNormal(-1)).toBe(0);
     expect(halfNormal(0)).toBe(1);
     expect(halfNormal(5) > 0).toBe(true);
-    expect(halfNormal(6)).toBe(0);
   });
 });
