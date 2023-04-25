@@ -38,7 +38,7 @@ export const sampleTractsOnAreas = (
   method: 'uniform' | 'systematic',
   sampleSize: number,
   modelTract: GeoJSON.Feature,
-  opts: TsampleTractsOnAreasOpts,
+  opts: TsampleTractsOnAreasOpts = {},
 ): GeoJSON.FeatureCollection => {
   if (geoJSON.type !== 'FeatureCollection') {
     throw new Error(
