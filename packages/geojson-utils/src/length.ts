@@ -1,18 +1,25 @@
 import {toFeatureCollection} from './toFeatureCollection.js';
 import {distance} from './distance.js';
 
-const lengthOfSegment = (
-  p0: GeoJSON.Position,
-  p1: GeoJSON.Position,
-  maxDist: number,
+/**
+ * Computes the length of the a GeoJSON segment.
+ * @param start - Start point [lon,lat]
+ * @param end - End point [lon,lat]
+ * @param dist - Optional distance for start using interpolated segment points, defaults to 100000 (meters).
+ * @returns - The length of the segment in meters.
+ */
+export const lengthOfSegment = (
+  start: GeoJSON.Position,
+  end: GeoJSON.Position,
+  dist = 100000,
 ): number => {
   let L = 0; // Aggregate length for segments longer than maxDist
-  const dist = distance(p0, p1);
-  if (dist > maxDist) {
-    const numPointsToAdd = Math.ceil(dist / maxDist);
-    const [lon0, lat0] = p0;
-    const [lon1, lat1] = p1;
-    let prev = p0;
+  const distToEnd = distance(start, end);
+  if (distToEnd > dist) {
+    const numPointsToAdd = Math.ceil(distToEnd / dist);
+    const [lon0, lat0] = start;
+    const [lon1, lat1] = end;
+    let prev = start;
     for (let i = 1; i <= numPointsToAdd; i++) {
       const t = i / numPointsToAdd;
       const lon = lon0 + t * (lon1 - lon0);
@@ -22,14 +29,14 @@ const lengthOfSegment = (
     }
     return L;
   }
-  return dist;
+  return distToEnd;
 };
 
 // Internal.
-const lengthOfLineString = (ls: GeoJSON.Position[], maxDist: number) => {
+const lengthOfLineString = (ls: GeoJSON.Position[], dist: number) => {
   let l = 0;
   for (let i = 0; i < ls.length - 1; i++) {
-    l += lengthOfSegment(ls[i], ls[i + 1], maxDist);
+    l += lengthOfSegment(ls[i], ls[i + 1], dist);
   }
   return l;
 };
@@ -37,15 +44,15 @@ const lengthOfLineString = (ls: GeoJSON.Position[], maxDist: number) => {
 // Internal.
 const lengthOfGeometry = (
   geometry: GeoJSON.Geometry,
-  opts = {_radius: 0, maxDist: 100000},
+  opts = {_radius: 0, dist: 100000},
 ): number => {
   switch (geometry.type) {
     case 'LineString':
-      return lengthOfLineString(geometry.coordinates, opts.maxDist);
+      return lengthOfLineString(geometry.coordinates, opts.dist);
     case 'MultiLineString':
     case 'Polygon':
       return geometry.coordinates.reduce(
-        (prev, curr) => prev + lengthOfLineString(curr, opts.maxDist),
+        (prev, curr) => prev + lengthOfLineString(curr, opts.dist),
         0,
       );
     case 'MultiPolygon':
@@ -53,7 +60,7 @@ const lengthOfGeometry = (
         (prev, curr) =>
           prev +
           curr.reduce(
-            (prev, curr) => prev + lengthOfLineString(curr, opts.maxDist),
+            (prev, curr) => prev + lengthOfLineString(curr, opts.dist),
             0,
           ),
         0,
@@ -95,7 +102,7 @@ export const length = (geoJSON: GeoJSON.GeoJSON, dist = 100000): number => {
   const gj = toFeatureCollection(geoJSON, {copy: false});
   let L = 0; // Aggregate length to L
   gj.features.forEach((feature) => {
-    const opts = {_radius: 0, maxDist: dist};
+    const opts = {_radius: 0, dist: dist};
     if (feature.properties?._radius) {
       opts._radius = feature.properties._radius;
     }

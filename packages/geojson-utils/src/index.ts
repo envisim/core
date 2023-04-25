@@ -35,7 +35,7 @@ export {intersectLineLineFeatures} from './intersectLineLineFeatures.js';
 export {intersectLinePolygonFeatures} from './intersectLinePolygonFeatures.js';
 export {intersectPolygonPolygonFeatures} from './intersectPolygonPolygonFeatures.js';
 export {intersectSegments} from './intersectSegments.js';
-export {length} from './length.js';
+export {length, lengthOfSegment} from './length.js';
 export {pointInPolygon, pointInSinglePolygon} from './pointInPolygon.js';
 export {webMercator, azimuthalEquidistant, cartesian} from './projections.js';
 export {rotateCoord} from './rotateCoord.js';
