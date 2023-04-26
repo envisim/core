@@ -15,6 +15,9 @@ export {
   distanceGS,
 } from './distances.js';
 
+// Utils
+export {NearestNeighbour} from './util-classes/NearestNeighbour.js';
+
 // Types
 export {
   IDistance,
