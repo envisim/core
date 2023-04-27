@@ -1,4 +1,4 @@
-import {distTests, fromTo} from './distributions.testf';
+import {distTests, fromTo} from './_distributions.testf';
 import {FRatio as Dist} from '../src/f.js';
 
 describe('f(5, 2)', () => {

@@ -1,5 +1,5 @@
 import {errorFunction, stdNormalQuantile} from '../src/normal-utils';
-import {createTable, fromTo, PRECISION} from './distributions.testf';
+import {createTable, fromTo, PRECISION} from './_distributions.testf';
 
 describe('errorFunction', () => {
   const x = [

@@ -1,4 +1,4 @@
-import {distTests, fromTo} from './distributions.testf';
+import {distTests, fromTo} from './_distributions.testf';
 import {Logarithmic as Dist} from '../src/logarithmic';
 
 describe('logarithmic(0.9)', () => {

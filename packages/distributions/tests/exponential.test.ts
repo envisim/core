@@ -1,4 +1,4 @@
-import {distTests, fromTo} from './distributions.testf';
+import {distTests, fromTo} from './_distributions.testf';
 import {Exponential as Dist} from '../src/exponential';
 
 describe('exponential(1.5)', () => {

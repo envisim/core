@@ -1,4 +1,4 @@
-import {distTests, fromTo} from './distributions.testf';
+import {distTests, fromTo} from './_distributions.testf';
 import {Pareto as Dist} from '../src/pareto';
 
 describe('pareto(2, 2)', () => {

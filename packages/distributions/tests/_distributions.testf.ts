@@ -6,7 +6,7 @@ export const RPRECISION = 2;
 export const RANDN = 100000;
 
 export const createTable = (...arrs: number[][]): number[][] => {
-  const c = [];
+  const c: number[][] = [];
   for (let i = 0; i < arrs[0].length; i++) {
     c.push(arrs.map((e) => e[i]));
   }
@@ -14,7 +14,7 @@ export const createTable = (...arrs: number[][]): number[][] => {
 };
 
 export const fromTo = (from: number, to: number, by: number) => {
-  const s = [];
+  const s: number[] = [];
   for (let i = from; i <= to; i += by) s.push(i);
   return s;
 };
