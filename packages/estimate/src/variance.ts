@@ -26,16 +26,13 @@ export function htVariance(
   let variance = 0.0;
 
   for (let i = 0; i < n; i++) {
-    const ypi_i = ypi.atIndex(i);
-    const pi_i = pi.atIndex(i);
+    const ypi_i = ypi.at(i);
+    const pi_i = pi.at(i);
     variance += ypi_i * ypi_i * (1.0 - pi_i);
 
     for (let j = i + 1; j < n; j++) {
       variance +=
-        2.0 *
-        ypi_i *
-        ypi.atIndex(j) *
-        (1.0 - (pi_i * pi.atIndex(j)) / prob2m.atRC(i, j));
+        2.0 * ypi_i * ypi.at(j) * (1.0 - (pi_i * pi.at(j)) / prob2m.atRC(i, j));
     }
   }
 
@@ -69,13 +66,12 @@ export function htVarianceSYG(
   let variance = 0.0;
 
   for (let i = 0; i < n; i++) {
-    const ypi_i = ypi.atIndex(i);
-    const pi_i = pi.atIndex(i);
+    const ypi_i = ypi.at(i);
+    const pi_i = pi.at(i);
 
     for (let j = i + 1; j < n; j++) {
-      const temp = ypi_i - ypi.atIndex(j);
-      variance -=
-        temp * temp * (1.0 - (pi_i * pi.atIndex(j)) / prob2m.atRC(i, j));
+      const temp = ypi_i - ypi.at(j);
+      variance -= temp * temp * (1.0 - (pi_i * pi.at(j)) / prob2m.atRC(i, j));
     }
   }
 
@@ -129,8 +125,8 @@ export function htVarianceGS(
   for (let i = 0; i < n; i++) {
     const neighbours = nn.findNearestNeighbours(i);
     const lht =
-      neighbours.reduce((t, i) => t + yps.atIndex(i), 0.0) / neighbours.length;
-    const temp = yps.atIndex(i) - lht;
+      neighbours.reduce((t, i) => t + yps.at(i), 0.0) / neighbours.length;
+    const temp = yps.at(i) - lht;
 
     res += (neighbours.length / (neighbours.length - 1)) * temp * temp;
   }
@@ -167,16 +163,13 @@ export function hhVariance(
   let variance = 0.0;
 
   for (let i = 0; i < n; i++) {
-    const ymu_i = ymu.atIndex(i);
-    const mu_i = mu.atIndex(i);
+    const ymu_i = ymu.at(i);
+    const mu_i = mu.at(i);
     variance += ymu_i * ymu_i * (1.0 - (mu_i * mu_i) / mu2m.atRC(i, i));
 
     for (let j = i + 1; j < n; j++) {
       variance +=
-        2.0 *
-        ymu_i *
-        ymu.atIndex(j) *
-        (1.0 - (mu_i * mu.atIndex(j)) / mu2m.atRC(i, j));
+        2.0 * ymu_i * ymu.at(j) * (1.0 - (mu_i * mu.at(j)) / mu2m.atRC(i, j));
     }
   }
 

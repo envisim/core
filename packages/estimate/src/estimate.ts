@@ -106,12 +106,11 @@ export function nearestNeighbourEstimator(
   xm: Matrix,
   sample: TArrayLike,
 ): number {
-  const ys = arrayLikeToArray(y);
   const N = xm.nrow;
   const sampleArr = parseAndCheckSampleArray(sample, N);
   const n = sampleArr.length;
 
-  if (ys.length !== n)
+  if (y.length !== n)
     throw new RangeError('y and sample must have the same length');
 
   const ni = new Array(n).fill(0.0);
@@ -126,5 +125,5 @@ export function nearestNeighbourEstimator(
     });
   }
 
-  return ni.reduce((e, t, i) => t + e * ys[i]);
+  return ni.reduce((e, t, i) => t + e * (y.at(i) as number));
 }

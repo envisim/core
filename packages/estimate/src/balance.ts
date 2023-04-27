@@ -8,7 +8,7 @@ import {NearestNeighbour} from '@envisim/sampling';
 import {parseAndCheckSampleArray} from './utils.js';
 
 /**
- * @category Spatial balance measures
+ * @category Spatial balance measure
  * @param sample - sample indices.
  * @param xm - Matrix of auxilliary variables of size N*p.
  * @param prob - inclusion probabilities of size N.
@@ -20,10 +20,9 @@ export function spatialBalanceVO(
   prob: TArrayLike,
 ): number {
   const N = xm.nrow;
-  const ps = arrayLikeToArray(prob);
   const sampleArr = parseAndCheckSampleArray(sample, N);
 
-  if (ps.length !== N)
+  if (prob.length !== N)
     throw new RangeError('xm and prob must have same number of rows');
 
   const incl = new Array(sampleArr.length).fill(0.0);
@@ -33,7 +32,10 @@ export function spatialBalanceVO(
     const unit = xm.extractRow(i);
     const neighbours = nn.findNearestNeighbours(unit);
 
-    const ppart = neighbours.length === 1 ? ps[i] : ps[i] / neighbours.length;
+    const ppart =
+      neighbours.length === 1
+        ? (prob.at(i) as number)
+        : (prob.at(i) as number) / neighbours.length;
     neighbours.forEach((e) => {
       incl[e] += ppart;
     });
@@ -49,7 +51,7 @@ export function spatialBalanceVO(
 }
 
 /**
- * @category Spatial balance measures
+ * @category Spatial balance measure
  * @param sample - sample indices.
  * @param xm - Matrix of auxilliary variables of size N*p.
  * @param prob - inclusion probabilities of size N.
@@ -66,14 +68,13 @@ export function spatialBalanceSS(
 
   let mat = xm;
   if (isArrayLike(prob)) {
-    const ps = arrayLikeToArray(prob);
-    if (ps.length !== N)
+    if (prob.length !== N)
       throw new RangeError('xm and prob must have same number of rows');
     mat = xm.copy();
 
     mat.mapInPlace((e: number, i: number): number => {
       const r = mat.indexToRow(i);
-      return e / ps[r];
+      return e / (prob.at(r) as number);
     });
   }
 
