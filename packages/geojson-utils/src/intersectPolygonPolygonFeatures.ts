@@ -6,6 +6,12 @@ interface Intersect {
   geoJSON?: GeoJSON.Feature;
 }
 
+/**
+ * Intersect of polygons.
+ * @param polygon1 - A GeoJSON Feature with a geometry type of Polygon/MultiPolygon.
+ * @param polygon2 - A GeoJSON Feature with a geometry type of Polygon/MultiPolygon.
+ * @returns - An empty object {} if no intersect and {geoJSON} if intersect.
+ */
 export const intersectPolygonPolygonFeatures = (
   polygon1: GeoJSON.Feature,
   polygon2: GeoJSON.Feature,
