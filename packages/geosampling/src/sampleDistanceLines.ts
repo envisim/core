@@ -75,7 +75,7 @@ export const sampleDistanceLines = (
                 pointFeature,
                 frameFeature,
               );
-              if (intersect.intersection) {
+              if (intersect.geoJSON) {
                 // Follow the design weight
                 // This selection
                 let designWeight = dw;

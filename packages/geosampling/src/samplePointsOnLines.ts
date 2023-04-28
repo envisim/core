@@ -1,6 +1,6 @@
 import {Random} from '@envisim/random';
 import {
-  toFeature,
+  toPoint,
   intermediate,
   destination,
   length,
@@ -271,21 +271,11 @@ export const samplePointsOnLines = (
       if (parentFeature.properties?._designWeight) {
         dw = dw * parentFeature.properties._designWeight;
       }
-      return toFeature(
-        {
-          type: 'Point',
-          coordinates: coords,
-        },
-        {
-          properties: {
-            _designWeight: dw,
-          },
-          copy: false,
-        },
-      );
+      return toPoint(coords, {
+        _designWeight: dw,
+      });
     },
   );
-
   return {
     type: 'FeatureCollection',
     features: features,

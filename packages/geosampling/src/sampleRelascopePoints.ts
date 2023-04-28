@@ -88,7 +88,7 @@ export const sampleRelascopePoints = (
                 pointFeature,
                 frameFeature,
               );
-              if (intersect.intersection) {
+              if (intersect.geoJSON) {
                 // Follow the design weight
                 let dw = 1 / (Math.PI * radius * radius);
                 if (samplePoint.properties?._designWeight) {

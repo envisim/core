@@ -4,11 +4,12 @@ import {
   intersectLinePolygonFeatures,
   geomEach,
   toFeature,
+  toLineString,
+  toMultiLineString,
 } from '@envisim/geojson-utils';
 import {convertPointCirclesToPolygons} from './convertPointCirclesToPolygons.js';
 
 interface Intersect {
-  intersection: boolean;
   geoJSON?: GeoJSON.Feature;
 }
 
@@ -28,11 +29,7 @@ export const intersectLineAreaFeatures = (
   const box2 = areaFeature.bbox || bbox(areaFeature);
   if (bboxInBbox(box1, box2)) {
     geomEach(areaFeature, (areaGeom: GeoJSON.Geometry) => {
-      let areaF = toFeature(areaGeom, {
-        properties: {
-          _radius: 0,
-        },
-      });
+      let areaF = toFeature(areaGeom, {_radius: 0});
       if (areaGeom.type === 'Point' || areaGeom.type === 'MultiPoint') {
         if (areaFeature.properties?._radius) {
           if (areaF.properties) {
@@ -50,7 +47,7 @@ export const intersectLineAreaFeatures = (
           lineGeom.type === 'LineString' ||
           lineGeom.type == 'MultiLineString'
         ) {
-          let lineF = toFeature(lineGeom, {copy: false});
+          let lineF = toFeature(lineGeom);
           if (
             areaF.geometry.type === 'Polygon' ||
             areaF.geometry.type === 'MultiPolygon'
@@ -75,28 +72,14 @@ export const intersectLineAreaFeatures = (
     });
   }
   if (lines.length === 0) {
-    return {intersection: false};
+    return {};
   }
   if (lines.length === 1) {
     return {
-      intersection: true,
-      geoJSON: toFeature(
-        {
-          type: 'LineString',
-          coordinates: lines[0],
-        },
-        {copy: false},
-      ),
+      geoJSON: toLineString(lines[0]),
     };
   }
   return {
-    intersection: true,
-    geoJSON: toFeature(
-      {
-        type: 'MultiLineString',
-        coordinates: lines,
-      },
-      {copy: false},
-    ),
+    geoJSON: toMultiLineString(lines),
   };
 };

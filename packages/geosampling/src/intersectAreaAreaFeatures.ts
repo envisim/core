@@ -10,7 +10,6 @@ import {
 import {convertPointCirclesToPolygons} from './convertPointCirclesToPolygons.js';
 
 interface Intersect {
-  intersection: boolean;
   geoJSON?: GeoJSON.Feature;
 }
 
@@ -167,7 +166,7 @@ export const intersectAreaAreaFeatures = (
     });
   }
   if (areaGeoms.length === 0) {
-    return {intersection: false};
+    return {};
   }
   // Compute new _radius, if any.
   let properties = {};
@@ -182,24 +181,19 @@ export const intersectAreaAreaFeatures = (
   }
   if (areaGeoms.length === 1) {
     return {
-      intersection: true,
-      geoJSON: toFeature(areaGeoms[0], {
-        properties: properties,
-        copy: false,
-      }),
+      geoJSON: toFeature(areaGeoms[0], properties),
     };
   }
   if (areaGeoms.length > 1) {
     return {
-      intersection: true,
       geoJSON: toFeature(
         {
           type: 'GeometryCollection',
           geometries: areaGeoms,
         },
-        {properties: properties, copy: false},
+        properties,
       ),
     };
   }
-  return {intersection: false};
+  return {};
 };

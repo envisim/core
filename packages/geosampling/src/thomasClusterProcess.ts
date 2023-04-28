@@ -4,8 +4,9 @@ import {
   pointInBbox,
   pointInPolygon,
   destination,
-  toFeature,
-  toFeatureCollection,
+  toPoint,
+  toPolygon,
+  asFeatureCollection,
 } from '@envisim/geojson-utils';
 import {Poisson} from '@envisim/distributions';
 import {Normal} from '@envisim/distributions';
@@ -75,20 +76,14 @@ export const thomasClusterProcess = (
     [westNorth, westSouth, eastSouth, eastNorth, westNorth],
   ];
   // Expanded box as Feature
-  const expandedBoxPolygon = toFeature(
-    {
-      type: 'Polygon',
-      coordinates: expandedBoxPolygonCoords,
-    },
-    {copy: false},
-  );
+  const expandedBoxPolygon = toPolygon(expandedBoxPolygonCoords);
   // Generate parents in expanded box.
   const A = area(expandedBoxPolygon);
   const muParents = intensityOfParents * A;
   const nrOfParents = Poisson.random(1, {rate: muParents}, {rand: rand})[0];
 
   const parentsInBox = uniformBinomialPointProcess(
-    toFeatureCollection(expandedBoxPolygon, {copy: false}),
+    asFeatureCollection(expandedBoxPolygon),
     nrOfParents,
     {rand: rand},
   );
@@ -114,13 +109,7 @@ export const thomasClusterProcess = (
           sigmaOfCluster,
           rand,
         );
-        const child = toFeature(
-          {
-            type: 'Point',
-            coordinates: coordinates,
-          },
-          {copy: false},
-        );
+        const child = toPoint(coordinates);
         // If child is in input geoJSON, then push child.
         if (pointInBbox(coordinates, box)) {
           const nrOfFeatures = geoJSON.features.length;

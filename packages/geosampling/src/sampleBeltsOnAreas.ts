@@ -1,5 +1,12 @@
 import {Random} from '@envisim/random';
-import {bbox, destination, distance, rotateCoord} from '@envisim/geojson-utils';
+import {
+  bbox,
+  destination,
+  distance,
+  rotateCoord,
+  toLineString,
+  toPolygon,
+} from '@envisim/geojson-utils';
 import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
 import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
 
@@ -93,16 +100,7 @@ export const sampleBeltsOnAreas = (
     let prelResult: GeoJSON.FeatureCollection = {
       type: 'FeatureCollection',
       features: lineStrings.map((coords) => {
-        const feature: GeoJSON.Feature = {
-          type: 'Feature',
-          geometry: {
-            type: 'LineString',
-            coordinates: coords,
-          },
-          properties: {
-            _designWeight: distBetween,
-          },
-        };
+        const feature = toLineString(coords, {_designWeight: distBetween});
         feature.bbox = bbox(feature);
         return feature;
       }),
@@ -146,16 +144,9 @@ export const sampleBeltsOnAreas = (
   let prelResult: GeoJSON.FeatureCollection = {
     type: 'FeatureCollection',
     features: lineStrings.map((coords) => {
-      const feature: GeoJSON.Feature = {
-        type: 'Feature',
-        geometry: {
-          type: 'Polygon',
-          coordinates: [coords],
-        },
-        properties: {
-          _designWeight: distBetween / (halfWidth * 2),
-        },
-      };
+      const feature = toPolygon([coords], {
+        _designWeight: distBetween / (halfWidth * 2),
+      });
       feature.bbox = bbox(feature);
       return feature;
     }),

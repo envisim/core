@@ -4,11 +4,12 @@ import {
   pointInPolygon,
   geomEach,
   toFeature,
+  toPoint,
+  toMultiPoint,
 } from '@envisim/geojson-utils';
 import {convertPointCirclesToPolygons} from './convertPointCirclesToPolygons.js';
 
 interface Intersect {
-  intersection: boolean;
   geoJSON?: GeoJSON.Feature;
 }
 
@@ -29,12 +30,7 @@ export const intersectPointAreaFeatures = (
   const box2 = areaFeature.bbox || bbox(areaFeature);
   if (bboxInBbox(box1, box2)) {
     geomEach(areaFeature, (areaGeom: GeoJSON.Geometry) => {
-      let areaF = toFeature(areaGeom, {
-        properties: {
-          _radius: 0,
-        },
-        copy: false,
-      });
+      let areaF = toFeature(areaGeom, {_radius: 0});
       if (areaGeom.type === 'Point' || areaGeom.type === 'MultiPoint') {
         if (areaFeature.properties?._radius) {
           if (areaF.properties) {
@@ -82,31 +78,14 @@ export const intersectPointAreaFeatures = (
     });
   }
   if (points.length === 0) {
-    return {intersection: false};
+    return {};
   }
   if (points.length === 1) {
     return {
-      intersection: true,
-      geoJSON: toFeature(
-        {
-          type: 'Point',
-          coordinates: points[0],
-        },
-        {copy: false},
-      ),
+      geoJSON: toPoint(points[0]),
     };
   }
-  if (points.length > 1) {
-    return {
-      intersection: true,
-      geoJSON: toFeature(
-        {
-          type: 'MultiPoint',
-          coordinates: points,
-        },
-        {copy: false},
-      ),
-    };
-  }
-  return {intersection: false};
+  return {
+    geoJSON: toMultiPoint(points),
+  };
 };

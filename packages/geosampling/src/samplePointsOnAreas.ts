@@ -7,6 +7,7 @@ import {
   distance,
   buffer,
   unionOfPolygons,
+  toPoint,
 } from '@envisim/geojson-utils';
 import {convertPointCirclesToPolygons} from './convertPointCirclesToPolygons.js';
 
@@ -144,16 +145,9 @@ export const samplePointsOnAreas = (
           box[0] + (box[2] - box[0]) * rand.float(),
           90 - Math.acos(2 * yRand - 1) * toDeg,
         ];
-        let pointFeature: GeoJSON.Feature = {
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: pointLonLat,
-          },
-          properties: {
-            _designWeight: designWeight,
-          },
-        };
+        let pointFeature = toPoint(pointLonLat, {
+          _designWeight: designWeight,
+        });
         // Check if point is in any feature.
         for (let i = 0; i < buffered.features.length; i++) {
           if (pointInPolygon(pointFeature, buffered.features[i])) {
@@ -193,16 +187,9 @@ export const samplePointsOnAreas = (
         for (let i = 0; i <= nx; i++) {
           let lonCoord = centerLon + (xoff + dx * (i - nx / 2)) * lonPerMeter;
           pointLonLat = [lonCoord, latCoord];
-          let pointFeature: GeoJSON.Feature = {
-            type: 'Feature',
-            geometry: {
-              type: 'Point',
-              coordinates: pointLonLat,
-            },
-            properties: {
-              _designWeight: designWeight,
-            },
-          };
+          let pointFeature = toPoint(pointLonLat, {
+            _designWeight: designWeight,
+          });
           // Check if point is in any feature and then store.
           for (let k = 0; k < buffered.features.length; k++) {
             if (pointInPolygon(pointFeature, buffered.features[k])) {

@@ -77,7 +77,7 @@ export const sampleDistancePoints = (
                 pointFeature,
                 frameFeature,
               );
-              if (intersect.intersection) {
+              if (intersect.geoJSON) {
                 // Follow the design weight
                 let dw = 1 / (Math.PI * effRadius * effRadius);
                 if (samplePoint.properties?._designWeight) {
