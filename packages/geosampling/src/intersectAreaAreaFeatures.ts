@@ -47,16 +47,10 @@ export const intersectAreaAreaFeatures = (
               // We have intersection,
               // convert both to polygons.
               let firstPolygon = convertPointCirclesToPolygons(
-                toFeature(firstGeom, {
-                  properties: {_radius: firstRadius},
-                  copy: false,
-                }),
+                toFeature(firstGeom, {_radius: firstRadius}),
               );
               let secondPolygon = convertPointCirclesToPolygons(
-                toFeature(secondGeom, {
-                  properties: {_radius: secondRadius},
-                  copy: false,
-                }),
+                toFeature(secondGeom, {_radius: secondRadius}),
               );
               let intersect = intersectPolygonPolygonFeatures(
                 firstPolygon,
@@ -74,8 +68,8 @@ export const intersectAreaAreaFeatures = (
         ) {
           if (firstRadius > 0) {
             let dist = distancePointToPolygon(
-              toFeature(firstGeom, {copy: false}),
-              toFeature(secondGeom, {copy: false}),
+              toFeature(firstGeom),
+              toFeature(secondGeom),
             );
             if (dist < -firstRadius) {
               // Circle fully within polygon,
@@ -87,15 +81,10 @@ export const intersectAreaAreaFeatures = (
               // to polygon.
               let firstPolygon = convertPointCirclesToPolygons(
                 toFeature(firstGeom, {
-                  properties: {
-                    _radius: firstRadius,
-                  },
-                  copy: false,
+                  _radius: firstRadius,
                 }),
               );
-              let secondPolygon = toFeature(secondGeom, {
-                copy: false,
-              });
+              let secondPolygon = toFeature(secondGeom);
               let intersect = intersectPolygonPolygonFeatures(
                 firstPolygon,
                 secondPolygon,
@@ -112,8 +101,8 @@ export const intersectAreaAreaFeatures = (
         ) {
           if (secondRadius > 0) {
             let dist = distancePointToPolygon(
-              toFeature(secondGeom, {copy: false}),
-              toFeature(firstGeom, {copy: false}),
+              toFeature(secondGeom),
+              toFeature(firstGeom),
             );
             if (dist < -secondRadius) {
               // Circle fully within polygon,
@@ -125,15 +114,10 @@ export const intersectAreaAreaFeatures = (
               // to polygon.
               let secondPolygon = convertPointCirclesToPolygons(
                 toFeature(secondGeom, {
-                  properties: {
-                    _radius: secondRadius,
-                  },
-                  copy: false,
+                  _radius: secondRadius,
                 }),
               );
-              let firstPolygon = toFeature(firstGeom, {
-                copy: false,
-              });
+              let firstPolygon = toFeature(firstGeom);
               let intersect = intersectPolygonPolygonFeatures(
                 firstPolygon,
                 secondPolygon,
@@ -148,12 +132,8 @@ export const intersectAreaAreaFeatures = (
           (firstGeom.type === 'Polygon' || firstGeom.type === 'MultiPolygon') &&
           (secondGeom.type === 'Polygon' || secondGeom.type === 'MultiPolygon')
         ) {
-          let firstPolygon = toFeature(firstGeom, {
-            copy: false,
-          });
-          let secondPolygon = toFeature(secondGeom, {
-            copy: false,
-          });
+          let firstPolygon = toFeature(firstGeom);
+          let secondPolygon = toFeature(secondGeom);
           let intersect = intersectPolygonPolygonFeatures(
             firstPolygon,
             secondPolygon,
