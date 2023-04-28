@@ -1,6 +1,6 @@
 import polygonClipping from 'polygon-clipping';
 import {geomEach} from './geomEach.js';
-import {toFeatureCollection} from './toFeatureCollection.js';
+import {toFeatureCollection, toPolygon, toMultiPolygon} from './to.js';
 
 /**
  * Computes the union of the polygons in a GeoJSON FeatureCollection
@@ -19,22 +19,9 @@ export const unionOfPolygons = (
   if (geoms.length < 2) {
     throw new Error('Requires at least 2 polygons');
   }
-
   const union = polygonClipping.union(geoms[0], ...geoms.slice(1));
   if (union.length === 1) {
-    return toFeatureCollection(
-      {
-        type: 'Polygon',
-        coordinates: union[0],
-      },
-      {copy: false},
-    );
+    return toFeatureCollection(toPolygon(union[0]));
   }
-  return toFeatureCollection(
-    {
-      type: 'MultiPolygon',
-      coordinates: union,
-    },
-    {copy: false},
-  );
+  return toFeatureCollection(toMultiPolygon(union));
 };
