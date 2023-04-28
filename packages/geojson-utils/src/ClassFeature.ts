@@ -36,7 +36,7 @@ export class Feature implements GeoJSON.Feature {
     this.geometry = copy === true ? fnCopy(geometry) : geometry;
 
     if (bbox) {
-      this.bbox = bbox;
+      this.bbox = copy === true ? fnCopy(bbox) : bbox;
     }
 
     if (this.geometry.type === 'GeometryCollection') {
