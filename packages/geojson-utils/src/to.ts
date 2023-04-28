@@ -7,14 +7,15 @@ import {asFeatureCollection} from './asFeatureCollection.js';
  * @param geometry - A GeoJSON geometry.
  * @param properties - The properties object to add, default {}.
  * @param copy - Boolean, default false. If true, then input is copied.
- * @param strict - Boolean, if mixed geometries are allowed, default false.
+ * @param strict - Boolean, defalut true. If strict is true, then mixed geometries are not allowed.
  * @returns - A GeoJSON Feature.
  */
 export const toFeatureCollection = (
   geoJSON: GeoJSON.GeoJSON,
   copy: boolean = false,
+  strict: boolean = true,
 ): Collection => {
-  return new Collection(asFeatureCollection(geoJSON, copy));
+  return new Collection(asFeatureCollection(geoJSON, copy), false, strict);
 };
 
 /**
@@ -22,7 +23,7 @@ export const toFeatureCollection = (
  * @param geometry - A GeoJSON geometry.
  * @param properties - The properties object to add, default {}.
  * @param copy - Boolean, default false. If true, then input is copied.
- * @param strict - Boolean, if mixed geometries are allowed, default false.
+ * @param strict - Boolean, defalut true. If strict is true, then mixed geometries are not allowed.
  * @returns - A GeoJSON Feature.
  */
 export const toFeature = (
@@ -35,11 +36,11 @@ export const toFeature = (
 };
 
 /**
- * Makes a Feature with geometry type Point from a GeoJSON.Position
+ * Makes a Feature (class Feature) with geometry type Point from a GeoJSON.Position
  * @param coordinates - A GeoJSON.Position
  * @param properties - The properties object to add, default {}.
  * @param copy - Boolean, default false. If true, then input is copied.
- * @param strict - Boolean, if mixed geometries are allowed, default false.
+ * @param strict - Boolean, defalut true. If strict is true, then mixed geometries are not allowed.
  * @returns - A GeoJSON Feature
  */
 export const toPoint = (
@@ -56,11 +57,11 @@ export const toPoint = (
 };
 
 /**
- * Makes a Feature with geometry type MultiPoint from a GeoJSON.Position[]
+ * Makes a Feature (class Feature) with geometry type MultiPoint from a GeoJSON.Position[]
  * @param coordinates - A GeoJSON.Position[]
  * @param properties - The properties object to add, default {}.
  * @param copy - Boolean, default false. If true, then input is copied.
- * @param strict - Boolean, if mixed geometries are allowed, default false.
+ * @param strict -Boolean, defalut true. If strict is true, then mixed geometries are not allowed.
  * @returns - A GeoJSON Feature
  */
 export const toMultiPoint = (
@@ -77,11 +78,11 @@ export const toMultiPoint = (
 };
 
 /**
- * Makes a Feature with geometry type LineString from a GeoJSON.Position[]
+ * Makes a Feature (class Feature) with geometry type LineString from a GeoJSON.Position[]
  * @param coordinates - A GeoJSON.Position[]
  * @param properties - The properties object to add, default {}.
  * @param copy - Boolean, default false. If true, then input is copied.
- * @param strict - Boolean, if mixed geometries are allowed, default false.
+ * @param strict - Boolean, defalut true. If strict is true, then mixed geometries are not allowed.
  * @returns - A GeoJSON Feature
  */
 export const toLineString = (
@@ -98,11 +99,11 @@ export const toLineString = (
 };
 
 /**
- * Makes a Feature with geometry type MultiLineString from a GeoJSON.Position[][]
+ * Makes a Feature (class Feature) with geometry type MultiLineString from a GeoJSON.Position[][]
  * @param coordinates - A GeoJSON.Position[][]
  * @param properties - The properties object to add, default {}.
  * @param copy - Boolean, default false. If true, then input is copied.
- * @param strict - Boolean, if mixed geometries are allowed, default false.
+ * @param strict - Boolean, defalut true. If strict is true, then mixed geometries are not allowed.
  * @returns - A GeoJSON Feature
  */
 export const toMultiLineString = (
@@ -119,11 +120,11 @@ export const toMultiLineString = (
 };
 
 /**
- * Makes a Feature with geometry type Polygon from a GeoJSON.Position[][]
+ * Makes a Feature (class Feature) with geometry type Polygon from a GeoJSON.Position[][]
  * @param coordinates - A GeoJSON.Position[][]
  * @param properties - The properties object to add, default {}.
  * @param copy - Boolean, default false. If true, then input is copied.
- * @param strict - Boolean, if mixed geometries are allowed, default false.
+ * @param strict - Boolean, defalut true. If strict is true, then mixed geometries are not allowed.
  * @returns - A GeoJSON Feature
  */
 export const toPolygon = (
@@ -140,11 +141,11 @@ export const toPolygon = (
 };
 
 /**
- * Makes a Feature with geometry type MultiPolygon from a GeoJSON.Position[][][]
+ * Makes a Feature (class Feature) with geometry type MultiPolygon from a GeoJSON.Position[][][]
  * @param coordinates - A GeoJSON.Position[][][]
  * @param properties - The properties object to add, default {}.
  * @param copy - Boolean, default false. If true, then input is copied.
- * @param strict - Boolean, if mixed geometries are allowed, default false.
+ * @param strict - Boolean, defalut true. If strict is true, then mixed geometries are not allowed.
  * @returns - A GeoJSON Feature
  */
 export const toMultiPolygon = (
