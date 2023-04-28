@@ -1,4 +1,4 @@
-import {toFeature} from '../src/toFeature.js';
+import {toFeature} from '../src/to.js';
 
 describe('toFeature', () => {
   const polygon: GeoJSON.Geometry = {
@@ -14,22 +14,13 @@ describe('toFeature', () => {
     ],
   };
 
-  const feature = toFeature(polygon, {
-    addBbox: true,
-    properties: {prop: 1},
-    addId: true,
-  });
+  const feature = toFeature(polygon, {prop: 1});
   // console.log(JSON.stringify(feature, null, 2));
-  const box = feature.bbox ?? [2, 2, 2, 2];
   const prop = feature?.properties?.prop;
 
   test('toFeature', () => {
     expect(feature.type).toBe('Feature');
     expect(prop).toBe(1);
-    expect(box[0]).toBe(0);
-    expect(box[1]).toBe(0);
-    expect(box[2]).toBe(1);
-    expect(box[3]).toBe(1);
     expect(typeof feature.id).toBe('string');
   });
 });
