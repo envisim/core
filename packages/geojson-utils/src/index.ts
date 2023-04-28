@@ -40,7 +40,16 @@ export {pointInPolygon, pointInSinglePolygon} from './pointInPolygon.js';
 export {webMercator, azimuthalEquidistant, cartesian} from './projections.js';
 export {rotateCoord} from './rotateCoord.js';
 export {segmentEach} from './segmentEach.js';
-export {toFeature} from './toFeature.js';
-export {toFeatureCollection} from './toFeatureCollection.js';
+export {
+  toFeatureCollection,
+  toFeature,
+  toPoint,
+  toMultiPoint,
+  toLineString,
+  toMultiLineString,
+  toPolygon,
+  toMultiPolygon,
+} from './to.js';
+export {asFeatureCollection} from './asFeatureCollection.js';
 export {unionOfPolygons} from './unionOfPolygons.js';
 export * as geodesic from 'geographiclib-geodesic';
