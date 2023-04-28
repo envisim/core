@@ -5,18 +5,18 @@ import {distance} from './distance.js';
  * Computes the length of the a GeoJSON segment.
  * @param start - Start point [lon,lat]
  * @param end - End point [lon,lat]
- * @param dist - Optional distance for start using interpolated segment points, defaults to 100000 (meters).
+ * @param dist - Optional distance for start using interpolated segment points, defaults to Infinity (meters).
  * @returns - The length of the segment in meters.
  */
 export const lengthOfSegment = (
   start: GeoJSON.Position,
   end: GeoJSON.Position,
-  dist = 100000,
+  dist = Infinity,
 ): number => {
   let L = 0; // Aggregate length for segments longer than maxDist
   const distToEnd = distance(start, end);
   if (distToEnd > dist) {
-    const numPointsToAdd = Math.ceil(distToEnd / dist);
+    const numPointsToAdd = dist === Infinity ? 1 : Math.ceil(distToEnd / dist);
     const [lon0, lat0] = start;
     const [lon1, lat1] = end;
     let prev = start;
@@ -44,7 +44,7 @@ const lengthOfLineString = (ls: GeoJSON.Position[], dist: number) => {
 // Internal.
 const lengthOfGeometry = (
   geometry: GeoJSON.Geometry,
-  opts = {_radius: 0, dist: 100000},
+  opts = {_radius: 0, dist: Infinity},
 ): number => {
   switch (geometry.type) {
     case 'LineString':
@@ -95,10 +95,10 @@ const lengthOfGeometry = (
  * a larger number of distance computations.
  *
  * @param geoJSON - A GeoJSON object.
- * @param dist - Optional distance for start using interpolated segment points, defaults to 100000 (meters).
+ * @param dist - Optional distance for start using interpolated segment points, defaults to Infinity (meters).
  * @returns - The length in meters.
  */
-export const length = (geoJSON: GeoJSON.GeoJSON, dist = 100000): number => {
+export const length = (geoJSON: GeoJSON.GeoJSON, dist = Infinity): number => {
   let L = 0; // Aggregate length to L
   asFeatureCollection(geoJSON).features.forEach((feature) => {
     const opts = {_radius: 0, dist: dist};

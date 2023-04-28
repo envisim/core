@@ -18,7 +18,7 @@ const areaOfSimplePolygonLonLat = (
     // add first point of segment (lat,lon)
     p.AddPoint(coords[i][1], coords[i][0]);
     // add more interpolated points?
-    const numPointsToAdd = Math.ceil(dist / maxDist);
+    const numPointsToAdd = maxDist === Infinity ? 1 : Math.ceil(dist / maxDist);
     if (numPointsToAdd > 1) {
       // add more points
       const lon0 = coords[i][0];
@@ -56,7 +56,7 @@ const areaOfPolygonLonLat = (
 // Internal.
 const areaOfGeometry = (
   geometry: GeoJSON.Geometry,
-  opts = {_radius: 0, maxDist: 100000},
+  opts = {_radius: 0, maxDist: Infinity},
 ): number => {
   switch (geometry.type) {
     case 'Point':
@@ -99,10 +99,10 @@ const areaOfGeometry = (
  * at the cost of a larger number of computations.
  *
  * @param geoJSON - A geoJSON.
- * @param dist - Optional distance for start using interpolated segment points, defaults to 100000 (meters).
+ * @param dist - Optional distance for start using interpolated segment points, defaults to Infinity (meters).
  * @returns - The sum of area in square meters.
  */
-export const area = (geoJSON: GeoJSON.GeoJSON, dist = 100000): number => {
+export const area = (geoJSON: GeoJSON.GeoJSON, dist = Infinity): number => {
   let A = 0; // aggregate area to A
   asFeatureCollection(geoJSON).features.forEach((feature) => {
     const opts = {_radius: 0, maxDist: dist};
