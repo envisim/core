@@ -1,16 +1,15 @@
 import {bbox, bboxInBbox} from './bbox.js';
 import {intersectSegments} from './intersectSegments.js';
-import {toFeature} from './toFeature.js';
+import {toPoint, toMultiPoint} from './to.js';
 
 interface Intersect {
-  intersection: boolean;
   geoJSON?: GeoJSON.Feature;
 }
 
 /**
  * Computes the intersect of features containing LineString/MultiLineString as
  * the crossing-points between the lines in the two features.
- * Returns {intersection:false} if no crossings and {intersection:true, geoJSON}
+ * Returns an empty object {} if no crossings and {geoJSON}
  * if intersection. Then geoJSON is a Feature with Point/MultiPoint geometry.
  *
  * @param firstFeature - A Feature containing LineString/MultiLineString geometry.
@@ -44,8 +43,8 @@ export const intersectLineLineFeatures = (
       g2.type === 'LineString' ? [g2.coordinates] : g2.coordinates;
     // Now we have coordinates for two MultiLineStrings.
     // Go thru all segments to find possible intersection points.
-    coords1.forEach(line1 => {
-      coords2.forEach(line2 => {
+    coords1.forEach((line1) => {
+      coords2.forEach((line2) => {
         for (let i = 0; i < line1.length - 1; i++) {
           for (let j = 0; j < line2.length - 1; j++) {
             const intersect = intersectSegments(
@@ -61,28 +60,14 @@ export const intersectLineLineFeatures = (
     });
   }
   if (points.length === 0) {
-    return {intersection: false};
+    return {};
   }
   if (points.length === 1) {
     return {
-      intersection: true,
-      geoJSON: toFeature(
-        {
-          type: 'Point',
-          coordinates: points[0],
-        },
-        {copy: false},
-      ),
+      geoJSON: toPoint(points[0]),
     };
   }
   return {
-    intersection: true,
-    geoJSON: toFeature(
-      {
-        type: 'MultiPoint',
-        coordinates: points,
-      },
-      {copy: false},
-    ),
+    geoJSON: toMultiPoint(points),
   };
 };
