@@ -1,7 +1,7 @@
 import {bbox, pointInBbox, bboxInBbox, addBboxes} from '../src/bbox.js';
 
 describe('bbox', () => {
-  // TODO: write tests for addBboxes
+  test.todo('Write tests for addBboxes.');
   // polygon
   const polygon: GeoJSON.Feature = {
     type: 'Feature',
