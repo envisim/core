@@ -1,4 +1,4 @@
-import {toFeatureCollection} from './toFeatureCollection.js';
+import {asFeatureCollection} from './asFeatureCollection.js';
 import {distance} from './distance.js';
 
 /**
@@ -99,9 +99,8 @@ const lengthOfGeometry = (
  * @returns - The length in meters.
  */
 export const length = (geoJSON: GeoJSON.GeoJSON, dist = 100000): number => {
-  const gj = toFeatureCollection(geoJSON, {copy: false});
   let L = 0; // Aggregate length to L
-  gj.features.forEach((feature) => {
+  asFeatureCollection(geoJSON).features.forEach((feature) => {
     const opts = {_radius: 0, dist: dist};
     if (feature.properties?._radius) {
       opts._radius = feature.properties._radius;
