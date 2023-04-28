@@ -1,4 +1,4 @@
-import {toFeatureCollection} from './toFeatureCollection.js';
+import {asFeatureCollection} from './asFeatureCollection.js';
 
 // Internal.
 const segmentInLineString = (
@@ -62,9 +62,7 @@ export const segmentEach = (
   geoJSON: GeoJSON.GeoJSON,
   callback: Function,
 ): void => {
-  toFeatureCollection(geoJSON, {copy: false}).features.forEach(
-    (feature, featureIndex) => {
-      segmentInGeometry(feature.geometry, featureIndex, callback);
-    },
-  );
+  asFeatureCollection(geoJSON).features.forEach((feature, featureIndex) => {
+    segmentInGeometry(feature.geometry, featureIndex, callback);
+  });
 };
