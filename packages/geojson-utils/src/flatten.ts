@@ -1,4 +1,4 @@
-import {toFeatureCollection} from './toFeatureCollection.js';
+import {asFeatureCollection} from './asFeatureCollection.js';
 import {copy} from './copy.js';
 
 // Internal.
@@ -72,7 +72,7 @@ const flattenFeature = (feature: GeoJSON.Feature): GeoJSON.Feature[] => {
 export const flatten = (
   geoJSON: GeoJSON.GeoJSON,
 ): GeoJSON.FeatureCollection => {
-  const g = toFeatureCollection(geoJSON, {copy: false}); // objects are copied in flattenFeature
+  const g = asFeatureCollection(geoJSON); // objects are copied in flattenFeature
   let features: GeoJSON.Feature[] = [];
   for (let i = 0; i < g.features.length; i++) {
     features = features.concat(flattenFeature(g.features[i]));
