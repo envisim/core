@@ -120,7 +120,7 @@ export class KDTree {
     // x > value is in range [r, n)
     // where value is the proposed split
     while (l < r) {
-      const temp = this.dt.atIndex(dti + this.splitUnits[fr + l]);
+      const temp = this.dt.at(dti + this.splitUnits[fr + l]);
 
       if (temp < node.value) {
         l += 1;
@@ -152,7 +152,7 @@ export class KDTree {
     // the splitting value to these units
     if (l == 0) {
       for (let i = 0; i < n; i++) {
-        const temp = this.dt.atIndex(dti + this.splitUnits[fr + i]);
+        const temp = this.dt.at(dti + this.splitUnits[fr + i]);
         if (temp === rsmall) {
           swap(this.splitUnits, fr + i, fr + l);
 
@@ -176,7 +176,7 @@ export class KDTree {
       rsmall = -Number.MAX_VALUE;
 
       for (let i = n; i-- > 0; ) {
-        const temp = this.dt.atIndex(dti + this.splitUnits[fr + i]);
+        const temp = this.dt.at(dti + this.splitUnits[fr + i]);
         if (temp == lbig) {
           r -= 1;
 
@@ -242,7 +242,7 @@ export class KDTree {
     let distance = 0.0;
 
     for (let k = 0; k < u1.length; k++) {
-      const temp = u1.atIndex(k) - u2.atIndex(k);
+      const temp = u1.at(k) - u2.at(k);
       distance += temp * temp;
     }
 
@@ -281,7 +281,7 @@ export class KDTree {
       return;
     }
 
-    const distance = unit.atIndex(node.split) - node.value;
+    const distance = unit.at(node.split) - node.value;
     const [nextNode1, nextNode2] =
       distance <= 0.0 ? [node.cleft, node.cright] : [node.cright, node.cleft];
 

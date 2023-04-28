@@ -1,4 +1,4 @@
-import {distTests, fromTo} from './distributions.testf';
+import {distTests, fromTo} from './_distributions.testf';
 import {Binomial as Dist, NegativeBinomial as Dist2} from '../src/binomial';
 
 describe('binomial (10, 0.25)', () => {

@@ -1,4 +1,4 @@
-import {distTests, fromTo} from './distributions.testf';
+import {distTests, fromTo} from './_distributions.testf';
 import {Weibull as Dist} from '../src/weibull';
 
 describe('weibull(1, 1)', () => {

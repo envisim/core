@@ -8,6 +8,9 @@ export {lcps, scps, scpsCoord} from './scps.js';
 export {srswor, srswr} from './srs.js';
 export {systematic, randomSystematic} from './systematic.js';
 
+// Utils
+export {NearestNeighbour} from './util-classes/NearestNeighbour.js';
+
 // Types
 export {
   IOptions,

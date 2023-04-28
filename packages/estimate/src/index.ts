@@ -1,12 +1,16 @@
-/** @module estimate */
-
 export {
   hansenHurwitz,
   horvitzThompson,
-  ht,
   ratioEstimator,
   wrEstimator,
   nearestNeighbourEstimator,
 } from './estimate.js';
-export {htVarianceDeville, htVarianceGS, wrVariance} from './variance.js';
-export {voronoiBalance} from './balance.js';
+export {
+  hhVariance,
+  htVariance,
+  htVarianceSYG,
+  htVarianceD,
+  htVarianceGS,
+  wrVariance,
+} from './variance.js';
+export {spatialBalanceSS, spatialBalanceVO} from './balance.js';

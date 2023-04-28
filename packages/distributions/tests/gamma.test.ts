@@ -1,4 +1,4 @@
-import {distTests, fromTo} from './distributions.testf';
+import {distTests, fromTo} from './_distributions.testf';
 import {Gamma as Dist} from '../src/gamma';
 
 describe('gamma(3, 2)', () => {

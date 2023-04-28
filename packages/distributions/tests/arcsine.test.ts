@@ -1,4 +1,4 @@
-import {distTests, fromTo} from './distributions.testf';
+import {distTests, fromTo} from './_distributions.testf';
 import {Arcsine as Dist} from '../src/arcsine';
 
 describe('arcsine(-1, 1)', () => {

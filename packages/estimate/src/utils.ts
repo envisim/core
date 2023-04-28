@@ -1,34 +1,14 @@
-import {Matrix} from '@envisim/matrix';
-import {
-  IOptions,
-  optionsDefaultDistfun,
-  optionsDefaultEps,
-} from '@envisim/sampling';
+import {TArrayLike, arrayLikeToArray} from '@envisim/matrix';
 
 /** @internal */
-export const nearestNeighbourArray = (
-  xm: Matrix,
-  idx: number,
-  {distfun = optionsDefaultDistfun, eps = optionsDefaultEps}: IOptions = {},
-): number[] => {
-  const neighbours: number[] = [];
-  let mindist = Infinity;
-  let dist;
+export function parseAndCheckSampleArray(
+  sample: TArrayLike,
+  N: number,
+): number[] {
+  const s = arrayLikeToArray(sample);
 
-  for (let j = 0; j < xm.nrow; j++) {
-    if (idx === j) continue;
-    dist = distfun(xm, idx, j);
+  if (!s.every((e: number): boolean => Number.isInteger(e) && 0 <= e && e < N))
+    throw new TypeError('sample must be a vector of valid sample indices');
 
-    if (dist > mindist) continue;
-
-    if (dist + eps < mindist) {
-      neighbours.splice(0, neighbours.length, j);
-      mindist = dist;
-      continue;
-    }
-
-    neighbours.push(j);
-  }
-
-  return neighbours;
-};
+  return s;
+}

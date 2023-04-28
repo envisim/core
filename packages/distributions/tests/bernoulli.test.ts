@@ -1,6 +1,6 @@
 import {Random} from '@envisim/random';
 import {Bernoulli} from '../src/bernoulli';
-import {RANDN, RPRECISION} from './distributions.testf';
+import {RANDN, RPRECISION} from './_distributions.testf';
 
 const rand = new Random('test');
 

@@ -46,7 +46,7 @@ abstract class Vector extends BaseMatrix {
    * @group Copy methods
    */
   toMatrix(): Matrix {
-    return new Matrix(this.internal, this.nrow, this.ncol);
+    return new Matrix(this._e, this._nrow, this._ncol);
   }
 
   /**
@@ -111,7 +111,7 @@ abstract class Vector extends BaseMatrix {
     const b = to < from ? -by : by;
 
     for (let i = 0; i < dim; i++) {
-      s.edIndex(i, current);
+      s.ed(i, current);
       current += b;
     }
 
@@ -123,7 +123,7 @@ abstract class Vector extends BaseMatrix {
    * @group Basic operators
    */
   mmult(mat: BaseMatrix): Matrix {
-    return new Matrix(this._matrixMultiply(mat), this.nrow, mat.ncol);
+    return new Matrix(this._matrixMultiply(mat), this._nrow, mat.ncol);
   }
 
   // VECTOR SPECIFIC
@@ -141,7 +141,7 @@ abstract class Vector extends BaseMatrix {
    */
   append(...vectors: Vector[]): this {
     const s = BaseMatrix.flatMap(vectors);
-    const len = s.length + this.nelements;
+    const len = s.length + this._nelements;
     return this.create([...this._e, ...s], {nrow: len, ncol: len});
   }
 
@@ -151,7 +151,7 @@ abstract class Vector extends BaseMatrix {
    */
   prepend(...vectors: Vector[]): this {
     const s = BaseMatrix.flatMap(vectors);
-    const len = s.length + this.nelements;
+    const len = s.length + this._nelements;
     return this.create([...s, ...this._e], {nrow: len, ncol: len});
   }
 
@@ -204,8 +204,8 @@ abstract class Vector extends BaseMatrix {
   sort(compareFn: ICallbackCompare = (a: number, b: number) => a - b): this {
     const s = this.internal;
     return this.create(s.sort(compareFn), {
-      nrow: this.nrow,
-      ncol: this.ncol,
+      nrow: this._nrow,
+      ncol: this._ncol,
     });
   }
 
@@ -222,10 +222,10 @@ abstract class Vector extends BaseMatrix {
    */
   sortIndex(
     compareFn: ICallbackCompare = (a: number, b: number) =>
-      this.atIndex(a) - this.atIndex(b),
+      this.at(a) - this.at(b),
   ): number[] {
-    const idx = new Array(this.nelements);
-    for (let i = 0; i < this.nelements; i++) idx[i] = i;
+    const idx = new Array(this._nelements);
+    for (let i = 0; i < this._nelements; i++) idx[i] = i;
     return idx.sort(compareFn);
   }
 
@@ -236,7 +236,7 @@ abstract class Vector extends BaseMatrix {
    * @group Copy methods
    */
   sortRandom(inPlace: boolean = false, rand: Random = new Random()): this {
-    const N = this.nelements;
+    const N = this._nelements;
 
     if (inPlace === true) {
       for (let i = N - 1; i > 0; i--) {
@@ -291,14 +291,14 @@ abstract class Vector extends BaseMatrix {
    * @group Statistics
    */
   covariance(vec: Vector): number {
-    if (!Vector.isVector(vec) || vec.nelements !== this.nelements)
+    if (!Vector.isVector(vec) || vec._nelements !== this._nelements)
       throw new RangeError('vec must be a vector of equal size as this');
 
     return (
       this.subtractScalar(this.mean())
         .multiply(vec.subtractScalar(vec.mean()), true)
         .sum() /
-      (this.nelements - 1)
+      (this._nelements - 1)
     );
   }
 
@@ -308,7 +308,7 @@ abstract class Vector extends BaseMatrix {
    * @group Statistics
    */
   correlation(vec: Vector): number {
-    if (!Vector.isVector(vec) || vec.nelements !== this.nelements)
+    if (!Vector.isVector(vec) || vec._nelements !== this._nelements)
       throw new TypeError('vec must be a vector of equal size as this');
 
     return this.covariance(vec) / Math.sqrt(this.variance() * vec.variance());
@@ -335,7 +335,7 @@ abstract class Vector extends BaseMatrix {
    * @group Maps
    */
   intersect(vec: Vector): this {
-    const s = this.unique().internal;
+    const s = this.unique()._e;
 
     for (let i = s.length - 1; i >= 0; i--) {
       if (vec.indexOf(s[i]) < 0) s.splice(i, 1);

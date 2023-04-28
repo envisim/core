@@ -50,9 +50,9 @@ abstract class BaseMatrix {
    * @group Copy methods
    */
   copy(): this {
-    return this.create(this.internal, {
-      nrow: this.nrow,
-      ncol: this.ncol,
+    return this.create(this._e, {
+      nrow: this._nrow,
+      ncol: this._ncol,
       byrow: false,
     });
   }
@@ -87,12 +87,12 @@ abstract class BaseMatrix {
 
     this._setDimensions(nrow, ncol);
 
-    if (this.nelements === len) {
+    if (this._nelements === len) {
       this._e = arr.slice();
-    } else if (this.nelements > len) {
-      this._e = [...arr, ...new Array(this.nelements - len).fill(0.0)];
-    } else if (this.nelements < len) {
-      this._e = arr.slice(0, this.nelements);
+    } else if (this._nelements > len) {
+      this._e = [...arr, ...new Array(this._nelements - len).fill(0.0)];
+    } else if (this._nelements < len) {
+      this._e = arr.slice(0, this._nelements);
     }
 
     return this;
@@ -139,7 +139,7 @@ abstract class BaseMatrix {
    * @group Property methods
    */
   isSquare(): boolean {
-    return this.nrow === this.ncol;
+    return this._nrow === this._ncol;
   }
   /**
    * @returns `true` if `this` has the same size as `mat`
@@ -148,7 +148,7 @@ abstract class BaseMatrix {
   hasSizeOf(mat: BaseMatrix): boolean {
     if (!BaseMatrix.isBaseMatrix(mat))
       throw new TypeError('mat must be of class BaseMatrix');
-    return this.nrow === mat.nrow && this.ncol === mat.ncol;
+    return this._nrow === mat._nrow && this._ncol === mat._ncol;
   }
   /**
    * @returns `true` if `this` is exactly equal to `mat`
@@ -168,38 +168,29 @@ abstract class BaseMatrix {
     return this._e.every((e, i) => e - eps < mat._e[i] && mat._e[i] < e + eps);
   }
   /**
-   * Alias: `.at(index)`.
-   *
+   * @param index - the index to access. If `index < 0`, `index + .length` is
+   *   accessed.
    * @returns the element at matrix `index`
    * @group Accessors
    */
-  atIndex(index: number): number {
-    if (index < 0 || index >= this.nelements)
-      throw new RangeError('index is not in range');
-    return this._e[index];
-  }
-  /** @ignore */
   at(index: number): number {
-    return this.atIndex(index);
+    if (index < -this._nelements || index >= this._nelements)
+      throw new RangeError('index is not in range');
+    return this._e.at(index) as number;
   }
 
   /**
-   * Alias: `.ed(index, value)`.
-   *
    * Changes the element at matrix `index` to `value`
+   * @param index - the index to access
    * @returns `value`
    * @throws `RangeError` if `index` is not in range
    * @group Accessors
    */
-  edIndex(index: number, value: number): number {
-    if (index < 0 || index >= this.nelements)
+  ed(index: number, value: number): number {
+    if (index < 0 || index >= this._nelements)
       throw new RangeError('index is not in range');
     this._e[index] = value;
     return value;
-  }
-  /** @ignore */
-  ed(index: number, value: number): number {
-    return this.edIndex(index, value);
   }
 
   /**
@@ -220,16 +211,12 @@ abstract class BaseMatrix {
    * @throws `RangeError` if `index` is not in range
    * @group Accessors
    */
-  fnIndex(index: number, callbackFn: ICallbackIndex, ...args: any[]): number {
-    if (index < 0 || index >= this.nelements)
+  fn(index: number, callbackFn: ICallbackIndex, ...args: any[]): number {
+    if (index < 0 || index >= this._nelements)
       throw new RangeError('index is not in range');
     const value = callbackFn(this._e[index], index, ...args);
     this._e[index] = value;
     return value;
-  }
-  /** @ignore */
-  fn(index: number, callbackFn: ICallbackIndex, ...args: any[]): number {
-    return this.fnIndex(index, callbackFn, ...args);
   }
 
   /**
@@ -238,10 +225,10 @@ abstract class BaseMatrix {
    * @group Accessors
    */
   indexToRow(index: number): number {
-    if (index < 0 || index >= this.nelements)
+    if (index < 0 || index >= this._nelements)
       throw new RangeError('index is not in range');
-    if (this.nrow === 1) return 0;
-    return index % this.nrow;
+    if (this._nrow === 1) return 0;
+    return index % this._nrow;
   }
   /**
    * @returns the column index of the matrix `index`
@@ -249,10 +236,10 @@ abstract class BaseMatrix {
    * @group Accessors
    */
   indexToCol(index: number): number {
-    if (index < 0 || index >= this.nelements)
+    if (index < 0 || index >= this._nelements)
       throw new RangeError('index is not in range');
-    if (this.ncol === 1) return 0;
-    return (index / this.nrow) | 0;
+    if (this._ncol === 1) return 0;
+    return (index / this._nrow) | 0;
   }
   /**
    * @returns an array `[row, column]`
@@ -267,12 +254,12 @@ abstract class BaseMatrix {
    * @group Accessors
    */
   rcToIndex(row: number, column: number): number {
-    if (row < 0 || row >= this.nrow)
+    if (row < 0 || row >= this._nrow)
       throw new RangeError('row is not in range');
-    if (column < 0 || column >= this.ncol)
+    if (column < 0 || column >= this._ncol)
       throw new RangeError('column is not in range');
 
-    return row + column * this.nrow;
+    return row + column * this._nrow;
   }
 
   /**
@@ -282,7 +269,7 @@ abstract class BaseMatrix {
    */
   atRC(row: number, column: number): number {
     const idx = this.rcToIndex(row, column);
-    return this.atIndex(idx);
+    return this.at(idx);
   }
   /**
    * @returns the element at `row`, `column`
@@ -291,7 +278,7 @@ abstract class BaseMatrix {
    */
   edRC(row: number, column: number, value: number): number {
     const idx = this.rcToIndex(row, column);
-    return this.edIndex(idx, value);
+    return this.ed(idx, value);
   }
   /**
    * @param ...args - any additional argumnets to be passed to `callbackFn`
@@ -306,28 +293,23 @@ abstract class BaseMatrix {
     ...args: any[]
   ): number {
     const idx = this.rcToIndex(row, column);
-    return this.fnIndex(idx, callbackFn, row, column, ...args);
+    return this.fn(idx, callbackFn, row, column, ...args);
   }
 
   /**
    * Swaps the elements at the provided indexes
-   * Alias: `.swap(index1, index2)`.
    *
    * @throws `RangeError` if `index` is not in range
    * @group Accessors
    */
-  swapIndex(index1: number, index2: number): this {
+  swap(index1: number, index2: number): this {
     if (index1 === index2) return this;
 
-    const tmp = this.atIndex(index1);
-    this.edIndex(index1, this.atIndex(index2));
-    this.edIndex(index2, tmp);
+    const tmp = this.at(index1);
+    this.ed(index1, this.at(index2));
+    this.ed(index2, tmp);
 
     return this;
-  }
-  /** @ignore */
-  swap(index1: number, index2: number): this {
-    return this.swapIndex(index1, index2);
   }
 
   /**
@@ -341,9 +323,9 @@ abstract class BaseMatrix {
     const index2 = this.rcToIndex(row2, column2);
     if (index1 === index2) return this;
 
-    const tmp = this.atIndex(index1);
-    this.edIndex(index1, this.atIndex(index2));
-    this.edIndex(index2, tmp);
+    const tmp = this.at(index1);
+    this.ed(index1, this.at(index2));
+    this.ed(index2, tmp);
 
     return this;
   }
@@ -355,8 +337,8 @@ abstract class BaseMatrix {
    */
   map(callbackFn: ICallbackMap<number>): this {
     return this.create(this._e.map(callbackFn), {
-      nrow: this.nrow,
-      ncol: this.ncol,
+      nrow: this._nrow,
+      ncol: this._ncol,
     });
   }
 
@@ -366,8 +348,8 @@ abstract class BaseMatrix {
    * @group Maps
    */
   mapInPlace(callbackFn: ICallbackMap<number>): this {
-    for (let i = 0; i < this.nelements; i++) {
-      this.fnIndex(i, callbackFn);
+    for (let i = 0; i < this._nelements; i++) {
+      this.fn(i, callbackFn);
     }
 
     return this;
@@ -493,7 +475,7 @@ abstract class BaseMatrix {
     const returnObj = (index: number) => {
       return {
         done: false,
-        value: this.atIndex(index),
+        value: this.at(index),
         index,
         row: this.indexToRow(index),
         col: this.indexToCol(index),
@@ -504,14 +486,14 @@ abstract class BaseMatrix {
 
     return {
       next: (): IIteratorReturn => {
-        if (i < this.nelements) {
+        if (i < this._nelements) {
           return returnObj(i++);
         }
 
         return {done: true, value: NaN, index: -1, row: -1, col: -1};
       },
       cont: (): IIteratorReturn => {
-        if (i >= this.nelements) i = 0;
+        if (i >= this._nelements) i = 0;
         return returnObj(i++);
       },
       reset: (): void => {
@@ -534,20 +516,20 @@ abstract class BaseMatrix {
   protected _matrixMultiply(mat: BaseMatrix): number[] {
     if (!BaseMatrix.isBaseMatrix(mat))
       throw new TypeError('mat must be inherited from BaseMatrix');
-    if (this.ncol !== mat.nrow)
+    if (this._ncol !== mat._nrow)
       throw new RangeError('Dimensions of matrices does not match');
 
-    const s = new Array(this.nrow * mat.ncol);
+    const s = new Array(this._nrow * mat._ncol);
 
-    for (let r = 0; r < this.nrow; r++) {
-      for (let c = 0; c < mat.ncol; c++) {
+    for (let r = 0; r < this._nrow; r++) {
+      for (let c = 0; c < mat._ncol; c++) {
         let t = 0.0;
 
-        for (let i = 0; i < this.ncol; i++) {
+        for (let i = 0; i < this._ncol; i++) {
           t += this.atRC(r, i) * mat.atRC(i, c);
         }
 
-        s[r + c * this.nrow] = t;
+        s[r + c * this._nrow] = t;
       }
     }
 
@@ -573,7 +555,7 @@ abstract class BaseMatrix {
     if (!this.hasSizeOf(mat))
       throw new TypeError('mat must be of same size as this');
 
-    const fn = (e: number, i: number) => e + mat.atIndex(i);
+    const fn = (e: number, i: number) => e + mat.at(i);
     if (inPlace === true) return this.mapInPlace(fn);
     return this.map(fn);
   }
@@ -602,7 +584,7 @@ abstract class BaseMatrix {
     if (!this.hasSizeOf(mat))
       throw new TypeError('mat must be of same size as this');
 
-    const fn = (e: number, i: number) => e - mat.atIndex(i);
+    const fn = (e: number, i: number) => e - mat.at(i);
     if (inPlace === true) return this.mapInPlace(fn);
     return this.map(fn);
   }
@@ -631,7 +613,7 @@ abstract class BaseMatrix {
     if (!this.hasSizeOf(mat))
       throw new TypeError('mat must be of same size as this');
 
-    const fn = (e: number, i: number) => e / mat.atIndex(i);
+    const fn = (e: number, i: number) => e / mat.at(i);
     if (inPlace === true) return this.mapInPlace(fn);
     return this.map(fn);
   }
@@ -660,7 +642,7 @@ abstract class BaseMatrix {
     if (!this.hasSizeOf(mat))
       throw new TypeError('mat must be of same size as this');
 
-    const fn = (e: number, i: number) => e * mat.atIndex(i);
+    const fn = (e: number, i: number) => e * mat.at(i);
     if (inPlace === true) return this.mapInPlace(fn);
     return this.map(fn);
   }
@@ -765,7 +747,7 @@ abstract class BaseMatrix {
     if (!this.hasSizeOf(mat))
       throw new TypeError('mat must be of same size as this');
 
-    const fn = (e: number, i: number) => e % mat.atIndex(i);
+    const fn = (e: number, i: number) => e % mat.at(i);
     if (inPlace === true) return this.mapInPlace(fn);
     return this.map(fn);
   }
@@ -808,7 +790,7 @@ abstract class BaseMatrix {
    * @group Statistics
    */
   mean(): number {
-    return this.sum() / this.nelements;
+    return this.sum() / this._nelements;
   }
 
   /**
@@ -824,7 +806,7 @@ abstract class BaseMatrix {
       s2 += Math.pow(v, 2);
     });
 
-    return (s2 - (s1 * s1) / this.nelements) / (this.nelements - 1);
+    return (s2 - (s1 * s1) / this._nelements) / (this._nelements - 1);
   }
 
   /**
@@ -888,7 +870,7 @@ abstract class BaseMatrix {
       if (0.0 <= probs && probs <= 1.0) p = [probs];
       else return [NaN];
     } else {
-      p = (BaseMatrix.isBaseMatrix(probs) ? probs.internal : probs).map((v) =>
+      p = (BaseMatrix.isBaseMatrix(probs) ? probs._e : probs).map((v) =>
         0.0 <= v && v <= 1.0 ? v : NaN,
       );
     }
@@ -988,29 +970,31 @@ abstract class BaseMatrix {
     let str = '[';
 
     if (pretty === true) {
-      const maxLen = new Array(this.ncol).fill(0);
-      const vals = this.internal.map((v) => v.toFixed(digits));
+      const maxLen = new Array(this._ncol).fill(0);
+      const vals = this._e.map((v) => v.toFixed(digits));
       maxLen.forEach((_, c) => {
         maxLen[c] = Math.max(
           0,
           ...vals
-            .slice(c * this.nrow, (c + 1) * this.nrow)
+            .slice(c * this._nrow, (c + 1) * this._nrow)
             .map((e) => e.length),
         );
       });
 
       str += '\n';
-      for (let r = 0; r < this.nrow; r++) {
-        for (let c = 0; c < this.ncol; c++) {
-          str += vals[c * this.nrow + r].padStart(maxLen[c] + 1);
+      for (let r = 0; r < this._nrow; r++) {
+        for (let c = 0; c < this._ncol; c++) {
+          str += vals[c * this._nrow + r].padStart(maxLen[c] + 1);
         }
         str += '\n';
       }
     } else {
-      const vals = this.transpose().internal.map((v) => v.toFixed(digits));
-      for (let r = 0; r < this.nrow; r++) {
+      const vals = this.transpose()._e.map((v) => v.toFixed(digits));
+      for (let r = 0; r < this._nrow; r++) {
         str +=
-          '[' + vals.slice(r * this.ncol, (r + 1) * this.ncol).join(',') + '],';
+          '[' +
+          vals.slice(r * this._ncol, (r + 1) * this._ncol).join(',') +
+          '],';
       }
       str = str.slice(0, -1);
     }

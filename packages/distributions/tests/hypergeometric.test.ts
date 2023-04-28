@@ -1,4 +1,4 @@
-import {distTests, fromTo} from './distributions.testf';
+import {distTests, fromTo} from './_distributions.testf';
 import {Hypergeometric as Dist} from '../src/hypergeometric';
 
 describe('hypergeometric(500, 50, 100)', () => {

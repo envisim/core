@@ -42,7 +42,7 @@ export const inclusionProbabilities = (
         continue;
       }
 
-      sp += prob.edIndex(res.index, 1.0);
+      sp += prob.ed(res.index, 1.0);
       n1++;
     }
 
@@ -55,13 +55,13 @@ export const inclusionProbabilities = (
       // Edit value in place and update pmax
       pmax = Math.max(
         pmax,
-        prob.fnIndex(res.index, (e) => e * frac),
+        prob.fn(res.index, (e) => e * frac),
       );
     }
   }
 
   prob.forEach((e, i) => {
-    if (e > 1.0 - eps) prob.edIndex(i, 1.0);
+    if (e > 1.0 - eps) prob.ed(i, 1.0);
   });
 
   return prob;

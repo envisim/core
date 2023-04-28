@@ -1,4 +1,4 @@
-import {createTable, fromTo, PRECISION} from './distributions.testf';
+import {createTable, fromTo, PRECISION} from './_distributions.testf';
 import {
   gammaFunction,
   logGammaFunction,
