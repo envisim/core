@@ -1,8 +1,8 @@
 import polygonClipping from 'polygon-clipping';
 import {geomEach} from './geomEach.js';
+import {toPolygon, toMultiPolygon} from './to.js';
 
 interface Intersect {
-  intersection: boolean;
   geoJSON?: GeoJSON.Feature;
 }
 
@@ -30,30 +30,14 @@ export const intersectPolygonPolygonFeatures = (
     ...geoms.slice(1),
   );
   if (intersection.length === 0) {
-    return {intersection: false};
+    return {};
   }
   if (intersection.length === 1) {
     return {
-      intersection: true,
-      geoJSON: {
-        type: 'Feature',
-        geometry: {
-          type: 'Polygon',
-          coordinates: intersection[0],
-        },
-        properties: {},
-      },
+      geoJSON: toPolygon(intersection[0]),
     };
   }
   return {
-    intersection: true,
-    geoJSON: {
-      type: 'Feature',
-      geometry: {
-        type: 'MultiPolygon',
-        coordinates: intersection,
-      },
-      properties: {},
-    },
+    geoJSON: toMultiPolygon(intersection),
   };
 };
