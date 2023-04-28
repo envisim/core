@@ -3,7 +3,7 @@ import {v4 as uuid} from 'uuid';
 import type {TCollectionType} from './types/collection.js';
 
 import {copy as fnCopy} from './copy.js';
-import {getCollectionTypeWithRadius} from './feature.js';
+import {collectionTypeWithRadius} from './collectionType.js';
 
 export class Feature implements GeoJSON.Feature {
   readonly type = 'Feature';
@@ -47,7 +47,7 @@ export class Feature implements GeoJSON.Feature {
           throw new Error('Nested GeometryCollections are not allowed');
       } else {
         const radiusIsDefined = this.properties._radius > 0.0;
-        const ctype = getCollectionTypeWithRadius(
+        const ctype = collectionTypeWithRadius(
           this.geometry.geometries[0],
           radiusIsDefined,
         );
@@ -56,7 +56,7 @@ export class Feature implements GeoJSON.Feature {
           if (g.type === 'GeometryCollection')
             throw new Error('Nested GeometryCollections are not allowed');
 
-          const t = getCollectionTypeWithRadius(g, radiusIsDefined);
+          const t = collectionTypeWithRadius(g, radiusIsDefined);
           if (t !== ctype)
             throw new Error(
               'Mixed GeometryCollections are not allowed (strict)',
