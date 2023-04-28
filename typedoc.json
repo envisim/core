@@ -15,8 +15,26 @@
   "commentStyle": "jsdoc",
 
   "externalSymbolLinkMappings": {
+    "@envisim/distributions": {
+      "*": "https://github.com/envisim/core/tree/main/packages/distributions/docs"
+    },
+    "@envisim/estimate": {
+      "*": "https://github.com/envisim/core/tree/main/packages/estimate/docs"
+    },
+    "@envisim/geojson-utils": {
+      "*": "https://github.com/envisim/core/tree/main/packages/geojson-utils/docs"
+    },
+    "@envisim/geosampling": {
+      "*": "https://github.com/envisim/core/tree/main/packages/geosampling/docs"
+    },
+    "@envisim/matrix": {
+      "*": "https://github.com/envisim/core/tree/main/packages/matrix/docs"
+    },
     "@envisim/random": {
-      "*": "https://github.com/envisim/core/packages/random/docs"
+      "*": "https://github.com/envisim/core/tree/main/packages/random/docs"
+    },
+    "@envisim/sampling": {
+      "*": "https://github.com/envisim/core/tree/main/packages/sampling/docs"
     }
   }
 }

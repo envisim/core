@@ -1,9 +1,6 @@
-import type {Matrix} from '@envisim/matrix';
 import {Random} from '@envisim/random';
 
-export interface IDistance {
-  (xm: Matrix, a: number, b: number): number;
-}
+export type PartialPick<T, K extends keyof T> = Partial<Pick<T, K>>;
 
 export interface IOptions {
   /**
@@ -17,8 +14,8 @@ export interface IOptions {
    */
   rand?: Random;
   /**
-   *
-   *
+   * The bucket size to use when building k-d-trees
+   * @defaultValue `40`
    */
   treeBucketSize?: number;
 }

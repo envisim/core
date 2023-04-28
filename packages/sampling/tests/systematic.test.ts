@@ -1,5 +1,6 @@
-import {RandomMock} from './sampling.testf';
-import {systematic, randomSystematic} from '../src/index';
+import {randomSystematic, systematic} from '../src/index';
+import './_equalArrays.testf';
+import {RandomMock} from './_Random.testf';
 
 describe('systematic', () => {
   const ps = [1, 4, 7, 1.5, 5, 6, 1.3, 3, 9].map((e) => (e / 37.8) * 3);

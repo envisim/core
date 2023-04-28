@@ -10,10 +10,10 @@ import {
 /**
  * Selects a Spatially Correlated Poisson Sample (SCPS)
  *
- * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities.
- * @param xm N*p Matrix of auxilliary variables, where N is equal to size of `prob`.
- * @param options - See {@link IOptions}
- * @returns An array of indices of the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param xm - matrix of auxilliary variables of size N*p.
+ * @param options
+ * @returns sample indices.
  */
 export function scps(
   prob: TArrayLike,
@@ -41,11 +41,11 @@ export function scps(
 /**
  * Selects a coordinated Spatially Correlated Poisson Sample (SCPSCOORD)
  *
- * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities.
- * @param xm - N*p Matrix of auxilliary variables, where N is equal to size of `prob`.
- * @param random - an {@link @envisim/matrix.TArrayLike} of random values
- * @param options - See {@link IOptions}
- * @returns An array of indices of the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param xm - matrix of auxilliary variables of size N*p.
+ * @param random - random values of size N.
+ * @param options
+ * @returns sample indices.
  */
 export function scpsCoord(
   prob: TArrayLike,
@@ -78,10 +78,10 @@ export function scpsCoord(
 /**
  * Selects a Locally Correlated Poisson Sample (LCPS)
  *
- * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities.
- * @param xm N*p Matrix of auxilliary variables, where N is equal to size of `prob`.
- * @param options - See {@link IOptions}
- * @returns An array of indices of the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param xm - matrix of auxilliary variables of size N*p.
+ * @param options
+ * @returns sample indices.
  */
 export function lcps(
   prob: TArrayLike,

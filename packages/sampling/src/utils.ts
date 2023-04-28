@@ -4,21 +4,20 @@ import {
   IIteratorReturn,
   TArrayLike,
 } from '@envisim/matrix';
-import type {Random} from '@envisim/random';
-import {optionsDefaultEps} from './types.js';
+import {IOptions, optionsDefaultEps} from './types.js';
 
 /**
  * Calculation of inclusion probabilities from a positive auxiliary variable.
  *
- * @param arr - {@link matrix.TArrayLike} of positive numbers (sizes)
- * @param n - The sample size (sum of inclusion probabilities)
- * @param eps - Epsilon.
+ * @param arr - positive numbers (sizes)
+ * @param n - sample size (sum of inclusion probabilities)
+ * @param eps
  * @returns Array of inclusion probabilities.
  */
 export const inclusionProbabilities = (
   arr: TArrayLike,
   n: number,
-  eps: number = optionsDefaultEps,
+  eps: IOptions['eps'] = optionsDefaultEps,
 ): ColumnVector => {
   if (!arr.every((e) => e >= 0.0)) {
     throw new RangeError('Every element in arr must be positive');
@@ -66,30 +65,6 @@ export const inclusionProbabilities = (
   });
 
   return prob;
-};
-
-/**
- * @internal
- * @returns `true` if `x` is in (eps, 1-eps)
- */
-export const numberInOpen01 = (
-  x: number,
-  eps: number = optionsDefaultEps,
-): boolean => {
-  return eps < x && x < 1.0 - eps;
-};
-
-/**
- * Randomly returns `o1` or `o2`, proportionally
- * @ignore
- */
-export const selectOneOfTwo = (
-  rand: Random,
-  o1: number,
-  o2: number,
-): number => {
-  if (rand.float() * (o1 + o2) < o1) return o1;
-  return o2;
 };
 
 export function arrayBack<T>(arr: T[]): T {

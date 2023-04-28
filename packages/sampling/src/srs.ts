@@ -1,17 +1,17 @@
-import {IOptions, optionsDefaultRand} from './types.js';
+import {IOptions, optionsDefaultRand, PartialPick} from './types.js';
 
 /**
  * Selects a simple random sampling without replacement.
  *
- * @param n - Sample size.
- * @param N - Population size.
- * @param options - Available: {@link IOptions.rand}
- * @returns The sample.
+ * @param n - sample size.
+ * @param N - population size.
+ * @param options
+ * @returns sample indices.
  */
 export const srswor = (
   n: number,
   N: number,
-  {rand = optionsDefaultRand}: IOptions = {},
+  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
   if (n === undefined || N === undefined)
     throw new TypeError('n and N must be number');
@@ -33,15 +33,15 @@ export const srswor = (
 /**
  * Selects a simple random sampling with replacement.
  *
- * @param n - Sample size.
- * @param N - Population size.
- * @param options - Available: {@link IOptions.rand}
- * @returns The sample.
+ * @param n - sample size.
+ * @param N - population size.
+ * @param options
+ * @returns sample indices.
  */
 export const srswr = (
   n: number,
   N: number,
-  {rand = optionsDefaultRand}: IOptions = {},
+  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
   if (n === undefined || N === undefined)
     throw new TypeError('n and N must be number');

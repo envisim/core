@@ -526,6 +526,26 @@ class Matrix extends BaseMatrix {
   }
 
   /**
+   * @param a - a row index
+   * @param b - a row index
+   * @param squared - if `false`, calculates the euclidean distance, otherwise
+   *   calculates the euclidean squared distance
+   * @returns the distance between units `a` and `b`
+   * @group Statistics
+   */
+  distance(a: number, b: number, squared: boolean = true) {
+    if (a === b) return 0.0;
+
+    let d = 0.0;
+    for (let k = 0; k < this.ncol; k++) {
+      const temp = this.atRC(a, k) - this.atRC(b, k);
+      d += temp;
+    }
+
+    return squared !== false ? d : Math.sqrt(d);
+  }
+
+  /**
    * @returns the matrix in reduced row echelon format
    * @group Linear algebra
    */
