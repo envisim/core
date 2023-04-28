@@ -42,13 +42,14 @@ describe('area', () => {
       ],
     ],
   };
-  const area0 = area(polygon2, 100); // add points roughly every 100 meters
-  const area1 = area(polygon2); // add pointsroughly every 100000 meters (default)
+  const area0 = area(polygon2, 100); // Add points roughly every 100 meters in area computation.
+  const area1 = area(polygon2); // Do not add points (default).
   //console.log(area0);
   //console.log(area1);
   test('area', () => {
-    // increase maxDist here as the area is for geodesic paths
-    expect(area(polygon, 100000000)).toBeCloseTo(13662703680020.13, 1);
+    // Use default here as the area is for geodesic paths.
+    expect(area(polygon)).toBeCloseTo(13662703680020.13, 1);
+    // The ratio should be near 1.
     expect(area0 / area1).toBeCloseTo(1, 4);
   });
 });
