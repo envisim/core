@@ -1,8 +1,6 @@
 import {pointInSinglePolygon} from './pointInPolygon.js';
-//import {distance} from './distance.js';
-//import {intermediate} from './intermediate.js';
 import {intersectSegments} from './intersectSegments.js';
-import {toFeature} from './toFeature.js';
+import {toLineString, toMultiLineString} from './to.js';
 
 type sortArrayElement = [GeoJSON.Position, number];
 
@@ -146,7 +144,6 @@ const multiLineStringInMultiPolygon = (
 };
 
 interface Intersect {
-  intersection: boolean;
   geoJSON?: GeoJSON.Feature;
 }
 
@@ -156,7 +153,7 @@ interface Intersect {
  *
  * @param lineFeature - A geoJSON Feature with geometry type: LineString | MultiLineString.
  * @param polygonFeature - A geoJSON Feature with geometry type: Polygon | MultiPolygon.
- * @returns - An intersect object conatining intersection:true/false and geoJSON if intersection is true.
+ * @returns - An empty object {} if no intersection and {geoJSON} if intersection.
  */
 export const intersectLinePolygonFeatures = (
   lineFeature: GeoJSON.Feature,
@@ -181,28 +178,14 @@ export const intersectLinePolygonFeatures = (
   const newCoords = multiLineStringInMultiPolygon(lCoords, pCoords);
 
   if (newCoords.length === 0) {
-    return {intersection: false};
+    return {};
   }
   if (newCoords.length === 1) {
     return {
-      intersection: true,
-      geoJSON: toFeature(
-        {
-          type: 'LineString',
-          coordinates: newCoords[0],
-        },
-        {copy: false},
-      ),
+      geoJSON: toLineString(newCoords[0]),
     };
   }
   return {
-    intersection: true,
-    geoJSON: toFeature(
-      {
-        type: 'MultiLineString',
-        coordinates: newCoords,
-      },
-      {copy: false},
-    ),
+    geoJSON: toMultiLineString(newCoords),
   };
 };
