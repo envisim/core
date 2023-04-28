@@ -1,7 +1,8 @@
 import {copy as fnCopy} from './copy.js';
 
 /**
- * Builds a new FeatureCollection from any GeoJSON type. No overhead. Internal.
+ * Builds a new FeatureCollection from any GeoJSON type. Minimum overhead.
+ * Does not convert Features to class Feature.
  * @param geoJSON - Any GeoJSON.
  * @param copy - Boolean, default false. If true, then makes a copy of input.
  * @returns - A GeoJSON FeatureCollection.
