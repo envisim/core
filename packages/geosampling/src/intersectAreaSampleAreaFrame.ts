@@ -30,15 +30,15 @@ export const intersectAreaSampleAreaFrame = (
 
       if (intersect.geoJSON) {
         let newFeature = intersect.geoJSON;
-        let designWeight = 1;
+        let dw = 1;
         if (frameFeature.properties?._designWeight) {
-          designWeight *= frameFeature.properties._designWeight;
+          dw *= frameFeature.properties._designWeight;
         }
         if (sampleFeature.properties?._designWeight) {
-          designWeight *= sampleFeature.properties._designWeight;
+          dw *= sampleFeature.properties._designWeight;
         }
         if (newFeature?.properties) {
-          newFeature.properties._designWeight = designWeight;
+          newFeature.properties._designWeight = dw;
         }
         newFeature.bbox = bbox(newFeature);
         newFeatures.push(newFeature);
