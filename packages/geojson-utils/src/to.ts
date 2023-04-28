@@ -15,6 +15,7 @@ export const toFeatureCollection = (
   copy: boolean = false,
   strict: boolean = true,
 ): Collection => {
+  // if copy === true, copy is done in asFeatureCollection
   return new Collection(asFeatureCollection(geoJSON, copy), false, strict);
 };
 
