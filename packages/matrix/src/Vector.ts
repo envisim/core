@@ -173,7 +173,7 @@ abstract class Vector extends BaseMatrix {
    */
   lastIndexOf(
     searchElement: number,
-    fromIndex: number = this._nelements - 1,
+    fromIndex: number = this.nelements - 1,
   ): number {
     return this._e.lastIndexOf(searchElement, fromIndex);
   }
