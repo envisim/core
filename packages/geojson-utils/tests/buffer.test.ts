@@ -1,8 +1,5 @@
 import {buffer} from '../src/buffer.js';
 import {unionOfPolygons} from '../src/unionOfPolygons.js';
-import {length} from '../src/length.js';
-import {area} from '../src/area.js';
-import {toFeatureCollection} from '../src/toFeatureCollection.js';
 
 describe('buffer', () => {
   const polygon1: GeoJSON.Feature = {
