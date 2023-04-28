@@ -15,7 +15,7 @@ export type {
 export {copy} from './copy.js';
 export * from './collection.js';
 //export * as distance from './distance.js';
-export * from './feature.js';
+export {collectionType, collectionTypeWithRadius} from './collectionType.js';
 export * from './position.js';
 
 export {area} from './area.js';
