@@ -1,4 +1,4 @@
-import {toFeatureCollection} from './toFeatureCollection.js';
+import {asFeatureCollection} from './asFeatureCollection.js';
 
 // Internal.
 const countInGeometry = (
@@ -37,7 +37,7 @@ const countInGeometry = (
  */
 export const count = (geoJSON: GeoJSON.GeoJSON): number => {
   let size = 0;
-  toFeatureCollection(geoJSON, {copy: false}).features.forEach((feature) => {
+  asFeatureCollection(geoJSON).features.forEach((feature) => {
     const opts = {_radius: 0};
     if (feature.properties?._radius) {
       opts._radius = feature.properties._radius;
