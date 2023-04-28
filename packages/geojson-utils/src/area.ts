@@ -1,7 +1,7 @@
 // @ts-ignore
 import geodesic from 'geographiclib-geodesic';
 import {distance} from './distance.js';
-import {toFeatureCollection} from './toFeatureCollection.js';
+import {asFeatureCollection} from './asFeatureCollection.js';
 
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
@@ -104,7 +104,7 @@ const areaOfGeometry = (
  */
 export const area = (geoJSON: GeoJSON.GeoJSON, dist = 100000): number => {
   let A = 0; // aggregate area to A
-  toFeatureCollection(geoJSON, {copy: false}).features.forEach((feature) => {
+  asFeatureCollection(geoJSON).features.forEach((feature) => {
     const opts = {_radius: 0, maxDist: dist};
     if (feature.properties?._radius) {
       opts._radius = feature.properties._radius;
