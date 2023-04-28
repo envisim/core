@@ -52,13 +52,7 @@ export const intersectPointAreaFeatures = (
           pointsCoords = pointGeom.coordinates;
         }
         pointsCoords.forEach((point) => {
-          let pointF = toFeature(
-            {
-              type: 'Point',
-              coordinates: point.slice(),
-            },
-            {copy: false},
-          );
+          let pointF = toPoint(point.slice());
           if (
             areaF.geometry.type === 'Polygon' ||
             areaF.geometry.type === 'MultiPolygon'
