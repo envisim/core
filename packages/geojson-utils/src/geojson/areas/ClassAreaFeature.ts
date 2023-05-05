@@ -1,0 +1,46 @@
+import {BaseFeature} from '../ClassBaseFeature.js';
+import type * as GJ from '../types.js';
+import {OptionalParam} from '../util-types.js';
+import {
+  MultiPointCircle,
+  MultiPolygon,
+  PointCircle,
+  Polygon,
+} from './AreaObjects.js';
+import {
+  AreaGeometry,
+  AreaGeometryCollection,
+} from './ClassAreaGeometryCollection.js';
+
+export class AreaFeature extends BaseFeature implements GJ.AreaFeature {
+  static isFeature(obj: any): obj is AreaFeature {
+    return obj instanceof AreaFeature;
+  }
+
+  geometry: AreaGeometry;
+
+  constructor(
+    obj: OptionalParam<GJ.AreaFeature, 'type'>,
+    shallow: boolean = true,
+  ) {
+    super({...obj, type: 'Feature'}, shallow);
+
+    switch (obj.geometry?.type) {
+      case 'GeometryCollection':
+        this.geometry = new AreaGeometryCollection(obj.geometry, shallow);
+        break;
+      case 'Point':
+        this.geometry = new PointCircle(obj.geometry, shallow);
+        break;
+      case 'MultiPoint':
+        this.geometry = new MultiPointCircle(obj.geometry, shallow);
+        break;
+      case 'Polygon':
+        this.geometry = new Polygon(obj.geometry, shallow);
+        break;
+      case 'MultiPolygon':
+        this.geometry = new MultiPolygon(obj.geometry, shallow);
+        break;
+    }
+  }
+}

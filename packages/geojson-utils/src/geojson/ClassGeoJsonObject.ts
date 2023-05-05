@@ -1,8 +1,5 @@
 import type * as GJ from './types.js';
 
-export type OptionalParam<T, S extends keyof T> = Omit<T, S> &
-  Partial<Pick<T, S>>;
-
 export abstract class GeoJsonObject<T extends string>
   implements GJ.GeoJsonObject<T>
 {
