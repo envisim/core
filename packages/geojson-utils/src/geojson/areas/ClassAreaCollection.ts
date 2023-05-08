@@ -35,4 +35,7 @@ export class AreaCollection
     this.features.push(new AreaFeature(feature, shallow));
     return this;
   }
+  area(dist: number = Infinity): number {
+    return this.features.reduce((prev, curr) => prev + curr.area(dist), 0);
+  }
 }

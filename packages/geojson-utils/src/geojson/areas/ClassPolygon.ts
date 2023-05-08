@@ -1,6 +1,7 @@
 import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
+import {areaOfPolygonLonLat} from '../../area.js';
 
 export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
   static isObject(obj: any): obj is Polygon {
@@ -22,7 +23,7 @@ export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
     return 1;
   }
 
-  area(): number {
-    return 0.0;
+  area(dist: number = Infinity): number {
+    return areaOfPolygonLonLat(this.coordinates, dist);
   }
 }

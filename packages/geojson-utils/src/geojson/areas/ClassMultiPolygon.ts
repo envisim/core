@@ -1,6 +1,7 @@
 import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
+import {areaOfPolygonLonLat} from '../../area.js';
 
 export class MultiPolygon
   extends BaseAreaObject<GJ.MultiPolygon>
@@ -28,7 +29,10 @@ export class MultiPolygon
     return this.coordinates.length;
   }
 
-  area(): number {
-    return 0.0;
+  area(dist: number = Infinity): number {
+    return this.coordinates.reduce(
+      (prev, curr) => prev + areaOfPolygonLonLat(curr, dist),
+      0,
+    );
   }
 }

@@ -2,6 +2,7 @@
 import geodesic from 'geographiclib-geodesic';
 import {distance} from './distance.js';
 import {asFeatureCollection} from './asFeatureCollection.js';
+import type * as GeoJSON from './geojson/types.js';
 
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
@@ -40,7 +41,7 @@ const areaOfSimplePolygonLonLat = (
 };
 
 // Internal.
-const areaOfPolygonLonLat = (
+export const areaOfPolygonLonLat = (
   points: GeoJSON.Position[][],
   maxDist: number,
 ): number => {
@@ -102,6 +103,12 @@ const areaOfGeometry = (
  * @param dist - Optional distance for start using interpolated segment points, defaults to Infinity (meters).
  * @returns - The sum of area in square meters.
  */
+/*function a(b:GeoJSON.AreaObject):number;
+function a(b:GeoJSON.LineObject):number {
+
+}
+export a;*/
+
 export const area = (geoJSON: GeoJSON.GeoJSON, dist = Infinity): number => {
   let A = 0; // aggregate area to A
   asFeatureCollection(geoJSON).features.forEach((feature) => {

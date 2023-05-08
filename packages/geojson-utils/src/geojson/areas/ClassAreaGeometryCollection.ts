@@ -49,6 +49,9 @@ export class AreaGeometryCollection
   get size(): number {
     return this.geometries.length;
   }
+  area(dist: number = Infinity): number {
+    return this.geometries.reduce((prev, curr) => prev + curr.area(dist), 0);
+  }
 }
 
 export type AreaGeometry = AreaObject | AreaGeometryCollection;
