@@ -22,7 +22,6 @@
     "test": "yarn node $(yarn bin jest)"
   },
   "devDependencies": {
-    "@types/geojson": "^7946.0.10",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.11",
     "@types/uuid": "^8.3.4",

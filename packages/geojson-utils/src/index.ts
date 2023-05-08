@@ -1,9 +1,7 @@
-/**
- * @module geojson-utils
- */
+// GeoJSON
+export * from './geojson/index.js';
 
 // Types
-export type {TCollectionType} from './types/collection.js';
 export type {
   ICategoricalProperty,
   INumericalProperty,
@@ -13,9 +11,6 @@ export type {
 
 // Utils
 export {copy} from './copy.js';
-export * from './collection.js';
-//export * as distance from './distance.js';
-export {collectionType, collectionTypeWithRadius} from './collectionType.js';
 export * from './position.js';
 
 export {area} from './area.js';
