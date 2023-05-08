@@ -10,6 +10,14 @@ export class MultiPointCircle
     return obj instanceof MultiPointCircle;
   }
 
+  static create(
+    coordinates: GJ.MultiPointCircle['coordinates'],
+    radius: number,
+    shallow: boolean = true,
+  ): MultiPointCircle {
+    return new MultiPointCircle({coordinates, radius}, shallow);
+  }
+
   radius: number;
 
   constructor(
@@ -18,14 +26,6 @@ export class MultiPointCircle
   ) {
     super({...obj, type: 'MultiPoint'}, shallow);
     this.radius = obj.radius;
-  }
-
-  create(
-    coordinates: GJ.MultiPointCircle['coordinates'],
-    radius: number,
-    shallow: boolean = true,
-  ): MultiPointCircle {
-    return new MultiPointCircle({coordinates, radius}, shallow);
   }
 
   toPolygon({
@@ -63,7 +63,11 @@ export class MultiPointCircle
     return new MultiPolygon({coordinates, bbox}, true);
   }
 
-  area() {
+  get size(): number {
+    return this.coordinates.length;
+  }
+
+  area(): number {
     return this.coordinates.length * Math.PI * this.radius ** 2;
   }
 }

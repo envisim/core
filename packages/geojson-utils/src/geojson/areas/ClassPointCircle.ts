@@ -10,6 +10,14 @@ export class PointCircle
     return obj instanceof PointCircle;
   }
 
+  static create(
+    coordinates: GJ.PointCircle['coordinates'],
+    radius: number,
+    shallow: boolean = true,
+  ): PointCircle {
+    return new PointCircle({coordinates, radius}, shallow);
+  }
+
   radius: number;
 
   constructor(
@@ -18,14 +26,6 @@ export class PointCircle
   ) {
     super({...obj, type: 'Point'}, shallow);
     this.radius = obj.radius;
-  }
-
-  create(
-    coordinates: GJ.PointCircle['coordinates'],
-    radius: number,
-    shallow: boolean = true,
-  ): PointCircle {
-    return new PointCircle({coordinates, radius}, shallow);
   }
 
   toPolygon({
@@ -52,6 +52,10 @@ export class PointCircle
     coordinates.push([...coordinates[0]]);
 
     return new Polygon({coordinates: [coordinates], bbox}, true);
+  }
+
+  get size(): number {
+    return 1;
   }
 
   area(): number {

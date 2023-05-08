@@ -1,5 +1,6 @@
 import {copy} from '../copy.js';
 import {GeoJsonObject} from './ClassGeoJsonObject.js';
+import type * as GJ from './types.js';
 
 export abstract class BaseFeature extends GeoJsonObject<'Feature'> {
   properties: Exclude<GJ.FeatureProperties, null>;
@@ -15,19 +16,18 @@ export abstract class BaseFeature extends GeoJsonObject<'Feature'> {
         : copy(obj.properties);
   }
 
-  initProperty(property: string, defaultValue: number = 0.0): this {
+  initProperty(property: string, defaultValue: number = 0.0): void {
     if (!this.properties.hasOwnProperty(property))
       this.properties[property] = defaultValue;
-    return this;
   }
 
-  removeProperty(property: string): this {
+  removeProperty(property: string): void {
     delete this.properties[property];
-    return this;
   }
 
-  setProperty(property: string, value: number): this {
+  setProperty(property: string, value: number): void {
     this.properties[property] = value;
-    return this;
   }
+
+  abstract get size(): number;
 }

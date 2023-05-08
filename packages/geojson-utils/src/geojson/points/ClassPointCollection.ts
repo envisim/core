@@ -11,6 +11,13 @@ export class PointCollection
     return obj instanceof PointCollection;
   }
 
+  static create(
+    features: GJ.PointFeature[],
+    shallow: boolean = true,
+  ): PointCollection {
+    return new PointCollection({features}, shallow);
+  }
+
   features: PointFeature[];
 
   constructor(

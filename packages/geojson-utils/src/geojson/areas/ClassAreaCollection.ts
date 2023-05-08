@@ -11,6 +11,13 @@ export class AreaCollection
     return obj instanceof AreaCollection;
   }
 
+  static create(
+    features: GJ.AreaFeature[],
+    shallow: boolean = true,
+  ): AreaCollection {
+    return new AreaCollection({features}, shallow);
+  }
+
   features: AreaFeature[];
 
   constructor(

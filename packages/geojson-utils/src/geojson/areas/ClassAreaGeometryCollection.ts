@@ -17,6 +17,13 @@ export class AreaGeometryCollection
     return obj instanceof AreaGeometryCollection;
   }
 
+  static create(
+    geometries: GJ.AreaObject[],
+    shallow: boolean = true,
+  ): AreaGeometryCollection {
+    return new AreaGeometryCollection({geometries}, shallow);
+  }
+
   geometries: AreaObject[];
 
   constructor(
@@ -37,6 +44,10 @@ export class AreaGeometryCollection
           return new MultiPolygon(g, true);
       }
     });
+  }
+
+  get size(): number {
+    return this.geometries.length;
   }
 }
 

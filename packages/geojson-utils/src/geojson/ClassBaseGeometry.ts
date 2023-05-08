@@ -1,5 +1,6 @@
 import {copy} from '../copy.js';
 import {GeoJsonObject} from './ClassGeoJsonObject.js';
+import type * as GJ from './types.js';
 
 export abstract class BaseGeometry<
   T extends GJ.BaseGeometry,
@@ -15,4 +16,6 @@ export abstract class BaseGeometry<
       this.coordinates = copy(obj.coordinates);
     }
   }
+
+  abstract get size(): number;
 }

@@ -7,11 +7,18 @@ export class Point extends BasePointObject<GJ.Point> implements GJ.Point {
     return obj instanceof Point;
   }
 
+  static create(
+    coordinates: GJ.Point['coordinates'],
+    shallow: boolean = true,
+  ): Point {
+    return new Point({coordinates}, shallow);
+  }
+
   constructor(obj: OptionalParam<GJ.Point, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'Point'}, shallow);
   }
 
-  create(coordinates: GJ.Point['coordinates'], shallow: boolean = true): Point {
-    return new Point({coordinates}, shallow);
+  get size(): number {
+    return 1;
   }
 }

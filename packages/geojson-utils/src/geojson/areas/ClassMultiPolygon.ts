@@ -10,6 +10,13 @@ export class MultiPolygon
     return obj instanceof MultiPolygon;
   }
 
+  static create(
+    coordinates: GJ.MultiPolygon['coordinates'],
+    shallow: boolean = true,
+  ): MultiPolygon {
+    return new MultiPolygon({coordinates}, shallow);
+  }
+
   constructor(
     obj: OptionalParam<GJ.MultiPolygon, 'type'>,
     shallow: boolean = true,
@@ -17,11 +24,8 @@ export class MultiPolygon
     super({...obj, type: 'MultiPolygon'}, shallow);
   }
 
-  create(
-    coordinates: GJ.MultiPolygon['coordinates'],
-    shallow: boolean = true,
-  ): MultiPolygon {
-    return new MultiPolygon({coordinates}, shallow);
+  get size(): number {
+    return this.coordinates.length;
   }
 
   area(): number {

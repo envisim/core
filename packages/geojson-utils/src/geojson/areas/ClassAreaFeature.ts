@@ -17,6 +17,13 @@ export class AreaFeature extends BaseFeature implements GJ.AreaFeature {
     return obj instanceof AreaFeature;
   }
 
+  static create(
+    geometry: GJ.AreaGeometry,
+    shallow: boolean = true,
+  ): AreaFeature {
+    return new AreaFeature({geometry}, shallow);
+  }
+
   geometry: AreaGeometry;
 
   constructor(
@@ -42,5 +49,9 @@ export class AreaFeature extends BaseFeature implements GJ.AreaFeature {
         this.geometry = new MultiPolygon(obj.geometry, shallow);
         break;
     }
+  }
+
+  get size(): number {
+    return this.geometry.size;
   }
 }

@@ -12,6 +12,13 @@ export class PointFeature extends BaseFeature implements GJ.PointFeature {
     return obj instanceof PointFeature;
   }
 
+  static create(
+    geometry: GJ.PointGeometry,
+    shallow: boolean = true,
+  ): PointFeature {
+    return new PointFeature({geometry}, shallow);
+  }
+
   geometry: PointGeometry;
 
   constructor(
@@ -31,5 +38,9 @@ export class PointFeature extends BaseFeature implements GJ.PointFeature {
         this.geometry = new MultiPoint(obj.geometry, shallow);
         break;
     }
+  }
+
+  get size(): number {
+    return this.geometry.size;
   }
 }

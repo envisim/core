@@ -32,4 +32,8 @@ export class LineFeature extends BaseFeature implements GJ.LineFeature {
         break;
     }
   }
+
+  get size(): number {
+    return this.geometry.size;
+  }
 }

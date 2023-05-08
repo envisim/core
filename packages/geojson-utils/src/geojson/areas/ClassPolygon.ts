@@ -7,15 +7,19 @@ export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
     return obj instanceof Polygon;
   }
 
-  constructor(obj: OptionalParam<GJ.Polygon, 'type'>, shallow: boolean = true) {
-    super({...obj, type: 'Polygon'}, shallow);
-  }
-
-  create(
+  static create(
     coordinates: GJ.Polygon['coordinates'],
     shallow: boolean = true,
   ): Polygon {
     return new Polygon({coordinates}, shallow);
+  }
+
+  constructor(obj: OptionalParam<GJ.Polygon, 'type'>, shallow: boolean = true) {
+    super({...obj, type: 'Polygon'}, shallow);
+  }
+
+  get size(): number {
+    return 1;
   }
 
   area(): number {

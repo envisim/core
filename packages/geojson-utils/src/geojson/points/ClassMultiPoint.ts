@@ -10,6 +10,13 @@ export class MultiPoint
     return obj instanceof MultiPoint;
   }
 
+  static create(
+    coordinates: GJ.MultiPoint['coordinates'],
+    shallow: boolean = true,
+  ): MultiPoint {
+    return new MultiPoint({coordinates}, shallow);
+  }
+
   constructor(
     obj: OptionalParam<GJ.MultiPoint, 'type'>,
     shallow: boolean = true,
@@ -17,10 +24,7 @@ export class MultiPoint
     super({...obj, type: 'MultiPoint'}, shallow);
   }
 
-  create(
-    coordinates: GJ.MultiPoint['coordinates'],
-    shallow: boolean = true,
-  ): MultiPoint {
-    return new MultiPoint({coordinates}, shallow);
+  get size(): number {
+    return this.coordinates.length;
   }
 }

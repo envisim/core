@@ -10,6 +10,13 @@ export class LineString
     return obj instanceof LineString;
   }
 
+  static create(
+    coordinates: GJ.LineString['coordinates'],
+    shallow: boolean = true,
+  ): LineString {
+    return new LineString({coordinates}, shallow);
+  }
+
   constructor(
     obj: OptionalParam<GJ.LineString, 'type'>,
     shallow: boolean = true,
@@ -17,10 +24,7 @@ export class LineString
     super({...obj, type: 'LineString'}, shallow);
   }
 
-  create(
-    coordinates: GJ.LineString['coordinates'],
-    shallow: boolean = true,
-  ): LineString {
-    return new LineString({coordinates}, shallow);
+  get size(): number {
+    return 1;
   }
 }

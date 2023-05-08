@@ -10,6 +10,13 @@ export class MultiLineString
     return obj instanceof MultiLineString;
   }
 
+  static create(
+    coordinates: GJ.MultiLineString['coordinates'],
+    shallow: boolean = true,
+  ): MultiLineString {
+    return new MultiLineString({coordinates}, shallow);
+  }
+
   constructor(
     obj: OptionalParam<GJ.MultiLineString, 'type'>,
     shallow: boolean = true,
@@ -17,10 +24,7 @@ export class MultiLineString
     super({...obj, type: 'MultiLineString'}, shallow);
   }
 
-  create(
-    coordinates: GJ.MultiLineString['coordinates'],
-    shallow: boolean = true,
-  ): MultiLineString {
-    return new MultiLineString({coordinates}, shallow);
+  get size(): number {
+    return this.coordinates.length;
   }
 }

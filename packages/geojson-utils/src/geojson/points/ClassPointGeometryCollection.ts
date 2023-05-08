@@ -11,6 +11,13 @@ export class PointGeometryCollection
     return obj instanceof PointGeometryCollection;
   }
 
+  static create(
+    geometries: GJ.PointObject[],
+    shallow: boolean = true,
+  ): PointGeometryCollection {
+    return new PointGeometryCollection({geometries}, shallow);
+  }
+
   geometries: PointObject[];
 
   constructor(
@@ -27,6 +34,10 @@ export class PointGeometryCollection
           return new MultiPoint(g, true);
       }
     });
+  }
+
+  get size(): number {
+    return this.geometries.length;
   }
 }
 

@@ -11,6 +11,13 @@ export class LineCollection
     return obj instanceof LineCollection;
   }
 
+  static create(
+    features: GJ.LineFeature[],
+    shallow: boolean = true,
+  ): LineCollection {
+    return new LineCollection({features}, shallow);
+  }
+
   features: LineFeature[];
 
   constructor(

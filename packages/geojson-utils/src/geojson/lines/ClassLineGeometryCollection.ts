@@ -11,6 +11,13 @@ export class LineGeometryCollection
     return obj instanceof LineGeometryCollection;
   }
 
+  static create(
+    geometries: GJ.LineObject[],
+    shallow: boolean = true,
+  ): LineGeometryCollection {
+    return new LineGeometryCollection({geometries}, shallow);
+  }
+
   geometries: LineObject[];
 
   constructor(
@@ -27,6 +34,10 @@ export class LineGeometryCollection
           return new MultiLineString(g, true);
       }
     });
+  }
+
+  get size(): number {
+    return this.geometries.length;
   }
 }
 
