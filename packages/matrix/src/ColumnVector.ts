@@ -37,7 +37,7 @@ class ColumnVector extends Vector {
    * @group Copy methods
    */
   toRowVector(): RowVector {
-    return new RowVector(this.internal, this.nrow);
+    return new RowVector(this._e, this._nrow);
   }
 
   /**
@@ -71,13 +71,13 @@ class ColumnVector extends Vector {
       throw new TypeError('columns must consist of 0');
 
     const n = columns.length;
-    const s = new Array(n * this.nrow);
+    const s = new Array(n * this._nrow);
 
     for (let i = 0; i < n; i++) {
-      s.splice(i * this.nrow, (i + 1) * this.nrow, ...this._e);
+      s.splice(i * this._nrow, (i + 1) * this._nrow, ...this._e);
     }
 
-    return new Matrix(s, this.nrow, n);
+    return new Matrix(s, this._nrow, n);
   }
   /**
    * {@inheritDoc Matrix.extractRow}
@@ -85,7 +85,7 @@ class ColumnVector extends Vector {
    * @group Accessors
    */
   extractRow(row: number): RowVector {
-    return new RowVector(this.atIndex(row), 1);
+    return new RowVector(this.at(row), 1);
   }
   /**
    * {@inheritDoc Matrix.extractRows}
@@ -100,7 +100,7 @@ class ColumnVector extends Vector {
     const s = new Matrix(0.0, rows.length, 1);
 
     for (let i = 0; i < rows.length; i++) {
-      s.edIndex(i, this.atIndex(rows[i]));
+      s.ed(i, this.at(rows[i]));
     }
 
     return s;
@@ -113,7 +113,7 @@ class ColumnVector extends Vector {
   extractSubMatrix(rowStart: number = 0, rowEnd: number = this.nrow - 1): this {
     if (!Number.isInteger(rowStart) || !Number.isInteger(rowEnd))
       throw new RangeError('rows must be integer');
-    if (rowStart < 0 || this.nrow <= rowEnd)
+    if (rowStart < 0 || this._nrow <= rowEnd)
       throw new RangeError('rows out of bounds');
 
     const rows = rowEnd - rowStart + 1;
@@ -143,7 +143,7 @@ class ColumnVector extends Vector {
    * @group Statistics
    */
   regressionCoefficients(xmat: Matrix): ColumnVector {
-    if (this.nrow !== xmat.nrow)
+    if (this._nrow !== xmat.nrow)
       throw new RangeError('xmat has not same number of rows as this');
     if (xmat.ncol > xmat.nrow)
       throw new RangeError(

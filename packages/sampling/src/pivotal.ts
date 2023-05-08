@@ -5,17 +5,17 @@ import {
   optionsDefaultEps,
   optionsDefaultRand,
   optionsDefaultTreeBucketSize,
+  PartialPick,
 } from './types.js';
 
 /**
  * Selects a (pips) sample using the local pivotal method 1.
  *
- * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities,
+ * @param prob - inclusion probabilities of size N,
  *   or a number `n` indicating equal inclusion probabilities `n / N`.
- * @param xm - N*p Matrix of auxilliary variables,
- *   where N is equal to size of `prob`.
- * @param options - See {@link IOptions}
- * @returns An array of indices of the sample.
+ * @param xm - matrix of auxilliary variables of size N*p.
+ * @param options
+ * @returns sample indices.
  */
 export function lpm1(
   prob: TArrayLike | number,
@@ -57,12 +57,11 @@ export function lpm1(
 /**
  * Selects a (pips) sample using the local pivotal method 2.
  *
- * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities,
+ * @param prob - inclusion probabilities of size N,
  *   or a number `n` indicating equal inclusion probabilities `n / N`.
- * @param xm - N*p Matrix of auxilliary variables,
- *   where N is equal to size of `prob`.
- * @param options - See {@link IOptions}
- * @returns An array of indices of the sample.
+ * @param xm - matrix of auxilliary variables of size N *p.
+ * @param options
+ * @returns sample indices.
  */
 export function lpm2(
   prob: TArrayLike | number,
@@ -104,12 +103,11 @@ export function lpm2(
 /**
  * Selects a (pips) sample using the local pivotal method 1 search.
  *
- * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities,
+ * @param prob - inclusion probabilities of size N,
  *   or a number `n` indicating equal inclusion probabilities `n / N`.
- * @param xm - N*p Matrix of auxilliary variables,
- *   where N is equal to size of `prob`.
- * @param options - See {@link IOptions}
- * @returns An array of indices of the sample.
+ * @param xm - matrix of auxilliary variables of size N*p.
+ * @param options
+ * @returns sample indices.
  */
 export function lpm1s(
   prob: TArrayLike | number,
@@ -151,16 +149,16 @@ export function lpm1s(
 /**
  * Selects a (pips) sample using the random pivotal method.
  *
- * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities.
- * @param options - See {@link IOptions}
- * @returns An array of indices of chosen units, the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param options
+ * @returns sample indices.
  */
 export function rpm(
   prob: TArrayLike,
   {
     rand = optionsDefaultRand,
     eps = optionsDefaultEps,
-  }: Omit<IOptions, 'treeBucketSize'> = {},
+  }: PartialPick<IOptions, 'rand' | 'eps'> = {},
 ): number[] {
   const p = arrayLikeToArray(prob) as number[];
   const N = p.length;
@@ -174,16 +172,16 @@ export function rpm(
 /**
  * Selects a (pips) sample using the sequential pivotal method.
  *
- * @param prob - an {@link @envisim/matrix.TArrayLike} of inclusion probabilities.
- * @param options - See {@link IOptions}
- * @returns An array of indices of chosen units, the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param options
+ * @returns sample indices.
  */
 export function spm(
   prob: TArrayLike,
   {
     rand = optionsDefaultRand,
     eps = optionsDefaultEps,
-  }: Omit<IOptions, 'treeBucketSize'> = {},
+  }: PartialPick<IOptions, 'rand' | 'eps'> = {},
 ): number[] {
   const p = arrayLikeToArray(prob) as number[];
   const N = p.length;

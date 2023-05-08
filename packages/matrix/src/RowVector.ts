@@ -30,7 +30,7 @@ class RowVector extends Vector {
    * @group Copy methods
    */
   toColumnVector(): ColumnVector {
-    return new ColumnVector(this.internal, this.ncol);
+    return new ColumnVector(this._e, this._ncol);
   }
   /**
    * {@inheritDoc Matrix.toRowVector}
@@ -54,7 +54,7 @@ class RowVector extends Vector {
    * @group Copy methods
    */
   extractColumn(column: number): ColumnVector {
-    return new ColumnVector(this.atIndex(column), 1);
+    return new ColumnVector(this.at(column), 1);
   }
   /**
    * {@inheritDoc Matrix.extractColumns}
@@ -68,7 +68,7 @@ class RowVector extends Vector {
     const s = new Matrix(0.0, 1, columns.length);
 
     for (let i = 0; i < columns.length; i++) {
-      s.edIndex(i, this.atIndex(columns[i]));
+      s.ed(i, this.at(columns[i]));
     }
 
     return s;
@@ -92,13 +92,13 @@ class RowVector extends Vector {
       throw new TypeError('rows must consist of integers');
 
     const n = rows.length;
-    const s = new Array(n * this.ncol);
+    const s = new Array(n * this._ncol);
 
-    for (let i = 0; i < this.ncol; i++) {
-      s.splice(i * n, (i + 1) * n, ...new Array(n).fill(this.atIndex(i)));
+    for (let i = 0; i < this._ncol; i++) {
+      s.splice(i * n, (i + 1) * n, ...new Array(n).fill(this.at(i)));
     }
 
-    return new Matrix(s, n, this.ncol);
+    return new Matrix(s, n, this._ncol);
   }
   /**
    * {@inheritDoc Matrix.extractSubMatrix}
@@ -110,7 +110,7 @@ class RowVector extends Vector {
   ): this {
     if (!Number.isInteger(columnStart) || !Number.isInteger(columnEnd))
       throw new RangeError('columns must be integer');
-    if (columnStart < 0 || this.ncol <= columnEnd)
+    if (columnStart < 0 || this._ncol <= columnEnd)
       throw new RangeError('rows out of bounds');
 
     const cols = columnEnd - columnStart + 1;

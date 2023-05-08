@@ -1,4 +1,4 @@
-import {distTests, fromTo, QARR} from './distributions.testf';
+import {distTests, fromTo, QARR} from './_distributions.testf';
 import {Semicircle as Dist} from '../src/semicircle';
 import {Beta} from '../src/beta';
 

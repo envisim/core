@@ -22,8 +22,9 @@ class Arcsine extends Distribution<IBoundParams> {
 
   /**
    * The probability density/mass function evaluated at `x`.
-   * @param params - parameters of the distribution
-   * @returns a number or a {@link matrix.TArrayLike}, depending on the type of `x`.
+   * @param x - the argument of the pdf.
+   * @param params - parameters of the distribution.
+   * @returns a number or array of numbers, type dependent on the input of `x`.
    * @group Static methods
    */
   static pdf<T extends number | TArrayLike>(
@@ -45,8 +46,9 @@ class Arcsine extends Distribution<IBoundParams> {
 
   /**
    * The cumulative distribution function evaluated at `x`.
-   * @param params - parameters of the distribution
-   * @returns a number or a {@link matrix.TArrayLike}, depending on the type of `x`.
+   * @param x - the argument of the cdf.
+   * @param params - parameters of the distribution.
+   * @returns a number or array of numbers, type dependent on the input of `x`.
    * @group Static methods
    */
   static cdf<T extends number | TArrayLike>(
@@ -68,8 +70,9 @@ class Arcsine extends Distribution<IBoundParams> {
 
   /**
    * The quantile function evaluated at `q`.
-   * @param params - parameters of the distribution
-   * @returns a number or a {@link matrix.TArrayLike}, depending on the type of `x`.
+   * @param q - the argument of the quantile function.
+   * @param params - parameters of the distribution.
+   * @returns a number or array of numbers, type dependent on the input of `x`.
    * @group Static methods
    */
   static quantile<T extends number | TArrayLike>(
@@ -91,11 +94,11 @@ class Arcsine extends Distribution<IBoundParams> {
   }
 
   /**
-   * The quantile function evaluated at `q`.
-   * @param n - the number of observations to be generated
-   * @param params - parameters of the distribution
+   * Random values of the distribution.
+   * @param n - the number of observations to be generated.
+   * @param params - parameters of the distribution.
    * @param options - Available: `rand`
-   * @returns a number or a {@link matrix.TArrayLike}, depending on the type of `x`.
+   * @returns the random values.
    * @group Static methods
    */
   static random(

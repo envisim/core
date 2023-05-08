@@ -1,14 +1,14 @@
 import type {Random} from '@envisim/random';
 import {arrayLikeToArray, ColumnVector, TArrayLike} from '@envisim/matrix';
-import {IOptions, optionsDefaultRand} from './types.js';
+import {IOptions, optionsDefaultRand, PartialPick} from './types.js';
 
 /**
  * Selects A systematic (pips) sample.
  *
  * @ignore
- * @param p - Array of inclusion probabilities.
- * @param fun - Index function.
- * @returns The sample.
+ * @param p - inclusion probabilities of size N.
+ * @param fun - index function.
+ * @returns sample indices.
  */
 const _systematic = (
   p: number[],
@@ -35,13 +35,13 @@ const _systematic = (
 /**
  * Selects a systematic (pips) sample.
  *
- * @param prob - an {@link matrix.TArrayLike} of inclusion probabilities.
- * @param options - Available: {@link IOptions.rand}
- * @returns An array of indices of the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param options
+ * @returns sample indices.
  */
 export const systematic = (
   prob: TArrayLike,
-  {rand = optionsDefaultRand}: IOptions = {},
+  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
   const p = arrayLikeToArray(prob);
   return _systematic(p, (i) => i, rand);
@@ -50,13 +50,13 @@ export const systematic = (
 /**
  * Selects a systematic (pips) sample with initial randomization of order of the units.
  *
- * @param prob - an {@link matrix.TArrayLike} of inclusion probabilities.
- * @param options - Available: {@link IOptions.rand}
- * @returns An array of indices of the sample.
+ * @param prob - inclusion probabilities of size N.
+ * @param options
+ * @returns sample indices.
  */
 export const randomSystematic = (
   prob: TArrayLike,
-  {rand = optionsDefaultRand}: IOptions = {},
+  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
   const p = arrayLikeToArray(prob);
   const N = p.length;

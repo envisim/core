@@ -1,4 +1,4 @@
-import {distTests, fromTo, QARR} from './distributions.testf';
+import {distTests, fromTo, QARR} from './_distributions.testf';
 import {Beta as Dist, BetaPrime as Dist2} from '../src/beta';
 
 describe('beta (2, 5)', () => {

@@ -1,140 +1,129 @@
 import {
   arrayLikeToArray,
   arrayLikeToColumnVector,
-  ColumnVector,
   Matrix,
   TArrayLike,
 } from '@envisim/matrix';
-import {
-  IOptions,
-  optionsDefaultDistfun,
-  optionsDefaultEps,
-} from '@envisim/sampling';
-import {nearestNeighbourArray} from './utils.js';
+import {NearestNeighbour} from '@envisim/sampling';
+import {parseAndCheckSampleArray} from './utils.js';
 
 /**
- * Single count Horvitz-Thompson estimator
- * $$ \sum_\{i \in S\} \frac\{y_i\}\{\pi_i\} $$
+ * Single count Horvitz-Thompson estimator of the total
+ * $$ \hat\{Y\} = \sum_\{i \in S\} \frac\{y_i\}\{\pi_i\} , $$
+ * $$ n = |S| . $$
+ * @category Estimator
  *
- * @param y - a {@link matrix.TArrayLike} of values in $S$.
- * @param prob - a {@link matrix.TArrayLike} of inclusion probabilities $\pi$.
- * Must have same size as `y`.
- * @returns the Horvitz-Thompson estimate.
+ * @param y - variable of interest of size n, $y_i$.
+ * @param prob - inclusion probabilities of size n, $\pi_i$.
+ * @returns the Horvitz-Thompson estimate, $\hat\{Y\}$.
  */
-export const horvitzThompson = (y: TArrayLike, prob: TArrayLike): number => {
+export function horvitzThompson(y: TArrayLike, prob: TArrayLike): number {
   const ys = arrayLikeToColumnVector(y);
   const ps = arrayLikeToColumnVector(prob);
 
   return ys.divide(ps, true).sum();
-};
-
-/** {@inheritDoc horvitzThompson} */
-export const ht = horvitzThompson;
+}
 
 /**
  * Multiple count Hansen-Hurwitz estimator.
- * $$ \sum_\{i \in S\} \frac\{y_i\}\{\E_i\}S_i $$
+ * $$ \hat\{Y\} = \sum_\{i \in S\} \frac\{y_i\}\{\mu_i\}S_i , $$
+ * $$ n = |S| . $$
+ * @category Estimator
  *
- * @param y - a {@link matrix.TArrayLike} of values.
- * @param expected - a {@link matrix.TArrayLike} of expected number of inclusions $E_i = E(S_i)$
- * Must have same size as `y`.
- * @param inclusions - a {@link matrix.TArrayLike} of number of inclusions for each value of `y`.
- * Must have same size as `y`.
- * @returns the Hansen-Hurwitz estimate.
+ * @param y - variable of interest of size n, $y_i$.
+ * @param expected - expected number of inclusions of size n, $\mu_i$.
+ * @param inclusions - number of inclusions of size n, $S_i$.
+ * @returns the Hansen-Hurwitz estimate, $\hat\{Y\}$.
  */
-export const hansenHurwitz = (
+export function hansenHurwitz(
   y: TArrayLike,
   expected: TArrayLike,
   inclusions: TArrayLike,
-): number => {
+): number {
   const ys = arrayLikeToColumnVector(y);
   const es = arrayLikeToColumnVector(expected);
   const ss = arrayLikeToColumnVector(inclusions);
 
   return ys.multiply(ss, true).divide(es, true).sum();
-};
+}
 
 /**
- * @param y - a {@link matrix.TArrayLike} of values.
- * @param x - a {@link matrix.TArrayLike} of values. Must have same size as `y`.
- * @param totalX - Population total of x.
- * @param prob - a {@link matrix.TArrayLike} of inclusion probabilities. Must have same
- *   size as `y`.
- * @returns the ratio estimate.
+ * Ratio estimator, where a true total $X$ is available for the population.
+ * $$ \hat\{T\} = \frac\{ \hat\{Y\} \}\{ \hat\{X\} \} X , $$
+ * where $\hat\{Y\}, \hat\{X\}$ are {@link horvitzThompson | HT-estimators}.
+ * @category Estimator
+ *
+ * @param y - variable of interest of size n.
+ * @param x - auxiliary variable of size n.
+ * @param totalX - population total, $X$.
+ * @param prob - inclusion probabilities of size n.
+ * @returns the ratio estimate, $\hat\{T\}$.
  */
-export const ratioEstimator = (
+export function ratioEstimator(
   y: TArrayLike,
   x: TArrayLike,
   totalX: number,
   prob: TArrayLike,
-): number => {
+): number {
   const ys = arrayLikeToColumnVector(y);
   const xs = arrayLikeToColumnVector(x);
   const ps = arrayLikeToColumnVector(prob);
 
   if (typeof totalX !== 'number') throw new TypeError('totalX must be number');
-  // if (ys.nrow !== xs.nrow || ys.nrow !== ps.nrow)
-  //   throw new RangeError('y, x and prob must have same size');
+  if (ys.nrow !== xs.nrow) throw new RangeError('y and x must have same size');
 
   return totalX * (ys.divide(ps, true).sum() / xs.divide(ps, true).sum());
-};
+}
 
 /**
- * @param y - a {@link matrix.TArrayLike} of values.
- * @param prob - a {@link matrix.TArrayLike} of inclusion probabilities. Must have same
- *   size as `y`.
- * @returns the wr estimate.
+ * $$ \hat\{Y\} = \sum_\{i=1\}^n \frac\{y_i\}\{n p_i\} $$
+ * @category Estimator
+ *
+ * @param y - variable of interest of size n, $y_i$.
+ * @param prob - drawing probabilities of size n, $p_i$.
+ * @returns the wr estimate, $\hat\{Y\}$.
  */
-export const wrEstimator = (y: TArrayLike, prob: TArrayLike): number => {
+export function wrEstimator(y: TArrayLike, prob: TArrayLike): number {
   const ys = arrayLikeToColumnVector(y);
   const ps = arrayLikeToColumnVector(prob);
 
-  // if (ys.nrow !== ps.nrow)
-  //   throw new RangeError('y and prob must have same size');
-
   return ys.divide(ps, true).mean();
-};
+}
 
 /**
- * @param y - a {@link matrix.TArrayLike} of values.
- * @param xm - a {@link matrix.Matrix} of auxilliary variables. Must have same size as `y`.
- * @param sample - A list of sample indices, in the same order as the y-values.
+ * $$ \hat\{Y\} = \sum_\{i \in S\} y_i n_i , $$
+ * where $n_i$ is the number of units in the population closer to unit $i$
+ * than to any other unit.
+ * @category Estimator
+ *
+ * @param y - variable of interest of size n.
+ * @param xm - auxilliary variables of size N*p.
+ * @param sample - sample indices, in the same order as the y-values.
  * @returns the nearest neighbour estimate
  */
-export const nearestNeighbourEstimator = (
+export function nearestNeighbourEstimator(
   y: TArrayLike,
   xm: Matrix,
   sample: TArrayLike,
-  opts: IOptions = {
-    eps: optionsDefaultEps,
-    distfun: optionsDefaultDistfun,
-  },
-): number => {
-  const ys = arrayLikeToColumnVector(y);
-  const sampleArr = arrayLikeToArray(sample);
+): number {
+  const N = xm.nrow;
+  const sampleArr = parseAndCheckSampleArray(sample, N);
+  const n = sampleArr.length;
 
-  if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be of class Matrix');
-  if (ys.nrow !== sample.length)
-    throw new RangeError(
-      'y must have same number of rows as the length of sample',
-    );
-  if (
-    !sampleArr.every(
-      (v: number) => Number.isInteger(v) && 0 <= v && v < xm.nrow,
-    )
-  )
-    throw new TypeError(
-      'sample must be a vector of integers inside the length of prob',
-    );
+  if (y.length !== n)
+    throw new RangeError('y and sample must have the same length');
 
-  const ni = new ColumnVector(0.0, sample.length);
+  const ni = new Array(n).fill(0.0);
+  const nn = new NearestNeighbour(xm.extractRows(sampleArr), 10);
 
-  for (let i = 0; i < xm.nrow; i++) {
-    const neighbours = nearestNeighbourArray(xm, i, opts);
-    for (let j = 0; j < neighbours.length; j++) {
-      ni.fnIndex(neighbours[j], (v: number) => v + 1.0 / neighbours.length);
-    }
+  for (let i = 0; i < N; i++) {
+    const unit = xm.extractRow(i);
+    const neighbours = nn.findNearestNeighbours(unit);
+    const part = neighbours.length === 1 ? 1.0 : 1.0 / neighbours.length;
+    neighbours.forEach((e) => {
+      ni[e] += part;
+    });
   }
 
-  return ni.multiply(ys, true).sum();
-};
+  return ni.reduce((e, t, i) => t + e * (y.at(i) as number));
+}

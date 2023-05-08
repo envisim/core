@@ -1,4 +1,4 @@
-import {RandomMock} from './sampling.testf';
+import {RandomMock} from './_Random.testf';
 import {sampford, pareto, brewer} from '../src/index';
 
 describe('pips', () => {

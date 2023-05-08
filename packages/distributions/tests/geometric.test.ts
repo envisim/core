@@ -1,4 +1,4 @@
-import {distTests, fromTo} from './distributions.testf';
+import {distTests, fromTo} from './_distributions.testf';
 import {Geometric as Dist} from '../src/geometric';
 
 describe('geometric(0.2)', () => {

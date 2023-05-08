@@ -6,7 +6,7 @@ import {
   regularizedBetaFunction,
   // rbf,
 } from '../src/beta-utils';
-import {createTable, fromTo, PRECISION} from './distributions.testf';
+import {createTable, fromTo, PRECISION} from './_distributions.testf';
 
 describe('beta', () => {
   const x = fromTo(0.5, 5, 0.5);
