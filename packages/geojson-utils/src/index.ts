@@ -1,3 +1,6 @@
+// GeoJSON
+export * from './geojson/index.js';
+
 // Types
 export type {
   ICategoricalProperty,
