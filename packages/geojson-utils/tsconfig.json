@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "dist/es",
     "rootDir": "src",
-    "types": ["jest", "node", "geojson"]
+    "types": ["jest", "node"]
   },
   "include": ["src/**/*"]
 }
