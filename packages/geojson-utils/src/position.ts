@@ -1,3 +1,5 @@
+import type * as GeoJSON from './geojson/types.js';
+
 function remainder(p: number, norm: number = 360.0): number {
   const v = p % norm;
   // +0.0 to change -0 => 0
@@ -10,7 +12,7 @@ function remainder(p: number, norm: number = 360.0): number {
 export function normalizePosition(
   p: GeoJSON.Position, // [lon, lat]
 ): GeoJSON.Position {
-  const r = [remainder(p[0], 360.0), remainder(p[1], 180.0)];
+  const r: GeoJSON.Position = [remainder(p[0], 360.0), remainder(p[1], 180.0)];
 
   if (p.length === 3) {
     r.push(p[2]);

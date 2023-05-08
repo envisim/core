@@ -469,7 +469,6 @@ __metadata:
   resolution: "@envisim/geojson-utils@workspace:packages/geojson-utils"
   dependencies:
     "@envisim/matrix": "workspace:*"
-    "@types/geojson": ^7946.0.10
     "@types/jest": ^29.5.0
     "@types/node": ^18.15.11
     "@types/uuid": ^8.3.4
