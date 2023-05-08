@@ -1,6 +1,6 @@
 import {asFeatureCollection} from './asFeatureCollection.js';
 import {distance} from './distance.js';
-
+import type * as GeoJSON from './geojson/types.js';
 /**
  * Computes the length of the a GeoJSON segment.
  * @param start - Start point [lon,lat]
@@ -33,7 +33,7 @@ export const lengthOfSegment = (
 };
 
 // Internal.
-const lengthOfLineString = (ls: GeoJSON.Position[], dist: number) => {
+export const lengthOfLineString = (ls: GeoJSON.Position[], dist: number) => {
   let l = 0;
   for (let i = 0; i < ls.length - 1; i++) {
     l += lengthOfSegment(ls[i], ls[i + 1], dist);

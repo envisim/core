@@ -7,4 +7,5 @@ export abstract class BaseLineObject<
   constructor(obj: GJ.LineObject, shallow: boolean = true) {
     super(obj, shallow);
   }
+  abstract length(): number;
 }

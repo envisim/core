@@ -35,4 +35,7 @@ export class LineCollection
     this.features.push(new LineFeature(feature, shallow));
     return this;
   }
+  length(dist: number = Infinity): number {
+    return this.features.reduce((prev, curr) => prev + curr.length(dist), 0);
+  }
 }

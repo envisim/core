@@ -1,7 +1,7 @@
 import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseLineObject} from './BaseLineObject.js';
-
+import {lengthOfLineString} from '../../length.js';
 export class MultiLineString
   extends BaseLineObject<GJ.MultiLineString>
   implements GJ.MultiLineString
@@ -26,5 +26,11 @@ export class MultiLineString
 
   get size(): number {
     return this.coordinates.length;
+  }
+  length(dist: number = Infinity): number {
+    return this.coordinates.reduce(
+      (prev, curr) => prev + lengthOfLineString(curr, dist),
+      0,
+    );
   }
 }

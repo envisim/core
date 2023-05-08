@@ -39,6 +39,9 @@ export class LineGeometryCollection
   get size(): number {
     return this.geometries.length;
   }
+  length(dist: number = Infinity): number {
+    return this.geometries.reduce((prev, curr) => prev + curr.length(dist), 0);
+  }
 }
 
 export type LineGeometry = LineObject | LineGeometryCollection;

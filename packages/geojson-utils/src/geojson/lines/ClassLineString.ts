@@ -1,7 +1,7 @@
 import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseLineObject} from './BaseLineObject.js';
-
+import {lengthOfLineString} from '../../length.js';
 export class LineString
   extends BaseLineObject<GJ.LineString>
   implements GJ.LineString
@@ -26,5 +26,8 @@ export class LineString
 
   get size(): number {
     return 1;
+  }
+  length(dist: number = Infinity): number {
+    return lengthOfLineString(this.coordinates, dist);
   }
 }
