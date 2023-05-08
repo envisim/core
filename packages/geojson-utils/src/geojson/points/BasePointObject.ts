@@ -7,4 +7,5 @@ export abstract class BasePointObject<
   constructor(obj: GJ.PointObject, shallow: boolean = true) {
     super(obj, shallow);
   }
+  abstract count(): number;
 }

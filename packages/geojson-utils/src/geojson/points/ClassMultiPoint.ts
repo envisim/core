@@ -27,4 +27,7 @@ export class MultiPoint
   get size(): number {
     return this.coordinates.length;
   }
+  count(): number {
+    return this.coordinates.length;
+  }
 }

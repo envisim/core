@@ -39,6 +39,9 @@ export class PointGeometryCollection
   get size(): number {
     return this.geometries.length;
   }
+  count(): number {
+    return this.geometries.reduce((prev, curr) => prev + curr.count(), 0);
+  }
 }
 
 export type PointGeometry = PointObject | PointGeometryCollection;

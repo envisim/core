@@ -35,4 +35,7 @@ export class PointCollection
     this.features.push(new PointFeature(feature, shallow));
     return this;
   }
+  count(): number {
+    return this.features.reduce((prev, curr) => prev + curr.count(), 0);
+  }
 }

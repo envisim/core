@@ -43,4 +43,7 @@ export class PointFeature extends BaseFeature implements GJ.PointFeature {
   get size(): number {
     return this.geometry.size;
   }
+  count(): number {
+    return this.geometry.count();
+  }
 }

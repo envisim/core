@@ -21,4 +21,7 @@ export class Point extends BasePointObject<GJ.Point> implements GJ.Point {
   get size(): number {
     return 1;
   }
+  count(): number {
+    return 1;
+  }
 }
