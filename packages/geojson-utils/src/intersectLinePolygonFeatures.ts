@@ -1,8 +1,9 @@
 import {pointInSinglePolygon} from './pointInPolygon.js';
 import {intersectSegments} from './intersectSegments.js';
 import {toLineString, toMultiLineString} from './to.js';
+import type * as GJ from './geojson/types.js';
 
-type sortArrayElement = [GeoJSON.Position, number];
+type sortArrayElement = [GJ.Position, number];
 
 // IntersectSegments can be replaced by intersectGreatCircleSegments
 // if we want to treat segments as geodesics.
@@ -10,8 +11,8 @@ type sortArrayElement = [GeoJSON.Position, number];
 // Internal. Can be replaced by distance if we want to treat
 // segments as geodesics.
 const squaredEuclideanDistOnSegment = (
-  p1: GeoJSON.Position,
-  p2: GeoJSON.Position,
+  p1: GJ.Position,
+  p2: GJ.Position,
 ): number => {
   const dx = p1[0] - p2[0];
   const dy = p1[1] - p2[1];
@@ -20,10 +21,7 @@ const squaredEuclideanDistOnSegment = (
 
 // Internal. Can be replaced by intermediate if we want to treat
 // segments as geodesics.
-const midpoint = (
-  p1: GeoJSON.Position,
-  p2: GeoJSON.Position,
-): GeoJSON.Position => {
+const midpoint = (p1: GJ.Position, p2: GJ.Position): GJ.Position => {
   return [(p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2];
 };
 
@@ -31,10 +29,10 @@ const midpoint = (
 // line segment and a polygon. Returns empty array if no
 // intersections.
 const lineSegmentPolygonIntersectPoints = (
-  segment: GeoJSON.Position[],
-  polygon: GeoJSON.Position[][],
-): GeoJSON.Position[] => {
-  let p: GeoJSON.Position[] = [],
+  segment: GJ.Position[],
+  polygon: GJ.Position[][],
+): GJ.Position[] => {
+  let p: GJ.Position[] = [],
     q,
     i,
     j;
@@ -57,14 +55,14 @@ const lineSegmentPolygonIntersectPoints = (
 // in polygon (intersection). An empty array is returned
 // if no intersection.
 const lineStringInPolygon = (
-  line: GeoJSON.Position[],
-  polygon: GeoJSON.Position[][],
-): GeoJSON.Position[][] => {
+  line: GJ.Position[],
+  polygon: GJ.Position[][],
+): GJ.Position[][] => {
   // 1. Build new linestring with all intersection-points added in order.
-  let points: GeoJSON.Position[] = [],
+  let points: GJ.Position[] = [],
     i = 0,
     j = 0,
-    intersectionpoints: GeoJSON.Position[] = [];
+    intersectionpoints: GJ.Position[] = [];
   for (i = 0; i < line.length - 1; i++) {
     points.push([...line[i]]);
     intersectionpoints = lineSegmentPolygonIntersectPoints(
@@ -75,7 +73,7 @@ const lineStringInPolygon = (
       // Sort and add/push points here.
       let sortArray: sortArrayElement[] = intersectionpoints
         .map(
-          (v: GeoJSON.Position): sortArrayElement => [
+          (v: GJ.Position): sortArrayElement => [
             v,
             squaredEuclideanDistOnSegment(v, line[i]),
           ],
@@ -96,7 +94,7 @@ const lineStringInPolygon = (
   // 2. Check each midpoint for in/out and build new (multi-)linestring.
   let mls = [],
     ls = [],
-    mp: GeoJSON.Position = [],
+    mp = [],
     pushed = -1;
   for (i = 0; i < points.length - 1; i++) {
     mp = midpoint(points[i], points[i + 1]);
@@ -125,10 +123,10 @@ const lineStringInPolygon = (
 // Returns array of coordinates for MultiLineString
 // inside MultiPolygon (intersection). Empty array if no intersection.
 const multiLineStringInMultiPolygon = (
-  line: GeoJSON.Position[][],
-  polygon: GeoJSON.Position[][][],
+  line: GJ.Position[][],
+  polygon: GJ.Position[][][],
 ) => {
-  let mls: GeoJSON.Position[][] = [],
+  let mls: GJ.Position[][] = [],
     part,
     i,
     j;
@@ -144,20 +142,22 @@ const multiLineStringInMultiPolygon = (
 };
 
 interface Intersect {
-  geoJSON?: GeoJSON.Feature;
+  geoJSON?: GJ.LineFeature;
 }
 
+// TODO: Fix conversion of PointCircles/MultiPointCircles and AreaGeometryCollection
+
 /**
- * Computes the intersection between a GeoJSON LineString/MultiLineString Feature
- * and a GeoJSON Polygon/MultiPolygon Feature.
+ * Computes the intersection between a LineFeature
+ * and an AreaFeature.
  *
- * @param lineFeature - A geoJSON Feature with geometry type: LineString | MultiLineString.
- * @param polygonFeature - A geoJSON Feature with geometry type: Polygon | MultiPolygon.
+ * @param lineFeature - A LineFeature.
+ * @param polygonFeature - An AreaFeature.
  * @returns - An empty object {} if no intersection and {geoJSON} if intersection.
  */
 export const intersectLinePolygonFeatures = (
-  lineFeature: GeoJSON.Feature,
-  polygonFeature: GeoJSON.Feature,
+  lineFeature: GJ.LineFeature,
+  polygonFeature: GJ.AreaFeature,
 ): Intersect => {
   const lfg = lineFeature.geometry;
   const pfg = polygonFeature.geometry;

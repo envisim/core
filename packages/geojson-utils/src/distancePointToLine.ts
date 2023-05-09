@@ -1,17 +1,16 @@
 import {distancePointToSegment} from './distancePointToSegment.js';
 import {segmentEach} from './segmentEach.js';
-
+import type * as GJ from './geojson/types.js';
 /**
- * Computes the shortest distance from a GeoJSON Feature with geometry type Point
- * to a GeoJSON Feature with geometry type LineString or MultiLineString.
+ * Computes the shortest distance from a point to a line.
  *
- * @param point - A GeoJSON Feature with geometry type Point.
- * @param line - A GeoJSON Feature with geometry type LineString or MultiLineString.
+ * @param point - A PointFeature.
+ * @param line - A LineFeature.
  * @returns - The distance between the point and the line in meters.
  */
 export const distancePointToLine = (
-  point: GeoJSON.Feature,
-  line: GeoJSON.Feature,
+  point: GJ.PointFeature,
+  line: GJ.LineFeature,
 ): number => {
   if (point.geometry.type !== 'Point') {
     throw new Error('Type Point is required for geometry of point Feature.');
@@ -26,7 +25,7 @@ export const distancePointToLine = (
   }
   let d = Infinity;
   const coords = point.geometry.coordinates;
-  segmentEach(line, (segment: GeoJSON.Position[]) => {
+  segmentEach(line, (segment: GJ.Position[]) => {
     d = Math.min(d, distancePointToSegment(coords, segment));
   });
   return d;

@@ -1,24 +1,27 @@
 import {bbox, bboxInBbox} from './bbox.js';
 import {intersectSegments} from './intersectSegments.js';
 import {toPoint, toMultiPoint} from './to.js';
+import type * as GJ from './geojson/types.js';
 
 interface Intersect {
-  geoJSON?: GeoJSON.Feature;
+  geoJSON?: GJ.PointFeature;
 }
+
+// TODO: Fix LineGeometryCollection
 
 /**
  * Computes the intersect of features containing LineString/MultiLineString as
  * the crossing-points between the lines in the two features.
  * Returns an empty object {} if no crossings and {geoJSON}
- * if intersection. Then geoJSON is a Feature with Point/MultiPoint geometry.
+ * if intersection. Then geoJSON is a PointFeature.
  *
- * @param firstFeature - A Feature containing LineString/MultiLineString geometry.
- * @param secondFeature - A Feature containing LineString/MultiLineString geometry.
+ * @param firstFeature - A LineFeature.
+ * @param secondFeature - A LineFeature.
  * @returns - An intersect object.
  */
 export const intersectLineLineFeatures = (
-  firstFeature: GeoJSON.Feature,
-  secondFeature: GeoJSON.Feature,
+  firstFeature: GJ.LineFeature,
+  secondFeature: GJ.LineFeature,
 ): Intersect => {
   const g1 = firstFeature.geometry;
   const g2 = secondFeature.geometry;
@@ -32,7 +35,7 @@ export const intersectLineLineFeatures = (
       'Geometry type for secondFeature must be LineString or MultiLineString.',
     );
   }
-  const points: GeoJSON.Position[] = [];
+  const points: GJ.Position[] = [];
   const box1 = firstFeature.bbox || bbox(firstFeature);
   const box2 = secondFeature.bbox || bbox(secondFeature);
 

@@ -1,7 +1,7 @@
 import {distance} from './distance.js';
-
+import type * as GJ from './geojson/types.js';
 // Internal.
-const dot = (u: GeoJSON.Position, v: GeoJSON.Position): number =>
+const dot = (u: GJ.Position, v: GJ.Position): number =>
   u[0] * v[0] + u[1] * v[1];
 
 /**
@@ -11,11 +11,14 @@ const dot = (u: GeoJSON.Position, v: GeoJSON.Position): number =>
  * @returns - The distance in meters.
  */
 export const distancePointToSegment = (
-  point: GeoJSON.Position,
-  segment: GeoJSON.Position[],
+  point: GJ.Position,
+  segment: GJ.Position[],
 ): number => {
-  const v = [segment[1][0] - segment[0][0], segment[1][1] - segment[0][1]];
-  const w = [point[0] - segment[0][0], point[1] - segment[0][1]];
+  const v: GJ.Position = [
+    segment[1][0] - segment[0][0],
+    segment[1][1] - segment[0][1],
+  ];
+  const w: GJ.Position = [point[0] - segment[0][0], point[1] - segment[0][1]];
   const c1 = dot(w, v);
   if (c1 <= 0) {
     return distance(point, segment[0]);
@@ -25,6 +28,9 @@ export const distancePointToSegment = (
     return distance(point, segment[1]);
   }
   const b2 = c1 / c2;
-  const Pb = [segment[0][0] + b2 * v[0], segment[0][1] + b2 * v[1]];
+  const Pb: GJ.Position = [
+    segment[0][0] + b2 * v[0],
+    segment[0][1] + b2 * v[1],
+  ];
   return distance(point, Pb);
 };

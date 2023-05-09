@@ -1,6 +1,7 @@
+import type * as GJ from './geojson/types.js';
+
 interface Intersect {
-  intersection: boolean;
-  point?: GeoJSON.Position;
+  point?: GJ.Position;
 }
 
 /**
@@ -14,8 +15,8 @@ interface Intersect {
  * @returns - An intersect object.
  */
 export const intersectSegments = (
-  segment1: GeoJSON.Position[],
-  segment2: GeoJSON.Position[],
+  segment1: GJ.Position[],
+  segment2: GJ.Position[],
 ): Intersect => {
   const p0 = segment1[0];
   const p1 = segment1[1];
@@ -27,23 +28,23 @@ export const intersectSegments = (
   const s32_y = p3[1] - p2[1];
   const denom = s10_x * s32_y - s32_x * s10_y;
   if (denom == 0) {
-    return {intersection: false};
+    return {};
   }
   const denom_positive = denom > 0;
   const s02_x = p0[0] - p2[0];
   const s02_y = p0[1] - p2[1];
   const s_numer = s10_x * s02_y - s10_y * s02_x;
   if (s_numer < 0 == denom_positive) {
-    return {intersection: false};
+    return {};
   }
   const t_numer = s32_x * s02_y - s32_y * s02_x;
   if (t_numer < 0 == denom_positive) {
-    return {intersection: false};
+    return {};
   }
   if (s_numer > denom == denom_positive || t_numer > denom == denom_positive) {
-    return {intersection: false};
+    return {};
   }
   const t = t_numer / denom;
-  const p = [p0[0] + t * s10_x, p0[1] + t * s10_y];
-  return {intersection: true, point: p};
+  const p: GJ.Position = [p0[0] + t * s10_x, p0[1] + t * s10_y];
+  return {point: p};
 };
