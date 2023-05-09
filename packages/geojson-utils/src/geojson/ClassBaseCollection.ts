@@ -1,5 +1,5 @@
 import type {AreaFeature} from './areas/ClassAreaFeature.js';
-import {GeoJsonObject} from './base-classes.js';
+import {GeoJsonObject} from './ClassGeoJsonObject.js';
 import type {LineFeature} from './lines/ClassLineFeature.js';
 import type {PointFeature} from './points/ClassPointFeature.js';
 import type * as GJ from './types.js';
