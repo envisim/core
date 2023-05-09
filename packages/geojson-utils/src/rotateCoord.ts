@@ -1,5 +1,6 @@
 // @ts-ignore
 import geodesic from 'geographiclib-geodesic';
+import type * as GJ from './geojson/types.js';
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
 
@@ -12,10 +13,10 @@ const geod = geodesic.Geodesic.WGS84;
  * @returns - The new coordinate as [lon,lat].
  */
 export const rotateCoord = (
-  coord: GeoJSON.Position,
-  refCoord: GeoJSON.Position,
+  coord: GJ.Position,
+  refCoord: GJ.Position,
   angle: number,
-): GeoJSON.Position => {
+): GJ.Position => {
   const result = geod.Inverse(refCoord[1], refCoord[0], coord[1], coord[0]);
   const dist = result.s12;
   const azimuth = result.azi1;

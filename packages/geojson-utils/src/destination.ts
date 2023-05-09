@@ -1,5 +1,6 @@
 // @ts-ignore
 import geodesic from 'geographiclib-geodesic';
+import type * as GJ from './geojson/types.js';
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
 
@@ -13,10 +14,10 @@ const geod = geodesic.Geodesic.WGS84;
  * @returns - The coordinates [lon,lat] of the destination point.
  */
 export const destination = (
-  point: GeoJSON.Position,
+  point: GJ.Position,
   dist: number,
   azimuth: number,
-): GeoJSON.Position => {
+): GJ.Position => {
   const result = geod.Direct(point[1], point[0], (azimuth + 360) % 360, dist);
   if (typeof result.lon2 === 'number' && typeof result.lat2 === 'number') {
     return [result.lon2, result.lat2];

@@ -1,5 +1,6 @@
 // @ts-ignore
 import geodesic from 'geographiclib-geodesic';
+import type * as GJ from './geojson/types.js';
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
 
@@ -19,10 +20,10 @@ const geod = geodesic.Geodesic.WGS84;
  * @returns - The coordinates [lon,lat] of the intermediate point.
  */
 export const intermediate = (
-  p1: GeoJSON.Position,
-  p2: GeoJSON.Position,
+  p1: GJ.Position,
+  p2: GJ.Position,
   fraction: number,
-): GeoJSON.Position => {
+): GJ.Position => {
   const result1 = geod.Inverse(p1[1], p1[0], p2[1], p2[0]);
   const dist = result1.s12;
   const azimuth = result1.azi1;
