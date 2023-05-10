@@ -36,7 +36,20 @@ export class LineFeature extends BaseFeature implements GJ.LineFeature {
   get size(): number {
     return this.geometry.size;
   }
+
   length(dist: number): number {
     return this.geometry.length(dist);
+  }
+
+  geomEach(callback: Function): void {
+    if (this.geometry.type === 'GeometryCollection') {
+      this.geometry.geometries.forEach(
+        (geom: GJ.LineObject, geomIndex: number) => {
+          callback(geom, geomIndex);
+        },
+      );
+    } else {
+      callback(this.geometry);
+    }
   }
 }

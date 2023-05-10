@@ -35,7 +35,22 @@ export class LineCollection
     this.features.push(new LineFeature(feature, shallow));
     return this;
   }
+
   length(dist: number = Infinity): number {
     return this.features.reduce((prev, curr) => prev + curr.length(dist), 0);
+  }
+
+  geomEach(callback: Function): void {
+    this.features.forEach((feature, featureIndex) => {
+      if (feature.geometry.type === 'GeometryCollection') {
+        feature.geometry.geometries.forEach(
+          (geom: GJ.LineObject, geomIndex: number) => {
+            callback(geom, featureIndex, geomIndex);
+          },
+        );
+      } else {
+        callback(feature.geometry, featureIndex);
+      }
+    });
   }
 }

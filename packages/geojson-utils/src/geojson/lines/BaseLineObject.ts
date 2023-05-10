@@ -8,4 +8,6 @@ export abstract class BaseLineObject<
     super(obj, shallow);
   }
   abstract length(): number;
+
+  abstract geomEach(calback: Function): void;
 }

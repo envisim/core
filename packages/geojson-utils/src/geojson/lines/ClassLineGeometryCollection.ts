@@ -39,8 +39,15 @@ export class LineGeometryCollection
   get size(): number {
     return this.geometries.length;
   }
+
   length(dist: number = Infinity): number {
     return this.geometries.reduce((prev, curr) => prev + curr.length(dist), 0);
+  }
+
+  geomEach(callback: Function): void {
+    this.geometries.forEach((geom, geomIndex) => {
+      callback(geom, geomIndex);
+    });
   }
 }
 

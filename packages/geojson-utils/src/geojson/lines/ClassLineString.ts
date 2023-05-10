@@ -27,7 +27,12 @@ export class LineString
   get size(): number {
     return 1;
   }
+
   length(dist: number = Infinity): number {
     return lengthOfLineString(this.coordinates, dist);
+  }
+
+  geomEach(callback: Function): void {
+    callback(this);
   }
 }

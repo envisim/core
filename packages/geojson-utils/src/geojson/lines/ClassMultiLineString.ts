@@ -27,10 +27,15 @@ export class MultiLineString
   get size(): number {
     return this.coordinates.length;
   }
+
   length(dist: number = Infinity): number {
     return this.coordinates.reduce(
       (prev, curr) => prev + lengthOfLineString(curr, dist),
       0,
     );
+  }
+
+  geomEach(callback: Function): void {
+    callback(this);
   }
 }
