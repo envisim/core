@@ -51,7 +51,7 @@ export class PointFeature extends BaseFeature implements GJ.PointFeature {
   geomEach(callback: Function): void {
     if (this.geometry.type === 'GeometryCollection') {
       this.geometry.geometries.forEach(
-        (geom: GJ.PointGeometry, geomIndex: number) => {
+        (geom: GJ.PointObject, geomIndex: number) => {
           callback(geom, geomIndex);
         },
       );

@@ -44,7 +44,7 @@ export class PointCollection
     this.features.forEach((feature, featureIndex: number) => {
       if (feature.geometry.type === 'GeometryCollection') {
         feature.geometry.geometries.forEach(
-          (geom: GJ.PointGeometry, geomIndex: number) => {
+          (geom: GJ.PointObject, geomIndex: number) => {
             callback(geom, featureIndex, geomIndex);
           },
         );
