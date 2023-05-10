@@ -38,4 +38,9 @@ export class PointCollection
   count(): number {
     return this.features.reduce((prev, curr) => prev + curr.count(), 0);
   }
+  geomEach(callback: Function): void {
+    this.features.forEach((feature, index: number) => {
+      feature.geomEach(callback, index);
+    });
+  }
 }

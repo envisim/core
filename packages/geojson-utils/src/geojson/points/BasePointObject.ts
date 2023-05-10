@@ -8,4 +8,9 @@ export abstract class BasePointObject<
     super(obj, shallow);
   }
   abstract count(): number;
+  abstract geomEach(
+    callback: Function,
+    featureIndex: null | number,
+    geometryIndex: null | number,
+  ): void;
 }

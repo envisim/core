@@ -42,6 +42,11 @@ export class PointGeometryCollection
   count(): number {
     return this.geometries.reduce((prev, curr) => prev + curr.count(), 0);
   }
+  geomEach(callback: Function, featureIndex: null | number = null): void {
+    this.geometries.forEach((geom: GJ.PointGeometry, index: number) => {
+      callback(geom, featureIndex, index);
+    });
+  }
 }
 
 export type PointGeometry = PointObject | PointGeometryCollection;
