@@ -26,4 +26,8 @@ export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
   area(dist: number = Infinity): number {
     return areaOfPolygonLonLat(this.coordinates, dist);
   }
+
+  geomEach(callback: Function): void {
+    callback(this);
+  }
 }

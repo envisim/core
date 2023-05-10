@@ -61,4 +61,8 @@ export class PointCircle
   area(): number {
     return Math.PI * this.radius ** 2;
   }
+
+  geomEach(callback: Function): void {
+    callback(this);
+  }
 }

@@ -70,4 +70,8 @@ export class MultiPointCircle
   area(): number {
     return this.coordinates.length * Math.PI * this.radius ** 2;
   }
+
+  geomEach(callback: Function): void {
+    callback(this);
+  }
 }

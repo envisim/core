@@ -35,4 +35,8 @@ export class MultiPolygon
       0,
     );
   }
+
+  geomEach(callback: Function): void {
+    callback(this);
+  }
 }
