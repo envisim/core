@@ -45,7 +45,7 @@ export class PointGeometryCollection
   }
 
   geomEach(callback: Function): void {
-    this.geometries.forEach((geom: GJ.PointObject, geomIndex: number) => {
+    this.geometries.forEach((geom, geomIndex) => {
       callback(geom, geomIndex);
     });
   }
