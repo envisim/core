@@ -7,10 +7,8 @@ export abstract class BasePointObject<
   constructor(obj: GJ.PointObject, shallow: boolean = true) {
     super(obj, shallow);
   }
+
   abstract count(): number;
-  abstract geomEach(
-    callback: Function,
-    featureIndex: null | number,
-    geometryIndex: null | number,
-  ): void;
+
+  abstract geomEach(callback: Function): void;
 }

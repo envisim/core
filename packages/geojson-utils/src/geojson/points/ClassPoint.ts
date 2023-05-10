@@ -21,14 +21,12 @@ export class Point extends BasePointObject<GJ.Point> implements GJ.Point {
   get size(): number {
     return 1;
   }
+
   count(): number {
     return 1;
   }
-  geomEach(
-    callback: Function,
-    featureIndex: null | number = null,
-    geometryIndex: null | number = null,
-  ): void {
-    callback(this, featureIndex, geometryIndex);
+
+  geomEach(callback: Function): void {
+    callback(this);
   }
 }

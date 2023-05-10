@@ -27,14 +27,12 @@ export class MultiPoint
   get size(): number {
     return this.coordinates.length;
   }
+
   count(): number {
     return this.coordinates.length;
   }
-  geomEach(
-    callback: Function,
-    featureIndex: null | number = null,
-    geometryIndex: null | number = null,
-  ): void {
-    callback(this, featureIndex, geometryIndex);
+
+  geomEach(callback: Function): void {
+    callback(this);
   }
 }

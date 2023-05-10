@@ -35,12 +35,22 @@ export class PointCollection
     this.features.push(new PointFeature(feature, shallow));
     return this;
   }
+
   count(): number {
     return this.features.reduce((prev, curr) => prev + curr.count(), 0);
   }
+
   geomEach(callback: Function): void {
-    this.features.forEach((feature, index: number) => {
-      feature.geomEach(callback, index);
+    this.features.forEach((feature, featureIndex: number) => {
+      if (feature.geometry.type === 'GeometryCollection') {
+        feature.geometry.geometries.forEach(
+          (geom: GJ.PointGeometry, geomIndex: number) => {
+            callback(geom, featureIndex, geomIndex);
+          },
+        );
+      } else {
+        callback(feature.geometry, featureIndex);
+      }
     });
   }
 }
