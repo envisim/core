@@ -60,4 +60,8 @@ export class PointFeature extends BaseFeature implements GJ.PointFeature {
       callback(this.geometry);
     }
   }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.geometry.distanceToPosition(coords);
+  }
 }

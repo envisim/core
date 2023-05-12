@@ -1,6 +1,7 @@
 import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BasePointObject} from './BasePointObject.js';
+import {distance} from '../../distance.js';
 
 export class MultiPoint
   extends BasePointObject<GJ.MultiPoint>
@@ -34,5 +35,11 @@ export class MultiPoint
 
   geomEach(callback: Function): void {
     callback(this);
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.coordinates.reduce((prev, curr) => {
+      return Math.min(prev, distance(curr, coords));
+    }, Infinity);
   }
 }

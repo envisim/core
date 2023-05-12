@@ -49,6 +49,12 @@ export class PointGeometryCollection
       callback(geom, geomIndex);
     });
   }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.geometries.reduce((prev, curr) => {
+      return Math.min(prev, curr.distanceToPosition(coords));
+    }, Infinity);
+  }
 }
 
 export type PointGeometry = PointObject | PointGeometryCollection;

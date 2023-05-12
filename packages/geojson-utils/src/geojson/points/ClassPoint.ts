@@ -1,6 +1,7 @@
 import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BasePointObject} from './BasePointObject.js';
+import {distance} from '../../distance.js';
 
 export class Point extends BasePointObject<GJ.Point> implements GJ.Point {
   static isObject(obj: any): obj is Point {
@@ -28,5 +29,9 @@ export class Point extends BasePointObject<GJ.Point> implements GJ.Point {
 
   geomEach(callback: Function): void {
     callback(this);
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return distance(coords, this.coordinates);
   }
 }
