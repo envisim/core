@@ -1,6 +1,7 @@
 import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
+import {Polygon} from './ClassPolygon.js';
 
 export class PointCircle
   extends BaseAreaObject<GJ.PointCircle>
@@ -33,7 +34,8 @@ export class PointCircle
     pointsPerCircle = 16,
   }: {shallow?: boolean; pointsPerCircle?: number} = {}): Polygon {
     // Check shallow for bbox, as this is the only prop in need of copy
-    const bbox = shallow === true ? this.bbox : [...this.bbox];
+    const bbox: GJ.BBox | undefined =
+      shallow === true ? this.bbox : this.bbox ? [...this.bbox] : undefined;
     const coordinates: GJ.Position[] = new Array(pointsPerCircle);
 
     // Use the radius that gives equal area to the polygon for best approx.

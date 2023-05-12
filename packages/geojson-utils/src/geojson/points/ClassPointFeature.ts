@@ -14,9 +14,10 @@ export class PointFeature extends BaseFeature implements GJ.PointFeature {
 
   static create(
     geometry: GJ.PointGeometry,
+    properties: GJ.FeatureProperties,
     shallow: boolean = true,
   ): PointFeature {
-    return new PointFeature({geometry}, shallow);
+    return new PointFeature({geometry, properties}, shallow);
   }
 
   geometry: PointGeometry;

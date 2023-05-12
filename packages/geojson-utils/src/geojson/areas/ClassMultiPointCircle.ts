@@ -1,6 +1,7 @@
 import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
+import {MultiPolygon} from './ClassMultiPolygon.js';
 
 export class MultiPointCircle
   extends BaseAreaObject<GJ.MultiPointCircle>
@@ -31,9 +32,10 @@ export class MultiPointCircle
   toPolygon({
     shallow = true,
     pointsPerCircle = 16,
-  }: {shallow?: boolean; pointsPerCircle?: number} = {}): Polygon {
+  }: {shallow?: boolean; pointsPerCircle?: number} = {}): MultiPolygon {
     // Check shallow for bbox, as this is the only prop in need of copy
-    const bbox = shallow === true ? this.bbox : [...this.bbox];
+    const bbox: GJ.BBox | undefined =
+      shallow === true ? this.bbox : this.bbox ? [...this.bbox] : undefined;
 
     // Early return
     if (this.coordinates.length === 0)

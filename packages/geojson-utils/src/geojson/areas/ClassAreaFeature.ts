@@ -19,9 +19,10 @@ export class AreaFeature extends BaseFeature implements GJ.AreaFeature {
 
   static create(
     geometry: GJ.AreaGeometry,
+    properties: GJ.FeatureProperties,
     shallow: boolean = true,
   ): AreaFeature {
-    return new AreaFeature({geometry}, shallow);
+    return new AreaFeature({geometry, properties}, shallow);
   }
 
   geometry: AreaGeometry;

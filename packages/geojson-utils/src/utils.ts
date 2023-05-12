@@ -1,7 +1,10 @@
 import type * as GeoJSON from './geojson/types.js';
 
 function degreeToRadian(p: number): number;
-function degreeToRadian(p: GeoJSON.Position): GeoJSON.Position {
+function degreeToRadian(p: GeoJSON.Position): GeoJSON.Position;
+function degreeToRadian(
+  p: GeoJSON.Position | number,
+): GeoJSON.Position | number {
   if (typeof p === 'number') {
     return (p * Math.PI) / 180.0;
   }
