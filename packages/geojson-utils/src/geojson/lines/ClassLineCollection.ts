@@ -53,4 +53,10 @@ export class LineCollection
       }
     });
   }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.features.reduce((prev, curr) => {
+      return Math.min(prev, curr.geometry.distanceToPosition(coords));
+    }, Infinity);
+  }
 }

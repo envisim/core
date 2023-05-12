@@ -60,4 +60,8 @@ export class LineFeature extends BaseFeature implements GJ.LineFeature {
       callback(this.geometry);
     }
   }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.geometry.distanceToPosition(coords);
+  }
 }

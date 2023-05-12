@@ -10,4 +10,8 @@ export abstract class BaseLineObject<
   abstract length(): number;
 
   abstract geomEach(calback: Function): void;
+
+  abstract segmentEach(calback: Function): void;
+
+  abstract distanceToPosition(coords: GJ.Position): number;
 }

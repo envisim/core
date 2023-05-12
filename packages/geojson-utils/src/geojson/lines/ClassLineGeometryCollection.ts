@@ -49,6 +49,18 @@ export class LineGeometryCollection
       callback(geom, geomIndex);
     });
   }
+
+  segmentEach(callback: Function): void {
+    this.geometries.forEach((geom) => {
+      geom.segmentEach(callback);
+    });
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.geometries.reduce((prev, curr) => {
+      return Math.min(prev, curr.distanceToPosition(coords));
+    }, Infinity);
+  }
 }
 
 export type LineGeometry = LineObject | LineGeometryCollection;

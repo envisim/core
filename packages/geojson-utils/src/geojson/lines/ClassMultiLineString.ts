@@ -2,6 +2,8 @@ import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseLineObject} from './BaseLineObject.js';
 import {lengthOfLineString} from '../../length.js';
+import {distancePointToSegment} from '../../distancePointToSegment.js';
+
 export class MultiLineString
   extends BaseLineObject<GJ.MultiLineString>
   implements GJ.MultiLineString
@@ -37,5 +39,25 @@ export class MultiLineString
 
   geomEach(callback: Function): void {
     callback(this);
+  }
+
+  segmentEach(callback: Function): void {
+    this.coordinates.forEach((coords) => {
+      for (let i = 0; i < coords.length; i++) {
+        callback([coords[i], coords[i + 1]]);
+      }
+    });
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    let d = Infinity;
+    const c = this.coordinates;
+    for (let i = 0; i < c.length; i++) {
+      const n = c[i].length - 1;
+      for (let j = 0; j < n; j++) {
+        d = Math.min(d, distancePointToSegment(coords, [c[i][j], c[i][j + 1]]));
+      }
+    }
+    return d;
   }
 }
