@@ -2,7 +2,7 @@ import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseLineObject} from './BaseLineObject.js';
 import {lengthOfLineString} from '../../length.js';
-import {distancePointToSegment} from '../../distancePointToSegment.js';
+import {distancePositionToSegment} from '../../distancePositionToSegment.js';
 
 export class LineString
   extends BaseLineObject<GJ.LineString>
@@ -50,7 +50,7 @@ export class LineString
     const c = this.coordinates;
     const n = c.length - 1;
     for (let i = 0; i < n; i++) {
-      d = Math.min(d, distancePointToSegment(coords, [c[i], c[i + 1]]));
+      d = Math.min(d, distancePositionToSegment(coords, [c[i], c[i + 1]]));
     }
     return d;
   }

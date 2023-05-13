@@ -2,7 +2,7 @@ import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseLineObject} from './BaseLineObject.js';
 import {lengthOfLineString} from '../../length.js';
-import {distancePointToSegment} from '../../distancePointToSegment.js';
+import {distancePositionToSegment} from '../../distancePositionToSegment.js';
 
 export class MultiLineString
   extends BaseLineObject<GJ.MultiLineString>
@@ -55,7 +55,10 @@ export class MultiLineString
     for (let i = 0; i < c.length; i++) {
       const n = c[i].length - 1;
       for (let j = 0; j < n; j++) {
-        d = Math.min(d, distancePointToSegment(coords, [c[i][j], c[i][j + 1]]));
+        d = Math.min(
+          d,
+          distancePositionToSegment(coords, [c[i][j], c[i][j + 1]]),
+        );
       }
     }
     return d;
