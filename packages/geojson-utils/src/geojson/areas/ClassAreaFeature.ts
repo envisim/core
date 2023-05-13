@@ -71,4 +71,8 @@ export class AreaFeature extends BaseFeature implements GJ.AreaFeature {
       callback(this.geometry);
     }
   }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.geometry.distanceToPosition(coords);
+  }
 }

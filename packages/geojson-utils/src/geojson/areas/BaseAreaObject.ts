@@ -11,4 +11,6 @@ export abstract class BaseAreaObject<
   abstract area(): number;
 
   abstract geomEach(calback: Function): void;
+
+  abstract distanceToPosition(coords: GJ.Position): number;
 }

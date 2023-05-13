@@ -21,7 +21,7 @@ export {destination} from './destination.js';
 export {distance} from './distance.js';
 export {distancePointToLine} from './distancePointToLine.js';
 export {distancePointToPolygon} from './distancePointToPolygon.js';
-export {distancePointToSegment} from './distancePointToSegment.js';
+export {distancePositionToSegment} from './distancePositionToSegment.js';
 export {flatten} from './flatten.js';
 export {forwardAzimuth} from './forwardAzimuth.js';
 export {geomEach} from './geomEach.js';

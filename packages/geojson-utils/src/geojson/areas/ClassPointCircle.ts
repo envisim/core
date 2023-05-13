@@ -2,6 +2,8 @@ import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
 import {Polygon} from './ClassPolygon.js';
+import {destination} from '../../destination.js';
+import {distance} from '../../distance.js';
 
 export class PointCircle
   extends BaseAreaObject<GJ.PointCircle>
@@ -66,5 +68,9 @@ export class PointCircle
 
   geomEach(callback: Function): void {
     callback(this);
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return distance(coords, this.coordinates) - this.radius;
   }
 }

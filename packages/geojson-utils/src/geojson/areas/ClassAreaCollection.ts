@@ -53,4 +53,14 @@ export class AreaCollection
       }
     });
   }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.features.reduce((prev, curr) => {
+      const d = curr.geometry.distanceToPosition(coords);
+      if (prev <= 0 && d <= 0) {
+        return Math.max(prev, d);
+      }
+      return Math.min(prev, d);
+    }, Infinity);
+  }
 }

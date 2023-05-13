@@ -59,6 +59,16 @@ export class AreaGeometryCollection
       callback(geom, geomIndex);
     });
   }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.geometries.reduce((prev, curr) => {
+      const d = curr.distanceToPosition(coords);
+      if (prev <= 0 && d <= 0) {
+        return Math.max(d, prev);
+      }
+      return Math.min(d, prev);
+    }, Infinity);
+  }
 }
 
 export type AreaGeometry = AreaObject | AreaGeometryCollection;

@@ -10,7 +10,7 @@ const dot = (u: GJ.Position, v: GJ.Position): number =>
  * @param segment - Coordinates of segment [[lon1,lat1],[lon2,lat2]].
  * @returns - The distance in meters.
  */
-export const distancePointToSegment = (
+export const distancePositionToSegment = (
   point: GJ.Position,
   segment: GJ.Position[],
 ): number => {

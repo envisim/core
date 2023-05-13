@@ -2,6 +2,8 @@ import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
 import {areaOfPolygonLonLat} from '../../area.js';
+import {distancePositionToSegment} from '../../distancePositionToSegment.js';
+import {pointInSinglePolygon} from '../../pointInPolygon.js';
 
 export class MultiPolygon
   extends BaseAreaObject<GJ.MultiPolygon>
@@ -38,5 +40,31 @@ export class MultiPolygon
 
   geomEach(callback: Function): void {
     callback(this);
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    let d = Infinity;
+    const c = this.coordinates;
+    const nPoly = c.length;
+    let inside = false;
+    for (let i = 0; i < nPoly; i++) {
+      const nRing = c[i].length;
+      for (let j = 0; j < nRing; j++) {
+        const nSeg = c[i][j].length - 1;
+        for (let k = 0; k < nSeg; k++) {
+          d = Math.min(
+            d,
+            distancePositionToSegment(coords, [c[i][j][k], c[i][j][k + 1]]),
+          );
+        }
+      }
+      if (pointInSinglePolygon(coords, c[i])) {
+        inside = true;
+      }
+    }
+    if (inside) {
+      return -d;
+    }
+    return d;
   }
 }
