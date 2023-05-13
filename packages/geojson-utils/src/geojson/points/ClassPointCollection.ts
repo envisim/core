@@ -37,7 +37,10 @@ export class PointCollection
   }
 
   count(): number {
-    return this.features.reduce((prev, curr) => prev + curr.count(), 0);
+    return this.features.reduce(
+      (prev, curr) => prev + curr.geometry.count(),
+      0,
+    );
   }
 
   geomEach(callback: Function): void {
@@ -55,8 +58,9 @@ export class PointCollection
   }
 
   distanceToPosition(coords: GJ.Position): number {
-    return this.features.reduce((prev, curr) => {
-      return Math.min(prev, curr.geometry.distanceToPosition(coords));
-    }, Infinity);
+    return this.features.reduce(
+      (prev, curr) => Math.min(prev, curr.geometry.distanceToPosition(coords)),
+      Infinity,
+    );
   }
 }

@@ -51,9 +51,10 @@ export class PointGeometryCollection
   }
 
   distanceToPosition(coords: GJ.Position): number {
-    return this.geometries.reduce((prev, curr) => {
-      return Math.min(prev, curr.distanceToPosition(coords));
-    }, Infinity);
+    return this.geometries.reduce(
+      (prev, curr) => Math.min(prev, curr.distanceToPosition(coords)),
+      Infinity,
+    );
   }
 }
 

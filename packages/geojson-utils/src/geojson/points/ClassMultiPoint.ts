@@ -38,8 +38,9 @@ export class MultiPoint
   }
 
   distanceToPosition(coords: GJ.Position): number {
-    return this.coordinates.reduce((prev, curr) => {
-      return Math.min(prev, distance(curr, coords));
-    }, Infinity);
+    return this.coordinates.reduce(
+      (prev, curr) => Math.min(prev, distance(curr, coords)),
+      Infinity,
+    );
   }
 }
