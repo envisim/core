@@ -3,6 +3,7 @@ import type {OptionalParam} from '../util-types.js';
 import {BaseLineObject} from './BaseLineObject.js';
 import {lengthOfLineString} from '../../length.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
+import {bboxFromArrayOfPositions} from '../../bbox.js';
 
 export class MultiLineString
   extends BaseLineObject<GJ.MultiLineString>
@@ -62,5 +63,14 @@ export class MultiLineString
       }
     }
     return d;
+  }
+
+  setBBox(): GJ.BBox {
+    this.bbox = bboxFromArrayOfPositions(this.coordinates.flat(1));
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }

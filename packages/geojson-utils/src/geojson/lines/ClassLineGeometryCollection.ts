@@ -2,6 +2,7 @@ import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type * as GJ from '../types.js';
 import {OptionalParam} from '../util-types.js';
 import {LineObject, LineString, MultiLineString} from './LineObjects.js';
+import {bboxFromArrayOfBBoxes} from '../../bbox.js';
 
 export class LineGeometryCollection
   extends GeoJsonObject<'GeometryCollection'>
@@ -60,6 +61,19 @@ export class LineGeometryCollection
     return this.geometries.reduce((prev, curr) => {
       return Math.min(prev, curr.distanceToPosition(coords));
     }, Infinity);
+  }
+
+  setBBox(): GJ.BBox {
+    let bboxArray: GJ.BBox[] = new Array(this.geometries.length);
+    this.geometries.forEach((geom, index) => {
+      bboxArray[index] = geom.getBBox();
+    });
+    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }
 

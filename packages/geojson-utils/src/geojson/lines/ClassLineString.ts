@@ -3,6 +3,7 @@ import type {OptionalParam} from '../util-types.js';
 import {BaseLineObject} from './BaseLineObject.js';
 import {lengthOfLineString} from '../../length.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
+import {bboxFromArrayOfPositions} from '../../bbox.js';
 
 export class LineString
   extends BaseLineObject<GJ.LineString>
@@ -53,5 +54,14 @@ export class LineString
       d = Math.min(d, distancePositionToSegment(coords, [c[i], c[i + 1]]));
     }
     return d;
+  }
+
+  setBBox(): GJ.BBox {
+    this.bbox = bboxFromArrayOfPositions(this.coordinates);
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }

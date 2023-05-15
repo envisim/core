@@ -2,6 +2,7 @@ import {BaseCollection} from '../ClassBaseCollection.js';
 import type * as GJ from '../types.js';
 import {OptionalParam} from '../util-types.js';
 import {LineFeature} from './ClassLineFeature.js';
+import {bboxFromArrayOfBBoxes} from '../../bbox.js';
 
 export class LineCollection
   extends BaseCollection<LineFeature>
@@ -58,5 +59,18 @@ export class LineCollection
     return this.features.reduce((prev, curr) => {
       return Math.min(prev, curr.geometry.distanceToPosition(coords));
     }, Infinity);
+  }
+
+  setBBox(): GJ.BBox {
+    const bboxArray: GJ.BBox[] = [];
+    this.features.forEach((feature) => {
+      bboxArray.push(feature.getBBox());
+    });
+    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }
