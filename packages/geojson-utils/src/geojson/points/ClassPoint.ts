@@ -34,4 +34,21 @@ export class Point extends BasePointObject<GJ.Point> implements GJ.Point {
   distanceToPosition(coords: GJ.Position): number {
     return distance(coords, this.coordinates);
   }
+
+  setBBox(): GJ.BBox {
+    const c = this.coordinates;
+    // Got to love typescript!
+    // Try remove the if, then it complains as it think the length of the bbox might be 5
+    // as the length of c might be 2 or 3...
+    if (c.length === 3) {
+      this.bbox = [...c, ...c];
+    } else {
+      this.bbox = [...c, ...c];
+    }
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
+  }
 }

@@ -2,6 +2,7 @@ import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type * as GJ from '../types.js';
 import {OptionalParam} from '../util-types.js';
 import {MultiPoint, Point, PointObject} from './PointObjects.js';
+import {bboxFromArrayOfBBoxes} from '../../bbox.js';
 
 export class PointGeometryCollection
   extends GeoJsonObject<'GeometryCollection'>
@@ -55,6 +56,19 @@ export class PointGeometryCollection
       (prev, curr) => Math.min(prev, curr.distanceToPosition(coords)),
       Infinity,
     );
+  }
+
+  setBBox(): GJ.BBox {
+    let bboxArray: GJ.BBox[] = [];
+    this.geometries.forEach((geom) => {
+      bboxArray.push(geom.getBBox());
+    });
+    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }
 

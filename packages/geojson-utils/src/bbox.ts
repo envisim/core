@@ -1,12 +1,13 @@
 import {copy} from './copy.js';
 import {destination} from './destination.js';
 import {geomEach} from './geomEach.js';
+import type * as GJ from './geojson/types.js';
 
 // Internal function to treat non-standard circle geometry.
 const getCoordinatesForCircle = (
-  point: GeoJSON.Position,
+  point: GJ.Position,
   radius: number,
-): GeoJSON.Position[] => {
+): GJ.Position[] => {
   const top = destination(point, radius, 0);
   const right = destination(point, radius, 90);
   const bottom = destination(point, radius, 180);
@@ -59,7 +60,7 @@ export const bbox = (geoJSON: GeoJSON.GeoJSON): GeoJSON.BBox => {
     switch (g.type) {
       case 'Point':
         if (circle) {
-          getCoordinatesForCircle(g.coordinates, radius).forEach(coord => {
+          getCoordinatesForCircle(g.coordinates, radius).forEach((coord) => {
             doCoord(coord);
           });
         } else {
@@ -69,9 +70,11 @@ export const bbox = (geoJSON: GeoJSON.GeoJSON): GeoJSON.BBox => {
       case 'MultiPoint':
         if (circle) {
           for (let i = 0; i < g.coordinates.length; i++) {
-            getCoordinatesForCircle(g.coordinates[i], radius).forEach(coord => {
-              doCoord(coord);
-            });
+            getCoordinatesForCircle(g.coordinates[i], radius).forEach(
+              (coord) => {
+                doCoord(coord);
+              },
+            );
           }
         } else {
           for (let i = 0; i < g.coordinates.length; i++) {
@@ -124,10 +127,7 @@ export const bbox = (geoJSON: GeoJSON.GeoJSON): GeoJSON.BBox => {
  * @param bbox - Bounding box.
  * @returns - Returns true if point is in bbox, otherwise false.
  */
-export const pointInBbox = (
-  point: GeoJSON.Position,
-  bbox: GeoJSON.BBox,
-): boolean => {
+export const pointInBbox = (point: GJ.Position, bbox: GJ.BBox): boolean => {
   if (bbox.length !== 4) {
     throw new Error('The bounding box must be of length 4.');
   }
@@ -159,10 +159,7 @@ export const pointInBbox = (
  * @param bbox2 - The second bounding box.
  * @returns - Returns true if the bboxes overlap, otherwise false.
  */
-export const bboxInBbox = (
-  bbox1: GeoJSON.BBox,
-  bbox2: GeoJSON.BBox,
-): boolean => {
+export const bboxInBbox = (bbox1: GJ.BBox, bbox2: GJ.BBox): boolean => {
   if (bbox1.length !== 4) {
     throw new Error('The bounding box bbox1 must be of length 4.');
   }
@@ -196,7 +193,7 @@ export const addBboxes = <
       g.bbox = bbox(g);
       break;
     case 'FeatureCollection':
-      g.features.forEach(feature => {
+      g.features.forEach((feature) => {
         feature.bbox = bbox(feature);
       });
       g.bbox = bbox(g);
@@ -205,4 +202,98 @@ export const addBboxes = <
       throw new Error('Argument must be Feature or FeatureCollection');
   }
   return g as T;
+};
+
+export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
+  let minLon = Infinity;
+  let maxLon = -Infinity;
+  let maxLonNeg = -Infinity;
+  let minLonPos = Infinity;
+  let minLat = Infinity;
+  let maxLat = -Infinity;
+  let maxHeight = -Infinity;
+  let minHeight = Infinity;
+  const n = coords.length;
+  let boxLength = 4;
+
+  for (let i = 0; i < n; i++) {
+    const lon = coords[i][0];
+    const lat = coords[i][1];
+    // As height may be undefined.
+    // Existance of any third coordinate gives box of length 6.
+    if (typeof coords[i][2] === 'number') {
+      boxLength = 6;
+    }
+    const height = coords[i][2] || 0;
+    minLon = Math.min(minLon, lon);
+    maxLon = Math.max(maxLon, lon);
+    minLat = Math.min(minLat, lat);
+    maxLat = Math.max(maxLat, lat);
+    if (boxLength == 6) {
+      minHeight = Math.min(minHeight, height);
+      maxHeight = Math.max(maxHeight, height);
+    }
+    if (lon < 0) {
+      maxLonNeg = Math.max(maxLonNeg, lon);
+    } else {
+      minLonPos = Math.min(minLonPos, lon);
+    }
+  }
+
+  // Pole box?
+  if (minLon === -180 && maxLon === 180) {
+    // Choose smallest cap
+    if (-minLat < maxLat) {
+      // box including north pole is smallest
+      maxLat = 90;
+    } else {
+      // box including south pole is smallest
+      minLat = -90;
+    }
+  } else {
+    // Meridian or antimeridian box?
+    if (minLon < 0 && maxLon > 0) {
+      if (maxLon - minLon > 360 - minLonPos + maxLonNeg) {
+        minLon = minLonPos;
+        maxLon = maxLonNeg;
+      }
+    }
+  }
+  if (boxLength === 4) {
+    return [minLon, minLat, maxLon, maxLat];
+  } else {
+    return [minLon, minLat, minHeight, maxLon, maxLat, maxHeight];
+  }
+};
+
+export const bboxFromArrayOfBBoxes = (bboxes: GJ.BBox[]): GJ.BBox => {
+  // build coordinates array
+  // is more points needed to avoid wrong split in meridian/antimeridian
+  // in extreme cases? Maybe need to add center points as well?
+  let coords: GJ.Position[] = [];
+  bboxes.forEach((box) => {
+    if (box.length === 4) {
+      coords = coords.concat([
+        [box[0], box[1]],
+        [box[2], box[1]],
+        [box[2], box[3]],
+        [box[0], box[3]],
+      ]);
+    } else {
+      coords = coords.concat([
+        [box[0], box[1], box[2]],
+        [box[3], box[1], box[2]],
+        [box[3], box[4], box[5]],
+        [box[0], box[4], box[5]],
+      ]);
+    }
+  });
+  return bboxFromArrayOfPositions(coords);
+};
+
+export const bbox4 = (bbox: GJ.BBox): [number, number, number, number] => {
+  if (bbox.length === 6) {
+    return [bbox[0], bbox[1], bbox[3], bbox[4]];
+  }
+  return [...bbox];
 };

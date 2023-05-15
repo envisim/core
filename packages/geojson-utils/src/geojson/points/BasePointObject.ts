@@ -13,4 +13,8 @@ export abstract class BasePointObject<
   abstract geomEach(callback: Function): void;
 
   abstract distanceToPosition(coords: GJ.Position): number;
+
+  abstract setBBox(): void;
+
+  abstract getBBox(): GJ.BBox;
 }

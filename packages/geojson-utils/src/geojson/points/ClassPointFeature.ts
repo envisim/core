@@ -64,4 +64,13 @@ export class PointFeature extends BaseFeature implements GJ.PointFeature {
   distanceToPosition(coords: GJ.Position): number {
     return this.geometry.distanceToPosition(coords);
   }
+
+  setBBox(): GJ.BBox {
+    this.bbox = this.geometry.setBBox();
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.geometry.getBBox();
+  }
 }
