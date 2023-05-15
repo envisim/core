@@ -4,7 +4,7 @@ import {geomEach} from './geomEach.js';
 import type * as GJ from './geojson/types.js';
 
 // Internal function to treat non-standard circle geometry.
-const getCoordinatesForCircle = (
+export const getPositionsForCircle = (
   point: GJ.Position,
   radius: number,
 ): GJ.Position[] => {
@@ -60,7 +60,7 @@ export const bbox = (geoJSON: GeoJSON.GeoJSON): GeoJSON.BBox => {
     switch (g.type) {
       case 'Point':
         if (circle) {
-          getCoordinatesForCircle(g.coordinates, radius).forEach((coord) => {
+          getPositionsForCircle(g.coordinates, radius).forEach((coord) => {
             doCoord(coord);
           });
         } else {
@@ -70,11 +70,9 @@ export const bbox = (geoJSON: GeoJSON.GeoJSON): GeoJSON.BBox => {
       case 'MultiPoint':
         if (circle) {
           for (let i = 0; i < g.coordinates.length; i++) {
-            getCoordinatesForCircle(g.coordinates[i], radius).forEach(
-              (coord) => {
-                doCoord(coord);
-              },
-            );
+            getPositionsForCircle(g.coordinates[i], radius).forEach((coord) => {
+              doCoord(coord);
+            });
           }
         } else {
           for (let i = 0; i < g.coordinates.length; i++) {
