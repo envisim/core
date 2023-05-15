@@ -15,12 +15,7 @@ export const getPositionsForCircle = (
   return [top, right, bottom, left];
 };
 
-/**
- * Computes the bounding box for longitude and latitude only.
- *
- * @param geoJSON - A GeoJSON object.
- * @returns - The bounding box as [west, south, east, north].
- */
+/*
 export const bbox = (geoJSON: GeoJSON.GeoJSON): GeoJSON.BBox => {
   // TODO?: Fix special cases for bbox including
   // north or south pole.
@@ -116,7 +111,7 @@ export const bbox = (geoJSON: GeoJSON.GeoJSON): GeoJSON.BBox => {
     return [minLonPos, minLat, maxLonNeg, maxLat];
   }
   return [minLon, minLat, maxLon, maxLat];
-};
+};*/
 
 /**
  * Checks if point is in bbox.
@@ -172,14 +167,7 @@ export const bboxInBbox = (bbox1: GJ.BBox, bbox2: GJ.BBox): boolean => {
   );
 };
 
-/**
- * Adds bounding boxes to all Features in the GeoJSON
- * and to FeatureCollection.
- * Note: The added bbox is of length 4, i.e. [west, south, east, north].
- *
- * @param geoJSON - The GeoJSON to add bboxes in.
- * @returns - The new GeoJSON
- */
+/*
 export const addBboxes = <
   T extends GeoJSON.Feature | GeoJSON.FeatureCollection,
 >(
@@ -200,7 +188,7 @@ export const addBboxes = <
       throw new Error('Argument must be Feature or FeatureCollection');
   }
   return g as T;
-};
+};*/
 
 export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
   let minLon = Infinity;
