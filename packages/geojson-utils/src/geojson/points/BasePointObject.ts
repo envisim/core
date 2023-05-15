@@ -14,7 +14,7 @@ export abstract class BasePointObject<
 
   abstract distanceToPosition(coords: GJ.Position): number;
 
-  abstract setBBox(): void;
+  abstract setBBox(): GJ.BBox;
 
   abstract getBBox(): GJ.BBox;
 }
