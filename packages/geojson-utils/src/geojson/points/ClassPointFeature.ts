@@ -66,6 +66,7 @@ export class PointFeature extends BaseFeature implements GJ.PointFeature {
   }
 
   setBBox(): GJ.BBox {
+    // need setBBox to recompute here
     this.bbox = this.geometry.setBBox();
     return this.bbox;
   }

@@ -59,9 +59,9 @@ export class PointGeometryCollection
   }
 
   setBBox(): GJ.BBox {
-    let bboxArray: GJ.BBox[] = [];
-    this.geometries.forEach((geom) => {
-      bboxArray.push(geom.getBBox());
+    let bboxArray: GJ.BBox[] = new Array(this.geometries.length);
+    this.geometries.forEach((geom, index) => {
+      bboxArray[index] = geom.getBBox();
     });
     this.bbox = bboxFromArrayOfBBoxes(bboxArray);
     return this.bbox;
