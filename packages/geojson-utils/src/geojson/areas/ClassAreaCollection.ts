@@ -2,6 +2,7 @@ import {BaseCollection} from '../ClassBaseCollection.js';
 import type * as GJ from '../types.js';
 import {OptionalParam} from '../util-types.js';
 import {AreaFeature} from './ClassAreaFeature.js';
+import {bboxFromArrayOfBBoxes} from '../../bbox.js';
 
 export class AreaCollection
   extends BaseCollection<AreaFeature>
@@ -62,5 +63,18 @@ export class AreaCollection
       }
       return Math.min(prev, d);
     }, Infinity);
+  }
+
+  setBBox(): GJ.BBox {
+    const bboxArray: GJ.BBox[] = new Array(this.features.length);
+    this.features.forEach((feature, index) => {
+      bboxArray[index] = feature.getBBox();
+    });
+    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }

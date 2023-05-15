@@ -8,6 +8,7 @@ import {
   PointCircle,
   Polygon,
 } from './AreaObjects.js';
+import {bboxFromArrayOfBBoxes} from '../../bbox.js';
 
 export class AreaGeometryCollection
   extends GeoJsonObject<'GeometryCollection'>
@@ -68,6 +69,19 @@ export class AreaGeometryCollection
       }
       return Math.min(d, prev);
     }, Infinity);
+  }
+
+  setBBox(): GJ.BBox {
+    let bboxArray: GJ.BBox[] = new Array(this.geometries.length);
+    this.geometries.forEach((geom, index) => {
+      bboxArray[index] = geom.getBBox();
+    });
+    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }
 

@@ -66,9 +66,9 @@ export class PointCollection
   }
 
   setBBox(): GJ.BBox {
-    const bboxArray: GJ.BBox[] = [];
-    this.features.forEach((feature) => {
-      bboxArray.push(feature.getBBox());
+    const bboxArray: GJ.BBox[] = new Array(this.features.length);
+    this.features.forEach((feature, index) => {
+      bboxArray[index] = feature.getBBox();
     });
     this.bbox = bboxFromArrayOfBBoxes(bboxArray);
     return this.bbox;

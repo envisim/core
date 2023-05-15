@@ -13,4 +13,8 @@ export abstract class BaseAreaObject<
   abstract geomEach(calback: Function): void;
 
   abstract distanceToPosition(coords: GJ.Position): number;
+
+  abstract setBBox(): GJ.BBox;
+
+  abstract getBBox(): GJ.BBox;
 }

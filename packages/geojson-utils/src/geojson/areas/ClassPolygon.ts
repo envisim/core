@@ -4,6 +4,7 @@ import {BaseAreaObject} from './BaseAreaObject.js';
 import {areaOfPolygonLonLat} from '../../area.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
 import {pointInSinglePolygon} from '../../pointInPolygon.js';
+import {bboxFromArrayOfPositions} from '../../bbox.js';
 
 export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
   static isObject(obj: any): obj is Polygon {
@@ -50,5 +51,14 @@ export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
       return -d;
     }
     return d;
+  }
+
+  setBBox(): GJ.BBox {
+    this.bbox = bboxFromArrayOfPositions(this.coordinates[0]);
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }

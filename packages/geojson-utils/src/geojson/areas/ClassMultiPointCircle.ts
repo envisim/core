@@ -4,6 +4,7 @@ import {BaseAreaObject} from './BaseAreaObject.js';
 import {MultiPolygon} from './ClassMultiPolygon.js';
 import {destination} from '../../destination.js';
 import {distance} from '../../distance.js';
+import {bboxFromArrayOfPositions, getPositionsForCircle} from '../../bbox.js';
 
 export class MultiPointCircle
   extends BaseAreaObject<GJ.MultiPointCircle>
@@ -85,5 +86,18 @@ export class MultiPointCircle
         return Math.min(prev, distance(coords, curr));
       }, Infinity) - this.radius
     );
+  }
+
+  setBBox(): GJ.BBox {
+    let coords: GJ.Position[] = [];
+    this.coordinates.forEach((coord) => {
+      coords = coords.concat(getPositionsForCircle(coord, this.radius));
+    });
+    this.bbox = bboxFromArrayOfPositions(coords);
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }

@@ -4,6 +4,7 @@ import {BaseAreaObject} from './BaseAreaObject.js';
 import {areaOfPolygonLonLat} from '../../area.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
 import {pointInSinglePolygon} from '../../pointInPolygon.js';
+import {bboxFromArrayOfPositions} from '../../bbox.js';
 
 export class MultiPolygon
   extends BaseAreaObject<GJ.MultiPolygon>
@@ -66,5 +67,19 @@ export class MultiPolygon
       return -d;
     }
     return d;
+  }
+
+  setBBox(): GJ.BBox {
+    let coords: GJ.Position[] = [];
+    this.coordinates.forEach((polygon) => {
+      // outer ring of each polygon is sufficient
+      coords = coords.concat(polygon[0]);
+    });
+    this.bbox = bboxFromArrayOfPositions(coords);
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }

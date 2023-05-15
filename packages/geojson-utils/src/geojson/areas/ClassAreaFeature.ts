@@ -75,4 +75,14 @@ export class AreaFeature extends BaseFeature implements GJ.AreaFeature {
   distanceToPosition(coords: GJ.Position): number {
     return this.geometry.distanceToPosition(coords);
   }
+
+  setBBox(): GJ.BBox {
+    // need setBBox to recompute here
+    this.bbox = this.geometry.setBBox();
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.geometry.getBBox();
+  }
 }

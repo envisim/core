@@ -4,6 +4,7 @@ import {BaseAreaObject} from './BaseAreaObject.js';
 import {Polygon} from './ClassPolygon.js';
 import {destination} from '../../destination.js';
 import {distance} from '../../distance.js';
+import {bboxFromArrayOfPositions, getPositionsForCircle} from '../../bbox.js';
 
 export class PointCircle
   extends BaseAreaObject<GJ.PointCircle>
@@ -72,5 +73,16 @@ export class PointCircle
 
   distanceToPosition(coords: GJ.Position): number {
     return distance(coords, this.coordinates) - this.radius;
+  }
+
+  setBBox(): GJ.BBox {
+    this.bbox = bboxFromArrayOfPositions(
+      getPositionsForCircle(this.coordinates, this.radius),
+    );
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }
