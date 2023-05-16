@@ -206,11 +206,11 @@ export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
     const lon = coords[i][0];
     const lat = coords[i][1];
     // As height may be undefined.
+    const height = coords[i][2] || 0;
     // Existance of any third coordinate gives box of length 6.
     if (typeof coords[i][2] === 'number') {
       boxLength = 6;
     }
-    const height = coords[i][2] || 0;
     minLon = Math.min(minLon, lon);
     maxLon = Math.max(maxLon, lon);
     minLat = Math.min(minLat, lat);
@@ -226,8 +226,8 @@ export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
     }
   }
 
-  // Pole box?
-  if (minLon === -180 && maxLon === 180) {
+  // Pole box? How to check?
+  /*if (minLon === -180 && maxLon === 180) {
     // Choose smallest cap
     if (-minLat < maxLat) {
       // box including north pole is smallest
@@ -236,42 +236,37 @@ export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
       // box including south pole is smallest
       minLat = -90;
     }
-  } else {
-    // Meridian or antimeridian box?
-    if (minLon < 0 && maxLon > 0) {
-      if (maxLon - minLon > 360 - minLonPos + maxLonNeg) {
-        minLon = minLonPos;
-        maxLon = maxLonNeg;
-      }
+  } else {*/
+  // Meridian or antimeridian box?
+  if (minLon < 0 && maxLon > 0) {
+    if (maxLon - minLon > 360 - minLonPos + maxLonNeg) {
+      minLon = minLonPos;
+      maxLon = maxLonNeg;
     }
   }
+  //}
   if (boxLength === 4) {
     return [minLon, minLat, maxLon, maxLat];
-  } else {
-    return [minLon, minLat, minHeight, maxLon, maxLat, maxHeight];
   }
+  return [minLon, minLat, minHeight, maxLon, maxLat, maxHeight];
 };
 
 export const bboxFromArrayOfBBoxes = (bboxes: GJ.BBox[]): GJ.BBox => {
   // build coordinates array
   // is more points needed to avoid wrong split in meridian/antimeridian
   // in extreme cases? Maybe need to add center points as well?
-  let coords: GJ.Position[] = [];
-  bboxes.forEach((box) => {
+  const coords: GJ.Position[] = new Array(bboxes.length * 4);
+  bboxes.forEach((box, i) => {
     if (box.length === 4) {
-      coords = coords.concat([
-        [box[0], box[1]],
-        [box[2], box[1]],
-        [box[2], box[3]],
-        [box[0], box[3]],
-      ]);
+      coords[i * 4] = [box[0], box[1]];
+      coords[i * 4 + 1] = [box[2], box[1]];
+      coords[i * 4 + 2] = [box[2], box[3]];
+      coords[i * 4 + 3] = [box[0], box[3]];
     } else {
-      coords = coords.concat([
-        [box[0], box[1], box[2]],
-        [box[3], box[1], box[2]],
-        [box[3], box[4], box[5]],
-        [box[0], box[4], box[5]],
-      ]);
+      coords[i * 4] = [box[0], box[1], box[2]];
+      coords[i * 4 + 1] = [box[3], box[1], box[2]];
+      coords[i * 4 + 2] = [box[3], box[4], box[5]];
+      coords[i * 4 + 3] = [box[0], box[4], box[5]];
     }
   });
   return bboxFromArrayOfPositions(coords);
