@@ -1,6 +1,12 @@
 import {pointInSinglePolygon} from './pointInPolygon.js';
 import {intersectSegments} from './intersectSegments.js';
-import {toLineString, toMultiLineString} from './to.js';
+import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
+import {PointCircle} from './geojson/areas/ClassPointCircle.js';
+import {MultiPointCircle} from './geojson/areas/ClassMultiPointCircle.js';
+import {LineFeature} from './geojson/lines/ClassLineFeature.js';
+import {LineString} from './geojson/lines/ClassLineString.js';
+import {MultiLineString} from './geojson/lines/ClassMultiLineString.js';
+import {bboxInBbox} from './bbox.js';
 import type * as GJ from './geojson/types.js';
 
 type sortArrayElement = [GJ.Position, number];
@@ -145,47 +151,80 @@ interface Intersect {
   geoJSON?: GJ.LineFeature;
 }
 
-// TODO: Fix conversion of PointCircles/MultiPointCircles and AreaGeometryCollection
-
 /**
  * Computes the intersection between a LineFeature
  * and an AreaFeature.
  *
  * @param lineFeature - A LineFeature.
- * @param polygonFeature - An AreaFeature.
- * @returns - An empty object {} if no intersection and {geoJSON} if intersection.
+ * @param areaFeature - An AreaFeature.
+ * @param pointsPerCircle - Optional number of points to use in intersects with circles, default 16.
+ * @returns - An empty object {} if no intersection and {geoJSON} if intersection, where geoJSON is a LineFeature.
  */
-export const intersectLinePolygonFeatures = (
+export const intersectLineAreaFeatures = (
   lineFeature: GJ.LineFeature,
-  polygonFeature: GJ.AreaFeature,
+  areaFeature: GJ.AreaFeature,
+  pointsPerCircle: number = 16,
 ): Intersect => {
-  const lfg = lineFeature.geometry;
-  const pfg = polygonFeature.geometry;
-  if (lfg.type !== 'LineString' && lfg.type !== 'MultiLineString') {
-    throw new Error(
-      'Argument lineFeature do not have a geometry of type LineString or MultiLineString.',
-    );
-  }
-  if (pfg.type !== 'Polygon' && pfg.type !== 'MultiPolygon') {
-    throw new Error(
-      'Argument polygonFeature do not have a geometry of type Polygon or MultiPolygon.',
-    );
+  const lf = LineFeature.isFeature(lineFeature)
+    ? lineFeature
+    : new LineFeature(lineFeature);
+  const af = AreaFeature.isFeature(areaFeature)
+    ? areaFeature
+    : new AreaFeature(areaFeature);
+
+  const box1 = lf.getBBox();
+  const box2 = af.getBBox();
+  if (!bboxInBbox(box1, box2)) {
+    return {};
   }
 
-  const lCoords =
-    lfg.type === 'LineString' ? [lfg.coordinates] : lfg.coordinates;
-  const pCoords = pfg.type === 'Polygon' ? [pfg.coordinates] : pfg.coordinates;
-  const newCoords = multiLineStringInMultiPolygon(lCoords, pCoords);
+  let mls: GJ.Position[][] = [];
+  lf.geomEach((lg: GJ.LineObject) => {
+    if (lg.type === 'LineString') {
+      mls.push(lg.coordinates);
+    } else {
+      mls = mls.concat(lg.coordinates);
+    }
+  });
+
+  let mp: GJ.Position[][][] = [];
+  af.geomEach((ag: GJ.AreaObject) => {
+    switch (ag.type) {
+      case 'Polygon':
+        mp.push(ag.coordinates);
+        break;
+      case 'MultiPolygon':
+        mp = mp.concat(ag.coordinates);
+        break;
+      case 'Point':
+        mp.push(
+          (PointCircle.isObject(ag) ? ag : new PointCircle(ag)).toPolygon({
+            pointsPerCircle,
+          }).coordinates,
+        );
+        break;
+      case 'MultiPoint':
+        mp.concat(
+          (MultiPointCircle.isObject(ag)
+            ? ag
+            : new MultiPointCircle(ag)
+          ).toPolygon({pointsPerCircle}).coordinates,
+        );
+        break;
+    }
+  });
+
+  const newCoords = multiLineStringInMultiPolygon(mls, mp);
 
   if (newCoords.length === 0) {
     return {};
   }
   if (newCoords.length === 1) {
     return {
-      geoJSON: toLineString(newCoords[0]),
+      geoJSON: LineFeature.create(LineString.create(newCoords[0]), {}),
     };
   }
   return {
-    geoJSON: toMultiLineString(newCoords),
+    geoJSON: LineFeature.create(MultiLineString.create(newCoords), {}),
   };
 };
