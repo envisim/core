@@ -177,7 +177,7 @@ export const intersectLineAreaFeatures = (
   if (!bboxInBbox(box1, box2)) {
     return {};
   }
-
+  // Build MultiLineString coordinates for LineFeature
   let mls: GJ.Position[][] = [];
   lf.geomEach((lg: GJ.LineObject) => {
     if (lg.type === 'LineString') {
@@ -187,6 +187,7 @@ export const intersectLineAreaFeatures = (
     }
   });
 
+  // Build MultiPolygon coordinates for AreaFeature
   let mp: GJ.Position[][][] = [];
   af.geomEach((ag: GJ.AreaObject) => {
     switch (ag.type) {
