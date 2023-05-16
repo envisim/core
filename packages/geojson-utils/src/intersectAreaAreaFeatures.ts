@@ -103,9 +103,10 @@ const intersectPointCirclePolygon = (
 };
 
 /**
- * Intersect of polygons.
- * @param polygon1 - An AreaFeature.
- * @param polygon2 - An AreaFeature.
+ * Intersect of AreaFeature and AreaFeature.
+ * @param areaFeature1 - An AreaFeature.
+ * @param areaFeature2 - An AreaFeature.
+ * @param pointsPerCircle - Optional number of points to use in intersects with circles, default 16.
  * @returns - An empty object {} if no intersect and {geoJSON} if intersect.
  */
 export const intersectAreaAreaFeatures = (
