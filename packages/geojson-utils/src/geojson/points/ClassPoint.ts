@@ -36,12 +36,7 @@ export class Point extends BasePointObject<GJ.Point> implements GJ.Point {
   }
 
   setBBox(): GJ.BBox {
-    const c = this.coordinates;
-    if (c.length === 3) {
-      this.bbox = [...c, ...c];
-    } else {
-      this.bbox = [...c, ...c];
-    }
+    this.bbox = [...this.coordinates, ...this.coordinates] as GJ.BBox;
     return this.bbox;
   }
 
