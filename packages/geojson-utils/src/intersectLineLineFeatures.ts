@@ -1,4 +1,4 @@
-import {bboxInBbox} from './bbox.js';
+import {bboxInBBox} from './bbox.js';
 import {intersectSegments} from './intersectSegments.js';
 import type * as GJ from './geojson/types.js';
 import {LineFeature} from './geojson/lines/ClassLineFeature.js';
@@ -13,12 +13,10 @@ interface Intersect {
 /**
  * Computes the intersect of two LineFeatures as
  * the crossing-points between the lines in the two features.
- * Returns an empty object {} if no crossings and {geoJSON}
- * if intersection. Then geoJSON is a PointFeature.
  *
  * @param firstFeature - A LineFeature.
  * @param secondFeature - A LineFeature.
- * @returns - An intersect object.
+ * @returns - An empty object {} if no crossings and {geoJSON:PointFeature} if intersection.
  */
 export const intersectLineLineFeatures = (
   firstFeature: GJ.LineFeature,
@@ -35,7 +33,7 @@ export const intersectLineLineFeatures = (
   const box1 = f1.getBBox();
   const box2 = f2.getBBox();
 
-  if (bboxInBbox(box1, box2)) {
+  if (bboxInBBox(box1, box2)) {
     f1.geomEach((g1: GJ.LineObject) => {
       f2.geomEach((g2: GJ.LineObject) => {
         const coords1 =

@@ -4,7 +4,7 @@ import {AreaObject} from './geojson/areas/AreaObjects.js';
 import {PointCircle} from './geojson/areas/ClassPointCircle.js';
 import {Polygon} from './geojson/areas/ClassPolygon.js';
 import {MultiPolygon} from './geojson/areas/ClassMultiPolygon.js';
-import {bboxInBbox} from './bbox.js';
+import {bboxInBBox} from './bbox.js';
 
 import type * as GJ from './geojson/types.js';
 import {AreaGeometryCollection, distance} from './index.js';
@@ -104,10 +104,11 @@ const intersectPointCirclePolygon = (
 
 /**
  * Intersect of AreaFeature and AreaFeature.
+ *
  * @param areaFeature1 - An AreaFeature.
  * @param areaFeature2 - An AreaFeature.
  * @param pointsPerCircle - Optional number of points to use in intersects with circles, default 16.
- * @returns - An empty object {} if no intersect and {geoJSON} if intersect.
+ * @returns - An empty object {} if no intersect and {geoJSON:AreaFeature} if intersect.
  */
 export const intersectAreaAreaFeatures = (
   areaFeature1: GJ.AreaFeature,
@@ -122,7 +123,7 @@ export const intersectAreaAreaFeatures = (
     : new AreaFeature(areaFeature2);
   const box1 = af1.getBBox();
   const box2 = af2.getBBox();
-  if (!bboxInBbox(box1, box2)) {
+  if (!bboxInBBox(box1, box2)) {
     return {};
   }
   // Need to work with geometries to keep
@@ -136,7 +137,7 @@ export const intersectAreaAreaFeatures = (
       const box1 = g1.getBBox();
       const box2 = g2.getBBox();
       let intersect;
-      if (bboxInBbox(box1, box2)) {
+      if (bboxInBBox(box1, box2)) {
         // We may have intersect
         switch (g1.type) {
           case 'MultiPolygon':

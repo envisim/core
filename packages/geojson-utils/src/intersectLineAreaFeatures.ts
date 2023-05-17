@@ -6,7 +6,7 @@ import {MultiPointCircle} from './geojson/areas/ClassMultiPointCircle.js';
 import {LineFeature} from './geojson/lines/ClassLineFeature.js';
 import {LineString} from './geojson/lines/ClassLineString.js';
 import {MultiLineString} from './geojson/lines/ClassMultiLineString.js';
-import {bboxInBbox} from './bbox.js';
+import {bboxInBBox} from './bbox.js';
 import type * as GJ from './geojson/types.js';
 
 type sortArrayElement = [GJ.Position, number];
@@ -158,7 +158,7 @@ interface Intersect {
  * @param lineFeature - A LineFeature.
  * @param areaFeature - An AreaFeature.
  * @param pointsPerCircle - Optional number of points to use in intersects with circles, default 16.
- * @returns - An empty object {} if no intersection and {geoJSON} if intersection, where geoJSON is a LineFeature.
+ * @returns - An empty object {} if no intersection and {geoJSON:LineFeature} if intersection.
  */
 export const intersectLineAreaFeatures = (
   lineFeature: GJ.LineFeature,
@@ -174,7 +174,7 @@ export const intersectLineAreaFeatures = (
 
   const box1 = lf.getBBox();
   const box2 = af.getBBox();
-  if (!bboxInBbox(box1, box2)) {
+  if (!bboxInBBox(box1, box2)) {
     return {};
   }
   // Build MultiLineString coordinates for LineFeature
