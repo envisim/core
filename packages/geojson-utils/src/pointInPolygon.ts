@@ -1,10 +1,8 @@
-import {pointInBbox} from './bbox.js';
-
+import {positionInBBox} from './bbox.js';
+import type * as GJ from './geojson/types.js';
+import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
 // internal.
-const pointInSimplePolygon = (
-  point: number[],
-  polygon: number[][],
-): boolean => {
+const pointInRing = (point: GJ.Position, polygon: GJ.Position[]): boolean => {
   const p = point;
   const q = polygon;
   const n = q.length;
@@ -32,14 +30,14 @@ const pointInSimplePolygon = (
  * @returns - true if point is in polygon, otherwise false.
  */
 export const pointInSinglePolygon = (
-  point: number[],
-  polygon: number[][][],
+  point: GJ.Position,
+  polygon: GJ.Position[][],
 ): boolean => {
-  if (!pointInSimplePolygon(point, polygon[0])) {
+  if (!pointInRing(point, polygon[0])) {
     return false; // Not in first polygon.
   }
   for (let i = 1; i < polygon.length; i++) {
-    if (pointInSimplePolygon(point, polygon[i])) {
+    if (pointInRing(point, polygon[i])) {
       return false; // In a hole.
     }
   }
@@ -48,8 +46,8 @@ export const pointInSinglePolygon = (
 
 // internal
 const pointInMultiPolygon = (
-  point: number[],
-  polygon: number[][][][],
+  point: GJ.Position,
+  polygon: GJ.Position[][][],
 ): boolean => {
   for (let i = 0; i < polygon.length; i++) {
     if (pointInSinglePolygon(point, polygon[i])) {
@@ -60,42 +58,57 @@ const pointInMultiPolygon = (
 };
 
 /**
- * Checks if a GeoJSON Feature with geometry type Point is within a
- * GeoJSON Feature with geometry type Polygon or MultiPolygon.
+ * Checks if a position is inside an AreaFeature.
  *
- * @param point - A GeoJSON Feature with geometry type Point.
- * @param polygon - A GeoJSON Feature with geometry type Polygon or MultiPolygon.
- * @returns - `true` if the Point is inside the Polygon; `false` if the Point is not inside the Polygon.
+ * @param position - A GeoJSON Position [lon,lat].
+ * @param areaFeature- An AreaFeature.
+ * @returns - `true` if the position is inside the area; `false` if the position is not inside the area.
  */
-export const pointInPolygon = (
-  point: GeoJSON.Feature,
-  polygon: GeoJSON.Feature,
+export const positionInAreaFeature = (
+  position: GJ.Position,
+  areaFeature: GJ.AreaFeature,
 ): boolean => {
-  const ptype = polygon.geometry.type;
-  if (point.geometry.type !== 'Point') {
-    throw new Error('Type Point is required for geometry of point Feature.');
+  // use distanceToPosition for non-polygons
+  const af = AreaFeature.isFeature(areaFeature)
+    ? areaFeature
+    : new AreaFeature(areaFeature);
+  const ag = af.geometry;
+  const box = ag.getBBox();
+  if (!positionInBBox(position, box)) {
+    return false;
   }
-  if (ptype !== 'Polygon' && ptype !== 'MultiPolygon') {
-    throw new Error(
-      'Type Polygon or MultiPolygon is required for geometry of polygon Feature.',
-    );
-  }
-  if (polygon.bbox) {
-    if (!pointInBbox(point.geometry.coordinates, polygon.bbox)) {
-      return false;
-    }
-  }
-  if (ptype === 'Polygon') {
-    return pointInSinglePolygon(
-      point.geometry.coordinates,
-      polygon.geometry.coordinates,
-    );
-  }
-  if (ptype === 'MultiPolygon') {
-    return pointInMultiPolygon(
-      point.geometry.coordinates,
-      polygon.geometry.coordinates,
-    );
+  switch (ag.type) {
+    case 'Point':
+    case 'MultiPoint':
+      return ag.distanceToPosition(position) <= 0;
+    case 'Polygon':
+      return pointInSinglePolygon(position, ag.coordinates);
+    case 'MultiPolygon':
+      return pointInMultiPolygon(position, ag.coordinates);
+    case 'GeometryCollection':
+      ag.geometries.forEach((geom) => {
+        const box = geom.getBBox();
+        if (positionInBBox(position, box)) {
+          switch (geom.type) {
+            case 'Point':
+            case 'MultiPoint':
+              if (geom.distanceToPosition(position) <= 0) {
+                return true;
+              }
+              break;
+            case 'Polygon':
+              if (pointInSinglePolygon(position, geom.coordinates)) {
+                return true;
+              }
+              break;
+            case 'MultiPolygon':
+              if (pointInMultiPolygon(position, geom.coordinates)) {
+                return true;
+              }
+              break;
+          }
+        }
+      });
   }
   return false;
 };
