@@ -114,37 +114,42 @@ export const bbox = (geoJSON: GeoJSON.GeoJSON): GeoJSON.BBox => {
 };*/
 
 /**
- * Checks if point is in bbox.
+ * Checks if position is in bbox.
  *
- * @param point - Point coordinates.
+ * @param position - Point coordinates.
  * @param bbox - Bounding box.
  * @returns - Returns true if point is in bbox, otherwise false.
  */
-export const pointInBbox = (point: GJ.Position, bbox: GJ.BBox): boolean => {
-  if (bbox.length !== 4) {
-    throw new Error('The bounding box must be of length 4.');
-  }
-  if (point.length !== 2) {
-    throw new Error('The point must be [longitude, latitude].');
-  }
-  if (bbox[2] < bbox[0]) {
-    // Over antimeridian.
-    if (point[0] >= bbox[0] || point[0] <= bbox[2]) {
-      if (point[1] <= bbox[3] && point[1] >= bbox[1]) {
-        return true;
-      }
+export const positionInBBox = (
+  position: GJ.Position,
+  bbox: GJ.BBox,
+): boolean => {
+  const [minLon, minLat, minAlt, maxLon, maxLat, maxAlt] =
+    bbox.length == 6 ? bbox : [bbox[0], bbox[1], 0, bbox[2], bbox[3], 0];
+  const p = position.length == 3 ? position : [...position, 0];
+
+  // Check if antimeridian bbox
+  if (maxLon < minLon) {
+    // Over antimeridian
+    if (p[0] >= minLon || p[0] <= maxLon) {
+      return (
+        minLat <= p[1] && maxLat >= p[1] && minAlt <= p[2] && maxAlt >= p[2]
+      );
     }
     return false;
   }
+  // Regular bbox
   return (
-    bbox[0] <= point[0] &&
-    bbox[1] <= point[1] &&
-    bbox[2] >= point[0] &&
-    bbox[3] >= point[1]
+    minLon <= p[0] &&
+    maxLon >= p[0] &&
+    minLat <= p[1] &&
+    maxLat >= p[1] &&
+    minAlt <= p[2] &&
+    maxAlt >= p[2]
   );
 };
 
-// TODO: Check this one. What about antimeridian boxes?
+// TODO: Test this one. Should we use < and > or <= and >= ?
 /**
  * Checks if two bounding boxes overlap.
  *
@@ -152,19 +157,31 @@ export const pointInBbox = (point: GJ.Position, bbox: GJ.BBox): boolean => {
  * @param bbox2 - The second bounding box.
  * @returns - Returns true if the bboxes overlap, otherwise false.
  */
-export const bboxInBbox = (bbox1: GJ.BBox, bbox2: GJ.BBox): boolean => {
-  if (bbox1.length !== 4) {
-    throw new Error('The bounding box bbox1 must be of length 4.');
+export const bboxInBBox = (bbox1: GJ.BBox, bbox2: GJ.BBox): boolean => {
+  const [minLon1, minLat1, minAlt1, maxLon1, maxLat1, maxAlt1] =
+    bbox1.length == 6 ? bbox1 : [bbox1[0], bbox1[1], 0, bbox1[2], bbox1[3], 0];
+  const [minLon2, minLat2, minAlt2, maxLon2, maxLat2, maxAlt2] =
+    bbox2.length == 6 ? bbox2 : [bbox2[0], bbox2[1], 0, bbox2[2], bbox2[3], 0];
+
+  const latCond = minLat1 < maxLat2 && minLat2 < maxLat1;
+  // Allow for all zeros here
+  const altCond = minAlt1 <= maxAlt2 && minAlt2 <= maxAlt1;
+
+  // Longitude is the odd one
+  if (maxLon1 < minLon1) {
+    if (maxLon2 < minLon2) {
+      // Both cover antimeridian
+      return latCond && altCond;
+    } else {
+      return latCond && altCond && (maxLon2 > minLon1 || minLon2 < maxLon1);
+    }
   }
-  if (bbox2.length !== 4) {
-    throw new Error('The bounding box bbox2 must be of length 4.');
+  if (maxLon2 < minLon2) {
+    // Only 2 cover antimeridian
+    return latCond && altCond && (maxLon1 > minLon2 || minLon1 < maxLon2);
   }
-  return (
-    bbox1[0] < bbox2[2] &&
-    bbox2[0] < bbox1[2] &&
-    bbox1[1] < bbox2[3] &&
-    bbox2[1] < bbox1[3]
-  );
+  // Regular boxes
+  return latCond && altCond && minLon1 < maxLon2 && minLon2 < maxLon1;
 };
 
 /*
@@ -191,14 +208,14 @@ export const addBboxes = <
 };*/
 
 export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
-  let minLon = Infinity;
-  let maxLon = -Infinity;
-  let maxLonNeg = -Infinity;
-  let minLonPos = Infinity;
-  let minLat = Infinity;
-  let maxLat = -Infinity;
-  let maxHeight = -Infinity;
-  let minHeight = Infinity;
+  let minLon = 180;
+  let maxLon = -180;
+  let maxLonNeg = -180;
+  let minLonPos = 180;
+  let minLat = 90;
+  let maxLat = -90;
+  let maxAlt = -Infinity;
+  let minAlt = Infinity;
   const n = coords.length;
   let boxLength = 4;
 
@@ -216,8 +233,8 @@ export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
     minLat = Math.min(minLat, lat);
     maxLat = Math.max(maxLat, lat);
     if (boxLength == 6) {
-      minHeight = Math.min(minHeight, height);
-      maxHeight = Math.max(maxHeight, height);
+      minAlt = Math.min(minAlt, height);
+      maxAlt = Math.max(maxAlt, height);
     }
     if (lon < 0) {
       maxLonNeg = Math.max(maxLonNeg, lon);
@@ -248,28 +265,74 @@ export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
   if (boxLength === 4) {
     return [minLon, minLat, maxLon, maxLat];
   }
-  return [minLon, minLat, minHeight, maxLon, maxLat, maxHeight];
+  return [minLon, minLat, minAlt, maxLon, maxLat, maxAlt];
 };
 
 export const bboxFromArrayOfBBoxes = (bboxes: GJ.BBox[]): GJ.BBox => {
-  // build coordinates array
-  // is more points needed to avoid wrong split in meridian/antimeridian
-  // in extreme cases? Maybe need to add center points as well?
-  const coords: GJ.Position[] = new Array(bboxes.length * 4);
-  bboxes.forEach((box, i) => {
+  let minLon = 180;
+  let maxLon = -180;
+  let maxLonNeg = -180;
+  let minLonPos = 180;
+  let minLat = 90;
+  let maxLat = -90;
+  let maxAlt = -Infinity;
+  let minAlt = Infinity;
+  let boxLength = 4;
+
+  let antimeridian = false;
+
+  bboxes.forEach((box) => {
     if (box.length === 4) {
-      coords[i * 4] = [box[0], box[1]];
-      coords[i * 4 + 1] = [box[2], box[1]];
-      coords[i * 4 + 2] = [box[2], box[3]];
-      coords[i * 4 + 3] = [box[0], box[3]];
+      minLat = Math.min(minLat, box[1]);
+      maxLat = Math.max(maxLat, box[3]);
+      minLon = Math.min(minLon, box[0]);
+      maxLon = Math.max(maxLon, box[2]);
+      if (box[0] > box[2]) {
+        antimeridian = true;
+      }
+      if (box[0] > 0) {
+        minLonPos = Math.min(minLonPos, box[0]);
+      }
+      if (box[2] < 0) {
+        maxLonNeg = Math.max(maxLonNeg, box[2]);
+      }
     } else {
-      coords[i * 4] = [box[0], box[1], box[2]];
-      coords[i * 4 + 1] = [box[3], box[1], box[2]];
-      coords[i * 4 + 2] = [box[3], box[4], box[5]];
-      coords[i * 4 + 3] = [box[0], box[4], box[5]];
+      boxLength = 6;
+      minLat = Math.min(minLat, box[1]);
+      maxLat = Math.max(maxLat, box[4]);
+      minAlt = Math.min(minAlt, box[2]);
+      maxAlt = Math.max(maxAlt, box[5]);
+      minLon = Math.min(minLon, box[0]);
+      maxLon = Math.max(maxLon, box[3]);
+      if (box[0] > box[3]) {
+        antimeridian = true;
+      }
+      if (box[0] > 0) {
+        minLonPos = Math.min(minLonPos, box[0]);
+      }
+      if (box[3] < 0) {
+        maxLonNeg = Math.max(maxLonNeg, box[3]);
+      }
     }
   });
-  return bboxFromArrayOfPositions(coords);
+  if (antimeridian) {
+    minLon = minLonPos;
+    maxLon = maxLonNeg;
+    return boxLength === 4
+      ? [minLon, minLat, maxLon, maxLat]
+      : [minLon, minLat, minAlt, maxLon, maxLat, maxAlt];
+  }
+  if (minLon < 0 && maxLon > 0) {
+    // Even if no individual box cover antimeridian, the overall box with the shortest width migth
+    // be an antimeridian box.
+    if (maxLon - minLon > 360 - minLonPos + maxLonNeg) {
+      minLon = minLonPos;
+      maxLon = maxLonNeg;
+    }
+  }
+  return boxLength === 4
+    ? [minLon, minLat, maxLon, maxLat]
+    : [minLon, minLat, minAlt, maxLon, maxLat, maxAlt];
 };
 
 export const bbox4 = (bbox: GJ.BBox): [number, number, number, number] => {
