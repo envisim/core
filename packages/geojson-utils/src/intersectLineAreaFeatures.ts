@@ -1,8 +1,7 @@
 import {pointInSinglePolygon} from './pointInPolygon.js';
 import {intersectSegments} from './intersectSegments.js';
 import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
-import {PointCircle} from './geojson/areas/ClassPointCircle.js';
-import {MultiPointCircle} from './geojson/areas/ClassMultiPointCircle.js';
+import {AreaObject} from './geojson/areas/AreaObjects.js';
 import {LineFeature} from './geojson/lines/ClassLineFeature.js';
 import {LineString} from './geojson/lines/ClassLineString.js';
 import {MultiLineString} from './geojson/lines/ClassMultiLineString.js';
@@ -189,7 +188,7 @@ export const intersectLineAreaFeatures = (
 
   // Build MultiPolygon coordinates for AreaFeature
   let mp: GJ.Position[][][] = [];
-  af.geomEach((ag: GJ.AreaObject) => {
+  af.geomEach((ag: AreaObject) => {
     switch (ag.type) {
       case 'Polygon':
         mp.push(ag.coordinates);
@@ -198,19 +197,10 @@ export const intersectLineAreaFeatures = (
         mp = mp.concat(ag.coordinates);
         break;
       case 'Point':
-        mp.push(
-          (PointCircle.isObject(ag) ? ag : new PointCircle(ag)).toPolygon({
-            pointsPerCircle,
-          }).coordinates,
-        );
+        mp.push(ag.toPolygon({pointsPerCircle}).coordinates);
         break;
       case 'MultiPoint':
-        mp.concat(
-          (MultiPointCircle.isObject(ag)
-            ? ag
-            : new MultiPointCircle(ag)
-          ).toPolygon({pointsPerCircle}).coordinates,
-        );
+        mp.concat(ag.toPolygon({pointsPerCircle}).coordinates);
         break;
     }
   });
