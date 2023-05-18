@@ -1,14 +1,14 @@
 // @ts-ignore
 import geodesic from 'geographiclib-geodesic';
 import {distance} from './distance.js';
-import {asFeatureCollection} from './asFeatureCollection.js';
+// import {asFeatureCollection} from './asFeatureCollection.js';
 import type * as GeoJSON from './geojson/types.js';
 
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
 
 // Internal.
-const areaOfSimplePolygonLonLat = (
+const areaOfRingLonLat = (
   coords: GeoJSON.Position[],
   maxDist: number,
 ): number => {
@@ -46,15 +46,16 @@ export const areaOfPolygonLonLat = (
   maxDist: number,
 ): number => {
   // Full area of outer ring.
-  let area = areaOfSimplePolygonLonLat(points[0], maxDist);
+  let area = areaOfRingLonLat(points[0], maxDist);
   // Now substract area of any holes.
   for (let i = 1; i < points.length; i++) {
-    area = area - areaOfSimplePolygonLonLat(points[i], maxDist);
+    area = area - areaOfRingLonLat(points[i], maxDist);
   }
   return area;
 };
 
 // Internal.
+/*
 const areaOfGeometry = (
   geometry: GeoJSON.Geometry,
   opts = {_radius: 0, maxDist: Infinity},
@@ -87,7 +88,7 @@ const areaOfGeometry = (
     default:
       return 0;
   }
-};
+};*/
 
 /**
  * Computes the sum of all areas of all geometries in a geoJSON.
@@ -109,7 +110,7 @@ function a(b:GeoJSON.LineObject):number {
 }
 export a;*/
 
-export const area = (geoJSON: GeoJSON.GeoJSON, dist = Infinity): number => {
+/*export const area = (geoJSON: GeoJSON.GeoJSON, dist = Infinity): number => {
   let A = 0; // aggregate area to A
   asFeatureCollection(geoJSON).features.forEach((feature) => {
     const opts = {_radius: 0, maxDist: dist};
@@ -119,4 +120,4 @@ export const area = (geoJSON: GeoJSON.GeoJSON, dist = Infinity): number => {
     A += areaOfGeometry(feature.geometry, opts);
   });
   return A;
-};
+};*/
