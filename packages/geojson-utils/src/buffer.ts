@@ -1,5 +1,6 @@
 // @ts-ignore
 import turfBuffer from '@turf/buffer';
+import type * as GJ from './geojson/types.js';
 
 type BufferOpts = {
   radius?: number;
@@ -11,16 +12,16 @@ type BufferOpts = {
  * May result in overlapping geometries. Use unionOfPolygons() on resulting
  * FeatureCollection to union overlapping polygons.
  *
- * @param geoJSON - The GeoJSON to buffer.
+ * @param geoJSON - The GeoJSON FeatureCollection to buffer.
  * @param opts - Options object.
  * @param opts.radius - The radius/distance to buffer in meters.
  * @param opts.steps - The number of steps in the buffer.
  * @returns - A GeoJSON FeatureCollection with result of buffering. An empty FeatureCollection if failed.
  */
 export const buffer = (
-  geoJSON: GeoJSON.FeatureCollection,
+  geoJSON: GJ.FeatureCollection,
   opts: BufferOpts,
-): GeoJSON.FeatureCollection => {
+): GJ.FeatureCollection => {
   const radius = opts.radius ?? 0;
   return turfBuffer(geoJSON, radius / 1000, {
     units: 'kilometers',
