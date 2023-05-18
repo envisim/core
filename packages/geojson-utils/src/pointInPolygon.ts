@@ -77,6 +77,11 @@ export const positionInAreaFeature = (
   if (!positionInBBox(position, box)) {
     return false;
   }
+
+  // TODO: Optimise this one. Do not use geomEach as it cannot
+  // stop until finished. Better to use for-loops.
+
+  let inside = false;
   af.geomEach((geom: AreaObject) => {
     const box = geom.getBBox();
     if (positionInBBox(position, box)) {
@@ -84,21 +89,21 @@ export const positionInAreaFeature = (
         case 'Point':
         case 'MultiPoint':
           if (geom.distanceToPosition(position) <= 0) {
-            return true;
+            inside = true;
           }
           break;
         case 'Polygon':
           if (pointInSinglePolygon(position, geom.coordinates)) {
-            return true;
+            inside = true;
           }
           break;
         case 'MultiPolygon':
           if (pointInMultiPolygon(position, geom.coordinates)) {
-            return true;
+            inside = true;
           }
           break;
       }
     }
   });
-  return false;
+  return inside;
 };
