@@ -1,4 +1,4 @@
-import {asFeatureCollection} from './asFeatureCollection.js';
+//import {asFeatureCollection} from './asFeatureCollection.js';
 import {distance} from './distance.js';
 import type * as GeoJSON from './geojson/types.js';
 /**
@@ -42,7 +42,7 @@ export const lengthOfLineString = (ls: GeoJSON.Position[], dist: number) => {
 };
 
 // Internal.
-const lengthOfGeometry = (
+/*const lengthOfGeometry = (
   geometry: GeoJSON.Geometry,
   opts = {_radius: 0, dist: Infinity},
 ): number => {
@@ -83,7 +83,7 @@ const lengthOfGeometry = (
     default:
       throw new Error('Unknown GeoJSON geometry type.');
   }
-};
+};*/
 
 /**
  * Computes the length in meters of a GeoJSON object. All length (including
@@ -98,7 +98,7 @@ const lengthOfGeometry = (
  * @param dist - Optional distance for start using interpolated segment points, defaults to Infinity (meters).
  * @returns - The length in meters.
  */
-export const length = (geoJSON: GeoJSON.GeoJSON, dist = Infinity): number => {
+/*export const length = (geoJSON: GeoJSON.GeoJSON, dist = Infinity): number => {
   let L = 0; // Aggregate length to L
   asFeatureCollection(geoJSON).features.forEach((feature) => {
     const opts = {_radius: 0, dist: dist};
@@ -108,4 +108,4 @@ export const length = (geoJSON: GeoJSON.GeoJSON, dist = Infinity): number => {
     L += lengthOfGeometry(feature.geometry, opts);
   });
   return L;
-};
+};*/
