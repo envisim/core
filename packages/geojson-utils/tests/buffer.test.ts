@@ -1,8 +1,9 @@
 import {buffer} from '../src/buffer.js';
 import {unionOfPolygons} from '../src/unionOfPolygons.js';
+import type * as GJ from '../src/geojson/types.js';
 
 describe('buffer', () => {
-  const polygon1: GeoJSON.Feature = {
+  const polygon1: GJ.AreaFeature = {
     type: 'Feature',
     geometry: {
       type: 'Polygon',
@@ -18,7 +19,7 @@ describe('buffer', () => {
     },
     properties: {},
   };
-  const polygon2: GeoJSON.Feature = {
+  const polygon2: GJ.AreaFeature = {
     type: 'Feature',
     geometry: {
       type: 'Polygon',
@@ -34,7 +35,7 @@ describe('buffer', () => {
     },
     properties: {},
   };
-  const collection: GeoJSON.FeatureCollection = {
+  const collection: GJ.AreaFeatureCollection = {
     type: 'FeatureCollection',
     features: [polygon1, polygon2],
   };

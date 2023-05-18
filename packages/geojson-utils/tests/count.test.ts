@@ -1,14 +1,12 @@
-import {count} from '../src/count.js';
+import type * as GJ from '../src/geojson/types.js';
+import {MultiPoint} from '../src/geojson/points/ClassMultiPoint.js';
 
 describe('count', () => {
-  const geometry: GeoJSON.Geometry = {
-    type: 'MultiPoint',
-    coordinates: [
-      [0, 0],
-      [0, 1],
-    ],
-  };
+  const geometry = MultiPoint.create([
+    [0, 0],
+    [0, 1],
+  ]);
   test('count', () => {
-    expect(count(geometry)).toBe(2);
+    expect(geometry.count()).toBe(2);
   });
 });

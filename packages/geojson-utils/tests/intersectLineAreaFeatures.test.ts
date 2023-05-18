@@ -1,8 +1,9 @@
-import {intersectLinePolygonFeatures} from '../src/intersectLinePolygonFeatures.js';
+import type * as GJ from '../src/geojson/types.js';
+import {intersectLineAreaFeatures} from '../src/intersectLineAreaFeatures.js';
 
 describe('intersectLinePolygonFeatures', () => {
   // polygon
-  const polygon: GeoJSON.Feature = {
+  const polygon: GJ.AreaFeature = {
     type: 'Feature',
     geometry: {
       type: 'Polygon',
@@ -19,7 +20,7 @@ describe('intersectLinePolygonFeatures', () => {
     properties: {},
   };
 
-  const line: GeoJSON.Feature = {
+  const line: GJ.LineFeature = {
     type: 'Feature',
     geometry: {
       type: 'LineString',
@@ -36,7 +37,7 @@ describe('intersectLinePolygonFeatures', () => {
     properties: {},
   };
 
-  const intersection = intersectLinePolygonFeatures(line, polygon);
+  const intersection = intersectLineAreaFeatures(line, polygon);
   let coords = [
     [2, 2],
     [3, 3],

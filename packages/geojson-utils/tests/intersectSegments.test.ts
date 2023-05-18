@@ -1,11 +1,12 @@
 import {intersectSegments} from '../src/intersectSegments.js';
+import type * as GJ from '../src/geojson/types.js';
 
 describe('intersectSegments', () => {
-  const seg1 = [
+  const seg1: GJ.Position[] = [
     [0, 0],
     [1, 0],
   ];
-  const seg2 = [
+  const seg2: GJ.Position[] = [
     [0.5, -1],
     [0.5, 1],
   ];

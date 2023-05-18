@@ -1,7 +1,8 @@
 import {destination} from '../src/destination.js';
+import type * as GJ from '../src/geojson/types.js';
 
 describe('destination', () => {
-  const p1 = [0, 90]; // North pole
+  const p1: GJ.Position = [0, 90]; // North pole
   const azimuth = 180;
   // Distance in meters between the north pole and the equator for WGS84
   // https://en.wikipedia.org/wiki/Latitude

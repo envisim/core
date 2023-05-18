@@ -1,7 +1,8 @@
-import {geomEach} from '../src/geomEach.js';
+import {PointCollection} from '../src/geojson/points/ClassPointCollection';
+import type * as GJ from '../src/geojson/types.js';
 
 describe('geomEach', () => {
-  const geoJSON: GeoJSON.FeatureCollection = {
+  const geoJSON = new PointCollection({
     type: 'FeatureCollection',
     features: [
       {
@@ -21,9 +22,9 @@ describe('geomEach', () => {
         properties: {},
       },
     ],
-  };
+  });
   let count = 0;
-  geomEach(geoJSON, (geom: GeoJSON.Geometry, fi: number) => {
+  geoJSON.geomEach((geom: GJ.PointObject) => {
     count++;
   });
   test('geomEach', () => {

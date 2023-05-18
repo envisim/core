@@ -1,7 +1,8 @@
 import {intersectLineLineFeatures} from '../src/intersectLineLineFeatures.js';
+import type * as GJ from '../src/geojson/types.js';
 
 describe('intersectLineLineFeatures', () => {
-  const line1: GeoJSON.Feature = {
+  const line1: GJ.LineFeature = {
     type: 'Feature',
     geometry: {
       type: 'LineString',
@@ -12,7 +13,7 @@ describe('intersectLineLineFeatures', () => {
     },
     properties: {},
   };
-  const line2: GeoJSON.Feature = {
+  const line2: GJ.LineFeature = {
     type: 'Feature',
     geometry: {
       type: 'LineString',
@@ -25,7 +26,7 @@ describe('intersectLineLineFeatures', () => {
   };
 
   const intersection = intersectLineLineFeatures(line1, line2);
-  let coords: GeoJSON.Position = [3, 3];
+  let coords: GJ.Position = [3, 3];
   if (intersection.geoJSON) {
     if (intersection.geoJSON.geometry.type === 'Point') {
       coords = intersection.geoJSON.geometry.coordinates;
