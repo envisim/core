@@ -1,19 +1,37 @@
 import polygonClipping from 'polygon-clipping';
-import {geomEach} from './geomEach.js';
-import {toFeatureCollection, toPolygon, toMultiPolygon} from './to.js';
+import type * as GJ from './geojson/types.js';
+import {AreaCollection} from './geojson/areas/ClassAreaCollection.js';
+import {AreaObject} from './geojson/areas/AreaObjects.js';
+import {Polygon} from './geojson/areas/ClassPolygon.js';
+import {MultiPolygon} from './geojson/areas/ClassMultiPolygon.js';
+import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
 
 /**
  * Computes the union of the polygons in a GeoJSON FeatureCollection
- * @param polygons - A FeatureCollection
+ * @param areaCollection - An AreaFeatureCollection
+ * @param pointsPerCircle - Points per circle, default 16.
  * @returns - A FeatureCollection
  */
 export const unionOfPolygons = (
-  polygons: GeoJSON.FeatureCollection,
-): GeoJSON.FeatureCollection => {
+  areaCollection: GJ.AreaFeatureCollection,
+  pointsPerCircle = 16,
+): GJ.AreaFeatureCollection => {
   const geoms: polygonClipping.Geom[] = [];
-  geomEach(polygons, (geom: GeoJSON.Geometry) => {
-    if (geom.type === 'Polygon' || geom.type === 'MultiPolygon') {
-      geoms.push(geom.coordinates as polygonClipping.Geom);
+  const collection = AreaCollection.isCollection(areaCollection)
+    ? areaCollection
+    : new AreaCollection(areaCollection);
+  collection.geomEach((geom: AreaObject) => {
+    switch (geom.type) {
+      case 'Point':
+      case 'MultiPoint':
+        geoms.push(
+          geom.toPolygon({pointsPerCircle}).coordinates as polygonClipping.Geom,
+        );
+        break;
+      case 'Polygon':
+      case 'MultiPolygon':
+        geoms.push(geom.coordinates as polygonClipping.Geom);
+        break;
     }
   });
   if (geoms.length < 2) {
@@ -21,7 +39,11 @@ export const unionOfPolygons = (
   }
   const union = polygonClipping.union(geoms[0], ...geoms.slice(1));
   if (union.length === 1) {
-    return toFeatureCollection(toPolygon(union[0]));
+    return AreaCollection.create([
+      AreaFeature.create(Polygon.create(union[0]), {}),
+    ]);
   }
-  return toFeatureCollection(toMultiPolygon(union));
+  return AreaCollection.create([
+    AreaFeature.create(MultiPolygon.create(union), {}),
+  ]);
 };
