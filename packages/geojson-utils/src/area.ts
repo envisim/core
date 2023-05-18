@@ -2,16 +2,13 @@
 import geodesic from 'geographiclib-geodesic';
 import {distance} from './distance.js';
 // import {asFeatureCollection} from './asFeatureCollection.js';
-import type * as GeoJSON from './geojson/types.js';
+import type * as GJ from './geojson/types.js';
 
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
 
 // Internal.
-const areaOfRingLonLat = (
-  coords: GeoJSON.Position[],
-  maxDist: number,
-): number => {
+const areaOfRingLonLat = (coords: GJ.Position[], maxDist: number): number => {
   const p = geod.Polygon(false);
   const n = coords.length;
   for (let i = 0; i < n - 1; i++) {
@@ -42,7 +39,7 @@ const areaOfRingLonLat = (
 
 // Internal.
 export const areaOfPolygonLonLat = (
-  points: GeoJSON.Position[][],
+  points: GJ.Position[][],
   maxDist: number,
 ): number => {
   // Full area of outer ring.
