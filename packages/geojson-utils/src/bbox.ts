@@ -221,7 +221,7 @@ export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
     const lon = coords[i][0];
     const lat = coords[i][1];
     // As height may be undefined.
-    const height = coords[i][2] || 0;
+    const height = coords[i][2] ?? 0;
     // Existance of any third coordinate gives box of length 6.
     if (typeof coords[i][2] === 'number') {
       boxLength = 6;
