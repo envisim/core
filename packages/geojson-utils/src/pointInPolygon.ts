@@ -1,6 +1,7 @@
 import {positionInBBox} from './bbox.js';
 import type * as GJ from './geojson/types.js';
 import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
+import {AreaObject} from './geojson/areas/AreaObjects.js';
 // internal.
 const pointInRing = (point: GJ.Position, polygon: GJ.Position[]): boolean => {
   const p = point;
@@ -68,47 +69,36 @@ export const positionInAreaFeature = (
   position: GJ.Position,
   areaFeature: GJ.AreaFeature,
 ): boolean => {
-  // use distanceToPosition for non-polygons
   const af = AreaFeature.isFeature(areaFeature)
     ? areaFeature
     : new AreaFeature(areaFeature);
-  const ag = af.geometry;
-  const box = ag.getBBox();
+
+  const box = af.getBBox();
   if (!positionInBBox(position, box)) {
     return false;
   }
-  switch (ag.type) {
-    case 'Point':
-    case 'MultiPoint':
-      return ag.distanceToPosition(position) <= 0;
-    case 'Polygon':
-      return pointInSinglePolygon(position, ag.coordinates);
-    case 'MultiPolygon':
-      return pointInMultiPolygon(position, ag.coordinates);
-    case 'GeometryCollection':
-      ag.geometries.forEach((geom) => {
-        const box = geom.getBBox();
-        if (positionInBBox(position, box)) {
-          switch (geom.type) {
-            case 'Point':
-            case 'MultiPoint':
-              if (geom.distanceToPosition(position) <= 0) {
-                return true;
-              }
-              break;
-            case 'Polygon':
-              if (pointInSinglePolygon(position, geom.coordinates)) {
-                return true;
-              }
-              break;
-            case 'MultiPolygon':
-              if (pointInMultiPolygon(position, geom.coordinates)) {
-                return true;
-              }
-              break;
+  af.geomEach((geom: AreaObject) => {
+    const box = geom.getBBox();
+    if (positionInBBox(position, box)) {
+      switch (geom.type) {
+        case 'Point':
+        case 'MultiPoint':
+          if (geom.distanceToPosition(position) <= 0) {
+            return true;
           }
-        }
-      });
-  }
+          break;
+        case 'Polygon':
+          if (pointInSinglePolygon(position, geom.coordinates)) {
+            return true;
+          }
+          break;
+        case 'MultiPolygon':
+          if (pointInMultiPolygon(position, geom.coordinates)) {
+            return true;
+          }
+          break;
+      }
+    }
+  });
   return false;
 };
