@@ -200,7 +200,7 @@ export const intersectLineAreaFeatures = (
         mp.push(ag.toPolygon({pointsPerCircle}).coordinates);
         break;
       case 'MultiPoint':
-        mp.concat(ag.toPolygon({pointsPerCircle}).coordinates);
+        mp = mp.concat(ag.toPolygon({pointsPerCircle}).coordinates);
         break;
     }
   });
