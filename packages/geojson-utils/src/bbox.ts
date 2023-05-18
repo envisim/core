@@ -1,6 +1,4 @@
-import {copy} from './copy.js';
 import {destination} from './destination.js';
-import {geomEach} from './geomEach.js';
 import type * as GJ from './geojson/types.js';
 
 // Internal function to treat non-standard circle geometry.
