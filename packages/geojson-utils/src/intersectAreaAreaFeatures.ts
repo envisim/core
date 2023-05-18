@@ -61,11 +61,11 @@ const intersectPointCirclePointCircle = (
     // Intersection
     if (dist + p1.radius < p2.radius) {
       // Circle 1 is fully within circle 2
-      return {geoJSON: PointCircle.create(p1.coordinates, p1.radius)};
+      return {geoJSON: PointCircle.create([...p1.coordinates], p1.radius)};
     }
     if (dist + p2.radius < p1.radius) {
       // Circle 2 is fully within circle 1
-      return {geoJSON: PointCircle.create(p2.coordinates, p2.radius)};
+      return {geoJSON: PointCircle.create([...p2.coordinates], p2.radius)};
     }
     // Need to intersect polygons
     const intersect = intersectPolygonPolygon(
