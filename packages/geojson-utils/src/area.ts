@@ -37,84 +37,21 @@ const areaOfRingLonLat = (coords: GJ.Position[], maxDist: number): number => {
   return Math.abs(p.Compute(false, true).area);
 };
 
-// Internal.
+/**
+ * Computes the area of a Polygon (not MultiPolygon)
+ * @param points - The coordinates of the Polygon.
+ * @param dist - Optional segment distance in meters for start using interpolated points, defaults to Infinity meters.
+ * @returns - The area in square meters.
+ */
 export const areaOfPolygonLonLat = (
   points: GJ.Position[][],
-  maxDist: number,
+  dist: number = Infinity,
 ): number => {
   // Full area of outer ring.
-  let area = areaOfRingLonLat(points[0], maxDist);
+  let area = areaOfRingLonLat(points[0], dist);
   // Now substract area of any holes.
   for (let i = 1; i < points.length; i++) {
-    area = area - areaOfRingLonLat(points[i], maxDist);
+    area = area - areaOfRingLonLat(points[i], dist);
   }
   return area;
 };
-
-// Internal.
-/*
-const areaOfGeometry = (
-  geometry: GeoJSON.Geometry,
-  opts = {_radius: 0, maxDist: Infinity},
-): number => {
-  switch (geometry.type) {
-    case 'Point':
-      if (opts._radius > 0) {
-        return Math.PI * opts._radius * opts._radius;
-      }
-      return 0;
-    case 'MultiPoint':
-      if (opts._radius > 0) {
-        return (
-          Math.PI * opts._radius * opts._radius * geometry.coordinates.length
-        );
-      }
-      return 0;
-    case 'Polygon':
-      return areaOfPolygonLonLat(geometry.coordinates, opts.maxDist);
-    case 'MultiPolygon':
-      return geometry.coordinates.reduce(
-        (prev, curr) => areaOfPolygonLonLat(curr, opts.maxDist) + prev,
-        0,
-      );
-    case 'GeometryCollection':
-      return geometry.geometries.reduce(
-        (prev, curr) => areaOfGeometry(curr, opts) + prev,
-        0,
-      );
-    default:
-      return 0;
-  }
-};*/
-
-/**
- * Computes the sum of all areas of all geometries in a geoJSON.
- * Note: Not the same as area of union. The area is computed using
- * geographiclib, which means segments are treated as geodesic paths.
- * According to the GeoJSON specification, segments are straight cartesian
- * lines in longitude and latitude. Interpolated points will be added
- * (in the computation) if the distance between the segment endpoints
- * exceeds dist. This can inrease precision in area for long segments,
- * at the cost of a larger number of computations.
- *
- * @param geoJSON - A geoJSON.
- * @param dist - Optional distance for start using interpolated segment points, defaults to Infinity (meters).
- * @returns - The sum of area in square meters.
- */
-/*function a(b:GeoJSON.AreaObject):number;
-function a(b:GeoJSON.LineObject):number {
-
-}
-export a;*/
-
-/*export const area = (geoJSON: GeoJSON.GeoJSON, dist = Infinity): number => {
-  let A = 0; // aggregate area to A
-  asFeatureCollection(geoJSON).features.forEach((feature) => {
-    const opts = {_radius: 0, maxDist: dist};
-    if (feature.properties?._radius) {
-      opts._radius = feature.properties._radius;
-    }
-    A += areaOfGeometry(feature.geometry, opts);
-  });
-  return A;
-};*/

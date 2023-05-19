@@ -1,6 +1,6 @@
-//import {asFeatureCollection} from './asFeatureCollection.js';
 import {distance} from './distance.js';
 import type * as GeoJSON from './geojson/types.js';
+
 /**
  * Computes the length of the a GeoJSON segment.
  * @param start - Start point [lon,lat]
@@ -32,80 +32,19 @@ export const lengthOfSegment = (
   return distToEnd;
 };
 
-// Internal.
-export const lengthOfLineString = (ls: GeoJSON.Position[], dist: number) => {
+/**
+ * Computes the length of a LineString.
+ * @param ls - Coordinates of a LineString
+ * @param dist - Optional distance for start using interpolated segment points, defaults to Infinity (meters).
+ * @returns - The length in meters.
+ */
+export const lengthOfLineString = (
+  ls: GeoJSON.Position[],
+  dist: number = Infinity,
+) => {
   let l = 0;
   for (let i = 0; i < ls.length - 1; i++) {
     l += lengthOfSegment(ls[i], ls[i + 1], dist);
   }
   return l;
 };
-
-// Internal.
-/*const lengthOfGeometry = (
-  geometry: GeoJSON.Geometry,
-  opts = {_radius: 0, dist: Infinity},
-): number => {
-  switch (geometry.type) {
-    case 'LineString':
-      return lengthOfLineString(geometry.coordinates, opts.dist);
-    case 'MultiLineString':
-    case 'Polygon':
-      return geometry.coordinates.reduce(
-        (prev, curr) => prev + lengthOfLineString(curr, opts.dist),
-        0,
-      );
-    case 'MultiPolygon':
-      return geometry.coordinates.reduce(
-        (prev, curr) =>
-          prev +
-          curr.reduce(
-            (prev, curr) => prev + lengthOfLineString(curr, opts.dist),
-            0,
-          ),
-        0,
-      );
-    case 'GeometryCollection':
-      return geometry.geometries.reduce(
-        (prev, curr) => lengthOfGeometry(curr, opts) + prev,
-        0,
-      );
-    case 'Point':
-      if (opts._radius > 0) {
-        return 2 * opts._radius * Math.PI;
-      }
-      return 0;
-    case 'MultiPoint':
-      if (opts._radius > 0) {
-        return 2 * opts._radius * Math.PI * geometry.coordinates.length;
-      }
-      return 0;
-    default:
-      throw new Error('Unknown GeoJSON geometry type.');
-  }
-};*/
-
-/**
- * Computes the length in meters of a GeoJSON object. All length (including
- * holes) is included. Distance is computed using geographiclib-geodesic, which treat
- * segments as geodesic paths. According to the GeoJSON specification, segments
- * are straight cartesian lines in longitude and latitude. Interpolated points
- * will be added (in the computation) if the distance between the segment endpoints
- * exceeds dist. This can inrease precision for long segments, at the cost of
- * a larger number of distance computations.
- *
- * @param geoJSON - A GeoJSON object.
- * @param dist - Optional distance for start using interpolated segment points, defaults to Infinity (meters).
- * @returns - The length in meters.
- */
-/*export const length = (geoJSON: GeoJSON.GeoJSON, dist = Infinity): number => {
-  let L = 0; // Aggregate length to L
-  asFeatureCollection(geoJSON).features.forEach((feature) => {
-    const opts = {_radius: 0, dist: dist};
-    if (feature.properties?._radius) {
-      opts._radius = feature.properties._radius;
-    }
-    L += lengthOfGeometry(feature.geometry, opts);
-  });
-  return L;
-};*/
