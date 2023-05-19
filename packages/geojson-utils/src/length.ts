@@ -13,9 +13,9 @@ export const lengthOfSegment = (
   end: GeoJSON.Position,
   dist = Infinity,
 ): number => {
-  let L = 0; // Aggregate length for segments longer than maxDist
   const distToEnd = distance(start, end);
   if (distToEnd > dist) {
+    let L = 0; // Aggregate length for segments longer than maxDist
     const numPointsToAdd = dist === Infinity ? 1 : Math.ceil(distToEnd / dist);
     const [lon0, lat0] = start;
     const [lon1, lat1] = end;
@@ -36,7 +36,7 @@ export const lengthOfSegment = (
  * Computes the length of a LineString.
  * @param ls - Coordinates of a LineString
  * @param dist - Optional distance for start using interpolated segment points, defaults to Infinity (meters).
- * @returns - The length in meters.
+ * @returns - The length of the LineString in meters.
  */
 export const lengthOfLineString = (
   ls: GeoJSON.Position[],
