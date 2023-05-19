@@ -13,6 +13,7 @@ export type {
 export {copy} from './copy.js';
 export * from './position.js';
 
+export {areaOfPolygonLonLat} from './area.js';
 export {pointInBBox, bboxInBBox} from './bbox.js';
 export {buffer} from './buffer.js';
 export {destination} from './destination.js';
@@ -23,6 +24,7 @@ export {intermediate} from './intermediate.js';
 export {intersectLineLineFeatures} from './intersectLineLineFeatures.js';
 export {intersectLineAreaFeatures} from './intersectLineAreaFeatures.js';
 export {intersectAreaAreaFeatures} from './intersectAreaAreaFeatures.js';
+export {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
 export {intersectSegments} from './intersectSegments.js';
 export {lengthOfLineString, lengthOfSegment} from './length.js';
 export {pointInAreaFeature, pointInSinglePolygon} from './pointInPolygon.js';
