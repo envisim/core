@@ -1,4 +1,4 @@
-import {positionInBBox, bboxInBBox} from '../src/bbox.js';
+import {pointInBBox, bboxInBBox} from '../src/bbox.js';
 import type * as GJ from '../src/geojson/types.js';
 import {Polygon} from '../src/geojson/areas/ClassPolygon';
 
@@ -32,11 +32,11 @@ describe('bbox', () => {
     expect(polygon.getBBox()).toStrictEqual(box);
   });
 
-  test('pointInBbox', () => {
-    expect(positionInBBox(p1, box)).toBe(true);
-    expect(positionInBBox(p2, box)).toBe(false);
-    expect(positionInBBox(p3, box)).toBe(true);
-    expect(positionInBBox(p4, box)).toBe(true);
+  test('pointInBBox', () => {
+    expect(pointInBBox(p1, box)).toBe(true);
+    expect(pointInBBox(p2, box)).toBe(false);
+    expect(pointInBBox(p3, box)).toBe(true);
+    expect(pointInBBox(p4, box)).toBe(true);
   });
 
   test('bboxInBBox', () => {
