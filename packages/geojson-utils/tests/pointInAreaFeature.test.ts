@@ -1,7 +1,7 @@
-import {positionInAreaFeature} from '../src/pointInPolygon.js';
+import {pointInAreaFeature} from '../src/pointInPolygon.js';
 import type * as GJ from '../src/geojson/types.js';
 import {AreaFeature} from '../src/geojson/areas/ClassAreaFeature.js';
-describe('positionInAreaFeature', () => {
+describe('pointInAreaFeature', () => {
   // polygon
   const polygon = new AreaFeature({
     type: 'Feature',
@@ -37,11 +37,11 @@ describe('positionInAreaFeature', () => {
 
   //console.log(polygon.getBBox());
 
-  test('positionInAreaFeature', () => {
-    expect(positionInAreaFeature(point1, polygon)).toBe(true);
-    expect(positionInAreaFeature(point2, polygon)).toBe(false);
-    expect(positionInAreaFeature(point3, polygon)).toBe(true);
-    expect(positionInAreaFeature(point4, polygon)).toBe(true);
-    expect(positionInAreaFeature(point5, polygon)).toBe(false);
+  test('pointInAreaFeature', () => {
+    expect(pointInAreaFeature(point1, polygon)).toBe(true);
+    expect(pointInAreaFeature(point2, polygon)).toBe(false);
+    expect(pointInAreaFeature(point3, polygon)).toBe(true);
+    expect(pointInAreaFeature(point4, polygon)).toBe(true);
+    expect(pointInAreaFeature(point5, polygon)).toBe(false);
   });
 });
