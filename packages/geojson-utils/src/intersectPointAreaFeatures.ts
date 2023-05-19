@@ -1,5 +1,5 @@
 import type * as GJ from './geojson/types.js';
-import {positionInAreaFeature} from './pointInPolygon.js';
+import {pointInAreaFeature} from './pointInPolygon.js';
 import {bboxInBBox} from './bbox.js';
 import {PointFeature} from './geojson/points/ClassPointFeature.js';
 import {Point} from './geojson/points/ClassPoint.js';
@@ -41,13 +41,13 @@ export const intersectPointAreaFeatures = (
   pf.geomEach((pg: GJ.PointObject) => {
     switch (pg.type) {
       case 'Point':
-        if (positionInAreaFeature(pg.coordinates, af)) {
+        if (pointInAreaFeature(pg.coordinates, af)) {
           coordinates.push([...pg.coordinates]);
         }
         break;
       case 'MultiPoint':
         pg.coordinates.forEach((coords) => {
-          if (positionInAreaFeature(coords, af)) {
+          if (pointInAreaFeature(coords, af)) {
             coordinates.push([...coords]);
           }
         });

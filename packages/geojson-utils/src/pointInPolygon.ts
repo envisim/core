@@ -1,7 +1,7 @@
-import {positionInBBox} from './bbox.js';
+import {pointInBBox} from './bbox.js';
 import type * as GJ from './geojson/types.js';
 import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
-import {AreaObject} from './geojson/areas/AreaObjects.js';
+
 // internal.
 const pointInRing = (point: GJ.Position, polygon: GJ.Position[]): boolean => {
   const p = point;
@@ -23,7 +23,7 @@ const pointInRing = (point: GJ.Position, polygon: GJ.Position[]): boolean => {
 };
 
 /**
- * Checks if a point is in a polygon.
+ * Checks if a point is in a Polygon.
  * Note: Not for MultiPolygon.
  *
  * @param point - Coordinates [lon,lat] of a point.
@@ -45,8 +45,15 @@ export const pointInSinglePolygon = (
   return true;
 };
 
-// internal
-const pointInMultiPolygon = (
+/**
+ * Checks if a point is in a MultiPolygon.
+ * Note: Not for Polygon.
+ *
+ * @param point - Coordinates [lon,lat] of a point.
+ * @param polygon - Coordinates of a MultiPolygon, not Polygon.
+ * @returns - true if point is in polygon, otherwise false.
+ */
+export const pointInMultiPolygon = (
   point: GJ.Position,
   polygon: GJ.Position[][][],
 ): boolean => {
@@ -59,14 +66,14 @@ const pointInMultiPolygon = (
 };
 
 /**
- * Checks if a position is inside an AreaFeature.
+ * Checks if a point is inside an AreaFeature.
  *
- * @param position - A GeoJSON Position [lon,lat].
+ * @param point - A GeoJSON Position [lon,lat].
  * @param areaFeature- An AreaFeature.
  * @returns - `true` if the position is inside the area; `false` if the position is not inside the area.
  */
-export const positionInAreaFeature = (
-  position: GJ.Position,
+export const pointInAreaFeature = (
+  point: GJ.Position,
   areaFeature: GJ.AreaFeature,
 ): boolean => {
   const af = AreaFeature.isFeature(areaFeature)
@@ -74,36 +81,53 @@ export const positionInAreaFeature = (
     : new AreaFeature(areaFeature);
 
   const box = af.getBBox();
-  if (!positionInBBox(position, box)) {
+  if (!pointInBBox(point, box)) {
     return false;
   }
 
-  // TODO: Optimise this one. Do not use geomEach as it cannot
-  // stop until finished. Better to use for-loops.
-
-  let inside = false;
-  af.geomEach((geom: AreaObject) => {
-    const box = geom.getBBox();
-    if (positionInBBox(position, box)) {
-      switch (geom.type) {
-        case 'Point':
-        case 'MultiPoint':
-          if (geom.distanceToPosition(position) <= 0) {
-            inside = true;
-          }
-          break;
-        case 'Polygon':
-          if (pointInSinglePolygon(position, geom.coordinates)) {
-            inside = true;
-          }
-          break;
-        case 'MultiPolygon':
-          if (pointInMultiPolygon(position, geom.coordinates)) {
-            inside = true;
-          }
-          break;
+  const ag = af.geometry;
+  switch (ag.type) {
+    case 'Point':
+    case 'MultiPoint':
+      if (ag.distanceToPosition(point) <= 0) {
+        return true;
       }
-    }
-  });
-  return inside;
+      break;
+    case 'Polygon':
+      if (pointInSinglePolygon(point, ag.coordinates)) {
+        return true;
+      }
+      break;
+    case 'MultiPolygon':
+      if (pointInMultiPolygon(point, ag.coordinates)) {
+        return true;
+      }
+      break;
+    case 'GeometryCollection':
+      for (let i = 0; i < ag.geometries.length; i++) {
+        const box = ag.geometries[i].getBBox();
+        if (pointInBBox(point, box)) {
+          const g = ag.geometries[i];
+          switch (g.type) {
+            case 'Point':
+            case 'MultiPoint':
+              if (g.distanceToPosition(point) <= 0) {
+                return true;
+              }
+              break;
+            case 'Polygon':
+              if (pointInSinglePolygon(point, g.coordinates)) {
+                return true;
+              }
+              break;
+            case 'MultiPolygon':
+              if (pointInMultiPolygon(point, g.coordinates)) {
+                return true;
+              }
+              break;
+          }
+        }
+      }
+  }
+  return false;
 };

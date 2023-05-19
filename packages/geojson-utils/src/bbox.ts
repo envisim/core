@@ -114,17 +114,14 @@ export const bbox = (geoJSON: GeoJSON.GeoJSON): GeoJSON.BBox => {
 /**
  * Checks if position is in bbox.
  *
- * @param position - Point coordinates.
+ * @param point - Point coordinates.
  * @param bbox - Bounding box.
  * @returns - Returns true if point is in bbox, otherwise false.
  */
-export const positionInBBox = (
-  position: GJ.Position,
-  bbox: GJ.BBox,
-): boolean => {
+export const pointInBBox = (point: GJ.Position, bbox: GJ.BBox): boolean => {
   const [minLon, minLat, minAlt, maxLon, maxLat, maxAlt] =
     bbox.length == 6 ? bbox : [bbox[0], bbox[1], 0, bbox[2], bbox[3], 0];
-  const p = position.length == 3 ? position : [...position, 0];
+  const p = point.length == 3 ? point : [...point, 0];
 
   // Check if antimeridian bbox
   if (maxLon < minLon) {
