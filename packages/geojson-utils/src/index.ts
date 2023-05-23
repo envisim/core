@@ -9,6 +9,8 @@ export type {
   IPropertyRecord,
 } from './types/property.js';
 
+export type * as GeoJSON from './geojson/types.js';
+
 // Utils
 export {copy} from './copy.js';
 export * from './position.js';
