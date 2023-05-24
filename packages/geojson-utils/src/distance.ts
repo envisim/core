@@ -12,7 +12,13 @@ const geod = geodesic.Geodesic.WGS84;
  * @returns - The distance in meters.
  */
 export const distance = (p1: GJ.Position, p2: GJ.Position): number => {
-  const result = geod.Inverse(p1[1], p1[0], p2[1], p2[0]);
+  const result = geod.Inverse(
+    p1[1],
+    p1[0],
+    p2[1],
+    p2[0],
+    geodesic.Geodesic.DISTANCE,
+  );
   if (typeof result.s12 === 'number') {
     return result.s12;
   }

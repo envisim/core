@@ -17,7 +17,13 @@ export const rotateCoord = (
   refCoord: GJ.Position,
   angle: number,
 ): GJ.Position => {
-  const result = geod.Inverse(refCoord[1], refCoord[0], coord[1], coord[0]);
+  const result = geod.Inverse(
+    refCoord[1],
+    refCoord[0],
+    coord[1],
+    coord[0],
+    geodesic.Geodesic.DISTANCE | geodesic.Geodesic.AZIMUTH,
+  );
   const dist = result.s12;
   const azimuth = result.azi1;
   if (typeof azimuth === 'number' && typeof dist === 'number') {
@@ -26,6 +32,7 @@ export const rotateCoord = (
       refCoord[0],
       (azimuth + angle + 360) % 360,
       dist,
+      geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE,
     );
     if (typeof result2.lon2 === 'number' && typeof result2.lat2 === 'number') {
       return [result2.lon2, result2.lat2];

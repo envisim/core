@@ -18,7 +18,13 @@ export const destination = (
   dist: number,
   azimuth: number,
 ): GJ.Position => {
-  const result = geod.Direct(point[1], point[0], (azimuth + 360) % 360, dist);
+  const result = geod.Direct(
+    point[1],
+    point[0],
+    (azimuth + 360) % 360,
+    dist,
+    geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE,
+  );
   if (typeof result.lon2 === 'number' && typeof result.lat2 === 'number') {
     return [result.lon2, result.lat2];
   }

@@ -14,7 +14,13 @@ const geod = geodesic.Geodesic.WGS84;
  * @returns - The forward azimuth in degrees.
  */
 export const forwardAzimuth = (p1: GJ.Position, p2: GJ.Position): number => {
-  const result = geod.Inverse(p1[1], p1[0], p2[1], p2[0]);
+  const result = geod.Inverse(
+    p1[1],
+    p1[0],
+    p2[1],
+    p2[0],
+    geodesic.Geodesic.AZIMUTH,
+  );
   if (typeof result.azi1 === 'number') {
     return result.azi1;
   }

@@ -24,12 +24,24 @@ export const intermediate = (
   p2: GJ.Position,
   fraction: number,
 ): GJ.Position => {
-  const result1 = geod.Inverse(p1[1], p1[0], p2[1], p2[0]);
+  const result1 = geod.Inverse(
+    p1[1],
+    p1[0],
+    p2[1],
+    p2[0],
+    geodesic.Geodesic.DISTANCE | geodesic.Geodesic.AZIMUTH,
+  );
   const dist = result1.s12;
   const azimuth = result1.azi1;
   let result2;
   if (typeof dist === 'number' && typeof azimuth === 'number') {
-    result2 = geod.Direct(p1[1], p1[0], azimuth, dist * fraction);
+    result2 = geod.Direct(
+      p1[1],
+      p1[0],
+      azimuth,
+      dist * fraction,
+      geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE,
+    );
     if (typeof result2.lon2 === 'number' && typeof result2.lat2 === 'number') {
       return [result2.lon2, result2.lat2];
     }
