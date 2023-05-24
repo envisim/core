@@ -61,7 +61,7 @@ export class AreaFeature extends BaseFeature implements GJ.AreaFeature {
   }
 
   geomEach(callback: Function): void {
-    if (this.geometry.type === 'GeometryCollection') {
+    if (AreaGeometryCollection.isGeometryCollection(this.geometry)) {
       this.geometry.geometries.forEach(
         (geom: GJ.AreaObject, geomIndex: number) => {
           callback(geom, geomIndex);

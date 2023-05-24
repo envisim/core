@@ -50,7 +50,7 @@ export class LineFeature extends BaseFeature implements GJ.LineFeature {
   }
 
   geomEach(callback: Function): void {
-    if (this.geometry.type === 'GeometryCollection') {
+    if (LineGeometryCollection.isGeometryCollection(this.geometry)) {
       this.geometry.geometries.forEach(
         (geom: GJ.LineObject, geomIndex: number) => {
           callback(geom, geomIndex);
