@@ -1,7 +1,12 @@
 import {destination} from './destination.js';
 import type * as GJ from './geojson/types.js';
 
-// Internal function to treat non-standard circle geometry.
+/**
+ * Computes posisions needed to find bounding box of a PointCircle.
+ * @param point - A position.
+ * @param radius - The radius in meters.
+ * @returns - An array with four positions [top,right,bottom,left].
+ */
 export const getPositionsForCircle = (
   point: GJ.Position,
   radius: number,
@@ -12,104 +17,6 @@ export const getPositionsForCircle = (
   const left = destination(point, radius, 270);
   return [top, right, bottom, left];
 };
-
-/*
-export const bbox = (geoJSON: GeoJSON.GeoJSON): GeoJSON.BBox => {
-  // TODO?: Fix special cases for bbox including
-  // north or south pole.
-  let minLat = Infinity;
-  let maxLat = -Infinity;
-  let minLon = Infinity;
-  let maxLon = -Infinity;
-  let maxLonNeg = -Infinity;
-  let minLonPos = Infinity;
-  const doCoord = (coord: GeoJSON.Position) => {
-    minLat = Math.min(minLat, coord[1]);
-    maxLat = Math.max(maxLat, coord[1]);
-    minLon = Math.min(minLon, coord[0]);
-    maxLon = Math.max(maxLon, coord[0]);
-    if (coord[0] < 0) {
-      maxLonNeg = Math.max(maxLonNeg, coord[0]);
-    } else {
-      minLonPos = Math.min(minLonPos, coord[0]);
-    }
-  };
-  geomEach(geoJSON, (g: GeoJSON.Geometry, fi: number) => {
-    let radius = 0;
-    let circle = false;
-    if (geoJSON.type === 'Feature') {
-      let props = geoJSON.properties;
-      if (props && props._radius > 0) {
-        circle = true;
-        radius = props._radius;
-      }
-    } else if (geoJSON.type === 'FeatureCollection') {
-      let props = geoJSON.features[fi].properties;
-      if (props && props._radius > 0) {
-        circle = true;
-        radius = props._radius;
-      }
-    }
-    switch (g.type) {
-      case 'Point':
-        if (circle) {
-          getPositionsForCircle(g.coordinates, radius).forEach((coord) => {
-            doCoord(coord);
-          });
-        } else {
-          doCoord(g.coordinates);
-        }
-        break;
-      case 'MultiPoint':
-        if (circle) {
-          for (let i = 0; i < g.coordinates.length; i++) {
-            getPositionsForCircle(g.coordinates[i], radius).forEach((coord) => {
-              doCoord(coord);
-            });
-          }
-        } else {
-          for (let i = 0; i < g.coordinates.length; i++) {
-            doCoord(g.coordinates[i]);
-          }
-        }
-        break;
-      case 'LineString':
-        for (let i = 0; i < g.coordinates.length; i++) {
-          doCoord(g.coordinates[i]);
-        }
-        break;
-      case 'MultiLineString':
-      case 'Polygon':
-        for (let i = 0; i < g.coordinates.length; i++) {
-          for (let j = 0; j < g.coordinates[i].length; j++) {
-            doCoord(g.coordinates[i][j]);
-          }
-        }
-        break;
-      case 'MultiPolygon':
-        for (let i = 0; i < g.coordinates.length; i++) {
-          for (let j = 0; j < g.coordinates[i].length; j++) {
-            for (let k = 0; k < g.coordinates[i][j].length; k++) {
-              doCoord(g.coordinates[i][j][k]);
-            }
-          }
-        }
-        break;
-      default:
-        break;
-    }
-  });
-
-  if (minLon < 0 && maxLon > 0) {
-    const lonSpan1 = maxLon - minLon;
-    const lonSpan2 = 360 - minLonPos + maxLonNeg;
-    if (lonSpan1 < lonSpan2) {
-      return [minLon, minLat, maxLon, maxLat];
-    }
-    return [minLonPos, minLat, maxLonNeg, maxLat];
-  }
-  return [minLon, minLat, maxLon, maxLat];
-};*/
 
 /**
  * Checks if position is in bbox.
@@ -171,6 +78,7 @@ export const bboxInBBox = (bbox1: GJ.BBox, bbox2: GJ.BBox): boolean => {
       return latCond && altCond && (maxLon2 > minLon1 || minLon2 < maxLon1);
     }
   }
+
   if (maxLon2 < minLon2) {
     // Only 2 cover antimeridian
     return latCond && altCond && (maxLon1 > minLon2 || minLon1 < maxLon2);
@@ -179,29 +87,11 @@ export const bboxInBBox = (bbox1: GJ.BBox, bbox2: GJ.BBox): boolean => {
   return latCond && altCond && minLon1 < maxLon2 && minLon2 < maxLon1;
 };
 
-/*
-export const addBboxes = <
-  T extends GeoJSON.Feature | GeoJSON.FeatureCollection,
->(
-  geoJSON: T,
-): T => {
-  const g = copy(geoJSON);
-  switch (g.type) {
-    case 'Feature':
-      g.bbox = bbox(g);
-      break;
-    case 'FeatureCollection':
-      g.features.forEach((feature) => {
-        feature.bbox = bbox(feature);
-      });
-      g.bbox = bbox(g);
-      break;
-    default:
-      throw new Error('Argument must be Feature or FeatureCollection');
-  }
-  return g as T;
-};*/
-
+/**
+ * Computes the bounding box from an array of positions
+ * @param coords - GeoJSON.Position[]
+ * @returns - The bounding box
+ */
 export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
   let minLon = 180;
   let maxLon = -180;
@@ -219,18 +109,22 @@ export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
     const lat = coords[i][1];
     // As height may be undefined.
     const height = coords[i][2] ?? 0;
+
     // Existance of any third coordinate gives box of length 6.
     if (typeof coords[i][2] === 'number') {
       boxLength = 6;
     }
+
     minLon = Math.min(minLon, lon);
     maxLon = Math.max(maxLon, lon);
     minLat = Math.min(minLat, lat);
     maxLat = Math.max(maxLat, lat);
+
     if (boxLength == 6) {
       minAlt = Math.min(minAlt, height);
       maxAlt = Math.max(maxAlt, height);
     }
+
     if (lon < 0) {
       maxLonNeg = Math.max(maxLonNeg, lon);
     } else {
@@ -238,31 +132,25 @@ export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
     }
   }
 
-  // Pole box? How to check?
-  /*if (minLon === -180 && maxLon === 180) {
-    // Choose smallest cap
-    if (-minLat < maxLat) {
-      // box including north pole is smallest
-      maxLat = 90;
-    } else {
-      // box including south pole is smallest
-      minLat = -90;
-    }
-  } else {*/
-  // Meridian or antimeridian box?
   if (minLon < 0 && maxLon > 0) {
     if (maxLon - minLon > 360 - minLonPos + maxLonNeg) {
       minLon = minLonPos;
       maxLon = maxLonNeg;
     }
   }
-  //}
+
   if (boxLength === 4) {
     return [minLon, minLat, maxLon, maxLat];
   }
+
   return [minLon, minLat, minAlt, maxLon, maxLat, maxAlt];
 };
 
+/**
+ * Computes the overall bounding box from an array of bounding boxes.
+ * @param bboxes - An array of type GeoJSON.BBox[].
+ * @returns - The bounding box.
+ */
 export const bboxFromArrayOfBBoxes = (bboxes: GJ.BBox[]): GJ.BBox => {
   let minLon = 180;
   let maxLon = -180;
@@ -273,7 +161,6 @@ export const bboxFromArrayOfBBoxes = (bboxes: GJ.BBox[]): GJ.BBox => {
   let maxAlt = -Infinity;
   let minAlt = Infinity;
   let boxLength = 4;
-
   let antimeridian = false;
 
   bboxes.forEach((box) => {
@@ -282,12 +169,15 @@ export const bboxFromArrayOfBBoxes = (bboxes: GJ.BBox[]): GJ.BBox => {
       maxLat = Math.max(maxLat, box[3]);
       minLon = Math.min(minLon, box[0]);
       maxLon = Math.max(maxLon, box[2]);
+
       if (box[0] > box[2]) {
         antimeridian = true;
       }
+
       if (box[0] > 0) {
         minLonPos = Math.min(minLonPos, box[0]);
       }
+
       if (box[2] < 0) {
         maxLonNeg = Math.max(maxLonNeg, box[2]);
       }
@@ -299,24 +189,30 @@ export const bboxFromArrayOfBBoxes = (bboxes: GJ.BBox[]): GJ.BBox => {
       maxAlt = Math.max(maxAlt, box[5]);
       minLon = Math.min(minLon, box[0]);
       maxLon = Math.max(maxLon, box[3]);
+
       if (box[0] > box[3]) {
         antimeridian = true;
       }
+
       if (box[0] > 0) {
         minLonPos = Math.min(minLonPos, box[0]);
       }
+
       if (box[3] < 0) {
         maxLonNeg = Math.max(maxLonNeg, box[3]);
       }
     }
   });
+
   if (antimeridian) {
     minLon = minLonPos;
     maxLon = maxLonNeg;
+
     return boxLength === 4
       ? [minLon, minLat, maxLon, maxLat]
       : [minLon, minLat, minAlt, maxLon, maxLat, maxAlt];
   }
+
   if (minLon < 0 && maxLon > 0) {
     // Even if no individual box cover antimeridian, the overall box with the shortest width migth
     // be an antimeridian box.
@@ -325,14 +221,21 @@ export const bboxFromArrayOfBBoxes = (bboxes: GJ.BBox[]): GJ.BBox => {
       maxLon = maxLonNeg;
     }
   }
+
   return boxLength === 4
     ? [minLon, minLat, maxLon, maxLat]
     : [minLon, minLat, minAlt, maxLon, maxLat, maxAlt];
 };
 
+/**
+ * Converts a bounding box of possible length 6 to a bounding box of length 4.
+ * @param bbox - A bounding box.
+ * @returns - A bounding box of length 4.
+ */
 export const bbox4 = (bbox: GJ.BBox): [number, number, number, number] => {
   if (bbox.length === 6) {
     return [bbox[0], bbox[1], bbox[3], bbox[4]];
   }
+
   return [...bbox];
 };
