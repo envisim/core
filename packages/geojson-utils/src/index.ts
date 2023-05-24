@@ -30,7 +30,6 @@ export {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
 export {intersectSegments} from './intersectSegments.js';
 export {lengthOfLineString, lengthOfSegment} from './length.js';
 export {pointInAreaFeature, pointInSinglePolygon} from './pointInPolygon.js';
-//export {webMercator, azimuthalEquidistant, cartesian} from './projections.js';
 export {rotateCoord} from './rotateCoord.js';
 export {unionOfPolygons} from './unionOfPolygons.js';
 export * as geodesic from 'geographiclib-geodesic';
