@@ -16,7 +16,7 @@ export {copy} from './copy.js';
 export * from './position.js';
 
 export {areaOfPolygonLonLat} from './area.js';
-export {pointInBBox, bboxInBBox} from './bbox.js';
+export {pointInBBox, bboxInBBox, bbox4} from './bbox.js';
 export {buffer} from './buffer.js';
 export {destination} from './destination.js';
 export {distance} from './distance.js';
