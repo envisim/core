@@ -5,7 +5,7 @@ import {areaOfPolygonLonLat} from '../../area.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
 import {pointInSinglePolygon} from '../../pointInPolygon.js';
 import {bboxFromArrayOfPositions} from '../../bbox.js';
-import type {AreaGeomEachCallback} from '../typeGeomEachCallback.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 
 export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
   static isObject(obj: any): obj is Polygon {
@@ -31,7 +31,7 @@ export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
     return areaOfPolygonLonLat(this.coordinates, dist);
   }
 
-  geomEach(callback: AreaGeomEachCallback): void {
+  geomEach(callback: GeomEachCallback<Polygon>): void {
     callback(this);
   }
 

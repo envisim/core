@@ -1,7 +1,7 @@
 import {BaseFeature} from '../ClassBaseFeature.js';
 import type * as GJ from '../types.js';
 import {OptionalParam} from '../util-types.js';
-import type {AreaGeomEachCallback} from '../typeGeomEachCallback.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import {
   AreaObject,
   MultiPointCircle,
@@ -62,7 +62,7 @@ export class AreaFeature extends BaseFeature implements GJ.AreaFeature {
     return this.geometry.area(dist);
   }
 
-  geomEach(callback: AreaGeomEachCallback): void {
+  geomEach(callback: GeomEachCallback<AreaObject>): void {
     if (AreaGeometryCollection.isGeometryCollection(this.geometry)) {
       this.geometry.geometries.forEach(
         (geom: AreaObject, geomIndex: number) => {

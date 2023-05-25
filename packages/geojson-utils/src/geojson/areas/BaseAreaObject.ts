@@ -1,6 +1,7 @@
 import {BaseGeometry} from '../ClassBaseGeometry.js';
 import type * as GJ from '../types.js';
-import type {AreaGeomEachCallback} from '../typeGeomEachCallback.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
+import {AreaObject} from './AreaObjects.js';
 
 export abstract class BaseAreaObject<
   T extends GJ.AreaObject,
@@ -11,7 +12,7 @@ export abstract class BaseAreaObject<
 
   abstract area(): number;
 
-  abstract geomEach(calback: AreaGeomEachCallback): void;
+  abstract geomEach(calback: GeomEachCallback<AreaObject>): void;
 
   abstract distanceToPosition(coords: GJ.Position): number;
 

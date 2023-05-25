@@ -1,6 +1,6 @@
 import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
-import type {LineGeomEachCallback} from '../typeGeomEachCallback.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import {BaseLineObject} from './BaseLineObject.js';
 import {lengthOfLineString} from '../../length.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
@@ -39,7 +39,7 @@ export class MultiLineString
     );
   }
 
-  geomEach(callback: LineGeomEachCallback): void {
+  geomEach(callback: GeomEachCallback<MultiLineString>): void {
     callback(this);
   }
 

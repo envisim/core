@@ -5,7 +5,7 @@ import {Polygon} from './ClassPolygon.js';
 import {destination} from '../../destination.js';
 import {distance} from '../../distance.js';
 import {bboxFromArrayOfPositions, getPositionsForCircle} from '../../bbox.js';
-import type {AreaGeomEachCallback} from '../typeGeomEachCallback.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 
 export class PointCircle
   extends BaseAreaObject<GJ.PointCircle>
@@ -68,7 +68,7 @@ export class PointCircle
     return Math.PI * this.radius ** 2;
   }
 
-  geomEach(callback: AreaGeomEachCallback): void {
+  geomEach(callback: GeomEachCallback<PointCircle>): void {
     callback(this);
   }
 

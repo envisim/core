@@ -1,6 +1,6 @@
 import {BaseCollection} from '../ClassBaseCollection.js';
 import type * as GJ from '../types.js';
-import type {PointGeomEachCallback} from '../typeGeomEachCallback.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {PointFeature} from './ClassPointFeature.js';
 import {PointObject} from './PointObjects.js';
@@ -46,7 +46,7 @@ export class PointCollection
     );
   }
 
-  geomEach(callback: PointGeomEachCallback): void {
+  geomEach(callback: GeomEachCallback<PointObject>): void {
     this.features.forEach((feature, featureIndex) => {
       if (feature.geometry.type === 'GeometryCollection') {
         feature.geometry.geometries.forEach(

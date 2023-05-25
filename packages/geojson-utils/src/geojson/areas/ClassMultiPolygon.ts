@@ -5,7 +5,7 @@ import {areaOfPolygonLonLat} from '../../area.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
 import {pointInSinglePolygon} from '../../pointInPolygon.js';
 import {bboxFromArrayOfPositions} from '../../bbox.js';
-import type {AreaGeomEachCallback} from '../typeGeomEachCallback.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 
 export class MultiPolygon
   extends BaseAreaObject<GJ.MultiPolygon>
@@ -40,7 +40,7 @@ export class MultiPolygon
     );
   }
 
-  geomEach(callback: AreaGeomEachCallback): void {
+  geomEach(callback: GeomEachCallback<MultiPolygon>): void {
     callback(this);
   }
 

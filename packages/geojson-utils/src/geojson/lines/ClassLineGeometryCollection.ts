@@ -1,6 +1,6 @@
 import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type * as GJ from '../types.js';
-import type {LineGeomEachCallback} from '../typeGeomEachCallback.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {LineObject, LineString, MultiLineString} from './LineObjects.js';
 import {bboxFromArrayOfBBoxes} from '../../bbox.js';
@@ -46,7 +46,7 @@ export class LineGeometryCollection
     return this.geometries.reduce((prev, curr) => prev + curr.length(dist), 0);
   }
 
-  geomEach(callback: LineGeomEachCallback): void {
+  geomEach(callback: GeomEachCallback<LineObject>): void {
     this.geometries.forEach((geom, geomIndex) => {
       callback(geom, geomIndex);
     });
