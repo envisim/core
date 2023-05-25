@@ -1,11 +1,12 @@
 import {BaseFeature} from '../ClassBaseFeature.js';
 import type * as GJ from '../types.js';
+import type {LineGeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {
   LineGeometry,
   LineGeometryCollection,
 } from './ClassLineGeometryCollection.js';
-import {LineString, MultiLineString} from './LineObjects.js';
+import {LineString, MultiLineString, LineObject} from './LineObjects.js';
 
 export class LineFeature extends BaseFeature implements GJ.LineFeature {
   static isFeature(obj: any): obj is LineFeature {
@@ -49,10 +50,10 @@ export class LineFeature extends BaseFeature implements GJ.LineFeature {
     return this.geometry.length(dist);
   }
 
-  geomEach(callback: Function): void {
+  geomEach(callback: LineGeomEachCallback): void {
     if (LineGeometryCollection.isGeometryCollection(this.geometry)) {
       this.geometry.geometries.forEach(
-        (geom: GJ.LineObject, geomIndex: number) => {
+        (geom: LineObject, geomIndex: number) => {
           callback(geom, geomIndex);
         },
       );

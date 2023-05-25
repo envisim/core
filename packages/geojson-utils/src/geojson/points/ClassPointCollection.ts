@@ -1,7 +1,9 @@
 import {BaseCollection} from '../ClassBaseCollection.js';
 import type * as GJ from '../types.js';
+import type {PointGeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {PointFeature} from './ClassPointFeature.js';
+import {PointObject} from './PointObjects.js';
 import {bboxFromArrayOfBBoxes} from '../../bbox.js';
 
 export class PointCollection
@@ -44,11 +46,11 @@ export class PointCollection
     );
   }
 
-  geomEach(callback: Function): void {
+  geomEach(callback: PointGeomEachCallback): void {
     this.features.forEach((feature, featureIndex) => {
       if (feature.geometry.type === 'GeometryCollection') {
         feature.geometry.geometries.forEach(
-          (geom: GJ.PointObject, geomIndex: number) => {
+          (geom: PointObject, geomIndex: number) => {
             callback(geom, featureIndex, geomIndex);
           },
         );

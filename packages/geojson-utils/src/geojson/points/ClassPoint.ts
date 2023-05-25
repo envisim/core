@@ -1,5 +1,6 @@
 import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
+import type {PointGeomEachCallback} from '../typeGeomEachCallback.js';
 import {BasePointObject} from './BasePointObject.js';
 import {distance} from '../../distance.js';
 
@@ -27,7 +28,7 @@ export class Point extends BasePointObject<GJ.Point> implements GJ.Point {
     return 1;
   }
 
-  geomEach(callback: Function): void {
+  geomEach(callback: PointGeomEachCallback): void {
     callback(this);
   }
 

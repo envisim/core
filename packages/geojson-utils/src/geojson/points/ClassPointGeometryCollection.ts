@@ -1,5 +1,6 @@
 import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type * as GJ from '../types.js';
+import type {PointGeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {MultiPoint, Point, PointObject} from './PointObjects.js';
 import {bboxFromArrayOfBBoxes} from '../../bbox.js';
@@ -45,7 +46,7 @@ export class PointGeometryCollection
     return this.geometries.reduce((prev, curr) => prev + curr.count(), 0);
   }
 
-  geomEach(callback: Function): void {
+  geomEach(callback: PointGeomEachCallback): void {
     this.geometries.forEach((geom, geomIndex) => {
       callback(geom, geomIndex);
     });

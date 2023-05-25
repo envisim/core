@@ -1,5 +1,6 @@
 import {BaseGeometry} from '../ClassBaseGeometry.js';
 import type * as GJ from '../types.js';
+import type {LineGeomEachCallback} from '../typeGeomEachCallback.js';
 
 export abstract class BaseLineObject<
   T extends GJ.LineObject,
@@ -9,9 +10,7 @@ export abstract class BaseLineObject<
   }
   abstract length(): number;
 
-  abstract geomEach(calback: Function): void;
-
-  abstract segmentEach(calback: Function): void;
+  abstract geomEach(calback: LineGeomEachCallback): void;
 
   abstract distanceToPosition(coords: GJ.Position): number;
 

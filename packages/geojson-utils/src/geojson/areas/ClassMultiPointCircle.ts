@@ -5,6 +5,7 @@ import {MultiPolygon} from './ClassMultiPolygon.js';
 import {destination} from '../../destination.js';
 import {distance} from '../../distance.js';
 import {bboxFromArrayOfPositions, getPositionsForCircle} from '../../bbox.js';
+import type {AreaGeomEachCallback} from '../typeGeomEachCallback.js';
 
 export class MultiPointCircle
   extends BaseAreaObject<GJ.MultiPointCircle>
@@ -76,7 +77,7 @@ export class MultiPointCircle
     return this.coordinates.length * Math.PI * this.radius ** 2;
   }
 
-  geomEach(callback: Function): void {
+  geomEach(callback: AreaGeomEachCallback): void {
     callback(this);
   }
 

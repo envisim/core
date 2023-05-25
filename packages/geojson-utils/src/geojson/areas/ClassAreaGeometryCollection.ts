@@ -1,6 +1,7 @@
 import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type * as GJ from '../types.js';
 import {OptionalParam} from '../util-types.js';
+import type {AreaGeomEachCallback} from '../typeGeomEachCallback.js';
 import {
   AreaObject,
   MultiPointCircle,
@@ -55,7 +56,7 @@ export class AreaGeometryCollection
     return this.geometries.reduce((prev, curr) => prev + curr.area(dist), 0);
   }
 
-  geomEach(callback: Function): void {
+  geomEach(callback: AreaGeomEachCallback): void {
     this.geometries.forEach((geom, geomIndex) => {
       callback(geom, geomIndex);
     });

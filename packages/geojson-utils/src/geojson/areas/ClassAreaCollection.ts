@@ -1,5 +1,7 @@
 import {BaseCollection} from '../ClassBaseCollection.js';
 import type * as GJ from '../types.js';
+import type {AreaGeomEachCallback} from '../typeGeomEachCallback.js';
+import {AreaObject} from './AreaObjects.js';
 import {OptionalParam} from '../util-types.js';
 import {AreaFeature} from './ClassAreaFeature.js';
 import {bboxFromArrayOfBBoxes} from '../../bbox.js';
@@ -41,11 +43,11 @@ export class AreaCollection
     return this.features.reduce((prev, curr) => prev + curr.area(dist), 0);
   }
 
-  geomEach(callback: Function): void {
+  geomEach(callback: AreaGeomEachCallback): void {
     this.features.forEach((feature, featureIndex) => {
       if (feature.geometry.type === 'GeometryCollection') {
         feature.geometry.geometries.forEach(
-          (geom: GJ.AreaObject, geomIndex: number) => {
+          (geom: AreaObject, geomIndex: number) => {
             callback(geom, featureIndex, geomIndex);
           },
         );

@@ -1,11 +1,12 @@
 import {BaseFeature} from '../ClassBaseFeature.js';
 import type * as GJ from '../types.js';
+import type {PointGeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {
   PointGeometry,
   PointGeometryCollection,
 } from './ClassPointGeometryCollection.js';
-import {MultiPoint, Point} from './PointObjects.js';
+import {MultiPoint, Point, PointObject} from './PointObjects.js';
 
 export class PointFeature extends BaseFeature implements GJ.PointFeature {
   static isFeature(obj: any): obj is PointFeature {
@@ -49,10 +50,10 @@ export class PointFeature extends BaseFeature implements GJ.PointFeature {
     return this.geometry.count();
   }
 
-  geomEach(callback: Function): void {
+  geomEach(callback: PointGeomEachCallback): void {
     if (PointGeometryCollection.isGeometryCollection(this.geometry)) {
       this.geometry.geometries.forEach(
-        (geom: GJ.PointObject, geomIndex: number) => {
+        (geom: PointObject, geomIndex: number) => {
           callback(geom, geomIndex);
         },
       );

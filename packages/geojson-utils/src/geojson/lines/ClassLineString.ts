@@ -1,5 +1,6 @@
 import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
+import type {LineGeomEachCallback} from '../typeGeomEachCallback.js';
 import {BaseLineObject} from './BaseLineObject.js';
 import {lengthOfLineString} from '../../length.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
@@ -35,15 +36,8 @@ export class LineString
     return lengthOfLineString(this.coordinates, dist);
   }
 
-  geomEach(callback: Function): void {
+  geomEach(callback: LineGeomEachCallback): void {
     callback(this);
-  }
-
-  segmentEach(callback: Function): void {
-    const coords = this.coordinates;
-    for (let i = 0; i < coords.length - 1; i++) {
-      callback([coords[i], coords[i + 1]]);
-    }
   }
 
   distanceToPosition(coords: GJ.Position): number {

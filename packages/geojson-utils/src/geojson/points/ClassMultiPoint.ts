@@ -1,5 +1,6 @@
 import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
+import type {PointGeomEachCallback} from '../typeGeomEachCallback.js';
 import {BasePointObject} from './BasePointObject.js';
 import {distance} from '../../distance.js';
 import {bboxFromArrayOfPositions} from '../../bbox.js';
@@ -34,7 +35,7 @@ export class MultiPoint
     return this.coordinates.length;
   }
 
-  geomEach(callback: Function): void {
+  geomEach(callback: PointGeomEachCallback): void {
     callback(this);
   }
 
