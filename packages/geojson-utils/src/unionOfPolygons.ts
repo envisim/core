@@ -15,7 +15,7 @@ import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
 export const unionOfPolygons = (
   areaCollection: GJ.AreaFeatureCollection,
   pointsPerCircle = 16,
-): GJ.AreaFeatureCollection => {
+): AreaCollection => {
   const geoms: polygonClipping.Geom[] = [];
   const collection = AreaCollection.isCollection(areaCollection)
     ? areaCollection
