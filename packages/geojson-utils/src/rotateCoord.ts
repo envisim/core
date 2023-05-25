@@ -3,6 +3,8 @@ import geodesic from 'geographiclib-geodesic';
 import type * as GJ from './geojson/types.js';
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
+const geodInverseOpts = geodesic.Geodesic.DISTANCE | geodesic.Geodesic.AZIMUTH;
+const geodDirectOpts = geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE;
 
 /**
  * Rotates coord around refCoord clockwise by angle.
@@ -22,7 +24,7 @@ export const rotateCoord = (
     refCoord[0],
     coord[1],
     coord[0],
-    geodesic.Geodesic.DISTANCE | geodesic.Geodesic.AZIMUTH,
+    geodInverseOpts,
   );
   const dist = result.s12;
   const azimuth = result.azi1;
@@ -32,7 +34,7 @@ export const rotateCoord = (
       refCoord[0],
       (azimuth + angle + 360) % 360,
       dist,
-      geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE,
+      geodDirectOpts,
     );
     if (typeof result2.lon2 === 'number' && typeof result2.lat2 === 'number') {
       return [result2.lon2, result2.lat2];

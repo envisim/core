@@ -3,6 +3,8 @@ import geodesic from 'geographiclib-geodesic';
 import type * as GJ from './geojson/types.js';
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
+const geodInverseOpts = geodesic.Geodesic.DISTANCE | geodesic.Geodesic.AZIMUTH;
+const geodDirectOpts = geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE;
 
 // TODO?: Add interpolation for long distance or create new function
 // intermediateOnSegment which uses interpolation. This would place the
@@ -24,13 +26,7 @@ export const intermediate = (
   p2: GJ.Position,
   fraction: number,
 ): GJ.Position => {
-  const result1 = geod.Inverse(
-    p1[1],
-    p1[0],
-    p2[1],
-    p2[0],
-    geodesic.Geodesic.DISTANCE | geodesic.Geodesic.AZIMUTH,
-  );
+  const result1 = geod.Inverse(p1[1], p1[0], p2[1], p2[0], geodInverseOpts);
   const dist = result1.s12;
   const azimuth = result1.azi1;
   let result2;
@@ -40,7 +36,7 @@ export const intermediate = (
       p1[0],
       azimuth,
       dist * fraction,
-      geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE,
+      geodDirectOpts,
     );
     if (typeof result2.lon2 === 'number' && typeof result2.lat2 === 'number') {
       return [result2.lon2, result2.lat2];

@@ -3,6 +3,7 @@ import geodesic from 'geographiclib-geodesic';
 import type * as GJ from './geojson/types.js';
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
+const geodDirectOpts = geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE;
 
 /**
  * Computes the destination point on a geodesic path given a point,
@@ -23,7 +24,7 @@ export const destination = (
     point[0],
     (azimuth + 360) % 360,
     dist,
-    geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE,
+    geodDirectOpts,
   );
   if (typeof result.lon2 === 'number' && typeof result.lat2 === 'number') {
     return [result.lon2, result.lat2];
