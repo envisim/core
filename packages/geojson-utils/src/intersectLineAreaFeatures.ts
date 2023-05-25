@@ -37,16 +37,15 @@ const lineSegmentPolygonIntersectPoints = (
   segment: GJ.Position[],
   polygon: GJ.Position[][],
 ): GJ.Position[] => {
-  let p: GJ.Position[] = [],
-    q,
-    i,
-    j;
-  for (i = 0; i < polygon.length; i++) {
-    for (j = 0; j < polygon[i].length - 1; j++) {
+  let p: GJ.Position[] = [];
+  let q;
+  for (let i = 0; i < polygon.length; i++) {
+    for (let j = 0; j < polygon[i].length - 1; j++) {
       q = intersectSegments(segment, [
         [polygon[i][j][0], polygon[i][j][1]],
         [polygon[i][j + 1][0], polygon[i][j + 1][1]],
       ]);
+
       if (q.point) {
         //console.log(q.point);
         p.push(q.point);
@@ -64,16 +63,15 @@ const lineStringInPolygon = (
   polygon: GJ.Position[][],
 ): GJ.Position[][] => {
   // 1. Build new linestring with all intersection-points added in order.
-  let points: GJ.Position[] = [],
-    i = 0,
-    j = 0,
-    intersectionpoints: GJ.Position[] = [];
-  for (i = 0; i < line.length - 1; i++) {
+  let points: GJ.Position[] = [];
+  let intersectionpoints: GJ.Position[] = [];
+  for (let i = 0; i < line.length - 1; i++) {
     points.push([...line[i]]);
     intersectionpoints = lineSegmentPolygonIntersectPoints(
       [line[i], line[i + 1]],
       polygon,
     );
+
     if (intersectionpoints.length > 0) {
       // Sort and add/push points here.
       let sortArray: sortArrayElement[] = intersectionpoints
@@ -85,7 +83,7 @@ const lineStringInPolygon = (
         )
         .sort((a, b) => a[1] - b[1]);
       const maxSqDist = squaredEuclideanDistOnSegment(line[i], line[i + 1]);
-      for (j = 0; j < sortArray.length; j++) {
+      for (let j = 0; j < sortArray.length; j++) {
         const sqDist = sortArray[j][1];
         // Make sure not to add points equal to segment points.
         if (sqDist > 0 && sqDist < maxSqDist) {
@@ -97,12 +95,14 @@ const lineStringInPolygon = (
   // Add last point.
   points.push([...line[line.length - 1]]);
   // 2. Check each midpoint for in/out and build new (multi-)linestring.
-  let mls = [],
-    ls = [],
-    mp = [],
-    pushed = -1;
-  for (i = 0; i < points.length - 1; i++) {
+  let mls = [];
+  let ls = [];
+  let mp = [];
+  let pushed = -1;
+
+  for (let i = 0; i < points.length - 1; i++) {
     mp = midpoint(points[i], points[i + 1]);
+
     if (pointInSinglePolygon(mp, polygon)) {
       // This segment is in the Polygon.
       if (pushed < i) {
@@ -131,13 +131,13 @@ const multiLineStringInMultiPolygon = (
   line: GJ.Position[][],
   polygon: GJ.Position[][][],
 ) => {
-  let mls: GJ.Position[][] = [],
-    part,
-    i,
-    j;
-  for (i = 0; i < line.length; i++) {
-    for (j = 0; j < polygon.length; j++) {
+  let mls: GJ.Position[][] = [];
+  let part;
+
+  for (let i = 0; i < line.length; i++) {
+    for (let j = 0; j < polygon.length; j++) {
       part = lineStringInPolygon(line[i], polygon[j]);
+
       if (part.length > 0) {
         mls = mls.concat(part);
       }
@@ -176,6 +176,7 @@ export const intersectLineAreaFeatures = (
   if (!bboxInBBox(box1, box2)) {
     return {};
   }
+
   // Build MultiLineString coordinates for LineFeature
   let mls: GJ.Position[][] = [];
   lf.geomEach((lg: GJ.LineObject) => {
