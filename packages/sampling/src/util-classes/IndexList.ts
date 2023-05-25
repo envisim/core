@@ -106,11 +106,15 @@ export class IndexList {
   }
 
   erase(id: number): void {
-    if (id >= this.capacity) throw new RangeError('Inadmissible value of id');
+    if (id >= this.capacity)
+      throw new RangeError(`Inadmissible value of id: ${id}, len: ${this.len}`);
 
     const k = this.reverse[id];
 
-    if (k >= this.len) throw new RangeError('Inadmissible value of k');
+    if (k >= this.len)
+      throw new RangeError(
+        `Inadmissible value of id: ${id}, k: ${k}, len: ${this.len}`,
+      );
 
     this.len -= 1;
 

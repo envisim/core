@@ -86,16 +86,14 @@ export class Pivotal extends SamplingBase {
   initInt(probability: number): void {
     if (this.N === 0 || probability === 0) {
       this.idx = new IndexList(0);
-      return;
     } else if (probability === this.N) {
       this.idx = new IndexList(0);
       for (let i = 0; i < this.N; i++) this.addUnitToSample(i);
-      return;
+    } else {
+      this.idx = new IndexList(this.N);
+      this.idx.fill();
+      this.probabilities.fill(probability);
     }
-
-    this.idx = new IndexList(this.N);
-    this.idx.fill();
-    this.probabilities.fill(probability);
 
     this.runInternal = this.runInt;
     this.setRun = true;
@@ -147,7 +145,8 @@ export class Pivotal extends SamplingBase {
   drawLpm2(): void {
     this.pair[0] = this.idx.draw(this.rand);
     this.tree.findNeighbours(this.store, this.pair[0]);
-    this.pair[1] = this.store.neighbours[this.rand.intn(this.store.getSize())];
+    const k = this.rand.intn(this.store.getSize());
+    this.pair[1] = this.store.neighbours[k];
 
     return;
   }
@@ -243,8 +242,10 @@ export class Pivotal extends SamplingBase {
     if (!this.idx.exists(this.pair[0])) {
       this.pair[0] = this.pair[1];
 
-      // If the second unit also doesn't exist, increment by 1
-      if (!this.idx.exists(this.pair[0])) {
+      // Increment by 1 until the unit exists
+      // These while-loops are needed as we don't know if any unit was initiated
+      // with probabilities 0 or 1
+      while (!this.idx.exists(this.pair[0])) {
         this.pair[0] += 1;
 
         if (this.pair[0] >= this.N)
@@ -252,16 +253,12 @@ export class Pivotal extends SamplingBase {
       }
     }
 
-    // If we have changed the first unit to be something bigger than the second,
-    // we set the second to be one above the first.
-    if (this.pair[0] >= this.pair[1]) {
-      this.pair[1] = this.pair[0] + 1;
-      return;
-    }
+    this.pair[1] = this.pair[0] + 1;
 
-    // If the second does no longer exist, increment by 1
-    if (!this.idx.exists(this.pair[1])) {
+    // Increment by 1 until the second unit exists
+    while (!this.idx.exists(this.pair[1])) {
       this.pair[1] += 1;
+
       if (this.pair[1] >= this.N)
         throw new RangeError('invalid value of pair 1');
     }
