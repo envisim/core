@@ -122,7 +122,7 @@ export class KDTree {
     while (l < r) {
       const temp = this.dt.at(dti + this.splitUnits[fr + l]);
 
-      if (temp < node.value) {
+      if (temp <= node.value) {
         l += 1;
 
         if (temp > lbig) {
