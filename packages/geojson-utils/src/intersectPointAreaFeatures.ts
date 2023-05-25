@@ -4,7 +4,7 @@ import {bboxInBBox} from './bbox.js';
 import {PointFeature} from './geojson/points/ClassPointFeature.js';
 import {Point} from './geojson/points/ClassPoint.js';
 import {MultiPoint} from './geojson/points/ClassMultiPoint.js';
-import {AreaFeature} from './index.js';
+import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
 
 interface intersection {
   geoJSON?: GJ.PointFeature;
