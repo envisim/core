@@ -12,6 +12,14 @@ export class LineFeature extends BaseFeature implements GJ.LineFeature {
     return obj instanceof LineFeature;
   }
 
+  static create(
+    geometry: GJ.LineGeometry,
+    properties: GJ.FeatureProperties,
+    shallow: boolean = true,
+  ): LineFeature {
+    return new LineFeature({geometry, properties}, shallow);
+  }
+
   geometry: LineGeometry;
 
   constructor(

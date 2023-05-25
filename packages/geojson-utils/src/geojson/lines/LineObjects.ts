@@ -1,4 +1,6 @@
-export {LineString} from './ClassLineString.js';
-export {MultiLineString} from './ClassLineString.js';
+import {LineString} from './ClassLineString.js';
+import {MultiLineString} from './ClassMultiLineString.js';
 
 export type LineObject = LineString | MultiLineString;
+
+export {LineString, MultiLineString};
