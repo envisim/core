@@ -1,6 +1,7 @@
 // @ts-ignore
 import turfBuffer from '@turf/buffer';
 import type * as GJ from './geojson/types.js';
+import {AreaCollection} from './geojson/areas/ClassAreaCollection.js';
 
 type BufferOpts = {
   radius?: number;
@@ -21,10 +22,11 @@ type BufferOpts = {
 export const buffer = (
   geoJSON: GJ.FeatureCollection,
   opts: BufferOpts,
-): GJ.FeatureCollection => {
+): AreaCollection => {
   const radius = opts.radius ?? 0;
-  return turfBuffer(geoJSON, radius / 1000, {
+  const turfCollection = turfBuffer(geoJSON, radius / 1000, {
     units: 'kilometers',
     steps: opts.steps ?? 10,
   });
+  return new AreaCollection(turfCollection);
 };
