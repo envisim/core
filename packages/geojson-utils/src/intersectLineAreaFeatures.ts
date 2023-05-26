@@ -178,7 +178,7 @@ export const intersectLineAreaFeatures = (
     if (lg.type === 'LineString') {
       mls.push(lg.coordinates);
     } else {
-      mls = mls.concat(lg.coordinates);
+      mls.push(...lg.coordinates);
     }
   });
 
@@ -190,13 +190,13 @@ export const intersectLineAreaFeatures = (
         mp.push(ag.coordinates);
         break;
       case 'MultiPolygon':
-        mp = mp.concat(ag.coordinates);
+        mp.push(...ag.coordinates);
         break;
       case 'Point':
         mp.push(ag.toPolygon({pointsPerCircle}).coordinates);
         break;
       case 'MultiPoint':
-        mp = mp.concat(ag.toPolygon({pointsPerCircle}).coordinates);
+        mp.push(...ag.toPolygon({pointsPerCircle}).coordinates);
         break;
     }
   });
