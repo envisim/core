@@ -6,22 +6,18 @@ import {Point} from './geojson/points/ClassPoint.js';
 import {MultiPoint} from './geojson/points/ClassMultiPoint.js';
 import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
 
-interface intersection {
-  geoJSON?: GJ.PointFeature;
-}
-
 /**
  * Computes the intersection between a PointFeature
  * and an AreaFeature.
  *
  * @param pointFeature - A PointFeature.
  * @param areaFeature - An AreaFeature.
- * @returns - An empty object {} if no intersection and {geoJSON:PointFeature} if intersection.
+ * @returns - null if no intersection and PointFeature if intersection.
  */
 export const intersectPointAreaFeatures = (
   pointFeature: GJ.PointFeature,
   areaFeature: GJ.AreaFeature,
-): intersection => {
+): PointFeature | null => {
   const pf = PointFeature.isFeature(pointFeature)
     ? pointFeature
     : new PointFeature(pointFeature);
@@ -33,7 +29,7 @@ export const intersectPointAreaFeatures = (
   const box1 = pf.getBBox();
   const box2 = af.getBBox();
   if (!bboxInBBox(box1, box2)) {
-    return {};
+    return null;
   }
 
   // Check each position
@@ -55,10 +51,10 @@ export const intersectPointAreaFeatures = (
     }
   });
   if (coordinates.length === 0) {
-    return {};
+    return null;
   }
   if (coordinates.length === 1) {
-    return {geoJSON: PointFeature.create(Point.create(coordinates[0]), {})};
+    return PointFeature.create(Point.create(coordinates[0]), {});
   }
-  return {geoJSON: PointFeature.create(MultiPoint.create(coordinates), {})};
+  return PointFeature.create(MultiPoint.create(coordinates), {});
 };

@@ -6,22 +6,18 @@ import {Point} from './geojson/points/ClassPoint.js';
 import {MultiPoint} from './geojson/points/ClassMultiPoint.js';
 import {PointFeature} from './geojson/points/ClassPointFeature.js';
 
-interface Intersect {
-  geoJSON?: GJ.PointFeature;
-}
-
 /**
  * Computes the intersect of two LineFeatures as
  * the crossing-points between the lines in the two features.
  *
  * @param firstFeature - A LineFeature.
  * @param secondFeature - A LineFeature.
- * @returns - An empty object {} if no crossings and {geoJSON:PointFeature} if intersection.
+ * @returns - null if no crossings and PointFeature if intersection.
  */
 export const intersectLineLineFeatures = (
   firstFeature: GJ.LineFeature,
   secondFeature: GJ.LineFeature,
-): Intersect => {
+): PointFeature | null => {
   const f1 = LineFeature.isFeature(firstFeature)
     ? firstFeature
     : new LineFeature(firstFeature);
@@ -46,12 +42,12 @@ export const intersectLineLineFeatures = (
           coords2.forEach((line2) => {
             for (let i = 0; i < line1.length - 1; i++) {
               for (let j = 0; j < line2.length - 1; j++) {
-                const intersect = intersectSegments(
+                const intersection = intersectSegments(
                   [line1[i], line1[i + 1]],
                   [line2[j], line2[j + 1]],
                 );
-                if (intersect.point) {
-                  points.push(intersect.point);
+                if (intersection) {
+                  points.push(intersection);
                 }
               }
             }
@@ -60,15 +56,14 @@ export const intersectLineLineFeatures = (
       });
     });
   }
+
   if (points.length === 0) {
-    return {};
+    return null;
   }
+
   if (points.length === 1) {
-    return {
-      geoJSON: PointFeature.create(Point.create(points[0]), {}),
-    };
+    return PointFeature.create(Point.create(points[0]), {});
   }
-  return {
-    geoJSON: PointFeature.create(MultiPoint.create(points), {}),
-  };
+
+  return PointFeature.create(MultiPoint.create(points), {});
 };

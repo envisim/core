@@ -46,9 +46,8 @@ const lineSegmentPolygonIntersectPoints = (
         [polygon[i][j + 1][0], polygon[i][j + 1][1]],
       ]);
 
-      if (q.point) {
-        //console.log(q.point);
-        p.push(q.point);
+      if (q) {
+        p.push(q);
       }
     }
   }
@@ -146,10 +145,6 @@ const multiLineStringInMultiPolygon = (
   return mls;
 };
 
-interface Intersect {
-  geoJSON?: GJ.LineFeature;
-}
-
 /**
  * Computes the intersection between a LineFeature
  * and an AreaFeature.
@@ -157,13 +152,13 @@ interface Intersect {
  * @param lineFeature - A LineFeature.
  * @param areaFeature - An AreaFeature.
  * @param pointsPerCircle - Optional number of points to use in intersects with circles, default 16.
- * @returns - An empty object {} if no intersection and {geoJSON:LineFeature} if intersection.
+ * @returns - null if no intersection and LineFeature if intersection.
  */
 export const intersectLineAreaFeatures = (
   lineFeature: GJ.LineFeature,
   areaFeature: GJ.AreaFeature,
   pointsPerCircle: number = 16,
-): Intersect => {
+): LineFeature | null => {
   const lf = LineFeature.isFeature(lineFeature)
     ? lineFeature
     : new LineFeature(lineFeature);
@@ -174,7 +169,7 @@ export const intersectLineAreaFeatures = (
   const box1 = lf.getBBox();
   const box2 = af.getBBox();
   if (!bboxInBBox(box1, box2)) {
-    return {};
+    return null;
   }
 
   // Build MultiLineString coordinates for LineFeature
@@ -209,14 +204,10 @@ export const intersectLineAreaFeatures = (
   const newCoords = multiLineStringInMultiPolygon(mls, mp);
 
   if (newCoords.length === 0) {
-    return {};
+    return null;
   }
   if (newCoords.length === 1) {
-    return {
-      geoJSON: LineFeature.create(LineString.create(newCoords[0]), {}),
-    };
+    return LineFeature.create(LineString.create(newCoords[0]), {});
   }
-  return {
-    geoJSON: LineFeature.create(MultiLineString.create(newCoords), {}),
-  };
+  return LineFeature.create(MultiLineString.create(newCoords), {});
 };

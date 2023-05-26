@@ -9,26 +9,10 @@ import {bboxInBBox} from './bbox.js';
 import type * as GJ from './geojson/types.js';
 import {AreaGeometryCollection, distance} from './index.js';
 
-interface Intersect {
-  geoJSON?: GJ.AreaFeature;
-}
-
-interface IntersectPolygon {
-  geoJSON?: Polygon | MultiPolygon;
-}
-
-interface IntersectPointCircles {
-  geoJSON?: Polygon | PointCircle;
-}
-
-interface IntersectPointCirclePolygon {
-  geoJSON?: MultiPolygon | Polygon | PointCircle;
-}
-
 const intersectPolygonPolygon = (
   p1: Polygon | MultiPolygon,
   p2: Polygon | MultiPolygon,
-): IntersectPolygon => {
+): Polygon | MultiPolygon | null => {
   const geoms: polygonClipping.Geom[] = [
     p1.coordinates as polygonClipping.Geom,
     p2.coordinates as polygonClipping.Geom,
@@ -38,68 +22,69 @@ const intersectPolygonPolygon = (
     ...geoms.slice(1),
   );
   if (intersection.length === 0) {
-    return {};
+    return null;
   }
   if (intersection.length === 1) {
-    return {
-      geoJSON: Polygon.create(intersection[0] as GJ.Position[][]),
-    };
+    return Polygon.create(intersection[0] as GJ.Position[][]);
   }
-  return {
-    geoJSON: MultiPolygon.create(intersection as GJ.Position[][][]),
-  };
+  return MultiPolygon.create(intersection as GJ.Position[][][]);
 };
 
 const intersectPointCirclePointCircle = (
   p1: PointCircle,
   p2: PointCircle,
   pointsPerCircle = 16,
-): IntersectPointCircles => {
+): Polygon | PointCircle | null => {
   const dist = distance(p1.coordinates, p2.coordinates);
   const minRadius = Math.min(p1.radius, p2.radius);
   if (dist < p1.radius + p2.radius) {
     // Intersection
     if (dist + p1.radius < p2.radius) {
       // Circle 1 is fully within circle 2
-      return {geoJSON: PointCircle.create([...p1.coordinates], p1.radius)};
+      return PointCircle.create([...p1.coordinates], p1.radius);
     }
+
     if (dist + p2.radius < p1.radius) {
       // Circle 2 is fully within circle 1
-      return {geoJSON: PointCircle.create([...p2.coordinates], p2.radius)};
+      return PointCircle.create([...p2.coordinates], p2.radius);
     }
+
     // Need to intersect polygons
     const intersect = intersectPolygonPolygon(
       p1.toPolygon({pointsPerCircle}),
       p2.toPolygon({pointsPerCircle}),
     );
     // Intersect must be Polygon not MultiPolygon
-    if (Polygon.isObject(intersect.geoJSON)) {
-      return {geoJSON: intersect.geoJSON};
+    if (Polygon.isObject(intersect)) {
+      return intersect;
     }
   }
   // No intersect
-  return {};
+  return null;
 };
 
 const intersectPointCirclePolygon = (
   p1: PointCircle,
   p2: Polygon | MultiPolygon,
   pointsPerCircle = 16,
-): IntersectPointCirclePolygon => {
+): MultiPolygon | Polygon | PointCircle | null => {
   const dist = p2.distanceToPosition(p1.coordinates);
+
   if (dist <= -p1.radius) {
     // Circle fully within polygon
-    return {geoJSON: PointCircle.create([...p1.coordinates], p1.radius)};
+    return PointCircle.create([...p1.coordinates], p1.radius);
   }
+
   if (dist < p1.radius) {
     // Intersection, convert to polygon
     const intersect = intersectPolygonPolygon(
       p1.toPolygon({pointsPerCircle}),
       p2,
     );
-    return {geoJSON: intersect.geoJSON};
+    return intersect;
   }
-  return {};
+  // No  intersect
+  return null;
 };
 
 /**
@@ -108,23 +93,25 @@ const intersectPointCirclePolygon = (
  * @param areaFeature1 - An AreaFeature.
  * @param areaFeature2 - An AreaFeature.
  * @param pointsPerCircle - Optional number of points to use in intersects with circles, default 16.
- * @returns - An empty object {} if no intersect and {geoJSON:AreaFeature} if intersect.
+ * @returns - null if no intersect and AreaFeature if intersect.
  */
 export const intersectAreaAreaFeatures = (
   areaFeature1: GJ.AreaFeature,
   areaFeature2: GJ.AreaFeature,
   pointsPerCircle = 16,
-): Intersect => {
+): AreaFeature | null => {
   const af1 = AreaFeature.isFeature(areaFeature1)
     ? areaFeature1
     : new AreaFeature(areaFeature1);
   const af2 = AreaFeature.isFeature(areaFeature2)
     ? areaFeature2
     : new AreaFeature(areaFeature2);
+
   const box1 = af1.getBBox();
   const box2 = af2.getBBox();
+
   if (!bboxInBBox(box1, box2)) {
-    return {};
+    return null;
   }
   // Need to work with geometries to keep
   // PointCircles/MultiPointCircles if possible
@@ -137,6 +124,7 @@ export const intersectAreaAreaFeatures = (
       const box1 = g1.getBBox();
       const box2 = g2.getBBox();
       let intersect;
+
       if (bboxInBBox(box1, box2)) {
         // We may have intersect
         switch (g1.type) {
@@ -144,15 +132,15 @@ export const intersectAreaAreaFeatures = (
           case 'Polygon':
             if (g2.type === 'Polygon' || g2.type === 'MultiPolygon') {
               intersect = intersectPolygonPolygon(g1, g2);
-              if (intersect.geoJSON) {
-                geoms.push(intersect.geoJSON);
+              if (intersect) {
+                geoms.push(intersect);
               }
               break;
             }
             if (g2.type === 'Point') {
               intersect = intersectPointCirclePolygon(g2, g1, pointsPerCircle);
-              if (intersect.geoJSON) {
-                geoms.push(intersect.geoJSON);
+              if (intersect) {
+                geoms.push(intersect);
               }
               break;
             }
@@ -164,8 +152,8 @@ export const intersectAreaAreaFeatures = (
                   g1,
                   pointsPerCircle,
                 );
-                if (intersect.geoJSON) {
-                  geoms.push(intersect.geoJSON);
+                if (intersect) {
+                  geoms.push(intersect);
                 }
               });
               break;
@@ -174,8 +162,8 @@ export const intersectAreaAreaFeatures = (
           case 'Point':
             if (g2.type === 'Polygon' || g2.type === 'MultiPolygon') {
               intersect = intersectPointCirclePolygon(g1, g2, pointsPerCircle);
-              if (intersect.geoJSON) {
-                geoms.push(intersect.geoJSON);
+              if (intersect) {
+                geoms.push(intersect);
               }
               break;
             }
@@ -185,8 +173,8 @@ export const intersectAreaAreaFeatures = (
                 g2,
                 pointsPerCircle,
               );
-              if (intersect.geoJSON) {
-                geoms.push(intersect.geoJSON);
+              if (intersect) {
+                geoms.push(intersect);
               }
               break;
             }
@@ -198,8 +186,8 @@ export const intersectAreaAreaFeatures = (
                   g1,
                   pointsPerCircle,
                 );
-                if (intersect.geoJSON) {
-                  geoms.push(intersect.geoJSON);
+                if (intersect) {
+                  geoms.push(intersect);
                 }
               });
               break;
@@ -214,8 +202,8 @@ export const intersectAreaAreaFeatures = (
                   g2,
                   pointsPerCircle,
                 );
-                if (intersect.geoJSON) {
-                  geoms.push(intersect.geoJSON);
+                if (intersect) {
+                  geoms.push(intersect);
                 }
               });
               break;
@@ -228,8 +216,8 @@ export const intersectAreaAreaFeatures = (
                   g2,
                   pointsPerCircle,
                 );
-                if (intersect.geoJSON) {
-                  geoms.push(intersect.geoJSON);
+                if (intersect) {
+                  geoms.push(intersect);
                 }
               });
               break;
@@ -244,8 +232,8 @@ export const intersectAreaAreaFeatures = (
                     circle2,
                     pointsPerCircle,
                   );
-                  if (intersect.geoJSON) {
-                    geoms.push(intersect.geoJSON);
+                  if (intersect) {
+                    geoms.push(intersect);
                   }
                 });
               });
@@ -258,18 +246,14 @@ export const intersectAreaAreaFeatures = (
   });
 
   if (geoms.length === 0) {
-    return {};
+    return null;
   }
   if (geoms.length === 1) {
-    return {
-      geoJSON: AreaFeature.create(geoms[0], {}),
-    };
+    return AreaFeature.create(geoms[0], {});
   }
   // TODO?: Might be possible to check if all geometries are of the same type,
   // e.g. all PointCircle and make MultiPointCircle instead of GeometryCollection
   // or MultiPolygon instead of GeometryCollection of Polygons/MultiPolygons
   // etc... For now keep as GeometryCollection.
-  return {
-    geoJSON: AreaFeature.create(AreaGeometryCollection.create(geoms), {}),
-  };
+  return AreaFeature.create(AreaGeometryCollection.create(geoms), {});
 };
