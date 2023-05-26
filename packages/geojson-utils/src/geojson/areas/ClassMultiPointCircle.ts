@@ -6,7 +6,6 @@ import {destination} from '../../destination.js';
 import {distance} from '../../distance.js';
 import {bboxFromArrayOfPositions, getPositionsForCircle} from '../../bbox.js';
 import type {GeomEachCallback} from '../typeGeomEachCallback.js';
-import {PointCircle} from './ClassPointCircle.js';
 
 export class MultiPointCircle
   extends BaseAreaObject<GJ.MultiPointCircle>
