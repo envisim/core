@@ -1,12 +1,15 @@
-import {bbox, bboxInBbox} from './bbox.js';
-import {intersectPolygonPolygon} from './intersectPolygonPolygon.js';
-import {geomEach} from './geomEach.js';
+import {
+  bbox,
+  bboxInBbox,
+  intersectPolygonPolygonFeatures,
+  geomEach,
+  distancePointToPolygon,
+  distance,
+  toFeature,
+} from '@envisim/geojson-utils';
 import {convertPointCirclesToPolygons} from './convertPointCirclesToPolygons.js';
-import {distancePointToPolygon} from './distancePointToPolygon.js';
-import {distance} from './distance.js';
 
 interface Intersect {
-  intersection: boolean;
   geoJSON?: GeoJSON.Feature;
 }
 
@@ -43,21 +46,13 @@ export const intersectAreaAreaFeatures = (
             if (dist < firstRadius + secondRadius) {
               // We have intersection,
               // convert both to polygons.
-              let firstPolygon = convertPointCirclesToPolygons({
-                type: 'Feature',
-                geometry: firstGeom,
-                properties: {
-                  _radius: firstRadius,
-                },
-              });
-              let secondPolygon = convertPointCirclesToPolygons({
-                type: 'Feature',
-                geometry: secondGeom,
-                properties: {
-                  _radius: secondRadius,
-                },
-              });
-              let intersect = intersectPolygonPolygon(
+              let firstPolygon = convertPointCirclesToPolygons(
+                toFeature(firstGeom, {_radius: firstRadius}),
+              );
+              let secondPolygon = convertPointCirclesToPolygons(
+                toFeature(secondGeom, {_radius: secondRadius}),
+              );
+              let intersect = intersectPolygonPolygonFeatures(
                 firstPolygon,
                 secondPolygon,
               );
@@ -73,16 +68,8 @@ export const intersectAreaAreaFeatures = (
         ) {
           if (firstRadius > 0) {
             let dist = distancePointToPolygon(
-              {
-                type: 'Feature',
-                geometry: firstGeom,
-                properties: {},
-              },
-              {
-                type: 'Feature',
-                geometry: secondGeom,
-                properties: {},
-              },
+              toFeature(firstGeom),
+              toFeature(secondGeom),
             );
             if (dist < -firstRadius) {
               // Circle fully within polygon,
@@ -92,21 +79,13 @@ export const intersectAreaAreaFeatures = (
             if (dist >= -firstRadius && dist < firstRadius) {
               // We have intersection and need to convert
               // to polygon.
-              let firstPolygon: GeoJSON.Feature = convertPointCirclesToPolygons(
-                {
-                  type: 'Feature',
-                  geometry: firstGeom,
-                  properties: {
-                    _radius: firstRadius,
-                  },
-                },
+              let firstPolygon = convertPointCirclesToPolygons(
+                toFeature(firstGeom, {
+                  _radius: firstRadius,
+                }),
               );
-              let secondPolygon: GeoJSON.Feature = {
-                type: 'Feature',
-                geometry: secondGeom,
-                properties: {},
-              };
-              let intersect = intersectPolygonPolygon(
+              let secondPolygon = toFeature(secondGeom);
+              let intersect = intersectPolygonPolygonFeatures(
                 firstPolygon,
                 secondPolygon,
               );
@@ -122,16 +101,8 @@ export const intersectAreaAreaFeatures = (
         ) {
           if (secondRadius > 0) {
             let dist = distancePointToPolygon(
-              {
-                type: 'Feature',
-                geometry: secondGeom,
-                properties: {},
-              },
-              {
-                type: 'Feature',
-                geometry: firstGeom,
-                properties: {},
-              },
+              toFeature(secondGeom),
+              toFeature(firstGeom),
             );
             if (dist < -secondRadius) {
               // Circle fully within polygon,
@@ -141,20 +112,13 @@ export const intersectAreaAreaFeatures = (
             if (dist >= -secondRadius && dist < secondRadius) {
               // We have intersection and need to convert
               // to polygon.
-              let secondPolygon: GeoJSON.Feature =
-                convertPointCirclesToPolygons({
-                  type: 'Feature',
-                  geometry: secondGeom,
-                  properties: {
-                    _radius: secondRadius,
-                  },
-                });
-              let firstPolygon: GeoJSON.Feature = {
-                type: 'Feature',
-                geometry: firstGeom,
-                properties: {},
-              };
-              let intersect = intersectPolygonPolygon(
+              let secondPolygon = convertPointCirclesToPolygons(
+                toFeature(secondGeom, {
+                  _radius: secondRadius,
+                }),
+              );
+              let firstPolygon = toFeature(firstGeom);
+              let intersect = intersectPolygonPolygonFeatures(
                 firstPolygon,
                 secondPolygon,
               );
@@ -168,17 +132,12 @@ export const intersectAreaAreaFeatures = (
           (firstGeom.type === 'Polygon' || firstGeom.type === 'MultiPolygon') &&
           (secondGeom.type === 'Polygon' || secondGeom.type === 'MultiPolygon')
         ) {
-          let firstPolygon: GeoJSON.Feature = {
-            type: 'Feature',
-            geometry: firstGeom,
-            properties: {},
-          };
-          let secondPolygon: GeoJSON.Feature = {
-            type: 'Feature',
-            geometry: secondGeom,
-            properties: {},
-          };
-          let intersect = intersectPolygonPolygon(firstPolygon, secondPolygon);
+          let firstPolygon = toFeature(firstGeom);
+          let secondPolygon = toFeature(secondGeom);
+          let intersect = intersectPolygonPolygonFeatures(
+            firstPolygon,
+            secondPolygon,
+          );
           if (intersect.geoJSON) {
             areaGeoms.push(intersect.geoJSON.geometry);
           }
@@ -187,7 +146,7 @@ export const intersectAreaAreaFeatures = (
     });
   }
   if (areaGeoms.length === 0) {
-    return {intersection: false};
+    return {};
   }
   // Compute new _radius, if any.
   let properties = {};
@@ -202,26 +161,19 @@ export const intersectAreaAreaFeatures = (
   }
   if (areaGeoms.length === 1) {
     return {
-      intersection: true,
-      geoJSON: {
-        type: 'Feature',
-        geometry: areaGeoms[0],
-        properties: properties,
-      },
+      geoJSON: toFeature(areaGeoms[0], properties),
     };
   }
   if (areaGeoms.length > 1) {
     return {
-      intersection: true,
-      geoJSON: {
-        type: 'Feature',
-        geometry: {
+      geoJSON: toFeature(
+        {
           type: 'GeometryCollection',
           geometries: areaGeoms,
         },
-        properties: properties,
-      },
+        properties,
+      ),
     };
   }
-  return {intersection: false};
+  return {};
 };

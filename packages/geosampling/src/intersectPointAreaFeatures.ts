@@ -1,10 +1,15 @@
-import {bbox, bboxInBbox} from './bbox.js';
-import {pointInPolygon} from './pointInPolygon.js';
-import {geomEach} from './geomEach.js';
+import {
+  bbox,
+  bboxInBbox,
+  pointInPolygon,
+  geomEach,
+  toFeature,
+  toPoint,
+  toMultiPoint,
+} from '@envisim/geojson-utils';
 import {convertPointCirclesToPolygons} from './convertPointCirclesToPolygons.js';
 
 interface Intersect {
-  intersection: boolean;
   geoJSON?: GeoJSON.Feature;
 }
 
@@ -25,13 +30,7 @@ export const intersectPointAreaFeatures = (
   const box2 = areaFeature.bbox || bbox(areaFeature);
   if (bboxInBbox(box1, box2)) {
     geomEach(areaFeature, (areaGeom: GeoJSON.Geometry) => {
-      let areaF: GeoJSON.Feature = {
-        type: 'Feature',
-        geometry: areaGeom,
-        properties: {
-          _radius: 0,
-        },
-      };
+      let areaF = toFeature(areaGeom, {_radius: 0});
       if (areaGeom.type === 'Point' || areaGeom.type === 'MultiPoint') {
         if (areaFeature.properties?._radius) {
           if (areaF.properties) {
@@ -40,7 +39,7 @@ export const intersectPointAreaFeatures = (
           areaF = convertPointCirclesToPolygons(areaF);
         } else {
           throw new Error(
-            'intersectPointAreaFeatures: Only Polygon/MultiPolygon geometries are allowed in areaFeature.',
+            'Only Polygon/MultiPolygon geometries are allowed in areaFeature.',
           );
         }
       }
@@ -53,14 +52,7 @@ export const intersectPointAreaFeatures = (
           pointsCoords = pointGeom.coordinates;
         }
         pointsCoords.forEach((point) => {
-          let pointF: GeoJSON.Feature = {
-            type: 'Feature',
-            geometry: {
-              type: 'Point',
-              coordinates: point.slice(),
-            },
-            properties: {},
-          };
+          let pointF = toPoint(point.slice());
           if (
             areaF.geometry.type === 'Polygon' ||
             areaF.geometry.type === 'MultiPolygon'
@@ -72,7 +64,7 @@ export const intersectPointAreaFeatures = (
             }
           } else {
             throw new Error(
-              'intersectPointAreaFeatures: Only Polygon/MultiPolygon geometries are allowed in areaFeature.',
+              'Only Polygon/MultiPolygon geometries are allowed in areaFeature.',
             );
           }
         });
@@ -80,33 +72,14 @@ export const intersectPointAreaFeatures = (
     });
   }
   if (points.length === 0) {
-    return {intersection: false};
+    return {};
   }
   if (points.length === 1) {
     return {
-      intersection: true,
-      geoJSON: {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: points[0],
-        },
-        properties: {},
-      },
+      geoJSON: toPoint(points[0]),
     };
   }
-  if (points.length > 1) {
-    return {
-      intersection: true,
-      geoJSON: {
-        type: 'Feature',
-        geometry: {
-          type: 'MultiPoint',
-          coordinates: points,
-        },
-        properties: {},
-      },
-    };
-  }
-  return {intersection: false};
+  return {
+    geoJSON: toMultiPoint(points),
+  };
 };

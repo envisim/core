@@ -5,61 +5,69 @@ import {
   placeModelTract,
   radiusOfModelTract,
   sizeOfModelTract,
+  pointTract,
 } from './modelTract.js';
-import {addBboxes} from './bbox.js';
+import {bbox} from '@envisim/geojson-utils';
 import {typeOfFrame} from './typeOfFrame.js';
 import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
 import {intersectPointSampleAreaFrame} from './intersectPointSampleAreaFrame.js';
 import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
 
-interface IsampleTractsOnAreasOpts {
-  modelTract: GeoJSON.Feature;
+export type TsampleTractsOnAreasOpts = {
   rotation?: number;
-  sampleSize: number;
-  method: 'uniform' | 'systematic';
   randomRotation?: boolean;
   ratio?: number;
   rand?: Random;
-}
+};
 /**
  * Select a sample of tracts on areas.
  *
- * @param geoJSON - A GeoJSON containing area.
+ * @param geoJSON - A GeoJSON FeatureCollection containing area.
+ * @param method - The method to use "uniform" or "systematic".
+ * @param sampleSize - Expected sample size integer > 0.
+ * @param modelTract - A GeoJSON model tract.
  * @param opts - An options object.
- * @param opts.modelTract - A GeoJSON model tract.
- * @param opts.method - The method to use "uniform" or "systematic".
- * @param opts.sampleSize - Expected sample size integer > 0.
  * @param opts.rotation - The rotation angle in degrees.
- * @param opts.randomRotation - Boolean true/false for random rotation of individual tract.
+ * @param opts.randomRotation - Boolean true/false for random rotation of individual tract (always true for line tract).
+ * @param opts.ratio - An optional ratio for systematic sampling.
+ * @param opts.rand - An optional instance of Random.
  * @returns - Resulting GeoJSON.
  */
 export const sampleTractsOnAreas = (
-  geoJSON: GeoJSON.Feature | GeoJSON.FeatureCollection,
-  opts: IsampleTractsOnAreasOpts,
-) => {
-  const point: GeoJSON.Feature = {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [0, 0],
-    },
-    properties: {},
-  };
-
+  geoJSON: GeoJSON.FeatureCollection,
+  method: 'uniform' | 'systematic',
+  sampleSize: number,
+  modelTract: GeoJSON.Feature,
+  opts: TsampleTractsOnAreasOpts = {},
+): GeoJSON.FeatureCollection => {
+  if (geoJSON.type !== 'FeatureCollection') {
+    throw new Error(
+      'Input GeoJSON must be a FeatureCollection, not type: ' +
+        geoJSON.type +
+        '.',
+    );
+  }
+  const point = pointTract();
   // Set default options.
-  const tract = opts.modelTract || point;
-  const rotation = opts.rotation || 0;
-  const sampleSize = opts.sampleSize || 1;
-  const method = opts.method || 'uniform';
-  const randomRotation = opts.randomRotation || false;
+  const tract = modelTract ?? point;
+  const rotation = opts.rotation ?? 0;
+  let randomRotation = opts.randomRotation ?? false;
+  const rand = opts.rand ?? new Random();
 
   // Check input modelTract is of type Feature.
   if (tract.type !== 'Feature') {
     throw new Error(
-      'sampleTractsOnAreas: modelTract needs to be of type Feature, not type: ' +
+      'The modelTract needs to be of type Feature, not type: ' +
         tract.type +
         '.',
     );
+  }
+
+  const typeOfTract = typeOfFrame(tract);
+
+  // Force randomRotation for type line!
+  if (typeOfTract === 'line') {
+    randomRotation = true;
   }
 
   // Compute radius and size of the model tract.
@@ -67,75 +75,53 @@ export const sampleTractsOnAreas = (
   const sizeOfTract = sizeOfModelTract(tract);
 
   // Select first a sample of points and use radius as buffer.
-  const featureCollection = samplePointsOnAreas(geoJSON, {
-    sampleSize: sampleSize,
-    method: method,
+  const featureCollection = samplePointsOnAreas(geoJSON, method, sampleSize, {
+    ratio: opts.ratio ?? 1,
     buffer: radius,
-    rand: opts.rand,
+    rand: rand,
   });
 
+  if (radius === 0) {
+    // Single point tract with 0 radius, _designWeight already transfered.
+    return featureCollection;
+  }
+
   // Transform the Features by placing a model tract on each point.
-  const newFeatures = featureCollection.features.map((feature) => {
-    let newFeature: GeoJSON.Feature = {
-      type: 'Feature',
-      geometry: feature.geometry,
-      properties: feature.properties,
-    };
+  featureCollection.features.forEach((feature, index) => {
+    const dw = feature.properties?._designWeight || 1;
+    let newFeature: GeoJSON.Feature;
     if (feature.geometry.type === 'Point') {
       newFeature = placeModelTract(tract, feature.geometry.coordinates, {
         rotation: rotation,
         randomRotation: randomRotation,
+        rand: rand,
       });
+      if (newFeature.properties) {
+        newFeature.properties._designWeight = dw / sizeOfTract;
+        // Flag randomRotation on line features for future
+        // computation of _designWeight or collect.
+        if (randomRotation && typeOfTract === 'line') {
+          newFeature.properties._randomRotation = true;
+        }
+      }
+      newFeature.bbox = bbox(newFeature);
+      featureCollection.features[index] = newFeature;
     }
-    if (!newFeature?.properties) {
-      newFeature.properties = {};
-    }
-    if (feature.properties) {
-      newFeature.properties._designWeight =
-        feature.properties._designWeight / sizeOfTract;
-    }
-    addBboxes(newFeature);
-    return newFeature;
   });
-  featureCollection.features = newFeatures;
 
   // Check type point/line/area and transfer designWeights from parents
   // by intersect of all features and split of features.
-  const type = typeOfFrame(tract);
-  if (type === 'point') {
+  if (typeOfTract === 'point') {
     // Call intersectPointSampleAreaFrame.
-    if (geoJSON.type === 'Feature') {
-      return intersectPointSampleAreaFrame(featureCollection, {
-        type: 'FeatureCollection',
-        features: [geoJSON],
-      });
-    }
-    if (geoJSON.type === 'FeatureCollection') {
-      return intersectPointSampleAreaFrame(featureCollection, geoJSON);
-    }
+    return intersectPointSampleAreaFrame(featureCollection, geoJSON);
   }
-  if (type === 'line') {
+  if (typeOfTract === 'line') {
     // Call intersectLineSampleAreaFrame.
-    if (geoJSON.type === 'Feature') {
-      return intersectLineSampleAreaFrame(featureCollection, {
-        type: 'FeatureCollection',
-        features: [geoJSON],
-      });
-    }
-    if (geoJSON.type === 'FeatureCollection') {
-      return intersectLineSampleAreaFrame(featureCollection, geoJSON);
-    }
+    return intersectLineSampleAreaFrame(featureCollection, geoJSON);
   }
-  if (type === 'area') {
+  if (typeOfTract === 'area') {
     // Call intersectAreaSampleAreaFrame.
-    if (geoJSON.type === 'Feature') {
-      return intersectAreaSampleAreaFrame(featureCollection, {
-        type: 'FeatureCollection',
-        features: [geoJSON],
-      });
-    }
-    if (geoJSON.type === 'FeatureCollection') {
-      return intersectAreaSampleAreaFrame(featureCollection, geoJSON);
-    }
+    return intersectAreaSampleAreaFrame(featureCollection, geoJSON);
   }
+  return {type: 'FeatureCollection', features: []};
 };

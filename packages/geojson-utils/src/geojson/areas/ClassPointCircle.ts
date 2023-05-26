@@ -2,6 +2,10 @@ import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
 import {Polygon} from './ClassPolygon.js';
+import {destination} from '../../destination.js';
+import {distance} from '../../distance.js';
+import {bboxFromArrayOfPositions, getPositionsForCircle} from '../../bbox.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 
 export class PointCircle
   extends BaseAreaObject<GJ.PointCircle>
@@ -62,5 +66,24 @@ export class PointCircle
 
   area(): number {
     return Math.PI * this.radius ** 2;
+  }
+
+  geomEach(callback: GeomEachCallback<PointCircle>): void {
+    callback(this);
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return distance(coords, this.coordinates) - this.radius;
+  }
+
+  setBBox(): GJ.BBox {
+    this.bbox = bboxFromArrayOfPositions(
+      getPositionsForCircle(this.coordinates, this.radius),
+    );
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }

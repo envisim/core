@@ -37,8 +37,6 @@ export const typeOfFrame = (
     case 'FeatureCollection':
       return typeOfFeature(geoJSON.features[0]);
     default:
-      throw new Error(
-        'typeOfFrame: A Feature or FeatureCollection is required.',
-      );
+      throw new Error('A Feature or FeatureCollection is required.');
   }
 };

@@ -469,11 +469,14 @@ __metadata:
   resolution: "@envisim/geojson-utils@workspace:packages/geojson-utils"
   dependencies:
     "@envisim/matrix": "workspace:*"
+    "@turf/buffer": ^6.5.0
     "@types/jest": ^29.5.0
     "@types/node": ^18.15.11
     "@types/uuid": ^8.3.4
+    geographiclib-geodesic: ^2.0.0
     jest: ^29.5.0
     npm-run-all: ^4.1.5
+    polygon-clipping: ^0.15.3
     ts-jest: ^29.1.0
     tslib: ^2.5.0
     typedoc: ^0.24.4
@@ -3791,6 +3794,13 @@ __metadata:
   version: 2.4.0
   resolution: "geodesy@npm:2.4.0"
   checksum: 78c458c62a6bd315a3c108754040548519b8478fbbe4ace299c34483c68a7a0a7e9abae213dcf53c89f0317569dfbc7dcad77a4b4f1265b9dc96c252e1402e76
+  languageName: node
+  linkType: hard
+
+"geographiclib-geodesic@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "geographiclib-geodesic@npm:2.0.0"
+  checksum: 114a64576887d7a20b36eb05e7edea39cd7fac4c3538bea19e44126170378fe26e56583517d0575d4295507567efadba17a93390cef3093631d2941594aab2c7
   languageName: node
   linkType: hard
 

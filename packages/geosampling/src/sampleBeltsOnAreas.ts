@@ -1,34 +1,54 @@
-import {bbox} from './bbox.js';
-import {destinationPoint, distance} from './distance.js';
-import {rotateCoord} from './rotateCoord.js';
+import {Random} from '@envisim/random';
+import {
+  bbox,
+  destination,
+  distance,
+  rotateCoord,
+  toLineString,
+  toPolygon,
+} from '@envisim/geojson-utils';
 import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
 import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
 
-interface IsampleBeltsOnAreasOpts {
-  distBetween: number;
+export type TsampleBeltsOnAreasOpts = {
   rotation?: number;
-  halfWidth: number;
-}
+  rand?: Random;
+};
 /**
  * Selects a systematic sample of belts (or lines) on areas.
  *
- * @param geoJSON - A GeoJSON Feature/FeatureCollection containing Polygon/MultiPolygon.
+ * @param geoJSON - A GeoJSON FeatureCollection containing Polygon/MultiPolygon.
+ * @param distBetween - Distance > 0 in meters between center lines.
+ * @param halfWidth - Half the width of the belt (= 0 for line sampling).
  * @param opts - An options object.
- * @param opts.distBetween - Distance > 0 in meters between center lines.
- * @param opts.halfWidth - Half the width of the belt (= 0 for line sampling).
  * @param opts.rotation - Rotation angle in degrees.
+ * @param opts.rand - An optional instance of Random.
  * @returns - A GeoJSON FeatureCollection of Polygon/MultiPolygon.
  */
 export const sampleBeltsOnAreas = (
-  geoJSON: GeoJSON.Feature | GeoJSON.FeatureCollection,
-  opts: IsampleBeltsOnAreasOpts = {halfWidth: 0, distBetween: 100, rotation: 0},
+  geoJSON: GeoJSON.FeatureCollection,
+  distBetween: number,
+  halfWidth: number,
+  opts: TsampleBeltsOnAreasOpts = {rotation: 0},
 ): GeoJSON.FeatureCollection => {
-  const halfWidth = opts.halfWidth || 0;
-  const distBetween = opts.distBetween || 100;
+  if (geoJSON.type !== 'FeatureCollection') {
+    throw new Error(
+      'Input GeoJSON must be a FeatureCollection, not type: ' +
+        geoJSON.type +
+        '.',
+    );
+  }
+  if (typeof distBetween !== 'number' || distBetween <= 0) {
+    throw new Error('Input distBetween must be a positive number.');
+  }
+  if (typeof halfWidth !== 'number' || halfWidth < 0) {
+    throw new Error('Input halfWidth must be a number >= 0.');
+  }
   const rotation = opts.rotation || 0;
+  const rand = opts.rand ?? new Random();
   const numPointsPerLine = 20;
   const box = geoJSON.bbox || bbox(geoJSON);
-  const randomStart = Math.random() * distBetween;
+  const randomStart = rand.float() * distBetween;
   const latPerMeter =
     (box[3] - box[1]) / distance([box[0], box[1]], [box[0], box[3]]);
   const refCoord = [
@@ -49,18 +69,10 @@ export const sampleBeltsOnAreas = (
   if (box[3] > 0 && box[1] < 0) {
     smallestAtLat = Math.max(box[3], -box[1]);
   }
-  const minLng = destinationPoint(
-    [refCoord[0], smallestAtLat],
-    maxRadius,
-    -90,
-  )[0];
-  const maxLng = destinationPoint(
-    [refCoord[0], smallestAtLat],
-    maxRadius,
-    90,
-  )[0];
-  const minLat = destinationPoint(refCoord, maxRadius + halfWidth, 180)[1];
-  const maxLat = destinationPoint(refCoord, maxRadius + halfWidth, 0)[1];
+  const minLon = destination([refCoord[0], smallestAtLat], maxRadius, 270)[0];
+  const maxLon = destination([refCoord[0], smallestAtLat], maxRadius, 90)[0];
+  const minLat = destination(refCoord, maxRadius + halfWidth, 180)[1];
+  const maxLat = destination(refCoord, maxRadius + halfWidth, 0)[1];
   const numLines = Math.ceil(
     distance([box[0], minLat], [box[0], maxLat]) / distBetween,
   );
@@ -75,7 +87,7 @@ export const sampleBeltsOnAreas = (
         thisLine.push(
           rotateCoord(
             [
-              minLng + (j / (numPointsPerLine - 1)) * (maxLng - minLng),
+              minLon + (j / (numPointsPerLine - 1)) * (maxLon - minLon),
               latitude,
             ],
             refCoord,
@@ -88,40 +100,23 @@ export const sampleBeltsOnAreas = (
     let prelResult: GeoJSON.FeatureCollection = {
       type: 'FeatureCollection',
       features: lineStrings.map((coords) => {
-        const feature: GeoJSON.Feature = {
-          type: 'Feature',
-          geometry: {
-            type: 'LineString',
-            coordinates: coords,
-          },
-          properties: {
-            _designWeight: distBetween,
-          },
-        };
+        const feature = toLineString(coords, {_designWeight: distBetween});
         feature.bbox = bbox(feature);
         return feature;
       }),
     };
-    if (geoJSON.type === 'Feature') {
-      return intersectLineSampleAreaFrame(prelResult, {
-        type: 'FeatureCollection',
-        features: [geoJSON],
-      });
-    }
-    if (geoJSON.type === 'FeatureCollection') {
-      return intersectLineSampleAreaFrame(prelResult, geoJSON);
-    }
+    return intersectLineSampleAreaFrame(prelResult, geoJSON);
   }
   // It is belts, not lines.
   for (let i = 0; i < numLines; i++) {
     latitude = minLat + (randomStart + i * distBetween) * latPerMeter;
     let thisLine = []; // Will be polygon.
-    // First side of belt.
+    // First side of belt (counterclockwise).
     for (let j = 0; j < numPointsPerLine; j++) {
       thisLine.push(
         rotateCoord(
           [
-            minLng + (j / (numPointsPerLine - 1)) * (maxLng - minLng),
+            minLon + (j / (numPointsPerLine - 1)) * (maxLon - minLon),
             latitude - halfWidth * latPerMeter,
           ],
           refCoord,
@@ -134,7 +129,7 @@ export const sampleBeltsOnAreas = (
       thisLine.push(
         rotateCoord(
           [
-            minLng + (j / (numPointsPerLine - 1)) * (maxLng - minLng),
+            minLon + (j / (numPointsPerLine - 1)) * (maxLon - minLon),
             latitude + halfWidth * latPerMeter,
           ],
           refCoord,
@@ -143,38 +138,18 @@ export const sampleBeltsOnAreas = (
       );
     }
     // Close the polygon by adding first coordinate at the end.
-    thisLine.push(thisLine[0]);
+    thisLine.push([...thisLine[0]]);
     lineStrings.push(thisLine);
   }
   let prelResult: GeoJSON.FeatureCollection = {
     type: 'FeatureCollection',
     features: lineStrings.map((coords) => {
-      const feature: GeoJSON.Feature = {
-        type: 'Feature',
-        geometry: {
-          type: 'Polygon',
-          coordinates: [coords],
-        },
-        properties: {
-          _designWeight: distBetween / (halfWidth * 2),
-        },
-      };
+      const feature = toPolygon([coords], {
+        _designWeight: distBetween / (halfWidth * 2),
+      });
       feature.bbox = bbox(feature);
       return feature;
     }),
   };
-  let newFC: GeoJSON.FeatureCollection = {
-    type: 'FeatureCollection',
-    features: [],
-  };
-  if (geoJSON.type === 'Feature') {
-    newFC = intersectAreaSampleAreaFrame(prelResult, {
-      type: 'FeatureCollection',
-      features: [geoJSON],
-    });
-  }
-  if (geoJSON.type === 'FeatureCollection') {
-    newFC = intersectAreaSampleAreaFrame(prelResult, geoJSON);
-  }
-  return newFC;
+  return intersectAreaSampleAreaFrame(prelResult, geoJSON);
 };

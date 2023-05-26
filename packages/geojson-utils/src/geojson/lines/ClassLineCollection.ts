@@ -1,7 +1,11 @@
 import {BaseCollection} from '../ClassBaseCollection.js';
 import type * as GJ from '../types.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {LineFeature} from './ClassLineFeature.js';
+import {LineObject} from './LineObjects.js';
+import {bboxFromArrayOfBBoxes} from '../../bbox.js';
+import {LineGeometryCollection} from './ClassLineGeometryCollection.js';
 
 export class LineCollection
   extends BaseCollection<LineFeature>
@@ -34,5 +38,42 @@ export class LineCollection
   addFeature(feature: GJ.LineFeature, shallow: boolean = true): this {
     this.features.push(new LineFeature(feature, shallow));
     return this;
+  }
+
+  length(dist: number = Infinity): number {
+    return this.features.reduce((prev, curr) => prev + curr.length(dist), 0);
+  }
+
+  geomEach(callback: GeomEachCallback<LineObject>): void {
+    this.features.forEach((feature, featureIndex) => {
+      if (LineGeometryCollection.isGeometryCollection(feature.geometry)) {
+        feature.geometry.geometries.forEach(
+          (geom: LineObject, geomIndex: number) => {
+            callback(geom, featureIndex, geomIndex);
+          },
+        );
+      } else {
+        callback(feature.geometry, featureIndex);
+      }
+    });
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.features.reduce((prev, curr) => {
+      return Math.min(prev, curr.geometry.distanceToPosition(coords));
+    }, Infinity);
+  }
+
+  setBBox(): GJ.BBox {
+    const bboxArray: GJ.BBox[] = new Array(this.features.length);
+    this.features.forEach((feature, index) => {
+      bboxArray[index] = feature.getBBox();
+    });
+    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }

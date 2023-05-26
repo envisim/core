@@ -2,6 +2,10 @@ import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
 import {MultiPolygon} from './ClassMultiPolygon.js';
+import {destination} from '../../destination.js';
+import {distance} from '../../distance.js';
+import {bboxFromArrayOfPositions, getPositionsForCircle} from '../../bbox.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 
 export class MultiPointCircle
   extends BaseAreaObject<GJ.MultiPointCircle>
@@ -71,5 +75,30 @@ export class MultiPointCircle
 
   area(): number {
     return this.coordinates.length * Math.PI * this.radius ** 2;
+  }
+
+  geomEach(callback: GeomEachCallback<MultiPointCircle>): void {
+    callback(this);
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return (
+      this.coordinates.reduce((prev, curr) => {
+        return Math.min(prev, distance(coords, curr));
+      }, Infinity) - this.radius
+    );
+  }
+
+  setBBox(): GJ.BBox {
+    let coords: GJ.Position[] = [];
+    this.coordinates.forEach((coord) => {
+      coords = coords.concat(getPositionsForCircle(coord, this.radius));
+    });
+    this.bbox = bboxFromArrayOfPositions(coords);
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }

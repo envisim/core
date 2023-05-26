@@ -1,6 +1,9 @@
 import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import {BasePointObject} from './BasePointObject.js';
+import {distance} from '../../distance.js';
+import {bboxFromArrayOfPositions} from '../../bbox.js';
 
 export class MultiPoint
   extends BasePointObject<GJ.MultiPoint>
@@ -26,5 +29,29 @@ export class MultiPoint
 
   get size(): number {
     return this.coordinates.length;
+  }
+
+  count(): number {
+    return this.coordinates.length;
+  }
+
+  geomEach(callback: GeomEachCallback<MultiPoint>): void {
+    callback(this);
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.coordinates.reduce(
+      (prev, curr) => Math.min(prev, distance(curr, coords)),
+      Infinity,
+    );
+  }
+
+  setBBox(): GJ.BBox {
+    this.bbox = bboxFromArrayOfPositions(this.coordinates);
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
   }
 }

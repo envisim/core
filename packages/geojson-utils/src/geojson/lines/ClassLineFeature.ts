@@ -1,11 +1,12 @@
 import {BaseFeature} from '../ClassBaseFeature.js';
 import type * as GJ from '../types.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {
   LineGeometry,
   LineGeometryCollection,
 } from './ClassLineGeometryCollection.js';
-import {LineString, MultiLineString} from './LineObjects.js';
+import {LineString, MultiLineString, LineObject} from './LineObjects.js';
 
 export class LineFeature extends BaseFeature implements GJ.LineFeature {
   static isFeature(obj: any): obj is LineFeature {
@@ -43,5 +44,35 @@ export class LineFeature extends BaseFeature implements GJ.LineFeature {
 
   get size(): number {
     return this.geometry.size;
+  }
+
+  length(dist: number): number {
+    return this.geometry.length(dist);
+  }
+
+  geomEach(callback: GeomEachCallback<LineObject>): void {
+    if (LineGeometryCollection.isGeometryCollection(this.geometry)) {
+      this.geometry.geometries.forEach(
+        (geom: LineObject, geomIndex: number) => {
+          callback(geom, geomIndex);
+        },
+      );
+    } else {
+      callback(this.geometry);
+    }
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.geometry.distanceToPosition(coords);
+  }
+
+  setBBox(): GJ.BBox {
+    // need setBBox to recompute here
+    this.bbox = this.geometry.setBBox();
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.geometry.getBBox();
   }
 }

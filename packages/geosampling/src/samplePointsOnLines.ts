@@ -1,12 +1,25 @@
 import {Random} from '@envisim/random';
+import {
+  toPoint,
+  intermediate,
+  destination,
+  length,
+  lengthOfSegment,
+} from '@envisim/geojson-utils';
 
-import {distance, intermediatePoint, destinationPoint} from './distance.js';
-import {length} from './length.js';
+// Comment: For now, length is computed with default dist,
+// for entire line and individual segments, but
+// intermediate places new points on fraction of distance on a
+// geodesic path between points instead of on the segment line.
+// This is ok in applications, which are unlikely to use very long segments.
+// We may consider creating intermediateOnSegment function.
 
-interface Track {
+// Type for keeping track of distance travelled (dt) and index of sample point
+// to be placed next (currentIndex).
+type Track = {
   dt: number;
   currentIndex: number;
-}
+};
 
 // Internal.
 const samplePointsOnGeometry = (
@@ -32,9 +45,7 @@ const samplePointsOnGeometry = (
         for (let i = track.currentIndex; i < distances.length; i++) {
           if (distances[i] < track.dt + segmentLength) {
             fraction = (distances[i] - track.dt) / segmentLength;
-            points.push(
-              destinationPoint(pointCoords, opts._radius, 360 * fraction),
-            );
+            points.push(destination(pointCoords, opts._radius, 360 * fraction));
             track.currentIndex += 1;
           }
         }
@@ -50,11 +61,7 @@ const samplePointsOnGeometry = (
             if (distances[i] < track.dt + segmentLength) {
               fraction = (distances[i] - track.dt) / segmentLength;
               points.push(
-                destinationPoint(
-                  multiPointCoords[k],
-                  opts._radius,
-                  360 * fraction,
-                ),
+                destination(multiPointCoords[k], opts._radius, 360 * fraction),
               );
               track.currentIndex += 1;
             }
@@ -66,12 +73,15 @@ const samplePointsOnGeometry = (
     case 'LineString':
       let lineStringCoords = geoJSON.coordinates;
       for (let i = 0; i < lineStringCoords.length - 1; i++) {
-        segmentLength = distance(lineStringCoords[i], lineStringCoords[i + 1]);
+        segmentLength = lengthOfSegment(
+          lineStringCoords[i],
+          lineStringCoords[i + 1],
+        );
         for (let l = track.currentIndex; l < distances.length; l++) {
           if (distances[l] < track.dt + segmentLength) {
             fraction = (distances[l] - track.dt) / segmentLength;
             points.push(
-              intermediatePoint(
+              intermediate(
                 lineStringCoords[i],
                 lineStringCoords[i + 1],
                 fraction,
@@ -88,16 +98,12 @@ const samplePointsOnGeometry = (
       let mlsCoords = geoJSON.coordinates;
       for (let i = 0; i < mlsCoords.length; i++) {
         for (let j = 0; j < mlsCoords[i].length - 1; j++) {
-          segmentLength = distance(mlsCoords[i][j], mlsCoords[i][j + 1]);
+          segmentLength = lengthOfSegment(mlsCoords[i][j], mlsCoords[i][j + 1]);
           for (let l = track.currentIndex; l < distances.length; l++) {
             if (distances[l] < track.dt + segmentLength) {
               fraction = (distances[l] - track.dt) / segmentLength;
               points.push(
-                intermediatePoint(
-                  mlsCoords[i][j],
-                  mlsCoords[i][j + 1],
-                  fraction,
-                ),
+                intermediate(mlsCoords[i][j], mlsCoords[i][j + 1], fraction),
               );
               track.currentIndex += 1;
             }
@@ -111,12 +117,15 @@ const samplePointsOnGeometry = (
       for (let i = 0; i < mpCoords.length; i++) {
         for (let j = 0; j < mpCoords[i].length; j++) {
           for (let k = 0; k < mpCoords[i][j].length - 1; k++) {
-            segmentLength = distance(mpCoords[i][j][k], mpCoords[i][j][k + 1]);
+            segmentLength = lengthOfSegment(
+              mpCoords[i][j][k],
+              mpCoords[i][j][k + 1],
+            );
             for (let l = track.currentIndex; l < distances.length; l++) {
               if (distances[l] < track.dt + segmentLength) {
                 fraction = (distances[l] - track.dt) / segmentLength;
                 points.push(
-                  intermediatePoint(
+                  intermediate(
                     mpCoords[i][j][k],
                     mpCoords[i][j][k + 1],
                     fraction,
@@ -131,7 +140,7 @@ const samplePointsOnGeometry = (
       }
       break;
     default:
-      throw new Error('samplePointsOnGeometry: Unknown GeoJSON geometry.');
+      throw new Error('Unknown GeoJSON geometry.');
   }
   return points;
 };
@@ -162,37 +171,45 @@ const samplePointsOnGeometryCollection = (
   return points;
 };
 
-interface IsamplePointsOnLinesOpts {
-  sampleSize: number;
-  method: 'uniform' | 'systematic';
-}
-
 /**
- * Selects points according to method and sampleSize on any GeoJSON object
+ * Selects points according to method and sampleSize on any GeoJSON FeatureCollection
  * which has a positive length.
  *
- * @param geoJSON - A GeoJSON object.
+ * @param geoJSON - A GeoJSON FeatureCollection.
+ * @param method - The method to use. Either 'uniform' or 'systematic'.
+ * @param sampleSize - An integer > 0 for number of points to sample.
  * @param opts - An options object.
- * @param opts.sampleSize - An integer > 0 for number of points to sample
- * @param opts.method - The method to use. Either 'uniform' or 'systematic'
- * @param opts.rand - An instance of `Random`
+ * @param opts.rand - An optional instance of Random.
  * @returns A GeoJSON FeatureCollection of Point Features.
  */
 export const samplePointsOnLines = (
-  geoJSON: GeoJSON.GeoJSON,
-  opts: {
-    method?: 'uniform' | 'systematic';
-    sampleSize?: number;
-    rand?: Random;
-  } = {},
+  geoJSON: GeoJSON.FeatureCollection,
+  method: 'uniform' | 'systematic',
+  sampleSize: number,
+  opts: {rand?: Random} = {},
 ): GeoJSON.FeatureCollection => {
-  const method = opts.method || 'uniform';
-  const sampleSize = opts.sampleSize || 1;
+  if (geoJSON.type !== 'FeatureCollection') {
+    throw new Error(
+      'Input GeoJSON must be a FeatureCollection, not type: ' +
+        geoJSON.type +
+        '.',
+    );
+  }
+  if (method !== 'systematic' && method !== 'uniform') {
+    throw new Error("Input method must be either 'uniform' or 'systematic'.");
+  }
+  if (
+    typeof sampleSize !== 'number' ||
+    sampleSize !== Math.round(sampleSize) ||
+    sampleSize <= 0
+  ) {
+    throw new Error('Input sampleSize must be a positive integer.');
+  }
   const rand = opts.rand ?? new Random();
-  const L = length(geoJSON); // total length of input geoJSON
 
+  const L = length(geoJSON); // total length of input geoJSON
   if (L === 0) {
-    throw new Error('samplePointsOnLines: Input GeoJSON has zero length.');
+    throw new Error('Input GeoJSON has zero length.');
   }
 
   let distances = []; // Holds sample points as distances from 0 to L.
@@ -219,100 +236,46 @@ export const samplePointsOnLines = (
   let parentIndex: number[] = [];
   let designWeight = L / sampleSize;
 
-  switch (geoJSON.type) {
-    case 'LineString':
-    case 'MultiLineString':
-    case 'Polygon':
-    case 'MultiPolygon':
-      points = samplePointsOnGeometry(geoJSON, track, distances);
-      parentIndex = new Array(points.length).fill(0);
-      break;
-    case 'GeometryCollection':
-      points = samplePointsOnGeometryCollection(geoJSON, track, distances);
-      parentIndex = new Array(points.length).fill(0);
-      break;
-    case 'Feature':
-      let opts = {_radius: 0};
-      if (geoJSON.properties?._radius) {
-        opts._radius = geoJSON.properties._radius;
-      }
-      if (geoJSON.geometry.type === 'GeometryCollection') {
-        points = samplePointsOnGeometryCollection(
-          geoJSON.geometry,
-          track,
-          distances,
-          opts,
-        );
-      } else {
-        points = samplePointsOnGeometry(
-          geoJSON.geometry,
-          track,
-          distances,
-          opts,
-        );
-      }
-      parentIndex = new Array(points.length).fill(0);
-      break;
-    case 'FeatureCollection':
-      for (let i = 0; i < geoJSON.features.length; i++) {
-        let opts = {_radius: 0};
-        let feature = geoJSON.features[i];
-        if (feature.properties?._radius) {
-          opts = {_radius: feature.properties._radius};
-        }
-        if (feature.geometry.type === 'GeometryCollection') {
-          let result = samplePointsOnGeometryCollection(
-            feature.geometry,
-            track,
-            distances,
-            opts,
-          );
-          points = points.concat(result);
-          parentIndex = parentIndex.concat(new Array(result.length).fill(i));
-        } else {
-          let result = samplePointsOnGeometry(
-            feature.geometry,
-            track,
-            distances,
-            opts,
-          );
-          points = points.concat(result);
-          parentIndex = parentIndex.concat(new Array(result.length).fill(i));
-        }
-      }
-      break;
-    default:
-      throw new Error(
-        'samplePointsOnLines: GeoJSON type ' +
-          geoJSON.type +
-          ' cannot be used.',
+  for (let i = 0; i < geoJSON.features.length; i++) {
+    let opts = {_radius: 0};
+    let feature = geoJSON.features[i];
+    if (feature.properties?._radius) {
+      opts = {_radius: feature.properties._radius};
+    }
+    if (feature.geometry.type === 'GeometryCollection') {
+      let result = samplePointsOnGeometryCollection(
+        feature.geometry,
+        track,
+        distances,
+        opts,
       );
+      points = points.concat(result);
+      parentIndex = parentIndex.concat(new Array(result.length).fill(i));
+    } else {
+      let result = samplePointsOnGeometry(
+        feature.geometry,
+        track,
+        distances,
+        opts,
+      );
+      points = points.concat(result);
+      parentIndex = parentIndex.concat(new Array(result.length).fill(i));
+    }
   }
 
   const features: GeoJSON.Feature[] = points.map(
     (coords, index): GeoJSON.Feature => {
       // transfer design weights if the frame has been sampled before
       let dw = designWeight;
-      if (geoJSON.type === 'FeatureCollection') {
-        let parentFeature = geoJSON.features[parentIndex[index]];
-        if (parentFeature.properties?._designWeight) {
-          dw = dw * parentFeature.properties._designWeight;
-        }
+      let parentFeature = geoJSON.features[parentIndex[index]];
+      if (parentFeature.properties?._designWeight) {
+        dw = dw * parentFeature.properties._designWeight;
       }
-
-      return {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: coords,
-        },
-        properties: {
-          _designWeight: dw,
-        },
-      };
+      return toPoint(coords, {
+        _designWeight: dw,
+      });
     },
   );
-
   return {
     type: 'FeatureCollection',
     features: features,

@@ -1,5 +1,4 @@
-import {destinationPoint} from './distance.js';
-import {deepCopy} from './deepCopy.js';
+import {destination, copy} from '@envisim/geojson-utils';
 
 interface IpointOpts {
   _radius?: number;
@@ -21,11 +20,11 @@ const pointToPolygon = (
       (Math.PI * Math.pow(opts._radius, 2)) / (n * Math.sin(v) * Math.cos(v)),
     );
     for (let i = 0; i < n; i++) {
-      let angle = (i / n) * 360;
-      coords.push(destinationPoint(point.coordinates, radius, angle));
+      let angle = 360 - (i / n) * 360;
+      coords.push(destination(point.coordinates, radius, angle));
     }
     // close the polygon by adding first point last
-    coords.push(coords[0]);
+    coords.push([...coords[0]]);
     geometry.coordinates = [coords];
     return geometry;
   } else {
@@ -75,18 +74,10 @@ const convertPointCirclesInGeometryCollection = (
   opts: IpointOpts,
 ): GeoJSON.GeometryCollection => {
   for (let i = 0; i < geoJSON.geometries.length; i++) {
-    //let geometry = geoJSON.geometries[i];
-    /* if(geometry.type === "GeometryCollection"){
-            geometry = convertPointCirclesInGeometryCollection(
-                geometry,
-                opts
-            );
-        }else{*/
     geoJSON.geometries[i] = convertPointCirclesInGeometry(
       geoJSON.geometries[i],
       opts,
     );
-    /*}*/
   }
   return geoJSON;
 };
@@ -119,17 +110,19 @@ const convertPointCirclesInFeature = (
  * @param opts.pointsPerCircle - Number of Points for circle Polygon (default: 36).
  * @returns - A new GeoJSON with Polygons instead of Points for circles.
  */
-export const convertPointCirclesToPolygons = (
-  geoJSON: GeoJSON.Feature | GeoJSON.FeatureCollection,
+export const convertPointCirclesToPolygons = <
+  T extends GeoJSON.Feature | GeoJSON.FeatureCollection,
+>(
+  geoJSON: T,
   opts: IpointOpts = {pointsPerCircle: 36},
-): any => {
-  const geo = deepCopy(geoJSON);
+): T => {
+  const geo = copy(geoJSON);
   switch (geo.type) {
     case 'Feature':
-      return convertPointCirclesInFeature(geo, opts);
+      return convertPointCirclesInFeature(geo, opts) as T;
     case 'FeatureCollection':
-      geo.features.forEach((feature: GeoJSON.Feature) => {
-        feature = convertPointCirclesInFeature(feature, opts);
+      geo.features.forEach((feature: GeoJSON.Feature, index: number) => {
+        geo.features[index] = convertPointCirclesInFeature(feature, opts);
       });
       return geo;
     default:

@@ -1,11 +1,12 @@
 import {BaseFeature} from '../ClassBaseFeature.js';
 import type * as GJ from '../types.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {
   PointGeometry,
   PointGeometryCollection,
 } from './ClassPointGeometryCollection.js';
-import {MultiPoint, Point} from './PointObjects.js';
+import {MultiPoint, Point, PointObject} from './PointObjects.js';
 
 export class PointFeature extends BaseFeature implements GJ.PointFeature {
   static isFeature(obj: any): obj is PointFeature {
@@ -43,5 +44,35 @@ export class PointFeature extends BaseFeature implements GJ.PointFeature {
 
   get size(): number {
     return this.geometry.size;
+  }
+
+  count(): number {
+    return this.geometry.count();
+  }
+
+  geomEach(callback: GeomEachCallback<PointObject>): void {
+    if (PointGeometryCollection.isGeometryCollection(this.geometry)) {
+      this.geometry.geometries.forEach(
+        (geom: PointObject, geomIndex: number) => {
+          callback(geom, geomIndex);
+        },
+      );
+    } else {
+      callback(this.geometry);
+    }
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.geometry.distanceToPosition(coords);
+  }
+
+  setBBox(): GJ.BBox {
+    // need setBBox to recompute here
+    this.bbox = this.geometry.setBBox();
+    return this.bbox;
+  }
+
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.geometry.getBBox();
   }
 }

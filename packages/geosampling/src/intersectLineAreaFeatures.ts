@@ -1,10 +1,15 @@
-import {bbox, bboxInBbox} from './bbox.js';
-import {intersectLinePolygon} from './intersectLinePolygon.js';
-import {geomEach} from './geomEach.js';
+import {
+  bbox,
+  bboxInBbox,
+  intersectLinePolygonFeatures,
+  geomEach,
+  toFeature,
+  toLineString,
+  toMultiLineString,
+} from '@envisim/geojson-utils';
 import {convertPointCirclesToPolygons} from './convertPointCirclesToPolygons.js';
 
 interface Intersect {
-  intersection: boolean;
   geoJSON?: GeoJSON.Feature;
 }
 
@@ -24,13 +29,7 @@ export const intersectLineAreaFeatures = (
   const box2 = areaFeature.bbox || bbox(areaFeature);
   if (bboxInBbox(box1, box2)) {
     geomEach(areaFeature, (areaGeom: GeoJSON.Geometry) => {
-      let areaF: GeoJSON.Feature = {
-        type: 'Feature',
-        geometry: areaGeom,
-        properties: {
-          _radius: 0,
-        },
-      };
+      let areaF = toFeature(areaGeom, {_radius: 0});
       if (areaGeom.type === 'Point' || areaGeom.type === 'MultiPoint') {
         if (areaFeature.properties?._radius) {
           if (areaF.properties) {
@@ -39,7 +38,7 @@ export const intersectLineAreaFeatures = (
           areaF = convertPointCirclesToPolygons(areaF);
         } else {
           throw new Error(
-            'intersectLineAreaFeatures: Only Polygon/MultiPolygon geometries are allowed in areaFeature.',
+            'Only Polygon/MultiPolygon geometries are allowed in areaFeature.',
           );
         }
       }
@@ -48,27 +47,24 @@ export const intersectLineAreaFeatures = (
           lineGeom.type === 'LineString' ||
           lineGeom.type == 'MultiLineString'
         ) {
-          let lineF: GeoJSON.Feature = {
-            type: 'Feature',
-            geometry: lineGeom,
-            properties: {},
-          };
+          let lineF = toFeature(lineGeom);
           if (
             areaF.geometry.type === 'Polygon' ||
             areaF.geometry.type === 'MultiPolygon'
           ) {
-            let intersect = intersectLinePolygon(lineF, areaF);
+            let intersect = intersectLinePolygonFeatures(lineF, areaF);
             if (intersect.geoJSON) {
               if (intersect.geoJSON.geometry.type === 'LineString') {
                 lines.push(intersect.geoJSON.geometry.coordinates);
-              }
-              if (intersect.geoJSON.geometry.type === 'MultiLineString') {
+              } else if (
+                intersect.geoJSON.geometry.type === 'MultiLineString'
+              ) {
                 lines = lines.concat(intersect.geoJSON.geometry.coordinates);
               }
             }
           } else {
             throw new Error(
-              'intersectLineAreaFeatures: Only Polygon/MultiPolygon geometries are allowed in areaFeature.',
+              'Only Polygon/MultiPolygon geometries are allowed in areaFeature.',
             );
           }
         }
@@ -76,33 +72,14 @@ export const intersectLineAreaFeatures = (
     });
   }
   if (lines.length === 0) {
-    return {intersection: false};
+    return {};
   }
   if (lines.length === 1) {
     return {
-      intersection: true,
-      geoJSON: {
-        type: 'Feature',
-        geometry: {
-          type: 'LineString',
-          coordinates: lines[0],
-        },
-        properties: {},
-      },
+      geoJSON: toLineString(lines[0]),
     };
   }
-  if (lines.length > 1) {
-    return {
-      intersection: true,
-      geoJSON: {
-        type: 'Feature',
-        geometry: {
-          type: 'MultiLineString',
-          coordinates: lines,
-        },
-        properties: {},
-      },
-    };
-  }
-  return {intersection: false};
+  return {
+    geoJSON: toMultiLineString(lines),
+  };
 };
