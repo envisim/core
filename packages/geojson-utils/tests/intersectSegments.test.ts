@@ -13,8 +13,8 @@ describe('intersectSegments', () => {
 
   const intersection = intersectSegments(seg1, seg2);
   let point = [0, 1];
-  if (intersection.point) {
-    point = intersection.point;
+  if (intersection) {
+    point = intersection;
   }
 
   const intersection2 = intersectSegments(seg1, seg1);
@@ -23,6 +23,6 @@ describe('intersectSegments', () => {
   test('intersectSegments', () => {
     expect(point[0]).toBeCloseTo(0.5, 4);
     expect(point[1]).toBeCloseTo(0, 4);
-    expect(intersection2.point).toBe(undefined);
+    expect(intersection2).toBe(null);
   });
 });

@@ -45,9 +45,9 @@ describe('intersectLinePolygonFeatures', () => {
     [3, 3],
     [3, 3],
   ];
-  if (intersection.geoJSON) {
-    if (intersection.geoJSON.geometry.type === 'LineString') {
-      coords = intersection.geoJSON.geometry.coordinates;
+  if (intersection) {
+    if (intersection.geometry.type === 'LineString') {
+      coords = intersection.geometry.coordinates;
       // console.log(JSON.stringify(intersection.geoJSON, null, 2));
       // console.log(coords);
       // expected coords are [[-0.5,0],[0.5,0]]

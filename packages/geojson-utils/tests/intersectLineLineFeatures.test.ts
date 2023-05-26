@@ -27,9 +27,9 @@ describe('intersectLineLineFeatures', () => {
 
   const intersection = intersectLineLineFeatures(line1, line2);
   let coords: GJ.Position = [3, 3];
-  if (intersection.geoJSON) {
-    if (intersection.geoJSON.geometry.type === 'Point') {
-      coords = intersection.geoJSON.geometry.coordinates;
+  if (intersection) {
+    if (intersection.geometry.type === 'Point') {
+      coords = intersection.geometry.coordinates;
       //console.log(intersection);
       //console.log(coords);
       // expected coords are [0,0]
