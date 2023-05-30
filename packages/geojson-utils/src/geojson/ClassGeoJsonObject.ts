@@ -15,4 +15,9 @@ export abstract class GeoJsonObject<T extends string>
       if (obj?.bbox) this.bbox = [...obj.bbox];
     }
   }
+
+  abstract setBBox(): GJ.BBox;
+  getBBox(): GJ.BBox {
+    return this.bbox ?? this.setBBox();
+  }
 }

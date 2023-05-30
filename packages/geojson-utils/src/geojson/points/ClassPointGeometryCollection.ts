@@ -1,12 +1,10 @@
-import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type * as GJ from '../types.js';
-import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {MultiPoint, Point, PointObject} from './PointObjects.js';
-import {bboxFromArrayOfBBoxes} from '../../bbox.js';
+import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
 
 export class PointGeometryCollection
-  extends GeoJsonObject<'GeometryCollection'>
+  extends BaseGeometryCollection<PointObject>
   implements GJ.PointGeometryCollection
 {
   static isGeometryCollection(obj: any): obj is PointGeometryCollection {
@@ -19,8 +17,6 @@ export class PointGeometryCollection
   ): PointGeometryCollection {
     return new PointGeometryCollection({geometries}, shallow);
   }
-
-  geometries: PointObject[];
 
   constructor(
     obj: OptionalParam<GJ.PointGeometryCollection, 'type'>,
@@ -38,18 +34,8 @@ export class PointGeometryCollection
     });
   }
 
-  get size(): number {
-    return this.geometries.length;
-  }
-
   count(): number {
     return this.geometries.reduce((prev, curr) => prev + curr.count(), 0);
-  }
-
-  geomEach(callback: GeomEachCallback<PointObject>): void {
-    this.geometries.forEach((geom, geomIndex) => {
-      callback(geom, geomIndex);
-    });
   }
 
   distanceToPosition(coords: GJ.Position): number {
@@ -57,19 +43,6 @@ export class PointGeometryCollection
       (prev, curr) => Math.min(prev, curr.distanceToPosition(coords)),
       Infinity,
     );
-  }
-
-  setBBox(): GJ.BBox {
-    let bboxArray: GJ.BBox[] = new Array(this.geometries.length);
-    this.geometries.forEach((geom, index) => {
-      bboxArray[index] = geom.getBBox();
-    });
-    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
-    return this.bbox;
-  }
-
-  getBBox(): GJ.BBox {
-    return this.bbox ?? this.setBBox();
   }
 }
 
