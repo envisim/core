@@ -1,11 +1,11 @@
 import type * as GJ from '../types.js';
-import type {OptionalParam} from '../util-types.js';
-import {BaseAreaObject} from './BaseAreaObject.js';
 import {areaOfPolygonLonLat} from '../../area.js';
+import {bboxFromArrayOfPositions} from '../../bbox.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
 import {pointInSinglePolygon} from '../../pointInPolygon.js';
-import {bboxFromArrayOfPositions} from '../../bbox.js';
 import type {GeomEachCallback} from '../typeGeomEachCallback.js';
+import type {OptionalParam} from '../util-types.js';
+import {BaseAreaObject} from './BaseAreaObject.js';
 
 export class MultiPolygon
   extends BaseAreaObject<GJ.MultiPolygon>

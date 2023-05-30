@@ -1,4 +1,5 @@
 import {Random} from '@envisim/random';
+
 import {LOG4, LOG5P1} from './utils-consts.js';
 import {PQMULTFUN} from './utils.js';
 

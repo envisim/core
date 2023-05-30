@@ -1,12 +1,12 @@
 import polygonClipping from 'polygon-clipping';
-import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
-import {AreaObject} from './geojson/areas/AreaObjects.js';
-import {PointCircle} from './geojson/areas/ClassPointCircle.js';
-import {Polygon} from './geojson/areas/ClassPolygon.js';
-import {MultiPolygon} from './geojson/areas/ClassMultiPolygon.js';
-import {bboxInBBox} from './bbox.js';
 
 import type * as GJ from './geojson/types.js';
+import {bboxInBBox} from './bbox.js';
+import {AreaObject} from './geojson/areas/AreaObjects.js';
+import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
+import {MultiPolygon} from './geojson/areas/ClassMultiPolygon.js';
+import {PointCircle} from './geojson/areas/ClassPointCircle.js';
+import {Polygon} from './geojson/areas/ClassPolygon.js';
 import {AreaGeometryCollection, distance} from './index.js';
 
 const intersectPolygonPolygon = (

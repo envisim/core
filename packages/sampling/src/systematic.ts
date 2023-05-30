@@ -1,5 +1,6 @@
-import type {Random} from '@envisim/random';
 import {arrayLikeToArray, ColumnVector, TArrayLike} from '@envisim/matrix';
+import type {Random} from '@envisim/random';
+
 import {IOptions, optionsDefaultRand, PartialPick} from './types.js';
 
 /**

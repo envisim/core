@@ -1,3 +1,4 @@
+import {Poisson} from '@envisim/distributions';
 import {
   area,
   bbox,
@@ -8,9 +9,9 @@ import {
   toPolygon,
   asFeatureCollection,
 } from '@envisim/geojson-utils';
-import {Poisson} from '@envisim/distributions';
-import {uniformBinomialPointProcess} from './uniformBinomialPointProcess.js';
 import {Random} from '@envisim/random';
+
+import {uniformBinomialPointProcess} from './uniformBinomialPointProcess.js';
 
 // For conversion from radians to degrees.
 const toDeg = 180 / Math.PI;

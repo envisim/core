@@ -1,10 +1,11 @@
 import polygonClipping from 'polygon-clipping';
+
 import type * as GJ from './geojson/types.js';
-import {AreaCollection} from './geojson/areas/ClassAreaCollection.js';
 import {AreaObject} from './geojson/areas/AreaObjects.js';
-import {Polygon} from './geojson/areas/ClassPolygon.js';
-import {MultiPolygon} from './geojson/areas/ClassMultiPolygon.js';
+import {AreaCollection} from './geojson/areas/ClassAreaCollection.js';
 import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
+import {MultiPolygon} from './geojson/areas/ClassMultiPolygon.js';
+import {Polygon} from './geojson/areas/ClassPolygon.js';
 
 /**
  * Computes the union of the polygons in a GeoJSON FeatureCollection

@@ -1,5 +1,6 @@
-import {hansenHurwitz, horvitzThompson} from '../src/index';
 import {ColumnVector} from '@envisim/matrix';
+
+import {hansenHurwitz, horvitzThompson} from '../src/index';
 
 describe('estimate', () => {
   const ys_arr = [1.1, 0.4, 0.0, 0.3, 1.2, 0.5];

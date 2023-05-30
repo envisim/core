@@ -1,4 +1,5 @@
 import {Random} from '@envisim/random';
+
 import {Exponential} from './exponential.js';
 import {Normal} from './normal.js';
 import {SQRT32} from './utils-consts.js';

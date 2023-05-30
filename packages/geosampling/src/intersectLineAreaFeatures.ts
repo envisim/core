@@ -7,6 +7,7 @@ import {
   toLineString,
   toMultiLineString,
 } from '@envisim/geojson-utils';
+
 import {convertPointCirclesToPolygons} from './convertPointCirclesToPolygons.js';
 
 interface Intersect {

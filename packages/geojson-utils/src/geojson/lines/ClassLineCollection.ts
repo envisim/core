@@ -1,11 +1,11 @@
-import {BaseCollection} from '../ClassBaseCollection.js';
 import type * as GJ from '../types.js';
+import {bboxFromArrayOfBBoxes} from '../../bbox.js';
+import {BaseCollection} from '../ClassBaseCollection.js';
 import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {LineFeature} from './ClassLineFeature.js';
-import {LineObject} from './LineObjects.js';
-import {bboxFromArrayOfBBoxes} from '../../bbox.js';
 import {LineGeometryCollection} from './ClassLineGeometryCollection.js';
+import {LineObject} from './LineObjects.js';
 
 export class LineCollection
   extends BaseCollection<LineFeature>

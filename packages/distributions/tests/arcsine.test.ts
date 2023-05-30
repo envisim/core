@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {Arcsine as Dist} from '../src/arcsine';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('arcsine(-1, 1)', () => {
   const pdf = [

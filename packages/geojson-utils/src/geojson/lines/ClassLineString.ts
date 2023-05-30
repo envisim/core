@@ -1,10 +1,10 @@
 import type * as GJ from '../types.js';
-import type {OptionalParam} from '../util-types.js';
-import type {GeomEachCallback} from '../typeGeomEachCallback.js';
-import {BaseLineObject} from './BaseLineObject.js';
-import {lengthOfLineString} from '../../length.js';
-import {distancePositionToSegment} from '../../distancePositionToSegment.js';
 import {bboxFromArrayOfPositions} from '../../bbox.js';
+import {distancePositionToSegment} from '../../distancePositionToSegment.js';
+import {lengthOfLineString} from '../../length.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
+import type {OptionalParam} from '../util-types.js';
+import {BaseLineObject} from './BaseLineObject.js';
 
 export class LineString
   extends BaseLineObject<GJ.LineString>

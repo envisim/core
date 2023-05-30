@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {Gamma as Dist} from '../src/gamma';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('gamma(3, 2)', () => {
   const pdf = [

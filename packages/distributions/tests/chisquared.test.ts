@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {ChiSquared as Dist} from '../src/chisquared';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('chisq(3)', () => {
   const pdf = [

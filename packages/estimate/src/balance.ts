@@ -5,6 +5,7 @@ import {
   TArrayLike,
 } from '@envisim/matrix';
 import {NearestNeighbour} from '@envisim/sampling';
+
 import {parseAndCheckSampleArray} from './utils.js';
 
 /**

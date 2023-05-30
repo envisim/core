@@ -1,5 +1,5 @@
-import {intersectLineLineFeatures} from '../src/intersectLineLineFeatures.js';
 import type * as GJ from '../src/geojson/types.js';
+import {intersectLineLineFeatures} from '../src/intersectLineLineFeatures.js';
 
 describe('intersectLineLineFeatures', () => {
   const line1: GJ.LineFeature = {

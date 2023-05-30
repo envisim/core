@@ -1,10 +1,11 @@
+import {copy, distance} from '@envisim/geojson-utils';
+
+import {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
 import {
   samplePointsOnAreas,
   TsamplePointsOnAreasOpts,
 } from './samplePointsOnAreas.js';
 import {typeOfFrame} from './typeOfFrame.js';
-import {copy, distance} from '@envisim/geojson-utils';
-import {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
 
 // TODO: Decide if we should implement correction by adding the correct buffer.
 // Probably deviates from common use to add buffer, but estimates will be biased

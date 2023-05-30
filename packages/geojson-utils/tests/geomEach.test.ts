@@ -1,5 +1,5 @@
-import {PointCollection} from '../src/geojson/points/ClassPointCollection';
 import type * as GJ from '../src/geojson/types.js';
+import {PointCollection} from '../src/geojson/points/ClassPointCollection';
 
 describe('geomEach', () => {
   const geoJSON = new PointCollection({

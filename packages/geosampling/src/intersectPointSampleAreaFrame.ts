@@ -1,5 +1,6 @@
-import {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
 import {bbox} from '@envisim/geojson-utils';
+
+import {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
 
 /**
  * Intersects a sample of points with an area frame and transfers _designWeight

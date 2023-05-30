@@ -1,5 +1,5 @@
-import {distance} from '../src/distance.js';
 import type * as GJ from '../src/geojson/types.js';
+import {distance} from '../src/distance.js';
 
 describe('distance', () => {
   const p1: GJ.Position = [0, 90]; // North pole

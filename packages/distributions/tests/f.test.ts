@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {FRatio as Dist} from '../src/f.js';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('f(5, 2)', () => {
   const pdf = [

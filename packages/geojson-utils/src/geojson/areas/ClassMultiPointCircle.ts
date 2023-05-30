@@ -1,11 +1,11 @@
 import type * as GJ from '../types.js';
+import {bboxFromArrayOfPositions, getPositionsForCircle} from '../../bbox.js';
+import {destination} from '../../destination.js';
+import {distance} from '../../distance.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
 import {MultiPolygon} from './ClassMultiPolygon.js';
-import {destination} from '../../destination.js';
-import {distance} from '../../distance.js';
-import {bboxFromArrayOfPositions, getPositionsForCircle} from '../../bbox.js';
-import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 
 export class MultiPointCircle
   extends BaseAreaObject<GJ.MultiPointCircle>

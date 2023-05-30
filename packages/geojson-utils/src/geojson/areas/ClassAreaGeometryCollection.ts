@@ -1,7 +1,8 @@
-import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type * as GJ from '../types.js';
-import {OptionalParam} from '../util-types.js';
+import {bboxFromArrayOfBBoxes} from '../../bbox.js';
+import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type {GeomEachCallback} from '../typeGeomEachCallback.js';
+import {OptionalParam} from '../util-types.js';
 import {
   AreaObject,
   MultiPointCircle,
@@ -9,7 +10,6 @@ import {
   PointCircle,
   Polygon,
 } from './AreaObjects.js';
-import {bboxFromArrayOfBBoxes} from '../../bbox.js';
 
 export class AreaGeometryCollection
   extends GeoJsonObject<'GeometryCollection'>

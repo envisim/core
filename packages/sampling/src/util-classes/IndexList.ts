@@ -1,4 +1,5 @@
 import {Random} from '@envisim/random';
+
 import {swap} from '../utils.js';
 
 export class IndexList {

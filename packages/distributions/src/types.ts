@@ -1,4 +1,5 @@
 import {Random} from '@envisim/random';
+
 import {EPS} from './utils-consts.js';
 
 export interface IRandomOptions {

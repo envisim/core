@@ -1,4 +1,5 @@
 import {Random} from '@envisim/random';
+
 import {LOGKFAC, LOGSQRT2PI} from './utils-consts.js';
 
 interface IRandomSmall {

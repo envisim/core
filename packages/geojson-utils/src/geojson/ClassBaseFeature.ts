@@ -1,6 +1,6 @@
+import type * as GJ from './types.js';
 import {copy} from '../copy.js';
 import {GeoJsonObject} from './ClassGeoJsonObject.js';
-import type * as GJ from './types.js';
 
 export abstract class BaseFeature extends GeoJsonObject<'Feature'> {
   properties: Exclude<GJ.FeatureProperties, null>;

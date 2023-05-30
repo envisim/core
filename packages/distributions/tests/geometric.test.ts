@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {Geometric as Dist} from '../src/geometric';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('geometric(0.2)', () => {
   const pdf = [

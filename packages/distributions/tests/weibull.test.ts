@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {Weibull as Dist} from '../src/weibull';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('weibull(1, 1)', () => {
   const pdf = [

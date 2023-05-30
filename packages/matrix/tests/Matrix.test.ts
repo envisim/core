@@ -1,5 +1,5 @@
-import {createTable} from './_createTable.testf';
 import {ColumnVector, Matrix, RowVector} from '../src/index';
+import {createTable} from './_createTable.testf';
 
 describe('Matrix', () => {
   const m1 = new Matrix([1, 0, 4, 3, 5, -1, -2, 1, 2], 3, 3);

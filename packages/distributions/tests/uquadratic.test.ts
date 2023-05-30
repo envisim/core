@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {UQuadratic as Dist} from '../src/uquadratic';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('uquadratic(0, 2)', () => {
   const pdf = [

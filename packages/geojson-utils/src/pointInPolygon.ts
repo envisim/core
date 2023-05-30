@@ -1,5 +1,5 @@
-import {pointInBBox} from './bbox.js';
 import type * as GJ from './geojson/types.js';
+import {pointInBBox} from './bbox.js';
 import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
 
 // internal.

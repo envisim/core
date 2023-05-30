@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {BenfordMantissa as Dist} from '../src/benfordmantissa';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('benfordmantissa(10)', () => {
   const pdf = [

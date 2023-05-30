@@ -1,5 +1,5 @@
-import {BaseGeometry} from '../ClassBaseGeometry.js';
 import type * as GJ from '../types.js';
+import {BaseGeometry} from '../ClassBaseGeometry.js';
 import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 
 export abstract class BaseLineObject<

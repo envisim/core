@@ -4,11 +4,12 @@ import {
   forwardAzimuth,
   intersectLineLineFeatures,
 } from '@envisim/geojson-utils';
-import {typeOfFrame} from './typeOfFrame.js';
-import {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
-import {intersectLineAreaFeatures} from './intersectLineAreaFeatures.js';
+
 import {intersectAreaAreaFeatures} from './intersectAreaAreaFeatures.js';
+import {intersectLineAreaFeatures} from './intersectLineAreaFeatures.js';
+import {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
 import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
+import {typeOfFrame} from './typeOfFrame.js';
 
 type TransferPropsOpts = {
   newFeature: GeoJSON.Feature;

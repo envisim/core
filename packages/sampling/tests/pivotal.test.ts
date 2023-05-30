@@ -1,8 +1,8 @@
 import {lpm2, rpm, spm} from '../src/index';
 import {Pivotal, PivotalMethod} from '../src/sampling-classes/Pivotal';
+import {RandomMock} from './_Random.testf';
 import {data} from './_data.testf';
 import './_equalArrays.testf';
-import {RandomMock} from './_Random.testf';
 
 describe('Pivotal', () => {
   const rand01 = new RandomMock(0.01);

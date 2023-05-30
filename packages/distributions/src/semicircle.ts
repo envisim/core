@@ -1,12 +1,11 @@
 import {TArrayLike} from '@envisim/matrix';
+
 import {inverseRegularizedBetaFunction} from './beta-utils.js';
 import {Beta} from './beta.js';
 import {
-  checkArrayLikeOrNumber,
-  // checkRandomNumber,
+  checkArrayLikeOrNumber, // checkRandomNumber,
   Distribution,
-  Interval,
-  // IDistributionRandomOptions,
+  Interval, // IDistributionRandomOptions,
 } from './distribution.js';
 import {
   IRadiusParams,

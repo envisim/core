@@ -1,5 +1,5 @@
-import {BaseFeature} from '../ClassBaseFeature.js';
 import type * as GJ from '../types.js';
+import {BaseFeature} from '../ClassBaseFeature.js';
 import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {

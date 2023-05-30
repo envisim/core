@@ -1,10 +1,10 @@
-import {BaseCollection} from '../ClassBaseCollection.js';
 import type * as GJ from '../types.js';
+import {bboxFromArrayOfBBoxes} from '../../bbox.js';
+import {BaseCollection} from '../ClassBaseCollection.js';
 import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {PointFeature} from './ClassPointFeature.js';
 import {PointObject} from './PointObjects.js';
-import {bboxFromArrayOfBBoxes} from '../../bbox.js';
 
 export class PointCollection
   extends BaseCollection<PointFeature>

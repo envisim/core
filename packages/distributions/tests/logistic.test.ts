@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {Logistic as Dist} from '../src/logistic';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('logistic(6, 2)', () => {
   const pdf = [

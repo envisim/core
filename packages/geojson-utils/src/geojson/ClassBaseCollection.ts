@@ -1,8 +1,8 @@
-import type {AreaFeature} from './areas/ClassAreaFeature.js';
+import type * as GJ from './types.js';
 import {GeoJsonObject} from './ClassGeoJsonObject.js';
+import type {AreaFeature} from './areas/ClassAreaFeature.js';
 import type {LineFeature} from './lines/ClassLineFeature.js';
 import type {PointFeature} from './points/ClassPointFeature.js';
-import type * as GJ from './types.js';
 
 export abstract class BaseCollection<
   T extends PointFeature | LineFeature | AreaFeature,

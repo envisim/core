@@ -1,9 +1,9 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {
   Uniform as Dist,
   UniformDiscrete as Dist2,
   Triangular as Dist3,
 } from '../src/uniform';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('uniform(-1, 1)', () => {
   const pdf = new Array(21).fill(0.5);

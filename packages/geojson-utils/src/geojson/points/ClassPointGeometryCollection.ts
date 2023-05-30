@@ -1,9 +1,9 @@
-import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type * as GJ from '../types.js';
+import {bboxFromArrayOfBBoxes} from '../../bbox.js';
+import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {MultiPoint, Point, PointObject} from './PointObjects.js';
-import {bboxFromArrayOfBBoxes} from '../../bbox.js';
 
 export class PointGeometryCollection
   extends GeoJsonObject<'GeometryCollection'>

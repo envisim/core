@@ -1,5 +1,5 @@
-import {destination} from './destination.js';
 import type * as GJ from './geojson/types.js';
+import {destination} from './destination.js';
 
 /**
  * Computes posisions needed to find bounding box of a PointCircle.
