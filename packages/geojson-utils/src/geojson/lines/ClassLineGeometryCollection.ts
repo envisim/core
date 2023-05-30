@@ -1,12 +1,11 @@
 import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type * as GJ from '../types.js';
-import type {GeomEachCallback} from '../typeGeomEachCallback.js';
 import {OptionalParam} from '../util-types.js';
 import {LineObject, LineString, MultiLineString} from './LineObjects.js';
-import {bboxFromArrayOfBBoxes} from '../../bbox.js';
+import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
 
 export class LineGeometryCollection
-  extends GeoJsonObject<'GeometryCollection'>
+  extends BaseGeometryCollection<LineObject>
   implements GJ.LineGeometryCollection
 {
   static isGeometryCollection(obj: any): obj is LineGeometryCollection {
@@ -19,8 +18,6 @@ export class LineGeometryCollection
   ): LineGeometryCollection {
     return new LineGeometryCollection({geometries}, shallow);
   }
-
-  geometries: LineObject[];
 
   constructor(
     obj: OptionalParam<GJ.LineGeometryCollection, 'type'>,
@@ -38,37 +35,14 @@ export class LineGeometryCollection
     });
   }
 
-  get size(): number {
-    return this.geometries.length;
-  }
-
   length(dist: number = Infinity): number {
     return this.geometries.reduce((prev, curr) => prev + curr.length(dist), 0);
-  }
-
-  geomEach(callback: GeomEachCallback<LineObject>): void {
-    this.geometries.forEach((geom, geomIndex) => {
-      callback(geom, geomIndex);
-    });
   }
 
   distanceToPosition(coords: GJ.Position): number {
     return this.geometries.reduce((prev, curr) => {
       return Math.min(prev, curr.distanceToPosition(coords));
     }, Infinity);
-  }
-
-  setBBox(): GJ.BBox {
-    let bboxArray: GJ.BBox[] = new Array(this.geometries.length);
-    this.geometries.forEach((geom, index) => {
-      bboxArray[index] = geom.getBBox();
-    });
-    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
-    return this.bbox;
-  }
-
-  getBBox(): GJ.BBox {
-    return this.bbox ?? this.setBBox();
   }
 }
 

@@ -1,6 +1,6 @@
 import type * as GJ from '../types.js';
 import type {OptionalParam} from '../util-types.js';
-import type {GeomEachCallback} from '../typeGeomEachCallback.js';
+import type {GeomEachCallback} from '../callback-types.js';
 import {BaseLineObject} from './BaseLineObject.js';
 import {lengthOfLineString} from '../../length.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
@@ -36,8 +36,11 @@ export class LineString
     return lengthOfLineString(this.coordinates, dist);
   }
 
-  geomEach(callback: GeomEachCallback<LineString>): void {
-    callback(this);
+  geomEach(
+    callback: GeomEachCallback<LineString>,
+    featureIndex: number = -1,
+  ): void {
+    callback(this, featureIndex, -1);
   }
 
   distanceToPosition(coords: GJ.Position): number {
@@ -53,9 +56,5 @@ export class LineString
   setBBox(): GJ.BBox {
     this.bbox = bboxFromArrayOfPositions(this.coordinates);
     return this.bbox;
-  }
-
-  getBBox(): GJ.BBox {
-    return this.bbox ?? this.setBBox();
   }
 }
