@@ -1,10 +1,11 @@
-import {BaseCollection} from '../ClassBaseCollection.js';
 import type * as GJ from '../types.js';
-import type {GeomEachCallback} from '../typeGeomEachCallback.js';
-import {AreaObject} from './AreaObjects.js';
-import {OptionalParam} from '../util-types.js';
-import {AreaFeature} from './ClassAreaFeature.js';
 import {bboxFromArrayOfBBoxes} from '../../bbox.js';
+import {unionOfBBoxesInPlace} from '../../bbox.js';
+import {BaseCollection} from '../ClassBaseCollection.js';
+import type {GeomEachCallback} from '../typeGeomEachCallback.js';
+import {OptionalParam} from '../util-types.js';
+import {AreaObject} from './AreaObjects.js';
+import {AreaFeature} from './ClassAreaFeature.js';
 
 export class AreaCollection
   extends BaseCollection<AreaFeature>
@@ -68,11 +69,13 @@ export class AreaCollection
   }
 
   setBBox(): GJ.BBox {
-    const bboxArray: GJ.BBox[] = new Array(this.features.length);
+    const bbox: GJ.BBox = [0, 0, 0, 0];
+
     this.features.forEach((feature, index) => {
-      bboxArray[index] = feature.getBBox();
+      unionOfBBoxesInPlace(bbox, feature.getBBox(), index === 0);
     });
-    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
+
+    this.bbox = bbox;
     return this.bbox;
   }
 

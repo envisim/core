@@ -1,5 +1,7 @@
-import {destination} from './destination.js';
 import type * as GJ from './geojson/types.js';
+import {destination} from './destination.js';
+import {checkLongitudeInRange} from './position.js';
+import {longitudeRange} from './position.js';
 
 /**
  * Computes posisions needed to find bounding box of a PointCircle.
@@ -145,6 +147,83 @@ export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
 
   return [minLon, minLat, minAlt, maxLon, maxLat, maxAlt];
 };
+
+export function unionOfBBoxesInPlace(
+  org: GJ.BBox,
+  box: GJ.BBox,
+  init: boolean = false,
+): void {
+  if (init === true) {
+    org.splice(0, 6, ...box);
+    return;
+  }
+
+  // Add z if needed
+  if (org.length === 4 && box.length === 6) {
+    // org 4, box 6
+    org.splice(2, 0, box[2]);
+    org.push(box[5]);
+  }
+
+  // Store positions of longitudes
+  const xA = 0;
+  const xB = org.length === 6 ? 3 : 2;
+  const xC = 0;
+  const xD = box.length === 6 ? 3 : 2;
+
+  // Update latitudes and z
+  if (org.length === 4 && box.length === 4) {
+    org[1] = Math.min(org[1], box[1]);
+    org[3] = Math.max(org[3], box[3]);
+  } else if (org.length === 6 && box.length === 6) {
+    org[1] = Math.min(org[1], box[1]);
+    org[2] = Math.min(org[2], box[2]);
+    org[4] = Math.max(org[4], box[4]);
+    org[5] = Math.max(org[5], box[5]);
+  } else if (org.length === 6 && box.length === 4) {
+    org[1] = Math.min(org[1], box[1]);
+    org[4] = Math.max(org[4], box[3]);
+  } else {
+    throw new Error('unexpected bbox');
+  }
+
+  /*
+    (a, b)
+       (c, d)
+
+    Cases:
+    - c & d in [a,b] => [a, b]
+    - c in [a, b] => [a, d]
+    - d in [a, b] => [c, b]
+    - a & b in [c,d] => [c, d]
+    - otherwise choose smalles of [a, d] and [c, b]
+  */
+
+  const boxCinAB = checkLongitudeInRange(box[xC], org[xA], org[xB]);
+  const boxDinAB = checkLongitudeInRange(box[xD], org[xA], org[xB]);
+
+  if (boxCinAB && boxDinAB) {
+    // DO NOTHING
+  } else if (boxCinAB) {
+    org[xB] = box[xD];
+  } else if (boxDinAB) {
+    org[xA] = box[xC];
+  } else if (
+    checkLongitudeInRange(org[xA], box[xC], box[xD]) &&
+    checkLongitudeInRange(org[xB], box[xC], box[xD])
+  ) {
+    org[xA] = box[xC];
+    org[xB] = box[xD];
+  } else {
+    if (longitudeRange(org[xA], box[xD]) <= longitudeRange(box[xC], org[xA])) {
+      org[xB] = box[xD];
+    } else {
+      org[xA] = box[xC];
+    }
+  }
+
+  return;
+}
 
 /**
  * Computes the overall bounding box from an array of bounding boxes.
