@@ -68,8 +68,11 @@ export class PointCircle
     return Math.PI * this.radius ** 2;
   }
 
-  geomEach(callback: GeomEachCallback<PointCircle>): void {
-    callback(this);
+  geomEach(
+    callback: GeomEachCallback<PointCircle>,
+    featureIndex: number = -1,
+  ): void {
+    callback(this, featureIndex, -1);
   }
 
   distanceToPosition(coords: GJ.Position): number {
@@ -81,9 +84,5 @@ export class PointCircle
       getPositionsForCircle(this.coordinates, this.radius),
     );
     return this.bbox;
-  }
-
-  getBBox(): GJ.BBox {
-    return this.bbox ?? this.setBBox();
   }
 }

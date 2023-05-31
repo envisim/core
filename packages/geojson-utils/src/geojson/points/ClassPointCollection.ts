@@ -1,7 +1,6 @@
 import type * as GJ from '../types.js';
-import {bboxFromArrayOfBBoxes} from '../../bbox.js';
 import {BaseCollection} from '../ClassBaseCollection.js';
-import type {GeomEachCallback} from '../typeGeomEachCallback.js';
+import type {GeomEachCallback} from '../callback-types.js';
 import {OptionalParam} from '../util-types.js';
 import {PointFeature} from './ClassPointFeature.js';
 import {PointObject} from './PointObjects.js';
@@ -20,8 +19,6 @@ export class PointCollection
   ): PointCollection {
     return new PointCollection({features}, shallow);
   }
-
-  features: PointFeature[];
 
   constructor(
     obj: OptionalParam<GJ.PointFeatureCollection, 'type'>,
@@ -47,16 +44,8 @@ export class PointCollection
   }
 
   geomEach(callback: GeomEachCallback<PointObject>): void {
-    this.features.forEach((feature, featureIndex) => {
-      if (feature.geometry.type === 'GeometryCollection') {
-        feature.geometry.geometries.forEach(
-          (geom: PointObject, geomIndex: number) => {
-            callback(geom, featureIndex, geomIndex);
-          },
-        );
-      } else {
-        callback(feature.geometry, featureIndex);
-      }
+    this.forEach((feature, featureIndex) => {
+      feature.geometry.geomEach(callback, featureIndex);
     });
   }
 
@@ -65,18 +54,5 @@ export class PointCollection
       (prev, curr) => Math.min(prev, curr.geometry.distanceToPosition(coords)),
       Infinity,
     );
-  }
-
-  setBBox(): GJ.BBox {
-    const bboxArray: GJ.BBox[] = new Array(this.features.length);
-    this.features.forEach((feature, index) => {
-      bboxArray[index] = feature.getBBox();
-    });
-    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
-    return this.bbox;
-  }
-
-  getBBox(): GJ.BBox {
-    return this.bbox ?? this.setBBox();
   }
 }

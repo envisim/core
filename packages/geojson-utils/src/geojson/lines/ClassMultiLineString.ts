@@ -2,7 +2,7 @@ import type * as GJ from '../types.js';
 import {bboxFromArrayOfPositions} from '../../bbox.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
 import {lengthOfLineString} from '../../length.js';
-import type {GeomEachCallback} from '../typeGeomEachCallback.js';
+import type {GeomEachCallback} from '../callback-types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseLineObject} from './BaseLineObject.js';
 
@@ -39,8 +39,11 @@ export class MultiLineString
     );
   }
 
-  geomEach(callback: GeomEachCallback<MultiLineString>): void {
-    callback(this);
+  geomEach(
+    callback: GeomEachCallback<MultiLineString>,
+    featureIndex: number = -1,
+  ): void {
+    callback(this, featureIndex, -1);
   }
 
   distanceToPosition(coords: GJ.Position): number {
@@ -61,9 +64,5 @@ export class MultiLineString
   setBBox(): GJ.BBox {
     this.bbox = bboxFromArrayOfPositions(this.coordinates.flat(1));
     return this.bbox;
-  }
-
-  getBBox(): GJ.BBox {
-    return this.bbox ?? this.setBBox();
   }
 }

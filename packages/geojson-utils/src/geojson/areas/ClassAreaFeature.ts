@@ -1,6 +1,6 @@
 import type * as GJ from '../types.js';
 import {BaseFeature} from '../ClassBaseFeature.js';
-import type {GeomEachCallback} from '../typeGeomEachCallback.js';
+import type {GeomEachCallback} from '../callback-types.js';
 import {OptionalParam} from '../util-types.js';
 import {
   AreaObject,
@@ -14,7 +14,10 @@ import {
   AreaGeometryCollection,
 } from './ClassAreaGeometryCollection.js';
 
-export class AreaFeature extends BaseFeature implements GJ.AreaFeature {
+export class AreaFeature
+  extends BaseFeature<AreaGeometry>
+  implements GJ.AreaFeature
+{
   static isFeature(obj: any): obj is AreaFeature {
     return obj instanceof AreaFeature;
   }
@@ -26,8 +29,6 @@ export class AreaFeature extends BaseFeature implements GJ.AreaFeature {
   ): AreaFeature {
     return new AreaFeature({geometry, properties}, shallow);
   }
-
-  geometry: AreaGeometry;
 
   constructor(
     obj: OptionalParam<GJ.AreaFeature, 'type'>,
@@ -62,29 +63,14 @@ export class AreaFeature extends BaseFeature implements GJ.AreaFeature {
     return this.geometry.area(dist);
   }
 
-  geomEach(callback: GeomEachCallback<AreaObject>): void {
-    if (AreaGeometryCollection.isGeometryCollection(this.geometry)) {
-      this.geometry.geometries.forEach(
-        (geom: AreaObject, geomIndex: number) => {
-          callback(geom, geomIndex);
-        },
-      );
-    } else {
-      callback(this.geometry);
-    }
+  geomEach(
+    callback: GeomEachCallback<AreaObject>,
+    featureIndex: number = -1,
+  ): void {
+    this.geometry.geomEach(callback, featureIndex);
   }
 
   distanceToPosition(coords: GJ.Position): number {
     return this.geometry.distanceToPosition(coords);
-  }
-
-  setBBox(): GJ.BBox {
-    // need setBBox to recompute here
-    this.bbox = this.geometry.setBBox();
-    return this.bbox;
-  }
-
-  getBBox(): GJ.BBox {
-    return this.bbox ?? this.geometry.getBBox();
   }
 }
