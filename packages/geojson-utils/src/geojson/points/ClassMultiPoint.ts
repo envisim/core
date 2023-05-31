@@ -1,5 +1,5 @@
 import type * as GJ from '../types.js';
-import {bboxFromArrayOfPositions} from '../../bbox.js';
+import {bboxFromPositions} from '../../bbox.js';
 import {distance} from '../../distance.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import type {OptionalParam} from '../util-types.js';
@@ -50,7 +50,7 @@ export class MultiPoint
   }
 
   setBBox(): GJ.BBox {
-    this.bbox = bboxFromArrayOfPositions(this.coordinates);
+    this.bbox = bboxFromPositions(this.coordinates);
     return this.bbox;
   }
 }

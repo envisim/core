@@ -88,65 +88,6 @@ export const bboxInBBox = (bbox1: GJ.BBox, bbox2: GJ.BBox): boolean => {
   return latCond && altCond && minLon1 < maxLon2 && minLon2 < maxLon1;
 };
 
-/**
- * Computes the bounding box from an array of positions
- * @param coords - GeoJSON.Position[]
- * @returns - The bounding box
- */
-export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
-  let minLon = 180;
-  let maxLon = -180;
-  let maxLonNeg = -180;
-  let minLonPos = 180;
-  let minLat = 90;
-  let maxLat = -90;
-  let maxAlt = -Infinity;
-  let minAlt = Infinity;
-  const n = coords.length;
-  let boxLength = 4;
-
-  for (let i = 0; i < n; i++) {
-    const lon = coords[i][0];
-    const lat = coords[i][1];
-    // As height may be undefined.
-    const height = coords[i][2] ?? 0;
-
-    // Existance of any third coordinate gives box of length 6.
-    if (typeof coords[i][2] === 'number') {
-      boxLength = 6;
-    }
-
-    minLon = Math.min(minLon, lon);
-    maxLon = Math.max(maxLon, lon);
-    minLat = Math.min(minLat, lat);
-    maxLat = Math.max(maxLat, lat);
-
-    if (boxLength == 6) {
-      minAlt = Math.min(minAlt, height);
-      maxAlt = Math.max(maxAlt, height);
-    }
-
-    if (lon < 0) {
-      maxLonNeg = Math.max(maxLonNeg, lon);
-    } else {
-      minLonPos = Math.min(minLonPos, lon);
-    }
-  }
-
-  if (minLon < 0 && maxLon > 0) {
-    if (maxLon - minLon > 360 - minLonPos + maxLonNeg) {
-      minLon = minLonPos;
-      maxLon = maxLonNeg;
-    }
-  }
-
-  if (boxLength === 4) {
-    return [minLon, minLat, maxLon, maxLat];
-  }
-
-  return [minLon, minLat, minAlt, maxLon, maxLat, maxAlt];
-};
-
 enum BBoxEnum {
   alon,
   alat,
@@ -173,35 +114,65 @@ function getBBoxValue(bbox: GJ.BBox, e: BBoxEnum): number {
   }
 }
 
-function setBBoxValue(bbox: GJ.BBox, e: BBoxEnum, value: number): void {
-  switch (e) {
-    case BBoxEnum.alon:
-      bbox[0] = value;
-      return;
-    case BBoxEnum.alat:
-      bbox[1] = value;
-      return;
-    case BBoxEnum.blon:
-      bbox[bbox.length === 4 ? 2 : 3] = value;
-      return;
-    case BBoxEnum.blat:
-      bbox[bbox.length === 4 ? 3 : 4] = value;
-      return;
-    case BBoxEnum.az:
-      if (bbox.length === 6) {
-        bbox[2] = value;
-        return;
-      }
-    case BBoxEnum.bz:
-      if (bbox.length === 6) {
-        bbox[5] = value;
-        return;
-      }
+/**
+ * @param positions - an array of positions
+ * @returns the bounding box around the array of positions
+ * @throws Error when positions.length === 0
+ */
+export function bboxFromPositions(positions: GJ.Position[]): GJ.BBox {
+  if (positions.length === 0) throw new Error('positions must not be empty');
+  if (positions.length === 1) {
+    return [...positions[0], ...positions[0]] as GJ.BBox;
   }
+
+  const box: GJ.BBox = positions.every((a) => a.length === 2)
+    ? [Infinity, Infinity, -Infinity, -Infinity]
+    : [Infinity, Infinity, Infinity, -Infinity, -Infinity, -Infinity];
+
+  if (box.length === 4) {
+    for (let i = 0; i < positions.length; i++) {
+      box[1] = Math.min(positions[i][1], box[1]);
+      box[3] = Math.max(positions[i][1], box[3]);
+    }
+  } else {
+    for (let i = 0; i < positions.length; i++) {
+      box[1] = Math.min(positions[i][1], box[1]);
+      box[4] = Math.max(positions[i][1], box[4]);
+
+      if (positions[i].length === 3) {
+        box[2] = Math.min(positions[i][2] as number, box[2]);
+        box[5] = Math.max(positions[i][2] as number, box[5]);
+      }
+    }
+  }
+
+  const sorted = positions.map((p) => p[0]).sort((a, b) => a - b);
+
+  let distance = longitudeDistance(sorted[sorted.length - 1], sorted[0]);
+  let distanceIndex = 0;
+  for (let i = 1; i < positions.length; i++) {
+    const dist = longitudeDistance(sorted[i - 1], sorted[i]);
+
+    if (dist > distance) {
+      distance = dist;
+      distanceIndex = i;
+    }
+  }
+
+  box[0] = sorted[distanceIndex];
+  box[box.length === 4 ? 2 : 3] =
+    sorted[distanceIndex === 0 ? sorted.length - 1 : distanceIndex - 1];
+
+  return box;
 }
 
-export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox | undefined {
-  if (bboxes.length === 0) return undefined;
+/**
+ * @param bboxes - an array of bboxes
+ * @returns the bounding box around the array of bboxes
+ * @throws Error when bboxes.length === 0
+ */
+export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox {
+  if (bboxes.length === 0) throw new Error('bboxes must not be empty');
 
   bboxes.sort((a, b) => a[0] - b[0]);
   const box: GJ.BBox = bboxes.every((a) => a.length === 4)
@@ -211,7 +182,7 @@ export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox | undefined {
   if (box.length === 4) {
     for (let i = 0; i < bboxes.length; i++) {
       box[1] = Math.min(bboxes[i][1], box[1]);
-      box[3] = Math.min(bboxes[i][3], box[3]);
+      box[3] = Math.max(bboxes[i][3], box[3]);
     }
   } else {
     for (let i = 0; i < bboxes.length; i++) {
@@ -248,6 +219,7 @@ export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox | undefined {
   if (merged.length === 1) {
     box[0] = merged[0][0];
     box[box.length === 4 ? 2 : 3] = merged[0][1];
+    return box;
   }
 
   // Check all distances, and select the largest distance
@@ -263,168 +235,11 @@ export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox | undefined {
   }
 
   box[0] = merged[distanceIndex][0];
-  box[box.length === 4 ? 2 : 3] = merged[distanceIndex - 1][1];
+  box[box.length === 4 ? 2 : 3] =
+    merged[distanceIndex === 0 ? merged.length - 1 : distanceIndex - 1][1];
+
+  return box;
 }
-
-export function unionOfBBoxesInPlace(
-  org: GJ.BBox,
-  box: GJ.BBox,
-  init: boolean = false,
-): void {
-  if (init === true) {
-    org.splice(0, 6, ...box);
-    return;
-  }
-
-  // Add z if needed
-  if (org.length === 4 && box.length === 6) {
-    // org 4, box 6
-    org.splice(2, 0, box[2]);
-    org.push(box[5]);
-  }
-
-  // Store positions of longitudes
-  const xA = 0;
-  const xB = org.length === 6 ? 3 : 2;
-  const xC = 0;
-  const xD = box.length === 6 ? 3 : 2;
-
-  // Update latitudes and z
-  if (org.length === 4 && box.length === 4) {
-    org[1] = Math.min(org[1], box[1]);
-    org[3] = Math.max(org[3], box[3]);
-  } else if (org.length === 6 && box.length === 6) {
-    org[1] = Math.min(org[1], box[1]);
-    org[2] = Math.min(org[2], box[2]);
-    org[4] = Math.max(org[4], box[4]);
-    org[5] = Math.max(org[5], box[5]);
-  } else if (org.length === 6 && box.length === 4) {
-    org[1] = Math.min(org[1], box[1]);
-    org[4] = Math.max(org[4], box[3]);
-  } else {
-    throw new Error('unexpected bbox');
-  }
-
-  /*
-    (a, b)
-       (c, d)
-
-    Cases:
-    - c & d in [a,b] => [a, b]
-    - c in [a, b] => [a, d]
-    - d in [a, b] => [c, b]
-    - a & b in [c,d] => [c, d]
-    - otherwise choose smalles of [a, d] and [c, b]
-  */
-
-  const boxCinAB = checkLongitudeInRange(box[xC], org[xA], org[xB]);
-  const boxDinAB = checkLongitudeInRange(box[xD], org[xA], org[xB]);
-
-  if (boxCinAB && boxDinAB) {
-    // DO NOTHING
-  } else if (boxCinAB) {
-    org[xB] = box[xD];
-  } else if (boxDinAB) {
-    org[xA] = box[xC];
-  } else if (
-    checkLongitudeInRange(org[xA], box[xC], box[xD]) &&
-    checkLongitudeInRange(org[xB], box[xC], box[xD])
-  ) {
-    org[xA] = box[xC];
-    org[xB] = box[xD];
-  } else {
-    if (
-      longitudeDistance(org[xA], box[xD]) <= longitudeDistance(box[xC], org[xA])
-    ) {
-      org[xB] = box[xD];
-    } else {
-      org[xA] = box[xC];
-    }
-  }
-
-  return;
-}
-
-/**
- * Computes the overall bounding box from an array of bounding boxes.
- * @param bboxes - An array of type GeoJSON.BBox[].
- * @returns - The bounding box.
- */
-export const bboxFromArrayOfBBoxes = (bboxes: GJ.BBox[]): GJ.BBox => {
-  let minLon = 180;
-  let maxLon = -180;
-  let maxLonNeg = -180;
-  let minLonPos = 180;
-  let minLat = 90;
-  let maxLat = -90;
-  let maxAlt = -Infinity;
-  let minAlt = Infinity;
-  let boxLength = 4;
-  let antimeridian = false;
-
-  bboxes.forEach((box) => {
-    if (box.length === 4) {
-      minLat = Math.min(minLat, box[1]);
-      maxLat = Math.max(maxLat, box[3]);
-      minLon = Math.min(minLon, box[0]);
-      maxLon = Math.max(maxLon, box[2]);
-
-      if (box[0] > box[2]) {
-        antimeridian = true;
-      }
-
-      if (box[0] > 0) {
-        minLonPos = Math.min(minLonPos, box[0]);
-      }
-
-      if (box[2] < 0) {
-        maxLonNeg = Math.max(maxLonNeg, box[2]);
-      }
-    } else {
-      boxLength = 6;
-      minLat = Math.min(minLat, box[1]);
-      maxLat = Math.max(maxLat, box[4]);
-      minAlt = Math.min(minAlt, box[2]);
-      maxAlt = Math.max(maxAlt, box[5]);
-      minLon = Math.min(minLon, box[0]);
-      maxLon = Math.max(maxLon, box[3]);
-
-      if (box[0] > box[3]) {
-        antimeridian = true;
-      }
-
-      if (box[0] > 0) {
-        minLonPos = Math.min(minLonPos, box[0]);
-      }
-
-      if (box[3] < 0) {
-        maxLonNeg = Math.max(maxLonNeg, box[3]);
-      }
-    }
-  });
-
-  if (antimeridian) {
-    minLon = minLonPos;
-    maxLon = maxLonNeg;
-
-    return boxLength === 4
-      ? [minLon, minLat, maxLon, maxLat]
-      : [minLon, minLat, minAlt, maxLon, maxLat, maxAlt];
-  }
-
-  if (minLon < 0 && maxLon > 0) {
-    // Even if no individual box cover antimeridian, the overall box with the shortest width migth
-    // be an antimeridian box.
-    if (maxLon - minLon > 360 - minLonPos + maxLonNeg) {
-      minLon = minLonPos;
-      maxLon = maxLonNeg;
-    }
-  }
-
-  return boxLength === 4
-    ? [minLon, minLat, maxLon, maxLat]
-    : [minLon, minLat, minAlt, maxLon, maxLat, maxAlt];
-};
 
 /**
  * Converts a bounding box of possible length 6 to a bounding box of length 4.

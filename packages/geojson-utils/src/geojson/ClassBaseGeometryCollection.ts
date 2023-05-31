@@ -1,5 +1,5 @@
 import type * as GJ from './types.js';
-import {bboxFromArrayOfBBoxes} from '../bbox.js';
+import {unionOfBBoxes} from '../bbox.js';
 import {GeoJsonObject} from './ClassGeoJsonObject.js';
 import type {AreaObject} from './areas/AreaObjects.js';
 import type {GeomEachCallback, ForEachCallback} from './callback-types.js';
@@ -34,7 +34,7 @@ export abstract class BaseGeometryCollection<
 
     if (force === true) {
       this.forEach((geom: T, index: number) => {
-        bboxArray[index] = geom.setBBox(true);
+        bboxArray[index] = geom.setBBox();
       });
     } else {
       this.forEach((geom: T, index: number) => {
@@ -42,7 +42,7 @@ export abstract class BaseGeometryCollection<
       });
     }
 
-    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
+    this.bbox = unionOfBBoxes(bboxArray);
     return this.bbox;
   }
 }

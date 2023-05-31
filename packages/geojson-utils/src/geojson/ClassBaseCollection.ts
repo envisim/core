@@ -1,5 +1,5 @@
 import type * as GJ from './types.js';
-import {bboxFromArrayOfBBoxes} from '../bbox.js';
+import {unionOfBBoxes} from '../bbox.js';
 import {GeoJsonObject} from './ClassGeoJsonObject.js';
 import type {AreaFeature} from './areas/ClassAreaFeature.js';
 import type {ForEachCallback, GeomEachCallback} from './callback-types.js';
@@ -61,7 +61,7 @@ export abstract class BaseCollection<
       });
     }
 
-    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
+    this.bbox = unionOfBBoxes(bboxArray);
     return this.bbox;
   }
 

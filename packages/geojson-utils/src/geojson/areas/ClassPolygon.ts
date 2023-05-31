@@ -1,6 +1,6 @@
 import type * as GJ from '../types.js';
 import {areaOfPolygonLonLat} from '../../area.js';
-import {bboxFromArrayOfPositions} from '../../bbox.js';
+import {bboxFromPositions} from '../../bbox.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
 import {pointInSinglePolygon} from '../../pointInPolygon.js';
 import type {GeomEachCallback} from '../callback-types.js';
@@ -58,7 +58,7 @@ export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
   }
 
   setBBox(): GJ.BBox {
-    this.bbox = bboxFromArrayOfPositions(this.coordinates[0]);
+    this.bbox = bboxFromPositions(this.coordinates[0]);
     return this.bbox;
   }
 }
