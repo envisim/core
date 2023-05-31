@@ -1,3 +1,4 @@
+import * as sampling from '@envisim/sampling';
 import {
   copy,
   createCollection,
@@ -7,10 +8,8 @@ import {
   mergeCollections,
   sizeOfCollection,
 } from '@envisim/geojson-utils';
-import * as sampling from '@envisim/sampling';
 
 import type {IPropsStratification, ISampleOptionsFinite} from './types.js';
-
 import {
   drawprobsFromCollection,
   inclprobsFromCollection,

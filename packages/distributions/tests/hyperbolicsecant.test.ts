@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {HyperbolicSecant as Dist} from '../src/hyperbolicsecant';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('hyperbolicsecant()', () => {
   const pdf = [

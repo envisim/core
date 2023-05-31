@@ -1,4 +1,5 @@
 import {Random} from '@envisim/random';
+
 import {hypergeometricQuantile} from './hypergeometric-utils.js';
 import {IHypergeometricParams} from './types.js';
 import {logFactorial} from './utils.js';

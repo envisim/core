@@ -1,8 +1,9 @@
 import {randomArray} from '@envisim/random';
-import {reducedRowEchelonForm} from './array-fns/reducedRowEchelonForm.js';
+
 import {BaseMatrix} from './BaseMatrix.js';
 import {ColumnVector} from './ColumnVector.js';
 import {RowVector} from './RowVector.js';
+import {reducedRowEchelonForm} from './array-fns/reducedRowEchelonForm.js';
 import type {
   IDimensions,
   TArrayLike,

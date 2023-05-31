@@ -1,8 +1,8 @@
 import type * as GJ from '../types.js';
-import type {OptionalParam} from '../util-types.js';
-import type {GeomEachCallback} from '../callback-types.js';
-import {BasePointObject} from './BasePointObject.js';
 import {distance} from '../../distance.js';
+import type {GeomEachCallback} from '../callback-types.js';
+import type {OptionalParam} from '../util-types.js';
+import {BasePointObject} from './BasePointObject.js';
 
 export class Point extends BasePointObject<GJ.Point> implements GJ.Point {
   static isObject(obj: any): obj is Point {

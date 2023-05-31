@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {Exponential as Dist} from '../src/exponential';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('exponential(1.5)', () => {
   const pdf = [

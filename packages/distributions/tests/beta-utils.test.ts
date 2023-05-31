@@ -3,8 +3,7 @@ import {
   incompleteBetaFunction,
   inverseRegularizedBetaFunction,
   logBetaFunction,
-  regularizedBetaFunction,
-  // rbf,
+  regularizedBetaFunction, // rbf,
 } from '../src/beta-utils';
 import {createTable, fromTo, PRECISION} from './_distributions.testf';
 

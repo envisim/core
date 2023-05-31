@@ -1,5 +1,5 @@
-import {createTable} from './_createTable.testf';
 import {ColumnVector, RowVector} from '../src/index';
+import {createTable} from './_createTable.testf';
 
 describe('RowVector', () => {
   const r1content = [1, 0, 4, 3, 5, -1];

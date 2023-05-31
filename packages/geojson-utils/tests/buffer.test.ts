@@ -1,6 +1,6 @@
+import type * as GJ from '../src/geojson/types.js';
 import {buffer} from '../src/buffer.js';
 import {unionOfPolygons} from '../src/unionOfPolygons.js';
-import type * as GJ from '../src/geojson/types.js';
 
 describe('buffer', () => {
   const polygon1: GJ.AreaFeature = {

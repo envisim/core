@@ -1,4 +1,5 @@
 import {TArrayLike} from '@envisim/matrix';
+
 import {regularizedBetaFunction} from './beta-utils.js';
 import {randomBinomial} from './binomial-random.js';
 import {

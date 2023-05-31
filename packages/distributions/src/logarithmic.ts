@@ -1,4 +1,5 @@
 import {TArrayLike} from '@envisim/matrix';
+
 import {betaContinuedFraction} from './beta-utils.js';
 import {
   checkArrayLikeOrNumber,

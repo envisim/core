@@ -1,7 +1,7 @@
-import {copy} from '../copy.js';
-import type {GeomEachCallback} from './callback-types.js';
-import {GeoJsonObject} from './ClassGeoJsonObject.js';
 import type * as GJ from './types.js';
+import {copy} from '../copy.js';
+import {GeoJsonObject} from './ClassGeoJsonObject.js';
+import type {GeomEachCallback} from './callback-types.js';
 
 export abstract class BaseGeometry<
   T extends GJ.BaseGeometry,

@@ -1,4 +1,5 @@
 import {isArrayLike, TArrayLike} from '@envisim/matrix';
+
 import {IRandomOptions} from './types.js';
 
 /** Base class */

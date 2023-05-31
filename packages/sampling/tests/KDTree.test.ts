@@ -1,5 +1,5 @@
-import {KDTree} from '../src/util-classes/KDTree';
 import {KDStore} from '../src/util-classes/KDStore';
+import {KDTree} from '../src/util-classes/KDTree';
 import {data, createIndexedTable} from './_data.testf';
 
 describe('KDTree', () => {

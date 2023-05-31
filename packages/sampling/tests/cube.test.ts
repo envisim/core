@@ -1,10 +1,11 @@
 import {Matrix, reducedRowEchelonForm} from '@envisim/matrix';
 import {Random} from '@envisim/random';
+
 import {cube, lcube} from '../src/index';
 import {Cube, CubeMethod} from '../src/sampling-classes/Cube';
+import {RandomMock} from './_Random.testf';
 import {data} from './_data.testf';
 import './_equalArrays.testf';
-import {RandomMock} from './_Random.testf';
 
 function addToRes(res: number[], arr: number[]): void {
   arr.forEach((v) => (res[v] += 1));

@@ -3,6 +3,7 @@ import {
   arrayLikeToColumnVector,
   TArrayLike,
 } from '@envisim/matrix';
+
 import {IOptions, optionsDefaultRand, PartialPick} from './types.js';
 
 /**

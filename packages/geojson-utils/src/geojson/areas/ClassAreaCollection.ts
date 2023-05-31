@@ -1,8 +1,8 @@
-import {BaseCollection} from '../ClassBaseCollection.js';
 import type * as GJ from '../types.js';
+import {BaseCollection} from '../ClassBaseCollection.js';
 import type {GeomEachCallback} from '../callback-types.js';
-import {AreaObject} from './AreaObjects.js';
 import {OptionalParam} from '../util-types.js';
+import {AreaObject} from './AreaObjects.js';
 import {AreaFeature} from './ClassAreaFeature.js';
 
 export class AreaCollection

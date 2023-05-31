@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {Cauchy as Dist} from '../src/cauchy';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('cauchy(2, 2)', () => {
   const pdf = [

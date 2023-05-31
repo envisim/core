@@ -1,7 +1,7 @@
 import type * as GJ from '../types.js';
+import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
 import {OptionalParam} from '../util-types.js';
 import {MultiPoint, Point, PointObject} from './PointObjects.js';
-import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
 
 export class PointGeometryCollection
   extends BaseGeometryCollection<PointObject>

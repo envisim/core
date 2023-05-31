@@ -1,5 +1,5 @@
-import {rotateCoord} from '../src/rotateCoord.js';
 import type * as GJ from '../src/geojson/types.js';
+import {rotateCoord} from '../src/rotateCoord.js';
 
 describe('rotateCoord', () => {
   const coord: GJ.Position = [0, 45];

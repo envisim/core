@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {Laplace as Dist} from '../src/laplace';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('laplace(2, 2)', () => {
   const pdf = [

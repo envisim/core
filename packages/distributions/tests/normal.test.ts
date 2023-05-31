@@ -1,9 +1,9 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {
   Normal as Dist,
   LogNormal as Dist2,
   FoldedNormal as Dist3,
 } from '../src/normal';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('normal(6, 2)', () => {
   const pdf = [

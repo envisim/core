@@ -1,4 +1,3 @@
-import {Random} from '@envisim/random';
 import {
   area,
   bbox,
@@ -9,6 +8,8 @@ import {
   unionOfPolygons,
   toPoint,
 } from '@envisim/geojson-utils';
+import {Random} from '@envisim/random';
+
 import {convertPointCirclesToPolygons} from './convertPointCirclesToPolygons.js';
 
 export type TsamplePointsOnAreasOpts = {

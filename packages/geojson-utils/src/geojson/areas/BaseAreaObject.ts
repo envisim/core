@@ -1,4 +1,3 @@
-import {BaseGeometry} from '../ClassBaseGeometry.js';
 import type * as GJ from '../types.js';
 
 export abstract class BaseAreaObject<

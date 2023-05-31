@@ -1,6 +1,6 @@
 import {srswor, srswr} from '../src/index';
-import './_equalArrays.testf';
 import {RandomMock} from './_Random.testf';
+import './_equalArrays.testf';
 
 describe('srs', () => {
   const rand = new RandomMock();

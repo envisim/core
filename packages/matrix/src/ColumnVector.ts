@@ -1,6 +1,6 @@
-import {Vector} from './Vector.js';
 import {Matrix} from './Matrix.js';
 import {RowVector} from './RowVector.js';
+import {Vector} from './Vector.js';
 import type {IDimensions, TArrayLike} from './types.js';
 import {arrayLikeToArray, isInteger} from './utils.js';
 

@@ -1,6 +1,6 @@
 import {ColumnVector} from './ColumnVector.js';
-import {TArrayLike} from './types.js';
 import {Vector} from './Vector.js';
+import {TArrayLike} from './types.js';
 
 /**
  * @returns a copy of the {@link TArrayLike} as a `number[]`

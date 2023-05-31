@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {StudentsT as Dist} from '../src/studentst';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('t(49)', () => {
   const pdf = [

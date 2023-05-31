@@ -1,9 +1,10 @@
-import {Random} from '@envisim/random';
-import {sampleLinesOnAreas} from './sampleLinesOnAreas.js';
-import {typeOfFrame} from './typeOfFrame.js';
 import {copy, distancePointToLine} from '@envisim/geojson-utils';
+import {Random} from '@envisim/random';
+
 import {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
 import {effectiveHalfWidth} from './sampleDistanceUtils.js';
+import {sampleLinesOnAreas} from './sampleLinesOnAreas.js';
+import {typeOfFrame} from './typeOfFrame.js';
 
 export type TsampleDistanceLinesOpts = {
   rotation?: number;

@@ -1,8 +1,7 @@
-import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type * as GJ from '../types.js';
+import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
 import {OptionalParam} from '../util-types.js';
 import {LineObject, LineString, MultiLineString} from './LineObjects.js';
-import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
 
 export class LineGeometryCollection
   extends BaseGeometryCollection<LineObject>

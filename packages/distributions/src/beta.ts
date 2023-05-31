@@ -1,4 +1,11 @@
 import {TArrayLike} from '@envisim/matrix';
+
+import {randomBeta} from './beta-random.js';
+import {
+  inverseRegularizedBetaFunction,
+  logBetaFunction,
+  regularizedBetaFunction,
+} from './beta-utils.js';
 import {
   checkArrayLikeOrNumber,
   checkRandomNumber,
@@ -6,17 +13,11 @@ import {
   Interval,
 } from './distribution.js';
 import {
-  inverseRegularizedBetaFunction,
-  logBetaFunction,
-  regularizedBetaFunction,
-} from './beta-utils.js';
-import {
   betaDefault,
   IBetaParams,
   IRandomOptions,
   randomOptionsDefault,
 } from './types.js';
-import {randomBeta} from './beta-random.js';
 
 class Beta extends Distribution<IBetaParams> {
   /** @internal */

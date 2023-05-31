@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {Pareto as Dist} from '../src/pareto';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('pareto(2, 2)', () => {
   const pdf = [

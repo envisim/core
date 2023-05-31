@@ -1,5 +1,5 @@
-import {distance} from './distance.js';
 import type * as GeoJSON from './geojson/types.js';
+import {distance} from './distance.js';
 
 /**
  * Computes the length of the a GeoJSON segment.

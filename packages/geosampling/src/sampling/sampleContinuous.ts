@@ -6,9 +6,8 @@ import {
   TCollectionType,
 } from '@envisim/geojson-utils';
 
-import type {IPropsStratification, ISampleOptionsContinuous} from './types.js';
-
 import {sampleFromLine, sampleFromPolygon} from './sampleFromGeoJson.js';
+import type {IPropsStratification, ISampleOptionsContinuous} from './types.js';
 
 export function sampleContinuous(
   geojsonType: Exclude<TCollectionType, 'point'>,

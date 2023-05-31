@@ -1,4 +1,5 @@
 import type * as GJ from '../types.js';
+import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
 import {OptionalParam} from '../util-types.js';
 import {
   AreaObject,
@@ -7,7 +8,6 @@ import {
   PointCircle,
   Polygon,
 } from './AreaObjects.js';
-import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
 
 export class AreaGeometryCollection
   extends BaseGeometryCollection<AreaObject>
@@ -23,8 +23,6 @@ export class AreaGeometryCollection
   ): AreaGeometryCollection {
     return new AreaGeometryCollection({geometries}, shallow);
   }
-
-  geometries: AreaObject[];
 
   constructor(
     obj: OptionalParam<GJ.AreaGeometryCollection, 'type'>,

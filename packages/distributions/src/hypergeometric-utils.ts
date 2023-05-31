@@ -1,5 +1,5 @@
-import {binomialCoefficient} from './utils.js';
 import {EPS} from './utils-consts.js';
+import {binomialCoefficient} from './utils.js';
 
 /*
  * Berger, R. L. (1991).

@@ -1,5 +1,6 @@
 import {Matrix} from '@envisim/matrix';
 import {Random} from '@envisim/random';
+
 import {optionsDefaultEps, optionsDefaultTreeBucketSize} from '../types.js';
 import {SamplingBase} from './SamplingBase.js';
 

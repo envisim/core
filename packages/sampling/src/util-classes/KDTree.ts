@@ -1,4 +1,5 @@
 import {Matrix, RowVector} from '@envisim/matrix';
+
 import {swap} from '../utils.js';
 import {KDNode} from './KDNode.js';
 import {KDStore} from './KDStore.js';

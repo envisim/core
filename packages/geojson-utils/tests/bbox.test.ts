@@ -1,5 +1,5 @@
-import {pointInBBox, bboxInBBox} from '../src/bbox.js';
 import type * as GJ from '../src/geojson/types.js';
+import {pointInBBox, bboxInBBox} from '../src/bbox.js';
 import {Polygon} from '../src/geojson/areas/ClassPolygon';
 
 describe('bbox', () => {
