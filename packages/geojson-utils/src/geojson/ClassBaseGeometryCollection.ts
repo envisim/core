@@ -29,12 +29,18 @@ export abstract class BaseGeometryCollection<
     });
   }
 
-  setBBox(): GJ.BBox {
+  setBBox(force: boolean = false): GJ.BBox {
     const bboxArray: GJ.BBox[] = new Array(this.geometries.length);
 
-    this.forEach((geom: T, index: number) => {
-      bboxArray[index] = geom.getBBox();
-    });
+    if (force === true) {
+      this.forEach((geom: T, index: number) => {
+        bboxArray[index] = geom.setBBox(true);
+      });
+    } else {
+      this.forEach((geom: T, index: number) => {
+        bboxArray[index] = geom.getBBox();
+      });
+    }
 
     this.bbox = bboxFromArrayOfBBoxes(bboxArray);
     return this.bbox;

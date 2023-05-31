@@ -147,6 +147,125 @@ export const bboxFromArrayOfPositions = (coords: GJ.Position[]): GJ.BBox => {
   return [minLon, minLat, minAlt, maxLon, maxLat, maxAlt];
 };
 
+enum BBoxEnum {
+  alon,
+  alat,
+  az,
+  blon,
+  blat,
+  bz,
+}
+
+function getBBoxValue(bbox: GJ.BBox, e: BBoxEnum): number {
+  switch (e) {
+    case BBoxEnum.alon:
+      return bbox[0];
+    case BBoxEnum.alat:
+      return bbox[1];
+    case BBoxEnum.blon:
+      return bbox.length === 4 ? bbox[2] : bbox[3];
+    case BBoxEnum.blat:
+      return bbox.length === 4 ? bbox[3] : bbox[4];
+    case BBoxEnum.az:
+      return bbox.length === 4 ? Infinity : bbox[2];
+    case BBoxEnum.bz:
+      return bbox.length === 4 ? -Infinity : bbox[5];
+  }
+}
+
+function setBBoxValue(bbox: GJ.BBox, e: BBoxEnum, value: number): void {
+  switch (e) {
+    case BBoxEnum.alon:
+      bbox[0] = value;
+      return;
+    case BBoxEnum.alat:
+      bbox[1] = value;
+      return;
+    case BBoxEnum.blon:
+      bbox[bbox.length === 4 ? 2 : 3] = value;
+      return;
+    case BBoxEnum.blat:
+      bbox[bbox.length === 4 ? 3 : 4] = value;
+      return;
+    case BBoxEnum.az:
+      if (bbox.length === 6) {
+        bbox[2] = value;
+        return;
+      }
+    case BBoxEnum.bz:
+      if (bbox.length === 6) {
+        bbox[5] = value;
+        return;
+      }
+  }
+}
+
+export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox | undefined {
+  if (bboxes.length === 0) return undefined;
+
+  bboxes.sort((a, b) => a[0] - b[0]);
+  const box: GJ.BBox = bboxes.every((a) => a.length === 4)
+    ? [Infinity, Infinity, -Infinity, -Infinity]
+    : [Infinity, Infinity, Infinity, -Infinity, -Infinity, -Infinity];
+
+  if (box.length === 4) {
+    for (let i = 0; i < bboxes.length; i++) {
+      box[1] = Math.min(bboxes[i][1], box[1]);
+      box[3] = Math.min(bboxes[i][3], box[3]);
+    }
+  } else {
+    for (let i = 0; i < bboxes.length; i++) {
+      box[1] = Math.min(bboxes[i][1], box[1]);
+      box[2] = Math.min(getBBoxValue(bboxes[i], BBoxEnum.az), box[2]);
+      box[4] = Math.max(getBBoxValue(bboxes[i], BBoxEnum.blat), box[4]);
+      box[5] = Math.max(getBBoxValue(bboxes[i], BBoxEnum.bz), box[5]);
+    }
+  }
+
+  const merged: [number, number][] = [];
+  for (let i = 0; i < bboxes.length; ) {
+    const candidate: [number, number] = [
+      bboxes[i][0],
+      getBBoxValue(bboxes[i], BBoxEnum.blon),
+    ];
+
+    // Check if the current candidate holds any other candidate
+    let j = i + 1;
+    for (; j < bboxes.length; j++) {
+      if (!checkLongitudeInRange(bboxes[j][0], candidate[0], candidate[1]))
+        break;
+
+      // We shouldn't update candidate's endpoint if both j-points are in the range
+      const blon = getBBoxValue(bboxes[j], BBoxEnum.blon);
+      if (!checkLongitudeInRange(blon, candidate[0], candidate[1]))
+        candidate[1] = getBBoxValue(bboxes[j], BBoxEnum.blon);
+    }
+
+    merged.push(candidate);
+    i = j;
+  }
+
+  if (merged.length === 1) {
+    box[0] = merged[0][0];
+    box[box.length === 4 ? 2 : 3] = merged[0][1];
+  }
+
+  // Check all distances, and select the largest distance
+  let distance = longitudeDistance(merged[merged.length - 1][1], merged[0][0]);
+  let distanceIndex = 0;
+  for (let i = 1; i < merged.length; i++) {
+    const dist = longitudeDistance(merged[i - 1][1], merged[i][0]);
+
+    if (dist > distance) {
+      distance = dist;
+      distanceIndex = i;
+    }
+  }
+
+  box[0] = merged[distanceIndex][0];
+  box[box.length === 4 ? 2 : 3] = merged[distanceIndex - 1][1];
+}
+
 export function unionOfBBoxesInPlace(
   org: GJ.BBox,
   box: GJ.BBox,

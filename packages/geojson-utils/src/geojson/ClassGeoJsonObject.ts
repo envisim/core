@@ -16,8 +16,8 @@ export abstract class GeoJsonObject<T extends string>
     }
   }
 
-  abstract setBBox(): GJ.BBox;
+  abstract setBBox(force?: boolean): GJ.BBox;
   getBBox(): GJ.BBox {
-    return this.bbox ?? this.setBBox();
+    return this.bbox ?? this.setBBox(false);
   }
 }
