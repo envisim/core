@@ -1,16 +1,16 @@
 import type * as GJ from './geojson/types.js';
 import {pointInBBox} from './bbox.js';
 import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
+import {toAreaGeometry} from './index.js';
 
-// internal.
-const pointInRing = (point: GJ.Position, polygon: GJ.Position[]): boolean => {
+/** @internal */
+function pointInRing(point: GJ.Position, polygon: GJ.Position[]): boolean {
   const p = point;
   const q = polygon;
   const n = q.length;
-  let i = 0;
-  let j = 0;
   let inside = false;
-  for (i = 0, j = n - 1; i < n; j = i++) {
+
+  for (let i = 0, j = n - 1; i < n; j = i++) {
     if (
       q[i][1] > p[1] != q[j][1] > p[1] &&
       p[0] <
@@ -20,7 +20,7 @@ const pointInRing = (point: GJ.Position, polygon: GJ.Position[]): boolean => {
     }
   }
   return inside;
-};
+}
 
 /**
  * Checks if a point is in a Polygon.
@@ -30,20 +30,22 @@ const pointInRing = (point: GJ.Position, polygon: GJ.Position[]): boolean => {
  * @param polygon - Coordinates of a Polygon, not MultiPolygon.
  * @returns - true if point is in polygon, otherwise false.
  */
-export const pointInSinglePolygon = (
+export function pointInSinglePolygon(
   point: GJ.Position,
   polygon: GJ.Position[][],
-): boolean => {
+): boolean {
   if (!pointInRing(point, polygon[0])) {
     return false; // Not in first polygon.
   }
+
   for (let i = 1; i < polygon.length; i++) {
     if (pointInRing(point, polygon[i])) {
       return false; // In a hole.
     }
   }
+
   return true;
-};
+}
 
 /**
  * Checks if a point is in a MultiPolygon.
@@ -55,14 +57,9 @@ export const pointInSinglePolygon = (
  */
 export const pointInMultiPolygon = (
   point: GJ.Position,
-  polygon: GJ.Position[][][],
+  polygons: GJ.Position[][][],
 ): boolean => {
-  for (let i = 0; i < polygon.length; i++) {
-    if (pointInSinglePolygon(point, polygon[i])) {
-      return true;
-    }
-  }
-  return false;
+  return polygons.some((pol) => pointInSinglePolygon(point, pol));
 };
 
 /**
@@ -70,64 +67,46 @@ export const pointInMultiPolygon = (
  *
  * @param point - A GeoJSON Position [lon,lat].
  * @param areaFeature- An AreaFeature.
- * @returns - `true` if the position is inside the area; `false` if the position is not inside the area.
+ * @returns `true` if the position is inside the area.
  */
-export const pointInAreaFeature = (
+export function pointInAreaGeometry(
   point: GJ.Position,
-  areaFeature: GJ.AreaFeature,
-): boolean => {
-  const af = AreaFeature.isFeature(areaFeature)
-    ? areaFeature
-    : new AreaFeature(areaFeature);
+  geometry: GJ.AreaGeometry,
+): boolean {
+  const ag = toAreaGeometry(geometry, true);
 
-  const box = af.getBBox();
-  if (!pointInBBox(point, box)) {
-    return false;
-  }
+  // If it is not in the bounding box, we can give up
+  if (!pointInBBox(point, ag.getBBox())) return false;
 
-  const ag = af.geometry;
   switch (ag.type) {
     case 'Point':
     case 'MultiPoint':
-      if (ag.distanceToPosition(point) <= 0) {
-        return true;
-      }
-      break;
+      return ag.distanceToPosition(point) <= 0;
+
     case 'Polygon':
-      if (pointInSinglePolygon(point, ag.coordinates)) {
-        return true;
-      }
-      break;
+      return pointInSinglePolygon(point, ag.coordinates);
+
     case 'MultiPolygon':
-      if (pointInMultiPolygon(point, ag.coordinates)) {
-        return true;
-      }
-      break;
+      return pointInMultiPolygon(point, ag.coordinates);
+
     case 'GeometryCollection':
-      for (let i = 0; i < ag.geometries.length; i++) {
-        const box = ag.geometries[i].getBBox();
-        if (pointInBBox(point, box)) {
-          const g = ag.geometries[i];
-          switch (g.type) {
-            case 'Point':
-            case 'MultiPoint':
-              if (g.distanceToPosition(point) <= 0) {
-                return true;
-              }
-              break;
-            case 'Polygon':
-              if (pointInSinglePolygon(point, g.coordinates)) {
-                return true;
-              }
-              break;
-            case 'MultiPolygon':
-              if (pointInMultiPolygon(point, g.coordinates)) {
-                return true;
-              }
-              break;
-          }
-        }
-      }
+      return ag.geometries.some((geom) => pointInAreaGeometry(point, geom));
+
+    default:
+      return false;
   }
-  return false;
-};
+}
+
+export function pointInAreaFeature(
+  point: GJ.Position,
+  areaFeature: GJ.AreaFeature,
+): boolean {
+  const af = AreaFeature.isFeature(areaFeature)
+    ? areaFeature
+    : new AreaFeature(areaFeature, true);
+
+  // If it is not in the bounding box, we can give up
+  if (!pointInBBox(point, af.getBBox())) return false;
+
+  return pointInAreaGeometry(point, af.geometry);
+}
