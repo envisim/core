@@ -1,14 +1,14 @@
 import type * as GJ from '../types.js';
 import {
-  AreaGeometry,
-  AreaGeometryCollection,
-} from './ClassAreaGeometryCollection.js';
-import {
   MultiPointCircle,
   MultiPolygon,
   PointCircle,
   Polygon,
 } from './AreaObjects.js';
+import {
+  AreaGeometry,
+  AreaGeometryCollection,
+} from './ClassAreaGeometryCollection.js';
 
 export function toAreaGeometry(
   geometry: GJ.AreaGeometry,
