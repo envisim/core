@@ -1,5 +1,6 @@
-import {samplePointsOnAreas} from './samplePointsOnAreas.js';
 import {Random} from '@envisim/random';
+
+import {samplePointsOnAreas} from './samplePointsOnAreas.js';
 
 /**
  * Generate points from a uniform Binomial point process

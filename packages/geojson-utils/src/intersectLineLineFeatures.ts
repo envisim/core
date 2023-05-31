@@ -1,10 +1,10 @@
-import {bboxInBBox} from './bbox.js';
-import {intersectSegments} from './intersectSegments.js';
 import type * as GJ from './geojson/types.js';
+import {bboxInBBox} from './bbox.js';
 import {LineFeature} from './geojson/lines/ClassLineFeature.js';
-import {Point} from './geojson/points/ClassPoint.js';
 import {MultiPoint} from './geojson/points/ClassMultiPoint.js';
+import {Point} from './geojson/points/ClassPoint.js';
 import {PointFeature} from './geojson/points/ClassPointFeature.js';
+import {intersectSegments} from './intersectSegments.js';
 
 /**
  * Computes the intersect of two LineFeatures as

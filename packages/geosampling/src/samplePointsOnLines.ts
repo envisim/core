@@ -1,4 +1,3 @@
-import {Random} from '@envisim/random';
 import {
   toPoint,
   intermediate,
@@ -6,6 +5,7 @@ import {
   length,
   lengthOfSegment,
 } from '@envisim/geojson-utils';
+import {Random} from '@envisim/random';
 
 // Comment: For now, length is computed with default dist,
 // for entire line and individual segments, but

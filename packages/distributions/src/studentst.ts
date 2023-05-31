@@ -1,4 +1,5 @@
 import {TArrayLike} from '@envisim/matrix';
+
 import {logBetaFunction, regularizedBetaFunction} from './beta-utils.js';
 import {Cauchy} from './cauchy.js';
 import {ChiSquared} from './chisquared.js';

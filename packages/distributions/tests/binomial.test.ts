@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {Binomial as Dist, NegativeBinomial as Dist2} from '../src/binomial';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('binomial (10, 0.25)', () => {
   const pdf = [

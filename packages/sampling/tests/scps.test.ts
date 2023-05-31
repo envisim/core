@@ -1,8 +1,8 @@
 import {lcps, scps} from '../src/index';
 import {Cps, CpsMethod} from '../src/sampling-classes/Cps';
+import {RandomMock} from './_Random.testf';
 import {data} from './_data.testf';
 import './_equalArrays.testf';
-import {RandomMock} from './_Random.testf';
 
 describe('Cps', () => {
   const rand01 = new RandomMock(0.01);

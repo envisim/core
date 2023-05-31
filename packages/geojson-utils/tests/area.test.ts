@@ -1,5 +1,6 @@
-import {Polygon} from '../src/geojson/areas/ClassPolygon';
 import type * as GJ from '../src/geojson/types.js';
+import {Polygon} from '../src/geojson/areas/ClassPolygon';
+
 describe('area', () => {
   // https://geographiclib.sourceforge.io/scripts/geod-calc.html
   // Polygon coordinates of Antarctica (not valid GeoJSON as

@@ -1,4 +1,5 @@
 import {Random, randomArray} from '@envisim/random';
+
 import {BaseMatrix} from './BaseMatrix.js';
 import {Matrix} from './Matrix.js';
 import type {ICallbackCompare, ICallbackMap} from './types.js';

@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {Hypergeometric as Dist} from '../src/hypergeometric';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('hypergeometric(500, 50, 100)', () => {
   const pdf = [

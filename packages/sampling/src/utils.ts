@@ -4,6 +4,7 @@ import {
   IIteratorReturn,
   TArrayLike,
 } from '@envisim/matrix';
+
 import {IOptions, optionsDefaultEps} from './types.js';
 
 /**

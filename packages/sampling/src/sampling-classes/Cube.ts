@@ -1,5 +1,6 @@
 import {Matrix, reducedRowEchelonForm} from '@envisim/matrix';
 import {Random} from '@envisim/random';
+
 import {optionsDefaultEps, optionsDefaultTreeBucketSize} from '../types.js';
 import {KDStore} from '../util-classes/KDStore.js';
 import {KDTree} from '../util-classes/KDTree.js';

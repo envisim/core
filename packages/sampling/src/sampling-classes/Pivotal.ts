@@ -1,5 +1,6 @@
 import {Matrix} from '@envisim/matrix';
 import {Random} from '@envisim/random';
+
 import {optionsDefaultEps, optionsDefaultTreeBucketSize} from '../types.js';
 import {IndexList} from '../util-classes/IndexList.js';
 import {KDStore} from '../util-classes/KDStore.js';

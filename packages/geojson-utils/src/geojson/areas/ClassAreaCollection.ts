@@ -1,8 +1,6 @@
 import type * as GJ from '../types.js';
-import {bboxFromArrayOfBBoxes} from '../../bbox.js';
-import {unionOfBBoxesInPlace} from '../../bbox.js';
 import {BaseCollection} from '../ClassBaseCollection.js';
-import type {GeomEachCallback} from '../typeGeomEachCallback.js';
+import type {GeomEachCallback} from '../callback-types.js';
 import {OptionalParam} from '../util-types.js';
 import {AreaObject} from './AreaObjects.js';
 import {AreaFeature} from './ClassAreaFeature.js';
@@ -21,8 +19,6 @@ export class AreaCollection
   ): AreaCollection {
     return new AreaCollection({features}, shallow);
   }
-
-  features: AreaFeature[];
 
   constructor(
     obj: OptionalParam<GJ.AreaFeatureCollection, 'type'>,
@@ -45,16 +41,8 @@ export class AreaCollection
   }
 
   geomEach(callback: GeomEachCallback<AreaObject>): void {
-    this.features.forEach((feature, featureIndex) => {
-      if (feature.geometry.type === 'GeometryCollection') {
-        feature.geometry.geometries.forEach(
-          (geom: AreaObject, geomIndex: number) => {
-            callback(geom, featureIndex, geomIndex);
-          },
-        );
-      } else {
-        callback(feature.geometry, featureIndex);
-      }
+    this.forEach((feature, featureIndex) => {
+      feature.geometry.geomEach(callback, featureIndex);
     });
   }
 
@@ -66,20 +54,5 @@ export class AreaCollection
       }
       return Math.min(prev, d);
     }, Infinity);
-  }
-
-  setBBox(): GJ.BBox {
-    const bbox: GJ.BBox = [0, 0, 0, 0];
-
-    this.features.forEach((feature, index) => {
-      unionOfBBoxesInPlace(bbox, feature.getBBox(), index === 0);
-    });
-
-    this.bbox = bbox;
-    return this.bbox;
-  }
-
-  getBBox(): GJ.BBox {
-    return this.bbox ?? this.setBBox();
   }
 }

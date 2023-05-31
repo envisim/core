@@ -1,7 +1,6 @@
 import type * as GJ from './geojson/types.js';
 import {destination} from './destination.js';
-import {checkLongitudeInRange} from './position.js';
-import {longitudeRange} from './position.js';
+import {checkLongitudeInRange, longitudeDistance} from './position.js';
 
 /**
  * Computes posisions needed to find bounding box of a PointCircle.
@@ -215,7 +214,9 @@ export function unionOfBBoxesInPlace(
     org[xA] = box[xC];
     org[xB] = box[xD];
   } else {
-    if (longitudeRange(org[xA], box[xD]) <= longitudeRange(box[xC], org[xA])) {
+    if (
+      longitudeDistance(org[xA], box[xD]) <= longitudeDistance(box[xC], org[xA])
+    ) {
       org[xB] = box[xD];
     } else {
       org[xA] = box[xC];

@@ -1,6 +1,7 @@
 // import type { ColumnVector } from './ColumnVector.js';
 import type {Matrix} from './Matrix.js';
 import {Vector} from './Vector.js';
+
 // import type { RowVector } from './RowVector.js';
 
 /**

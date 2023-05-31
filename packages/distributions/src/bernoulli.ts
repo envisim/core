@@ -1,4 +1,5 @@
 import {TArrayLike} from '@envisim/matrix';
+
 import {
   checkArrayLikeOrNumber,
   checkRandomNumber,

@@ -1,6 +1,5 @@
-import {BaseGeometry} from '../ClassBaseGeometry.js';
 import type * as GJ from '../types.js';
-import type {GeomEachCallback} from '../typeGeomEachCallback.js';
+import {BaseGeometry} from '../ClassBaseGeometry.js';
 
 export abstract class BasePointObject<
   T extends GJ.PointObject,
@@ -10,12 +9,4 @@ export abstract class BasePointObject<
   }
 
   abstract count(): number;
-
-  abstract geomEach(callback: GeomEachCallback<T>): void;
-
-  abstract distanceToPosition(coords: GJ.Position): number;
-
-  abstract setBBox(): GJ.BBox;
-
-  abstract getBBox(): GJ.BBox;
 }

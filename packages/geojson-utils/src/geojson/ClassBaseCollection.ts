@@ -1,14 +1,15 @@
-import type {AreaFeature} from './areas/ClassAreaFeature.js';
+import type * as GJ from './types.js';
+import {bboxFromArrayOfBBoxes} from '../bbox.js';
 import {GeoJsonObject} from './ClassGeoJsonObject.js';
+import type {AreaFeature} from './areas/ClassAreaFeature.js';
+import type {ForEachCallback, GeomEachCallback} from './callback-types.js';
 import type {LineFeature} from './lines/ClassLineFeature.js';
 import type {PointFeature} from './points/ClassPointFeature.js';
-import type * as GJ from './types.js';
 
 export abstract class BaseCollection<
-  T extends PointFeature | LineFeature | AreaFeature,
+  T extends AreaFeature | LineFeature | PointFeature,
 > extends GeoJsonObject<'FeatureCollection'> {
-  //abstract features: PointFeature[] | LineFeature[] | AreaFeature[];
-  abstract features: T[];
+  features: T[] = [];
 
   constructor(obj: GJ.FeatureCollection, shallow: boolean = true) {
     super(obj, shallow);
@@ -18,8 +19,20 @@ export abstract class BaseCollection<
     return this.features.length;
   }
 
+  /* === FOR EACH === */
+
+  forEach(callback: ForEachCallback<T>): void {
+    this.features.forEach(callback);
+  }
+
+  abstract geomEach(
+    callback: GeomEachCallback<GJ.AreaObject | GJ.LineObject | GJ.PointObject>,
+  ): void;
+
+  /* === ADD/REMOVE FEATURES === */
+
   abstract addFeature(
-    feature: GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
+    feature: GJ.AreaFeature | GJ.LineFeature | GJ.PointFeature,
     shallow: boolean,
   ): this;
 
@@ -28,31 +41,40 @@ export abstract class BaseCollection<
     return this;
   }
 
-  initProperty(property: string, defaultValue: number = 0.0): this {
-    this.features.forEach((f) => f.initProperty(property, defaultValue));
-    return this;
+  /* === BBOX === */
+  setBBox(): GJ.BBox {
+    const bboxArray: GJ.BBox[] = new Array(this.features.length);
+
+    this.forEach((feature, index) => {
+      bboxArray[index] = feature.getBBox();
+    });
+
+    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
+    return this.bbox;
   }
 
-  removeProperty(property: string): this {
-    this.features.forEach((f) => f.removeProperty(property));
-    return this;
+  /* === PROPERTIES === */
+
+  initProperty(property: string, defaultValue: number = 0.0): void {
+    this.forEach((feature) => feature.initProperty(property, defaultValue));
   }
 
-  setProperty(property: string, index: number, value: number): this {
+  removeProperty(property: string): void {
+    this.forEach((feature) => feature.removeProperty(property));
+  }
+
+  setProperty(property: string, index: number, value: number): void {
     if (index < 0 || index >= this.size)
       throw new Error('no feature with this index exists');
     this.features[index].setProperty(property, value);
-    return this;
   }
 
   forEachProperty(
     property: string,
-    callbackFn: (value: number, index: number) => void,
-  ): this {
-    this.features.forEach((f, i) => {
-      callbackFn(f.properties[property], i);
+    callback: (value: number, index: number) => void,
+  ): void {
+    this.forEach((feature, index) => {
+      callback(feature.properties[property], index);
     });
-
-    return this;
   }
 }

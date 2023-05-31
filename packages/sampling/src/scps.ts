@@ -1,4 +1,5 @@
 import {arrayLikeToArray, Matrix, TArrayLike} from '@envisim/matrix';
+
 import {Cps, CpsMethod} from './sampling-classes/Cps.js';
 import {
   IOptions,

@@ -1,5 +1,5 @@
-import {intermediate} from '../src/intermediate.js';
 import type * as GJ from '../src/geojson/types.js';
+import {intermediate} from '../src/intermediate.js';
 
 describe('intermediate', () => {
   const p1: GJ.Position = [0, 0];

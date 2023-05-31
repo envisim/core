@@ -1,7 +1,9 @@
 import {Poisson} from '@envisim/distributions';
 import {area} from '@envisim/geojson-utils';
-import {uniformBinomialPointProcess} from './uniformBinomialPointProcess.js';
 import {Random} from '@envisim/random';
+
+import {uniformBinomialPointProcess} from './uniformBinomialPointProcess.js';
+
 /**
  * Generates points from a uniform Poisson point process
  * on areas of input GeoJSON. Given the (Poisson distributed)

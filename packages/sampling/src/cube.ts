@@ -1,4 +1,5 @@
 import {arrayLikeToArray, Matrix, TArrayLike} from '@envisim/matrix';
+
 import {Cube, CubeMethod} from './sampling-classes/Cube.js';
 import {
   IOptions,

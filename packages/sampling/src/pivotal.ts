@@ -1,4 +1,5 @@
 import {arrayLikeToArray, Matrix, TArrayLike} from '@envisim/matrix';
+
 import {Pivotal, PivotalMethod} from './sampling-classes/Pivotal.js';
 import {
   IOptions,

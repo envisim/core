@@ -1,4 +1,5 @@
 import {TArrayLike, arrayLikeToColumnVector} from '@envisim/matrix';
+
 import {IOptions, optionsDefaultRand, PartialPick} from './types.js';
 
 /**

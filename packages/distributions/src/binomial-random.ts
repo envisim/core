@@ -1,6 +1,7 @@
 import {Random} from '@envisim/random';
-import {PQFUN} from './utils.js';
+
 import {FRAC1_6} from './utils-consts.js';
+import {PQFUN} from './utils.js';
 
 const binomialCoefsFun = (a: number, b: number): number => {
   return (

@@ -1,6 +1,7 @@
+import type * as GJ from './types.js';
 import {copy} from '../copy.js';
 import {GeoJsonObject} from './ClassGeoJsonObject.js';
-import type * as GJ from './types.js';
+import type {GeomEachCallback} from './callback-types.js';
 
 export abstract class BaseGeometry<
   T extends GJ.BaseGeometry,
@@ -18,4 +19,6 @@ export abstract class BaseGeometry<
   }
 
   abstract get size(): number;
+  abstract geomEach(callback: GeomEachCallback<T>, featureIndex: number): void;
+  abstract distanceToPosition(coords: GJ.Position): number;
 }

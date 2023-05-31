@@ -1,4 +1,5 @@
 import {Random} from '@envisim/random';
+
 import {Bernoulli} from '../src/bernoulli';
 import {RANDN, RPRECISION} from './_distributions.testf';
 

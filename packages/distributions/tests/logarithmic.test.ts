@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {Logarithmic as Dist} from '../src/logarithmic';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('logarithmic(0.9)', () => {
   const pdf = [

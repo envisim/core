@@ -1,5 +1,4 @@
 import {chiSquaredQuantile91} from './chisquared-utils.js';
-import {doubleFactorial} from './utils.js';
 import {
   EPS,
   KFAC,
@@ -8,6 +7,7 @@ import {
   SQRTEBYPI,
   SQRTPI,
 } from './utils-consts.js';
+import {doubleFactorial} from './utils.js';
 
 const LOGGAMMACOEFS = {
   c0: 2.48574089138753565546e-5,

@@ -1,4 +1,3 @@
-import {Random} from '@envisim/random';
 import {
   bbox,
   destination,
@@ -7,8 +6,10 @@ import {
   toLineString,
   toPolygon,
 } from '@envisim/geojson-utils';
-import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
+import {Random} from '@envisim/random';
+
 import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
+import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
 
 export type TsampleBeltsOnAreasOpts = {
   rotation?: number;

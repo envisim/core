@@ -1,10 +1,10 @@
 import type * as GJ from './geojson/types.js';
-import {pointInAreaFeature} from './pointInPolygon.js';
 import {bboxInBBox} from './bbox.js';
-import {PointFeature} from './geojson/points/ClassPointFeature.js';
-import {Point} from './geojson/points/ClassPoint.js';
-import {MultiPoint} from './geojson/points/ClassMultiPoint.js';
 import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
+import {MultiPoint} from './geojson/points/ClassMultiPoint.js';
+import {Point} from './geojson/points/ClassPoint.js';
+import {PointFeature} from './geojson/points/ClassPointFeature.js';
+import {pointInAreaFeature} from './pointInPolygon.js';
 
 /**
  * Computes the intersection between a PointFeature

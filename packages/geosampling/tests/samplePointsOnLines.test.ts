@@ -1,4 +1,5 @@
 import {toFeatureCollection} from '@envisim/geojson-utils';
+
 import {samplePointsOnLines} from '../src/samplePointsOnLines.js';
 
 describe('samplePointsOnAreas', () => {

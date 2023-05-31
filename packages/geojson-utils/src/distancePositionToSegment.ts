@@ -1,5 +1,6 @@
-import {distance} from './distance.js';
 import type * as GJ from './geojson/types.js';
+import {distance} from './distance.js';
+
 // Internal.
 const dot = (u: GJ.Position, v: GJ.Position): number =>
   u[0] * v[0] + u[1] * v[1];

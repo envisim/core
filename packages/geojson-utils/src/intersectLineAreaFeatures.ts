@@ -1,12 +1,12 @@
-import {pointInSinglePolygon} from './pointInPolygon.js';
-import {intersectSegments} from './intersectSegments.js';
-import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
+import type * as GJ from './geojson/types.js';
+import {bboxInBBox} from './bbox.js';
 import {AreaObject} from './geojson/areas/AreaObjects.js';
+import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
 import {LineFeature} from './geojson/lines/ClassLineFeature.js';
 import {LineString} from './geojson/lines/ClassLineString.js';
 import {MultiLineString} from './geojson/lines/ClassMultiLineString.js';
-import {bboxInBBox} from './bbox.js';
-import type * as GJ from './geojson/types.js';
+import {intersectSegments} from './intersectSegments.js';
+import {pointInSinglePolygon} from './pointInPolygon.js';
 
 type sortArrayElement = [GJ.Position, number];
 

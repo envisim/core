@@ -1,5 +1,5 @@
-import {distTests, fromTo} from './_distributions.testf';
 import {ExtremeValue as Dist} from '../src/extremevalue';
+import {distTests, fromTo} from './_distributions.testf';
 
 describe('extremevalue(10, 5)', () => {
   const pdf = [

@@ -1,6 +1,6 @@
 import {conditionalPoisson, poisson} from '../src/index';
-import './_equalArrays.testf';
 import {RandomMock} from './_Random.testf';
+import './_equalArrays.testf';
 
 describe('poisson', () => {
   const pi_arr = [0.2, 0.6, 0.4, 0.8, 0.5];

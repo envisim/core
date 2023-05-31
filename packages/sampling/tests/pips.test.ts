@@ -1,5 +1,5 @@
-import {RandomMock} from './_Random.testf';
 import {sampford, pareto, brewer} from '../src/index';
+import {RandomMock} from './_Random.testf';
 
 describe('pips', () => {
   const rand = new RandomMock();

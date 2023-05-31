@@ -1,8 +1,14 @@
+import type * as GJ from './types.js';
 import {copy} from '../copy.js';
 import {GeoJsonObject} from './ClassGeoJsonObject.js';
-import type * as GJ from './types.js';
+import type {AreaGeometry} from './areas/ClassAreaGeometryCollection.js';
+import type {LineGeometry} from './lines/ClassLineGeometryCollection.js';
+import type {PointGeometry} from './points/ClassPointGeometryCollection.js';
 
-export abstract class BaseFeature extends GeoJsonObject<'Feature'> {
+export abstract class BaseFeature<
+  T extends AreaGeometry | LineGeometry | PointGeometry,
+> extends GeoJsonObject<'Feature'> {
+  geometry!: T;
   properties: Exclude<GJ.FeatureProperties, null>;
 
   constructor(obj: GJ.Feature<GJ.Geometry>, shallow: boolean = true) {
@@ -30,4 +36,10 @@ export abstract class BaseFeature extends GeoJsonObject<'Feature'> {
   }
 
   abstract get size(): number;
+
+  setBBox(): GJ.BBox {
+    // need setBBox to recompute here
+    this.bbox = this.geometry.setBBox();
+    return this.bbox;
+  }
 }

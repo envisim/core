@@ -1,5 +1,5 @@
-import type {Matrix} from './Matrix.js';
 import type {ColumnVector} from './ColumnVector.js';
+import type {Matrix} from './Matrix.js';
 import type {RowVector} from './RowVector.js';
 import type {
   IDimensions,

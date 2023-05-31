@@ -1,8 +1,9 @@
 // @ts-ignore
 import geodesic from 'geographiclib-geodesic';
-import {distance} from './distance.js';
+
 // import {asFeatureCollection} from './asFeatureCollection.js';
 import type * as GJ from './geojson/types.js';
+import {distance} from './distance.js';
 
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
