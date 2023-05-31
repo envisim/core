@@ -1,5 +1,3 @@
-import type * as GeoJSON from './geojson/types.js';
-
 /**
  * @param p - the longitude to normalize
  * @param norm - the normalizing factor
@@ -42,33 +40,10 @@ export function longitudeDistance(
   return b - a + (b >= a ? 0.0 : norm);
 }
 
-/**
- * Transforms a `GeoJSON.Position` to +/-180 and +/-90.
- */
-export function normalizePosition(
-  p: GeoJSON.Position, // [lon, lat]
-): GeoJSON.Position {
-  const r: GeoJSON.Position = [
-    normalizeLongitude(p[0], 360.0),
-    normalizeLongitude(p[1], 180.0),
-  ];
-
-  if (p.length === 3) {
-    r.push(p[2]);
-  }
-
-  return r;
-}
-
-export function longitudeDifference(
-  p1: number,
-  p2: number,
+export function longitudeCenter(
+  a: number,
+  b: number,
   norm: number = 360.0,
 ): number {
-  return Math.abs(
-    normalizeLongitude(
-      normalizeLongitude(-p1, norm) + normalizeLongitude(p2, norm) + 0.0,
-      norm,
-    ),
-  );
+  return normalizeLongitude(a + longitudeDistance(a, b, norm) * 0.5);
 }
