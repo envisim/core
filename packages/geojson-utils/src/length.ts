@@ -19,7 +19,7 @@ export const lengthOfSegment = (
     const numPointsToAdd = dist === Infinity ? 1 : Math.ceil(distToEnd / dist);
     const [lon0, lat0] = start;
     const [lon1, lat1] = end;
-    let prev = start;
+    let prev: GeoJSON.Position = [lon0, lat0];
     for (let i = 1; i <= numPointsToAdd; i++) {
       const t = i / numPointsToAdd;
       const lon = lon0 + t * (lon1 - lon0);
