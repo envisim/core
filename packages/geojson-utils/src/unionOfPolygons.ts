@@ -35,15 +35,19 @@ export const unionOfPolygons = (
         break;
     }
   });
+
   if (geoms.length < 2) {
-    throw new Error('Requires at least 2 polygons');
+    // A single geometry, copy and return as a new AreaCollection
+    return new AreaCollection(collection,false);
   }
+
   const union = polygonClipping.union(geoms[0], ...geoms.slice(1));
   if (union.length === 1) {
     return AreaCollection.create([
       AreaFeature.create(Polygon.create(union[0]), {}),
     ]);
   }
+
   return AreaCollection.create([
     AreaFeature.create(MultiPolygon.create(union), {}),
   ]);

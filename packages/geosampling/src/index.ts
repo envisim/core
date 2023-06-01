@@ -30,7 +30,7 @@ export {
 
 // Maybe these two should only be internal
 export {convertPointCirclesToPolygons} from './convertPointCirclesToPolygons.js';
-export {typeOfFrame} from './typeOfFrame.js';
+export {typeOfTract} from './typeOfTract.js';
 
 // Model tracts
 export {
