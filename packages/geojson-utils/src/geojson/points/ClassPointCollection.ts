@@ -31,9 +31,10 @@ export class PointCollection
     });
   }
 
-  addFeature(feature: GJ.PointFeature, shallow: boolean = true): this {
-    this.features.push(new PointFeature(feature, shallow));
-    return this;
+  addFeature(feature: PointFeature, shallow: boolean = true): void {
+    this.features.push(
+      shallow === false ? new PointFeature(feature, false) : feature,
+    );
   }
 
   count(): number {

@@ -23,9 +23,9 @@ function pointInRing(point: GJ.Position, polygon: GJ.Position[]): boolean {
  * Checks if a point is in a Polygon.
  * Note: Not for MultiPolygon.
  *
- * @param point - Coordinates [lon,lat] of a point.
- * @param polygon - Coordinates of a Polygon, not MultiPolygon.
- * @returns - true if point is in polygon, otherwise false.
+ * @param point Coordinates [lon,lat] of a point.
+ * @param polygon Coordinates of a Polygon, not MultiPolygon.
+ * @returns `true` if point is in polygon.
  */
 export function pointInSinglePolygonPosition(
   point: GJ.Position,
@@ -48,9 +48,9 @@ export function pointInSinglePolygonPosition(
  * Checks if a point is in a MultiPolygon.
  * Note: Not for Polygon.
  *
- * @param point - Coordinates [lon,lat] of a point.
- * @param polygon - Coordinates of a MultiPolygon, not Polygon.
- * @returns - true if point is in polygon, otherwise false.
+ * @param point Coordinates [lon,lat] of a point.
+ * @param polygon Coordinates of a MultiPolygon, not Polygon.
+ * @returns `true` if point is in polygon.
  */
 export function pointInMultiPolygonPosition(
   point: GJ.Position,

@@ -31,9 +31,10 @@ export class LineCollection
     });
   }
 
-  addFeature(feature: GJ.LineFeature, shallow: boolean = true): this {
-    this.features.push(new LineFeature(feature, shallow));
-    return this;
+  addFeature(feature: LineFeature, shallow: boolean = true): void {
+    this.features.push(
+      shallow === false ? new LineFeature(feature, false) : feature,
+    );
   }
 
   length(dist: number = Infinity): number {

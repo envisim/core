@@ -1,7 +1,6 @@
 import type * as GJ from './geojson/types.js';
 import {pointInBBox} from './bbox.js';
-import type {AreaObject} from './geojson/areas/AreaObjects.js';
-import {toAreaGeometry} from './geojson/areas/toAreaGeometry.js';
+import type {AreaObject, AreaGeometry, AreaFeature} from './geojson/index.js';
 import {
   pointInMultiPolygonPosition,
   pointInSinglePolygonPosition,
@@ -10,32 +9,30 @@ import {
 /**
  * Checks if a point is inside an AreaGeometry.
  *
- * @param point - A GeoJSON Position [lon,lat].
+ * @param point A GeoJSON Position [lon,lat].
  * @param geometry
  * @returns `true` if the position is inside the area.
  */
 export function pointInAreaGeometry(
   point: GJ.Position,
-  geometry: GJ.AreaGeometry,
+  geometry: AreaGeometry,
 ): boolean {
-  const ag = toAreaGeometry(geometry, true);
-
   // If it is not in the bounding box, we can give up
-  if (!pointInBBox(point, ag.getBBox())) return false;
+  if (!pointInBBox(point, geometry.getBBox())) return false;
 
-  switch (ag.type) {
+  switch (geometry.type) {
     case 'Point':
     case 'MultiPoint':
-      return ag.distanceToPosition(point) <= 0;
+      return geometry.distanceToPosition(point) <= 0;
 
     case 'Polygon':
-      return pointInSinglePolygonPosition(point, ag.coordinates);
+      return pointInSinglePolygonPosition(point, geometry.coordinates);
 
     case 'MultiPolygon':
-      return pointInMultiPolygonPosition(point, ag.coordinates);
+      return pointInMultiPolygonPosition(point, geometry.coordinates);
 
     case 'GeometryCollection':
-      return ag.geometries.some((geom: AreaObject) =>
+      return geometry.geometries.some((geom: AreaObject) =>
         pointInAreaGeometry(point, geom),
       );
 
@@ -47,13 +44,13 @@ export function pointInAreaGeometry(
 /**
  * Checks if a point is inside an AreaFeature.
  *
- * @param point - A GeoJSON Position [lon,lat].
+ * @param point A GeoJSON Position [lon,lat].
  * @param feature
  * @returns `true` if the position is inside the area.
  */
 export function pointInAreaFeature(
   point: GJ.Position,
-  feature: GJ.AreaFeature,
+  feature: AreaFeature,
 ): boolean {
   return pointInAreaGeometry(point, feature.geometry);
 }

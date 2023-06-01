@@ -31,14 +31,10 @@ export abstract class BaseCollection<
 
   /* === ADD/REMOVE FEATURES === */
 
-  abstract addFeature(
-    feature: GJ.AreaFeature | GJ.LineFeature | GJ.PointFeature,
-    shallow: boolean,
-  ): this;
+  abstract addFeature(feature: T, shallow: boolean): void;
 
-  removeFeature(index: number): this {
+  removeFeature(index: number): void {
     this.features.splice(index, 1);
-    return this;
   }
 
   /* === BBOX === */

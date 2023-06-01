@@ -31,9 +31,10 @@ export class AreaCollection
     });
   }
 
-  addFeature(feature: GJ.AreaFeature, shallow: boolean = true): this {
-    this.features.push(new AreaFeature(feature, shallow));
-    return this;
+  addFeature(feature: AreaFeature, shallow: boolean = true): void {
+    this.features.push(
+      shallow === false ? new AreaFeature(feature, false) : feature,
+    );
   }
 
   area(dist: number = Infinity): number {
