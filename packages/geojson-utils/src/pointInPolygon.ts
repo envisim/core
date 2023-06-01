@@ -79,13 +79,12 @@ export const pointInAreaFeature = (
   const af = AreaFeature.isFeature(areaFeature)
     ? areaFeature
     : new AreaFeature(areaFeature);
-
-  const box = af.getBBox();
+  const ag = af.geometry;
+  const box = ag.getBBox();
   if (!pointInBBox(point, box)) {
     return false;
   }
 
-  const ag = af.geometry;
   switch (ag.type) {
     case 'Point':
     case 'MultiPoint':

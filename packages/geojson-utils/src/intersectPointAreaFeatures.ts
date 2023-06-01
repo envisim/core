@@ -25,9 +25,9 @@ export const intersectPointAreaFeatures = (
     ? areaFeature
     : new AreaFeature(areaFeature);
 
-  // Check if bboxes of features overlap
-  const box1 = pf.getBBox();
-  const box2 = af.getBBox();
+  // Check if bboxes of geometries overlap
+  const box1 = pf.geometry.getBBox();
+  const box2 = af.geometry.getBBox();
   if (!bboxInBBox(box1, box2)) {
     return null;
   }
