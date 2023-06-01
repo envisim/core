@@ -43,20 +43,20 @@
 class Random {
   // set the 'order' number of ENTROPY-holding 32-bit values
   /** @ignore */
-  #o = 48;
+  private o = 48;
   // init the 'carry' used by the multiply-with-carry (MWC) algorithm
   /** @ignore */
-  #c = 1;
+  private c = 1;
   // init the 'phase' (max-1) of the intermediate variable pointer
   /** @ignore */
-  #p = this.#o;
+  private p = this.o;
   // declare our intermediate variables array
   /** @ignore */
-  #s = new Array(this.#o);
+  private s = new Array(this.o);
 
   // general purpose local
   /** @ignore */
-  #k = 0;
+  private k = 0;
 
   // ===========================================================================
   // This is based upon Johannes Baagoe's carefully designed and efficient hash
@@ -65,25 +65,25 @@ class Random {
   // which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
   // ===========================================================================
   /** @ignore */
-  #n = 0xefc8249d;
+  private n = 0xefc8249d;
   /** @ignore */
-  #mash(data: number | string): number {
+  private mash(data: number | string): number {
     data = data.toString();
     for (let i = 0; i < data.length; i++) {
-      this.#n += data.charCodeAt(i);
-      let h = 0.02519603282416938 * this.#n;
-      this.#n = h >>> 0;
-      h -= this.#n;
-      h *= this.#n;
-      this.#n = h >>> 0;
-      h -= this.#n;
-      this.#n += h * 0x100000000; // 2^32
+      this.n += data.charCodeAt(i);
+      let h = 0.02519603282416938 * this.n;
+      this.n = h >>> 0;
+      h -= this.n;
+      h *= this.n;
+      this.n = h >>> 0;
+      h -= this.n;
+      this.n += h * 0x100000000; // 2^32
     }
-    return (this.#n >>> 0) * 2.3283064365386963e-10; // 2^-32
+    return (this.n >>> 0) * 2.3283064365386963e-10; // 2^-32
   }
   /** @ignore */
-  #mashInit(): void {
-    this.#n = 0xefc8249d;
+  private mashInit(): void {
+    this.n = 0xefc8249d;
   }
 
   /**
@@ -112,7 +112,7 @@ class Random {
       return this.seed(seed);
 
     // fill the array with initial mash hash values
-    for (let i = 0; i < this.#o; i++) this.#s[i] = this.#mash(Math.random());
+    for (let i = 0; i < this.o; i++) this.s[i] = this.mash(Math.random());
     return this;
   }
 
@@ -123,11 +123,11 @@ class Random {
   // function, and by the random 'string(n)' function which returns 'n'
   // characters from 33 to 126.
   /** @ignore */
-  #rawprng(): number {
-    if (++this.#p >= this.#o) this.#p = 0;
-    const t = 1768863 * this.#s[this.#p] + this.#c * 2.3283064365386963e-10; // 2^-32
-    this.#s[this.#p] = t - (this.#c = t | 0);
-    return this.#s[this.#p];
+  private rawprng(): number {
+    if (++this.p >= this.o) this.p = 0;
+    const t = 1768863 * this.s[this.p] + this.c * 2.3283064365386963e-10; // 2^-32
+    this.s[this.p] = t - (this.c = t | 0);
+    return this.s[this.p];
   }
 
   // this EXPORTED function is the default function returned by this library.
@@ -164,11 +164,11 @@ class Random {
   // entropy state. It is also called by the EXPORTED addEntropy() function
   // which is used to pour entropy into the PRNG.
   /** @internal */
-  #hash(...args: number[] | string[]): void {
+  private hash(...args: number[] | string[]): void {
     for (let i = 0; i < args.length; i++) {
-      for (let j = 0; j < this.#o; j++) {
-        this.#s[j] -= this.#mash(args[i]);
-        if (this.#s[j] < 0) this.#s[j] += 1;
+      for (let j = 0; j < this.o; j++) {
+        this.s[j] -= this.mash(args[i]);
+        if (this.s[j] < 0) this.s[j] += 1;
       }
     }
   }
@@ -193,14 +193,14 @@ class Random {
   // embedded carriage returns (CR) or Line Feeds (LF)
   hashString(inStr: string): this {
     inStr = this.cleanString(inStr);
-    this.#mash(inStr); // use the string to evolve the 'mash' state
+    this.mash(inStr); // use the string to evolve the 'mash' state
     for (let i = 0; i < inStr.length; i++) {
       // scan through the characters in our string
-      this.#k = inStr.charCodeAt(i); // get the character code at the location
-      for (let j = 0; j < this.#o; j++) {
+      this.k = inStr.charCodeAt(i); // get the character code at the location
+      for (let j = 0; j < this.o; j++) {
         //	"mash" it into the UHEPRNG state
-        this.#s[j] -= this.#mash(this.#k);
-        if (this.#s[j] < 0) this.#s[j] += 1;
+        this.s[j] -= this.mash(this.k);
+        if (this.s[j] < 0) this.s[j] += 1;
       }
     }
 
@@ -211,9 +211,7 @@ class Random {
   // time
   /** Adds entropy to Uheprng. */
   addEntropy(...args: string[] | number[]): this {
-    this.#hash(
-      this.#k++ + new Date().getTime() + args.join('') + Math.random(),
-    );
+    this.hash(this.k++ + new Date().getTime() + args.join('') + Math.random());
 
     return this;
   }
@@ -224,12 +222,12 @@ class Random {
   // some hashing input
   /** Initializes state */
   initState(): this {
-    this.#mashInit(); // pass a null arg to force mash hash to init
-    for (let i = 0; i < this.#o; i++) {
-      this.#s[i] = this.#mash(' '); // fill the array with initial mash hash values
+    this.mashInit(); // pass a null arg to force mash hash to init
+    for (let i = 0; i < this.o; i++) {
+      this.s[i] = this.mash(' '); // fill the array with initial mash hash values
     }
-    this.#c = 1; // init our multiply-with-carry carry
-    this.#p = this.#o; // init our phase
+    this.c = 1; // init our multiply-with-carry carry
+    this.p = this.o; // init our phase
 
     return this;
   }
@@ -246,8 +244,8 @@ class Random {
   /** @returns Pseudo-random (uniform) number on the interval [0.0, 1.0) */
   float(): number {
     return (
-      this.#rawprng() +
-      ((this.#rawprng() * 0x200000) | 0) * 1.1102230246251565e-16
+      this.rawprng() +
+      ((this.rawprng() * 0x200000) | 0) * 1.1102230246251565e-16
     ); // 2^-53
   }
 
