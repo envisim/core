@@ -1,5 +1,5 @@
 import type * as GJ from './types.js';
-import {bboxFromArrayOfBBoxes} from '../bbox.js';
+import {unionOfBBoxes} from '../bbox.js';
 import {GeoJsonObject} from './ClassGeoJsonObject.js';
 import type {AreaFeature} from './areas/ClassAreaFeature.js';
 import type {ForEachCallback, GeomEachCallback} from './callback-types.js';
@@ -42,14 +42,26 @@ export abstract class BaseCollection<
   }
 
   /* === BBOX === */
-  setBBox(): GJ.BBox {
+  /**
+   * @param force - if `true`, it sets all the underlying `bbox`'es, skipping
+   *   the features.
+   * @returns the bounding box.
+   */
+
+  setBBox(force: boolean = false): GJ.BBox {
     const bboxArray: GJ.BBox[] = new Array(this.features.length);
 
-    this.forEach((feature, index) => {
-      bboxArray[index] = feature.getBBox();
-    });
+    if (force === true) {
+      this.forEach((feature: T, index: number) => {
+        bboxArray[index] = feature.geometry.setBBox(true);
+      });
+    } else {
+      this.forEach((feature: T, index: number) => {
+        bboxArray[index] = feature.geometry.getBBox();
+      });
+    }
 
-    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
+    this.bbox = unionOfBBoxes(bboxArray);
     return this.bbox;
   }
 

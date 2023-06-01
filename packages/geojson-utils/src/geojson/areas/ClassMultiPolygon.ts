@@ -1,6 +1,6 @@
 import type * as GJ from '../types.js';
 import {areaOfPolygonLonLat} from '../../area.js';
-import {bboxFromArrayOfPositions} from '../../bbox.js';
+import {bboxFromPositions, unionOfBBoxes} from '../../bbox.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
 import {pointInSinglePolygon} from '../../pointInPolygon.js';
 import type {GeomEachCallback} from '../callback-types.js';
@@ -74,12 +74,8 @@ export class MultiPolygon
   }
 
   setBBox(): GJ.BBox {
-    let coords: GJ.Position[] = [];
-    this.coordinates.forEach((polygon) => {
-      // outer ring of each polygon is sufficient
-      coords = coords.concat(polygon[0]);
-    });
-    this.bbox = bboxFromArrayOfPositions(coords);
+    const bboxes = this.coordinates.map((pos) => bboxFromPositions(pos[0]));
+    this.bbox = unionOfBBoxes(bboxes);
     return this.bbox;
   }
 }
