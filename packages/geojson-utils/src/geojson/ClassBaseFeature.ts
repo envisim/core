@@ -37,9 +37,13 @@ export abstract class BaseFeature<
 
   abstract get size(): number;
 
-  setBBox(): GJ.BBox {
-    // need setBBox to recompute here
-    this.bbox = this.geometry.setBBox();
+  setBBox(force: boolean = false): GJ.BBox {
+    if (force === true) {
+      this.bbox = this.geometry.setBBox(true);
+    } else {
+      this.bbox = this.geometry.getBBox();
+    }
+
     return this.bbox;
   }
 }

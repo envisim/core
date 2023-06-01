@@ -1,5 +1,5 @@
 import type * as GJ from '../types.js';
-import {bboxFromArrayOfPositions, getPositionsForCircle} from '../../bbox.js';
+import {bboxFromPositions, getPositionsForCircle} from '../../bbox.js';
 import {destination} from '../../destination.js';
 import {distance} from '../../distance.js';
 import type {GeomEachCallback} from '../callback-types.js';
@@ -80,7 +80,7 @@ export class PointCircle
   }
 
   setBBox(): GJ.BBox {
-    this.bbox = bboxFromArrayOfPositions(
+    this.bbox = bboxFromPositions(
       getPositionsForCircle(this.coordinates, this.radius),
     );
     return this.bbox;

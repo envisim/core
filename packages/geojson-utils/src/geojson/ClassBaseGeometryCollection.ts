@@ -1,5 +1,5 @@
 import type * as GJ from './types.js';
-import {bboxFromArrayOfBBoxes} from '../bbox.js';
+import {unionOfBBoxes} from '../bbox.js';
 import {GeoJsonObject} from './ClassGeoJsonObject.js';
 import type {AreaObject} from './areas/AreaObjects.js';
 import type {GeomEachCallback, ForEachCallback} from './callback-types.js';
@@ -29,14 +29,20 @@ export abstract class BaseGeometryCollection<
     });
   }
 
-  setBBox(): GJ.BBox {
+  setBBox(force: boolean = false): GJ.BBox {
     const bboxArray: GJ.BBox[] = new Array(this.geometries.length);
 
-    this.forEach((geom: T, index: number) => {
-      bboxArray[index] = geom.getBBox();
-    });
+    if (force === true) {
+      this.forEach((geom: T, index: number) => {
+        bboxArray[index] = geom.setBBox();
+      });
+    } else {
+      this.forEach((geom: T, index: number) => {
+        bboxArray[index] = geom.getBBox();
+      });
+    }
 
-    this.bbox = bboxFromArrayOfBBoxes(bboxArray);
+    this.bbox = unionOfBBoxes(bboxArray);
     return this.bbox;
   }
 }

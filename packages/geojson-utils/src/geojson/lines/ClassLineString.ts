@@ -1,5 +1,5 @@
 import type * as GJ from '../types.js';
-import {bboxFromArrayOfPositions} from '../../bbox.js';
+import {bboxFromPositions} from '../../bbox.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
 import {lengthOfLineString} from '../../length.js';
 import type {GeomEachCallback} from '../callback-types.js';
@@ -54,7 +54,7 @@ export class LineString
   }
 
   setBBox(): GJ.BBox {
-    this.bbox = bboxFromArrayOfPositions(this.coordinates);
+    this.bbox = bboxFromPositions(this.coordinates);
     return this.bbox;
   }
 }

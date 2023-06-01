@@ -1,5 +1,5 @@
 import type * as GJ from '../types.js';
-import {bboxFromArrayOfPositions, getPositionsForCircle} from '../../bbox.js';
+import {bboxFromPositions} from '../../bbox.js';
 import {destination} from '../../destination.js';
 import {distance} from '../../distance.js';
 import type {GeomEachCallback} from '../callback-types.js';
@@ -93,11 +93,21 @@ export class MultiPointCircle
   }
 
   setBBox(): GJ.BBox {
-    let coords: GJ.Position[] = [];
-    this.coordinates.forEach((coord) => {
-      coords = coords.concat(getPositionsForCircle(coord, this.radius));
-    });
-    this.bbox = bboxFromArrayOfPositions(coords);
+    const bbox = bboxFromPositions(this.coordinates);
+    const pos1: GJ.Position = [bbox[0], bbox[1]];
+    const pos2: GJ.Position =
+      bbox.length === 4 ? [bbox[2], bbox[3]] : [bbox[3], bbox[4]];
+    const west = destination(pos1, this.radius, 270.0)[0];
+    const south = destination(pos1, this.radius, 180.0)[1];
+    const east = destination(pos2, this.radius, 90.0)[0];
+    const north = destination(pos2, this.radius, 0.0)[1];
+
+    if (bbox.length === 4) {
+      this.bbox = [west, south, east, north];
+    } else {
+      this.bbox = [west, south, bbox[2], east, north, bbox[5]];
+    }
+
     return this.bbox;
   }
 }
