@@ -260,5 +260,5 @@ export const bbox4 = (bbox: GJ.BBox): [number, number, number, number] => {
     return [bbox[0], bbox[1], bbox[3], bbox[4]];
   }
 
-  return [...bbox];
+  return [...bbox] as [number,number,number,number];
 };
