@@ -2,6 +2,7 @@ import type * as GJ from '../types.js';
 import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
 import {OptionalParam} from '../util-types.js';
 import {PointObject} from './PointObjects.js';
+import {toPointGeometry} from './toPointGeometry.js';
 
 export class PointGeometryCollection
   extends BaseGeometryCollection<PointObject>
