@@ -1,3 +1,4 @@
+import {GeoJSON} from '@envisim/geojson-utils';
 import {destination, copy} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
@@ -40,13 +41,7 @@ const placePoint = (
 
 // Internal.
 const setCoordinatesForGeometry = (
-  geoJSON:
-    | GeoJSON.Point
-    | GeoJSON.MultiPoint
-    | GeoJSON.LineString
-    | GeoJSON.MultiLineString
-    | GeoJSON.Polygon
-    | GeoJSON.MultiPolygon,
+  geoJSON: GeoJSON.BaseGeometry,
   position: GeoJSON.Position,
   rotation: number,
 ): void => {
@@ -101,13 +96,14 @@ const setCooordinatesForGeometryCollection = (
   rotation: number,
 ): void => {
   for (let i = 0; i < geoJSON.geometries.length; i++) {
-    let geometry = geoJSON.geometries[i];
-    if (geometry.type === 'GeometryCollection') {
-      setCooordinatesForGeometryCollection(geometry, position, rotation);
-    } else {
-      setCoordinatesForGeometry(geometry, position, rotation);
-    }
+    setCoordinatesForGeometry(geoJSON.geometries[i], position, rotation);
   }
+};
+
+type PlaceOpts = {
+  rotation: number;
+  randomRotation: boolean;
+  rand: Random;
 };
 
 /**
@@ -121,11 +117,26 @@ const setCooordinatesForGeometryCollection = (
  * @param opts.rand - Optional instance of Random.
  * @returns - A GeoJSON feature.
  */
-export const placeModelTract = (
-  modelTract: GeoJSON.Feature,
+function placeModelTract(
+  modelTract: GeoJSON.PointFeature,
+  position: GeoJSON.Position,
+  opts: PlaceOpts,
+): GeoJSON.PointFeature;
+function placeModelTract(
+  modelTract: GeoJSON.LineFeature,
+  position: GeoJSON.Position,
+  opts: PlaceOpts,
+): GeoJSON.LineFeature;
+function placeModelTract(
+  modelTract: GeoJSON.AreaFeature,
+  position: GeoJSON.Position,
+  opts: PlaceOpts,
+): GeoJSON.AreaFeature;
+function placeModelTract(
+  modelTract: GeoJSON.PointFeature | GeoJSON.LineFeature | GeoJSON.AreaFeature,
   position: GeoJSON.Position,
   opts = {rotation: 0, randomRotation: false, rand: new Random()},
-): GeoJSON.Feature => {
+) {
   let rotation = opts.rotation ?? 0;
   const rand = opts.rand ?? new Random();
   const randomRotation = opts.randomRotation ?? false;
@@ -143,28 +154,22 @@ export const placeModelTract = (
   }
   //feature.properties._center = position.slice();
   return feature;
-};
+}
+export {placeModelTract};
 
 // Internal, not coordinates in longitude and latitude.
 const radiusOfGeometry = (
-  geometry:
-    | GeoJSON.Point
-    | GeoJSON.MultiPoint
-    | GeoJSON.LineString
-    | GeoJSON.MultiLineString
-    | GeoJSON.Polygon
-    | GeoJSON.MultiPolygon,
-  opts = {_radius: 0},
+  geometry: GeoJSON.BaseGeometry,
 ) => {
   let maxRadius = 0;
   switch (geometry.type) {
     case 'Point':
-      if (opts._radius > 0) {
+      if (geometry?.radius && geometry.radius > 0) {
         maxRadius =
           Math.sqrt(
             geometry.coordinates[0] * geometry.coordinates[0] +
               geometry.coordinates[1] * geometry.coordinates[1],
-          ) + opts._radius;
+          ) + geometry.radius;
       } else {
         maxRadius = Math.sqrt(
           geometry.coordinates[0] * geometry.coordinates[0] +
@@ -175,8 +180,8 @@ const radiusOfGeometry = (
     case 'MultiPoint':
       geometry.coordinates.forEach((coord) => {
         const radius = Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]);
-        if (opts._radius) {
-          maxRadius = Math.max(maxRadius, radius + opts._radius);
+        if (geometry?.radius && geometry.radius > 0) {
+          maxRadius = Math.max(maxRadius, radius + geometry.radius);
         } else {
           maxRadius = Math.max(maxRadius, radius);
         }
@@ -229,18 +234,10 @@ const radiusOfGeometry = (
 // Internal, not coordinates in longitude and latitude.
 const radiusOfGeometryCollection = (
   geometry: GeoJSON.GeometryCollection,
-  opts = {_radius: 0},
 ) => {
   let maxRadius = 0;
   geometry.geometries.forEach((geometry) => {
-    if (geometry.type === 'GeometryCollection') {
-      maxRadius = Math.max(
-        maxRadius,
-        radiusOfGeometryCollection(geometry, opts),
-      );
-    } else {
-      maxRadius = Math.max(maxRadius, radiusOfGeometry(geometry, opts));
-    }
+    maxRadius = Math.max(maxRadius, radiusOfGeometry(geometry));
   });
   return maxRadius;
 };
@@ -251,15 +248,13 @@ const radiusOfGeometryCollection = (
  * @param feature - The model tract.
  * @returns - The radius of the model tract from (0,0).
  */
-export const radiusOfModelTract = (feature: GeoJSON.Feature): number => {
-  let opts = {_radius: 0};
-  if (feature.properties?._radius) {
-    opts._radius = feature.properties._radius;
-  }
+export const radiusOfModelTract = (
+  feature: GeoJSON.PointFeature | GeoJSON.LineFeature | GeoJSON.AreaFeature,
+): number => {
   if (feature.geometry.type === 'GeometryCollection') {
-    return radiusOfGeometryCollection(feature.geometry, opts);
+    return radiusOfGeometryCollection(feature.geometry);
   }
-  return radiusOfGeometry(feature.geometry, opts);
+  return radiusOfGeometry(feature.geometry);
 };
 
 // Internal.
@@ -275,7 +270,7 @@ const lengthOfLineString = (coords: GeoJSON.Position[]) => {
 };
 
 // Internal.
-const areaOfSimplePolygon = (coords: GeoJSON.Position[]): number => {
+const areaOfRing = (coords: GeoJSON.Position[]): number => {
   let area = 0; // Accumulates area in the loop
   let j = coords.length - 1; // The last vertex is the 'previous' one to the first
   let n = coords.length;
@@ -288,32 +283,25 @@ const areaOfSimplePolygon = (coords: GeoJSON.Position[]): number => {
 
 // Internal.
 const areaOfSinglePolygon = (coords: GeoJSON.Position[][]): number => {
-  let area = areaOfSimplePolygon(coords[0]); // full area
+  let area = areaOfRing(coords[0]); // full area
   let n = coords.length;
   for (let i = 1; i < n; i++) {
-    area = area - areaOfSimplePolygon(coords[i]); // substract holes
+    area = area - areaOfRing(coords[i]); // substract holes
   }
   return area;
 };
 
 // Internal.
 const sizeOfGeometry = (
-  geometry:
-    | GeoJSON.Point
-    | GeoJSON.MultiPoint
-    | GeoJSON.LineString
-    | GeoJSON.MultiLineString
-    | GeoJSON.Polygon
-    | GeoJSON.MultiPolygon,
-  opts = {_radius: 0},
+  geometry: GeoJSON.BaseGeometry,
 ) => {
   let circles = false;
   let size = 0;
   let radius = 0;
-  if (opts._radius > 0) {
+  if (geometry.radius && geometry.radius > 0) {
     // Treat points as circles.
     circles = true;
-    radius = opts._radius;
+    radius = geometry.radius;
   }
   switch (geometry.type) {
     case 'Point':
@@ -360,25 +348,19 @@ const sizeOfGeometry = (
  * @param feature - A GeoJSON format feature tract, but with cartesian coordinates relative to (0,0).
  * @returns - The size of the model tract.
  */
-export const sizeOfModelTract = (feature: GeoJSON.Feature): number => {
+export const sizeOfModelTract = (
+  feature: GeoJSON.PointFeature | GeoJSON.LineFeature | GeoJSON.AreaFeature,
+): number => {
   // Feature may not contain mixed geometries
   // but may be of type GeometryCollection.
   // Nested GeometryCollections are not supported.
-  const opts = {_radius: 0};
-  if (feature.properties?._radius) {
-    opts._radius = feature.properties._radius;
-  }
   let size = 0;
   if (feature.geometry.type === 'GeometryCollection') {
     feature.geometry.geometries.forEach((geometry) => {
-      if (geometry.type !== 'GeometryCollection') {
-        size += sizeOfGeometry(geometry, opts);
-      } else {
-        throw new Error('Nested GeometryCollections are not supported.');
-      }
+      size += sizeOfGeometry(geometry);
     });
   } else {
-    size = sizeOfGeometry(feature.geometry, opts);
+    size = sizeOfGeometry(feature.geometry);
   }
   return size;
 };
@@ -392,7 +374,7 @@ export const sizeOfModelTract = (feature: GeoJSON.Feature): number => {
  * @param length - The length of the line in meters.
  * @returns - A model tract.
  */
-export const straightLineTract = (length: number): GeoJSON.Feature => {
+export const straightLineTract = (length: number): GeoJSON.LineFeature => {
   const sideLength = length || 100;
   const halfSide = sideLength / 2;
   return {
@@ -414,7 +396,7 @@ export const straightLineTract = (length: number): GeoJSON.Feature => {
  * @param sideLength - Length of side in meters.
  * @returns - A model tract.
  */
-export const ellLineTract = (sideLength: number): GeoJSON.Feature => {
+export const ellLineTract = (sideLength: number): GeoJSON.LineFeature => {
   const length = sideLength || 100;
   const halfSide = length / 2;
   return {
@@ -441,7 +423,7 @@ export const ellLineTract = (sideLength: number): GeoJSON.Feature => {
 export const rectangularLineTract = (
   sideLength1: number,
   sideLength2: number,
-): GeoJSON.Feature => {
+): GeoJSON.LineFeature => {
   const halfSide1 = (sideLength1 || 100) / 2;
   const halfSide2 = (sideLength2 || 100) / 2;
   return {
@@ -463,10 +445,11 @@ export const rectangularLineTract = (
 /**
  * Returns a square-shaped line model tract.
  *
- * @param sideLength - Length of side in meters.
+ * @param sideLength1 - Length of side west-east in meters.
+ * @param sideLength2 - Length of side south-north in meters.
  * @returns - A model tract.
  */
-export const squareLineTract = (sideLength: number): GeoJSON.Feature => {
+export const squareLineTract = (sideLength: number): GeoJSON.LineFeature => {
   return rectangularLineTract(sideLength, sideLength);
 };
 
@@ -476,17 +459,16 @@ export const squareLineTract = (sideLength: number): GeoJSON.Feature => {
  * @param radius - The radius in meters.
  * @returns - A model tract.
  */
-export const circleAreaTract = (radius: number): GeoJSON.Feature => {
+export const circleAreaTract = (radius: number): GeoJSON.AreaFeature => {
   const r = radius || 10;
   return {
     type: 'Feature',
     geometry: {
       type: 'Point',
       coordinates: [0, 0],
+      radius: r,
     },
-    properties: {
-      _radius: r,
-    },
+    properties: {},
   };
 };
 
@@ -501,7 +483,7 @@ export const circleAreaTract = (radius: number): GeoJSON.Feature => {
 export const squareCircleAreaTract = (
   sideLength: number,
   radius: number,
-): GeoJSON.Feature => {
+): GeoJSON.AreaFeature => {
   const r = radius || 10;
   const length = sideLength || 100;
   const halfSide = length / 2;
@@ -513,18 +495,22 @@ export const squareCircleAreaTract = (
         {
           type: 'Point',
           coordinates: [halfSide, halfSide],
+          radius: r,
         },
         {
           type: 'Point',
           coordinates: [-halfSide, halfSide],
+          radius: r,
         },
         {
           type: 'Point',
           coordinates: [-halfSide, -halfSide],
+          radius: r,
         },
         {
           type: 'Point',
           coordinates: [halfSide, -halfSide],
+          radius: r,
         },
       ],
     },
@@ -544,7 +530,7 @@ export const squareCircleAreaTract = (
 export const rectangularAreaTract = (
   sideLength1: number,
   sideLength2: number,
-): GeoJSON.Feature => {
+): GeoJSON.AreaFeature => {
   const halfSide1 = (sideLength1 || 100) / 2;
   const halfSide2 = (sideLength2 || 100) / 2;
   return {
@@ -571,7 +557,7 @@ export const rectangularAreaTract = (
  * @param sideLength - Length of side in meters.
  * @returns - A model tract.
  */
-export const squareAreaTract = (sideLength: number): GeoJSON.Feature => {
+export const squareAreaTract = (sideLength: number): GeoJSON.AreaFeature => {
   return rectangularAreaTract(sideLength, sideLength);
 };
 
@@ -580,7 +566,7 @@ export const squareAreaTract = (sideLength: number): GeoJSON.Feature => {
  *
  * @returns - A model point tract.
  */
-export const pointTract = (): GeoJSON.Feature => {
+export const pointTract = (): GeoJSON.PointFeature => {
   return {
     type: 'Feature',
     geometry: {
@@ -598,7 +584,7 @@ export const pointTract = (): GeoJSON.Feature => {
  * @param sideLength - The side length in meters.
  * @returns - A model tract.
  */
-export const squarePointTract = (sideLength: number): GeoJSON.Feature => {
+export const squarePointTract = (sideLength: number): GeoJSON.PointFeature => {
   const length = sideLength || 100;
   const halfSide = length / 2;
   return {
@@ -626,11 +612,11 @@ export const squarePointTract = (sideLength: number): GeoJSON.Feature => {
 export const regularPolygonAreaTract = (
   sides: number,
   sideLength: number,
-): GeoJSON.Feature => {
+): GeoJSON.AreaFeature => {
   const n = Math.max(Math.round(sides || 3), 3);
   const length = sideLength || 100;
   const r = length / (2 * Math.sin(Math.PI / n));
-  const coordinates = [];
+  const coordinates: GeoJSON.Position[] = [];
   for (let i = 0; i < n + 1; i++) {
     let angle = (i / n) * 2 * Math.PI;
     coordinates.push([r * Math.cos(angle), r * Math.sin(angle)]);
@@ -655,11 +641,11 @@ export const regularPolygonAreaTract = (
 export const regularPolygonLineTract = (
   sides: number,
   sideLength: number,
-): GeoJSON.Feature => {
+): GeoJSON.LineFeature => {
   const n = Math.max(Math.round(sides || 3), 3);
   const length = sideLength || 100;
   const r = length / (2 * Math.sin(Math.PI / n));
-  const coordinates = [];
+  const coordinates: GeoJSON.Position[] = [];
   for (let i = 0; i < n + 1; i++) {
     let angle = (i / n) * 2 * Math.PI;
     coordinates.push([r * Math.cos(angle), r * Math.sin(angle)]);
@@ -682,7 +668,7 @@ export const regularPolygonLineTract = (
  * @param radius - The radius of the circle in meters.
  * @returns - A model tract.
  */
-export const circularLineTract = (radius: number): GeoJSON.Feature => {
+export const circularLineTract = (radius: number): GeoJSON.LineFeature => {
   const n = 36;
   const v = Math.PI / n;
   // use the radius that gives equal area to the polygon for best approximation
