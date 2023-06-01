@@ -2,17 +2,9 @@ import type * as GJ from '../types.js';
 import {BaseFeature} from '../ClassBaseFeature.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import {OptionalParam} from '../util-types.js';
-import {
-  AreaObject,
-  MultiPointCircle,
-  MultiPolygon,
-  PointCircle,
-  Polygon,
-} from './AreaObjects.js';
-import {
-  AreaGeometry,
-  AreaGeometryCollection,
-} from './ClassAreaGeometryCollection.js';
+import {AreaObject} from './AreaObjects.js';
+import {AreaGeometry} from './ClassAreaGeometryCollection.js';
+import {toAreaGeometry} from './toAreaGeometry.js';
 
 export class AreaFeature
   extends BaseFeature<AreaGeometry>
@@ -36,23 +28,7 @@ export class AreaFeature
   ) {
     super({...obj, type: 'Feature'}, shallow);
 
-    switch (obj.geometry?.type) {
-      case 'GeometryCollection':
-        this.geometry = new AreaGeometryCollection(obj.geometry, shallow);
-        break;
-      case 'Point':
-        this.geometry = new PointCircle(obj.geometry, shallow);
-        break;
-      case 'MultiPoint':
-        this.geometry = new MultiPointCircle(obj.geometry, shallow);
-        break;
-      case 'Polygon':
-        this.geometry = new Polygon(obj.geometry, shallow);
-        break;
-      case 'MultiPolygon':
-        this.geometry = new MultiPolygon(obj.geometry, shallow);
-        break;
-    }
+    this.geometry = toAreaGeometry(obj.geometry, shallow);
   }
 
   get size(): number {

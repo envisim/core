@@ -2,11 +2,9 @@ import type * as GJ from '../types.js';
 import {BaseFeature} from '../ClassBaseFeature.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import {OptionalParam} from '../util-types.js';
-import {
-  PointGeometry,
-  PointGeometryCollection,
-} from './ClassPointGeometryCollection.js';
-import {MultiPoint, Point, PointObject} from './PointObjects.js';
+import {PointGeometry} from './ClassPointGeometryCollection.js';
+import {PointObject} from './PointObjects.js';
+import {toPointGeometry} from './toPointGeometry.js';
 
 export class PointFeature
   extends BaseFeature<PointGeometry>
@@ -30,17 +28,7 @@ export class PointFeature
   ) {
     super({...obj, type: 'Feature'}, shallow);
 
-    switch (obj.geometry?.type) {
-      case 'GeometryCollection':
-        this.geometry = new PointGeometryCollection(obj.geometry, shallow);
-        break;
-      case 'Point':
-        this.geometry = new Point(obj.geometry, shallow);
-        break;
-      case 'MultiPoint':
-        this.geometry = new MultiPoint(obj.geometry, shallow);
-        break;
-    }
+    this.geometry = toPointGeometry(obj.geometry, shallow);
   }
 
   get size(): number {

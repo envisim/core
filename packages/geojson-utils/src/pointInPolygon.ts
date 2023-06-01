@@ -1,7 +1,7 @@
 import type * as GJ from './geojson/types.js';
 import {pointInBBox} from './bbox.js';
-import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
-import {toAreaGeometry} from './index.js';
+import type {AreaObject} from './geojson/areas/AreaObjects.js';
+import {toAreaGeometry} from './geojson/areas/toAreaGeometry.js';
 
 /** @internal */
 function pointInRing(point: GJ.Position, polygon: GJ.Position[]): boolean {
@@ -63,10 +63,10 @@ export const pointInMultiPolygon = (
 };
 
 /**
- * Checks if a point is inside an AreaFeature.
+ * Checks if a point is inside an AreaGeometry.
  *
  * @param point - A GeoJSON Position [lon,lat].
- * @param areaFeature- An AreaFeature.
+ * @param geometry
  * @returns `true` if the position is inside the area.
  */
 export function pointInAreaGeometry(
@@ -90,23 +90,25 @@ export function pointInAreaGeometry(
       return pointInMultiPolygon(point, ag.coordinates);
 
     case 'GeometryCollection':
-      return ag.geometries.some((geom) => pointInAreaGeometry(point, geom));
+      return ag.geometries.some((geom: AreaObject) =>
+        pointInAreaGeometry(point, geom),
+      );
 
     default:
       return false;
   }
 }
 
+/**
+ * Checks if a point is inside an AreaFeature.
+ *
+ * @param point - A GeoJSON Position [lon,lat].
+ * @param feature
+ * @returns `true` if the position is inside the area.
+ */
 export function pointInAreaFeature(
   point: GJ.Position,
-  areaFeature: GJ.AreaFeature,
+  feature: GJ.AreaFeature,
 ): boolean {
-  const af = AreaFeature.isFeature(areaFeature)
-    ? areaFeature
-    : new AreaFeature(areaFeature, true);
-
-  // If it is not in the bounding box, we can give up
-  if (!pointInBBox(point, af.getBBox())) return false;
-
-  return pointInAreaGeometry(point, af.geometry);
+  return pointInAreaGeometry(point, feature.geometry);
 }
