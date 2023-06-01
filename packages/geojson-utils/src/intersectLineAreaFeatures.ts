@@ -166,8 +166,8 @@ export const intersectLineAreaFeatures = (
     ? areaFeature
     : new AreaFeature(areaFeature);
 
-  const box1 = lf.getBBox();
-  const box2 = af.getBBox();
+  const box1 = lf.geometry.getBBox();
+  const box2 = af.geometry.getBBox();
   if (!bboxInBBox(box1, box2)) {
     return null;
   }
