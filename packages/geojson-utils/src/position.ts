@@ -47,3 +47,7 @@ export function longitudeCenter(
 ): number {
   return normalizeLongitude(a + longitudeDistance(a, b, norm) * 0.5);
 }
+
+export function checkInRange(x: number, a: number, b: number): boolean {
+  return a <= x && x <= b;
+}

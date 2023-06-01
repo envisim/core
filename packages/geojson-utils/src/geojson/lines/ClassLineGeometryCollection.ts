@@ -1,7 +1,8 @@
 import type * as GJ from '../types.js';
 import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
 import {OptionalParam} from '../util-types.js';
-import {LineObject, LineString, MultiLineString} from './LineObjects.js';
+import {LineObject} from './LineObjects.js';
+import {toLineGeometry} from './toLineGeometry.js';
 
 export class LineGeometryCollection
   extends BaseGeometryCollection<LineObject>
@@ -24,14 +25,9 @@ export class LineGeometryCollection
   ) {
     super({...obj, type: 'GeometryCollection'}, shallow);
 
-    this.geometries = obj.geometries.map((g: GJ.LineObject) => {
-      switch (g.type) {
-        case 'LineString':
-          return new LineString(g, true);
-        case 'MultiLineString':
-          return new MultiLineString(g, true);
-      }
-    });
+    this.geometries = obj.geometries.map((g: GJ.LineObject) =>
+      toLineGeometry(g, shallow, false),
+    );
   }
 
   length(dist: number = Infinity): number {

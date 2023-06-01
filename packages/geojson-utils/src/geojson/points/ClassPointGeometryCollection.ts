@@ -1,7 +1,8 @@
 import type * as GJ from '../types.js';
 import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
 import {OptionalParam} from '../util-types.js';
-import {MultiPoint, Point, PointObject} from './PointObjects.js';
+import {PointObject} from './PointObjects.js';
+import {toPointGeometry} from './toPointGeometry.js';
 
 export class PointGeometryCollection
   extends BaseGeometryCollection<PointObject>
@@ -24,14 +25,9 @@ export class PointGeometryCollection
   ) {
     super({...obj, type: 'GeometryCollection'}, shallow);
 
-    this.geometries = obj.geometries.map((g: GJ.PointObject) => {
-      switch (g.type) {
-        case 'Point':
-          return new Point(g, true);
-        case 'MultiPoint':
-          return new MultiPoint(g, true);
-      }
-    });
+    this.geometries = obj.geometries.map((g: GJ.PointObject) =>
+      toPointGeometry(g, shallow, false),
+    );
   }
 
   count(): number {
