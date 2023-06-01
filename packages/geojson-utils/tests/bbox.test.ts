@@ -1,6 +1,12 @@
 import type * as GJ from '../src/geojson/types.js';
-import {pointInBBox, bboxInBBox} from '../src/bbox.js';
+import {
+  pointInBBox,
+  bboxInBBox,
+  unionOfBBoxes,
+  bboxFromPositions,
+} from '../src/bbox.js';
 import {Polygon} from '../src/geojson/areas/ClassPolygon';
+import './_equalArrays.testf';
 
 describe('bbox', () => {
   // test.todo('Write more tests');
@@ -42,5 +48,50 @@ describe('bbox', () => {
   test('bboxInBBox', () => {
     expect(bboxInBBox(box, box2)).toBe(true);
     expect(bboxInBBox(box, box3)).toBe(false);
+  });
+
+  test('union of bboxes', () => {
+    let bboxes: GJ.BBox[] = [
+      [-170, -10, -110, 10],
+      [-160, -10, -150, 15],
+      [-165, -20, -10, -120, 10, 10],
+    ];
+    expect(unionOfBBoxes(bboxes)).arrayToEqual([-170, -20, -10, -110, 15, 10]);
+
+    bboxes = [
+      [-170, -10, -110, 10],
+      [-150, -10, -100, 10],
+      [-165, -10, -155, 10],
+    ];
+    expect(unionOfBBoxes(bboxes)).arrayToEqual([-170, -10, -100, 10]);
+
+    bboxes = [
+      [-170, -10, -110, 20],
+      [-120, -10, 20, 10],
+      [50, -50, -180, 10],
+    ];
+    expect(unionOfBBoxes(bboxes)).arrayToEqual([50, -50, 20, 20]);
+  });
+
+  test('bbox from positions', () => {
+    let positions: GJ.Position[] = [
+      [-58, -63],
+      [-74, -72],
+      [-102, -71],
+      [-102, -74],
+      [-131, -74],
+      [-163, -77],
+      [163, -77],
+      [172, -71],
+      [140, -65],
+      [113, -65],
+      [-4, -70],
+      [-14, -71],
+      [-33, -77],
+      [-46, -77],
+      [-61, -74],
+      [-58, -63],
+    ];
+    expect(bboxFromPositions(positions)).arrayToEqual([113, -77, -4, -63]);
   });
 });

@@ -1,5 +1,5 @@
 import type * as GJ from '../types.js';
-import {bboxFromArrayOfPositions} from '../../bbox.js';
+import {bboxFromPositions, unionOfBBoxes} from '../../bbox.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
 import {lengthOfLineString} from '../../length.js';
 import type {GeomEachCallback} from '../callback-types.js';
@@ -62,7 +62,8 @@ export class MultiLineString
   }
 
   setBBox(): GJ.BBox {
-    this.bbox = bboxFromArrayOfPositions(this.coordinates.flat(1));
+    const bbox = this.coordinates.map((ls) => bboxFromPositions(ls));
+    this.bbox = unionOfBBoxes(bbox);
     return this.bbox;
   }
 }
