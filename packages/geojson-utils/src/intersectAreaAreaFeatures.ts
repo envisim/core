@@ -107,8 +107,8 @@ export const intersectAreaAreaFeatures = (
     ? areaFeature2
     : new AreaFeature(areaFeature2);
 
-  const box1 = af1.getBBox();
-  const box2 = af2.getBBox();
+  const box1 = af1.geometry.getBBox();
+  const box2 = af2.geometry.getBBox();
 
   if (!bboxInBBox(box1, box2)) {
     return null;

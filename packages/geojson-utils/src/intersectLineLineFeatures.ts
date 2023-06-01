@@ -26,8 +26,8 @@ export const intersectLineLineFeatures = (
     : new LineFeature(secondFeature);
 
   const points: GJ.Position[] = [];
-  const box1 = f1.getBBox();
-  const box2 = f2.getBBox();
+  const box1 = f1.geometry.getBBox();
+  const box2 = f2.geometry.getBBox();
 
   if (bboxInBBox(box1, box2)) {
     f1.geomEach((g1: GJ.LineObject) => {
