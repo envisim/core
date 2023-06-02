@@ -1,10 +1,8 @@
 import type * as GJ from './types.js';
 import {unionOfBBoxes} from '../bbox.js';
+import type {AreaObject, LineObject, PointObject} from '../objects/index.js';
 import {GeoJsonObject} from './ClassGeoJsonObject.js';
-import type {AreaObject} from './areas/AreaObjects.js';
 import type {GeomEachCallback, ForEachCallback} from './callback-types.js';
-import type {LineObject} from './lines/LineObjects.js';
-import type {PointObject} from './points/PointObjects.js';
 
 export abstract class BaseGeometryCollection<
   T extends AreaObject | LineObject | PointObject,

@@ -1,9 +1,6 @@
 import type * as GJ from '../types.js';
-import {
-  LineGeometry,
-  LineGeometryCollection,
-} from './ClassLineGeometryCollection.js';
-import {LineObject, LineString, MultiLineString} from './LineObjects.js';
+import {LineObject, LineString, MultiLineString} from '../objects/index.js';
+import {LineGeometryCollection} from './ClassLineGeometryCollection.js';
 
 function toLineGeometry(
   geometry: GJ.LineObject,
@@ -14,12 +11,12 @@ function toLineGeometry(
   geometry: GJ.LineGeometry,
   shallow: boolean,
   allowCollection?: true,
-): LineGeometry;
+): LineObject | LineGeometryCollection;
 function toLineGeometry(
   geometry: GJ.LineGeometry,
   shallow: boolean = true,
   allowCollection: boolean = true,
-): LineGeometry {
+): LineObject | LineGeometryCollection {
   switch (geometry.type) {
     case 'LineString':
       return shallow === false || !LineString.isObject(geometry)

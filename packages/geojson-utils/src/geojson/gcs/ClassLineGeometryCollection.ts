@@ -1,7 +1,7 @@
 import type * as GJ from '../types.js';
-import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
+import type {LineObject} from '../objects/index.js';
 import {OptionalParam} from '../util-types.js';
-import {LineObject} from './LineObjects.js';
+import {BaseGeometryCollection} from './BaseGeometryCollection.js';
 import {toLineGeometry} from './toLineGeometry.js';
 
 export class LineGeometryCollection
@@ -40,5 +40,3 @@ export class LineGeometryCollection
     }, Infinity);
   }
 }
-
-export type LineGeometry = LineObject | LineGeometryCollection;

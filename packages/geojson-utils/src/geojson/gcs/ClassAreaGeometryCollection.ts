@@ -1,7 +1,7 @@
 import type * as GJ from '../types.js';
-import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
+import type {AreaObject} from '../objects/index.js';
 import {OptionalParam} from '../util-types.js';
-import {AreaObject} from './AreaObjects.js';
+import {BaseGeometryCollection} from './BaseGeometryCollection.js';
 import {toAreaGeometry} from './toAreaGeometry.js';
 
 export class AreaGeometryCollection
@@ -44,5 +44,3 @@ export class AreaGeometryCollection
     }, Infinity);
   }
 }
-
-export type AreaGeometry = AreaObject | AreaGeometryCollection;

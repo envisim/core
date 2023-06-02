@@ -1,9 +1,6 @@
 import type * as GJ from '../types.js';
-import {
-  PointGeometry,
-  PointGeometryCollection,
-} from './ClassPointGeometryCollection.js';
-import {MultiPoint, Point, PointObject} from './PointObjects.js';
+import {MultiPoint, Point, PointObject} from '../objects/index.js';
+import {PointGeometryCollection} from './ClassPointGeometryCollection.js';
 
 function toPointGeometry(
   geometry: GJ.PointObject,
@@ -14,12 +11,12 @@ function toPointGeometry(
   geometry: GJ.PointGeometry,
   shallow: boolean,
   allowCollection?: true,
-): PointGeometry;
+): PointObject | PointGeometryCollection;
 function toPointGeometry(
   geometry: GJ.PointGeometry,
   shallow: boolean = true,
   allowCollection: boolean = true,
-): PointGeometry {
+): PointObject | PointGeometryCollection {
   switch (geometry.type) {
     case 'Point':
       return shallow === false || !Point.isObject(geometry)

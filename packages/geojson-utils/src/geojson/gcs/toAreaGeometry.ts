@@ -1,15 +1,12 @@
 import type * as GJ from '../types.js';
 import {
   AreaObject,
-  MultiPointCircle,
+  Circle,
+  MultiCircle,
   MultiPolygon,
-  PointCircle,
   Polygon,
-} from './AreaObjects.js';
-import {
-  AreaGeometry,
-  AreaGeometryCollection,
-} from './ClassAreaGeometryCollection.js';
+} from '../objects/index.js';
+import {AreaGeometryCollection} from './ClassAreaGeometryCollection.js';
 
 function toAreaGeometry(
   geometry: GJ.AreaObject,
@@ -20,21 +17,21 @@ function toAreaGeometry(
   geometry: GJ.AreaGeometry,
   shallow: boolean,
   allowCollection?: true,
-): AreaGeometry;
+): AreaObject | AreaGeometryCollection;
 function toAreaGeometry(
   geometry: GJ.AreaGeometry,
   shallow: boolean = true,
   allowCollection: boolean = true,
-): AreaGeometry {
+): AreaObject | AreaGeometryCollection {
   switch (geometry.type) {
     case 'Point':
-      return shallow === false || !PointCircle.isObject(geometry)
-        ? new PointCircle(geometry, shallow)
+      return shallow === false || !Circle.isObject(geometry)
+        ? new Circle(geometry, shallow)
         : geometry;
 
     case 'MultiPoint':
-      return shallow === false || !MultiPointCircle.isObject(geometry)
-        ? new MultiPointCircle(geometry, shallow)
+      return shallow === false || !MultiCircle.isObject(geometry)
+        ? new MultiCircle(geometry, shallow)
         : geometry;
 
     case 'Polygon':

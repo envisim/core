@@ -1,7 +1,7 @@
 import type * as GJ from '../types.js';
-import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
+import type {PointObject} from '../objects/index.js';
 import {OptionalParam} from '../util-types.js';
-import {PointObject} from './PointObjects.js';
+import {BaseGeometryCollection} from './ClassBaseGeometryCollection.js';
 import {toPointGeometry} from './toPointGeometry.js';
 
 export class PointGeometryCollection
@@ -41,5 +41,3 @@ export class PointGeometryCollection
     );
   }
 }
-
-export type PointGeometry = PointObject | PointGeometryCollection;
