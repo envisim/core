@@ -1,29 +1,32 @@
 import {Poisson} from '@envisim/distributions';
 import {Normal} from '@envisim/distributions';
 import {
-  area,
-  bbox,
-  pointInBbox,
-  pointInPolygon,
+  GeoJSON,
+  pointInBBox,
+  bbox4,
+  pointInAreaFeature,
   destination,
-  toPoint,
-  toPolygon,
-  asFeatureCollection,
+  Point,
+  PointFeature,
+  PointCollection,
+  AreaCollection,
+  Polygon,
+  AreaFeature,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {uniformBinomialPointProcess} from './uniformBinomialPointProcess.js';
+import {uniformPositionsInBBox} from './samplePointsOnAreas.js';
 
 // For conversion from radians to degrees.
 const toDeg = 180 / Math.PI;
 
 // Internal. Generates point with normally distributed offsets around center.
 // Sigma is standard deviation.
-const randomPointInCluster = (
+function randomPositionInCluster(
   center: GeoJSON.Position,
   sigma: number,
   rand: Random,
-): GeoJSON.Position => {
+): GeoJSON.Position {
   // Generate two independent Normal(0,sigma).
   const xy = Normal.random(2, {mu: 0, sigma: sigma}, {rand});
   // Compute angle.
@@ -35,36 +38,33 @@ const randomPointInCluster = (
   // Compute destination point from center via
   // distance and angle.
   return destination(center, dist, azimuth);
-};
+}
 
 /**
  * Generates points from a Thomas cluster point process
- * on areas of input GeoJSON.
+ * on areas of input AreaCollection.
  *
- * @param geoJSON - A GeoJSON FeatureCollection containing area.
+ * @param collection - An AreaCollection.
  * @param intensityOfParents - Number of parent points / clusters per square meter.
  * @param meanOfCluster - Mean number of points per cluster.
  * @param sigmaOfCluster - Standard deviation in meters in Normal distributions for generating points offset in cluster.
  * @param opts - An optional options object.
  * @param opts.rand - An optional instance of Random.
- * @returns - A GeoJSON FeatureCollection of generated points.
+ * @returns - A PointCollection.
  */
-export const thomasClusterProcess = (
-  geoJSON: GeoJSON.FeatureCollection,
+export function thomasClusterProcess(
+  collection: AreaCollection,
   intensityOfParents: number,
   meanOfCluster: number,
   sigmaOfCluster: number,
   opts: {rand?: Random} = {},
-): GeoJSON.FeatureCollection => {
-  if (geoJSON.type !== 'FeatureCollection') {
-    throw new Error(
-      'Input GeoJSON must be a FeatureCollection, not type: ' +
-        geoJSON.type +
-        '.',
-    );
+): PointCollection {
+  if (!AreaCollection.isCollection(collection)) {
+    throw new Error('Input collection must be an Areaollection.');
   }
+
   const rand = opts.rand ?? new Random();
-  const box = bbox(geoJSON);
+  const box = bbox4(collection.getBBox());
   // Extend box by 4 * sigmaOfCluster to avoid edge effects.
   // Same as spatstat default in R.
   const dist = Math.SQRT2 * 4 * sigmaOfCluster;
@@ -77,19 +77,29 @@ export const thomasClusterProcess = (
     [westNorth, westSouth, eastSouth, eastNorth, westNorth],
   ];
   // Expanded box as Feature
-  const expandedBoxPolygon = toPolygon(expandedBoxPolygonCoords);
+  const expandedBoxPolygon = AreaFeature.create(
+    Polygon.create(expandedBoxPolygonCoords),
+    {},
+    true,
+  );
   // Generate parents in expanded box.
-  const A = area(expandedBoxPolygon);
+  const A = expandedBoxPolygon.area();
+  // TODO?: The expanded box polygon may overlap antimeridian
+  // and be incorrect GeoJSON. However, the area calculation
+  // should still be correct as geographic-lib does not require
+  // split over antimeridian.
+
   const muParents = intensityOfParents * A;
   const nrOfParents = Poisson.random(1, {rate: muParents}, {rand: rand})[0];
 
-  const parentsInBox = uniformBinomialPointProcess(
-    asFeatureCollection(expandedBoxPolygon),
+  const parentsInBox = uniformPositionsInBBox(
+    [...westSouth, ...eastNorth] as GeoJSON.BBox,
     nrOfParents,
-    {rand: rand},
+    {rand},
   );
+
   // To store new features.
-  const features: GeoJSON.Feature[] = [];
+  const features: PointFeature[] = [];
   // Generate number of points in each cluster.
   const nrOfPointsInCluster = Poisson.random(
     nrOfParents,
@@ -99,39 +109,34 @@ export const thomasClusterProcess = (
     {rand: rand},
   );
 
-  parentsInBox.features.forEach((feature: GeoJSON.Feature, index: number) => {
+  // nr of features in collection
+  const nrOfFeatures = collection.features.length;
+
+  parentsInBox.forEach((coords, index: number) => {
     // Generate the child points and push if they are inside
     // input geoJSON.
-    for (let i = 0; i < nrOfPointsInCluster[index]; i++) {
-      if (feature.geometry.type === 'Point') {
-        // Create random child point in cluster.
-        const coordinates = randomPointInCluster(
-          feature.geometry.coordinates,
-          sigmaOfCluster,
-          rand,
-        );
-        const child = toPoint(coordinates);
-        // If child is in input geoJSON, then push child.
-        if (pointInBbox(coordinates, box)) {
-          const nrOfFeatures = geoJSON.features.length;
-          for (let j = 0; j < nrOfFeatures; j++) {
-            const f = geoJSON.features[j];
-            if (
-              f.geometry.type === 'Polygon' ||
-              f.geometry.type === 'MultiPolygon'
-            ) {
-              if (pointInPolygon(child, f)) {
-                features.push(child);
-                break;
-              }
-            }
+    const clusterSize = nrOfPointsInCluster[index];
+    for (let i = 0; i < clusterSize; i++) {
+      // Create random child point in cluster.
+      const coordinates = randomPositionInCluster(coords, sigmaOfCluster, rand);
+      // If child is in input collection, then push child.
+      if (pointInBBox(coordinates, box)) {
+        for (let j = 0; j < nrOfFeatures; j++) {
+          if (pointInAreaFeature(coordinates, collection.features[i])) {
+            const child = PointFeature.create(
+              Point.create(coordinates),
+              {},
+              true,
+            );
+            features.push(child);
+            break;
           }
         }
       }
     }
   });
-  return {
+  return new PointCollection({
     type: 'FeatureCollection',
     features: features,
-  };
-};
+  });
+}
