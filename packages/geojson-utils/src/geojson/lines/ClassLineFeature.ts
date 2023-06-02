@@ -16,7 +16,7 @@ export class LineFeature
 
   static create(
     geometry: GJ.LineGeometry,
-    properties: GJ.FeatureProperties,
+    properties: GJ.FeatureProperties = {},
     shallow: boolean = true,
   ): LineFeature {
     return new LineFeature({geometry, properties}, shallow);

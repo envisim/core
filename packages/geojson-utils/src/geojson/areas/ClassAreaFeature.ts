@@ -16,7 +16,7 @@ export class AreaFeature
 
   static create(
     geometry: GJ.AreaGeometry,
-    properties: GJ.FeatureProperties,
+    properties: GJ.FeatureProperties = {},
     shallow: boolean = true,
   ): AreaFeature {
     return new AreaFeature({geometry, properties}, shallow);

@@ -16,7 +16,7 @@ export class PointFeature
 
   static create(
     geometry: GJ.PointGeometry,
-    properties: GJ.FeatureProperties,
+    properties: GJ.FeatureProperties = {},
     shallow: boolean = true,
   ): PointFeature {
     return new PointFeature({geometry, properties}, shallow);

@@ -1,41 +1,35 @@
 import type * as GJ from '../src/geojson/types.js';
+import {AreaFeature} from '../src/geojson/areas/ClassAreaFeature.js';
+import {LineFeature} from '../src/geojson/lines/ClassLineFeature.js';
 import {intersectLineAreaFeatures} from '../src/intersectLineAreaFeatures.js';
+import './_equalArrays.testf';
 
 describe('intersectLinePolygonFeatures', () => {
-  // polygon
-  const polygon: GJ.AreaFeature = {
-    type: 'Feature',
-    geometry: {
-      type: 'Polygon',
-      coordinates: [
-        [
-          [-0.5, -0.5],
-          [0.5, -0.5],
-          [0.5, 0.5],
-          [-0.5, 0.5],
-          [-0.5, -0.5],
-        ],
+  const polygon = AreaFeature.create({
+    type: 'Polygon',
+    coordinates: [
+      [
+        [-0.5, -0.5],
+        [0.5, -0.5],
+        [0.5, 0.5],
+        [-0.5, 0.5],
+        [-0.5, -0.5],
       ],
-    },
-    properties: {},
-  };
+    ],
+  });
 
-  const line: GJ.LineFeature = {
-    type: 'Feature',
-    geometry: {
-      type: 'LineString',
-      coordinates: [
-        [-2, 0],
-        [-0.5, 0],
-        [0, 0.1],
-        [0.1, 0],
-        [0.4, 0],
-        [0.5, 0],
-        [2, 0],
-      ],
-    },
-    properties: {},
-  };
+  const line = LineFeature.create({
+    type: 'LineString',
+    coordinates: [
+      [-2, 0],
+      [-0.5, 0],
+      [0, 0.1],
+      [0.1, 0],
+      [0.4, 0],
+      [0.5, 0],
+      [2, 0],
+    ],
+  });
 
   const intersection = intersectLineAreaFeatures(line, polygon);
   let coords = [
@@ -45,6 +39,7 @@ describe('intersectLinePolygonFeatures', () => {
     [3, 3],
     [3, 3],
   ];
+
   if (intersection) {
     if (intersection.geometry.type === 'LineString') {
       coords = intersection.geometry.coordinates;
@@ -53,10 +48,10 @@ describe('intersectLinePolygonFeatures', () => {
       // expected coords are [[-0.5,0],[0.5,0]]
     }
   }
+
+  console.log(coords);
   test('intersectLinePolygonFeatures', () => {
-    expect(coords[0][0]).toBeCloseTo(-0.5, 3);
-    expect(coords[0][1]).toBeCloseTo(0, 3);
-    expect(coords[4][0]).toBeCloseTo(0.5, 3);
-    expect(coords[4][1]).toBeCloseTo(0, 3);
+    expect(coords[0]).arrayToAlmostEqual([-0.5, 0], 1e-9);
+    expect(coords[4]).arrayToAlmostEqual([0.5, 0], 1e-9);
   });
 });

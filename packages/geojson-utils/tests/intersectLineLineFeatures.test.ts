@@ -1,42 +1,31 @@
-import type * as GJ from '../src/geojson/types.js';
+import {LineFeature} from '../src/geojson/lines/ClassLineFeature.js';
+import type {PointObject} from '../src/geojson/points/PointObjects.js';
 import {intersectLineLineFeatures} from '../src/intersectLineLineFeatures.js';
+import './_equalArrays.testf';
 
 describe('intersectLineLineFeatures', () => {
-  const line1: GJ.LineFeature = {
-    type: 'Feature',
-    geometry: {
-      type: 'LineString',
-      coordinates: [
-        [-2, 0],
-        [2, 0],
-      ],
-    },
-    properties: {},
-  };
-  const line2: GJ.LineFeature = {
-    type: 'Feature',
-    geometry: {
-      type: 'LineString',
-      coordinates: [
-        [0, -1],
-        [0, 1],
-      ],
-    },
-    properties: {},
-  };
+  const line1 = LineFeature.create({
+    type: 'LineString',
+    coordinates: [
+      [-2, 0],
+      [2, 0],
+    ],
+  });
+  const line2 = LineFeature.create({
+    type: 'LineString',
+    coordinates: [
+      [0, -1],
+      [0, 1],
+    ],
+  });
 
   const intersection = intersectLineLineFeatures(line1, line2);
-  let coords: GJ.Position = [3, 3];
-  if (intersection) {
-    if (intersection.geometry.type === 'Point') {
-      coords = intersection.geometry.coordinates;
-      //console.log(intersection);
-      //console.log(coords);
-      // expected coords are [0,0]
-    }
-  }
+  const coords = (intersection?.geometry as PointObject)?.coordinates ?? [
+    Infinity,
+    Infinity,
+  ];
+
   test('intersectLineLineFeatures', () => {
-    expect(coords[0]).toBeCloseTo(0, 3);
-    expect(coords[1]).toBeCloseTo(0, 3);
+    expect(coords).arrayToAlmostEqual([0, 0], 1e-9);
   });
 });
