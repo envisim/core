@@ -1,10 +1,9 @@
 import type * as GJ from '../types.js';
-import {BaseFeature} from '../ClassBaseFeature.js';
 import type {GeomEachCallback} from '../callback-types.js';
+import {LineGeometry, toLineGeometry} from '../gcs/index.js';
+import type {LineObject} from '../objects/index.js';
 import {OptionalParam} from '../util-types.js';
-import {LineGeometry} from './ClassLineGeometryCollection.js';
-import {LineObject} from './LineObjects.js';
-import {toLineGeometry} from './toLineGeometry.js';
+import {BaseFeature} from './BaseFeature.js';
 
 export class LineFeature
   extends BaseFeature<LineGeometry>

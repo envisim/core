@@ -1,10 +1,9 @@
 import type * as GJ from '../types.js';
-import {BaseFeature} from '../ClassBaseFeature.js';
 import type {GeomEachCallback} from '../callback-types.js';
+import {PointGeometry, toPointGeometry} from '../gcs/index.js';
+import type {PointObject} from '../objects/index.js';
 import {OptionalParam} from '../util-types.js';
-import {PointGeometry} from './ClassPointGeometryCollection.js';
-import {PointObject} from './PointObjects.js';
-import {toPointGeometry} from './toPointGeometry.js';
+import {BaseFeature} from './BaseFeature.js';
 
 export class PointFeature
   extends BaseFeature<PointGeometry>
