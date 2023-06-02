@@ -19,6 +19,49 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
+const toRad = Math.PI / 180;
+const toDeg = 180 / Math.PI;
+
+/**
+ * Generates uniform random positions in bounding box
+ * @param box - A GeoJSON bounding box.
+ * @param n - Positive integer sample size.
+ * @param opts - Options.
+ * @param opts.rand - Optional instance of Random.
+ * @returns - Array of GeoJSON positions.
+ */
+export function uniformPositionsInBBox(
+  box: GeoJSON.BBox,
+  n: number,
+  opts: {rand: Random},
+): GeoJSON.Position[] {
+  const bbox = bbox4(box);
+  const y1 = (Math.cos((90 - bbox[1]) * toRad) + 1) / 2;
+  const y2 = (Math.cos((90 - bbox[3]) * toRad) + 1) / 2;
+  const lonDist = longitudeDistance(bbox[0], bbox[2]);
+  const positions: GeoJSON.Position[] = [];
+  const rand = opts.rand ?? new Random();
+  if (n < 0) {
+    throw new Error('n must be non-negative.');
+  }
+
+  for (let i = 0; i < n; i++) {
+    // Generate the point
+    const yRand = y1 + (y2 - y1) * rand.float();
+    const lat = 90 - Math.acos(2 * yRand - 1) * toDeg;
+    const lon = normalizeLongitude(bbox[0] + lonDist * rand.float());
+    positions.push([lon, lat]);
+  }
+
+  if (box.length === 6) {
+    for (let i = 0; i < n; i++) {
+      const alt = box[2] + (box[5] - box[2]) * rand.float();
+      positions[i].push(alt);
+    }
+  }
+  return positions;
+}
+
 export type TsamplePointsOnAreasOpts = {
   buffer?: number;
   ratio?: number;
@@ -38,12 +81,12 @@ export type TsamplePointsOnAreasOpts = {
  * @param opts.rand - An optional instance of Random.
  * @returns - Resulting GeoJSON FeatureCollection.
  */
-export const samplePointsOnAreas = (
+export function samplePointsOnAreas(
   collection: AreaCollection,
   method: 'uniform' | 'systematic',
   sampleSize: number,
   opts: TsamplePointsOnAreasOpts = {},
-): PointCollection => {
+): PointCollection {
   if (!AreaCollection.isCollection(collection)) {
     throw new Error('Input collection must be an AreaCollection.');
   }
@@ -106,8 +149,6 @@ export const samplePointsOnAreas = (
   const box = bbox4(buffered.getBBox());
   const pointFeatures = [];
   const parentIndex: number[] = [];
-  const toRad = Math.PI / 180;
-  const toDeg = 180 / Math.PI;
   let pointLonLat: GeoJSON.Position;
   switch (method) {
     case 'uniform':
@@ -225,4 +266,4 @@ export const samplePointsOnAreas = (
     type: 'FeatureCollection',
     features: pointFeatures,
   });
-};
+}
