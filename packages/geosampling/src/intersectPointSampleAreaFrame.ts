@@ -13,10 +13,10 @@ import {
  * @param frame - A GeoJSON AreaFeatureCollection.
  * @returns - A PointCollection.
  */
-export const intersectPointSampleAreaFrame = (
+export function intersectPointSampleAreaFrame(
   sample: PointCollection,
   frame: AreaCollection,
-): PointCollection => {
+): PointCollection {
   const newFeatures: PointFeature[] = [];
 
   // Intersect with all polygons and push results to newFeatures.
@@ -44,4 +44,4 @@ export const intersectPointSampleAreaFrame = (
     type: 'FeatureCollection',
     features: newFeatures,
   });
-};
+}

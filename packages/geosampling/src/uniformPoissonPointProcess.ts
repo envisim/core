@@ -16,11 +16,11 @@ import {uniformBinomialPointProcess} from './uniformBinomialPointProcess.js';
  * @param opts.rand - An optional instance of Random.
  * @returns - A GeoJSON FeatureCollection of generated points.
  */
-export const uniformPoissonPointProcess = (
+export function uniformPoissonPointProcess(
   collection: AreaCollection,
   intensity: number,
   opts: {rand?: Random} = {},
-): PointCollection => {
+): PointCollection {
   if (!AreaCollection.isCollection(collection)) {
     throw new Error('Input collection must be an AreaCollection.');
   }
@@ -30,4 +30,4 @@ export const uniformPoissonPointProcess = (
   const mu = intensity * A;
   const sampleSize = Poisson.random(1, {rate: mu}, {rand: rand})[0];
   return uniformBinomialPointProcess(collection, sampleSize, {rand: rand});
-};
+}

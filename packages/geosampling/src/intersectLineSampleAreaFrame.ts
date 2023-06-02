@@ -13,10 +13,10 @@ import {
  * @param frame - A GeoJSON AreaFeatureCollection.
  * @returns - A LineCollection.
  */
-export const intersectLineSampleAreaFrame = (
+export function intersectLineSampleAreaFrame(
   sample: LineCollection,
   frame: AreaCollection,
-): LineCollection => {
+): LineCollection {
   const newFeatures: LineFeature[] = [];
   // Intersect with all polygons and push results to newFeatures.
   // if intersection, then compute new designWeight as product of the features design weights.
@@ -45,4 +45,4 @@ export const intersectLineSampleAreaFrame = (
     type: 'FeatureCollection',
     features: newFeatures,
   });
-};
+}

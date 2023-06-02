@@ -26,12 +26,12 @@ type Track = {
 };
 
 // Internal.
-const samplePointsOnGeometry = (
+function samplePointsOnGeometry(
   geoJSON: LineObject,
   track: Track,
   distances: number[],
   maxDist: number,
-) => {
+) {
   let points = [];
   let segmentLength = 0;
   let fraction = 0;
@@ -86,15 +86,15 @@ const samplePointsOnGeometry = (
       throw new Error('Unknown GeoJSON LineObject.');
   }
   return points;
-};
+}
 
 // Internal.
-const samplePointsOnGeometryCollection = (
+function samplePointsOnGeometryCollection(
   geoJSON: LineGeometryCollection,
   track: Track,
   distances: number[],
   maxDist: number,
-): GeoJSON.Position[] => {
+): GeoJSON.Position[] {
   let points: GeoJSON.Position[] = [];
   let result: GeoJSON.Position[] = [];
 
@@ -108,7 +108,7 @@ const samplePointsOnGeometryCollection = (
     points = points.concat(result);
   }
   return points;
-};
+}
 
 /**
  * Selects points according to method and sampleSize on a LineCollection.
@@ -121,12 +121,12 @@ const samplePointsOnGeometryCollection = (
  * @param opts.dist - Optional distance for start using interpolated points on segments.
  * @returns - A PointCollection.
  */
-export const samplePointsOnLines = (
+export function samplePointsOnLines(
   collection: LineCollection,
   method: 'uniform' | 'systematic',
   sampleSize: number,
   opts: {rand?: Random; dist?: number} = {},
-): PointCollection => {
+): PointCollection {
   if (!LineCollection.isCollection(collection)) {
     throw new Error('Input geoJSON must be a LineCollection.');
   }
@@ -204,4 +204,4 @@ export const samplePointsOnLines = (
     return PointFeature.create(Point.create(coords), {_designWeight: dw});
   });
   return PointCollection.create(features);
-};
+}

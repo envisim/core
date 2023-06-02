@@ -37,7 +37,7 @@ import {
  * @param opts.rand - An optional instance of Random.
  * @returns - Resulting GeoJSON FeatureCollection.
  */
-export const sampleRelascopePoints = (
+export function sampleRelascopePoints(
   frame: AreaCollection,
   method: 'uniform' | 'systematic',
   sampleSize: number,
@@ -45,7 +45,7 @@ export const sampleRelascopePoints = (
   sizeProperty: string,
   factor: number,
   opts: TsamplePointsOnAreasOpts,
-): PointCollection => {
+): PointCollection {
   // Square root of relascope factor
   const sqrtRf = Math.sqrt(factor);
   // Set buffer
@@ -117,4 +117,4 @@ export const sampleRelascopePoints = (
     type: 'FeatureCollection',
     features: sampledFeatures,
   });
-};
+}

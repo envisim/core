@@ -12,10 +12,10 @@ import {
  * @param frame - A GeoJSON AreaFeatureCollection.
  * @returns An AreaCollection.
  */
-export const intersectAreaSampleAreaFrame = (
+export function intersectAreaSampleAreaFrame(
   sample: AreaCollection,
   frame: AreaCollection,
-): AreaCollection => {
+): AreaCollection {
   const newFeatures: GeoJSON.AreaFeature[] = [];
 
   // Intersect with all area features and push results to newFeatures.
@@ -44,4 +44,4 @@ export const intersectAreaSampleAreaFrame = (
     type: 'FeatureCollection',
     features: newFeatures,
   });
-};
+}

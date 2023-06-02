@@ -29,14 +29,14 @@ export type TsampleDistanceLinesOpts = {
  * @param opts.rand - An optional instance of Random.
  * @returns - Resulting PointCollection.
  */
-export const sampleDistanceLines = (
+export function sampleDistanceLines(
   frame: AreaCollection,
   distBetween: number,
   base: PointCollection,
   detectionFunction: Function,
   cutoff: number,
   opts: TsampleDistanceLinesOpts,
-): PointCollection => {
+): PointCollection {
   // Compute effective half width
   const effHalfWidth = effectiveHalfWidth(detectionFunction, cutoff);
   // Get random generator
@@ -101,4 +101,4 @@ export const sampleDistanceLines = (
     type: 'FeatureCollection',
     features: sampledFeatures,
   });
-};
+}

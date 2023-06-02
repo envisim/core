@@ -6,8 +6,9 @@ import {
   LineFeature,
   AreaFeature,
   bbox4,
-  longitudeCenter
+  longitudeCenter,
 } from '@envisim/geojson-utils';
+
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
 const geodInverseOpts = geodesic.Geodesic.DISTANCE | geodesic.Geodesic.AZIMUTH;
@@ -20,11 +21,11 @@ type TdistCoord = {
 const toRad = Math.PI / 180;
 
 // Internal, used for computing projected length.
-const distCoordsForLineString = (
+function distCoordsForLineString(
   lineString: GeoJSON.Position[],
   refPointLonLat: GeoJSON.Position,
   azimuth: number,
-): TdistCoord[] => {
+): TdistCoord[] {
   let minDist = Infinity;
   let maxDist = -Infinity;
   lineString.forEach((coord) => {
@@ -33,7 +34,7 @@ const distCoordsForLineString = (
       refPointLonLat[0],
       coord[1],
       coord[0],
-      geodInverseOpts
+      geodInverseOpts,
     );
     const dist = result.s12 || 0;
     const azi1 = result.azi1 || 0;
@@ -47,14 +48,14 @@ const distCoordsForLineString = (
     {dist: minDist, type: 'start'},
     {dist: maxDist, type: 'end'},
   ];
-};
+}
 
 // Internal, used for computing projected length.
-const distCoordsForMultiLineString = (
+function distCoordsForMultiLineString(
   multiLineString: GeoJSON.Position[][],
   refPointLonLat: GeoJSON.Position,
   azimuth: number,
-): TdistCoord[] => {
+): TdistCoord[] {
   let distCoords: TdistCoord[] = [];
   multiLineString.forEach((lineString) => {
     distCoords = distCoords.concat(
@@ -62,10 +63,10 @@ const distCoordsForMultiLineString = (
     );
   });
   return distCoords;
-};
+}
 
 // Internal, used for computing projected length.
-const lengthFromDistCoords = (distCoords: TdistCoord[]): number => {
+function lengthFromDistCoords(distCoords: TdistCoord[]): number {
   // Sort distCoords by dist first
   // then loop over all to find length of
   // union.
@@ -93,12 +94,12 @@ const lengthFromDistCoords = (distCoords: TdistCoord[]): number => {
     }
   });
   return L; //{L: L, intervals: intervals};
-};
+}
 
-const geometryToMultiLineString = (
+function geometryToMultiLineString(
   geom: GeoJSON.BaseGeometry,
   pointsPerCircle = 16,
-) => {
+) {
   let mls: GeoJSON.Position[][] = [];
   switch (geom.type) {
     case 'Point':
@@ -140,7 +141,7 @@ const geometryToMultiLineString = (
       throw new Error('Unknown geometry type.');
   }
   return mls;
-};
+}
 
 /**
  * Computes projected length of a feature. This is the
@@ -150,11 +151,11 @@ const geometryToMultiLineString = (
  * @param azimuth - The azimuth of the sample line (angle clockwise from north).
  * @returns - The projected length in meters.
  */
-export const projectedLengthOfFeature = (
+export function projectedLengthOfFeature(
   feature: LineFeature | AreaFeature,
   azimuth: number,
   pointsPerCircle = 16,
-): number => {
+): number {
   // 1. build one MultiLineString of the feature geometries
   let coords: GeoJSON.Position[][] = [];
   const geom = feature.geometry;
@@ -173,11 +174,11 @@ export const projectedLengthOfFeature = (
   const box = bbox4(feature.geometry.getBBox());
 
   const refCoord: GeoJSON.Position = [
-    longitudeCenter(box[0],box[2]),
+    longitudeCenter(box[0], box[2]),
     box[1] + (box[3] - box[1]) / 2,
   ];
 
   return lengthFromDistCoords(
     distCoordsForMultiLineString(coords, refCoord, azimuth),
   );
-};
+}

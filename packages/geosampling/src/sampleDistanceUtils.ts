@@ -6,7 +6,7 @@
  * detection probability is 1 if distance >= 0 and 0 otherwise.
  * @returns - The uniform detection function.
  */
-export const uniformDetectionFunction = (): Function => {
+export function uniformDetectionFunction(): Function {
   const g = (dist: number) => {
     if (dist < 0) {
       return 0;
@@ -15,14 +15,14 @@ export const uniformDetectionFunction = (): Function => {
     }
   };
   return g;
-};
+}
 
 /**
  * Returns a half normal detection function on [0, Infinity).
  * @param sigma - The sigma parameter.
  * @returns - The half normal detection function.
  */
-export const halfNormalDetectionFunction = (sigma: number): Function => {
+export function halfNormalDetectionFunction(sigma: number): Function {
   const g = (dist: number) => {
     if (dist < 0) {
       return 0;
@@ -31,7 +31,7 @@ export const halfNormalDetectionFunction = (sigma: number): Function => {
     }
   };
   return g;
-};
+}
 
 // maybe remove this one?
 
@@ -42,10 +42,10 @@ export const halfNormalDetectionFunction = (sigma: number): Function => {
  * @param cutoff - The maximum detection distance in meters.
  * @returns - The detection function.
  */
-export const detectionFunction = (
+export function detectionFunction(
   breakValues: number[],
   cutoff: number,
-): Function => {
+): Function {
   const n = breakValues.length;
   if (cutoff <= 0) {
     throw new Error('cutoff must be a positive number.');
@@ -75,7 +75,7 @@ export const detectionFunction = (
     }
   };
   return g;
-};
+}
 
 /**
  * Integrate a function f from a to b.
@@ -85,12 +85,7 @@ export const detectionFunction = (
  * @param n - Optional, number of intervals will be 3n (default n = 100).
  * @returns - Number, f integrated from a to b.
  */
-export const integrate = (
-  f: Function,
-  a: number,
-  b: number,
-  n = 100,
-): number => {
+export function integrate(f: Function, a: number, b: number, n = 100): number {
   // Simpson's 3/8 rule
   const np = 3 * Math.round(n);
   const h = (b - a) / np;
@@ -103,7 +98,7 @@ export const integrate = (
       f(a + 3 * i * h);
   }
   return ((3 * h) / 8) * sum;
-};
+}
 
 /**
  * Computes the effective radius for distance sampling with points.
@@ -111,13 +106,13 @@ export const integrate = (
  * @param cutoff - Maximum detection distance in meters.
  * @returns - The effective radius in meters.
  */
-export const effectiveRadius = (g: Function, cutoff: number): number => {
+export function effectiveRadius(g: Function, cutoff: number): number {
   const h = (x: number) => {
     return g(x) * (x / cutoff) * (2 / cutoff);
   };
   const sum = integrate(h, 0, cutoff);
   return cutoff * Math.sqrt(sum);
-};
+}
 
 /**
  * Computes the effective half width for distance sampling along a line.
@@ -125,6 +120,6 @@ export const effectiveRadius = (g: Function, cutoff: number): number => {
  * @param cutoff - Maximum detection distance in meters.
  * @returns - The effective half width in meters.
  */
-export const effectiveHalfWidth = (g: Function, cutoff: number): number => {
+export function effectiveHalfWidth(g: Function, cutoff: number): number {
   return integrate(g, 0, cutoff);
-};
+}

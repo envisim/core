@@ -30,7 +30,7 @@ import {
  * @param opts.rand - An optional instance of Random.
  * @returns - Resulting GeoJSON FeatureCollection.
  */
-export const sampleDistancePoints = (
+export function sampleDistancePoints(
   frame: AreaCollection,
   method: 'uniform' | 'systematic',
   sampleSize: number,
@@ -38,7 +38,7 @@ export const sampleDistancePoints = (
   detectionFunction: Function,
   cutoff: number,
   opts: TsamplePointsOnAreasOpts,
-): PointCollection => {
+): PointCollection {
   // Check input first
 
   if (!AreaCollection.isCollection(frame)) {
@@ -117,4 +117,4 @@ export const sampleDistancePoints = (
     type: 'FeatureCollection',
     features: sampledFeatures,
   });
-};
+}

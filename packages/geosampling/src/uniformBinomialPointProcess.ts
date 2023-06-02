@@ -14,11 +14,11 @@ import {samplePointsOnAreas} from './samplePointsOnAreas.js';
  * @param opts.rand - An optional instance of Random.
  * @returns - A PointCollection.
  */
-export const uniformBinomialPointProcess = (
+export function uniformBinomialPointProcess(
   collection: AreaCollection,
   sampleSize: number,
   opts: {rand?: Random} = {},
-): PointCollection => {
+): PointCollection {
   const rand = opts.rand ?? new Random();
   const points = samplePointsOnAreas(collection, 'uniform', sampleSize, {
     buffer: 0,
@@ -29,4 +29,4 @@ export const uniformBinomialPointProcess = (
     feature.properties = {};
   });
   return points;
-};
+}

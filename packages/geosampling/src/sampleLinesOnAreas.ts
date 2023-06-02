@@ -15,10 +15,10 @@ import {
  * @param opts.rand - Optional instance of Random.
  * @returns - A LineCollection of LineString/MultiLineString.
  */
-export const sampleLinesOnAreas = (
+export function sampleLinesOnAreas(
   collection: AreaCollection,
   distBetween: number,
   opts: TsampleBeltsOnAreasOpts,
-): LineCollection => {
-  return sampleBeltsOnAreas(geoJSON, distBetween, 0, opts);
-};
+): LineCollection {
+  return sampleBeltsOnAreas(collection, distBetween, 0, opts);
+}
