@@ -1,13 +1,8 @@
 import type * as GJ from '../types.js';
 import {BaseGeometryCollection} from '../ClassBaseGeometryCollection.js';
 import {OptionalParam} from '../util-types.js';
-import {
-  AreaObject,
-  MultiPointCircle,
-  MultiPolygon,
-  PointCircle,
-  Polygon,
-} from './AreaObjects.js';
+import {AreaObject} from './AreaObjects.js';
+import {toAreaGeometry} from './toAreaGeometry.js';
 
 export class AreaGeometryCollection
   extends BaseGeometryCollection<AreaObject>
@@ -30,18 +25,9 @@ export class AreaGeometryCollection
   ) {
     super({...obj, type: 'GeometryCollection'}, shallow);
 
-    this.geometries = obj.geometries.map((g: GJ.AreaObject) => {
-      switch (g.type) {
-        case 'Point':
-          return new PointCircle(g, true);
-        case 'MultiPoint':
-          return new MultiPointCircle(g, true);
-        case 'Polygon':
-          return new Polygon(g, true);
-        case 'MultiPolygon':
-          return new MultiPolygon(g, true);
-      }
-    });
+    this.geometries = obj.geometries.map((g: GJ.AreaObject) =>
+      toAreaGeometry(g, shallow, false),
+    );
   }
 
   area(dist: number = Infinity): number {

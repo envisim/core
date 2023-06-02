@@ -2,7 +2,7 @@ import type * as GJ from '../types.js';
 import {areaOfPolygonLonLat} from '../../area.js';
 import {bboxFromPositions, unionOfBBoxes} from '../../bbox.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';
-import {pointInSinglePolygon} from '../../pointInPolygon.js';
+import {pointInSinglePolygonPosition} from '../../pointInPolygonPosition.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
@@ -63,7 +63,7 @@ export class MultiPolygon
           );
         }
       }
-      if (pointInSinglePolygon(coords, c[i])) {
+      if (pointInSinglePolygonPosition(coords, c[i])) {
         inside = true;
       }
     }

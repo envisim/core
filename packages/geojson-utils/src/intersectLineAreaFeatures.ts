@@ -6,7 +6,7 @@ import {LineFeature} from './geojson/lines/ClassLineFeature.js';
 import {LineString} from './geojson/lines/ClassLineString.js';
 import {MultiLineString} from './geojson/lines/ClassMultiLineString.js';
 import {intersectSegments} from './intersectSegments.js';
-import {pointInSinglePolygon} from './pointInPolygon.js';
+import {pointInSinglePolygonPosition} from './pointInPolygonPosition.js';
 
 type sortArrayElement = [GJ.Position, number];
 
@@ -102,7 +102,7 @@ const lineStringInPolygon = (
   for (let i = 0; i < points.length - 1; i++) {
     mp = midpoint(points[i], points[i + 1]);
 
-    if (pointInSinglePolygon(mp, polygon)) {
+    if (pointInSinglePolygonPosition(mp, polygon)) {
       // This segment is in the Polygon.
       if (pushed < i) {
         ls.push(points[i]);

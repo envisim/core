@@ -1,100 +1,18 @@
 import type * as GJ from './geojson/types.js';
 import {destination} from './destination.js';
-import {checkLongitudeInRange, longitudeDistance} from './position.js';
-
-/**
- * Computes posisions needed to find bounding box of a PointCircle.
- * @param point - A position.
- * @param radius - The radius in meters.
- * @returns - An array with four positions [top,right,bottom,left].
- */
-export const getPositionsForCircle = (
-  point: GJ.Position,
-  radius: number,
-): GJ.Position[] => {
-  const top = destination(point, radius, 0);
-  const right = destination(point, radius, 90);
-  const bottom = destination(point, radius, 180);
-  const left = destination(point, radius, 270);
-  return [top, right, bottom, left];
-};
-
-/**
- * Checks if position is in bbox.
- *
- * @param point - Point coordinates.
- * @param bbox - Bounding box.
- * @returns - Returns true if point is in bbox, otherwise false.
- */
-export const pointInBBox = (point: GJ.Position, bbox: GJ.BBox): boolean => {
-  const [minLon, minLat, minAlt, maxLon, maxLat, maxAlt] =
-    bbox.length == 6 ? bbox : [bbox[0], bbox[1], 0, bbox[2], bbox[3], 0];
-  const p = point.length == 3 ? point : [...point, 0];
-
-  // Check if antimeridian bbox
-  if (maxLon < minLon) {
-    // Over antimeridian
-    if (p[0] >= minLon || p[0] <= maxLon) {
-      return (
-        minLat <= p[1] && maxLat >= p[1] && minAlt <= p[2] && maxAlt >= p[2]
-      );
-    }
-    return false;
-  }
-  // Regular bbox
-  return (
-    minLon <= p[0] &&
-    maxLon >= p[0] &&
-    minLat <= p[1] &&
-    maxLat >= p[1] &&
-    minAlt <= p[2] &&
-    maxAlt >= p[2]
-  );
-};
-
-// TODO: Test this one. Should we use < and > or <= and >= ?
-/**
- * Checks if two bounding boxes overlap.
- *
- * @param bbox1 - The first bounding box.
- * @param bbox2 - The second bounding box.
- * @returns - Returns true if the bboxes overlap, otherwise false.
- */
-export const bboxInBBox = (bbox1: GJ.BBox, bbox2: GJ.BBox): boolean => {
-  const [minLon1, minLat1, minAlt1, maxLon1, maxLat1, maxAlt1] =
-    bbox1.length == 6 ? bbox1 : [bbox1[0], bbox1[1], 0, bbox1[2], bbox1[3], 0];
-  const [minLon2, minLat2, minAlt2, maxLon2, maxLat2, maxAlt2] =
-    bbox2.length == 6 ? bbox2 : [bbox2[0], bbox2[1], 0, bbox2[2], bbox2[3], 0];
-
-  const latCond = minLat1 < maxLat2 && minLat2 < maxLat1;
-  // Allow for all zeros here
-  const altCond = minAlt1 <= maxAlt2 && minAlt2 <= maxAlt1;
-
-  // Longitude is the odd one
-  if (maxLon1 < minLon1) {
-    if (maxLon2 < minLon2) {
-      // Both cover antimeridian
-      return latCond && altCond;
-    } else {
-      return latCond && altCond && (maxLon2 > minLon1 || minLon2 < maxLon1);
-    }
-  }
-
-  if (maxLon2 < minLon2) {
-    // Only 2 cover antimeridian
-    return latCond && altCond && (maxLon1 > minLon2 || minLon1 < maxLon2);
-  }
-  // Regular boxes
-  return latCond && altCond && minLon1 < maxLon2 && minLon2 < maxLon1;
-};
+import {
+  checkInRange,
+  checkLongitudeInRange,
+  longitudeDistance,
+} from './position.js';
 
 enum BBoxEnum {
   alon,
   alat,
-  az,
+  aalt,
   blon,
   blat,
-  bz,
+  balt,
 }
 
 function getBBoxValue(bbox: GJ.BBox, e: BBoxEnum): number {
@@ -107,11 +25,102 @@ function getBBoxValue(bbox: GJ.BBox, e: BBoxEnum): number {
       return bbox.length === 4 ? bbox[2] : bbox[3];
     case BBoxEnum.blat:
       return bbox.length === 4 ? bbox[3] : bbox[4];
-    case BBoxEnum.az:
+    case BBoxEnum.aalt:
       return bbox.length === 4 ? Infinity : bbox[2];
-    case BBoxEnum.bz:
+    case BBoxEnum.balt:
       return bbox.length === 4 ? -Infinity : bbox[5];
   }
+}
+
+/**
+ * Computes posisions needed to find bounding box of a PointCircle.
+ * @param point - A position.
+ * @param radius - The radius in meters.
+ * @returns - An array with four positions [top,right,bottom,left].
+ */
+export function getPositionsForCircle(
+  point: GJ.Position,
+  radius: number,
+): GJ.Position[] {
+  const top = destination(point, radius, 0);
+  const right = destination(point, radius, 90);
+  const bottom = destination(point, radius, 180);
+  const left = destination(point, radius, 270);
+  return [top, right, bottom, left];
+}
+
+/**
+ * Checks if position is in bbox.
+ * Considers the altitude only if both have it
+ *
+ * @param point - Point coordinates.
+ * @param bbox - Bounding box.
+ * @returns true if point is in bbox, otherwise false.
+ */
+export function pointInBBox(point: GJ.Position, bbox: GJ.BBox): boolean {
+  return (
+    // Check lon
+    checkLongitudeInRange(
+      point[0],
+      bbox[0],
+      getBBoxValue(bbox, BBoxEnum.blon),
+    ) &&
+    // Check lat
+    checkInRange(point[1], bbox[1], getBBoxValue(bbox, BBoxEnum.blat)) &&
+    // Check z, only if both have it, otherwise they are considered all-covering
+    (point.length === 2 ||
+      bbox.length === 4 ||
+      checkInRange(point[2], bbox[2], bbox[5]))
+  );
+}
+
+// TODO: Test this one. Should we use < and > or <= and >= ?
+/**
+ * Checks if two bounding boxes overlap.
+ *
+ * @param b1 - The first bounding box.
+ * @param b2 - The second bounding box.
+ * @returns - Returns true if the bboxes overlap, otherwise false.
+ */
+export function bboxInBBox(b1: GJ.BBox, b2: GJ.BBox): boolean {
+  const b1lonb = getBBoxValue(b1, BBoxEnum.blon);
+  const b2lonb = getBBoxValue(b2, BBoxEnum.blon);
+  const b1latb = getBBoxValue(b1, BBoxEnum.blat);
+  const b2latb = getBBoxValue(b2, BBoxEnum.blat);
+
+  if (
+    !(
+      checkLongitudeInRange(b1[0], b2[0], b2lonb) ||
+      checkLongitudeInRange(b1lonb, b2[0], b2lonb) ||
+      checkLongitudeInRange(b2[0], b1[0], b1lonb)
+    )
+  ) {
+    return false;
+  }
+
+  if (
+    !(
+      checkInRange(b1[1], b2[1], b2latb) ||
+      checkInRange(b1latb, b2[1], b2latb) ||
+      checkInRange(b2[1], b1[1], b1latb)
+    )
+  ) {
+    return false;
+  }
+
+  if (b1.length === 4 || b2.length === 4) return true;
+
+  if (
+    !(
+      checkInRange(b1[2], b2[2], b2[5]) ||
+      checkInRange(b1[5], b2[2], b2[5]) ||
+      checkInRange(b2[2], b1[2], b1[5])
+    )
+  ) {
+    return false;
+  }
+
+  return true;
 }
 
 /**
@@ -187,9 +196,9 @@ export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox {
   } else {
     for (let i = 0; i < bboxes.length; i++) {
       box[1] = Math.min(bboxes[i][1], box[1]);
-      box[2] = Math.min(getBBoxValue(bboxes[i], BBoxEnum.az), box[2]);
+      box[2] = Math.min(getBBoxValue(bboxes[i], BBoxEnum.aalt), box[2]);
       box[4] = Math.max(getBBoxValue(bboxes[i], BBoxEnum.blat), box[4]);
-      box[5] = Math.max(getBBoxValue(bboxes[i], BBoxEnum.bz), box[5]);
+      box[5] = Math.max(getBBoxValue(bboxes[i], BBoxEnum.balt), box[5]);
     }
   }
 
@@ -251,5 +260,5 @@ export const bbox4 = (bbox: GJ.BBox): [number, number, number, number] => {
     return [bbox[0], bbox[1], bbox[3], bbox[4]];
   }
 
-  return [...bbox];
+  return [...bbox] as [number,number,number,number];
 };

@@ -2,11 +2,9 @@ import type * as GJ from '../types.js';
 import {BaseFeature} from '../ClassBaseFeature.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import {OptionalParam} from '../util-types.js';
-import {
-  LineGeometry,
-  LineGeometryCollection,
-} from './ClassLineGeometryCollection.js';
-import {LineString, MultiLineString, LineObject} from './LineObjects.js';
+import {LineGeometry} from './ClassLineGeometryCollection.js';
+import {LineObject} from './LineObjects.js';
+import {toLineGeometry} from './toLineGeometry.js';
 
 export class LineFeature
   extends BaseFeature<LineGeometry>
@@ -30,17 +28,7 @@ export class LineFeature
   ) {
     super({...obj, type: 'Feature'}, shallow);
 
-    switch (obj.geometry?.type) {
-      case 'GeometryCollection':
-        this.geometry = new LineGeometryCollection(obj.geometry, shallow);
-        break;
-      case 'LineString':
-        this.geometry = new LineString(obj.geometry, shallow);
-        break;
-      case 'MultiLineString':
-        this.geometry = new MultiLineString(obj.geometry, shallow);
-        break;
-    }
+    this.geometry = toLineGeometry(obj.geometry, shallow);
   }
 
   get size(): number {
