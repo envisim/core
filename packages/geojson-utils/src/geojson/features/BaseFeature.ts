@@ -1,12 +1,14 @@
 import type * as GJ from '../../types/geojson.js';
 import {copy} from '../../copy.js';
 import {GeoJsonObject} from '../ClassGeoJsonObject.js';
-import type {AreaGeometry, LineGeometry, PointGeometry} from '../gcs/index.js';
+import {GeomEachCallback} from '../callback-types.js';
+import type {Geometry} from '../gcs/index.js';
+import type {AreaObject, LineObject, PointObject} from '../objects/index.js';
 
 export abstract class BaseFeature<
-  T extends AreaGeometry | LineGeometry | PointGeometry,
+  T extends AreaObject | LineObject | PointObject,
 > extends GeoJsonObject<'Feature'> {
-  geometry!: T;
+  geometry!: Geometry<T>;
   properties: Exclude<GJ.FeatureProperties, null>;
 
   constructor(obj: GJ.Feature<GJ.Geometry>, shallow: boolean = true) {
@@ -20,6 +22,30 @@ export abstract class BaseFeature<
         : copy(obj.properties);
   }
 
+  /* GEOJSON COMMON */
+  get size(): number {
+    return this.geometry.size;
+  }
+
+  setBBox(force: boolean = false): GJ.BBox {
+    if (force === true) {
+      this.bbox = this.geometry.setBBox(true);
+    } else {
+      this.bbox = this.geometry.getBBox();
+    }
+
+    return this.bbox;
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.geometry.distanceToPosition(coords);
+  }
+
+  /* FEATURE SPECIFIC */
+  // geomEach(callback: GeomEachCallback<T>, featureIndex: number = -1): void {
+  //   this.geometry.geomEach(callback, featureIndex);
+  // }
+
   initProperty(property: string, defaultValue: number = 0.0): void {
     if (!this.properties.hasOwnProperty(property))
       this.properties[property] = defaultValue;
@@ -31,17 +57,5 @@ export abstract class BaseFeature<
 
   setProperty(property: string, value: number): void {
     this.properties[property] = value;
-  }
-
-  abstract get size(): number;
-
-  setBBox(force: boolean = false): GJ.BBox {
-    if (force === true) {
-      this.bbox = this.geometry.setBBox(true);
-    } else {
-      this.bbox = this.geometry.getBBox();
-    }
-
-    return this.bbox;
   }
 }

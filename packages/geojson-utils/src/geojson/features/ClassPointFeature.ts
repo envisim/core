@@ -6,7 +6,7 @@ import {OptionalParam} from '../util-types.js';
 import {BaseFeature} from './BaseFeature.js';
 
 export class PointFeature
-  extends BaseFeature<PointGeometry>
+  extends BaseFeature<PointObject>
   implements GJ.PointFeature
 {
   static isFeature(obj: any): obj is PointFeature {
@@ -30,10 +30,7 @@ export class PointFeature
     this.geometry = toPointGeometry(obj.geometry, shallow);
   }
 
-  get size(): number {
-    return this.geometry.size;
-  }
-
+  /* POINT SPECIFIC */
   count(): number {
     return this.geometry.count();
   }
@@ -43,9 +40,5 @@ export class PointFeature
     featureIndex: number = -1,
   ): void {
     this.geometry.geomEach(callback, featureIndex);
-  }
-
-  distanceToPosition(coords: GJ.Position): number {
-    return this.geometry.distanceToPosition(coords);
   }
 }

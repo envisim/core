@@ -16,8 +16,12 @@ export abstract class GeoJsonObject<T extends string>
     }
   }
 
+  abstract get size(): number;
+
   abstract setBBox(force?: boolean): GJ.BBox;
   getBBox(): GJ.BBox {
     return this.bbox ?? this.setBBox(false);
   }
+
+  abstract distanceToPosition(coors: GJ.Position): number;
 }

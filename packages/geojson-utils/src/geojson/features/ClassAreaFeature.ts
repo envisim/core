@@ -6,7 +6,7 @@ import {OptionalParam} from '../util-types.js';
 import {BaseFeature} from './BaseFeature.js';
 
 export class AreaFeature
-  extends BaseFeature<AreaGeometry>
+  extends BaseFeature<AreaObject>
   implements GJ.AreaFeature
 {
   static isFeature(obj: any): obj is AreaFeature {
@@ -30,10 +30,7 @@ export class AreaFeature
     this.geometry = toAreaGeometry(obj.geometry, shallow);
   }
 
-  get size(): number {
-    return this.geometry.size;
-  }
-
+  /* AREA SPECIFIC */
   area(dist: number = Infinity): number {
     return this.geometry.area(dist);
   }
@@ -43,9 +40,5 @@ export class AreaFeature
     featureIndex: number = -1,
   ): void {
     this.geometry.geomEach(callback, featureIndex);
-  }
-
-  distanceToPosition(coords: GJ.Position): number {
-    return this.geometry.distanceToPosition(coords);
   }
 }

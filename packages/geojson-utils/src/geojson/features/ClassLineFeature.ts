@@ -6,7 +6,7 @@ import {OptionalParam} from '../util-types.js';
 import {BaseFeature} from './BaseFeature.js';
 
 export class LineFeature
-  extends BaseFeature<LineGeometry>
+  extends BaseFeature<LineObject>
   implements GJ.LineFeature
 {
   static isFeature(obj: any): obj is LineFeature {
@@ -30,10 +30,7 @@ export class LineFeature
     this.geometry = toLineGeometry(obj.geometry, shallow);
   }
 
-  get size(): number {
-    return this.geometry.size;
-  }
-
+  /* LINE SPECIFIC */
   length(dist: number): number {
     return this.geometry.length(dist);
   }
@@ -43,9 +40,5 @@ export class LineFeature
     featureIndex: number = -1,
   ): void {
     this.geometry.geomEach(callback, featureIndex);
-  }
-
-  distanceToPosition(coords: GJ.Position): number {
-    return this.geometry.distanceToPosition(coords);
   }
 }
