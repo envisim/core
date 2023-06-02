@@ -1,5 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
-import {copy} from '../../copy.js';
+import {copy} from '../../utils/copy.js';
 import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import {GeomEachCallback} from '../callback-types.js';
 import type {Geometry} from '../gcs/index.js';

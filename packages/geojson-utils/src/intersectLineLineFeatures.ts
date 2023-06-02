@@ -1,5 +1,4 @@
 import type * as GJ from './types/geojson.js';
-import {bboxInBBox} from './bbox.js';
 import {
   LineFeature,
   LineObject,
@@ -7,7 +6,8 @@ import {
   Point,
   PointFeature,
 } from './geojson/index.js';
-import {intersectSegments} from './intersectSegments.js';
+import {bboxInBBox} from './utils/bbox.js';
+import {intersectSegments} from './utils/intersectSegments.js';
 
 /**
  * Computes the intersect of two LineFeatures as

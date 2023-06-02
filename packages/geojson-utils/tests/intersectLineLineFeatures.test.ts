@@ -1,6 +1,8 @@
-import {LineFeature} from '../src/geojson/lines/ClassLineFeature.js';
-import type {PointObject} from '../src/geojson/points/PointObjects.js';
-import {intersectLineLineFeatures} from '../src/intersectLineLineFeatures.js';
+import {
+  LineFeature,
+  PointObject,
+  intersectLineLineFeatures,
+} from '../src/index.js';
 import './_equalArrays.testf';
 
 describe('intersectLineLineFeatures', () => {

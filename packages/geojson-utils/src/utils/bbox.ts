@@ -1,4 +1,4 @@
-import type * as GJ from './types/geojson.js';
+import type * as GJ from '../types/geojson.js';
 import {destination} from './destination.js';
 import {
   checkInRange,

@@ -1,5 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
-import {unionOfBBoxes} from '../../bbox.js';
+import {unionOfBBoxes} from '../../utils/bbox.js';
 import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type {GeomEachCallback, ForEachCallback} from '../callback-types.js';
 import type {AreaObject, LineObject, PointObject} from '../objects/index.js';

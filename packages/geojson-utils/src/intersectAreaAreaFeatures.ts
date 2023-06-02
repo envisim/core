@@ -1,8 +1,6 @@
 import polygonClipping from 'polygon-clipping';
 
 import type * as GJ from './types/geojson.js';
-import {bboxInBBox} from './bbox.js';
-import {distance} from './distance.js';
 import {
   AreaFeature,
   AreaGeometryCollection,
@@ -11,6 +9,8 @@ import {
   Circle,
   Polygon,
 } from './geojson/index.js';
+import {bboxInBBox} from './utils/bbox.js';
+import {distance} from './utils/distance.js';
 
 /**
  * @internal

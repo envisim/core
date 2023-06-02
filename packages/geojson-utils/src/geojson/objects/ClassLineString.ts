@@ -1,7 +1,7 @@
 import type * as GJ from '../../types/geojson.js';
-import {bboxFromPositions} from '../../bbox.js';
-import {distancePositionToSegment} from '../../distancePositionToSegment.js';
-import {lengthOfLineString} from '../../length.js';
+import {bboxFromPositions} from '../../utils/bbox.js';
+import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
+import {lengthOfLineString} from '../../utils/length.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseLineObject} from './BaseLineObject.js';

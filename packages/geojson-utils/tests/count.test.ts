@@ -1,5 +1,4 @@
-import type * as GJ from '../src/geojson/types.js';
-import {MultiPoint} from '../src/geojson/points/ClassMultiPoint.js';
+import {MultiPoint} from '../src/index.js';
 
 describe('count', () => {
   const geometry = MultiPoint.create([

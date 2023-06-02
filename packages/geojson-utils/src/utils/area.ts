@@ -1,7 +1,7 @@
 // @ts-ignore
 import geodesic from 'geographiclib-geodesic';
 
-import type * as GJ from './types/geojson.js';
+import type * as GJ from '../types/geojson.js';
 import {distance} from './distance.js';
 
 // @ts-ignore

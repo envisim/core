@@ -1,4 +1,4 @@
-import type * as GJ from './types/geojson.js';
+import type * as GJ from '../types/geojson.js';
 
 /**
  * This function takes two linesegments and returns

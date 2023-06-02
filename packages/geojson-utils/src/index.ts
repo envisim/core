@@ -2,6 +2,7 @@
 export * from './geojson/index.js';
 
 // Types
+export type * as GeoJSON from './types/geojson.js';
 export type {
   ICategoricalProperty,
   INumericalProperty,
@@ -9,27 +10,38 @@ export type {
   IPropertyRecord,
 } from './types/property.js';
 
-export type * as GeoJSON from './types/geojson.js';
-
 // Utils
-export {copy} from './copy.js';
-export * from './position.js';
+export {areaOfPolygonLonLat} from './utils/area.js';
+export {
+  pointInBBox,
+  bboxInBBox,
+  bbox4,
+  unionOfBBoxes,
+  bboxFromPositions,
+} from './utils/bbox.js';
+export {copy} from './utils/copy.js';
+export {destination} from './utils/destination.js';
+export {distance} from './utils/distance.js';
+export {distancePositionToSegment} from './utils/distancePositionToSegment.js';
+export {forwardAzimuth} from './utils/forwardAzimuth.js';
+export {intermediate} from './utils/intermediate.js';
+export {intersectSegments} from './utils/intersectSegments.js';
+export {lengthOfLineString, lengthOfSegment} from './utils/length.js';
+export {pointInSinglePolygonPosition} from './utils/pointInPolygonPosition.js';
+export {
+  normalizeLongitude,
+  checkLongitudeInRange,
+  longitudeDistance,
+  longitudeCenter,
+  checkInRange,
+} from './utils/position.js';
+export {rotateCoord} from './utils/rotateCoord.js';
 
-export {areaOfPolygonLonLat} from './area.js';
-export {pointInBBox, bboxInBBox, bbox4} from './bbox.js';
+// Dependent
 export {buffer} from './buffer.js';
-export {destination} from './destination.js';
-export {distance} from './distance.js';
-export {distancePositionToSegment} from './distancePositionToSegment.js';
-export {forwardAzimuth} from './forwardAzimuth.js';
-export {intermediate} from './intermediate.js';
 export {intersectLineLineFeatures} from './intersectLineLineFeatures.js';
 export {intersectLineAreaFeatures} from './intersectLineAreaFeatures.js';
 export {intersectAreaAreaFeatures} from './intersectAreaAreaFeatures.js';
 export {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
-export {intersectSegments} from './intersectSegments.js';
-export {lengthOfLineString, lengthOfSegment} from './length.js';
 export {pointInAreaFeature, pointInAreaGeometry} from './pointInPolygon.js';
-export {pointInSinglePolygonPosition} from './pointInPolygonPosition.js';
-export {rotateCoord} from './rotateCoord.js';
 export {unionOfPolygons} from './unionOfPolygons.js';

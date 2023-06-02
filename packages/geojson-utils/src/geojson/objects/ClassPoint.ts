@@ -1,5 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
-import {distance} from '../../distance.js';
+import {distance} from '../../utils/distance.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BasePointObject} from './BasePointObject.js';

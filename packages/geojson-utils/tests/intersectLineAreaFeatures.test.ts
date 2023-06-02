@@ -1,7 +1,8 @@
-import type * as GJ from '../src/geojson/types.js';
-import {AreaFeature} from '../src/geojson/areas/ClassAreaFeature.js';
-import {LineFeature} from '../src/geojson/lines/ClassLineFeature.js';
-import {intersectLineAreaFeatures} from '../src/intersectLineAreaFeatures.js';
+import {
+  AreaFeature,
+  LineFeature,
+  intersectLineAreaFeatures,
+} from '../src/index.js';
 import './_equalArrays.testf';
 
 describe('intersectLinePolygonFeatures', () => {
@@ -49,7 +50,6 @@ describe('intersectLinePolygonFeatures', () => {
     }
   }
 
-  console.log(coords);
   test('intersectLinePolygonFeatures', () => {
     expect(coords[0]).arrayToAlmostEqual([-0.5, 0], 1e-9);
     expect(coords[4]).arrayToAlmostEqual([0.5, 0], 1e-9);

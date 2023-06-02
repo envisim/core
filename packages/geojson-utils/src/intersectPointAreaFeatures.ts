@@ -1,5 +1,4 @@
 import type * as GJ from './types/geojson.js';
-import {bboxInBBox} from './bbox.js';
 import {
   AreaFeature,
   MultiPoint,
@@ -8,6 +7,7 @@ import {
   PointObject,
 } from './geojson/index.js';
 import {pointInAreaFeature} from './pointInPolygon.js';
+import {bboxInBBox} from './utils/bbox.js';
 
 /**
  * Computes the intersection between a PointFeature and an AreaFeature.

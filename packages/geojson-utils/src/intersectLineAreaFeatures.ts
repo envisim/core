@@ -1,5 +1,4 @@
 import type * as GJ from './types/geojson.js';
-import {bboxInBBox} from './bbox.js';
 import {
   AreaObject,
   AreaFeature,
@@ -8,8 +7,9 @@ import {
   MultiLineString,
   LineObject,
 } from './geojson/index.js';
-import {intersectSegments} from './intersectSegments.js';
-import {pointInSinglePolygonPosition} from './pointInPolygonPosition.js';
+import {bboxInBBox} from './utils/bbox.js';
+import {intersectSegments} from './utils/intersectSegments.js';
+import {pointInSinglePolygonPosition} from './utils/pointInPolygonPosition.js';
 
 type sortArrayElement = [GJ.Position, number];
 

@@ -1,7 +1,9 @@
-import {buffer} from '../src/buffer.js';
-import {AreaCollection} from '../src/geojson/areas/ClassAreaCollection.js';
-import {AreaFeature} from '../src/geojson/areas/ClassAreaFeature.js';
-import {unionOfPolygons} from '../src/unionOfPolygons.js';
+import {
+  buffer,
+  AreaCollection,
+  AreaFeature,
+  unionOfPolygons,
+} from '../src/index.js';
 
 describe('buffer', () => {
   const polygon1 = AreaFeature.create({

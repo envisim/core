@@ -1,10 +1,10 @@
 import type * as GJ from './types/geojson.js';
-import {pointInBBox} from './bbox.js';
 import type {AreaObject, AreaGeometry, AreaFeature} from './geojson/index.js';
+import {pointInBBox} from './utils/bbox.js';
 import {
   pointInMultiPolygonPosition,
   pointInSinglePolygonPosition,
-} from './pointInPolygonPosition.js';
+} from './utils/pointInPolygonPosition.js';
 
 /**
  * Checks if a point is inside an AreaGeometry.
