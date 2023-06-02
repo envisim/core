@@ -1,5 +1,5 @@
 import type * as GJ from '../types.js';
-import {BaseGeometry} from '../ClassBaseGeometry.js';
+import {BaseGeometry} from './BaseGeometry.js';
 
 export abstract class BasePointObject<
   T extends GJ.PointObject,
