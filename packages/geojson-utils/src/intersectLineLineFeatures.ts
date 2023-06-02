@@ -1,10 +1,12 @@
-import type * as GJ from './geojson/types.js';
 import {bboxInBBox} from './bbox.js';
-import type {LineFeature} from './geojson/lines/ClassLineFeature.js';
-import type {LineObject} from './geojson/lines/LineObjects.js';
-import {MultiPoint} from './geojson/points/ClassMultiPoint.js';
-import {Point} from './geojson/points/ClassPoint.js';
-import {PointFeature} from './geojson/points/ClassPointFeature.js';
+import {
+  GeoJSON as GJ,
+  LineFeature,
+  LineObject,
+  MultiPoint,
+  Point,
+  PointFeature,
+} from './geojson/index.js';
 import {intersectSegments} from './intersectSegments.js';
 
 /**

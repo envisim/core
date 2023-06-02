@@ -1,11 +1,13 @@
-import type * as GJ from './geojson/types.js';
 import {bboxInBBox} from './bbox.js';
-import type {AreaObject} from './geojson/areas/AreaObjects.js';
-import type {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
-import {LineFeature} from './geojson/lines/ClassLineFeature.js';
-import {LineString} from './geojson/lines/ClassLineString.js';
-import {MultiLineString} from './geojson/lines/ClassMultiLineString.js';
-import type {LineObject} from './geojson/lines/LineObjects.js';
+import {
+  GeoJSON as GJ,
+  AreaObject,
+  AreaFeature,
+  LineFeature,
+  LineString,
+  MultiLineString,
+  LineObject,
+} from './geojson/index.js';
 import {intersectSegments} from './intersectSegments.js';
 import {pointInSinglePolygonPosition} from './pointInPolygonPosition.js';
 

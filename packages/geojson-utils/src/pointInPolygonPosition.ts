@@ -1,4 +1,4 @@
-import type * as GJ from './geojson/types.js';
+import type {GeoJSON as GJ} from './geojson/index.js';
 
 /** @internal */
 function pointInRing(point: GJ.Position, polygon: GJ.Position[]): boolean {

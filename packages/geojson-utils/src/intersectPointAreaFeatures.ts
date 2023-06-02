@@ -1,10 +1,12 @@
-import type * as GJ from './geojson/types.js';
 import {bboxInBBox} from './bbox.js';
-import type {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
-import {MultiPoint} from './geojson/points/ClassMultiPoint.js';
-import {Point} from './geojson/points/ClassPoint.js';
-import {PointFeature} from './geojson/points/ClassPointFeature.js';
-import type {PointObject} from './geojson/points/PointObjects.js';
+import {
+  GeoJSON as GJ,
+  AreaFeature,
+  MultiPoint,
+  Point,
+  PointFeature,
+  PointObject,
+} from './geojson/index.js';
 import {pointInAreaFeature} from './pointInPolygon.js';
 
 /**

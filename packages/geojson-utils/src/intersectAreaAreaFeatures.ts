@@ -1,15 +1,16 @@
 import polygonClipping from 'polygon-clipping';
 
-import type * as GJ from './geojson/types.js';
 import {bboxInBBox} from './bbox.js';
+import {distance} from './distance.js';
 import {
+  GeoJSON as GJ,
+  AreaFeature,
+  AreaGeometryCollection,
   AreaObject,
   MultiPolygon,
-  PointCircle,
+  Circle,
   Polygon,
-} from './geojson/areas/AreaObjects.js';
-import {AreaFeature} from './geojson/areas/ClassAreaFeature.js';
-import {AreaGeometryCollection, distance} from './index.js';
+} from './geojson/index.js';
 
 /**
  * @internal
@@ -39,11 +40,11 @@ function intersectPolygonPolygon(
 /**
  * @internal
  */
-function intersectPointCirclePointCircle(
-  p1: PointCircle,
-  p2: PointCircle,
+function intersectCircleCircle(
+  p1: Circle,
+  p2: Circle,
   pointsPerCircle: number = 16,
-): Polygon | PointCircle | null {
+): Polygon | Circle | null {
   const dist = distance(p1.coordinates, p2.coordinates);
 
   if (dist < p1.radius + p2.radius) {
@@ -51,11 +52,11 @@ function intersectPointCirclePointCircle(
 
     // Check if circle 1 is fully within circle 2
     if (dist + p1.radius < p2.radius)
-      return PointCircle.create([...p1.coordinates], p1.radius);
+      return Circle.create([...p1.coordinates], p1.radius);
 
     // Check if circle 2 is fully within circle 1
     if (dist + p2.radius < p1.radius)
-      return PointCircle.create([...p2.coordinates], p2.radius);
+      return Circle.create([...p2.coordinates], p2.radius);
 
     // Need to intersect polygons
     const intersect = intersectPolygonPolygon(
@@ -74,16 +75,16 @@ function intersectPointCirclePointCircle(
 /**
  * @internal
  */
-function intersectPointCirclePolygon(
-  p1: PointCircle,
+function intersectCirclePolygon(
+  p1: Circle,
   p2: Polygon | MultiPolygon,
   pointsPerCircle: number = 16,
-): MultiPolygon | Polygon | PointCircle | null {
+): MultiPolygon | Polygon | Circle | null {
   const dist = p2.distanceToPosition(p1.coordinates);
 
   if (dist <= -p1.radius) {
     // Circle fully within polygon
-    return PointCircle.create([...p1.coordinates], p1.radius);
+    return Circle.create([...p1.coordinates], p1.radius);
   }
 
   if (dist < p1.radius) {
@@ -121,14 +122,14 @@ function intersectPolygonAF(
         return;
 
       case 'Point':
-        isc = intersectPointCirclePolygon(g2, g1, pointsPerCircle);
+        isc = intersectCirclePolygon(g2, g1, pointsPerCircle);
         if (isc) geoms.push(isc);
         return;
 
       case 'MultiPoint':
         g2.coordinates.forEach((coords) => {
-          const circle = PointCircle.create(coords, g2.radius);
-          isc = intersectPointCirclePolygon(circle, g1, pointsPerCircle);
+          const circle = Circle.create(coords, g2.radius);
+          isc = intersectCirclePolygon(circle, g1, pointsPerCircle);
           if (isc) geoms.push(isc);
           return;
         });
@@ -140,9 +141,9 @@ function intersectPolygonAF(
 /**
  * @internal
  */
-function intersectPointCircleAF(
+function intersectCircleAF(
   geoms: AreaObject[],
-  circles1: PointCircle[],
+  circles1: Circle[],
   circles1BBox: GJ.BBox,
   feature: AreaFeature,
   pointsPerCircle: number = 16,
@@ -155,31 +156,27 @@ function intersectPointCircleAF(
     switch (g2.type) {
       case 'Polygon':
       case 'MultiPolygon':
-        circles1.forEach((circle: PointCircle) => {
-          isc = intersectPointCirclePolygon(circle, g2, pointsPerCircle);
+        circles1.forEach((circle: Circle) => {
+          isc = intersectCirclePolygon(circle, g2, pointsPerCircle);
           if (isc) geoms.push(isc);
         });
         return;
 
       case 'Point':
-        circles1.forEach((circle: PointCircle) => {
-          isc = intersectPointCirclePointCircle(circle, g2, pointsPerCircle);
+        circles1.forEach((circle: Circle) => {
+          isc = intersectCircleCircle(circle, g2, pointsPerCircle);
           if (isc) geoms.push(isc);
         });
         return;
 
       case 'MultiPoint':
         const circles2 = g2.coordinates.map((coords) =>
-          PointCircle.create(coords, g2.radius),
+          Circle.create(coords, g2.radius),
         );
 
-        circles1.forEach((circle1: PointCircle) => {
-          circles2.forEach((circle2: PointCircle) => {
-            isc = intersectPointCirclePointCircle(
-              circle1,
-              circle2,
-              pointsPerCircle,
-            );
+        circles1.forEach((circle1: Circle) => {
+          circles2.forEach((circle2: Circle) => {
+            isc = intersectCircleCircle(circle1, circle2, pointsPerCircle);
             if (isc) geoms.push(isc);
           });
         });
@@ -206,7 +203,7 @@ export function intersectAreaAreaFeatures(
     return null;
 
   // Need to work with geometries to keep
-  // PointCircles/MultiPointCircles if possible
+  // Circles/MultiCircles if possible
   const geoms: AreaObject[] = [];
 
   feature1.geomEach((g1: AreaObject) => {
@@ -215,20 +212,14 @@ export function intersectAreaAreaFeatures(
       return;
     }
 
-    const circles: PointCircle[] =
+    const circles: Circle[] =
       g1.type === 'Point'
         ? [g1]
         : g1.coordinates.map((coords: GJ.Position) =>
-            PointCircle.create(coords, g1.radius),
+            Circle.create(coords, g1.radius),
           );
 
-    intersectPointCircleAF(
-      geoms,
-      circles,
-      g1.getBBox(),
-      feature2,
-      pointsPerCircle,
-    );
+    intersectCircleAF(geoms, circles, g1.getBBox(), feature2, pointsPerCircle);
   });
 
   if (geoms.length === 0) return null;
@@ -236,7 +227,7 @@ export function intersectAreaAreaFeatures(
   if (geoms.length === 1) return AreaFeature.create(geoms[0], {});
 
   // TODO?: Might be possible to check if all geometries are of the same type,
-  // e.g. all PointCircle and make MultiPointCircle instead of GeometryCollection
+  // e.g. all Circle and make MultiCircle instead of GeometryCollection
   // or MultiPolygon instead of GeometryCollection of Polygons/MultiPolygons
   // etc... For now keep as GeometryCollection.
   return AreaFeature.create(AreaGeometryCollection.create(geoms), {});

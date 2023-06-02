@@ -1,6 +1,10 @@
-import type * as GJ from './geojson/types.js';
 import {pointInBBox} from './bbox.js';
-import type {AreaObject, AreaGeometry, AreaFeature} from './geojson/index.js';
+import type {
+  GeoJSON as GJ,
+  AreaObject,
+  AreaGeometry,
+  AreaFeature,
+} from './geojson/index.js';
 import {
   pointInMultiPolygonPosition,
   pointInSinglePolygonPosition,
