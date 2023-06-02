@@ -1,10 +1,13 @@
-import {copy, distancePointToLine} from '@envisim/geojson-utils';
+import {
+  intersectPointAreaFeatures,
+  PointCollection,
+  PointFeature,
+  AreaCollection,
+} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
 import {effectiveHalfWidth} from './sampleDistanceUtils.js';
 import {sampleLinesOnAreas} from './sampleLinesOnAreas.js';
-import {typeOfFrame} from './typeOfFrame.js';
 
 export type TsampleDistanceLinesOpts = {
   rotation?: number;
@@ -16,35 +19,24 @@ export type TsampleDistanceLinesOpts = {
  * Selects a line sample on an area frame and collect point objects from a base
  * layer using a detection function to (randomly) determine inclusion.
  *
- * @param frame - A GeoJSON FeatureCollection of Polygon/MultiPolygon features.
+ * @param frame - An AreaCollection.
  * @param distBetween - The distance in meters between lines.
- * @param base - A GeoJSON FeatureCollection of single Point features.
+ * @param base - A PointCollection of single Point features.
  * @param detectionFunction - The detection function.
  * @param cutoff - Positive number, the maximum distance for detection.
  * @param opts - An object containing distBetween, rotation, rand.
  * @param opts.rotation - Optional fixed rotation of the lines.
  * @param opts.rand - An optional instance of Random.
- * @returns - Resulting GeoJSON FeatureCollection.
+ * @returns - Resulting PointCollection.
  */
 export const sampleDistanceLines = (
-  frame: GeoJSON.FeatureCollection,
+  frame: AreaCollection,
   distBetween: number,
-  base: GeoJSON.FeatureCollection,
+  base: PointCollection,
   detectionFunction: Function,
   cutoff: number,
   opts: TsampleDistanceLinesOpts,
-): GeoJSON.FeatureCollection => {
-  // Check types first
-  const frameType = typeOfFrame(frame);
-  const baseType = typeOfFrame(base);
-  if (frameType !== 'area') {
-    throw new Error(
-      'Parameter frame must be a FeatureCollection of Polygons/MultiPolygons.',
-    );
-  }
-  if (baseType !== 'point') {
-    throw new Error('Parameter base must be a FeatureCollection of Points.');
-  }
+): PointCollection => {
   // Compute effective half width
   const effHalfWidth = effectiveHalfWidth(detectionFunction, cutoff);
   // Get random generator
@@ -56,7 +48,7 @@ export const sampleDistanceLines = (
   // Select sample of lines
   const lineSample = sampleLinesOnAreas(frame, distBetween, opts);
   // To store sampled features
-  const sampledFeatures: GeoJSON.Feature[] = [];
+  const sampledFeatures: PointFeature[] = [];
 
   // Find selected points in base layer and check if
   // seleccted base point is in frame and transfer _designWeight
@@ -67,7 +59,8 @@ export const sampleDistanceLines = (
       lineSample.features.forEach((sampleLine, sampleLineIndex) => {
         const type = sampleLine.geometry.type;
         if (type === 'LineString' || type === 'MultiLineString') {
-          const dist = distancePointToLine(pointFeature, sampleLine);
+          const dist = sampleLine.distanceToPosition(basePointCoords);
+
           if (dist < cutoff && rand.float() < detectionFunction(dist)) {
             // Check if base point exists in this frame (frame could be part/stratum)
             for (let i = 0; i < frame.features.length; i++) {
@@ -76,7 +69,7 @@ export const sampleDistanceLines = (
                 pointFeature,
                 frameFeature,
               );
-              if (intersect.geoJSON) {
+              if (intersect) {
                 // Follow the design weight
                 // This selection
                 let designWeight = dw;
@@ -84,7 +77,7 @@ export const sampleDistanceLines = (
                 if (frameFeature.properties?._designWeight) {
                   designWeight *= frameFeature.properties._designWeight;
                 }
-                const newFeature = copy(pointFeature);
+                const newFeature = new PointFeature(pointFeature, false);
                 if (!newFeature.properties) {
                   newFeature.properties = {};
                 }
@@ -104,8 +97,8 @@ export const sampleDistanceLines = (
       );
     }
   });
-  return {
+  return new PointCollection({
     type: 'FeatureCollection',
     features: sampledFeatures,
-  };
+  });
 };

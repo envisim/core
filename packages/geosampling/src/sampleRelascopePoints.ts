@@ -1,11 +1,16 @@
-import {copy, distance} from '@envisim/geojson-utils';
+import {
+  copy,
+  distance,
+  intersectPointAreaFeatures,
+  PointFeature,
+  PointCollection,
+  AreaCollection,
+} from '@envisim/geojson-utils';
 
-import {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
 import {
   samplePointsOnAreas,
   TsamplePointsOnAreasOpts,
 } from './samplePointsOnAreas.js';
-import {typeOfFrame} from './typeOfFrame.js';
 
 // TODO: Decide if we should implement correction by adding the correct buffer.
 // Probably deviates from common use to add buffer, but estimates will be biased
@@ -20,10 +25,10 @@ import {typeOfFrame} from './typeOfFrame.js';
  * Default buffer is zero, which gives a negative bias for estimates of positive
  * quantities.
  *
- * @param frame - A GeoJSON FeatureCollection of Polygon/MultiPolygon features.
+ * @param frame - An AreaCollection.
  * @param method - The method to use "uniform" or "systematic"
  * @param sampleSize - The expected number of points as integer > 0.
- * @param base - A GeoJSON FeatureCollection of single Point features.
+ * @param base - A PointCollection of single Point features.
  * @param sizeProperty - The name of the size property in base which has numeric value in meters (e.g. diameter at breast hight).
  * @param factor - Positive number, the relascope factor.
  * @param opts - An object containing buffer, ratio (dx/dy), rand
@@ -33,26 +38,14 @@ import {typeOfFrame} from './typeOfFrame.js';
  * @returns - Resulting GeoJSON FeatureCollection.
  */
 export const sampleRelascopePoints = (
-  frame: GeoJSON.FeatureCollection,
+  frame: AreaCollection,
   method: 'uniform' | 'systematic',
   sampleSize: number,
-  base: GeoJSON.FeatureCollection,
+  base: PointCollection,
   sizeProperty: string,
   factor: number,
   opts: TsamplePointsOnAreasOpts,
-): GeoJSON.FeatureCollection => {
-  // Check types first
-  const frameType = typeOfFrame(frame);
-  const baseType = typeOfFrame(base);
-  if (frameType !== 'area') {
-    throw new Error(
-      'Parameter frame must be a FeatureCollection of Polygons/MultiPolygons.',
-    );
-  }
-  if (baseType !== 'point') {
-    throw new Error('Parameter base must be a FeatureCollection of Points.');
-  }
-
+): PointCollection => {
   // Square root of relascope factor
   const sqrtRf = Math.sqrt(factor);
   // Set buffer
@@ -61,7 +54,7 @@ export const sampleRelascopePoints = (
   // Select sample of points (optional buffer via opts)
   const pointSample = samplePointsOnAreas(frame, method, sampleSize, opts);
   // To store sampled features
-  const sampledFeatures: GeoJSON.Feature[] = [];
+  const sampledFeatures: PointFeature[] = [];
 
   // Find selected points in base layer and check if seleccted base point
   // is in frame and transfer _designWeight
@@ -89,7 +82,7 @@ export const sampleRelascopePoints = (
                 pointFeature,
                 frameFeature,
               );
-              if (intersect.geoJSON) {
+              if (intersect) {
                 // Follow the design weight
                 let dw = 1 / (Math.PI * radius * radius);
                 if (samplePoint.properties?._designWeight) {
@@ -120,8 +113,8 @@ export const sampleRelascopePoints = (
       );
     }
   });
-  return {
+  return new PointCollection({
     type: 'FeatureCollection',
     features: sampledFeatures,
-  };
+  });
 };

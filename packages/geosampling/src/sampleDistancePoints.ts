@@ -1,23 +1,27 @@
-import {copy, distance} from '@envisim/geojson-utils';
+import {
+  distance,
+  intersectPointAreaFeatures,
+  AreaCollection,
+  PointCollection,
+  PointFeature,
+} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
 import {effectiveRadius} from './sampleDistanceUtils.js';
 import {
   samplePointsOnAreas,
   TsamplePointsOnAreasOpts,
 } from './samplePointsOnAreas.js';
-import {typeOfFrame} from './typeOfFrame.js';
 
 /**
  * Distance sampling with points. Selects a point sample on an area frame
  * and collect point objects from a base layer using a detection function
  * to (randomly) determine inclusion.
  *
- * @param frame - A GeoJSON FeatureCollection of Polygon/MultiPolygon features.
+ * @param frame - An AreaCollection.
  * @param method - The method to use "uniform" or "systematic".
  * @param sampleSize - The expected sample size of points as integer > 0.
- * @param base - A GeoJSON FeatureCollection of single Point features.
+ * @param base - A PointCollection of single Point features.
  * @param detectionFunction - The detection function.
  * @param cutoff - The maximum detection distance in meters.
  * @param opts - An object containing buffer, ratio (dx/dy), rand.
@@ -27,25 +31,24 @@ import {typeOfFrame} from './typeOfFrame.js';
  * @returns - Resulting GeoJSON FeatureCollection.
  */
 export const sampleDistancePoints = (
-  frame: GeoJSON.FeatureCollection,
+  frame: AreaCollection,
   method: 'uniform' | 'systematic',
   sampleSize: number,
-  base: GeoJSON.FeatureCollection,
+  base: PointCollection,
   detectionFunction: Function,
   cutoff: number,
   opts: TsamplePointsOnAreasOpts,
-): GeoJSON.FeatureCollection => {
-  // Check types first
-  const frameType = typeOfFrame(frame);
-  const baseType = typeOfFrame(base);
-  if (frameType !== 'area') {
-    throw new Error(
-      'Parameter frame must be a FeatureCollection of Polygons/MultiPolygons.',
-    );
+): PointCollection => {
+  // Check input first
+
+  if (!AreaCollection.isCollection(frame)) {
+    throw new Error('Parameter frame must be an AreaCollection.');
   }
-  if (baseType !== 'point') {
-    throw new Error('Parameter base must be a FeatureCollection of Points.');
+
+  if (!PointCollection.isCollection(base)) {
+    throw new Error('Parameter base must be a PointCollection.');
   }
+
   // Compute effective radius
   const effRadius = effectiveRadius(detectionFunction, cutoff);
   // Set random generator
@@ -56,7 +59,7 @@ export const sampleDistancePoints = (
   opts.buffer = buffer;
   const pointSample = samplePointsOnAreas(frame, method, sampleSize, opts);
   // To store sampled features
-  const sampledFeatures: GeoJSON.Feature[] = [];
+  const sampledFeatures: PointFeature[] = [];
 
   // Find selected points in base layer and check if seleccted base point
   // is in frame and transfer _designWeight
@@ -78,7 +81,7 @@ export const sampleDistancePoints = (
                 pointFeature,
                 frameFeature,
               );
-              if (intersect.geoJSON) {
+              if (intersect) {
                 // Follow the design weight
                 let dw = 1 / (Math.PI * effRadius * effRadius);
                 if (samplePoint.properties?._designWeight) {
@@ -90,7 +93,7 @@ export const sampleDistancePoints = (
                 if (frameFeature.properties?._designWeight && buffer > 0) {
                   dw *= frameFeature.properties._designWeight;
                 }
-                const newFeature = copy(pointFeature);
+                const newFeature = new PointFeature(pointFeature, false);
                 if (!newFeature.properties) {
                   newFeature.properties = {};
                 }
@@ -110,8 +113,8 @@ export const sampleDistancePoints = (
       );
     }
   });
-  return {
+  return new PointCollection({
     type: 'FeatureCollection',
     features: sampledFeatures,
-  };
+  });
 };
