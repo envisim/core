@@ -6,7 +6,7 @@ import {OptionalParam} from '../util-types.js';
 import {BaseCollection} from './BaseCollection.js';
 
 export class AreaCollection
-  extends BaseCollection<AreaFeature>
+  extends BaseCollection<AreaObject>
   implements GJ.AreaFeatureCollection
 {
   static isCollection(obj: any): obj is AreaCollection {
@@ -31,22 +31,7 @@ export class AreaCollection
     });
   }
 
-  addFeature(feature: AreaFeature, shallow: boolean = true): void {
-    this.features.push(
-      shallow === false ? new AreaFeature(feature, false) : feature,
-    );
-  }
-
-  area(dist: number = Infinity): number {
-    return this.features.reduce((prev, curr) => prev + curr.area(dist), 0);
-  }
-
-  geomEach(callback: GeomEachCallback<AreaObject>): void {
-    this.forEach((feature, featureIndex) => {
-      feature.geometry.geomEach(callback, featureIndex);
-    });
-  }
-
+  /* GEOJSON COMMON */
   distanceToPosition(coords: GJ.Position): number {
     return this.features.reduce((prev, curr) => {
       const d = curr.geometry.distanceToPosition(coords);
@@ -55,5 +40,23 @@ export class AreaCollection
       }
       return Math.min(prev, d);
     }, Infinity);
+  }
+
+  /* COLLECTION SPECIFIC */
+  geomEach(callback: GeomEachCallback<AreaObject>): void {
+    this.forEach((feature, featureIndex) => {
+      feature.geometry.geomEach(callback, featureIndex);
+    });
+  }
+
+  addFeature(feature: AreaFeature, shallow: boolean = true): void {
+    this.features.push(
+      shallow === false ? new AreaFeature(feature, false) : feature,
+    );
+  }
+
+  /* AREA SPECIFIC */
+  area(dist: number = Infinity): number {
+    return this.features.reduce((prev, curr) => prev + curr.area(dist), 0);
   }
 }

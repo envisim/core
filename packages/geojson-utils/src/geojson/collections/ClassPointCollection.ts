@@ -6,7 +6,7 @@ import {OptionalParam} from '../util-types.js';
 import {BaseCollection} from './BaseCollection.js';
 
 export class PointCollection
-  extends BaseCollection<PointFeature>
+  extends BaseCollection<PointObject>
   implements GJ.PointFeatureCollection
 {
   static isCollection(obj: any): obj is PointCollection {
@@ -31,29 +31,24 @@ export class PointCollection
     });
   }
 
-  addFeature(feature: PointFeature, shallow: boolean = true): void {
-    this.features.push(
-      shallow === false ? new PointFeature(feature, false) : feature,
-    );
-  }
-
-  count(): number {
-    return this.features.reduce(
-      (prev, curr) => prev + curr.geometry.count(),
-      0,
-    );
-  }
-
+  /* COLLECTION SPECIFIC */
   geomEach(callback: GeomEachCallback<PointObject>): void {
     this.forEach((feature, featureIndex) => {
       feature.geometry.geomEach(callback, featureIndex);
     });
   }
 
-  distanceToPosition(coords: GJ.Position): number {
+  addFeature(feature: PointFeature, shallow: boolean = true): void {
+    this.features.push(
+      shallow === false ? new PointFeature(feature, false) : feature,
+    );
+  }
+
+  /* AREA SPECIFIC */
+  count(): number {
     return this.features.reduce(
-      (prev, curr) => Math.min(prev, curr.geometry.distanceToPosition(coords)),
-      Infinity,
+      (prev, curr) => prev + curr.geometry.count(),
+      0,
     );
   }
 }

@@ -30,13 +30,8 @@ export class LineGeometryCollection
     );
   }
 
+  /* LINE SPECIFIC */
   length(dist: number = Infinity): number {
     return this.geometries.reduce((prev, curr) => prev + curr.length(dist), 0);
-  }
-
-  distanceToPosition(coords: GJ.Position): number {
-    return this.geometries.reduce((prev, curr) => {
-      return Math.min(prev, curr.distanceToPosition(coords));
-    }, Infinity);
   }
 }

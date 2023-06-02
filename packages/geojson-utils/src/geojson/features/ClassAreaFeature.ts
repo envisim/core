@@ -30,15 +30,16 @@ export class AreaFeature
     this.geometry = toAreaGeometry(obj.geometry, shallow);
   }
 
-  /* AREA SPECIFIC */
-  area(dist: number = Infinity): number {
-    return this.geometry.area(dist);
-  }
-
+  /* FEATURE SPECIFIC */
   geomEach(
     callback: GeomEachCallback<AreaObject>,
     featureIndex: number = -1,
   ): void {
     this.geometry.geomEach(callback, featureIndex);
+  }
+
+  /* AREA SPECIFIC */
+  area(dist: number = Infinity): number {
+    return this.geometry.area(dist);
   }
 }

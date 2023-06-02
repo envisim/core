@@ -30,15 +30,16 @@ export class PointFeature
     this.geometry = toPointGeometry(obj.geometry, shallow);
   }
 
-  /* POINT SPECIFIC */
-  count(): number {
-    return this.geometry.count();
-  }
-
+  /* FEATURE SPECIFIC */
   geomEach(
     callback: GeomEachCallback<PointObject>,
     featureIndex: number = -1,
   ): void {
     this.geometry.geomEach(callback, featureIndex);
+  }
+
+  /* POINT SPECIFIC */
+  count(): number {
+    return this.geometry.count();
   }
 }

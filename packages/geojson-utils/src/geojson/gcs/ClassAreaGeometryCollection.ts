@@ -30,10 +30,7 @@ export class AreaGeometryCollection
     );
   }
 
-  area(dist: number = Infinity): number {
-    return this.geometries.reduce((prev, curr) => prev + curr.area(dist), 0);
-  }
-
+  /* GEOJSON COMMON */
   distanceToPosition(coords: GJ.Position): number {
     return this.geometries.reduce((prev, curr) => {
       const d = curr.distanceToPosition(coords);
@@ -42,5 +39,10 @@ export class AreaGeometryCollection
       }
       return Math.min(d, prev);
     }, Infinity);
+  }
+
+  /* AREA SPECIFIC */
+  area(dist: number = Infinity): number {
+    return this.geometries.reduce((prev, curr) => prev + curr.area(dist), 0);
   }
 }

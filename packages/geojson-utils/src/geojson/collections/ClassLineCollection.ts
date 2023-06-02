@@ -6,7 +6,7 @@ import {OptionalParam} from '../util-types.js';
 import {BaseCollection} from './BaseCollection.js';
 
 export class LineCollection
-  extends BaseCollection<LineFeature>
+  extends BaseCollection<LineObject>
   implements GJ.LineFeatureCollection
 {
   static isCollection(obj: any): obj is LineCollection {
@@ -31,25 +31,21 @@ export class LineCollection
     });
   }
 
-  addFeature(feature: LineFeature, shallow: boolean = true): void {
-    this.features.push(
-      shallow === false ? new LineFeature(feature, false) : feature,
-    );
-  }
-
-  length(dist: number = Infinity): number {
-    return this.features.reduce((prev, curr) => prev + curr.length(dist), 0);
-  }
-
+  /* COLLECTION SPECIFIC */
   geomEach(callback: GeomEachCallback<LineObject>): void {
     this.forEach((feature, featureIndex) => {
       feature.geometry.geomEach(callback, featureIndex);
     });
   }
 
-  distanceToPosition(coords: GJ.Position): number {
-    return this.features.reduce((prev, curr) => {
-      return Math.min(prev, curr.geometry.distanceToPosition(coords));
-    }, Infinity);
+  addFeature(feature: LineFeature, shallow: boolean = true): void {
+    this.features.push(
+      shallow === false ? new LineFeature(feature, false) : feature,
+    );
+  }
+
+  /* LINE SPECIFIC */
+  length(dist: number = Infinity): number {
+    return this.features.reduce((prev, curr) => prev + curr.length(dist), 0);
   }
 }

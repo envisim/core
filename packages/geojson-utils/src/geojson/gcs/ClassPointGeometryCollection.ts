@@ -30,14 +30,8 @@ export class PointGeometryCollection
     );
   }
 
+  /* POINT SPECIFIC */
   count(): number {
     return this.geometries.reduce((prev, curr) => prev + curr.count(), 0);
-  }
-
-  distanceToPosition(coords: GJ.Position): number {
-    return this.geometries.reduce(
-      (prev, curr) => Math.min(prev, curr.distanceToPosition(coords)),
-      Infinity,
-    );
   }
 }

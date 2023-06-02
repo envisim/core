@@ -5,7 +5,7 @@ import {GeomEachCallback} from '../callback-types.js';
 import type {Geometry} from '../gcs/index.js';
 import type {AreaObject, LineObject, PointObject} from '../objects/index.js';
 
-export abstract class BaseFeature<
+abstract class BaseFeature<
   T extends AreaObject | LineObject | PointObject,
 > extends GeoJsonObject<'Feature'> {
   geometry!: Geometry<T>;
@@ -42,9 +42,7 @@ export abstract class BaseFeature<
   }
 
   /* FEATURE SPECIFIC */
-  // geomEach(callback: GeomEachCallback<T>, featureIndex: number = -1): void {
-  //   this.geometry.geomEach(callback, featureIndex);
-  // }
+  abstract geomEach(callback: GeomEachCallback<T>, featureIndex: number): void;
 
   initProperty(property: string, defaultValue: number = 0.0): void {
     if (!this.properties.hasOwnProperty(property))
@@ -59,3 +57,5 @@ export abstract class BaseFeature<
     this.properties[property] = value;
   }
 }
+
+export {BaseFeature};

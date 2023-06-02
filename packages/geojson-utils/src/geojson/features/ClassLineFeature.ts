@@ -30,15 +30,16 @@ export class LineFeature
     this.geometry = toLineGeometry(obj.geometry, shallow);
   }
 
-  /* LINE SPECIFIC */
-  length(dist: number): number {
-    return this.geometry.length(dist);
-  }
-
+  /* FEATURE SPECIFIC */
   geomEach(
     callback: GeomEachCallback<LineObject>,
     featureIndex: number = -1,
   ): void {
     this.geometry.geomEach(callback, featureIndex);
+  }
+
+  /* LINE SPECIFIC */
+  length(dist: number): number {
+    return this.geometry.length(dist);
   }
 }

@@ -13,18 +13,9 @@ export abstract class BaseGeometryCollection<
     super(obj, shallow);
   }
 
+  /* GEOJSON COMMON */
   get size(): number {
     return this.geometries.length;
-  }
-
-  forEach(callback: ForEachCallback<T>): void {
-    this.geometries.forEach(callback);
-  }
-
-  geomEach(callback: GeomEachCallback<T>, featureIndex: number = -1): void {
-    this.forEach((geometry: T, geometryIndex: number) => {
-      callback(geometry, featureIndex, geometryIndex);
-    });
   }
 
   setBBox(force: boolean = false): GJ.BBox {
@@ -42,5 +33,23 @@ export abstract class BaseGeometryCollection<
 
     this.bbox = unionOfBBoxes(bboxArray);
     return this.bbox;
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return this.geometries.reduce(
+      (prev, curr) => Math.min(prev, curr.distanceToPosition(coords)),
+      Infinity,
+    );
+  }
+
+  /* GEOMETRYCOLLECTION SPECIFIC */
+  forEach(callback: ForEachCallback<T>): void {
+    this.geometries.forEach(callback);
+  }
+
+  geomEach(callback: GeomEachCallback<T>, featureIndex: number = -1): void {
+    this.forEach((geometry: T, geometryIndex: number) => {
+      callback(geometry, featureIndex, geometryIndex);
+    });
   }
 }
