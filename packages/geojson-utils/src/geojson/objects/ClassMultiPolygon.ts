@@ -1,4 +1,4 @@
-import type * as GJ from '../types.js';
+import type * as GJ from '../../types/geojson.js';
 import {areaOfPolygonLonLat} from '../../area.js';
 import {bboxFromPositions, unionOfBBoxes} from '../../bbox.js';
 import {distancePositionToSegment} from '../../distancePositionToSegment.js';

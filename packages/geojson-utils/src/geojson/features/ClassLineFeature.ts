@@ -1,4 +1,4 @@
-import type * as GJ from '../types.js';
+import type * as GJ from '../../types/geojson.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import {LineGeometry, toLineGeometry} from '../gcs/index.js';
 import type {LineObject} from '../objects/index.js';

@@ -1,7 +1,7 @@
 // @ts-ignore
 import geodesic from 'geographiclib-geodesic';
 
-import type {GeoJSON as GJ} from './geojson/index.js';
+import type * as GJ from './types/geojson.js';
 
 const geod = geodesic.Geodesic.WGS84;
 const geodInverseOpts = geodesic.Geodesic.DISTANCE | geodesic.Geodesic.AZIMUTH;

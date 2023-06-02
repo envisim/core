@@ -9,7 +9,7 @@ export type {
   IPropertyRecord,
 } from './types/property.js';
 
-export type * as GeoJSON from './geojson/types.js';
+export type * as GeoJSON from './types/geojson.js';
 
 // Utils
 export {copy} from './copy.js';
@@ -33,4 +33,3 @@ export {pointInAreaFeature, pointInAreaGeometry} from './pointInPolygon.js';
 export {pointInSinglePolygonPosition} from './pointInPolygonPosition.js';
 export {rotateCoord} from './rotateCoord.js';
 export {unionOfPolygons} from './unionOfPolygons.js';
-export * as geodesic from 'geographiclib-geodesic';

@@ -1,4 +1,4 @@
-import type * as GJ from './geojson/types.js';
+import type * as GJ from './types/geojson.js';
 import {destination} from './destination.js';
 import {
   checkInRange,
@@ -260,5 +260,5 @@ export const bbox4 = (bbox: GJ.BBox): [number, number, number, number] => {
     return [bbox[0], bbox[1], bbox[3], bbox[4]];
   }
 
-  return [...bbox] as [number,number,number,number];
+  return [...bbox] as [number, number, number, number];
 };

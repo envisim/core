@@ -1,4 +1,4 @@
-import type * as GJ from '../types.js';
+import type * as GJ from '../../types/geojson.js';
 import {LineObject, LineString, MultiLineString} from '../objects/index.js';
 import {LineGeometryCollection} from './ClassLineGeometryCollection.js';
 

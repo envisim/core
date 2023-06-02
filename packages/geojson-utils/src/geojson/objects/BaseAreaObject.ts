@@ -1,4 +1,4 @@
-import type * as GJ from '../types.js';
+import type * as GJ from '../../types/geojson.js';
 import {BaseGeometry} from './BaseGeometry.js';
 
 export abstract class BaseAreaObject<

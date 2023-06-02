@@ -1,7 +1,7 @@
 // @ts-ignore
 import geodesic from 'geographiclib-geodesic';
 
-import type * as GJ from './geojson/types.js';
+import type * as GJ from './types/geojson.js';
 
 // @ts-ignore
 const geod = geodesic.Geodesic.WGS84;

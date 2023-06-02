@@ -1,6 +1,6 @@
+import type * as GJ from './types/geojson.js';
 import {bboxInBBox} from './bbox.js';
 import {
-  GeoJSON as GJ,
   AreaObject,
   AreaFeature,
   LineFeature,

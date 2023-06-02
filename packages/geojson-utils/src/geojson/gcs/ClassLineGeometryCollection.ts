@@ -1,4 +1,4 @@
-import type * as GJ from '../types.js';
+import type * as GJ from '../../types/geojson.js';
 import type {LineObject} from '../objects/index.js';
 import {OptionalParam} from '../util-types.js';
 import {BaseGeometryCollection} from './BaseGeometryCollection.js';

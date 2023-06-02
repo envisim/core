@@ -1,4 +1,4 @@
-import type * as GJ from '../types.js';
+import type * as GJ from '../../types/geojson.js';
 import {bboxFromPositions, getPositionsForCircle} from '../../bbox.js';
 import {destination} from '../../destination.js';
 import {distance} from '../../distance.js';

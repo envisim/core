@@ -1,12 +1,12 @@
-import type * as GJ from './types.js';
-import {unionOfBBoxes} from '../bbox.js';
+import type * as GJ from '../../types/geojson.js';
+import {unionOfBBoxes} from '../../bbox.js';
+import {GeoJsonObject} from '../ClassGeoJsonObject.js';
+import type {ForEachCallback, GeomEachCallback} from '../callback-types.js';
 import type {
   AreaFeature,
   LineFeature,
   PointFeature,
 } from '../features/index.js';
-import {GeoJsonObject} from './ClassGeoJsonObject.js';
-import type {ForEachCallback, GeomEachCallback} from './callback-types.js';
 
 export abstract class BaseCollection<
   T extends AreaFeature | LineFeature | PointFeature,

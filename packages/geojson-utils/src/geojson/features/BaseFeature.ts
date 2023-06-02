@@ -1,7 +1,7 @@
-import type * as GJ from './types.js';
-import {copy} from '../copy.js';
+import type * as GJ from '../../types/geojson.js';
+import {copy} from '../../copy.js';
+import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type {AreaGeometry, LineGeometry, PointGeometry} from '../gcs/index.js';
-import {GeoJsonObject} from './ClassGeoJsonObject.js';
 
 export abstract class BaseFeature<
   T extends AreaGeometry | LineGeometry | PointGeometry,

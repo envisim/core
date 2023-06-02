@@ -1,7 +1,7 @@
-import type * as GJ from '../types.js';
+import type * as GJ from '../../types/geojson.js';
 import type {PointObject} from '../objects/index.js';
 import {OptionalParam} from '../util-types.js';
-import {BaseGeometryCollection} from './ClassBaseGeometryCollection.js';
+import {BaseGeometryCollection} from './BaseGeometryCollection.js';
 import {toPointGeometry} from './toPointGeometry.js';
 
 export class PointGeometryCollection

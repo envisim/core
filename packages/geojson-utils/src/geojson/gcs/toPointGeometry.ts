@@ -1,4 +1,4 @@
-import type * as GJ from '../types.js';
+import type * as GJ from '../../types/geojson.js';
 import {MultiPoint, Point, PointObject} from '../objects/index.js';
 import {PointGeometryCollection} from './ClassPointGeometryCollection.js';
 

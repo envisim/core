@@ -1,4 +1,4 @@
-import type * as GJ from '../types.js';
+import type * as GJ from '../../types/geojson.js';
 import {bboxFromPositions} from '../../bbox.js';
 import {distance} from '../../distance.js';
 import type {GeomEachCallback} from '../callback-types.js';

@@ -1,4 +1,4 @@
-import type * as GJ from '../types.js';
+import type * as GJ from '../../types/geojson.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import {AreaFeature} from '../features/index.js';
 import {AreaObject} from '../objects/index.js';

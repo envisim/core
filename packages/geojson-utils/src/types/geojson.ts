@@ -15,7 +15,7 @@ export interface Point extends GeoJsonObject<'Point'> {
   coordinates: Position;
   radius?: undefined;
 }
-export interface PointCircle extends GeoJsonObject<'Point'> {
+export interface Circle extends GeoJsonObject<'Point'> {
   type: 'Point';
   coordinates: Position;
   radius: number;
@@ -25,7 +25,7 @@ export interface MultiPoint extends GeoJsonObject<'MultiPoint'> {
   coordinates: Position[];
   radius?: undefined;
 }
-export interface MultiPointCircle extends GeoJsonObject<'MultiPoint'> {
+export interface MultiCircle extends GeoJsonObject<'MultiPoint'> {
   type: 'MultiPoint';
   coordinates: Position[];
   radius: number;
@@ -68,11 +68,7 @@ export interface AreaGeometryCollection extends GeometryCollection {
 
 export type PointObject = Point | MultiPoint;
 export type LineObject = LineString | MultiLineString;
-export type AreaObject =
-  | PointCircle
-  | MultiPointCircle
-  | Polygon
-  | MultiPolygon;
+export type AreaObject = Circle | MultiCircle | Polygon | MultiPolygon;
 
 export type BaseGeometry = PointObject | LineObject | AreaObject;
 export type Geometry = BaseGeometry | GeometryCollection;
