@@ -7,28 +7,22 @@ import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
 import {Polygon} from './ClassPolygon.js';
 
-export class PointCircle
-  extends BaseAreaObject<GJ.PointCircle>
-  implements GJ.PointCircle
-{
-  static isObject(obj: any): obj is PointCircle {
-    return obj instanceof PointCircle;
+export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
+  static isObject(obj: any): obj is Circle {
+    return obj instanceof Circle;
   }
 
   static create(
-    coordinates: GJ.PointCircle['coordinates'],
+    coordinates: GJ.Circle['coordinates'],
     radius: number,
     shallow: boolean = true,
-  ): PointCircle {
-    return new PointCircle({coordinates, radius}, shallow);
+  ): Circle {
+    return new Circle({coordinates, radius}, shallow);
   }
 
   radius: number;
 
-  constructor(
-    obj: OptionalParam<GJ.PointCircle, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.Circle, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'Point'}, shallow);
     this.radius = obj.radius;
   }
@@ -69,7 +63,7 @@ export class PointCircle
   }
 
   geomEach(
-    callback: GeomEachCallback<PointCircle>,
+    callback: GeomEachCallback<Circle>,
     featureIndex: number = -1,
   ): void {
     callback(this, featureIndex, -1);

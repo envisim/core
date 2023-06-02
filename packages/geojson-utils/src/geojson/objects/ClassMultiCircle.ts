@@ -7,26 +7,26 @@ import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
 import {MultiPolygon} from './ClassMultiPolygon.js';
 
-export class MultiPointCircle
-  extends BaseAreaObject<GJ.MultiPointCircle>
-  implements GJ.MultiPointCircle
+export class MultiCircle
+  extends BaseAreaObject<GJ.MultiCircle>
+  implements GJ.MultiCircle
 {
-  static isObject(obj: any): obj is MultiPointCircle {
-    return obj instanceof MultiPointCircle;
+  static isObject(obj: any): obj is MultiCircle {
+    return obj instanceof MultiCircle;
   }
 
   static create(
-    coordinates: GJ.MultiPointCircle['coordinates'],
+    coordinates: GJ.MultiCircle['coordinates'],
     radius: number,
     shallow: boolean = true,
-  ): MultiPointCircle {
-    return new MultiPointCircle({coordinates, radius}, shallow);
+  ): MultiCircle {
+    return new MultiCircle({coordinates, radius}, shallow);
   }
 
   radius: number;
 
   constructor(
-    obj: OptionalParam<GJ.MultiPointCircle, 'type'>,
+    obj: OptionalParam<GJ.MultiCircle, 'type'>,
     shallow: boolean = true,
   ) {
     super({...obj, type: 'MultiPoint'}, shallow);
@@ -78,7 +78,7 @@ export class MultiPointCircle
   }
 
   geomEach(
-    callback: GeomEachCallback<MultiPointCircle>,
+    callback: GeomEachCallback<MultiCircle>,
     featureIndex: number = -1,
   ): void {
     callback(this, featureIndex, -1);
