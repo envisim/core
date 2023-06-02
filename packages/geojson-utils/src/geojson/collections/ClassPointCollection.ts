@@ -1,9 +1,9 @@
 import type * as GJ from '../types.js';
-import {BaseCollection} from '../ClassBaseCollection.js';
 import type {GeomEachCallback} from '../callback-types.js';
+import {PointFeature} from '../features/index.js';
+import {PointObject} from '../objects/index.js';
 import {OptionalParam} from '../util-types.js';
-import {PointFeature} from './ClassPointFeature.js';
-import {PointObject} from './PointObjects.js';
+import {BaseCollection} from './BaseCollection.js';
 
 export class PointCollection
   extends BaseCollection<PointFeature>

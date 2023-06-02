@@ -1,9 +1,9 @@
 import type * as GJ from '../types.js';
-import {BaseCollection} from '../ClassBaseCollection.js';
 import type {GeomEachCallback} from '../callback-types.js';
+import {LineFeature} from '../features/index.js';
+import {LineObject} from '../objects/index.js';
 import {OptionalParam} from '../util-types.js';
-import {LineFeature} from './ClassLineFeature.js';
-import {LineObject} from './LineObjects.js';
+import {BaseCollection} from './BaseCollection.js';
 
 export class LineCollection
   extends BaseCollection<LineFeature>
