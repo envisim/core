@@ -18,17 +18,17 @@ import {
  * and collect point objects from a base layer using a detection function
  * to (randomly) determine inclusion.
  *
- * @param frame - An AreaCollection.
- * @param method - The method to use "uniform" or "systematic".
- * @param sampleSize - The expected sample size of points as integer > 0.
- * @param base - A PointCollection of single Point features.
- * @param detectionFunction - The detection function.
- * @param cutoff - The maximum detection distance in meters.
- * @param opts - An object containing buffer, ratio (dx/dy), rand.
- * @param opts.buffer - Optional buffer in meters (default cutoff).
- * @param opts.ratio - The ratio (dx/dy) for systematic sampling (default 1).
- * @param opts.rand - An optional instance of Random.
- * @returns - Resulting GeoJSON FeatureCollection.
+ * @param frame an AreaCollection.
+ * @param method the method to use "uniform" or "systematic".
+ * @param sampleSize the expected sample size of points as integer > 0.
+ * @param base a PointCollection of single Point features.
+ * @param detectionFunction the detection function.
+ * @param cutoff the maximum detection distance in meters.
+ * @param opts an object containing buffer, ratio (dx/dy), rand.
+ * @param opts.buffer optional buffer in meters (default cutoff).
+ * @param opts.ratio the ratio (dx/dy) for systematic sampling (default 1).
+ * @param opts.rand an optional instance of Random.
+ * @returns resulting PointCollection.
  */
 export function sampleDistancePoints(
   frame: AreaCollection,

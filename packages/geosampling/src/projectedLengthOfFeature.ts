@@ -28,6 +28,7 @@ function distCoordsForLineString(
 ): TdistCoord[] {
   let minDist = Infinity;
   let maxDist = -Infinity;
+
   lineString.forEach((coord) => {
     const result = geod.Inverse(
       refPointLonLat[1],
@@ -44,6 +45,7 @@ function distCoordsForLineString(
     minDist = Math.min(minDist, x);
     maxDist = Math.max(maxDist, x);
   });
+
   return [
     {dist: minDist, type: 'start'},
     {dist: maxDist, type: 'end'},
@@ -57,6 +59,7 @@ function distCoordsForMultiLineString(
   azimuth: number,
 ): TdistCoord[] {
   let distCoords: TdistCoord[] = [];
+
   multiLineString.forEach((lineString) => {
     distCoords = distCoords.concat(
       distCoordsForLineString(lineString, refPointLonLat, azimuth),
@@ -76,12 +79,11 @@ function lengthFromDistCoords(distCoords: TdistCoord[]): number {
   let L = 0; // Length of union.
   let p1 = 0; // start point of an interval
   let p2 = 0; // end point of an interval
-  //let intervals: number[][] = [];
+
   distCoords.forEach((e) => {
     if (e.type == 'start') {
       if (start == end) {
         p1 = e.dist;
-        //intervals.push([e.dist]);
       }
       start++;
     } else {
@@ -89,11 +91,10 @@ function lengthFromDistCoords(distCoords: TdistCoord[]): number {
       if (end == start) {
         p2 = e.dist;
         L += p2 - p1;
-        //intervals[intervals.length - 1].push(e.dist);
       }
     }
   });
-  return L; //{L: L, intervals: intervals};
+  return L;
 }
 
 function geometryToMultiLineString(
@@ -147,9 +148,9 @@ function geometryToMultiLineString(
  * Computes projected length of a feature. This is the
  * total length of the feature projected to a line
  * perpendicular to the sample line.
- * @param feature - A GeoJSON Feature.
- * @param azimuth - The azimuth of the sample line (angle clockwise from north).
- * @returns - The projected length in meters.
+ * @param feature a GeoJSON Feature.
+ * @param azimuth the azimuth of the sample line (angle clockwise from north).
+ * @returns the projected length in meters.
  */
 export function projectedLengthOfFeature(
   feature: LineFeature | AreaFeature,

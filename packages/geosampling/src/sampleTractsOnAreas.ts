@@ -29,16 +29,16 @@ type Method = 'uniform' | 'systematic';
 /**
  * Select a sample of tracts on areas.
  *
- * @param collection - An AreaCollection
- * @param method - The method to use "uniform" or "systematic".
- * @param sampleSize - Expected sample size integer > 0.
- * @param modelTract - A GeoJSON model tract.
- * @param opts - An options object.
- * @param opts.rotation - The rotation angle in degrees.
- * @param opts.randomRotation - Boolean true/false for random rotation of individual tract (always true for line tract).
- * @param opts.ratio - An optional ratio for systematic sampling.
- * @param opts.rand - An optional instance of Random.
- * @returns - Resulting Point/Line/AreaCollection.
+ * @param collection an AreaCollection
+ * @param method the method to use "uniform" or "systematic".
+ * @param sampleSize expected sample size integer > 0.
+ * @param modelTract a GeoJSON model tract.
+ * @param opts an options object.
+ * @param opts.rotation the rotation angle in degrees.
+ * @param opts.randomRotation boolean true/false for random rotation of individual tract (always true for line tract).
+ * @param opts.ratio an optional ratio for systematic sampling.
+ * @param opts.rand an optional instance of Random.
+ * @returns resulting Point/Line/AreaCollection.
  */
 
 // create overload signatures for different return types

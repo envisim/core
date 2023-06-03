@@ -19,15 +19,15 @@ export type TsampleDistanceLinesOpts = {
  * Selects a line sample on an area frame and collect point objects from a base
  * layer using a detection function to (randomly) determine inclusion.
  *
- * @param frame - An AreaCollection.
- * @param distBetween - The distance in meters between lines.
- * @param base - A PointCollection of single Point features.
- * @param detectionFunction - The detection function.
- * @param cutoff - Positive number, the maximum distance for detection.
- * @param opts - An object containing distBetween, rotation, rand.
- * @param opts.rotation - Optional fixed rotation of the lines.
- * @param opts.rand - An optional instance of Random.
- * @returns - Resulting PointCollection.
+ * @param frame an AreaCollection.
+ * @param distBetween the distance in meters between lines.
+ * @param base a PointCollection of single Point features.
+ * @param detectionFunction the detection function.
+ * @param cutoff positive number, the maximum distance for detection.
+ * @param opts an object containing distBetween, rotation, rand.
+ * @param opts.rotation optional fixed rotation of the lines.
+ * @param opts.rand an optional instance of Random.
+ * @returns resulting PointCollection.
  */
 export function sampleDistanceLines(
   frame: AreaCollection,
@@ -44,7 +44,6 @@ export function sampleDistanceLines(
   opts.rand = rand;
   // Compute design weight for this selection
   const dw = distBetween / (effHalfWidth * 2);
-
   // Select sample of lines
   const lineSample = sampleLinesOnAreas(frame, distBetween, opts);
   // To store sampled features
@@ -52,12 +51,13 @@ export function sampleDistanceLines(
 
   // Find selected points in base layer and check if
   // seleccted base point is in frame and transfer _designWeight
-  base.features.forEach((pointFeature) => {
+  base.forEach((pointFeature) => {
     if (pointFeature.geometry.type === 'Point') {
       const basePointCoords = pointFeature.geometry.coordinates;
 
-      lineSample.features.forEach((sampleLine, sampleLineIndex) => {
+      lineSample.forEach((sampleLine, sampleLineIndex) => {
         const type = sampleLine.geometry.type;
+
         if (type === 'LineString' || type === 'MultiLineString') {
           const dist = sampleLine.distanceToPosition(basePointCoords);
 
@@ -69,6 +69,7 @@ export function sampleDistanceLines(
                 pointFeature,
                 frameFeature,
               );
+
               if (intersect) {
                 // Follow the design weight
                 // This selection
@@ -77,13 +78,13 @@ export function sampleDistanceLines(
                 if (frameFeature.properties?._designWeight) {
                   designWeight *= frameFeature.properties._designWeight;
                 }
+
                 const newFeature = new PointFeature(pointFeature, false);
-                if (!newFeature.properties) {
-                  newFeature.properties = {};
-                }
+
                 newFeature.properties._designWeight = designWeight;
                 newFeature.properties._parent = sampleLineIndex;
                 newFeature.properties._distance = dist;
+
                 sampledFeatures.push(newFeature);
                 break;
               }

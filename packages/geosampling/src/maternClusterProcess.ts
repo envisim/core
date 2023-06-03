@@ -39,13 +39,13 @@ function randomPositionInCluster(
  * Generates points from a Matérn cluster point process
  * on an AreaCollection.
  *
- * @param collection - An AreaCollection.
- * @param intensityOfParents - Number of parent points / clusters per square meter.
- * @param meanOfCluster - Mean number of points per cluster.
- * @param radiusOfCluster - Radius in meters of a (circular) cluster.
- * @param opts - An optional options object.
- * @param opts.rand - An optional instance of Random.
- * @returns - A PointCollection.
+ * @param collection an AreaCollection.
+ * @param intensityOfParents number of parent points / clusters per square meter.
+ * @param meanOfCluster mean number of points per cluster.
+ * @param radiusOfCluster radius in meters of a (circular) cluster.
+ * @param opts an optional options object.
+ * @param opts.rand an optional instance of Random.
+ * @returns a PointCollection.
  */
 export function maternClusterProcess(
   collection: AreaCollection,

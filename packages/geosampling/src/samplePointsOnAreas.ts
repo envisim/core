@@ -72,14 +72,14 @@ export type TsamplePointsOnAreasOpts = {
  * Selects points on areas (if features have bbox, it is used in pointInPolygon
  * to reject point outside bbox if buffer is zero).
  *
- * @param collection - An AreaCollection
- * @param method - The method to use "uniform" or "systematic"
- * @param sampleSize - The expected sample size as integer > 0.
- * @param opts - An optional options object.
- * @param opts.buffer - An optional buffer in meters (default 0).
- * @param opts.ratio - An optional ratio (dx/dy) for systematic sampling (default 1).
- * @param opts.rand - An optional instance of Random.
- * @returns - Resulting GeoJSON FeatureCollection.
+ * @param collection an AreaCollection
+ * @param method the method to use "uniform" or "systematic"
+ * @param sampleSize the expected sample size as integer > 0.
+ * @param opts an optional options object.
+ * @param opts.buffer an optional buffer in meters (default 0).
+ * @param opts.ratio an optional ratio (dx/dy) for systematic sampling (default 1).
+ * @param opts.rand an optional instance of Random.
+ * @returns resulting PointCollection.
  */
 export function samplePointsOnAreas(
   collection: AreaCollection,

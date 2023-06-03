@@ -25,17 +25,17 @@ import {
  * Default buffer is zero, which gives a negative bias for estimates of positive
  * quantities.
  *
- * @param frame - An AreaCollection.
- * @param method - The method to use "uniform" or "systematic"
- * @param sampleSize - The expected number of points as integer > 0.
- * @param base - A PointCollection of single Point features.
- * @param sizeProperty - The name of the size property in base which has numeric value in meters (e.g. diameter at breast hight).
- * @param factor - Positive number, the relascope factor.
- * @param opts - An object containing buffer, ratio (dx/dy), rand
- * @param opts.buffer - Optional buffer in meters (default 0).
- * @param opts.ratio - The ratio (dx/dy) for systematic sampling (default 1).
- * @param opts.rand - An optional instance of Random.
- * @returns - Resulting GeoJSON FeatureCollection.
+ * @param frame an AreaCollection.
+ * @param method the method to use "uniform" or "systematic"
+ * @param sampleSize the expected number of points as integer > 0.
+ * @param base a PointCollection of single Point features.
+ * @param sizeProperty the name of the size property in base which has numeric value in meters (e.g. diameter at breast hight).
+ * @param factor positive number, the relascope factor.
+ * @param opts an object containing buffer, ratio (dx/dy), rand
+ * @param opts.buffer optional buffer in meters (default 0).
+ * @param opts.ratio the ratio (dx/dy) for systematic sampling (default 1).
+ * @param opts.rand an optional instance of Random.
+ * @returns resulting PointCollection.
  */
 export function sampleRelascopePoints(
   frame: AreaCollection,

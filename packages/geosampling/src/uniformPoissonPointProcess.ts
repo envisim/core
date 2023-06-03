@@ -10,11 +10,11 @@ import {uniformBinomialPointProcess} from './uniformBinomialPointProcess.js';
  * random number of points, the points are generated uniformly
  * on a spherical model of the earth.
  *
- * @param collection - An AreaCollection.
- * @param intensity - Number of points per square meter.
- * @param opts - An optional options object.
- * @param opts.rand - An optional instance of Random.
- * @returns - A GeoJSON FeatureCollection of generated points.
+ * @param collection an AreaCollection.
+ * @param intensity number of points per square meter.
+ * @param opts an optional options object.
+ * @param opts.rand an optional instance of Random.
+ * @returns a PointCollection of generated points.
  */
 export function uniformPoissonPointProcess(
   collection: AreaCollection,

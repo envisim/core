@@ -4,8 +4,8 @@ import {GeoJSON} from '@envisim/geojson-utils';
  * Check for points/lines/areas and return first occurence. A tract must be of a
  * single type. Geometries of different dimensions must not be mixed in a tract.
  *
- * @param geoJSON - A GeoJSON Point/Line/AreaFeature.
- * @returns - First occurence of point/line/area.
+ * @param geoJSON a GeoJSON Point/Line/AreaFeature.
+ * @returns first occurence of point/line/area.
  */
 export function typeOfTract(
   feature: GeoJSON.PointFeature | GeoJSON.LineFeature | GeoJSON.AreaFeature,
