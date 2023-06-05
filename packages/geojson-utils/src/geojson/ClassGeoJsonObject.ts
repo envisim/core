@@ -1,4 +1,4 @@
-import type * as GJ from './types.js';
+import type * as GJ from '../types/geojson.js';
 
 export abstract class GeoJsonObject<T extends string>
   implements GJ.GeoJsonObject<T>
@@ -16,8 +16,12 @@ export abstract class GeoJsonObject<T extends string>
     }
   }
 
+  abstract get size(): number;
+
   abstract setBBox(force?: boolean): GJ.BBox;
   getBBox(): GJ.BBox {
     return this.bbox ?? this.setBBox(false);
   }
+
+  abstract distanceToPosition(coors: GJ.Position): number;
 }

@@ -1,5 +1,4 @@
-import type * as GJ from '../src/geojson/types.js';
-import {intersectSegments} from '../src/intersectSegments.js';
+import {intersectSegments, GeoJSON as GJ} from '../src/index.js';
 
 describe('intersectSegments', () => {
   const seg1: GJ.Position[] = [

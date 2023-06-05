@@ -1,11 +1,11 @@
-import type * as GJ from '../src/geojson/types.js';
 import {
+  Polygon,
+  GeoJSON as GJ,
   pointInBBox,
   bboxInBBox,
   unionOfBBoxes,
   bboxFromPositions,
-} from '../src/bbox.js';
-import {Polygon} from '../src/geojson/areas/ClassPolygon';
+} from '../src/index.js';
 import './_equalArrays.testf';
 
 describe('bbox', () => {

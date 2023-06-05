@@ -1,5 +1,4 @@
-import type * as GJ from '../src/geojson/types.js';
-import {LineString} from '../src/geojson/lines/ClassLineString.js';
+import {LineString, GeoJSON as GJ} from '../src/index.js';
 
 describe('length', () => {
   const p1: GJ.Position = [0, 90]; // North pole

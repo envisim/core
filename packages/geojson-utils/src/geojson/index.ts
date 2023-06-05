@@ -1,5 +1,4 @@
-export * as GeoJSON from './types.js';
-
-export * from './points/index.js';
-export * from './lines/index.js';
-export * from './areas/index.js';
+export * from './objects/index.js';
+export * from './gcs/index.js';
+export * from './features/index.js';
+export * from './collections/index.js';

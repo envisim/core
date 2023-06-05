@@ -1,8 +1,8 @@
 // @ts-ignore
 import turfBuffer from '@turf/buffer';
 
-import type * as GJ from './geojson/types.js';
-import {AreaCollection} from './geojson/areas/ClassAreaCollection.js';
+import type * as GJ from './types/geojson.js';
+import {AreaCollection} from './geojson/index.js';
 
 type BufferOpts = {
   radius?: number;
