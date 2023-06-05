@@ -20,7 +20,7 @@ export class Pivotal extends SamplingBase {
   setDirect: boolean = false;
   setRun: boolean = false;
 
-  runInternal: () => void = () => {};
+  runInternal!: () => void;
 
   method: PivotalMethod;
 

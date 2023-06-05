@@ -15,12 +15,6 @@ module.exports = {
   root: true,
   rules: {
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-inferrable-types': [
-      'error',
-      {
-        ignoreParameters: true,
-        ignoreProperties: true,
-      },
-    ],
+    '@typescript-eslint/no-inferrable-types': 'off',
   },
 };

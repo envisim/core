@@ -17,7 +17,7 @@ export const srswor = (
     throw new TypeError('n and N must be number');
 
   const nn = Math.min(n, N);
-  const s = new Array(nn);
+  const s = new Array<number>(nn);
   let ns = 0;
 
   for (let i = 0; i < N; i++) {
@@ -46,7 +46,7 @@ export const srswr = (
   if (n === undefined || N === undefined)
     throw new TypeError('n and N must be number');
 
-  const s = new Array(n);
+  const s = new Array<number>(n);
 
   for (let i = 0; i < n; i++) {
     s[i] = Math.floor(rand.float() * N);
