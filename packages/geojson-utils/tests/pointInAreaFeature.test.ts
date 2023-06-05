@@ -1,6 +1,4 @@
-import type * as GJ from '../src/geojson/types.js';
-import {AreaFeature} from '../src/geojson/areas/ClassAreaFeature.js';
-import {pointInAreaFeature} from '../src/pointInPolygon.js';
+import {AreaFeature, GeoJSON as GJ, pointInAreaFeature} from '../src/index.js';
 
 describe('pointInAreaFeature', () => {
   // polygon

@@ -1,5 +1,4 @@
-import type * as GJ from '../src/geojson/types.js';
-import {Polygon} from '../src/geojson/areas/ClassPolygon';
+import {Polygon, GeoJSON as GJ} from '../src/index.js';
 
 describe('area', () => {
   // https://geographiclib.sourceforge.io/scripts/geod-calc.html

@@ -1,5 +1,4 @@
-import type * as GJ from '../src/geojson/types.js';
-import {forwardAzimuth} from '../src/forwardAzimuth.js';
+import {GeoJSON as GJ, forwardAzimuth} from '../src/index.js';
 
 describe('forwardAzimuth', () => {
   const p1: GJ.Position = [0, 0];
