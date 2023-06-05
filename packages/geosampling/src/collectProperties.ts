@@ -2,19 +2,22 @@ import {v4 as uuidv4} from 'uuid';
 
 import {IPropertyRecord} from '@envisim/geojson-utils';
 import {
-  area,
-  length,
-  count,
+  GeoJSON,
+  PointFeature,
+  LineFeature,
+  AreaFeature,
+  PointCollection,
+  LineCollection,
+  AreaCollection,
   copy,
   forwardAzimuth,
   intersectLineLineFeatures,
+  intersectAreaAreaFeatures,
+  intersectLineAreaFeatures,
+  intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
 
-import {intersectAreaAreaFeatures} from './intersectAreaAreaFeatures.js';
-import {intersectLineAreaFeatures} from './intersectLineAreaFeatures.js';
-import {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
 import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
-import {typeOfFrame} from './typeOfFrame.js';
 
 /* 
     properties = [
@@ -42,7 +45,7 @@ type ICollect = {
 
 const addPropertiesToFeature = (
   properties: IPropertyRecord,
-  feature: GeoJSON.Feature,
+  feature: PointFeature | LineFeature | AreaFeature,
 ): void => {
   // for now, add name and value 0 for numeric and name and value {} for categorical
   // later fill categorical {} with "cat":value if "cat" exists for feature.
@@ -66,8 +69,8 @@ const addPropertiesToFeature = (
 };
 
 type AggregateOpts = {
-  to: GeoJSON.Feature;
-  from: GeoJSON.Feature;
+  to: PointFeature | LineFeature | AreaFeature;
+  from: PointFeature | LineFeature | AreaFeature;
   toSize: number;
   intersectSize: number;
   properties: IPropertyRecord;
@@ -135,16 +138,10 @@ const aggregateProperties = (opts: AggregateOpts) => {
  * @param properties - A properties object describing the properties to collect.
  */
 export const collectProperties = (
-  frame: GeoJSON.FeatureCollection,
-  base: GeoJSON.FeatureCollection,
+  frame: PointCollection | LineCollection | AreaCollection,
+  base: PointCollection | LineCollection | AreaCollection,
   properties: IPropertyRecord,
 ): ICollect => {
-  if (frame.type !== 'FeatureCollection') {
-    throw new Error('FeatureCollection is required for sample.');
-  }
-  if (base.type !== 'FeatureCollection') {
-    throw new Error('FeatureCollection is required for base.');
-  }
   const sample: GeoJSON.FeatureCollection = copy(frame);
   // add the properties to all sampleFeatures with default values
   // 0 for numeric and {} for categorical
