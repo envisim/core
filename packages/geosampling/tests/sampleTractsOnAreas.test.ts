@@ -1,10 +1,10 @@
-import {toFeatureCollection} from '@envisim/geojson-utils';
+import {GeoJSON, AreaFeature, AreaCollection} from '@envisim/geojson-utils';
 
 import {squareAreaTract, pointTract} from '../src/modelTract.js';
 import {sampleTractsOnAreas} from '../src/sampleTractsOnAreas.js';
 
 describe('sampleTractsOnAreas', () => {
-  const polygon: GeoJSON.Geometry = {
+  const polygon: GeoJSON.Polygon = {
     type: 'Polygon',
     coordinates: [
       [
@@ -16,7 +16,7 @@ describe('sampleTractsOnAreas', () => {
       ],
     ],
   };
-  const frame = toFeatureCollection(polygon);
+  const frame = AreaCollection.create([AreaFeature.create(polygon, {})]);
   const tract = squareAreaTract(10);
   const sample = sampleTractsOnAreas(frame, 'uniform', 10, tract);
   //console.log(JSON.stringify(sample, null, 2));
