@@ -32,7 +32,7 @@ class Matrix extends BaseMatrix {
     byRow: boolean = false,
   ) {
     let rows = isInteger(nrow) ? nrow : 1;
-    let cols = isInteger(ncol) ? ncol : 1;
+    const cols = isInteger(ncol) ? ncol : 1;
 
     if (typeof arr === 'number') {
       super(arr, rows, cols);
@@ -140,7 +140,7 @@ class Matrix extends BaseMatrix {
 
     if (!Array.isArray(arr)) throw new TypeError('arr must be array or number');
 
-    let n = nrow ?? arr.length;
+    const n = nrow ?? arr.length;
     if (n > arr.length)
       throw new RangeError('nrow cant be larger than arr.length');
 
@@ -169,7 +169,7 @@ class Matrix extends BaseMatrix {
    */
   extractColumn(column: number): ColumnVector {
     if (!Number.isInteger(column) || column < 0 || this._ncol <= column)
-      throw new RangeError('column out of bounds: ' + column);
+      throw new RangeError(`column out of bounds: ${column}`);
 
     return new ColumnVector(
       this._e.slice(column * this._nrow, (column + 1) * this._nrow),
@@ -210,7 +210,7 @@ class Matrix extends BaseMatrix {
    */
   extractRow(row: number): RowVector {
     if (!Number.isInteger(row) || row < 0 || this._nrow <= row)
-      throw new RangeError('row out of bounds: ' + row);
+      throw new RangeError(`row out of bounds: ${row}`);
 
     const s = new RowVector(0, this._ncol);
 
@@ -346,7 +346,7 @@ class Matrix extends BaseMatrix {
    * @group Static methods
    */
   static rbind(...matrices: TMatrixLike[]): Matrix {
-    if (!matrices.every(BaseMatrix.isBaseMatrix))
+    if (!matrices.every((m) => BaseMatrix.isBaseMatrix(m)))
       throw new TypeError('Not all arguments are of type BaseMatrix');
     if (matrices.length === 0) throw new Error('Nothing to cbind');
 

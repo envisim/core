@@ -126,11 +126,11 @@ abstract class BaseMatrix {
     return [this._nrow, this._ncol];
   }
   /**
-   * @returns `true` if `mat` is {@link TMatrixLike}
+   * @returns `true` if `mat` is `BaseMatrix`
    * @group Static methods
    * @group Property methods
    */
-  static isBaseMatrix(mat: any): mat is BaseMatrix {
+  static isBaseMatrix(mat: unknown): mat is BaseMatrix {
     return mat instanceof BaseMatrix;
   }
   /**
@@ -211,7 +211,7 @@ abstract class BaseMatrix {
    * @throws `RangeError` if `index` is not in range
    * @group Accessors
    */
-  fn(index: number, callbackFn: ICallbackIndex, ...args: any[]): number {
+  fn(index: number, callbackFn: ICallbackIndex, ...args: unknown[]): number {
     if (index < 0 || index >= this._nelements)
       throw new RangeError('index is not in range');
     const value = callbackFn(this._e[index], index, ...args);
@@ -766,7 +766,7 @@ abstract class BaseMatrix {
    * @group Statistics
    */
   prod(): number {
-    return this.reduce((s, e) => s * e, 1.0);
+    return this.reduce((s, e): number => s * e, 1.0);
   }
 
   /**
@@ -832,7 +832,7 @@ abstract class BaseMatrix {
    * @group Statistics
    */
   mode(): number[] {
-    const s = new Map();
+    const s = new Map<number, number>();
 
     this.forEach((e) => {
       s.set(e, (s.get(e) ?? 0) + 1);
@@ -878,7 +878,7 @@ abstract class BaseMatrix {
     if (p.length === 0) return [];
 
     const s = this.internal.sort((a: number, b: number) => a - b);
-    const res = new Array(p.length);
+    const res = new Array<number>(p.length);
     const n = s.length;
     let unit: number;
     let low: number;
@@ -970,7 +970,7 @@ abstract class BaseMatrix {
     let str = '[';
 
     if (pretty === true) {
-      const maxLen = new Array(this._ncol).fill(0);
+      const maxLen = new Array<number>(this._ncol).fill(0);
       const vals = this._e.map((v) => v.toFixed(digits));
       maxLen.forEach((_, c) => {
         maxLen[c] = Math.max(

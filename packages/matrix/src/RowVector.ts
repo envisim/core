@@ -45,7 +45,7 @@ class RowVector extends Vector {
    * @group Static methods
    * @group Property methods
    */
-  static isRowVector(vec: any): vec is RowVector {
+  static isRowVector(vec: unknown): vec is RowVector {
     return vec instanceof RowVector;
   }
 
@@ -92,10 +92,10 @@ class RowVector extends Vector {
       throw new TypeError('rows must consist of integers');
 
     const n = rows.length;
-    const s = new Array(n * this._ncol);
+    const s = new Array<number>(n * this._ncol);
 
     for (let i = 0; i < this._ncol; i++) {
-      s.splice(i * n, (i + 1) * n, ...new Array(n).fill(this.at(i)));
+      s.splice(i * n, (i + 1) * n, ...new Array<number>(n).fill(this.at(i)));
     }
 
     return new Matrix(s, n, this._ncol);

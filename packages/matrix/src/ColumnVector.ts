@@ -45,7 +45,7 @@ class ColumnVector extends Vector {
    * @group Static methods
    * @group Property methods
    */
-  static isColumnVector(vec: any): vec is ColumnVector {
+  static isColumnVector(vec: unknown): vec is ColumnVector {
     return vec instanceof ColumnVector;
   }
 

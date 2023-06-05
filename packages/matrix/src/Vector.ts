@@ -38,7 +38,7 @@ abstract class Vector extends BaseMatrix {
    * @group Static methods
    * @group Property methods
    */
-  static isVector(vec: any): vec is Vector {
+  static isVector(vec: unknown): vec is Vector {
     return vec instanceof Vector;
   }
 
@@ -225,7 +225,7 @@ abstract class Vector extends BaseMatrix {
     compareFn: ICallbackCompare = (a: number, b: number) =>
       this.at(a) - this.at(b),
   ): number[] {
-    const idx = new Array(this._nelements);
+    const idx = new Array<number>(this._nelements);
     for (let i = 0; i < this._nelements; i++) idx[i] = i;
     return idx.sort(compareFn);
   }
