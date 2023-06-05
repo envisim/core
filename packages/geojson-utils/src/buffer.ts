@@ -37,5 +37,5 @@ export function buffer(
   if (!turfCollection.features || turfCollection.features.length === 0)
     return null;
 
-  return new AreaCollection(turfCollection);
+  return new AreaCollection(turfCollection, true);
 }
