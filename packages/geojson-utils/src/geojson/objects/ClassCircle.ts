@@ -22,6 +22,14 @@ export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
 
   radius: number;
 
+  /**
+   * The `Circle` is a {@link Point} with the extra property `radius`.
+   * Thus, it does not follow the GeoJSON standard, but can be converted to
+   * a {@link Polygon} through the {@link Circle.toPolygon}.
+   *
+   * @param obj
+   * @param shallow if `true`, copys by reference when possible.
+   */
   constructor(obj: OptionalParam<GJ.Circle, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'Point'}, shallow);
     this.radius = obj.radius;

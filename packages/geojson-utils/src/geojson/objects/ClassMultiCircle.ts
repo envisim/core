@@ -25,6 +25,14 @@ export class MultiCircle
 
   radius: number;
 
+  /**
+   * The `Circle` is a {@link MultiPoint} with the extra property `radius`.
+   * Thus, it does not follow the GeoJSON standard, but can be converted to
+   * a {@link MultiPolygon} through the {@link MultiCircle.toPolygon}.
+   *
+   * @param obj
+   * @param shallow if `true`, copys by reference when possible.
+   */
   constructor(
     obj: OptionalParam<GJ.MultiCircle, 'type'>,
     shallow: boolean = true,

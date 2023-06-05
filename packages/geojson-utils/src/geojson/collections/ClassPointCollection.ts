@@ -44,7 +44,7 @@ export class PointCollection
     );
   }
 
-  /* AREA SPECIFIC */
+  /* POINT SPECIFIC */
   count(): number {
     return this.features.reduce(
       (prev, curr) => prev + curr.geometry.count(),
