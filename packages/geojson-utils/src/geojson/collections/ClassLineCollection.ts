@@ -9,7 +9,7 @@ export class LineCollection
   extends BaseCollection<LineObject>
   implements GJ.LineFeatureCollection
 {
-  static isCollection(obj: any): obj is LineCollection {
+  static isCollection(obj: unknown): obj is LineCollection {
     return obj instanceof LineCollection;
   }
 

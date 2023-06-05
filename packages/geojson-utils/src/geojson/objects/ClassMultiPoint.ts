@@ -9,7 +9,7 @@ export class MultiPoint
   extends BasePointObject<GJ.MultiPoint>
   implements GJ.MultiPoint
 {
-  static isObject(obj: any): obj is MultiPoint {
+  static isObject(obj: unknown): obj is MultiPoint {
     return obj instanceof MultiPoint;
   }
 

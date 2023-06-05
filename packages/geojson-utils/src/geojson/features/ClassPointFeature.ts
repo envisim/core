@@ -1,6 +1,6 @@
 import type * as GJ from '../../types/geojson.js';
 import type {GeomEachCallback} from '../callback-types.js';
-import {PointGeometry, toPointGeometry} from '../gcs/index.js';
+import {toPointGeometry} from '../gcs/index.js';
 import type {PointObject} from '../objects/index.js';
 import {OptionalParam} from '../util-types.js';
 import {BaseFeature} from './BaseFeature.js';
@@ -9,7 +9,7 @@ export class PointFeature
   extends BaseFeature<PointObject>
   implements GJ.PointFeature
 {
-  static isFeature(obj: any): obj is PointFeature {
+  static isFeature(obj: unknown): obj is PointFeature {
     return obj instanceof PointFeature;
   }
 

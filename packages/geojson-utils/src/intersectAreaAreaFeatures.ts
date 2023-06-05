@@ -169,7 +169,7 @@ function intersectCircleAF(
         });
         return;
 
-      case 'MultiPoint':
+      case 'MultiPoint': {
         const circles2 = g2.coordinates.map((coords) =>
           Circle.create(coords, g2.radius),
         );
@@ -181,6 +181,7 @@ function intersectCircleAF(
           });
         });
         return;
+      }
     }
   });
 }

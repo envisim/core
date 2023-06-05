@@ -4,5 +4,5 @@ export function copy<T>(obj: T): T {
   }
 
   // Enjoy
-  return JSON.parse(JSON.stringify(obj));
+  return JSON.parse(JSON.stringify(obj)) as T;
 }

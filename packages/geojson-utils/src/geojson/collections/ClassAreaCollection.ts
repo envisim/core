@@ -9,7 +9,7 @@ export class AreaCollection
   extends BaseCollection<AreaObject>
   implements GJ.AreaFeatureCollection
 {
-  static isCollection(obj: any): obj is AreaCollection {
+  static isCollection(obj: unknown): obj is AreaCollection {
     return obj instanceof AreaCollection;
   }
 

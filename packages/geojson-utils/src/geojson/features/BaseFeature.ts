@@ -45,7 +45,7 @@ abstract class BaseFeature<
   abstract geomEach(callback: GeomEachCallback<T>, featureIndex: number): void;
 
   initProperty(property: string, defaultValue: number = 0.0): void {
-    if (!this.properties.hasOwnProperty(property))
+    if (!Object.prototype.hasOwnProperty.call(this.properties, property))
       this.properties[property] = defaultValue;
   }
 

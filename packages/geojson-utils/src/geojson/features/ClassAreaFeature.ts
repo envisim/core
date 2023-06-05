@@ -1,6 +1,6 @@
 import type * as GJ from '../../types/geojson.js';
 import type {GeomEachCallback} from '../callback-types.js';
-import {AreaGeometry, toAreaGeometry} from '../gcs/index.js';
+import {toAreaGeometry} from '../gcs/index.js';
 import type {AreaObject} from '../objects/index.js';
 import {OptionalParam} from '../util-types.js';
 import {BaseFeature} from './BaseFeature.js';
@@ -9,7 +9,7 @@ export class AreaFeature
   extends BaseFeature<AreaObject>
   implements GJ.AreaFeature
 {
-  static isFeature(obj: any): obj is AreaFeature {
+  static isFeature(obj: unknown): obj is AreaFeature {
     return obj instanceof AreaFeature;
   }
 

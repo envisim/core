@@ -10,7 +10,7 @@ export class MultiLineString
   extends BaseLineObject<GJ.MultiLineString>
   implements GJ.MultiLineString
 {
-  static isObject(obj: any): obj is MultiLineString {
+  static isObject(obj: unknown): obj is MultiLineString {
     return obj instanceof MultiLineString;
   }
 

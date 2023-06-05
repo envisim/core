@@ -87,7 +87,7 @@ function lineStringInPolygon(
 
     if (intersectionpoints.length > 0) {
       // Sort and add/push points here.
-      let sortArray: sortArrayElement[] = intersectionpoints
+      const sortArray: sortArrayElement[] = intersectionpoints
         .map(
           (v: GJ.Position): sortArrayElement => [
             v,
@@ -192,7 +192,7 @@ export function intersectLineAreaFeatures(
     return null;
 
   // Build MultiLineString coordinates for LineFeature
-  let mls: GJ.Position[][] = [];
+  const mls: GJ.Position[][] = [];
   lineFeature.geomEach((lg: LineObject) => {
     if (lg.type === 'LineString') {
       mls.push(lg.coordinates);
@@ -202,7 +202,7 @@ export function intersectLineAreaFeatures(
   });
 
   // Build MultiPolygon coordinates for AreaFeature
-  let mp: GJ.Position[][][] = [];
+  const mp: GJ.Position[][][] = [];
   areaFeature.geomEach((ag: AreaObject) => {
     switch (ag.type) {
       case 'Polygon':

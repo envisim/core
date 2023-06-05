@@ -11,7 +11,7 @@ export class MultiCircle
   extends BaseAreaObject<GJ.MultiCircle>
   implements GJ.MultiCircle
 {
-  static isObject(obj: any): obj is MultiCircle {
+  static isObject(obj: unknown): obj is MultiCircle {
     return obj instanceof MultiCircle;
   }
 
@@ -53,7 +53,7 @@ export class MultiCircle
     if (this.coordinates.length === 0)
       return new MultiPolygon({coordinates: [], bbox}, true);
 
-    const coordinates: GJ.Position[][][] = new Array(this.coordinates.length);
+    const coordinates = new Array<GJ.Position[][]>(this.coordinates.length);
 
     // Use the radius that gives equal area to the polygon for best approx.
     const v = Math.PI / pointsPerCircle;
@@ -63,7 +63,7 @@ export class MultiCircle
     );
 
     for (let i = 0; i < this.coordinates.length; i++) {
-      const coords: GJ.Position[] = new Array(pointsPerCircle);
+      const coords = new Array<GJ.Position>(pointsPerCircle);
       for (let j = 0; j < pointsPerCircle; j++) {
         const angle = 360.0 - (j / pointsPerCircle) * 360.0;
         coords[j] = destination(this.coordinates[i], radius, angle);

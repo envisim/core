@@ -8,7 +8,7 @@ export class LineGeometryCollection
   extends BaseGeometryCollection<LineObject>
   implements GJ.LineGeometryCollection
 {
-  static isGeometryCollection(obj: any): obj is LineGeometryCollection {
+  static isGeometryCollection(obj: unknown): obj is LineGeometryCollection {
     return obj instanceof LineGeometryCollection;
   }
 

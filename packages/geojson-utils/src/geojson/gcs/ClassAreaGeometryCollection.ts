@@ -8,7 +8,7 @@ export class AreaGeometryCollection
   extends BaseGeometryCollection<AreaObject>
   implements GJ.AreaGeometryCollection
 {
-  static isGeometryCollection(obj: any): obj is AreaGeometryCollection {
+  static isGeometryCollection(obj: unknown): obj is AreaGeometryCollection {
     return obj instanceof AreaGeometryCollection;
   }
 

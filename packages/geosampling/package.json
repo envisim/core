@@ -40,7 +40,7 @@
     "@envisim/matrix": "workspace:*",
     "@envisim/random": "workspace:*",
     "@envisim/sampling": "workspace:*",
-    "@turf/buffer": "^6.5.0",
+    "@turf/buffer": "^7.0.0-alpha.0",
     "@turf/intersect": "^6.5.0",
     "geodesy": "^2.4.0",
     "uuid": "^9.0.0"

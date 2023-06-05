@@ -13,4 +13,14 @@ module.exports = {
     project: ['./packages/*/tsconfig.json'],
   },
   root: true,
+  rules: {
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-inferrable-types': [
+      'error',
+      {
+        ignoreParameters: true,
+        ignoreProperties: true,
+      },
+    ],
+  },
 };
