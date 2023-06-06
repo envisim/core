@@ -17,21 +17,21 @@ describe('RowVector', () => {
     expect(r1.nrow).toBe(1);
     expect(r1.size[0]).toBe(1);
     expect(r1.size[1]).toBe(6);
-    expect(r1.atIndex(2)).toBe(4);
+    expect(r1.at(2)).toBe(4);
     expect(r1.atRC(0, 2)).toBe(4);
-    expect(r2.edIndex(2, 10)).toBe(10);
-    expect(r2.atIndex(2)).toBe(10);
+    expect(r2.ed(2, 10)).toBe(10);
+    expect(r2.at(2)).toBe(10);
     expect(r2.edRC(0, 2, 3)).toBe(3);
     expect(r2.atRC(0, 2)).toBe(3);
-    expect(r2.fnIndex(2, (e) => e + 2)).toBe(5);
-    expect(r2.atIndex(2)).toBe(5);
+    expect(r2.fn(2, (e) => e + 2)).toBe(5);
+    expect(r2.at(2)).toBe(5);
     expect(r2.fnRC(0, 2, (e) => e + 2)).toBe(7);
     expect(r2.atRC(0, 2)).toBe(7);
     expect(r1.indexOf(4)).toBe(2);
-    expect(r1.indexToCol(2)).toBe(2);
-    expect(r1.indexToRow(2)).toBe(0);
+    expect(r1.colOfIndex(2)).toBe(2);
+    expect(r1.rowOfIndex(2)).toBe(0);
     expect(r1.lastIndexOf(5)).toBe(4);
-    expect(r1.rcToIndex(0, 2)).toBe(2);
+    expect(r1.indexOfRc(0, 2)).toBe(2);
   });
 
   /* 1, 0, 4, 3, 5, -1 */
@@ -39,14 +39,14 @@ describe('RowVector', () => {
 
   test('basic operators', () => {
     // Same as Matrix, inherited from BaseMatrix
-    expect(r1.add(r1).isEqualTo(r1.multiplyScalar(2))).toBe(true);
-    expect(r1.addScalar(2).isEqualTo(r1p2)).toBe(true);
+    expect(r1.add(r1).isEqualTo(r1.multiply(2))).toBe(true);
+    expect(r1.add(2).isEqualTo(r1p2)).toBe(true);
   });
 
   const r1_r1p2 = new RowVector([...r1content, ...r1p2.internal]);
   const r1p2_r1 = new RowVector([...r1p2.internal, ...r1content]);
-  const r1c2 = new RowVector([4], 1);
-  const r1c23 = new RowVector([4, 3], 2);
+  const r1c2 = new RowVector([4]);
+  const r1c23 = new RowVector([4, 3]);
   const r1_positive = new RowVector([1, 4, 3, 5]);
   const c1 = new ColumnVector(r1content);
 
@@ -54,13 +54,9 @@ describe('RowVector', () => {
     expect(r1.append(r1p2).isEqualTo(r1_r1p2)).toBe(true);
     expect(r1.prepend(r1p2).isEqualTo(r1p2_r1)).toBe(true);
     expect(r1.copy().isEqualTo(r1)).toBe(true);
-    expect(r1.extractColumn(2).isEqualTo(r1c2)).toBe(true);
     expect(r1.extractColumns([2, 3]).isEqualTo(r1c23)).toBe(true);
-    expect(r1.extractRow(0).isEqualTo(r1)).toBe(true);
-    expect(r1.extractRows([0]).isEqualTo(r1)).toBe(true);
-    expect(r1.extractSubMatrix(2, 3).isEqualTo(r1c23)).toBe(true);
     expect(r1.filter((e) => e > 0).isEqualTo(r1_positive)).toBe(true);
-    expect(r1.t().isEqualTo(c1)).toBe(true);
+    expect(r1.transpose().isEqualTo(c1)).toBe(true);
   });
 
   /* 1, 0, 4, 3, 5, -1 */

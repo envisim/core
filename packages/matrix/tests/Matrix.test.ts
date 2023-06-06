@@ -1,4 +1,4 @@
-import {ColumnVector, Matrix, RowVector} from '../src/index';
+import {ColumnVector, Matrix, RowVector, identityMatrix} from '../src/index';
 import {createTable} from './_createTable.testf';
 
 describe('Matrix', () => {
@@ -15,7 +15,7 @@ describe('Matrix', () => {
   test('initialization', () => {
     expect(m1.isEqualTo(m1b)).toBe(true);
     expect(m1.isEqualTo(m1t)).toBe(false);
-    expect(m1.t().isEqualTo(m1t)).toBe(true);
+    expect(m1.transpose().isEqualTo(m1t)).toBe(true);
     expect(m1.transpose().isEqualTo(m1t)).toBe(true);
     expect(m1.copy().isEqualTo(m1b)).toBe(true);
     expect(m1.extractColumn(1).isEqualTo(m1c2)).toBe(true);
@@ -40,18 +40,20 @@ describe('Matrix', () => {
     expect(m1.ncol).toBe(m1.size[1]);
     expect(m1.nelements).toBe(9);
     expect(m1.diagonal().isEqualTo(m1diag)).toBe(true);
-    expect(m1.atIndex(5)).toBe(-1);
+    expect(m1.at(5)).toBe(-1);
     expect(m1.atRC(2, 2)).toBe(2);
-    expect(m1b.edIndex(5, -2)).toBe(-2);
-    expect(m1b.atIndex(5)).toBe(-2);
+    expect(m1b.ed(5, -2)).toBe(-2);
+    expect(m1b.at(5)).toBe(-2);
     expect(m1b.edRC(2, 1, -10)).toBe(-10);
     expect(m1b.atRC(2, 1)).toBe(-10);
-    expect(m1b.fnIndex(1, (_, i) => i + 10)).toBe(11);
+    expect(m1b.fn(1, (_, i) => i + 10)).toBe(11);
     expect(m1b.fnRC(0, 0, (_, __, r, c) => r + c + 10)).toBe(10);
-    expect(m1b.swapIndex(7, 8).atIndex(7)).toBe(2);
-    expect(m1b.atIndex(8)).toBe(1);
-    expect(m1b.swapRC(2, 2, 1, 2).atIndex(7)).toBe(1);
-    expect(m1b.atIndex(8)).toBe(2);
+    m1b.swap(7, 8);
+    expect(m1b.at(7)).toBe(2);
+    expect(m1b.at(8)).toBe(1);
+    m1b.swapRC(2, 2, 1, 2);
+    expect(m1b.at(7)).toBe(1);
+    expect(m1b.at(8)).toBe(2);
   });
 
   /*
@@ -75,19 +77,18 @@ describe('Matrix', () => {
 
   test('basic operators', () => {
     expect(m2.add(m2).isEqualTo(m2pp)).toBe(true);
-    expect(m2.addScalar(2).isEqualTo(m2p2)).toBe(true);
+    expect(m2.add(2).isEqualTo(m2p2)).toBe(true);
     expect(m2.divide(m2).isEqualTo(m2dd)).toBe(true);
-    expect(m2.divideScalar(2).isEqualTo(m2d2)).toBe(true);
+    expect(m2.divide(2).isEqualTo(m2d2)).toBe(true);
     expect(m2.math('abs').isCloseTo(m2abs)).toBe(true);
     expect(m2.math('pow', 2).isCloseTo(m2pow2)).toBe(true);
     expect(m2.mmult(m2).isEqualTo(m2mmultm2)).toBe(true);
-    expect(m2.modScalar(2).isEqualTo(m2mod2)).toBe(true);
+    expect(m2.mod(2).isEqualTo(m2mod2)).toBe(true);
     expect(m2p2.mod(m2).isEqualTo(m2modm)).toBe(true);
     expect(m2.multiply(m2).isEqualTo(m2pow2)).toBe(true);
-    expect(m2.multiplyScalar(2).isEqualTo(m2m2)).toBe(true);
-    expect(m2snap0.snap(0).isEqualTo(m2)).toBe(true);
+    expect(m2.multiply(2).isEqualTo(m2m2)).toBe(true);
     expect(m2.subtract(m2).isEqualTo(m2_0)).toBe(true);
-    expect(m2.subtractScalar(2).isEqualTo(m2mi2)).toBe(true);
+    expect(m2.subtract(2).isEqualTo(m2mi2)).toBe(true);
   });
 
   const m2colmax = new ColumnVector([5, 2]);
@@ -101,7 +102,7 @@ describe('Matrix', () => {
     2,
     2,
   );
-  const m2colstd2 = Matrix.createIdentity(2);
+  const m2colstd2 = identityMatrix(2);
 
   test('column operations', () => {
     expect(m2.colMaxs().isEqualTo(m2colmax)).toBe(true);
@@ -163,12 +164,8 @@ describe('Matrix', () => {
     3,
     3,
   );
-  const m1id = new Matrix(
-    [11, 4, -20, -4, 10, 13, 13, -1, 5],
-    3,
-    3,
-  ).divideScalar(63);
-  const identity3 = Matrix.createIdentity(3);
+  const m1id = new Matrix([11, 4, -20, -4, 10, 13, 13, -1, 5], 3, 3).divide(63);
+  const identity3 = identityMatrix(3);
   const m1triangular = new Matrix([1, 0, 0, 3, 5, 0, -2, 1, 63 / 5], 3, 3);
 
   test('linear algebra', () => {

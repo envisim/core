@@ -1,155 +1,170 @@
-import type {ColumnVector} from './ColumnVector.js';
-import type {Matrix} from './Matrix.js';
-import type {RowVector} from './RowVector.js';
-import type {
-  IDimensions,
-  ICallbackIndex,
-  ICallbackMap,
-  IIteratorReturn,
-  IMath,
-  TMath,
+import {
+  MatrixCallback,
+  MatrixCallbackRC,
+  MatrixIterator,
+  MatrixIteratorReturn,
 } from './types.js';
 
-abstract class BaseMatrix {
-  /*
-   * CHILD MUST IMPLEMENT
-   * copy()
-   * toMatrix()
-   * toColumnVector()
-   * toRowVector()
-   * indexToRow()
-   * indexToCol()
-   * rcToIndex()
-   * atRC()
-   * edRC()
-   * fnRC()
-   * extractColumn()
-   * extractColumns()
-   * extractRow()
-   * extractRows()
-   * extractSubMatrix()
-   * transpose()
-   * mmult()
-   *
+const mathMethods1 = [
+  'abs',
+  'acos',
+  'acosh',
+  'asin',
+  'asinh',
+  'atan',
+  'atanh',
+  'cbrt',
+  'ceil',
+  'cos',
+  'cosh',
+  'exp',
+  'expm1',
+  'floor',
+  'fround',
+  'log',
+  'log10',
+  'log1p',
+  'log2',
+  'round',
+  'sign',
+  'sin',
+  'sinh',
+  'sqrt',
+  'tan',
+  'tanh',
+  'trunc',
+] as const;
+const mathMethods2 = ['max', 'min', 'pow'] as const;
+
+type TMathMethods =
+  | (typeof mathMethods1)[number]
+  | (typeof mathMethods2)[number];
+
+export abstract class BaseMatrix {
+  /**
+   * @returns `true` if `mat` is inherited from BaseMatrix
+   * @group Static methods
+   * @group Property methods
    */
+  static isBaseMatrix(mat: unknown): mat is BaseMatrix {
+    return mat instanceof BaseMatrix;
+  }
 
   /** @internal */
-  protected _e: number[] = [];
+  protected _e: number[];
   /** @internal */
-  protected _nrow: number = 1;
+  protected _nrow: number;
   /** @internal */
-  protected _ncol: number = 1;
+  protected _ncol: number;
   /** @internal */
   protected _nelements: number = 1;
 
-  /** @internal */
-  protected abstract create(arr: number | number[], dims: IDimensions): this;
-
-  /**
-   * @returns a copy of the {@link TMatrixLike}
-   * @group Copy methods
-   */
-  copy(): this {
-    return this.create(this._e, {
-      nrow: this._nrow,
-      ncol: this._ncol,
-      byrow: false,
-    });
-  }
-  abstract toMatrix(): Matrix;
-  abstract toColumnVector(): ColumnVector;
-  abstract toRowVector(): RowVector;
-
-  /** Abstract base class for {@link TMatrixLike}s */
-  constructor(arr: number | number[], nrow: number, ncol: number = 1) {
+  /** Abstract base class */
+  constructor(arr: number | number[], nrow: number, ncol: number) {
     if (!Number.isInteger(nrow) || nrow <= 0)
       throw new TypeError('nrow must be positive integer');
     if (!Number.isInteger(ncol) || ncol <= 0)
       throw new TypeError('ncol must be positive integer');
 
-    if (typeof arr === 'number') {
-      this._setDimensions(nrow, ncol);
-      this._e = new Array(nrow * ncol).fill(arr);
-      return this;
-    }
-
-    if (!Array.isArray(arr))
-      throw new TypeError('arr must be number or number[]');
-
-    if (!arr.every((e) => typeof e === 'number'))
-      throw new TypeError('arr must be number or number[]');
-
-    const len = arr.length;
-
-    if (len === 0) {
-      throw new Error('arr must be number or number[] of length > 0');
-    }
-
-    this._setDimensions(nrow, ncol);
-
-    if (this._nelements === len) {
-      this._e = arr.slice();
-    } else if (this._nelements > len) {
-      this._e = [...arr, ...new Array(this._nelements - len).fill(0.0)];
-    } else if (this._nelements < len) {
-      this._e = arr.slice(0, this._nelements);
-    }
-
-    return this;
-  }
-
-  /** @internal */
-  protected _setDimensions(nrow: number, ncol: number): void {
     this._nrow = nrow;
     this._ncol = ncol;
     this._nelements = nrow * ncol;
+
+    if (typeof arr === 'number') {
+      this._e = new Array<number>(nrow * ncol).fill(arr);
+      return;
+    }
+
+    if (
+      !Array.isArray(arr) ||
+      arr.length === 0 ||
+      arr.some((e) => typeof e !== 'number')
+    )
+      throw new TypeError(
+        'arr is neither number or an non-empty array of numbers',
+      );
+
+    if (this._nelements !== arr.length)
+      throw new TypeError('the dimensions and arr does not match');
+
+    this._e = arr;
   }
 
-  /** @returns the internal array of elements (stored column-row) */
-  get internal() {
+  abstract copy(): BaseMatrix;
+  abstract toMatrix(): BaseMatrix;
+  abstract toColumnVector(): BaseMatrix;
+  abstract toRowVector(): BaseMatrix;
+  abstract transpose(): BaseMatrix;
+  abstract mmult(mat: BaseMatrix): BaseMatrix;
+
+  /**
+   * @returns the internal array of elements (stored column-row)
+   */
+  get internal(): number[] {
     return this._e.slice();
   }
-  /** @returns the number of rows */
-  get nrow() {
+  /**
+   * {@inheritDoc internal}
+   * @group Accessors
+   */
+  toArray(): number[] {
+    return this._e.slice();
+  }
+  /**
+   * {@inheritDoc internal}
+   * @group Accessors
+   */
+  slice(): number[] {
+    return this._e.slice();
+  }
+  /**
+   * @returns the number of rows
+   */
+  get nrow(): number {
     return this._nrow;
   }
-  /** @returns the number of columns */
-  get ncol() {
+  /**
+   * @returns the number of columns
+   */
+  get ncol(): number {
     return this._ncol;
   }
-  /** @returns the number of elements */
-  get nelements() {
+  /**
+   * @returns the number of elements
+   */
+  get nelements(): number {
     return this._nelements;
   }
-  /** The size as an array with elements {@link nrow} and {@link ncol} */
-  get size() {
+  /**
+   * @returns the number of elements
+   */
+  get length(): number {
+    return this._nelements;
+  }
+
+  /**
+   * @returns the size as an array with elements {@link nrow} and {@link ncol}
+   */
+  size(): [number, number] {
     return [this._nrow, this._ncol];
   }
+
   /**
-   * @returns `true` if `mat` is {@link TMatrixLike}
-   * @group Static methods
-   * @group Property methods
-   */
-  static isBaseMatrix(mat: any): mat is BaseMatrix {
-    return mat instanceof BaseMatrix;
-  }
-  /**
-   * @returns `true` if `this` is square, i.e. the number of rows are equal to
-   *   the number of columns
+   * @returns `true` if the matrix is a square
    * @group Property methods
    */
   isSquare(): boolean {
     return this._nrow === this._ncol;
   }
+
   /**
    * @returns `true` if `this` has the same size as `mat`
    * @group Property methods
    */
   hasSizeOf(mat: BaseMatrix): boolean {
-    if (!BaseMatrix.isBaseMatrix(mat))
-      throw new TypeError('mat must be of class BaseMatrix');
     return this._nrow === mat._nrow && this._ncol === mat._ncol;
   }
+
   /**
    * @returns `true` if `this` is exactly equal to `mat`
    * @group Basic operators
@@ -158,6 +173,7 @@ abstract class BaseMatrix {
     if (!this.hasSizeOf(mat)) return false;
     return this._e.every((e, i) => e === mat._e[i]);
   }
+
   /**
    * @returns `true` if `this` and `mat` has same size, and the elements does
    * not differ more than `eps`.
@@ -167,9 +183,9 @@ abstract class BaseMatrix {
     if (!this.hasSizeOf(mat)) return false;
     return this._e.every((e, i) => e - eps < mat._e[i] && mat._e[i] < e + eps);
   }
+
   /**
-   * @param index - the index to access. If `index < 0`, `index + .length` is
-   *   accessed.
+   * @param index if `index < 0`, `index + .length` is accessed.
    * @returns the element at matrix `index`
    * @group Accessors
    */
@@ -181,21 +197,25 @@ abstract class BaseMatrix {
 
   /**
    * Changes the element at matrix `index` to `value`
-   * @param index - the index to access
+   * @param index if `index < 0`, `index + .length` is accessed.
    * @returns `value`
    * @throws `RangeError` if `index` is not in range
    * @group Accessors
    */
   ed(index: number, value: number): number {
-    if (index < 0 || index >= this._nelements)
-      throw new RangeError('index is not in range');
+    if (index >= this._nelements) throw new RangeError('index is not in range');
+
+    if (index < 0) {
+      if (index < -this._nelements)
+        throw new RangeError('index is not in range');
+      index += this._nelements;
+    }
+
     this._e[index] = value;
     return value;
   }
 
   /**
-   * Alias: `.fn(index, callbackFn, ...args)`.
-   *
    * Changes the element at matrix `index` through a callback function.
    *
    * @example
@@ -206,17 +226,54 @@ abstract class BaseMatrix {
    * // [ 0, 0,
    * //   0, 3 ]
    *
-   * @param ...args - any additional argumnets to be passed to `callbackFn`
-   * @returns the result of `callbackFn`
+   * @returns the result of `callback`
    * @throws `RangeError` if `index` is not in range
    * @group Accessors
    */
-  fn(index: number, callbackFn: ICallbackIndex, ...args: any[]): number {
-    if (index < 0 || index >= this._nelements)
-      throw new RangeError('index is not in range');
-    const value = callbackFn(this._e[index], index, ...args);
+  fn(index: number, callback: MatrixCallback): number {
+    if (index >= this._nelements) throw new RangeError('index is not in range');
+
+    if (index < 0) {
+      if (index < -this._nelements)
+        throw new RangeError('index is not in range');
+      index += this._nelements;
+    }
+
+    const value = callback(this._e[index], index);
     this._e[index] = value;
     return value;
+  }
+
+  /**
+   * @returns the element at `row`, `column`
+   * @throws `RangeError` if `row`, `column` is not in range
+   * @group Accessors
+   */
+  atRC(row: number, column: number): number {
+    const idx = this.indexOfRc(row, column);
+    return this.at(idx);
+  }
+  /**
+   * @returns the element at `row`, `column`
+   * @throws `RangeError` if `row`, `column` is not in range
+   * @group Accessors
+   */
+  edRC(row: number, column: number, value: number): number {
+    const idx = this.indexOfRc(row, column);
+    return this.ed(idx, value);
+  }
+  /**
+   * @returns the element at `index`
+   * @throws `RangeError` if `row`, `column` is not in range
+   * @group Accessors
+   */
+  fnRC(
+    row: number,
+    column: number,
+    callback: MatrixCallbackRC<number>,
+  ): number {
+    const idx = this.indexOfRc(row, column);
+    return this.fn(idx, (e, i) => callback(e, i, row, column));
   }
 
   /**
@@ -224,36 +281,49 @@ abstract class BaseMatrix {
    * @throws `RangeError` if `index` is not in range
    * @group Accessors
    */
-  indexToRow(index: number): number {
-    if (index < 0 || index >= this._nelements)
-      throw new RangeError('index is not in range');
-    if (this._nrow === 1) return 0;
-    return index % this._nrow;
+  rowOfIndex(index: number): number {
+    if (index >= this._nelements) throw new RangeError('index is not in range');
+
+    if (index < 0) {
+      if (index < -this._nelements)
+        throw new RangeError('index is not in range');
+      index += this._nelements;
+    }
+
+    return this._nrow === 1 ? 0 : index % this._nrow;
   }
+
   /**
    * @returns the column index of the matrix `index`
    * @throws `RangeError` if `index` is not in range
    * @group Accessors
    */
-  indexToCol(index: number): number {
-    if (index < 0 || index >= this._nelements)
-      throw new RangeError('index is not in range');
-    if (this._ncol === 1) return 0;
-    return (index / this._nrow) | 0;
+  colOfIndex(index: number): number {
+    if (index >= this._nelements) throw new RangeError('index is not in range');
+
+    if (index < 0) {
+      if (index < -this._nelements)
+        throw new RangeError('index is not in range');
+      index += this._nelements;
+    }
+
+    return this._ncol === 1 ? 0 : (index / this._nrow) | 0;
   }
+
   /**
    * @returns an array `[row, column]`
    * @group Accessors
    */
-  indexToRC(index: number): number[] {
-    return [this.indexToRow(index), this.indexToCol(index)];
+  rcOfIndex(index: number): [number, number] {
+    return [this.rowOfIndex(index), this.colOfIndex(index)];
   }
+
   /**
    * @returns the matrix index at `row`, `column`
    * @throws `RangeError` if `row` or `column` is not in range
    * @group Accessors
    */
-  rcToIndex(row: number, column: number): number {
+  indexOfRc(row: number, column: number): number {
     if (row < 0 || row >= this._nrow)
       throw new RangeError('row is not in range');
     if (column < 0 || column >= this._ncol)
@@ -263,53 +333,17 @@ abstract class BaseMatrix {
   }
 
   /**
-   * @returns the matrix index at `row`, `column`
-   * @throws `RangeError` if `row`, `column` is not in range
-   * @group Accessors
-   */
-  atRC(row: number, column: number): number {
-    const idx = this.rcToIndex(row, column);
-    return this.at(idx);
-  }
-  /**
-   * @returns the element at `row`, `column`
-   * @throws `RangeError` if `row`, `column` is not in range
-   * @group Accessors
-   */
-  edRC(row: number, column: number, value: number): number {
-    const idx = this.rcToIndex(row, column);
-    return this.ed(idx, value);
-  }
-  /**
-   * @param ...args - any additional argumnets to be passed to `callbackFn`
-   * @returns the element at `index`
-   * @throws `RangeError` if `row`, `column` is not in range
-   * @group Accessors
-   */
-  fnRC(
-    row: number,
-    column: number,
-    callbackFn: ICallbackIndex,
-    ...args: any[]
-  ): number {
-    const idx = this.rcToIndex(row, column);
-    return this.fn(idx, callbackFn, row, column, ...args);
-  }
-
-  /**
    * Swaps the elements at the provided indexes
    *
    * @throws `RangeError` if `index` is not in range
    * @group Accessors
    */
-  swap(index1: number, index2: number): this {
-    if (index1 === index2) return this;
+  swap(index1: number, index2: number): void {
+    if (index1 === index2) return;
 
     const tmp = this.at(index1);
     this.ed(index1, this.at(index2));
     this.ed(index2, tmp);
-
-    return this;
   }
 
   /**
@@ -318,16 +352,24 @@ abstract class BaseMatrix {
    * @throws `RangeError` if `row`s or `column`s is not in range
    * @group Accessors
    */
-  swapRC(row1: number, column1: number, row2: number, column2: number): this {
-    const index1 = this.rcToIndex(row1, column1);
-    const index2 = this.rcToIndex(row2, column2);
-    if (index1 === index2) return this;
+  swapRC(row1: number, column1: number, row2: number, column2: number): void {
+    const index1 = this.indexOfRc(row1, column1);
+    const index2 = this.indexOfRc(row2, column2);
+    if (index1 === index2) return;
 
     const tmp = this.at(index1);
     this.ed(index1, this.at(index2));
     this.ed(index2, tmp);
 
-    return this;
+    return;
+  }
+
+  /**
+   * Executes the provided function once for each element
+   * @group Maps
+   */
+  forEach(callback: MatrixCallback<void>): void {
+    this._e.forEach(callback);
   }
 
   /**
@@ -335,32 +377,13 @@ abstract class BaseMatrix {
    * through the callback function.
    * @group Maps
    */
-  map(callbackFn: ICallbackMap<number>): this {
-    return this.create(this._e.map(callbackFn), {
-      nrow: this._nrow,
-      ncol: this._ncol,
-    });
-  }
-
-  /**
-   * @returns a {@link TMatrixLike}, where each element has been mapped in
-   * place through the callback function.
-   * @group Maps
-   */
-  mapInPlace(callbackFn: ICallbackMap<number>): this {
-    for (let i = 0; i < this._nelements; i++) {
-      this.fn(i, callbackFn);
+  map(callback: MatrixCallback<number>, inPlace: boolean = false): this {
+    if (inPlace === true) {
+      this._e.map(callback);
+      return this;
     }
 
-    return this;
-  }
-
-  /**
-   * Executes the provided function once for each element
-   * @group Maps
-   */
-  forEach(callbackFn: ICallbackMap<void>): void {
-    this._e.forEach(callbackFn);
+    return this.copy().map(callback, false) as this;
   }
 
   /**
@@ -371,22 +394,21 @@ abstract class BaseMatrix {
    * @group Maps
    */
   reduce(
-    callbackFn: (
+    callback: (
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: number[],
-    ) => any,
-    initialValue: any = null,
-  ): any {
-    return this._e.reduce(callbackFn, initialValue);
+    ) => number,
+    initialValue: number = 0.0,
+  ): number {
+    return this._e.reduce(callback, initialValue);
   }
 
   /**
    * Tests whether all elements pass the test implemented by the provided function
    * @group Maps
    */
-  every(callbackFn: ICallbackMap<boolean>): boolean {
+  every(callbackFn: MatrixCallback<boolean>): boolean {
     return this._e.every(callbackFn);
   }
 
@@ -394,72 +416,18 @@ abstract class BaseMatrix {
    * Tests whether any element pass the test implemented by the provided function
    * @group Maps
    */
-  some(callbackFn: ICallbackMap<boolean>): boolean {
+  some(callbackFn: MatrixCallback<boolean>): boolean {
     return this._e.some(callbackFn);
   }
-
-  // Extractions
-  abstract extractColumn(columnIndex: number): ColumnVector;
-  abstract extractRow(rowIndex: number): RowVector;
-  abstract extractColumns(columnIndices: number[]): Matrix;
-  abstract extractRows(rowIndices: number[]): Matrix;
-  /*
-   * @param rowIndexStart - The index of the first row to include in the submatrix.
-   * @param colIndexStart - The index of the first column to include in the submatrix.
-   * @param rowIndexEnd - The index of the last row to include in the submatrix.
-   * @param colIndexEnd - The index of the last column to include in the submatrix.
-   */
-  // abstract extractSubMatrix(
-  //   rowIndexStart: number,
-  //   colIndexStart: number,
-  //   rowIndexEnd: number,
-  //   colIndexEnd: number,
-  // ): this;
-
-  // static cbind/rbind for Matrix only ?? abstract??
-  // matrix to column
-  /**
-   * Transposes a {@link TMatrixLike}
-   *
-   * Returns a:
-   * - {@link ColumnVector} if {@link TMatrixLike} is {@link RowVector},
-   * - {@link RowVector} if {@link TMatrixLike} is {@link ColumnVector},
-   * - {@link Matrix} if {@link TMatrixLike} is {@link Matrix}.
-   */
-  abstract transpose(): BaseMatrix;
-  /**
-   * {@inheritDoc transpose}
-   * @group Copy methods
-   */
-  t(): BaseMatrix {
-    return this.transpose();
-  }
-  abstract mmult(mat: BaseMatrix): Matrix;
-  // static Matrix::asMatix
-  // static ColumnVector::asColumnVector
-  // Matrix::column
-  // Matrix::row
-  // Matrix::columns
-  // Matrix::rows
-  // Matrix::subMatrix
-  // Matrix::diagonal
-  // Matrix::diag => diagonal
-  // Matrix::cov
-  // Matrix::colSums
-  // Matrix::colMeans
-  // Matrix::colVars
-  // Matrix::colSds
-  // Matrix::colMins
-  // Matrix::colMaxs
-  // Matrix::colStandardize (incl. normalize)
 
   /**
    * @see {@link iterator}
    * @group Iterators
    */
-  [Symbol.iterator]() {
+  [Symbol.iterator](): MatrixIterator {
     return this.iterator();
   }
+
   /**
    * Returns iterables:
    * - `.next()` returns the next value of the {@link TMatrixLike}, until `done`,
@@ -467,32 +435,28 @@ abstract class BaseMatrix {
    * - `.reset()` resets the pointer to the first element
    * @group Iterators
    */
-  iterator(): {
-    next: () => IIteratorReturn;
-    cont: () => IIteratorReturn;
-    reset: () => void;
-  } {
+  iterator(): MatrixIterator {
     const returnObj = (index: number) => {
       return {
         done: false,
         value: this.at(index),
         index,
-        row: this.indexToRow(index),
-        col: this.indexToCol(index),
+        row: this.rowOfIndex(index),
+        col: this.colOfIndex(index),
       };
     };
 
     let i = 0;
 
     return {
-      next: (): IIteratorReturn => {
+      next: (): MatrixIteratorReturn => {
         if (i < this._nelements) {
           return returnObj(i++);
         }
 
         return {done: true, value: NaN, index: -1, row: -1, col: -1};
       },
-      cont: (): IIteratorReturn => {
+      cont: (): MatrixIteratorReturn => {
         if (i >= this._nelements) i = 0;
         return returnObj(i++);
       },
@@ -502,263 +466,115 @@ abstract class BaseMatrix {
     };
   }
 
-  // Basic Matrix Operations
-  // - abstract transpose();
-  // - abstract mmult();
-  // - Matrix::inverse()
-  // - Matrix::i() => inverse()
-
-  // t(): any {
-  //   return this.transpose();
-  // }
-
-  /** @ignore */
-  protected _matrixMultiply(mat: BaseMatrix): number[] {
-    if (!BaseMatrix.isBaseMatrix(mat))
-      throw new TypeError('mat must be inherited from BaseMatrix');
-    if (this._ncol !== mat._nrow)
-      throw new RangeError('Dimensions of matrices does not match');
-
-    const s = new Array(this._nrow * mat._ncol);
-
-    for (let r = 0; r < this._nrow; r++) {
-      for (let c = 0; c < mat._ncol; c++) {
-        let t = 0.0;
-
-        for (let i = 0; i < this._ncol; i++) {
-          t += this.atRC(r, i) * mat.atRC(i, c);
-        }
-
-        s[r + c * this._nrow] = t;
-      }
-    }
-
-    return s;
-  }
-
-  /** @internal */
-  protected _basicMathInternal(
-    fn: (e: number, i: number) => number,
-    inPlace: boolean = false,
-  ): this {
-    if (inPlace === true) return this.mapInPlace(fn);
-    return this.map(fn);
-  }
-
   /**
-   * Matrix addition of two equal sized {@link TMatrixLike}s.
+   * Matrix addition.
    *
    * @param inPlace - If `true`, performes the operation in place.
    * @group Basic operators
    */
-  add(mat: BaseMatrix, inPlace: boolean = false): this {
-    if (!this.hasSizeOf(mat))
-      throw new TypeError('mat must be of same size as this');
+  add(value: number, inPlace?: boolean): this;
+  add(mat: BaseMatrix, inPlace?: boolean): this;
+  add(mat: number | BaseMatrix, inPlace: boolean = false): this {
+    let fn: MatrixCallback<number>;
+    if (typeof mat === 'number') fn = (e: number) => e + mat;
+    else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e + mat.at(i);
+    else throw new TypeError('mat must be of same size as this');
 
-    const fn = (e: number, i: number) => e + mat.at(i);
-    if (inPlace === true) return this.mapInPlace(fn);
-    return this.map(fn);
+    return this.map(fn, inPlace);
   }
 
   /**
-   * Adds a scalar value.
+   * Matrix subtraction.
    *
-   * @param inPlace - If `true`, performes the operation in place.
+   * @param inPlace If `true`, performes the operation in place.
    * @group Basic operators
    */
-  addScalar(n: number, inPlace: boolean = false): this {
-    if (typeof n !== 'number') throw new TypeError('n must be number');
+  subtract(value: number, inPlace?: boolean): this;
+  subtract(mat: BaseMatrix, inPlace?: boolean): this;
+  subtract(mat: number | BaseMatrix, inPlace: boolean = false): this {
+    let fn: MatrixCallback<number>;
+    if (typeof mat === 'number') fn = (e: number) => e - mat;
+    else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e - mat.at(i);
+    else throw new TypeError('mat must be of same size as this');
 
-    const fn = (e: number) => e + n;
-    if (inPlace === true) return this.mapInPlace(fn);
-    return this.map(fn);
+    return this.map(fn, inPlace);
   }
 
   /**
-   * Matrix subtraction of two equal sized {@link TMatrixLike}s.
+   * Element wise division.
    *
-   * @param inPlace - If `true`, performes the operation in place.
+   * @param inPlace If `true`, performes the operation in place.
    * @group Basic operators
    */
-  subtract(mat: BaseMatrix, inPlace: boolean = false): this {
-    if (!this.hasSizeOf(mat))
-      throw new TypeError('mat must be of same size as this');
+  divide(value: number, inPlace?: boolean): this;
+  divide(mat: BaseMatrix, inPlace?: boolean): this;
+  divide(mat: number | BaseMatrix, inPlace: boolean = false): this {
+    let fn: MatrixCallback<number>;
+    if (typeof mat === 'number') fn = (e: number) => e / mat;
+    else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e / mat.at(i);
+    else throw new TypeError('mat must be of same size as this');
 
-    const fn = (e: number, i: number) => e - mat.at(i);
-    if (inPlace === true) return this.mapInPlace(fn);
-    return this.map(fn);
+    return this.map(fn, inPlace);
   }
 
   /**
-   * Subtracts a scalar value.
+   * Element wise multiplication.
    *
-   * @param inPlace - If `true`, performes the operation in place.
+   * @param inPlace If `true`, performes the operation in place.
    * @group Basic operators
    */
-  subtractScalar(n: number, inPlace: boolean = false): this {
-    if (typeof n !== 'number') throw new TypeError('n must be number');
+  multiply(value: number, inPlace?: boolean): this;
+  multiply(mat: BaseMatrix, inPlace?: boolean): this;
+  multiply(mat: number | BaseMatrix, inPlace: boolean = false): this {
+    let fn: MatrixCallback<number>;
+    if (typeof mat === 'number') fn = (e: number) => e * mat;
+    else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e * mat.at(i);
+    else throw new TypeError('mat must be of same size as this');
 
-    const fn = (e: number) => e - n;
-    if (inPlace === true) return this.mapInPlace(fn);
-    return this.map(fn);
+    return this.map(fn, inPlace);
   }
 
   /**
-   * Element wise division of two equal sized {@link TMatrixLike}s.
+   * Element wise remainder (%) `x % y`
    *
-   * @param inPlace - If `true`, performes the operation in place.
+   * @param inPlace If `true`, performes the operation in place.
    * @group Basic operators
    */
-  divide(mat: BaseMatrix, inPlace: boolean = false): this {
-    if (!this.hasSizeOf(mat))
-      throw new TypeError('mat must be of same size as this');
+  mod(value: number, inPlace?: boolean): this;
+  mod(mat: BaseMatrix, inPlace?: boolean): this;
+  mod(mat: number | BaseMatrix, inPlace: boolean = false): this {
+    let fn: MatrixCallback<number>;
+    if (typeof mat === 'number') fn = (e: number) => e % mat;
+    else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e % mat.at(i);
+    else throw new TypeError('mat must be of same size as this');
 
-    const fn = (e: number, i: number) => e / mat.at(i);
-    if (inPlace === true) return this.mapInPlace(fn);
-    return this.map(fn);
-  }
-
-  /**
-   * Divides with a scalar value.
-   *
-   * @param inPlace - If `true`, performes the operation in place.
-   * @group Basic operators
-   */
-  divideScalar(n: number, inPlace: boolean = false): this {
-    if (typeof n !== 'number') throw new TypeError('n must be number');
-
-    const fn = (e: number) => e / n;
-    if (inPlace === true) return this.mapInPlace(fn);
-    return this.map(fn);
-  }
-
-  /**
-   * Element wise multiplication of two equal sized {@link TMatrixLike}s.
-   *
-   * @param inPlace - If `true`, performes the operation in place.
-   * @group Basic operators
-   */
-  multiply(mat: BaseMatrix, inPlace: boolean = false): this {
-    if (!this.hasSizeOf(mat))
-      throw new TypeError('mat must be of same size as this');
-
-    const fn = (e: number, i: number) => e * mat.at(i);
-    if (inPlace === true) return this.mapInPlace(fn);
-    return this.map(fn);
-  }
-
-  /**
-   * Multiplies with a scalar value.
-   *
-   * @param inPlace - If `true`, performes the operation in place.
-   * @group Basic operators
-   */
-  multiplyScalar(n: number, inPlace: boolean = false): this {
-    if (typeof n !== 'number') throw new TypeError('n must be number');
-
-    const fn = (e: number) => e * n;
-    if (inPlace === true) return this.mapInPlace(fn);
-    return this.map(fn);
+    return this.map(fn, inPlace);
   }
 
   /**
    * Element wise math operations:
    *
-   * @param method - The `Math` method to perform
-   * @param arg - a second argument passed if method is `Math.max`, `Math.min`, or
-   *   `Math.pow`.
-   * @param inPlace - If `true`, performes the operation in place.
+   * @param method The `Math` method to perform
+   * @param arg a second argument to pass for methods `max`, `min`, and `pow`
+   * @param inPlace If `true`, performes the operation in place.
    * @group Basic operators
    */
-  math(method: TMath, arg: number = 0, inPlace: boolean = false): this {
-    const mth: IMath = {
-      abs: Math.abs,
-      acos: Math.acos,
-      acosh: Math.acosh,
-      asin: Math.asin,
-      asinh: Math.asinh,
-      atan: Math.atan,
-      atanh: Math.atanh,
-      cbrt: Math.cbrt,
-      ceil: Math.ceil,
-      cos: Math.cos,
-      cosh: Math.cosh,
-      exp: Math.exp,
-      expm1: Math.expm1,
-      floor: Math.floor,
-      fround: Math.fround,
-      log: Math.log,
-      log10: Math.log10,
-      log1p: Math.log1p,
-      log2: Math.log2,
-      max: (v: number): number => Math.max(v, arg),
-      min: (v: number): number => Math.min(v, arg),
-      pow: (v: number): number => Math.pow(v, arg),
-      round: Math.round,
-      sign: Math.sign,
-      sin: Math.sin,
-      sinh: Math.sinh,
-      sqrt: Math.sqrt,
-      tan: Math.tan,
-      tanh: Math.tanh,
-      trunc: Math.trunc,
-    };
-
-    if (method in mth) {
-      if (inPlace === true) return this.mapInPlace(mth[method]);
-      return this.map(mth[method]);
+  math(method: TMathMethods, arg: number = 0, inPlace: boolean = false): this {
+    if (method in mathMethods1) {
+      return this.map(Math[method], inPlace);
+    } else if (method in mathMethods2) {
+      return this.map((e) => Math[method](e, arg), inPlace);
     }
 
     throw new TypeError('method does not match any supported method in Math.');
   }
 
   /**
-   * Rounds the elements in the {@link TMatrixLike} to `d` digits after the
-   * decimal point.
-   *
-   * @param inPlace - If `true`, performes the operation in place.
-   * @group Basic operators
-   */
-  snap(d: number = 0, inPlace: boolean = false): this {
-    const fn = (v: number) => parseFloat(v.toFixed(d));
-    if (inPlace === true) return this.mapInPlace(fn);
-    return this.map(fn);
-  }
-
-  /**
-   * Remainder (%) `x % y`, where x are the elements of the {@link TMatrixLike}
-   *
-   * @param inPlace - If `true`, performes the operation in place.
-   * @group Basic operators
-   */
-  modScalar(y: number, inPlace: boolean = false): this {
-    const fn = (v: number) => v % y;
-    if (inPlace === true) return this.mapInPlace(fn);
-    return this.map(fn);
-  }
-
-  /**
-   * Element-wise remainder (%) `x % mat`, where x are element of the {@link TMatrixLike}
-   *
-   * @param inPlace - If `true`, performes the operation in place.
-   * @group Basic operators
-   */
-  mod(mat: BaseMatrix, inPlace: boolean = false): this {
-    if (!this.hasSizeOf(mat))
-      throw new TypeError('mat must be of same size as this');
-
-    const fn = (e: number, i: number) => e % mat.at(i);
-    if (inPlace === true) return this.mapInPlace(fn);
-    return this.map(fn);
-  }
-
-  // Basic statistics
-  /**
    * Sums all elements
    * @group Statistics
    */
   sum(): number {
-    return this.reduce((s, e) => s + e);
+    return this.reduce((s, e) => s + e, 0.0);
   }
 
   /**
@@ -860,7 +676,7 @@ abstract class BaseMatrix {
    * where $N$ is the size of the {@link TMatrixLike}, and $p$ the quantile.
    *
    * @param probs - the quantiles to evaluate
-   * @returns the quantiles of all the elements in the {@link TMatrixLike}
+   * @returns the quantiles of all the elements
    * @group Statistics
    */
   quantiles(probs: number | number[] | BaseMatrix): number[] {
@@ -878,7 +694,7 @@ abstract class BaseMatrix {
     if (p.length === 0) return [];
 
     const s = this.internal.sort((a: number, b: number) => a - b);
-    const res = new Array(p.length);
+    const res = new Array<number>(p.length);
     const n = s.length;
     let unit: number;
     let low: number;
@@ -918,24 +734,18 @@ abstract class BaseMatrix {
    * @group Statistics
    */
   skewness(): number {
-    const xm = this.subtractScalar(this.mean());
+    const xm = this.subtract(this.mean(), false);
     return xm.math('pow', 3).mean() / Math.pow(xm.math('pow', 2).mean(), 1.5);
   }
 
-  // Standardization
   /**
-   * Standardizes the elements by mean value and standard deviation, or if
-   * `normalize` is `true`, normalizes the elements by minimum value and range.
-   */
-  /**
-   * Standardizes or normalizes the {@link TMatrixLike}
+   * Standardizes or normalizes the matrix
    * - if `normalize` is `true`: normalizes the values by `(x-min)/(max-min)`
    * - otherwise: standardizes the values by `(x - mu)/sigma`
    *
-   * @returns a new standardized or normalized {@link TMatrixLike}
    * @group Statistics
    */
-  standardize(normalize: boolean = false): this {
+  standardize(normalize: boolean = false, inPlace: boolean = false): this {
     let offset: number;
     let denom: number;
 
@@ -947,23 +757,13 @@ abstract class BaseMatrix {
       denom = this.sd();
     }
 
-    return this.map((v) => (v - offset) / denom);
+    return this.map((v) => (v - offset) / denom, inPlace);
   }
 
-  /** @ignore */
-  protected static flatMap(matrices: BaseMatrix[]): number[] {
-    if (!matrices.every(BaseMatrix.isBaseMatrix))
-      throw new TypeError('Not all arguments are of type BaseMatrix');
-    if (matrices.length === 0) throw new Error('Nothing to flat');
-
-    return matrices.flatMap((m) => m.internal);
-  }
-
-  // to<Base>
   /**
-   * @param digits - the number of digits to appear after the decimal point
-   * @param pretty - `true` if the output should be prettyfied
-   * @returns a string representation of the {@link TMatrixLike}
+   * @param digits the number of digits to appear after the decimal point
+   * @param pretty `true` if the output should be prettyfied
+   * @returns a string representation
    * @group Accessors
    */
   toString(digits: number = 2, pretty: boolean = false): string {
@@ -1002,13 +802,27 @@ abstract class BaseMatrix {
     return str + ']';
   }
 
-  /**
-   * {@inheritDoc internal}
-   * @group Accessors
-   */
-  toArray(): number[] {
-    return this.internal;
+  /** @ignore */
+  protected _matrixMultiply(mat: BaseMatrix): number[] {
+    if (!BaseMatrix.isBaseMatrix(mat))
+      throw new TypeError('mat must be inherited from BaseMatrix');
+    if (this._ncol !== mat._nrow)
+      throw new RangeError('Dimensions of matrices does not match');
+
+    const s = new Array(this._nrow * mat._ncol);
+
+    for (let r = 0; r < this._nrow; r++) {
+      for (let c = 0; c < mat._ncol; c++) {
+        let t = 0.0;
+
+        for (let i = 0; i < this._ncol; i++) {
+          t += this.atRC(r, i) * mat.atRC(i, c);
+        }
+
+        s[r + c * this._nrow] = t;
+      }
+    }
+
+    return s;
   }
 }
-
-export {BaseMatrix};

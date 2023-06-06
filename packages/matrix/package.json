@@ -32,6 +32,7 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@envisim/random": "workspace:*"
+    "@envisim/random": "workspace:*",
+    "@envisim/utils": "workspace:*"
   }
 }
