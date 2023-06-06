@@ -1,4 +1,4 @@
-import {arrayLikeToColumnVector, Matrix, TArrayLike} from '@envisim/matrix';
+import {ColumnVector, Matrix, TArrayLike} from '@envisim/matrix';
 import {NearestNeighbour} from '@envisim/sampling';
 
 /**
@@ -16,8 +16,8 @@ export function htVariance(
   prob: TArrayLike,
   prob2m: Matrix,
 ): number {
-  const pi = arrayLikeToColumnVector(prob);
-  const ypi = arrayLikeToColumnVector(y).divide(pi, true);
+  const pi = new ColumnVector(prob, true);
+  const ypi = new ColumnVector(y, false).divide(pi, true);
   const n = pi.length;
 
   if (prob2m.nrow !== n || prob2m.ncol !== n)
@@ -45,9 +45,9 @@ export function htVariance(
  * $$ \hat\{V\}(\hat\{Y\}) = -\frac\{1\}\{2\} \sum_\{i \in S\} \sum_\{j \in S\} (y_i / \pi_i - y_j / \pi_j)^2 \frac\{\pi_\{ij\} - \pi_i \pi_j\}\{\pi_\{ij\}\} $$
  * @category Variance estimator
  *
- * @param y - variable of interest of size n, $y_i$.
- * @param prob - inclusion probabilities of size n, $\pi_i$.
- * @param prob2m - second order inclusion probabilities of size n*n,
+ * @param y variable of interest of size n, $y_i$.
+ * @param prob inclusion probabilities of size n, $\pi_i$.
+ * @param prob2m second order inclusion probabilities of size n*n,
  *   upper triangular matrix, $\pi_\{ij\}$.
  * @returns the Horvitz-Thompson variance estimate.
  */
@@ -56,8 +56,8 @@ export function htVarianceSYG(
   prob: TArrayLike,
   prob2m: Matrix,
 ): number {
-  const pi = arrayLikeToColumnVector(prob);
-  const ypi = arrayLikeToColumnVector(y).divide(pi, true);
+  const pi = new ColumnVector(prob, true);
+  const ypi = new ColumnVector(y, false).divide(pi, true);
   const n = pi.length;
 
   if (prob2m.nrow !== n || prob2m.ncol !== n)
@@ -80,24 +80,24 @@ export function htVarianceSYG(
 
 /**
  * @category Variance estimator
- * @param y - variable of interest of size n, $y_i$.
- * @param prob - inclusion probabilities of size n, $\pi_i$.
+ * @param y variable of interest of size n, $y_i$.
+ * @param prob inclusion probabilities of size n, $\pi_i$.
  * @returns Deville's HT variance estimate.
  */
 export function htVarianceD(y: TArrayLike, prob: TArrayLike): number {
-  const ps = arrayLikeToColumnVector(prob);
-  const yps = arrayLikeToColumnVector(y).divide(ps, true);
+  const ps = new ColumnVector(prob, true);
+  const yps = new ColumnVector(y, false).divide(ps, true);
 
-  ps.mapInPlace((e) => 1.0 - e);
+  ps.map((e) => 1.0 - e, true);
   const s1mp = ps.sum();
   const del = yps.multiply(ps).sum();
 
-  const sak2 = ps.divideScalar(s1mp).math('pow', 2).sum();
+  const sak2 = ps.divide(s1mp).math('pow', 2).sum();
 
   const dsum = yps
-    .subtractScalar(s1mp / del)
-    .math('pow', 2)
-    .multiply(ps)
+    .subtract(s1mp / del, true)
+    .math('pow', 2, true)
+    .multiply(ps, true)
     .sum();
 
   return (1.0 / (1.0 - sak2)) * dsum;
@@ -105,9 +105,9 @@ export function htVarianceD(y: TArrayLike, prob: TArrayLike): number {
 
 /**
  * @category Variance estimator
- * @param y - variable of interest of size n, $y_i$.
- * @param prob - inclusion probabilities of size n, $\pi_i$.
- * @param xm - auxilliary variables of size n*p.
+ * @param y variable of interest of size n, $y_i$.
+ * @param prob inclusion probabilities of size n, $\pi_i$.
+ * @param xm auxilliary variables of size n*p.
  * @returns GS's HT variance estimate.
  */
 export function htVarianceGS(
@@ -115,8 +115,8 @@ export function htVarianceGS(
   prob: TArrayLike,
   xm: Matrix,
 ): number {
-  const ps = arrayLikeToColumnVector(prob);
-  const yps = arrayLikeToColumnVector(y).divide(ps, true);
+  const ps = new ColumnVector(prob, true);
+  const yps = new ColumnVector(y, false).divide(ps, true);
   const n = yps.length;
 
   const nn = new NearestNeighbour(xm, 30);
@@ -151,9 +151,9 @@ export function hhVariance(
   inclusions: TArrayLike,
   mu2m: Matrix,
 ): number {
-  const mu = arrayLikeToColumnVector(expected);
-  const ymu = arrayLikeToColumnVector(y)
-    .multiply(arrayLikeToColumnVector(inclusions), true)
+  const mu = new ColumnVector(expected, true);
+  const ymu = new ColumnVector(y, false)
+    .multiply(new ColumnVector(inclusions), true)
     .divide(mu, true);
   const n = mu.length;
 
@@ -183,14 +183,12 @@ export function hhVariance(
  * @returns the wr variance estimate.
  */
 export function wrVariance(y: TArrayLike, prob: TArrayLike): number {
-  const ps = arrayLikeToColumnVector(prob);
-  const yps = arrayLikeToColumnVector(y).divide(ps, true);
+  const ps = new ColumnVector(prob, true);
+  const yps = new ColumnVector(y, false).divide(ps, true);
 
   const est = yps.mean();
 
   return (
-    yps.subtractScalar(est, true).math('pow', 2, true).sum() /
-    (ps.nrow - 1) /
-    ps.nrow
+    yps.subtract(est, true).math('pow', 2, true).sum() / (ps.nrow - 1) / ps.nrow
   );
 }

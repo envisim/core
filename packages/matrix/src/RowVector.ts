@@ -3,17 +3,27 @@ import {BaseVector} from './BaseVector.js';
 import {ColumnVector} from './ColumnVector.js';
 
 export class RowVector extends BaseVector {
-  constructor(fill: number, ncol: number);
-  constructor(arr: number[]);
-  constructor(vec: BaseMatrix);
-  constructor(arr: number | number[] | BaseMatrix, ncol?: number) {
-    if (typeof arr === 'number') {
-      super(arr, 1, ncol ?? 0);
+  /**
+   * @returns `true` if `mat` is inherited from RowVector
+   * @group Static methods
+   * @group Property methods
+   */
+  static isRowVector(mat: unknown): mat is RowVector {
+    return mat instanceof RowVector;
+  }
+
+  static create(fill: number, nrow: number): RowVector {
+    return new RowVector(new Array<number>(nrow).fill(fill), true);
+  }
+
+  constructor(arr: number[] | BaseMatrix, shallow: boolean = false) {
+    if (Array.isArray(arr)) {
+      super(shallow === true ? arr : arr.slice(), 1, arr.length);
       return;
     }
 
-    if (Array.isArray(arr) || BaseMatrix.isBaseMatrix(arr)) {
-      super(arr.slice(), 1, arr.length);
+    if (BaseMatrix.isBaseMatrix(arr)) {
+      super(shallow === true ? arr.internal : arr.slice(), 1, arr.length);
       return;
     }
 
@@ -36,20 +46,6 @@ export class RowVector extends BaseVector {
 
   /**
    * @group Copy methods
-   */
-  toColumnVector(): ColumnVector {
-    return new ColumnVector(this);
-  }
-
-  /**
-   * @group Copy methods
-   */
-  toRowVector(): RowVector {
-    return new RowVector(this);
-  }
-
-  /**
-   * @group Copy methods
    * @group Accessors
    */
   extractColumns(cols: number[]): RowVector {
@@ -57,7 +53,7 @@ export class RowVector extends BaseVector {
     if (!cols.every(Number.isInteger))
       throw new TypeError('cols must consist of integers');
 
-    const s = new RowVector(0, cols.length);
+    const s = RowVector.create(0.0, cols.length);
 
     for (let i = 0; i < cols.length; i++) {
       s.ed(i, this.at(cols[i]));

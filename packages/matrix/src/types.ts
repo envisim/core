@@ -1,3 +1,12 @@
+export interface MatrixDims {
+  nrow?: number;
+  ncol?: number;
+}
+
+export interface MatrixByRow {
+  byRow?: boolean;
+}
+
 export interface MatrixIterator {
   next: () => MatrixIteratorReturn;
   cont: () => MatrixIteratorReturn;

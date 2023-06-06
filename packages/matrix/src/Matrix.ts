@@ -4,8 +4,18 @@ import {reducedRowEchelonForm} from '@envisim/utils';
 import {BaseMatrix} from './BaseMatrix.js';
 import {ColumnVector} from './ColumnVector.js';
 import {RowVector} from './RowVector.js';
+import {MatrixByRow, MatrixDims} from './types.js';
 
 export class Matrix extends BaseMatrix {
+  /**
+   * @returns `true` if `mat` is inherited from Matrix
+   * @group Static methods
+   * @group Property methods
+   */
+  static isMatrix(mat: unknown): mat is Matrix {
+    return mat instanceof Matrix;
+  }
+
   /**
    * Bind multiple matrices together by columns
    * @throws `RangeError` if the number of rows of any matrix doesn't match
@@ -16,16 +26,17 @@ export class Matrix extends BaseMatrix {
       throw new TypeError('Not all arguments are of type BaseMatrix');
     if (matrices.length === 0) throw new Error('Nothing to cbind');
 
-    const nrows = matrices[0].nrow;
+    const nrow = matrices[0].nrow;
 
-    if (!matrices.every((m) => nrows === m.nrow))
+    if (!matrices.every((m) => nrow === m.nrow))
       throw new RangeError('Dimensions of matrices does not match');
 
-    const ncols = matrices.reduce((s, m) => s + m.ncol, 0);
+    const ncol = matrices.reduce((s, m) => s + m.ncol, 0);
+
     return new Matrix(
       matrices.flatMap((m) => m.internal),
-      nrows,
-      ncols,
+      {nrow, ncol},
+      true,
     );
   }
 
@@ -39,14 +50,14 @@ export class Matrix extends BaseMatrix {
       throw new TypeError('Not all arguments are of type BaseMatrix');
     if (matrices.length === 0) throw new Error('Nothing to cbind');
 
-    const ncols = matrices[0].ncol;
+    const ncol = matrices[0].ncol;
 
-    if (!matrices.every((m) => ncols === m.ncol))
+    if (!matrices.every((m) => ncol === m.ncol))
       throw new RangeError('Dimensions of matrices does not match');
 
-    const nrows = matrices.reduce((s, m) => s + m.nrow, 0);
+    const nrow = matrices.reduce((s, m) => s + m.nrow, 0);
 
-    const s = new Matrix(0, nrows, ncols);
+    const s = Matrix.create(0, {nrow, ncol});
 
     let rows = 0;
 
@@ -63,29 +74,38 @@ export class Matrix extends BaseMatrix {
     return s;
   }
 
-  constructor(fill: number, nrow: number, ncol: number);
-  constructor(arr: number[], nrow: number, ncol?: number, byRow?: boolean);
-  constructor(mat: BaseMatrix);
-  constructor(
-    arr: number | number[] | BaseMatrix,
-    nrow?: number,
-    ncol: number = 1,
-    byRow: boolean = false,
-  ) {
-    if (typeof arr === 'number') {
-      super(arr, nrow ?? 0, ncol);
-      return;
-    }
+  static create(fill: number, dims: Required<MatrixDims>): Matrix {
+    return new Matrix(
+      new Array<number>(dims.nrow * dims.ncol).fill(fill),
+      dims,
+    );
+  }
 
+  constructor(
+    arr: number[],
+    dims: Required<MatrixDims> & MatrixByRow,
+    shallow?: boolean,
+  );
+  constructor(mat: BaseMatrix, dims?: MatrixDims, shallow?: boolean);
+  constructor(
+    arr: number[] | BaseMatrix,
+    dims: MatrixDims & MatrixByRow = {},
+    shallow: boolean = false,
+  ) {
     if (Array.isArray(arr)) {
-      super(arr.slice(), nrow ?? arr.length, ncol);
-      return byRow === true && this._nrow > 0 && this._ncol > 0
+      super(
+        shallow === true ? arr : arr.slice(),
+        dims.nrow ?? arr.length,
+        dims.ncol ?? 1,
+      );
+
+      return dims.byRow === true && this._nrow > 0 && this._ncol > 0
         ? this.transpose()
         : this;
     }
 
     if (BaseMatrix.isBaseMatrix(arr)) {
-      super(arr.slice(), arr.nrow, arr.ncol);
+      super(shallow === true ? arr.internal : arr.slice(), arr.nrow, arr.ncol);
       return;
     }
 
@@ -97,27 +117,6 @@ export class Matrix extends BaseMatrix {
    */
   copy(): Matrix {
     return new Matrix(this);
-  }
-
-  /**
-   * @group Copy methods
-   */
-  toMatrix(): Matrix {
-    return new Matrix(this);
-  }
-
-  /**
-   * @group Copy methods
-   */
-  toColumnVector(): ColumnVector {
-    return new ColumnVector(this);
-  }
-
-  /**
-   * @group Copy methods
-   */
-  toRowVector(): RowVector {
-    return new RowVector(this);
   }
 
   /**
@@ -157,7 +156,7 @@ export class Matrix extends BaseMatrix {
     if (!cols.every((e) => Number.isInteger(e) && 0 <= e && e < this._ncol))
       throw new RangeError('columns must be in valid range');
 
-    const s = new Matrix(0.0, this._nrow, cols.length);
+    const s = Matrix.create(0.0, {nrow: this._nrow, ncol: cols.length});
 
     for (let c = 0; c < cols.length; c++) {
       s._e.splice(
@@ -179,7 +178,7 @@ export class Matrix extends BaseMatrix {
     if (!rows.every((e) => Number.isInteger(e) && 0 <= e && e < this._ncol))
       throw new RangeError('rows must be in valid range');
 
-    const s = new Matrix(0.0, rows.length, this._ncol);
+    const s = Matrix.create(0.0, {nrow: rows.length, ncol: this._ncol});
 
     for (let r = 0; r < rows.length; r++) {
       for (let c = 0; c < this._ncol; c++) {
@@ -214,18 +213,18 @@ export class Matrix extends BaseMatrix {
     if (columnStart < 0 || this._nrow <= columnEnd)
       throw new RangeError('rows out of bounds');
 
-    const rows = rowEnd - rowStart + 1;
-    const cols = columnEnd - columnStart + 1;
+    const nrow = rowEnd - rowStart + 1;
+    const ncol = columnEnd - columnStart + 1;
 
-    if (rows < 1 || cols < 1)
+    if (nrow < 1 || ncol < 1)
       throw new RangeError('end must be at least as large as start');
 
-    const s = new Array<number>(cols * rows);
+    const s = new Array<number>(ncol * nrow);
 
-    for (let i = 0; i < cols; i++) {
+    for (let i = 0; i < ncol; i++) {
       s.splice(
-        i * rows,
-        (i + 1) * rows,
+        i * nrow,
+        (i + 1) * nrow,
         ...this._e.slice(
           this.indexOfRc(rowStart, columnStart + i),
           this.indexOfRc(rowEnd, columnStart + i) + 1,
@@ -233,14 +232,14 @@ export class Matrix extends BaseMatrix {
       );
     }
 
-    return new Matrix(s, rows, cols);
+    return new Matrix(s, {nrow, ncol}, true);
   }
 
   /**
    * @group Copy methods
    */
   transpose(): Matrix {
-    const s = new Matrix(0, this._nrow, this._ncol);
+    const s = Matrix.create(0, {nrow: this._nrow, ncol: this._ncol});
 
     this.forEach((e, i) => {
       s.edRC(this.colOfIndex(i), this.rowOfIndex(i), e);
@@ -254,7 +253,11 @@ export class Matrix extends BaseMatrix {
    * @group Basic operators
    */
   mmult(mat: BaseMatrix): Matrix {
-    return new Matrix(this._matrixMultiply(mat), this._nrow, mat.ncol);
+    return new Matrix(
+      this._matrixMultiply(mat),
+      {nrow: this._nrow, ncol: mat.ncol},
+      true,
+    );
   }
 
   /**
@@ -263,7 +266,7 @@ export class Matrix extends BaseMatrix {
    */
   diagonal(): ColumnVector {
     const rc = Math.min(this._nrow, this._ncol);
-    const s = new ColumnVector(0.0, rc);
+    const s = ColumnVector.create(0.0, rc);
 
     return s.map((_, i) => this.atRC(i, i), true);
   }
@@ -274,7 +277,7 @@ export class Matrix extends BaseMatrix {
    * @group Column operations
    */
   colSums(): ColumnVector {
-    const s = new ColumnVector(0.0, this._ncol);
+    const s = ColumnVector.create(0.0, this._ncol);
 
     for (let i = 0; i < this._ncol; i++) {
       s.ed(
@@ -301,7 +304,7 @@ export class Matrix extends BaseMatrix {
    * @group Column operations
    */
   colVars(): ColumnVector {
-    const s = new ColumnVector(0.0, this._ncol);
+    const s = ColumnVector.create(0.0, this._ncol);
 
     const means = this.colMeans();
     const nishRows = this._nrow - 1;
@@ -327,7 +330,7 @@ export class Matrix extends BaseMatrix {
    * @group Column operations
    */
   colMins(): ColumnVector {
-    const s = new ColumnVector(0.0, this._ncol);
+    const s = ColumnVector.create(0.0, this._ncol);
 
     return s.map(
       (_, i) =>
@@ -341,7 +344,7 @@ export class Matrix extends BaseMatrix {
    * @group Column operations
    */
   colMaxs(asRow: boolean = false): ColumnVector {
-    const s = new ColumnVector(0.0, this._ncol);
+    const s = ColumnVector.create(0.0, this._ncol);
 
     return s.map(
       (_, i) =>
@@ -425,9 +428,9 @@ export class Matrix extends BaseMatrix {
       return this;
     }
 
-    const s = this.internal;
+    const s = this.slice();
     reducedRowEchelonForm(s, this._nrow, this._ncol, eps);
-    return new Matrix(s, this._nrow, this._ncol);
+    return new Matrix(s, {nrow: this._nrow, ncol: this._ncol}, true);
   }
 
   /**
@@ -497,8 +500,8 @@ export class Matrix extends BaseMatrix {
 
     return new Matrix(
       sim.internal.slice(this._nelements),
-      this._nrow,
-      this._ncol,
+      {nrow: this._nrow, ncol: this._ncol},
+      true,
     );
   }
 }
@@ -513,7 +516,7 @@ export function randomMatrix(
   ncol: number,
   seed?: string | number,
 ): Matrix {
-  return new Matrix(randomArray(nrow * ncol, seed), nrow, ncol);
+  return new Matrix(randomArray(nrow * ncol, seed), {nrow, ncol}, true);
 }
 
 /**
@@ -531,13 +534,13 @@ export function diagonalMatrix(
     if (typeof nrow !== 'number' || Number.isInteger(nrow))
       throw new TypeError('nrow must be defined and integer if arr is number');
 
-    const s = new Matrix(0.0, nrow, nrow);
+    const s = Matrix.create(0.0, {nrow, ncol: nrow});
     for (let i = 0; i < nrow; i++) s.edRC(i, i, arr);
     return s;
   }
 
   const n = arr.length;
-  const s = new Matrix(0.0, n, n);
+  const s = Matrix.create(0.0, {nrow: n, ncol: n});
   for (let i = 0; i < n; i++) s.edRC(i, i, arr.at(i) as number);
   return s;
 }

@@ -16,7 +16,7 @@ describe('estimate', () => {
   });
   test.todo('ht variance');
 
-  const es = pi.multiplyScalar(8);
+  const es = pi.multiply(8);
   const is = new ColumnVector([2, 2, 1, 1, 1, 1]);
   const hh_est = 32.7598539;
 

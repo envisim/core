@@ -5,17 +5,27 @@ import {Matrix} from './Matrix.js';
 import {RowVector} from './RowVector.js';
 
 export class ColumnVector extends BaseVector {
-  constructor(fill: number, nrow: number);
-  constructor(arr: number[]);
-  constructor(vec: BaseMatrix);
-  constructor(arr: number | number[] | BaseMatrix, nrow?: number) {
-    if (typeof arr === 'number') {
-      super(arr, nrow ?? 0, 1);
+  /**
+   * @returns `true` if `mat` is inherited from ColumnVector
+   * @group Static methods
+   * @group Property methods
+   */
+  static isColumnVector(mat: unknown): mat is ColumnVector {
+    return mat instanceof ColumnVector;
+  }
+
+  static create(fill: number, nrow: number): ColumnVector {
+    return new ColumnVector(new Array<number>(nrow).fill(fill), true);
+  }
+
+  constructor(arr: number[] | BaseMatrix, shallow: boolean = false) {
+    if (Array.isArray(arr)) {
+      super(shallow === true ? arr : arr.slice(), arr.length, 1);
       return;
     }
 
-    if (Array.isArray(arr) || BaseMatrix.isBaseMatrix(arr)) {
-      super(arr.slice(), arr.length, 1);
+    if (BaseMatrix.isBaseMatrix(arr)) {
+      super(shallow === true ? arr.internal : arr.slice(), arr.length, 1);
       return;
     }
 
@@ -38,20 +48,6 @@ export class ColumnVector extends BaseVector {
 
   /**
    * @group Copy methods
-   */
-  toColumnVector(): ColumnVector {
-    return new ColumnVector(this);
-  }
-
-  /**
-   * @group Copy methods
-   */
-  toRowVector(): RowVector {
-    return new RowVector(this);
-  }
-
-  /**
-   * @group Copy methods
    * @group Accessors
    */
   extractRows(rows: number[]): ColumnVector {
@@ -59,7 +55,7 @@ export class ColumnVector extends BaseVector {
     if (!rows.every(Number.isInteger))
       throw new TypeError('rows must consist of integers');
 
-    const s = new ColumnVector(0, rows.length);
+    const s = ColumnVector.create(0.0, rows.length);
 
     for (let i = 0; i < rows.length; i++) {
       s.ed(i, this.at(rows[i]));
@@ -73,29 +69,6 @@ export class ColumnVector extends BaseVector {
    */
   transpose(): RowVector {
     return new RowVector(this);
-  }
-
-  /**
-   * Calculates the coefficients B of `this = xmat * B`
-   *
-   * @params xmat - the explanatory/independent variables
-   * @returns the regression coefficients
-   * @group Statistics
-   */
-  regressionCoefficients(xmat: Matrix): ColumnVector {
-    if (this._nrow !== xmat.nrow)
-      throw new RangeError('xmat has not same number of rows as this');
-    if (xmat.ncol > xmat.nrow)
-      throw new RangeError(
-        'xmat has more columns than rows, no unique solution exists',
-      );
-
-    const xmatt = xmat.transpose();
-    const xmi = xmatt.mmult(xmat).inverse();
-
-    if (xmi === null) throw new Error('xmat is not invertible');
-
-    return xmi.mmult(xmatt).mmult(this).toColumnVector();
   }
 }
 
@@ -138,7 +111,7 @@ export function sequence(
 
   if (dim >= 10000000) throw new RangeError('by is to small');
 
-  const s = new ColumnVector(0.0, dim);
+  const s = ColumnVector.create(0.0, dim);
   let current = from;
   const b = to < from ? -by : by;
 

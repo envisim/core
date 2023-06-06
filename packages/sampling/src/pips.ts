@@ -1,8 +1,4 @@
-import {
-  arrayLikeToArray,
-  arrayLikeToColumnVector,
-  TArrayLike,
-} from '@envisim/matrix';
+import {arrayLikeToArray, ColumnVector, TArrayLike} from '@envisim/matrix';
 
 import {conditionalPoisson} from './poisson.js';
 import {discrete} from './pps.js';
@@ -24,9 +20,9 @@ export const sampford = (
   prob: TArrayLike,
   {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
-  const p = arrayLikeToColumnVector(prob);
+  const p = new ColumnVector(prob, false);
   const psum = p.sum();
-  const q = p.divideScalar(psum);
+  const q = p.divide(psum);
   const n = Math.round(psum);
 
   if (n <= 1) {
@@ -73,7 +69,7 @@ export const pareto = (
     eps = optionsDefaultEps,
   }: PartialPick<IOptions, 'rand' | 'eps'> = {},
 ): number[] => {
-  const p = arrayLikeToArray(prob);
+  const p = arrayLikeToArray(prob, true);
   const psum = p.reduce((t: number, c: number) => t + c);
   const n = Math.round(psum);
 
@@ -104,7 +100,7 @@ export const brewer = (
     eps = optionsDefaultEps,
   }: PartialPick<IOptions, 'rand' | 'eps'> = {},
 ): number[] => {
-  const pr = arrayLikeToArray(prob);
+  const pr = arrayLikeToArray(prob, false);
   const N = pr.length;
 
   const s = [];

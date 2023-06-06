@@ -21,8 +21,8 @@ export interface IOptions {
 }
 
 /** @internal */
-export const optionsDefaultEps: number = 1e-9;
+export const optionsDefaultEps = 1e-9;
 /** @internal */
-export const optionsDefaultRand: Random = new Random();
+export const optionsDefaultRand = new Random();
 /** @internal */
-export const optionsDefaultTreeBucketSize: number = 40;
+export const optionsDefaultTreeBucketSize = 40;

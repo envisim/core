@@ -20,23 +20,18 @@ export abstract class BaseVector extends BaseMatrix {
 
   abstract create(arr: number[]): BaseVector;
   abstract copy(): BaseVector;
-  abstract toColumnVector(): BaseVector;
-  abstract toRowVector(): BaseVector;
   abstract transpose(): BaseVector;
-
-  /**
-   * @group Copy methods
-   */
-  toMatrix(): Matrix {
-    return new Matrix(this);
-  }
 
   /**
    * Performs matrix multiplication this * mat
    * @group Basic operators
    */
   mmult(mat: BaseMatrix): Matrix {
-    return new Matrix(this._matrixMultiply(mat), this._nrow, mat.ncol);
+    return new Matrix(
+      this._matrixMultiply(mat),
+      {nrow: this._nrow, ncol: mat.ncol},
+      true,
+    );
   }
 
   /**
@@ -108,7 +103,7 @@ export abstract class BaseVector extends BaseMatrix {
   sort(
     callback: MatrixCallbackCompare = (a: number, b: number) => a - b,
   ): BaseVector {
-    return this.create(this.internal.sort(callback));
+    return this.create(this.slice().sort(callback));
   }
 
   /**
@@ -170,7 +165,7 @@ export abstract class BaseVector extends BaseMatrix {
    * @group Copy methods
    */
   filter(callback: MatrixCallback<boolean>): BaseVector {
-    const s = this.internal;
+    const s = this.slice();
     const sf = s.filter(callback, s);
     return this.create(sf);
   }

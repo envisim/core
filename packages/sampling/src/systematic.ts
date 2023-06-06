@@ -1,4 +1,4 @@
-import {arrayLikeToArray, ColumnVector, TArrayLike} from '@envisim/matrix';
+import {arrayLikeToArray, sequence, TArrayLike} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
 
 import {IOptions, optionsDefaultRand, PartialPick} from './types.js';
@@ -44,7 +44,7 @@ export const systematic = (
   prob: TArrayLike,
   {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
-  const p = arrayLikeToArray(prob);
+  const p = arrayLikeToArray(prob, true);
   return _systematic(p, (i) => i, rand);
 };
 
@@ -59,9 +59,9 @@ export const randomSystematic = (
   prob: TArrayLike,
   {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
-  const p = arrayLikeToArray(prob);
+  const p = arrayLikeToArray(prob, true);
   const N = p.length;
-  const index = ColumnVector.createSequence(0, N - 1, 1)
+  const index = sequence(0, N - 1, 1)
     .sortRandom(true, rand)
     .toArray();
 

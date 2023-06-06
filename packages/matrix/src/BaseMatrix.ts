@@ -91,17 +91,15 @@ export abstract class BaseMatrix {
   }
 
   abstract copy(): BaseMatrix;
-  abstract toMatrix(): BaseMatrix;
-  abstract toColumnVector(): BaseMatrix;
-  abstract toRowVector(): BaseMatrix;
   abstract transpose(): BaseMatrix;
   abstract mmult(mat: BaseMatrix): BaseMatrix;
 
   /**
+   * @internal
    * @returns the internal array of elements (stored column-row)
    */
   get internal(): number[] {
-    return this._e.slice();
+    return this._e;
   }
   /**
    * {@inheritDoc internal}
@@ -693,7 +691,7 @@ export abstract class BaseMatrix {
 
     if (p.length === 0) return [];
 
-    const s = this.internal.sort((a: number, b: number) => a - b);
+    const s = this.slice().sort((a: number, b: number) => a - b);
     const res = new Array<number>(p.length);
     const n = s.length;
     let unit: number;
@@ -720,7 +718,7 @@ export abstract class BaseMatrix {
    * @group Statistics
    */
   median(): number {
-    const s = this.internal.sort((a, b) => a - b);
+    const s = this.slice().sort((a, b) => a - b);
     let n = s.length;
 
     if ((n & 1) === 1) return s[(n - 1) >> 1];
