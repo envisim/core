@@ -8,11 +8,11 @@ import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
 
 export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
-  static isObject(obj: any): obj is Polygon {
+  static isObject(obj: unknown): obj is Polygon {
     return obj instanceof Polygon;
   }
 
-  static assert(obj: any, msg?: string): obj is Polygon {
+  static assert(obj: unknown, msg?: string): obj is Polygon {
     if (obj instanceof Polygon) return true;
     throw new TypeError(msg ?? 'Expected Polygon');
   }

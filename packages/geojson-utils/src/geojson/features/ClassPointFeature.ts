@@ -9,11 +9,11 @@ export class PointFeature
   extends BaseFeature<PointObject>
   implements GJ.PointFeature
 {
-  static isFeature(obj: any): obj is PointFeature {
+  static isFeature(obj: unknown): obj is PointFeature {
     return obj instanceof PointFeature;
   }
 
-  static assert(obj: any, msg?: string): obj is PointFeature {
+  static assert(obj: unknown, msg?: string): obj is PointFeature {
     if (obj instanceof PointFeature) return true;
     throw new TypeError(msg ?? 'Expected PointFeature');
   }

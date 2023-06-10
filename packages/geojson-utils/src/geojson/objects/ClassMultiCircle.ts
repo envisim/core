@@ -11,11 +11,11 @@ export class MultiCircle
   extends BaseAreaObject<GJ.MultiCircle>
   implements GJ.MultiCircle
 {
-  static isObject(obj: any): obj is MultiCircle {
+  static isObject(obj: unknown): obj is MultiCircle {
     return obj instanceof MultiCircle;
   }
 
-  static assert(obj: any, msg?: string): obj is MultiCircle {
+  static assert(obj: unknown, msg?: string): obj is MultiCircle {
     if (obj instanceof MultiCircle) return true;
     throw new TypeError(msg ?? 'Expected MultiCircle');
   }

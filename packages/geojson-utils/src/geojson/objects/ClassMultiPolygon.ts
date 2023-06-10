@@ -11,11 +11,11 @@ export class MultiPolygon
   extends BaseAreaObject<GJ.MultiPolygon>
   implements GJ.MultiPolygon
 {
-  static isObject(obj: any): obj is MultiPolygon {
+  static isObject(obj: unknown): obj is MultiPolygon {
     return obj instanceof MultiPolygon;
   }
 
-  static assert(obj: any, msg?: string): obj is MultiPolygon {
+  static assert(obj: unknown, msg?: string): obj is MultiPolygon {
     if (obj instanceof MultiPolygon) return true;
     throw new TypeError(msg ?? 'Expected MultiPolygon');
   }
