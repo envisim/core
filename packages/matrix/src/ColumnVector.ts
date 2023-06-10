@@ -14,15 +14,30 @@ export class ColumnVector extends BaseVector {
     return mat instanceof ColumnVector;
   }
 
+  /**
+   * @param msg message to pass, defaults to `"Expected ColumnVector"`
+   * @returns `true` if `obj` is ColumnVector
+   * @throws TypeError if `obj` is not ColumnVector
+   * @group Static methods
+   * @group Property methods
+   */
   static assert(obj: unknown, msg?: string): obj is ColumnVector {
     if (obj instanceof ColumnVector) return true;
     throw new TypeError(msg ?? 'Expected ColumnVector');
   }
 
+  /**
+   * @returns a new ColumnVector of size `nrow` filled with `fill`
+   * @group Static methods
+   */
   static create(fill: number, nrow: number): ColumnVector {
     return new ColumnVector(new Array<number>(nrow).fill(fill), true);
   }
 
+  /**
+   * @param arr the values used to form the ColumnVector
+   * @param shallow if `true`, uses the internal arrays of `arr` as a reference
+   */
   constructor(arr: number[] | BaseMatrix, shallow: boolean = false) {
     if (Array.isArray(arr)) {
       super(shallow === true ? arr : arr.slice(), arr.length, 1);

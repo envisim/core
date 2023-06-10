@@ -16,6 +16,13 @@ export class Matrix extends BaseMatrix {
     return mat instanceof Matrix;
   }
 
+  /**
+   * @param msg message to pass, defaults to `"Expected Matrix"`
+   * @returns `true` if `obj` is Matrix
+   * @throws TypeError if `obj` is not Matrix
+   * @group Static methods
+   * @group Property methods
+   */
   static assert(obj: unknown, msg?: string): obj is Matrix {
     if (obj instanceof Matrix) return true;
     throw new TypeError(msg ?? 'Expected Matrix');
@@ -79,6 +86,10 @@ export class Matrix extends BaseMatrix {
     return s;
   }
 
+  /**
+   * @returns a new Matrix of size `dims` filled with `fill`
+   * @group Static methods
+   */
   static create(fill: number, dims: Required<MatrixDims>): Matrix {
     return new Matrix(
       new Array<number>(dims.nrow * dims.ncol).fill(fill),
@@ -86,6 +97,12 @@ export class Matrix extends BaseMatrix {
     );
   }
 
+  /**
+   * @param arr the values used to form the Matrix in column-order, or row-order
+   * if `dims.byRow` is `true`
+   * @param dims the dimensions of the Matrix. Must match the size of `arr`.
+   * @param shallow if `true`, uses the internal arrays of `arr` as a reference
+   */
   constructor(
     arr: number[],
     dims: Required<MatrixDims> & MatrixByRow,

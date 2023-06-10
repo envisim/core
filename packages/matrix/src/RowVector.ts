@@ -12,15 +12,30 @@ export class RowVector extends BaseVector {
     return mat instanceof RowVector;
   }
 
+  /**
+   * @param msg message to pass, defaults to `"Expected RowVector"`
+   * @returns `true` if `obj` is RowVector
+   * @throws TypeError if `obj` is not RowVector
+   * @group Static methods
+   * @group Property methods
+   */
   static assert(obj: unknown, msg?: string): obj is RowVector {
     if (obj instanceof RowVector) return true;
     throw new TypeError(msg ?? 'Expected RowVector');
   }
 
+  /**
+   * @returns a new RowVector of size `nrow` filled with `fill`
+   * @group Static methods
+   */
   static create(fill: number, nrow: number): RowVector {
     return new RowVector(new Array<number>(nrow).fill(fill), true);
   }
 
+  /**
+   * @param arr the values used to form the RowVector
+   * @param shallow if `true`, uses the internal arrays of `arr` as a reference
+   */
   constructor(arr: number[] | BaseMatrix, shallow: boolean = false) {
     if (Array.isArray(arr)) {
       super(shallow === true ? arr : arr.slice(), 1, arr.length);
