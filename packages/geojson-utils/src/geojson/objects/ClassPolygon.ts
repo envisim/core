@@ -12,6 +12,11 @@ export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
     return obj instanceof Polygon;
   }
 
+  static assert(obj: any, msg?: string): obj is Polygon {
+    if (obj instanceof Polygon) return true;
+    throw new TypeError(msg ?? 'Expected Polygon');
+  }
+
   static create(
     coordinates: GJ.Polygon['coordinates'],
     shallow: boolean = true,

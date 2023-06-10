@@ -12,6 +12,11 @@ export class PointGeometryCollection
     return obj instanceof PointGeometryCollection;
   }
 
+  static assert(obj: any, msg?: string): obj is PointGeometryCollection {
+    if (obj instanceof PointGeometryCollection) return true;
+    throw new TypeError(msg ?? 'Expected PointGeometryCollection');
+  }
+
   static create(
     geometries: GJ.PointObject[],
     shallow: boolean = true,

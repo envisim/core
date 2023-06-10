@@ -13,6 +13,11 @@ export class MultiPoint
     return obj instanceof MultiPoint;
   }
 
+  static assert(obj: any, msg?: string): obj is MultiPoint {
+    if (obj instanceof MultiPoint) return true;
+    throw new TypeError(msg ?? 'Expected MultiPoint');
+  }
+
   static create(
     coordinates: GJ.MultiPoint['coordinates'],
     shallow: boolean = true,

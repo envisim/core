@@ -13,6 +13,11 @@ export class AreaFeature
     return obj instanceof AreaFeature;
   }
 
+  static assert(obj: any, msg?: string): obj is AreaFeature {
+    if (obj instanceof AreaFeature) return true;
+    throw new TypeError(msg ?? 'Expected AreaFeature');
+  }
+
   static create(
     geometry: GJ.AreaGeometry,
     properties: GJ.FeatureProperties = {},

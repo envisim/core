@@ -14,6 +14,11 @@ export class LineString
     return obj instanceof LineString;
   }
 
+  static assert(obj: any, msg?: string): obj is LineString {
+    if (obj instanceof LineString) return true;
+    throw new TypeError(msg ?? 'Expected LineString');
+  }
+
   static create(
     coordinates: GJ.LineString['coordinates'],
     shallow: boolean = true,

@@ -9,6 +9,11 @@ export class Point extends BasePointObject<GJ.Point> implements GJ.Point {
     return obj instanceof Point;
   }
 
+  static assert(obj: any, msg?: string): obj is Point {
+    if (obj instanceof Point) return true;
+    throw new TypeError(msg ?? 'Expected Point');
+  }
+
   static create(
     coordinates: GJ.Point['coordinates'],
     shallow: boolean = true,

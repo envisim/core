@@ -12,6 +12,11 @@ export class LineGeometryCollection
     return obj instanceof LineGeometryCollection;
   }
 
+  static assert(obj: any, msg?: string): obj is LineGeometryCollection {
+    if (obj instanceof LineGeometryCollection) return true;
+    throw new TypeError(msg ?? 'Expected LineGeometryCollection');
+  }
+
   static create(
     geometries: GJ.LineObject[],
     shallow: boolean = true,

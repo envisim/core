@@ -12,6 +12,11 @@ export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
     return obj instanceof Circle;
   }
 
+  static assert(obj: any, msg?: string): obj is Circle {
+    if (obj instanceof Circle) return true;
+    throw new TypeError(msg ?? 'Expected Circle');
+  }
+
   static create(
     coordinates: GJ.Circle['coordinates'],
     radius: number,

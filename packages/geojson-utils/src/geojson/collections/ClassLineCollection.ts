@@ -13,6 +13,11 @@ export class LineCollection
     return obj instanceof LineCollection;
   }
 
+  static assert(obj: any, msg?: string): obj is LineCollection {
+    if (obj instanceof LineCollection) return true;
+    throw new TypeError(msg ?? 'Expected LineCollection');
+  }
+
   static create(
     features: GJ.LineFeature[],
     shallow: boolean = true,
