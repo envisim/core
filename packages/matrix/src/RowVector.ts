@@ -12,7 +12,7 @@ export class RowVector extends BaseVector {
     return mat instanceof RowVector;
   }
 
-  static assert(obj: any, msg?: string): obj is RowVector {
+  static assert(obj: unknown, msg?: string): obj is RowVector {
     if (obj instanceof RowVector) return true;
     throw new TypeError(msg ?? 'Expected RowVector');
   }

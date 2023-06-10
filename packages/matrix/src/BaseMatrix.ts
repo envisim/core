@@ -50,7 +50,7 @@ export abstract class BaseMatrix {
     return mat instanceof BaseMatrix;
   }
 
-  static assert(obj: any, msg?: string): obj is BaseMatrix {
+  static assert(obj: unknown, msg?: string): obj is BaseMatrix {
     if (obj instanceof BaseMatrix) return true;
     throw new TypeError(msg ?? 'Expected BaseMatrix');
   }

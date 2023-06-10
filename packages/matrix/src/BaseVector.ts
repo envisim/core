@@ -14,7 +14,7 @@ export abstract class BaseVector extends BaseMatrix {
     return mat instanceof BaseVector;
   }
 
-  static assert(obj: any, msg?: string): obj is BaseVector {
+  static assert(obj: unknown, msg?: string): obj is BaseVector {
     if (obj instanceof BaseVector) return true;
     throw new TypeError(msg ?? 'Expected BaseVector');
   }

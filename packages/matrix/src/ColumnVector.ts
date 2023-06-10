@@ -14,7 +14,7 @@ export class ColumnVector extends BaseVector {
     return mat instanceof ColumnVector;
   }
 
-  static assert(obj: any, msg?: string): obj is ColumnVector {
+  static assert(obj: unknown, msg?: string): obj is ColumnVector {
     if (obj instanceof ColumnVector) return true;
     throw new TypeError(msg ?? 'Expected ColumnVector');
   }

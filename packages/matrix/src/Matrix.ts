@@ -16,7 +16,7 @@ export class Matrix extends BaseMatrix {
     return mat instanceof Matrix;
   }
 
-  static assert(obj: any, msg?: string): obj is Matrix {
+  static assert(obj: unknown, msg?: string): obj is Matrix {
     if (obj instanceof Matrix) return true;
     throw new TypeError(msg ?? 'Expected Matrix');
   }
