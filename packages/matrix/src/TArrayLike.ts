@@ -1,5 +1,5 @@
-import {ColumnVector} from './ColumnVector.js';
-import {RowVector} from './RowVector.js';
+import {ColumnVector} from './base/ColumnVector.js';
+import {RowVector} from './base/RowVector.js';
 
 export type TArrayLike = number[] | ColumnVector | RowVector;
 

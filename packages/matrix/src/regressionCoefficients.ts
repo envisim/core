@@ -1,5 +1,5 @@
-import {ColumnVector} from './ColumnVector.js';
-import {Matrix} from './Matrix.js';
+import {ColumnVector} from './base/ColumnVector.js';
+import {Matrix} from './base/Matrix.js';
 
 /**
  * Calculates the coefficients B of `this = xmat * B`
