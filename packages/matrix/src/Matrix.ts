@@ -16,6 +16,11 @@ export class Matrix extends BaseMatrix {
     return mat instanceof Matrix;
   }
 
+  static assert(obj: any, msg?: string): obj is Matrix {
+    if (obj instanceof Matrix) return true;
+    throw new TypeError(msg ?? 'Expected Matrix');
+  }
+
   /**
    * Bind multiple matrices together by columns
    * @throws `RangeError` if the number of rows of any matrix doesn't match

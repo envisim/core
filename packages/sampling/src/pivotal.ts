@@ -27,7 +27,7 @@ export function lpm1(
     treeBucketSize = optionsDefaultTreeBucketSize,
   }: IOptions = {},
 ): number[] {
-  if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
+  Matrix.assert(xm);
 
   const N = xm.nrow;
 
@@ -73,7 +73,7 @@ export function lpm2(
     treeBucketSize = optionsDefaultTreeBucketSize,
   }: IOptions = {},
 ): number[] {
-  if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
+  Matrix.assert(xm);
 
   const N = xm.nrow;
 
@@ -119,7 +119,7 @@ export function lpm1s(
     treeBucketSize = optionsDefaultTreeBucketSize,
   }: IOptions = {},
 ): number[] {
-  if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
+  Matrix.assert(xm);
 
   const N = xm.nrow;
 

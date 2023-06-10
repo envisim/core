@@ -50,6 +50,11 @@ export abstract class BaseMatrix {
     return mat instanceof BaseMatrix;
   }
 
+  static assert(obj: any, msg?: string): obj is BaseMatrix {
+    if (obj instanceof BaseMatrix) return true;
+    throw new TypeError(msg ?? 'Expected BaseMatrix');
+  }
+
   /** @internal */
   protected _e: number[];
   /** @internal */
@@ -802,8 +807,7 @@ export abstract class BaseMatrix {
 
   /** @ignore */
   protected _matrixMultiply(mat: BaseMatrix): number[] {
-    if (!BaseMatrix.isBaseMatrix(mat))
-      throw new TypeError('mat must be inherited from BaseMatrix');
+    BaseMatrix.assert(mat);
     if (this._ncol !== mat._nrow)
       throw new RangeError('Dimensions of matrices does not match');
 

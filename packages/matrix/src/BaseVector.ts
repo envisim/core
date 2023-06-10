@@ -14,6 +14,11 @@ export abstract class BaseVector extends BaseMatrix {
     return mat instanceof BaseVector;
   }
 
+  static assert(obj: any, msg?: string): obj is BaseVector {
+    if (obj instanceof BaseVector) return true;
+    throw new TypeError(msg ?? 'Expected BaseVector');
+  }
+
   constructor(arr: number | number[], nrow: number, ncol: number) {
     super(arr, nrow, ncol);
   }
@@ -191,7 +196,8 @@ export abstract class BaseVector extends BaseMatrix {
    * @group Statistics
    */
   covariance(vec: BaseVector): number {
-    if (!BaseVector.isBaseVector(vec) || vec._nelements !== this._nelements)
+    BaseVector.assert(vec);
+    if (vec._nelements !== this._nelements)
       throw new RangeError('vec must be a vector of equal size as this');
 
     return (
@@ -208,7 +214,8 @@ export abstract class BaseVector extends BaseMatrix {
    * @group Statistics
    */
   correlation(vec: BaseVector): number {
-    if (!BaseVector.isBaseVector(vec) || vec._nelements !== this._nelements)
+    BaseVector.assert(vec);
+    if (vec._nelements !== this._nelements)
       throw new TypeError('vec must be a vector of equal size as this');
 
     return this.covariance(vec) / Math.sqrt(this.variance() * vec.variance());

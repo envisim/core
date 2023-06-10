@@ -25,7 +25,7 @@ export function scps(
     treeBucketSize = optionsDefaultTreeBucketSize,
   }: IOptions = {},
 ): number[] {
-  if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
+  Matrix.assert(xm);
 
   const N = xm.nrow;
   const p = arrayLikeToArray(prob, true);
@@ -58,7 +58,7 @@ export function scpsCoord(
     treeBucketSize = optionsDefaultTreeBucketSize,
   }: IOptions = {},
 ): number[] {
-  if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
+  Matrix.assert(xm);
 
   const N = xm.nrow;
   const p = arrayLikeToArray(prob, true);
@@ -93,7 +93,7 @@ export function lcps(
     treeBucketSize = optionsDefaultTreeBucketSize,
   }: IOptions = {},
 ): number[] {
-  if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
+  Matrix.assert(xm);
 
   const N = xm.nrow;
   const p = arrayLikeToArray(prob, true);

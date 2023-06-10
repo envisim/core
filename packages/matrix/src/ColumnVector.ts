@@ -14,6 +14,11 @@ export class ColumnVector extends BaseVector {
     return mat instanceof ColumnVector;
   }
 
+  static assert(obj: any, msg?: string): obj is ColumnVector {
+    if (obj instanceof ColumnVector) return true;
+    throw new TypeError(msg ?? 'Expected ColumnVector');
+  }
+
   static create(fill: number, nrow: number): ColumnVector {
     return new ColumnVector(new Array<number>(nrow).fill(fill), true);
   }

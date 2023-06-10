@@ -12,6 +12,11 @@ export class RowVector extends BaseVector {
     return mat instanceof RowVector;
   }
 
+  static assert(obj: any, msg?: string): obj is RowVector {
+    if (obj instanceof RowVector) return true;
+    throw new TypeError(msg ?? 'Expected RowVector');
+  }
+
   static create(fill: number, nrow: number): RowVector {
     return new RowVector(new Array<number>(nrow).fill(fill), true);
   }

@@ -58,8 +58,8 @@ export function lcube(
     treeBucketSize = optionsDefaultTreeBucketSize,
   }: IOptions = {},
 ): number[] {
-  if (!Matrix.isMatrix(xb)) throw new TypeError('xb must be Matrix');
-  if (!Matrix.isMatrix(xs)) throw new TypeError('xs must be Matrix');
+  Matrix.assert(xb);
+  Matrix.assert(xs);
 
   const N = xb.nrow;
   const p = arrayLikeToArray(prob, true);
