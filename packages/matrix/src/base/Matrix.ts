@@ -94,6 +94,7 @@ export class Matrix extends BaseMatrix {
     return new Matrix(
       new Array<number>(dims.nrow * dims.ncol).fill(fill),
       dims,
+      true,
     );
   }
 
