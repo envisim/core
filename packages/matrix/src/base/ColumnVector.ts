@@ -1,7 +1,7 @@
-import {randomArray} from '../../random/dist/es/random.js';
+import {randomArray} from '@envisim/random';
+
 import {BaseMatrix} from './BaseMatrix.js';
 import {BaseVector} from './BaseVector.js';
-import {Matrix} from './Matrix.js';
 import {RowVector} from './RowVector.js';
 
 export class ColumnVector extends BaseVector {
