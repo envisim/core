@@ -46,12 +46,14 @@ export function unionOfPolygons(
   );
 
   if (union.length === 1) {
-    return AreaCollection.create([
-      AreaFeature.create(Polygon.create(union[0]), {}),
-    ]);
+    return AreaCollection.create(
+      [AreaFeature.create(Polygon.create(union[0], true), {}, true)],
+      true,
+    );
   }
 
-  return AreaCollection.create([
-    AreaFeature.create(MultiPolygon.create(union), {}),
-  ]);
+  return AreaCollection.create(
+    [AreaFeature.create(MultiPolygon.create(union, true), {}, true)],
+    true,
+  );
 }
