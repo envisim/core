@@ -191,14 +191,19 @@ function segmentInPolygon(
     });
   }
 
+  if (points.length === 0) {
+    // If there are not points, and the segment mid is fully within the polygon
+    // the segment is fully within
+    if (pointInSinglePolygonPosition(midpoint(segment[0], segment[1]), polygon))
+      return [];
+    // Else, the segment is fully outside, thus all is excluded
+    return [segment];
+  }
+
   // Check if the starting point of the segment is in the polygon
   // use midpoint in order to reduce risk of failing when starting point is on
   // a line
   if (pointInSinglePolygonPosition(midpoint(segment[0], points[0]), polygon)) {
-    // If the first point is in the polygon, and there are no intersections
-    // the segment is fully within the polygon
-    if (points.length === 0) return [];
-
     const seg: Segment[] = [];
 
     // Every other pair of points are outside the polygon
@@ -208,9 +213,6 @@ function segmentInPolygon(
 
     return seg;
   }
-
-  // Starting point is outside the polygon
-  if (points.length === 0) return [segment];
 
   const seg: Segment[] = [[segment[0], points[0]]];
 
