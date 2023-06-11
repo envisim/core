@@ -96,17 +96,21 @@ function lineStringInPolygons(
 
     // Check if first linestring of return should be appended to the previous
     // linestring
+    let startIndex = 0;
     if (mls.length > 0) {
       const id = mls.length - 1;
-      const prev = mls[id][mls[id].length - 1];
-      if (xyAreEqual(newMls[0][0], prev)) {
-        newMls[0].shift();
+      if (xyAreEqual(newMls[0][0], mls[id][mls[id].length - 1])) {
+        mls[id].pop();
         mls[id].push(...newMls[0]);
-        newMls.shift();
+        startIndex = 1;
       }
     }
 
-    mls.push(...newMls);
+    if (startIndex === 0) {
+      mls.push(...newMls);
+    } else {
+      for (let j = startIndex; j < newMls.length; j++) mls.push(newMls[j]);
+    }
   }
 
   return mls;
@@ -171,10 +175,7 @@ function segmentInPolygon(
   // Store all intersection points between the segment and the polygon
   for (let i = 0; i < polygon.length; i++) {
     for (let j = 1; j < polygon[i].length; j++) {
-      const q = intersectSegments(segment, [
-        polygon[i][j - 1].slice(0, 2) as GJ.Position,
-        polygon[i][j].slice(0, 2) as GJ.Position,
-      ]);
+      const q = intersectSegments(segment, [polygon[i][j - 1], polygon[i][j]]);
 
       if (q) points.push(q);
     }
@@ -193,7 +194,12 @@ function segmentInPolygon(
   }
 
   // Remove first points if they are equal to the first segment point
-  while (points.length > 0 && xyAreEqual(segment[0], points[0])) points.shift();
+  let startIndex = 0;
+  while (
+    startIndex < points.length &&
+    xyAreEqual(segment[0], points[startIndex])
+  )
+    startIndex++;
 
   if (points.length === 0) {
     // If there are not points, and the segment mid is fully within the polygon
@@ -207,12 +213,17 @@ function segmentInPolygon(
   // Check if the starting point of the segment is in the polygon
   // use midpoint in order to reduce risk of failing when starting point is on
   // a line
-  if (pointInSinglePolygonPosition(midpoint(segment[0], points[0]), polygon)) {
+  if (
+    pointInSinglePolygonPosition(
+      midpoint(segment[0], points[startIndex]),
+      polygon,
+    )
+  ) {
     const seg: Segment[] = [];
 
     // Every other pair of points are outside the polygon
     points.push(segment[1]);
-    for (let i = 1; i < points.length; i += 2)
+    for (let i = startIndex + 1; i < points.length; i += 2)
       if (!xyAreEqual(points[i - 1], points[i]))
         seg.push([points[i - 1], points[i]]);
 
@@ -223,7 +234,7 @@ function segmentInPolygon(
 
   // Every other pair of points are outside the polygon
   points.push(segment[1]);
-  for (let i = 2; i < points.length; i += 2)
+  for (let i = startIndex + 2; i < points.length; i += 2)
     if (!xyAreEqual(points[i - 1], points[i]))
       seg.push([points[i - 1], points[i]]);
 
