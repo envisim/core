@@ -201,7 +201,7 @@ function segmentInPolygon(
   )
     startIndex++;
 
-  if (points.length === 0) {
+  if (points.length === startIndex) {
     // If there are not points, and the segment mid is fully within the polygon
     // the segment is fully within
     if (pointInSinglePolygonPosition(midpoint(segment[0], segment[1]), polygon))
