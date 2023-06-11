@@ -100,6 +100,7 @@ function lineStringInPolygons(
       const id = mls.length - 1;
       const prev = mls[id][mls[id].length - 1];
       if (xyAreEqual(newMls[0][0], prev)) {
+        newMls[0].shift();
         mls[id].push(...newMls[0]);
         newMls.shift();
       }
@@ -148,12 +149,12 @@ function segmentInPolygons(
 
   // Add the diff between all exluded segments, if it isn't a single point
   for (let i = 1; i < segs.length; i++) {
-    if (xyAreEqual(segs[i - 1][1], segs[i][0])) continue;
-    mls.push([segs[i - 1][1], segs[i][0]]);
+    if (!xyAreEqual(segs[i - 1][1], segs[i][0]))
+      mls.push([segs[i - 1][1], segs[i][0]]);
   }
 
   // Add the last part, if it is not a single point
-  if (!xyAreEqual(segment[1], segs[0][0])) {
+  if (!xyAreEqual(segs[segs.length - 1][1], segment[1])) {
     mls.push([segs[segs.length - 1][1], segment[1]]);
   }
 
@@ -191,6 +192,9 @@ function segmentInPolygon(
     });
   }
 
+  // Remove first points if they are equal to the first segment point
+  while (points.length > 0 && xyAreEqual(segment[0], points[0])) points.shift();
+
   if (points.length === 0) {
     // If there are not points, and the segment mid is fully within the polygon
     // the segment is fully within
@@ -209,7 +213,8 @@ function segmentInPolygon(
     // Every other pair of points are outside the polygon
     points.push(segment[1]);
     for (let i = 1; i < points.length; i += 2)
-      seg.push([points[i - 1], points[i]]);
+      if (!xyAreEqual(points[i - 1], points[i]))
+        seg.push([points[i - 1], points[i]]);
 
     return seg;
   }
@@ -219,7 +224,8 @@ function segmentInPolygon(
   // Every other pair of points are outside the polygon
   points.push(segment[1]);
   for (let i = 2; i < points.length; i += 2)
-    seg.push([points[i - 1], points[i]]);
+    if (!xyAreEqual(points[i - 1], points[i]))
+      seg.push([points[i - 1], points[i]]);
 
   return seg;
 }
