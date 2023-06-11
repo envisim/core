@@ -1,8 +1,10 @@
 // Basic
-export type Position = [number, number] | [number, number, number];
-export type BBox =
-  | [number, number, number, number]
-  | [number, number, number, number, number, number];
+export type PositionXY = [number, number];
+export type PositionXYZ = [number, number, number];
+export type Position = PositionXY | PositionXYZ;
+export type BBoxXY = [number, number, number, number];
+export type BBoxXYZ = [number, number, number, number, number, number];
+export type BBox = BBoxXY | BBoxXYZ;
 
 export interface GeoJsonObject<T extends string> {
   type: T;

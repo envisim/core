@@ -10,9 +10,13 @@ import type * as GJ from '../types/geojson.js';
  * @returns A position or null.
  */
 export function intersectSegments(
-  segment1: GJ.Position[],
-  segment2: GJ.Position[],
-): GJ.Position | null {
+  segment1: [GJ.Position, GJ.Position],
+  segment2: [GJ.Position, GJ.Position],
+): GJ.PositionXY | null {
+  // Given two segments:
+  // - L1 = P11 + (P12 - P11)t, 0 <= t <= 1
+  // - L2 = P21 + (P22 - P21)s, 0 <= s <= 1
+  // Find the intersection between these lines through
   const p0 = segment1[0];
   const p1 = segment1[1];
   const p2 = segment2[0];
@@ -32,12 +36,14 @@ export function intersectSegments(
   const s02_y = p0[1] - p2[1];
   const s_numer = s10_x * s02_y - s10_y * s02_x;
 
+  // Intersection only if 0 <= s <= 1
   if (s_numer < 0 === denom_positive || s_numer > denom === denom_positive) {
     return null;
   }
 
   const t_numer = s32_x * s02_y - s32_y * s02_x;
 
+  // Intersection only if 0 <= t <= 1
   if (t_numer < 0 === denom_positive || t_numer > denom === denom_positive) {
     return null;
   }

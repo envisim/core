@@ -43,7 +43,7 @@ function midpoint(p1: GJ.Position, p2: GJ.Position): GJ.Position {
  * an empty array if no intersections.
  */
 function lineSegmentPolygonIntersectPoints(
-  segment: GJ.Position[],
+  segment: [GJ.Position, GJ.Position],
   polygon: GJ.Position[][],
 ): GJ.Position[] {
   const p: GJ.Position[] = [];
