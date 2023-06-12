@@ -5,12 +5,12 @@
 // Sampling methods
 export {samplePointsOnLines} from './samplePointsOnLines.js';
 export {samplePointsOnAreas} from './samplePointsOnAreas.js';
-export {sampleLinesOnAreas} from './sampleLinesOnAreas.js';
-export {sampleBeltsOnAreas} from './sampleBeltsOnAreas.js';
+export {sampleSystematicLinesOnAreas} from './sampleSystematicLinesOnAreas.js';
+export {sampleSystematicBeltsOnAreas} from './sampleSystematicBeltsOnAreas.js';
 export {sampleTractsOnAreas} from './sampleTractsOnAreas.js';
 export {sampleRelascopePoints} from './sampleRelascopePoints.js';
 export {sampleDistancePoints} from './sampleDistancePoints.js';
-export {sampleDistanceLines} from './sampleDistanceLines.js';
+export {sampleSystematicDistanceLines} from './sampleSystematicDistanceLines.js';
 
 // Distance sampling utils.
 export {

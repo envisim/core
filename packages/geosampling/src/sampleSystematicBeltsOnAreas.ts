@@ -30,7 +30,7 @@ export type TsampleBeltsOnAreasOpts = {
  * @param opts.rand - An optional instance of Random.
  * @returns - A GeoJSON FeatureCollection of Polygon/MultiPolygon.
  */
-export const sampleBeltsOnAreas = (
+export const sampleSystematicBeltsOnAreas = (
   collection: AreaCollection,
   distBetween: number,
   halfWidth: number,
@@ -64,16 +64,13 @@ export const sampleBeltsOnAreas = (
   );
 
   let smallestAtLat = 0;
-  if (box[1] > 0) {
-    smallestAtLat = box[3];
-  }
-
-  if (box[3] < 0) {
-    smallestAtLat = box[1];
-  }
 
   if (box[3] > 0 && box[1] < 0) {
     smallestAtLat = Math.max(box[3], -box[1]);
+  } else if (box[3] < 0) {
+    smallestAtLat = box[1];
+  } else if (box[1] > 0) {
+    smallestAtLat = box[3];
   }
 
   const minLon = destination([refCoord[0], smallestAtLat], maxRadius, 270)[0];

@@ -24,14 +24,13 @@ export type TsampleLinesOnAreasOpts = {
 /**
  * Selects a sample of lines systematically over all areas.
  *
- * @param collection an AreaCollection.
+ * @param collection
  * @param distBetween distance in meters between the parallell lines.
  * @param opts an options object.
  * @param opts.rotation rotation angle in degrees.
  * @param opts.rand optional instance of Random.
- * @returns a LineCollection.
  */
-export function sampleLinesOnAreas(
+export function sampleSystematicLinesOnAreas(
   collection: AreaCollection,
   distBetween: number,
   opts: TsampleLinesOnAreasOpts,

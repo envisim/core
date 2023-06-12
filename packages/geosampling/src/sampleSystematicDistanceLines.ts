@@ -7,7 +7,7 @@ import {
 import {Random} from '@envisim/random';
 
 import {effectiveHalfWidth} from './sampleDistanceUtils.js';
-import {sampleLinesOnAreas} from './sampleLinesOnAreas.js';
+import {sampleSystematicLinesOnAreas} from './sampleSystematicLinesOnAreas.js';
 
 export type TsampleDistanceLinesOpts = {
   rotation?: number;
@@ -19,7 +19,7 @@ export type TsampleDistanceLinesOpts = {
  * Selects a line sample on an area frame and collect point objects from a base
  * layer using a detection function to (randomly) determine inclusion.
  *
- * @param frame an AreaCollection.
+ * @param frame
  * @param distBetween the distance in meters between lines.
  * @param base a PointCollection of single Point features.
  * @param detectionFunction the detection function.
@@ -27,9 +27,8 @@ export type TsampleDistanceLinesOpts = {
  * @param opts an object containing distBetween, rotation, rand.
  * @param opts.rotation optional fixed rotation of the lines.
  * @param opts.rand an optional instance of Random.
- * @returns resulting PointCollection.
  */
-export function sampleDistanceLines(
+export function sampleSystematicDistanceLines(
   frame: AreaCollection,
   distBetween: number,
   base: PointCollection,
@@ -45,7 +44,7 @@ export function sampleDistanceLines(
   // Compute design weight for this selection
   const dw = distBetween / (effHalfWidth * 2);
   // Select sample of lines
-  const lineSample = sampleLinesOnAreas(frame, distBetween, opts);
+  const lineSample = sampleSystematicLinesOnAreas(frame, distBetween, opts);
   // To store sampled features
   const sampledFeatures: PointFeature[] = [];
 
