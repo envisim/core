@@ -9,9 +9,8 @@ import {
  * Intersects a sample of points with an area frame and transfers _designWeight
  * to sample of points (if frame features have design weights).
  *
- * @param sample a PointCollection.
- * @param frame an AreaCollection.
- * @returns a PointCollection.
+ * @param sample
+ * @param frame
  */
 export function intersectPointSampleAreaFrame(
   sample: PointCollection,
