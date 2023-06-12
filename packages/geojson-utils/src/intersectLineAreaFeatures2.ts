@@ -85,14 +85,17 @@ function lineStringInPolygons(
   lineString: GJ.Position[],
   areas: GJ.Position[][][],
 ): GJ.Position[][] {
+  if (lineString.length < 2) return [[]];
+
   // Go through every feature
   const mls = new Array<GJ.Position[]>();
+  let startPoint: GJ.Position;
+  let endPoint: GJ.Position = [lineString[0][0], lineString[0][1]];
 
   for (let i = 1; i < lineString.length; i++) {
-    const newMls = segmentInPolygons(
-      [[...lineString[i - 1]], [...lineString[i]]],
-      areas,
-    );
+    startPoint = endPoint;
+    endPoint = [lineString[i][0], lineString[i][1]];
+    const newMls = segmentInPolygons(startPoint, endPoint, areas);
 
     // Skip if nothing was returned
     if (newMls.length === 0) continue;
@@ -121,38 +124,48 @@ function lineStringInPolygons(
 
 // returns a list of segments still included
 function segmentInPolygons(
-  segment: Segment,
+  startPoint: GJ.Position,
+  endPoint: GJ.Position,
   areas: GJ.Position[][][],
 ): GJ.Position[][] {
   // Excluded segments
-  const segs: Segment[] = [segment];
+  const segs: Segment[] = [[startPoint, endPoint]];
 
   // Go through all areas, excluding segments as needed
   for (let i = 0; i < areas.length; i++) {
     // Move backwards, as we're inserting new excluded segments for next areas
     for (let j = segs.length; j-- > 0; ) {
       const exclSeg = segmentInPolygon(segs[j], areas[i]);
-      if (exclSeg.length > 0) segs.splice(j, 1, ...exclSeg);
-      else if (exclSeg.length === 0) segs.splice(j, 1);
+      if (exclSeg.length === 1) {
+        if (!xyAreEqual(segs[j][0], exclSeg[0][0])) segs[j][0] = exclSeg[0][0];
+        if (!xyAreEqual(segs[j][1], exclSeg[0][1])) segs[j][1] = exclSeg[0][1];
+      } else if (exclSeg.length === 0) {
+        segs.splice(j, 1);
+      } else {
+        segs.splice(j, 1, ...exclSeg);
+      }
     }
 
-    if (segs.length === 0) return [segment];
+    if (segs.length === 0) return [[startPoint, endPoint]];
   }
 
   // Sort the excluded segments in the same order as the initial segment
-  const lonComp = segment[1][0] > segment[0][0] ? lonCompare1 : lonCompare2;
-  const latComp = segment[1][1] > segment[0][1] ? latCompare1 : latCompare2;
-  segs.sort((a, b) => {
-    const d = lonComp(a[0], b[0]);
-    return d !== 0.0 ? d : latComp(a[0], b[0]);
-  });
+  // const lonComp = endPoint[0] > startPoint[0] ? lonCompare1 : lonCompare2;
+  // const latComp = endPoint[1] > startPoint[1] ? latCompare1 : latCompare2;
+  // segs.sort((a, b) => {
+  //   const d = lonComp(a[0], b[0]);
+  //   return d !== 0.0 ? d : latComp(a[0], b[0]);
+  // });
+
+  if (segs.length === 1) {
+  }
 
   // Construct the new MultiPolygon
   const mls = new Array<GJ.Position[]>();
 
   // Add the first part, if it is not a single point
-  if (!xyAreEqual(segment[0], segs[0][0])) {
-    mls.push([segment[0], segs[0][0]]);
+  if (!xyAreEqual(startPoint, segs[0][0])) {
+    mls.push([startPoint, segs[0][0]]);
   }
 
   // Add the diff between all exluded segments, if it isn't a single point
@@ -162,8 +175,8 @@ function segmentInPolygons(
   }
 
   // Add the last part, if it is not a single point
-  if (!xyAreEqual(segs[segs.length - 1][1], segment[1])) {
-    mls.push([segs[segs.length - 1][1], segment[1]]);
+  if (!xyAreEqual(segs[segs.length - 1][1], endPoint)) {
+    mls.push([segs[segs.length - 1][1], endPoint]);
   }
 
   return mls;
