@@ -1,4 +1,4 @@
-import {TArrayLike, arrayLikeToColumnVector} from '@envisim/matrix';
+import {ColumnVector, TArrayLike} from '@envisim/matrix';
 
 import {IOptions, optionsDefaultRand, PartialPick} from './types.js';
 
@@ -13,9 +13,9 @@ export const poisson = (
   prob: TArrayLike,
   {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
-  const p = arrayLikeToColumnVector(prob);
+  const p = new ColumnVector(prob, true);
   const N = p.length;
-  const s: number[] = new Array(N);
+  const s = new Array<number>(N);
 
   let j = 0;
   p.forEach((e, i) => {
@@ -42,7 +42,7 @@ export const conditionalPoisson = (
 ): number[] => {
   // depends on poisson
   // sum(p) should be n or close to n
-  const p = arrayLikeToColumnVector(prob);
+  const p = new ColumnVector(prob, true);
   let s: number[] = [];
   let run: number = 0;
 

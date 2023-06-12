@@ -1,7 +1,7 @@
 {
   "$schema": "https://typedoc.org/schema.json",
 
-  "plugin": "typedoc-plugin-markdown",
+  "plugin": ["typedoc-plugin-markdown"],
 
   "excludeNotDocumented": false,
   "excludeInternal": true,
@@ -35,6 +35,9 @@
     },
     "@envisim/sampling": {
       "*": "https://github.com/envisim/core/tree/main/packages/sampling/docs"
+    },
+    "@envisim/utils": {
+      "*": "https://github.com/envisim/core/tree/main/packages/utils/docs"
     }
   }
 }
