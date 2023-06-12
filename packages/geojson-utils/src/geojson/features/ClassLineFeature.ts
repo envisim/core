@@ -9,8 +9,13 @@ export class LineFeature
   extends BaseFeature<LineObject>
   implements GJ.LineFeature
 {
-  static isFeature(obj: any): obj is LineFeature {
+  static isFeature(obj: unknown): obj is LineFeature {
     return obj instanceof LineFeature;
+  }
+
+  static assert(obj: unknown, msg?: string): obj is LineFeature {
+    if (obj instanceof LineFeature) return true;
+    throw new TypeError(msg ?? 'Expected LineFeature');
   }
 
   static create(

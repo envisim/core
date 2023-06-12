@@ -29,5 +29,5 @@ export const buffer = (
     units: 'kilometers',
     steps: opts.steps ?? 10,
   });
-  return new AreaCollection(turfCollection);
+  return new AreaCollection(turfCollection, true);
 };

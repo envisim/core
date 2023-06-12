@@ -8,8 +8,13 @@ export class LineGeometryCollection
   extends BaseGeometryCollection<LineObject>
   implements GJ.LineGeometryCollection
 {
-  static isGeometryCollection(obj: any): obj is LineGeometryCollection {
+  static isGeometryCollection(obj: unknown): obj is LineGeometryCollection {
     return obj instanceof LineGeometryCollection;
+  }
+
+  static assert(obj: unknown, msg?: string): obj is LineGeometryCollection {
+    if (obj instanceof LineGeometryCollection) return true;
+    throw new TypeError(msg ?? 'Expected LineGeometryCollection');
   }
 
   static create(

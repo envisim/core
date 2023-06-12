@@ -8,8 +8,13 @@ import {BaseAreaObject} from './BaseAreaObject.js';
 import {Polygon} from './ClassPolygon.js';
 
 export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
-  static isObject(obj: any): obj is Circle {
+  static isObject(obj: unknown): obj is Circle {
     return obj instanceof Circle;
+  }
+
+  static assert(obj: unknown, msg?: string): obj is Circle {
+    if (obj instanceof Circle) return true;
+    throw new TypeError(msg ?? 'Expected Circle');
   }
 
   static create(

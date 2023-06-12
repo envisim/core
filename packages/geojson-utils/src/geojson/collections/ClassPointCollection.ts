@@ -9,8 +9,13 @@ export class PointCollection
   extends BaseCollection<PointObject>
   implements GJ.PointFeatureCollection
 {
-  static isCollection(obj: any): obj is PointCollection {
+  static isCollection(obj: unknown): obj is PointCollection {
     return obj instanceof PointCollection;
+  }
+
+  static assert(obj: unknown, msg?: string): obj is PointCollection {
+    if (obj instanceof PointCollection) return true;
+    throw new TypeError(msg ?? 'Expected PointCollection');
   }
 
   static create(

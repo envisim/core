@@ -9,8 +9,13 @@ export class AreaCollection
   extends BaseCollection<AreaObject>
   implements GJ.AreaFeatureCollection
 {
-  static isCollection(obj: any): obj is AreaCollection {
+  static isCollection(obj: unknown): obj is AreaCollection {
     return obj instanceof AreaCollection;
+  }
+
+  static assert(obj: unknown, msg?: string): obj is AreaCollection {
+    if (obj instanceof AreaCollection) return true;
+    throw new TypeError(msg ?? 'Expected AreaCollection');
   }
 
   static create(

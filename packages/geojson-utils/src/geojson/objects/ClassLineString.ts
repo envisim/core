@@ -10,8 +10,13 @@ export class LineString
   extends BaseLineObject<GJ.LineString>
   implements GJ.LineString
 {
-  static isObject(obj: any): obj is LineString {
+  static isObject(obj: unknown): obj is LineString {
     return obj instanceof LineString;
+  }
+
+  static assert(obj: unknown, msg?: string): obj is LineString {
+    if (obj instanceof LineString) return true;
+    throw new TypeError(msg ?? 'Expected LineString');
   }
 
   static create(

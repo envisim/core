@@ -52,8 +52,8 @@ export function intersectPointAreaFeatures(
   }
 
   if (coordinates.length === 1) {
-    return PointFeature.create(Point.create(coordinates[0]), {});
+    return PointFeature.create(Point.create(coordinates[0], true), {}, true);
   }
 
-  return PointFeature.create(MultiPoint.create(coordinates), {});
+  return PointFeature.create(MultiPoint.create(coordinates, true), {}, true);
 }
