@@ -29,7 +29,7 @@ type Method = 'uniform' | 'systematic';
 /**
  * Select a sample of tracts on areas.
  *
- * @param collection an AreaCollection
+ * @param collection
  * @param method the method to use "uniform" or "systematic".
  * @param sampleSize expected sample size integer > 0.
  * @param modelTract a GeoJSON model tract.
@@ -70,7 +70,7 @@ function sampleTractsOnAreas(
   sampleSize: number,
   modelTract: GeoJSON.PointFeature | GeoJSON.LineFeature | GeoJSON.AreaFeature,
   opts: TsampleTractsOnAreasOpts = {},
-) {
+): PointCollection | LineCollection | AreaCollection {
   if (!AreaCollection.isCollection(collection)) {
     throw new Error('Input collection must be an AreaCollection.');
   }
