@@ -8,9 +8,8 @@ import {
  * Intersects a sample of area with an area frame and transfers _designWeight
  * to sample (if frame features have design weights).
  *
- * @param sample an AreaCollection.
- * @param frame an AreaCollection.
- * @returns an AreaCollection.
+ * @param sample
+ * @param frame
  */
 export function intersectAreaSampleAreaFrame(
   sample: AreaCollection,
@@ -20,8 +19,8 @@ export function intersectAreaSampleAreaFrame(
 
   // Intersect with all area features and push results to newFeatures.
   // If intersection, then compute new designWeight as product of the features design weights.
-  sample.forEach((sampleFeature) => {
-    frame.forEach((frameFeature) => {
+  frame.forEach((frameFeature) => {
+    sample.forEach((sampleFeature) => {
       const intersect = intersectAreaAreaFeatures(sampleFeature, frameFeature);
 
       if (intersect) {
@@ -37,8 +36,5 @@ export function intersectAreaSampleAreaFrame(
       }
     });
   });
-  return new AreaCollection({
-    type: 'FeatureCollection',
-    features: newFeatures,
-  });
+  return new AreaCollection({features: newFeatures}, true);
 }
