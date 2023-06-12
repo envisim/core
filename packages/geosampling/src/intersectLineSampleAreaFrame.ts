@@ -9,9 +9,8 @@ import {
  * Intersects a sample of lines with an area frame and transfers _designWeight
  * to sample of lines (if frame features have design weights).
  *
- * @param sample a LineCollection.
- * @param frame an AreaCollection.
- * @returns a LineCollection.
+ * @param sample
+ * @param frame
  */
 export function intersectLineSampleAreaFrame(
   sample: LineCollection,
@@ -21,8 +20,8 @@ export function intersectLineSampleAreaFrame(
 
   // Intersect with all polygons and push results to newFeatures.
   // if intersection, then compute new designWeight as product of the features design weights.
-  sample.forEach((sampleFeature) => {
-    frame.forEach((frameFeature) => {
+  frame.forEach((frameFeature) => {
+    sample.forEach((sampleFeature) => {
       const intersect = intersectLineAreaFeatures(sampleFeature, frameFeature);
 
       if (intersect) {
@@ -41,8 +40,5 @@ export function intersectLineSampleAreaFrame(
       }
     });
   });
-  return new LineCollection({
-    type: 'FeatureCollection',
-    features: newFeatures,
-  });
+  return new LineCollection({features: newFeatures}, true);
 }

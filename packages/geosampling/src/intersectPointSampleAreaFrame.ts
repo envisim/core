@@ -21,8 +21,8 @@ export function intersectPointSampleAreaFrame(
 
   // Intersect with all polygons and push results to newFeatures.
   // if intersection, then compute new designWeight as product of the features design weights.
-  sample.forEach((sampleFeature) => {
-    frame.forEach((frameFeature) => {
+  frame.forEach((frameFeature) => {
+    sample.forEach((sampleFeature) => {
       const intersect = intersectPointAreaFeatures(sampleFeature, frameFeature);
 
       if (intersect) {
@@ -38,8 +38,5 @@ export function intersectPointSampleAreaFrame(
       }
     });
   });
-  return new PointCollection({
-    type: 'FeatureCollection',
-    features: newFeatures,
-  });
+  return new PointCollection({features: newFeatures}, true);
 }
