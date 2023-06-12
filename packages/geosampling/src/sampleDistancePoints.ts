@@ -7,7 +7,7 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {effectiveRadius} from './sampleDistanceUtils.js';
+import {effectiveRadius, DetectionFunction} from './sampleDistanceUtils.js';
 import {
   samplePointsOnAreas,
   TsamplePointsOnAreasOpts,
@@ -35,7 +35,7 @@ export function sampleDistancePoints(
   method: 'uniform' | 'systematic',
   sampleSize: number,
   base: PointCollection,
-  detectionFunction: Function,
+  detectionFunction: DetectionFunction,
   cutoff: number,
   opts: TsamplePointsOnAreasOpts,
 ): PointCollection {
@@ -113,8 +113,5 @@ export function sampleDistancePoints(
       );
     }
   });
-  return new PointCollection({
-    type: 'FeatureCollection',
-    features: sampledFeatures,
-  });
+  return new PointCollection({features: sampledFeatures}, true);
 }

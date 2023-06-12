@@ -6,7 +6,7 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {effectiveHalfWidth} from './sampleDistanceUtils.js';
+import {effectiveHalfWidth, DetectionFunction} from './sampleDistanceUtils.js';
 import {sampleSystematicLinesOnAreas} from './sampleSystematicLinesOnAreas.js';
 
 export type TsampleDistanceLinesOpts = {
@@ -32,7 +32,7 @@ export function sampleSystematicDistanceLines(
   frame: AreaCollection,
   distBetween: number,
   base: PointCollection,
-  detectionFunction: Function,
+  detectionFunction: DetectionFunction,
   cutoff: number,
   opts: TsampleDistanceLinesOpts,
 ): PointCollection {
@@ -97,8 +97,5 @@ export function sampleSystematicDistanceLines(
       );
     }
   });
-  return new PointCollection({
-    type: 'FeatureCollection',
-    features: sampledFeatures,
-  });
+  return new PointCollection({features: sampledFeatures}, true);
 }

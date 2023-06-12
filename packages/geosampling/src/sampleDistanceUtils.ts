@@ -1,3 +1,6 @@
+export type DetectionFunction = (dist: number) => number;
+export type IntegrateFunction = (x: number) => number;
+
 // TODO: Should we add parametric options for detection function instead?
 // E.g. uniform, halfnormal(sigma),...
 
@@ -6,7 +9,7 @@
  * detection probability is 1 if distance >= 0 and 0 otherwise.
  * @returns the uniform detection function.
  */
-export function uniformDetectionFunction(): Function {
+export function uniformDetectionFunction(): DetectionFunction {
   const g = (dist: number) => {
     if (dist < 0) {
       return 0;
@@ -22,7 +25,7 @@ export function uniformDetectionFunction(): Function {
  * @param sigma the sigma parameter.
  * @returns the half normal detection function.
  */
-export function halfNormalDetectionFunction(sigma: number): Function {
+export function halfNormalDetectionFunction(sigma: number): DetectionFunction {
   const g = (dist: number) => {
     if (dist < 0) {
       return 0;
@@ -45,7 +48,7 @@ export function halfNormalDetectionFunction(sigma: number): Function {
 export function detectionFunction(
   breakValues: number[],
   cutoff: number,
-): Function {
+): DetectionFunction {
   const n = breakValues.length;
   if (cutoff <= 0) {
     throw new Error('cutoff must be a positive number.');
@@ -58,7 +61,7 @@ export function detectionFunction(
       throw new Error('breakValues must contain numbers between 0 and 1.');
     }
   }
-  const g = (x: number) => {
+  const g = (x: number): number => {
     if (x < 0 || x > cutoff) {
       return 0;
     }
@@ -73,6 +76,7 @@ export function detectionFunction(
         );
       }
     }
+    return 0;
   };
   return g;
 }
@@ -85,7 +89,12 @@ export function detectionFunction(
  * @param n optional, number of intervals will be 3n (default n = 100).
  * @returns number, f integrated from a to b.
  */
-export function integrate(f: Function, a: number, b: number, n = 100): number {
+export function integrate(
+  f: IntegrateFunction,
+  a: number,
+  b: number,
+  n = 100,
+): number {
   // Simpson's 3/8 rule
   const np = 3 * Math.round(n);
   const h = (b - a) / np;
@@ -106,7 +115,7 @@ export function integrate(f: Function, a: number, b: number, n = 100): number {
  * @param cutoff maximum detection distance in meters.
  * @returns the effective radius in meters.
  */
-export function effectiveRadius(g: Function, cutoff: number): number {
+export function effectiveRadius(g: DetectionFunction, cutoff: number): number {
   const h = (x: number) => {
     return g(x) * (x / cutoff) * (2 / cutoff);
   };
@@ -120,6 +129,9 @@ export function effectiveRadius(g: Function, cutoff: number): number {
  * @param cutoff maximum detection distance in meters.
  * @returns the effective half width in meters.
  */
-export function effectiveHalfWidth(g: Function, cutoff: number): number {
+export function effectiveHalfWidth(
+  g: DetectionFunction,
+  cutoff: number,
+): number {
   return integrate(g, 0, cutoff);
 }
