@@ -18,7 +18,7 @@ import {
  * and collect point objects from a base layer using a detection function
  * to (randomly) determine inclusion.
  *
- * @param frame an AreaCollection.
+ * @param frame
  * @param method the method to use "uniform" or "systematic".
  * @param sampleSize the expected sample size of points as integer > 0.
  * @param base a PointCollection of single Point features.
@@ -28,7 +28,6 @@ import {
  * @param opts.buffer optional buffer in meters (default cutoff).
  * @param opts.ratio the ratio (dx/dy) for systematic sampling (default 1).
  * @param opts.rand an optional instance of Random.
- * @returns resulting PointCollection.
  */
 export function sampleDistancePoints(
   frame: AreaCollection,

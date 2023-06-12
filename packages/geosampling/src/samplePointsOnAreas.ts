@@ -72,14 +72,13 @@ export type TsamplePointsOnAreasOpts = {
  * Selects points on areas (if features have bbox, it is used in pointInPolygon
  * to reject point outside bbox if buffer is zero).
  *
- * @param collection an AreaCollection
+ * @param collection
  * @param method the method to use "uniform" or "systematic"
  * @param sampleSize the expected sample size as integer > 0.
  * @param opts an optional options object.
  * @param opts.buffer an optional buffer in meters (default 0).
  * @param opts.ratio an optional ratio (dx/dy) for systematic sampling (default 1).
  * @param opts.rand an optional instance of Random.
- * @returns resulting PointCollection.
  */
 export function samplePointsOnAreas(
   collection: AreaCollection,
@@ -262,8 +261,5 @@ export function samplePointsOnAreas(
   // parentIndex refer to buffered features, so
   // may not be used to transfer design weights
   // from parents unless buffer is 0.
-  return new PointCollection({
-    type: 'FeatureCollection',
-    features: pointFeatures,
-  });
+  return new PointCollection({features: pointFeatures}, true);
 }

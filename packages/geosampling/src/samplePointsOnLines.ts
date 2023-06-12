@@ -113,13 +113,12 @@ function samplePointsOnGeometryCollection(
 /**
  * Selects points according to method and sampleSize on a LineCollection.
  *
- * @param collection a LineCollection.
+ * @param collection
  * @param method the method to use. Either 'uniform' or 'systematic'.
  * @param sampleSize an integer > 0 for number of points to sample.
  * @param opts an options object.
  * @param opts.rand an optional instance of Random.
  * @param opts.dist optional distance for start using interpolated points on segments.
- * @returns a PointCollection.
  */
 export function samplePointsOnLines(
   collection: LineCollection,

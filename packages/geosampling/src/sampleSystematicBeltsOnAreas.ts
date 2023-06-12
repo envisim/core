@@ -22,13 +22,12 @@ export type TsampleBeltsOnAreasOpts = {
 /**
  * Selects a systematic sample of belts on areas.
  *
- * @param collection - A GeoJSON FeatureCollection containing Polygon/MultiPolygon.
- * @param distBetween - Distance > 0 in meters between center lines.
- * @param halfWidth - Half the width of the belt (= 0 for line sampling).
- * @param opts - An options object.
- * @param opts.rotation - Rotation angle in degrees.
- * @param opts.rand - An optional instance of Random.
- * @returns - A GeoJSON FeatureCollection of Polygon/MultiPolygon.
+ * @param collection
+ * @param distBetween distance > 0 in meters between center lines.
+ * @param halfWidth half the width of the belt (= 0 for line sampling).
+ * @param opts an options object.
+ * @param opts.rotation rotation angle in degrees.
+ * @param opts.rand an optional instance of Random.
  */
 export const sampleSystematicBeltsOnAreas = (
   collection: AreaCollection,

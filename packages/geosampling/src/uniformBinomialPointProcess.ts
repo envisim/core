@@ -8,11 +8,10 @@ import {samplePointsOnAreas} from './samplePointsOnAreas.js';
  * on areas of input AreaCollection. The points are generated
  * uniformly on a spherical model of the earth.
  *
- * @param collection an AreaCollection.
+ * @param collection
  * @param sampleSize number of points to generate.
  * @param opts an optional options object.
  * @param opts.rand an optional instance of Random.
- * @returns a PointCollection.
  */
 export function uniformBinomialPointProcess(
   collection: AreaCollection,

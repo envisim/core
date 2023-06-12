@@ -44,13 +44,12 @@ function randomPositionInCluster(
  * Generates points from a Thomas cluster point process
  * on areas of input AreaCollection.
  *
- * @param collection an AreaCollection.
+ * @param collection
  * @param intensityOfParents number of parent points / clusters per square meter.
  * @param meanOfCluster mean number of points per cluster.
  * @param sigmaOfCluster standard deviation in meters in Normal distributions for generating points offset in cluster.
  * @param opts an optional options object.
  * @param opts.rand an optional instance of Random.
- * @returns a PointCollection.
  */
 export function thomasClusterProcess(
   collection: AreaCollection,
@@ -135,8 +134,5 @@ export function thomasClusterProcess(
       }
     }
   });
-  return new PointCollection({
-    type: 'FeatureCollection',
-    features: features,
-  });
+  return new PointCollection({features: features}, true);
 }

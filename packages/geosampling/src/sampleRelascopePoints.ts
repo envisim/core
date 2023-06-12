@@ -25,7 +25,7 @@ import {
  * Default buffer is zero, which gives a negative bias for estimates of positive
  * quantities.
  *
- * @param frame an AreaCollection.
+ * @param frame
  * @param method the method to use "uniform" or "systematic"
  * @param sampleSize the expected number of points as integer > 0.
  * @param base a PointCollection of single Point features.
@@ -35,7 +35,6 @@ import {
  * @param opts.buffer optional buffer in meters (default 0).
  * @param opts.ratio the ratio (dx/dy) for systematic sampling (default 1).
  * @param opts.rand an optional instance of Random.
- * @returns resulting PointCollection.
  */
 export function sampleRelascopePoints(
   frame: AreaCollection,
@@ -113,8 +112,5 @@ export function sampleRelascopePoints(
       );
     }
   });
-  return new PointCollection({
-    type: 'FeatureCollection',
-    features: sampledFeatures,
-  });
+  return new PointCollection({features: sampledFeatures}, true);
 }
