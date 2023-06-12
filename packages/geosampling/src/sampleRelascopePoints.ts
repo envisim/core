@@ -1,11 +1,16 @@
-import {copy, distance} from '@envisim/geojson-utils';
+import {
+  copy,
+  distance,
+  intersectPointAreaFeatures,
+  PointFeature,
+  PointCollection,
+  AreaCollection,
+} from '@envisim/geojson-utils';
 
-import {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
 import {
   samplePointsOnAreas,
   TsamplePointsOnAreasOpts,
 } from './samplePointsOnAreas.js';
-import {typeOfFrame} from './typeOfFrame.js';
 
 // TODO: Decide if we should implement correction by adding the correct buffer.
 // Probably deviates from common use to add buffer, but estimates will be biased
@@ -20,39 +25,26 @@ import {typeOfFrame} from './typeOfFrame.js';
  * Default buffer is zero, which gives a negative bias for estimates of positive
  * quantities.
  *
- * @param frame - A GeoJSON FeatureCollection of Polygon/MultiPolygon features.
- * @param method - The method to use "uniform" or "systematic"
- * @param sampleSize - The expected number of points as integer > 0.
- * @param base - A GeoJSON FeatureCollection of single Point features.
- * @param sizeProperty - The name of the size property in base which has numeric value in meters (e.g. diameter at breast hight).
- * @param factor - Positive number, the relascope factor.
- * @param opts - An object containing buffer, ratio (dx/dy), rand
- * @param opts.buffer - Optional buffer in meters (default 0).
- * @param opts.ratio - The ratio (dx/dy) for systematic sampling (default 1).
- * @param opts.rand - An optional instance of Random.
- * @returns - Resulting GeoJSON FeatureCollection.
+ * @param frame
+ * @param method the method to use "uniform" or "systematic"
+ * @param sampleSize the expected number of points as integer > 0.
+ * @param base a PointCollection of single Point features.
+ * @param sizeProperty the name of the size property in base which has numeric value in meters (e.g. diameter at breast hight).
+ * @param factor positive number, the relascope factor.
+ * @param opts an object containing buffer, ratio (dx/dy), rand
+ * @param opts.buffer optional buffer in meters (default 0).
+ * @param opts.ratio the ratio (dx/dy) for systematic sampling (default 1).
+ * @param opts.rand an optional instance of Random.
  */
-export const sampleRelascopePoints = (
-  frame: GeoJSON.FeatureCollection,
+export function sampleRelascopePoints(
+  frame: AreaCollection,
   method: 'uniform' | 'systematic',
   sampleSize: number,
-  base: GeoJSON.FeatureCollection,
+  base: PointCollection,
   sizeProperty: string,
   factor: number,
   opts: TsamplePointsOnAreasOpts,
-): GeoJSON.FeatureCollection => {
-  // Check types first
-  const frameType = typeOfFrame(frame);
-  const baseType = typeOfFrame(base);
-  if (frameType !== 'area') {
-    throw new Error(
-      'Parameter frame must be a FeatureCollection of Polygons/MultiPolygons.',
-    );
-  }
-  if (baseType !== 'point') {
-    throw new Error('Parameter base must be a FeatureCollection of Points.');
-  }
-
+): PointCollection {
   // Square root of relascope factor
   const sqrtRf = Math.sqrt(factor);
   // Set buffer
@@ -61,7 +53,7 @@ export const sampleRelascopePoints = (
   // Select sample of points (optional buffer via opts)
   const pointSample = samplePointsOnAreas(frame, method, sampleSize, opts);
   // To store sampled features
-  const sampledFeatures: GeoJSON.Feature[] = [];
+  const sampledFeatures: PointFeature[] = [];
 
   // Find selected points in base layer and check if seleccted base point
   // is in frame and transfer _designWeight
@@ -89,7 +81,7 @@ export const sampleRelascopePoints = (
                 pointFeature,
                 frameFeature,
               );
-              if (intersect.geoJSON) {
+              if (intersect) {
                 // Follow the design weight
                 let dw = 1 / (Math.PI * radius * radius);
                 if (samplePoint.properties?._designWeight) {
@@ -120,8 +112,5 @@ export const sampleRelascopePoints = (
       );
     }
   });
-  return {
-    type: 'FeatureCollection',
-    features: sampledFeatures,
-  };
-};
+  return new PointCollection({features: sampledFeatures}, true);
+}

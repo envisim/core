@@ -1,12 +1,15 @@
+export type DetectionFunction = (dist: number) => number;
+export type IntegrateFunction = (x: number) => number;
+
 // TODO: Should we add parametric options for detection function instead?
 // E.g. uniform, halfnormal(sigma),...
 
 /**
  * Returns a uniform detection function on [0, Infinity), i.e. the
  * detection probability is 1 if distance >= 0 and 0 otherwise.
- * @returns - The uniform detection function.
+ * @returns the uniform detection function.
  */
-export const uniformDetectionFunction = (): Function => {
+export function uniformDetectionFunction(): DetectionFunction {
   const g = (dist: number) => {
     if (dist < 0) {
       return 0;
@@ -15,14 +18,14 @@ export const uniformDetectionFunction = (): Function => {
     }
   };
   return g;
-};
+}
 
 /**
  * Returns a half normal detection function on [0, Infinity).
- * @param sigma - The sigma parameter.
- * @returns - The half normal detection function.
+ * @param sigma the sigma parameter.
+ * @returns the half normal detection function.
  */
-export const halfNormalDetectionFunction = (sigma: number): Function => {
+export function halfNormalDetectionFunction(sigma: number): DetectionFunction {
   const g = (dist: number) => {
     if (dist < 0) {
       return 0;
@@ -31,21 +34,21 @@ export const halfNormalDetectionFunction = (sigma: number): Function => {
     }
   };
   return g;
-};
+}
 
 // maybe remove this one?
 
 /**
  * Constructs a detection function on the interval [0,cutoff] given
  * an array of breakValues (probabilities).
- * @param breakValues - Array of n >= 2 detection probabilities at the distances [0,cutoff/(n-1),cutoff/(n-2),...,cutoff].
- * @param cutoff - The maximum detection distance in meters.
- * @returns - The detection function.
+ * @param breakValues array of n >= 2 detection probabilities at the distances [0,cutoff/(n-1),cutoff/(n-2),...,cutoff].
+ * @param cutoff the maximum detection distance in meters.
+ * @returns the detection function.
  */
-export const detectionFunction = (
+export function detectionFunction(
   breakValues: number[],
   cutoff: number,
-): Function => {
+): DetectionFunction {
   const n = breakValues.length;
   if (cutoff <= 0) {
     throw new Error('cutoff must be a positive number.');
@@ -58,7 +61,7 @@ export const detectionFunction = (
       throw new Error('breakValues must contain numbers between 0 and 1.');
     }
   }
-  const g = (x: number) => {
+  const g = (x: number): number => {
     if (x < 0 || x > cutoff) {
       return 0;
     }
@@ -73,24 +76,25 @@ export const detectionFunction = (
         );
       }
     }
+    return 0;
   };
   return g;
-};
+}
 
 /**
  * Integrate a function f from a to b.
- * @param f - Function to integrate.
- * @param a - Lower limit a > -Infinity.
- * @param b - Upper limit b > a and b < Infinity.
- * @param n - Optional, number of intervals will be 3n (default n = 100).
- * @returns - Number, f integrated from a to b.
+ * @param f function to integrate.
+ * @param a lower limit a > -Infinity.
+ * @param b upper limit b > a and b < Infinity.
+ * @param n optional, number of intervals will be 3n (default n = 100).
+ * @returns number, f integrated from a to b.
  */
-export const integrate = (
-  f: Function,
+export function integrate(
+  f: IntegrateFunction,
   a: number,
   b: number,
   n = 100,
-): number => {
+): number {
   // Simpson's 3/8 rule
   const np = 3 * Math.round(n);
   const h = (b - a) / np;
@@ -103,28 +107,31 @@ export const integrate = (
       f(a + 3 * i * h);
   }
   return ((3 * h) / 8) * sum;
-};
+}
 
 /**
  * Computes the effective radius for distance sampling with points.
- * @param g - Detection function (should return detection probability, given distance in meters).
- * @param cutoff - Maximum detection distance in meters.
- * @returns - The effective radius in meters.
+ * @param g detection function (should return detection probability, given distance in meters).
+ * @param cutoff maximum detection distance in meters.
+ * @returns the effective radius in meters.
  */
-export const effectiveRadius = (g: Function, cutoff: number): number => {
+export function effectiveRadius(g: DetectionFunction, cutoff: number): number {
   const h = (x: number) => {
     return g(x) * (x / cutoff) * (2 / cutoff);
   };
   const sum = integrate(h, 0, cutoff);
   return cutoff * Math.sqrt(sum);
-};
+}
 
 /**
  * Computes the effective half width for distance sampling along a line.
- * @param g - Detection function (should return detection probability, given distance in meters).
- * @param cutoff - Maximum detection distance in meters.
- * @returns - The effective half width in meters.
+ * @param g detection function (should return detection probability, given distance in meters).
+ * @param cutoff maximum detection distance in meters.
+ * @returns the effective half width in meters.
  */
-export const effectiveHalfWidth = (g: Function, cutoff: number): number => {
+export function effectiveHalfWidth(
+  g: DetectionFunction,
+  cutoff: number,
+): number {
   return integrate(g, 0, cutoff);
-};
+}
