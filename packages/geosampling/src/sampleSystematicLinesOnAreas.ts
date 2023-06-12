@@ -76,7 +76,7 @@ export function sampleSystematicLinesOnAreas(
 
   const numLines = Math.ceil((2 * maxRadius) / distBetween);
 
-  const lineStrings = [];
+  const lineFeatures: LineFeature[] = [];
   for (let i = 0; i < numLines; i++) {
     const latitude = minLat + (randomStart + i * distBetween) * latPerMeter;
     const thisLine = [];
@@ -95,17 +95,16 @@ export function sampleSystematicLinesOnAreas(
     // TODO?: thisLine may cross antimeridian and thus produce
     // wrong result in intersect below. We may need to create
     // dual geometries.
-    lineStrings.push(thisLine);
-  }
-  let features = lineStrings.map((coords) => {
-    return LineFeature.create(
-      LineString.create(coords, true),
-      {_designWeight: distBetween},
-      true,
+    lineFeatures.push(
+      LineFeature.create(
+        LineString.create(thisLine, true),
+        {_designWeight: distBetween},
+        true,
+      ),
     );
-  });
+  }
   return intersectLineSampleAreaFrame(
-    LineCollection.create(features, true),
+    LineCollection.create(lineFeatures, true),
     collection,
   );
 }
