@@ -35,7 +35,9 @@ export function intersectLineAreaFeatures(
 
   const geometry = lineFeature.geometry;
   let multiLineString: GJ.Position[][];
+  const areas = new Array<GJ.Position[][]>();
 
+  // Construct the MultiLineString by fetching all LineStrings
   if (LineString.isObject(geometry)) {
     multiLineString = [geometry.coordinates];
   } else if (MultiLineString.isObject(geometry)) {
@@ -49,7 +51,7 @@ export function intersectLineAreaFeatures(
     });
   }
 
-  const areas = new Array<GJ.Position[][]>();
+  // Construct the MultiPolygon (areas) by fetching all polygons
   areaFeature.geomEach((geom) => {
     if (Polygon.isObject(geom)) {
       areas.push(geom.coordinates);
@@ -69,6 +71,7 @@ export function intersectLineAreaFeatures(
 
   if (coords.length === 0) return null;
 
+  // We don't need to claim Multi if there is only one LineString left
   if (coords.length === 1)
     return LineFeature.create(LineString.create(coords[0], true), {}, true);
 
@@ -144,6 +147,7 @@ function segmentInPolygons(
     return d !== 0.0 ? d : latComp(a[0], b[0]);
   });
 
+  // Construct the new MultiPolygon
   const mls = new Array<GJ.Position[]>();
 
   // Add the first part, if it is not a single point
