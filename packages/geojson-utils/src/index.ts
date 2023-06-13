@@ -24,7 +24,7 @@ export {distance} from './utils/distance.js';
 export {distancePositionToSegment} from './utils/distancePositionToSegment.js';
 export {forwardAzimuth} from './utils/forwardAzimuth.js';
 export {intermediate} from './utils/intermediate.js';
-export {intersectSegments} from './utils/intersectSegments.js';
+export {intersectSegments, Segment} from './utils/intersectSegments.js';
 export {lengthOfLineString, lengthOfSegment} from './utils/length.js';
 export {pointInSinglePolygonPosition} from './utils/pointInPolygonPosition.js';
 export {
