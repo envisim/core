@@ -1,5 +1,6 @@
+import {copy} from '@envisim/utils';
+
 import type * as GJ from '../../types/geojson.js';
-import {copy} from '../../utils/copy.js';
 import {GeoJsonObject} from '../ClassGeoJsonObject.js';
 import type {GeomEachCallback} from '../callback-types.js';
 

@@ -1,4 +1,4 @@
-import {arrayLikeToArray, Matrix, TArrayLike} from '@envisim/matrix';
+import {Matrix, TArrayLike, arrayLikeToArray} from '@envisim/matrix';
 
 import {Cube, CubeMethod} from './sampling-classes/Cube.js';
 import {
@@ -28,7 +28,7 @@ export function cube(
   if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
 
   const N = xm.nrow;
-  const p = arrayLikeToArray(prob);
+  const p = arrayLikeToArray(prob, true);
 
   if (p.length !== N)
     throw new RangeError('Rows in xm must match length of prob');
@@ -58,11 +58,11 @@ export function lcube(
     treeBucketSize = optionsDefaultTreeBucketSize,
   }: IOptions = {},
 ): number[] {
-  if (!Matrix.isMatrix(xb)) throw new TypeError('xb must be Matrix');
-  if (!Matrix.isMatrix(xs)) throw new TypeError('xs must be Matrix');
+  Matrix.assert(xb);
+  Matrix.assert(xs);
 
   const N = xb.nrow;
-  const p = arrayLikeToArray(prob);
+  const p = arrayLikeToArray(prob, true);
 
   if (p.length !== N)
     throw new RangeError('Rows in xb must match length of prob');

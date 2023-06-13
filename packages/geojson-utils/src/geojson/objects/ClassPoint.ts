@@ -5,8 +5,13 @@ import type {OptionalParam} from '../util-types.js';
 import {BasePointObject} from './BasePointObject.js';
 
 export class Point extends BasePointObject<GJ.Point> implements GJ.Point {
-  static isObject(obj: any): obj is Point {
+  static isObject(obj: unknown): obj is Point {
     return obj instanceof Point;
+  }
+
+  static assert(obj: unknown, msg?: string): obj is Point {
+    if (obj instanceof Point) return true;
+    throw new TypeError(msg ?? 'Expected Point');
   }
 
   static create(

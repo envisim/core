@@ -9,8 +9,13 @@ export class AreaFeature
   extends BaseFeature<AreaObject>
   implements GJ.AreaFeature
 {
-  static isFeature(obj: any): obj is AreaFeature {
+  static isFeature(obj: unknown): obj is AreaFeature {
     return obj instanceof AreaFeature;
+  }
+
+  static assert(obj: unknown, msg?: string): obj is AreaFeature {
+    if (obj instanceof AreaFeature) return true;
+    throw new TypeError(msg ?? 'Expected AreaFeature');
   }
 
   static create(

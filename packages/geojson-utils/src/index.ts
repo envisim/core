@@ -19,7 +19,6 @@ export {
   unionOfBBoxes,
   bboxFromPositions,
 } from './utils/bbox.js';
-export {copy} from './utils/copy.js';
 export {destination} from './utils/destination.js';
 export {distance} from './utils/distance.js';
 export {distancePositionToSegment} from './utils/distancePositionToSegment.js';

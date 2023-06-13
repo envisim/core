@@ -25,10 +25,10 @@ export function scps(
     treeBucketSize = optionsDefaultTreeBucketSize,
   }: IOptions = {},
 ): number[] {
-  if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
+  Matrix.assert(xm);
 
   const N = xm.nrow;
-  const p = arrayLikeToArray(prob);
+  const p = arrayLikeToArray(prob, true);
 
   if (p.length !== N)
     throw new RangeError('Rows in xm must match length of prob');
@@ -58,11 +58,11 @@ export function scpsCoord(
     treeBucketSize = optionsDefaultTreeBucketSize,
   }: IOptions = {},
 ): number[] {
-  if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
+  Matrix.assert(xm);
 
   const N = xm.nrow;
-  const p = arrayLikeToArray(prob);
-  const randvals = arrayLikeToArray(random);
+  const p = arrayLikeToArray(prob, true);
+  const randvals = arrayLikeToArray(random, true);
 
   if (p.length !== N)
     throw new RangeError('Rows in xm must match length of prob');
@@ -93,10 +93,10 @@ export function lcps(
     treeBucketSize = optionsDefaultTreeBucketSize,
   }: IOptions = {},
 ): number[] {
-  if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
+  Matrix.assert(xm);
 
   const N = xm.nrow;
-  const p = arrayLikeToArray(prob);
+  const p = arrayLikeToArray(prob, true);
 
   if (p.length !== N)
     throw new RangeError('Rows in xm must match length of prob');

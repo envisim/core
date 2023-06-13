@@ -8,8 +8,13 @@ export class PointGeometryCollection
   extends BaseGeometryCollection<PointObject>
   implements GJ.PointGeometryCollection
 {
-  static isGeometryCollection(obj: any): obj is PointGeometryCollection {
+  static isGeometryCollection(obj: unknown): obj is PointGeometryCollection {
     return obj instanceof PointGeometryCollection;
+  }
+
+  static assert(obj: unknown, msg?: string): obj is PointGeometryCollection {
+    if (obj instanceof PointGeometryCollection) return true;
+    throw new TypeError(msg ?? 'Expected PointGeometryCollection');
   }
 
   static create(

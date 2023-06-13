@@ -33,7 +33,7 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@envisim/matrix": "workspace:*",
+    "@envisim/utils": "workspace:*",
     "@turf/buffer": "^6.5.0",
     "geographiclib-geodesic": "^2.0.0",
     "polygon-clipping": "^0.15.3",

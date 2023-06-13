@@ -60,8 +60,8 @@ export function intersectLineLineFeatures(
   }
 
   if (points.length === 1) {
-    return PointFeature.create(Point.create(points[0]), {});
+    return PointFeature.create(Point.create(points[0], true), {}, true);
   }
 
-  return PointFeature.create(MultiPoint.create(points), {});
+  return PointFeature.create(MultiPoint.create(points, true), {}, true);
 }

@@ -1,8 +1,6 @@
-import {Matrix, reducedRowEchelonForm} from '@envisim/matrix';
-import {Random} from '@envisim/random';
+import {Matrix} from '@envisim/matrix';
 
 import {cube, lcube} from '../src/index';
-import {Cube, CubeMethod} from '../src/sampling-classes/Cube';
 import {RandomMock} from './_Random.testf';
 import {data} from './_data.testf';
 import './_equalArrays.testf';
@@ -19,7 +17,7 @@ describe('Cube', () => {
   const rand01 = new RandomMock(0.01);
   const rand99 = new RandomMock(0.99);
   const probs = new Array<number>(10).fill(0.2);
-  const balData = Matrix.cbind(new Matrix(probs, 10, 1), data);
+  const balData = Matrix.cbind(new Matrix(probs, {nrow: 10, ncol: 1}), data);
 
   test('length', () => {
     for (let r = 0; r < 100; r++) expect(cube(probs, balData).length).toBe(2);
@@ -30,7 +28,10 @@ describe('Cube', () => {
 
   test('probs', () => {
     const probs2 = [0.1, 0.2, 0.3, 0.4, 0.5, 0.5, 0.4, 0.3, 0.2, 0.1];
-    const balData2 = Matrix.cbind(new Matrix(probs2, 10, 1), data);
+    const balData2 = Matrix.cbind(
+      new Matrix(probs2, {nrow: 10, ncol: 1}),
+      data,
+    );
     const res = new Array<number>(10).fill(0);
     const lres = new Array<number>(10).fill(0);
     const R = 10000;
