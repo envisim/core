@@ -59,9 +59,17 @@ export class Segment {
   delta: GJ.Position;
 
   constructor(p1: GJ.Position, p2: GJ.Position) {
-    this.p1 = [p1[0], p1[1]];
-    this.p2 = [p2[0], p1[1]];
+    this.p1 = p1;
+    this.p2 = p2;
     this.delta = [p2[0] - p1[0], p2[1] - p1[1]];
+  }
+
+  get a(): GJ.Position {
+    return [this.p1[0], this.p1[1]];
+  }
+
+  get b(): GJ.Position {
+    return [this.p2[0], this.p2[1]];
   }
 
   position(t: number): GJ.PositionXY {

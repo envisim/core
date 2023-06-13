@@ -97,18 +97,18 @@ function lineStringInPolygons(
     const vals = segmentIntersectsAreas(seg, areas);
 
     if (vals.length === 0) {
-      ls.push(seg.p1);
+      ls.push(seg.a);
       continue;
     }
 
     if (vals[0] === 0.0) {
       if (ls.length > 0) {
-        ls.push(seg.p1);
+        ls.push(seg.a);
         mls.push(ls);
         ls = [];
       }
     } else {
-      ls.push(seg.p1, seg.position(vals[0]));
+      ls.push(seg.a, seg.position(vals[0]));
       mls.push(ls);
       ls = [];
     }
