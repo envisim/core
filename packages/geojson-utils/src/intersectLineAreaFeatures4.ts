@@ -34,7 +34,8 @@ export function intersectLineAreaFeatures(
 
   const geometry = lineFeature.geometry;
   let multiLineString: GJ.Position[][];
-  const areas = new Array<GJ.Position[][]>();
+  const areas: GJ.Position[][][] = [];
+  // const areas = new Array<GJ.Position[][]>();
 
   // Construct the MultiLineString by fetching all LineStrings
   if (LineString.isObject(geometry)) {
@@ -89,8 +90,10 @@ function lineStringInPolygons(
   lineString: GJ.Position[],
   areas: GJ.Position[][][],
 ): GJ.Position[][] {
-  const mls = new Array<GJ.Position[]>();
-  let ls = new Array<GJ.Position>();
+  const mls: GJ.Position[][] = [];
+  let ls: GJ.Position[] = [];
+  // const mls = new Array<GJ.Position[]>();
+  // let ls = new Array<GJ.Position>();
 
   for (let i = 1; i < lineString.length; i++) {
     const seg = new Segment(lineString[i - 1], lineString[i]);
@@ -149,12 +152,13 @@ export function segmentIntersectsAreas(
   return values;
 }
 
-function segmentIntersectsArea(
+export function segmentIntersectsArea(
   segment: Segment,
   values: number[],
   area: GJ.Position[][],
 ): void {
-  const tarr = new Array<number>();
+  const tarr: number[] = [];
+  // const tarr = new Array<number>();
   const vsmall = values[0];
 
   for (let i = 0; i < area.length; i++) {
