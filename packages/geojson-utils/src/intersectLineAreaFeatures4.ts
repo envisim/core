@@ -155,20 +155,19 @@ function segmentIntersectsArea(
   area: GJ.Position[][],
 ): void {
   const tarr = new Array<number>();
+  const vsmall = values[0];
 
   for (let i = 0; i < area.length; i++) {
     for (let j = 1; j < area[i].length; j++) {
       const t = segment.parameter(area[i][j - 1], area[i][j]);
-      if (t) tarr.push(t);
+      if (t && t > vsmall) tarr.push(t);
     }
   }
 
   if (tarr.length > 0) tarr.sort();
 
   // Remove all if there is no t's
-  let i = 0;
-  while (i < tarr.length && tarr[i] <= values[0]) i++;
-  if (i === tarr.length) {
+  if (tarr.length === 0) {
     if (
       pointInSinglePolygonPosition(segment.midPosition(values[0], 1.0), area)
     ) {
@@ -178,15 +177,17 @@ function segmentIntersectsArea(
     return;
   }
 
+  let i = 0;
   // Make sure that i points to a t that marks the end of an ex-zone
   if (
-    pointInSinglePolygonPosition(segment.midPosition(values[0], tarr[i]), area)
+    pointInSinglePolygonPosition(segment.midPosition(values[0], tarr[0]), area)
   ) {
-    values.splice(0, tarr[i]);
-    i++;
-  }
-
-  if (tarr.length % 2 === 1) {
+    if (tarr[0] === values[1]) {
+      values.splice(0, 2);
+    } else {
+      values[0] = tarr[0];
+    }
+    i = 1;
   }
 
   // values is assumed to be even-length
@@ -237,7 +238,7 @@ function segmentIntersectsArea(
 
   // if tarr was odd, the last i point to the end of an ex-zone
   // thus, we can remove all remaining
-  if (tarr.length % 2 === 1) {
+  if (i < tarr.length && tarr.length % 2 === 1) {
     while (j < values.length) {
       if (tarr[i] >= values[j + 1]) {
         j += 2;
