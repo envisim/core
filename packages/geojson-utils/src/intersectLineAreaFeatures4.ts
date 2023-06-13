@@ -9,10 +9,8 @@ import {
   Circle,
 } from './geojson/index.js';
 import {bboxInBBox} from './utils/bbox.js';
-import {copy} from './utils/copy.js';
-import {Segment, intersectSegments} from './utils/intersectSegments.js';
+import {Segment} from './utils/intersectSegments.js';
 import {pointInSinglePolygonPosition} from './utils/pointInPolygonPosition.js';
-import {xyAreEqual} from './utils/position.js';
 
 /**
  * Computes the intersection between a LineFeature
@@ -91,14 +89,50 @@ function lineStringInPolygons(
   lineString: GJ.Position[],
   areas: GJ.Position[][][],
 ): GJ.Position[][] {
-  const segmentValues = new Array<number[]>();
+  const mls = new Array<GJ.Position[]>();
+  let ls = new Array<GJ.Position>();
 
   for (let i = 1; i < lineString.length; i++) {
-    segmentIntersects(new Segment(lineString[i - 1], lineString[i]), areas);
-    segmentValues.push([0.0, 1.0]);
+    const seg = new Segment(lineString[i - 1], lineString[i]);
+    const vals = segmentIntersectsAreas(seg, areas);
+
+    if (vals.length === 0) {
+      ls.push(seg.p1);
+      continue;
+    }
+
+    if (vals[0] === 0.0) {
+      if (ls.length > 0) {
+        ls.push(seg.p1);
+        mls.push(ls);
+        ls = [];
+      }
+    } else {
+      ls.push(seg.p1, seg.position(vals[0]));
+      mls.push(ls);
+      ls = [];
+    }
+
+    for (let i = 1; i < vals.length - 1; i++) {
+      ls.push(seg.position(vals[i]));
+      if (i % 2 === 0) {
+        mls.push(ls);
+        ls = [];
+      }
+    }
+
+    if (vals[vals.length - 1] < 1.0) {
+      ls.push(seg.position(vals[i]));
+    }
   }
 
-  return;
+  if (ls.length > 0) {
+    const plast = lineString[lineString.length - 1];
+    ls.push([plast[0], plast[1]]);
+    mls.push(ls);
+  }
+
+  return mls;
 }
 
 function segmentIntersectsAreas(
@@ -111,6 +145,8 @@ function segmentIntersectsAreas(
     segmentIntersectsArea(segment, values, areas[i]);
     if (values.length === 0) break;
   }
+
+  return values;
 }
 
 function segmentIntersectsArea(
@@ -150,46 +186,69 @@ function segmentIntersectsArea(
     i++;
   }
 
-  let iMarksEnd = true;
-
-  for (let j = 0; j < values.length; j += 2) {
-    if (tarr[i] > values[j + 1]) continue;
-    //if (tarr[i] < values[j])
+  if (tarr.length % 2 === 1) {
   }
 
-  // j points to the beginning of an ex-zone
-  for (let j = 0; j < values.length; j += 2) {
-    while (i < tarr.length && tarr[i] <= values[j]) i += 2;
-    if (i >= tarr.length) break;
-    if (tarr[i] > values[j + 1]) continue;
-    if (tarr[i] === values[j + 1]) {
+  // values is assumed to be even-length
+  // going until < tarr.len -1 makes sure that we treat tarr as even
+  let j = 0;
+  while (j < values.length && i < tarr.length - 1) {
+    // Increment t if t1 < v0
+    // Increment v if t0 > v1
+    // Cases:
+    // a- t0 === t1 implies nothing to do                  next t
+    // b- t1 < v0 implies t0 < v0                          next t
+    // c- t0 > v1 implies t1 > v1                          next v
+    // d- t0 <= v0, t1 => v1 => remove the seg and cont    ------
+    // e- t0 <= v0, t1 in v  => replace v0 with t1         next t
+    // f- t0 in v , t1 in v  => place t within v           next t, v
+    // g- t0 in v , t1 >  v1 => replace v1 with t0         next v
+    if (tarr[i] === tarr[i + 1]) {
+      // a
+      i += 2;
+    } else if (tarr[i + 1] <= values[j]) {
+      // b
+      i += 2;
+    } else if (tarr[i] >= values[j + 1]) {
+      // c
+      j += 2;
+    } else if (tarr[i] <= values[j]) {
+      if (tarr[i + 1] >= values[j + 1]) {
+        // d
+        values.splice(j, 2);
+      } else {
+        // e
+        values[j] = tarr[i + 1];
+        i += 2;
+      }
+    } else if (tarr[i] > values[j]) {
+      if (tarr[i + 1] < values[j + 1]) {
+        // f
+        values.splice(j, 0, tarr[i], tarr[i + 1]);
+        i += 2;
+        j += 2;
+      } else {
+        // g
+        values[j + 1] = tarr[i];
+        j += 2;
+      }
     }
-
-    if (tarr[i + 1] <= values[j + 1]) {
-      values.splice(j, 0, tarr[i], tarr[i + 1]);
-    } else {
-    }
-    values.splice(j + 1, tarr[i]);
-
-    const newNums = new Array<number>();
-
-    let istop = i + 1;
-    while (istop < tarr.length && istop <= values[j + 1]) istop += 2;
   }
-}
 
-function lonCompare1(a: GJ.Position, b: GJ.Position): number {
-  return a[0] - b[0];
-}
-function lonCompare2(a: GJ.Position, b: GJ.Position): number {
-  return b[0] - a[0];
-}
-function latCompare1(a: GJ.Position, b: GJ.Position): number {
-  return a[0] - b[0];
-}
-function latCompare2(a: GJ.Position, b: GJ.Position): number {
-  return a[0] - b[0];
-}
-function midpoint(p1: GJ.Position, p2: GJ.Position): GJ.PositionXY {
-  return [(p1[0] + p2[0]) * 0.5, (p1[1] + p2[1]) * 0.5];
+  // if tarr was odd, the last i point to the end of an ex-zone
+  // thus, we can remove all remaining
+  if (tarr.length % 2 === 1) {
+    while (j < values.length) {
+      if (tarr[i] >= values[j + 1]) {
+        j += 2;
+      } else if (tarr[i] <= values[j]) {
+        break;
+      } else {
+        values[j + 1] = tarr[i];
+        j += 2;
+      }
+    }
+
+    values.splice(j);
+  }
 }
