@@ -123,7 +123,7 @@ function lineStringInPolygons(
 }
 
 // returns a list of segments still included
-function segmentInPolygons(
+export function segmentInPolygons(
   startPoint: GJ.Position,
   endPoint: GJ.Position,
   areas: GJ.Position[][][],

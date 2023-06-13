@@ -135,7 +135,7 @@ function lineStringInPolygons(
   return mls;
 }
 
-function segmentIntersectsAreas(
+export function segmentIntersectsAreas(
   segment: Segment,
   areas: GJ.Position[][][],
 ): number[] {
