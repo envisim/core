@@ -67,7 +67,3 @@ export function longitudeCenter(
 export function checkInRange(x: number, a: number, b: number): boolean {
   return a <= x && x <= b;
 }
-
-export function xyAreEqual(a: Position, b: Position): boolean {
-  return a[0] === b[0] && a[1] === b[1];
-}
