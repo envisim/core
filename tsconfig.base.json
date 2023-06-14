@@ -7,7 +7,6 @@
     "esModuleInterop": true,
     "strict": true,
     "moduleResolution": "nodenext",
-    "importHelpers": true,
-    "types": ["jest", "node"]
+    "importHelpers": true
   }
 }

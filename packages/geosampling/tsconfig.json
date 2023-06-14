@@ -2,8 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist/es",
-    "rootDir": "src",
-    "types": ["jest", "node", "geojson"]
+    "rootDir": "src"
   },
   "include": ["src/**/*"]
 }
