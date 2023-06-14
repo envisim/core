@@ -19,7 +19,7 @@
     "build:es": "tsc",
     "build:js": "tsc --outDir dist/js --module commonjs --declaration false && echo '{\"type\":\"commonjs\"}' > dist/js/package.json",
     "docs": "typedoc",
-    "test": "jest"
+    "test": "yarn node --experimental-vm-modules $(yarn bin jest)"
   },
   "devDependencies": {
     "@types/jest": "^29.5.2",
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@envisim/utils": "workspace:*",
-    "@turf/buffer": "^7.0.0-alpha.0",
+    "@turf/buffer": "^6.5.0",
     "geographiclib-geodesic": "^2.0.0",
     "polygon-clipping": "^0.15.3",
     "tslib": "^2.5.2",

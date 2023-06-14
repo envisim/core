@@ -19,7 +19,7 @@
     "build:es": "tsc",
     "build:js": "tsc --outDir dist/js --module commonjs --declaration false && echo '{\"type\":\"commonjs\"}' > dist/js/package.json",
     "docs": "typedoc",
-    "test": "yarn node $(yarn bin jest)"
+    "test": "yarn node --experimental-vm-modules $(yarn bin jest)"
   },
   "devDependencies": {
     "@types/jest": "^29.5.2",
