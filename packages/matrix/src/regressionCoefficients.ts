@@ -4,8 +4,8 @@ import {Matrix} from './base/Matrix.js';
 /**
  * Calculates the coefficients B of `this = xmat * B`
  *
- * @params yvec the dependent variable
- * @params xmat the explanatory/independent variables
+ * @param yvec the dependent variable
+ * @param xmat the independent variables, beginning with a column of ones
  * @returns the regression coefficients
  */
 export function regressionCoefficients(
@@ -23,5 +23,5 @@ export function regressionCoefficients(
 
   if (xmi === null) throw new Error('xmat is not invertible');
 
-  return new ColumnVector(yvec.transpose().mmult(xmi).mmult(xmat), true);
+  return new ColumnVector(yvec.transpose().mmult(xmat).mmult(xmi), true);
 }

@@ -13,3 +13,7 @@ export function arrayLikeToArray(
 
   return shallow === true ? arr.internal : arr.slice();
 }
+
+export function isVector(obj: unknown): obj is ColumnVector | RowVector {
+  return ColumnVector.isColumnVector(obj) || RowVector.isRowVector(obj);
+}

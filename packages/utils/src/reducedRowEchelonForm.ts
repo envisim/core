@@ -9,9 +9,9 @@ export function reducedRowEchelonForm(
   rowCount: number,
   colCount: number,
   eps: number = 1e-9,
+  mIdx: (r: number, c: number) => number = (r: number, c: number): number =>
+    r * colCount + c,
 ): void {
-  const mIdx = (r: number, c: number): number => r * colCount + c;
-
   let lead = 0;
 
   for (let r = 0; r < rowCount; r++) {
@@ -30,31 +30,26 @@ export function reducedRowEchelonForm(
       }
     }
 
-    const id_r = mIdx(r, 0);
-
     if (i !== r) {
-      const id_i = mIdx(i, 0);
-
       for (let k = 0; k < colCount; k++) {
-        const temp = mat[id_i + k];
-        mat[id_i + k] = mat[id_r + k];
-        mat[id_r + k] = temp;
+        const temp = mat[mIdx(i, k)];
+        mat[mIdx(i, k)] = mat[mIdx(r, k)];
+        mat[mIdx(r, k)] = temp;
       }
     }
 
     {
-      const temp = mat[id_r + lead];
-      mat[id_r + lead] = 1.0;
-      for (let k = lead + 1; k < colCount; k++) mat[id_r + k] /= temp;
+      const temp = mat[mIdx(r, lead)];
+      mat[mIdx(r, lead)] = 1.0;
+      for (let k = lead + 1; k < colCount; k++) mat[mIdx(r, k)] /= temp;
     }
 
     for (let j = 0; j < rowCount; j++) {
       if (j === r) continue;
-      const id_j = mIdx(j, 0);
-      const temp = mat[id_j + lead];
-      mat[id_j + lead] = 0.0;
+      const temp = mat[mIdx(j, lead)];
+      mat[mIdx(j, lead)] = 0.0;
       for (let k = lead + 1; k < colCount; k++)
-        mat[id_j + k] -= mat[id_r + k] * temp;
+        mat[mIdx(j, k)] -= mat[mIdx(r, k)] * temp;
     }
 
     lead += 1;

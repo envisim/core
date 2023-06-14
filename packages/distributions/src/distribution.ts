@@ -1,4 +1,4 @@
-import {isArrayLike, TArrayLike} from '@envisim/matrix';
+import {isVector, TArrayLike} from '@envisim/matrix';
 
 import {IRandomOptions} from './types.js';
 
@@ -66,7 +66,7 @@ export const checkArrayLikeOrNumber = (
     throw new TypeError('every element of x must be a number');
   }
 
-  if (isArrayLike(x)) return true;
+  if (Array.isArray(x) || isVector(x)) return true;
 
   if (typeof x === 'number') return false;
   throw new TypeError('x must be a number or an array of numbers');
