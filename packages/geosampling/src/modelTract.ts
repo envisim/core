@@ -1,6 +1,7 @@
 import {GeoJSON} from '@envisim/geojson-utils';
-import {destination, copy} from '@envisim/geojson-utils';
+import {destination} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
+import {copy} from '@envisim/utils';
 
 // This file has a set of functions to deal with a model
 // feature (tract), which is a GeoJSON feature with cartesian
@@ -269,7 +270,7 @@ function lengthOfLineString(coords: GeoJSON.Position[]) {
 function areaOfRing(coords: GeoJSON.Position[]): number {
   let area = 0; // Accumulates area in the loop
   let j = coords.length - 1; // The last vertex is the 'previous' one to the first
-  let n = coords.length;
+  const n = coords.length;
   for (let i = 0; i < n; i++) {
     area += (coords[j][0] + coords[i][0]) * (coords[j][1] - coords[i][1]);
     j = i; //j is previous vertex to i
@@ -280,7 +281,7 @@ function areaOfRing(coords: GeoJSON.Position[]): number {
 // Internal.
 function areaOfSinglePolygon(coords: GeoJSON.Position[][]): number {
   let area = areaOfRing(coords[0]); // full area
-  let n = coords.length;
+  const n = coords.length;
   for (let i = 1; i < n; i++) {
     area = area - areaOfRing(coords[i]); // substract holes
   }
@@ -611,10 +612,12 @@ export function regularPolygonAreaTract(
   const length = sideLength || 100;
   const r = length / (2 * Math.sin(Math.PI / n));
   const coordinates: GeoJSON.Position[] = [];
+
   for (let i = 0; i < n + 1; i++) {
-    let angle = (i / n) * 2 * Math.PI;
+    const angle = (i / n) * 2 * Math.PI;
     coordinates.push([r * Math.cos(angle), r * Math.sin(angle)]);
   }
+
   return {
     type: 'Feature',
     geometry: {
@@ -640,10 +643,12 @@ export function regularPolygonLineTract(
   const length = sideLength || 100;
   const r = length / (2 * Math.sin(Math.PI / n));
   const coordinates: GeoJSON.Position[] = [];
+
   for (let i = 0; i < n + 1; i++) {
-    let angle = (i / n) * 2 * Math.PI;
+    const angle = (i / n) * 2 * Math.PI;
     coordinates.push([r * Math.cos(angle), r * Math.sin(angle)]);
   }
+
   return {
     type: 'Feature',
     geometry: {

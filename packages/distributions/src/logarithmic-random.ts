@@ -6,7 +6,7 @@ import {Random} from '@envisim/random';
  * Journal of the Royal Statistical Society: Series C (Applied Statistics), 30(3), 249-253.
  * https://doi.org/10.2307/2346348
  */
-export const randomLogarithmic = (p: number, rand: Random): number => {
+export function randomLogarithmic(p: number, rand: Random): number {
   // LK
   if (p >= 0.95) {
     const h = Math.log(1 - p);
@@ -31,4 +31,4 @@ export const randomLogarithmic = (p: number, rand: Random): number => {
   }
 
   return x;
-};
+}

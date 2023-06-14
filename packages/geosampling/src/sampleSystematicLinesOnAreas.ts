@@ -54,7 +54,7 @@ export function sampleSystematicLinesOnAreas(
     box[1] + (box[3] - box[1]) / 2,
   ];
 
-  let maxRadius = Math.max(
+  const maxRadius = Math.max(
     distance([box[0], box[1]], refCoord),
     distance([box[2], box[3]], refCoord),
   );

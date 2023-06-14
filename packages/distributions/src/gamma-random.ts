@@ -29,18 +29,18 @@ interface IRandomShapeLarge {
  * Computing, 30(2), 185-188.
  * https://doi.org/10.1007/BF02280789
  */
-const randomShapeSmall = (
+function randomShapeSmall(
   n: number,
   shape0: number,
   rand: Random,
   scale0: number = 1.0,
-): number[] => {
+): number[] {
   const z = 0.07 + 0.75 * Math.sqrt(1.0 - shape0);
   const b = 1.0 + (Math.exp(-z) * shape0) / z;
 
   const constants: IRandomShapeSmall = {shape0, shape0inv: 1.0 / shape0, b, z};
 
-  const rv = new Array(n);
+  const rv = new Array<number>(n);
   if (scale0 === 1.0) {
     for (let i = 0; i < n; i++) rv[i] = randomShapeSmall_inner(rand, constants);
   } else {
@@ -48,12 +48,12 @@ const randomShapeSmall = (
       rv[i] = randomShapeSmall_inner(rand, constants) * scale0;
   }
   return rv;
-};
+}
 
-const randomShapeSmall_inner = (
+function randomShapeSmall_inner(
   rand: Random,
   {shape0, shape0inv, b, z}: IRandomShapeSmall,
-): number => {
+): number {
   let u: number, p: number, x: number, y: number;
   let run = 1;
 
@@ -83,7 +83,7 @@ const randomShapeSmall_inner = (
   // Should not happen, solution is found in (max) average 1.28 iter.
   console.warn('gamma (randomShapeSmall) did not resolve in 1e5 iterations');
   return NaN;
-};
+}
 
 const GAMMACOEFS = [
   [
@@ -107,12 +107,12 @@ const GAMMACOEFS = [
  * Communications of the ACM, 25(1), 47-54.
  * https://doi.org/10.1145/358315.358390
  */
-const randomShapeLarge = (
+function randomShapeLarge(
   n: number,
   shape0: number,
   rand: Random,
   scale0: number = 1.0,
-): number[] => {
+): number[] {
   const shape0inv = 1.0 / shape0;
 
   // GD 1
@@ -143,7 +143,7 @@ const randomShapeLarge = (
 
   const constants: IRandomShapeLarge = {s2, s, d, q0, b, sigma, c};
 
-  const rv = new Array(n);
+  const rv = new Array<number>(n);
   if (scale0 === 1.0) {
     for (let i = 0; i < n; i++) rv[i] = randomShapeLarge_inner(rand, constants);
   } else {
@@ -151,12 +151,12 @@ const randomShapeLarge = (
       rv[i] = randomShapeLarge_inner(rand, constants) * scale0;
   }
   return rv;
-};
+}
 
-const randomShapeLarge_inner = (
+function randomShapeLarge_inner(
   rand: Random,
   {s2, s, d, q0, b, sigma, c}: IRandomShapeLarge,
-): number => {
+): number {
   // GD 2
   let t = Normal.random(1, {mu: 0.0, sigma: 1.0}, {rand})[0];
   const x = s + t * 0.5;
@@ -212,14 +212,14 @@ const randomShapeLarge_inner = (
   // Should not happen, solution is found in average 1.36 iter.
   console.warn('gamma (randomShapeLarge) did not resolve in 1e5 iterations');
   return NaN;
-};
+}
 
-export const randomShapeGamma = (
+export function randomShapeGamma(
   n: number,
   shape0: number,
   rand: Random,
   scale0: number = 1.0,
-): number[] => {
+): number[] {
   if (shape0 < 1.0) return randomShapeSmall(n, shape0, rand, scale0);
   return randomShapeLarge(n, shape0, rand, scale0);
-};
+}

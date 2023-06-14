@@ -10,7 +10,7 @@ abstract class BaseFeature<
   T extends AreaObject | LineObject | PointObject,
 > extends GeoJsonObject<'Feature'> {
   geometry!: Geometry<T>;
-  properties: Exclude<GJ.FeatureProperties, null>;
+  properties: GJ.NumericProperties;
 
   constructor(obj: GJ.Feature<GJ.Geometry>, shallow: boolean = true) {
     super(obj, shallow);

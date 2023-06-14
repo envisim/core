@@ -74,7 +74,7 @@ export function spatialBalanceSS(
     }, true);
   }
 
-  const means = new Array(p).fill(0.0);
+  const means = new Array<number>(p).fill(0.0);
   let total = 0.0;
   let result = 0.0;
   const nn = new NearestNeighbour(mat.extractRows(sampleArr), 10);

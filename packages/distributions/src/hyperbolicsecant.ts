@@ -6,10 +6,10 @@ import {
   Distribution,
   Interval,
 } from './distribution.js';
-import {IEmptyParams, IRandomOptions, randomOptionsDefault} from './types.js';
+import {IRandomOptions, randomOptionsDefault} from './types.js';
 import {sech} from './utils.js';
 
-class HyperbolicSecant extends Distribution<IEmptyParams> {
+class HyperbolicSecant extends Distribution<Record<string, never>> {
   /** @internal */
   static checkParameters = new Interval(-Infinity, Infinity, true, true);
 
@@ -71,7 +71,7 @@ class HyperbolicSecant extends Distribution<IEmptyParams> {
     return this.quantile(u);
   }
 
-  protected params: IEmptyParams = {};
+  protected params: Record<string, never> = {};
 
   /** @see {@link hyperbolicSecant} */
   constructor() {

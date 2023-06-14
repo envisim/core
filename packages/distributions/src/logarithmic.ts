@@ -113,7 +113,7 @@ class Logarithmic extends Distribution<IBernoulliParams> {
   ): number[] {
     this.checkParameters(params);
     checkRandomNumber(n);
-    const s = new Array(n);
+    const s = new Array<number>(n);
     for (let i = 0; i < n; i++) s[i] = randomLogarithmic(params.p, rand);
     return s;
   }

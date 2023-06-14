@@ -1,7 +1,3 @@
-/**
- * @module geosampling
- */
-
 // Sampling methods
 export {samplePointsOnLines} from './samplePointsOnLines.js';
 export {samplePointsOnAreas} from './samplePointsOnAreas.js';

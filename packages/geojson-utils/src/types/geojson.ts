@@ -77,7 +77,8 @@ export type LineGeometry = LineObject | LineGeometryCollection;
 export type AreaGeometry = AreaObject | AreaGeometryCollection;
 
 // Features
-export type FeatureProperties = {[name: string]: number} | null;
+export type NumericProperties = {[name: string]: number};
+export type FeatureProperties = NumericProperties | null;
 export interface Feature<T extends Geometry | null>
   extends GeoJsonObject<'Feature'> {
   type: 'Feature';

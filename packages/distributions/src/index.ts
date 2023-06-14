@@ -71,7 +71,6 @@ export {Weibull, weibull} from './weibull.js';
 export {
   IRandomOptions,
   // Params
-  IEmptyParams,
   IBenfordMantissaParams,
   IBernoulliParams,
   IBetaParams,

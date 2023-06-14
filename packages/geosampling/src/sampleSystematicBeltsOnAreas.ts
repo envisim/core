@@ -57,7 +57,7 @@ export const sampleSystematicBeltsOnAreas = (
     box[1] + (box[3] - box[1]) / 2,
   ];
 
-  let maxRadius = Math.max(
+  const maxRadius = Math.max(
     distance([box[0], box[1]], refCoord),
     distance([box[2], box[3]], refCoord),
   );
@@ -81,7 +81,7 @@ export const sampleSystematicBeltsOnAreas = (
   const rings: GeoJSON.Position[][] = [];
   for (let i = 0; i < numLines; i++) {
     const latitude = minLat + (randomStart + i * distBetween) * latPerMeter;
-    let thisRing: GeoJSON.Position[] = [];
+    const thisRing: GeoJSON.Position[] = [];
     // First side of belt (counterclockwise).
     for (let j = 0; j < numPointsPerLine; j++) {
       thisRing.push(

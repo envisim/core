@@ -2,6 +2,9 @@ import {isVector, TArrayLike} from '@envisim/matrix';
 
 import {IRandomOptions} from './types.js';
 
+/* eslint @typescript-eslint/no-unsafe-call: 0 */
+/* eslint @typescript-eslint/no-unsafe-member-access: 0 */
+
 /** Base class */
 export abstract class Distribution<I> {
   /** @internal */
@@ -35,7 +38,7 @@ export abstract class Distribution<I> {
    * @param n - the number of observations to be generated
    */
   random(n: number, opts: IRandomOptions): number[] {
-    return (this.constructor as any).random(n, this.params, opts);
+    return (this.constructor as any).random(n, this.params, opts) as number[];
   }
 
   /** the mean value */

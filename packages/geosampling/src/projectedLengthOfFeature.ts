@@ -1,15 +1,15 @@
+import geodesic from 'geographiclib-geodesic';
+
 import {
-  geodesic,
   GeoJSON,
-  PointCircle,
-  MultiPointCircle,
+  Circle,
+  MultiCircle,
   LineFeature,
   AreaFeature,
   bbox4,
   longitudeCenter,
 } from '@envisim/geojson-utils';
 
-// @ts-ignore
 const geod = geodesic.Geodesic.WGS84;
 const geodInverseOpts = geodesic.Geodesic.DISTANCE | geodesic.Geodesic.AZIMUTH;
 
@@ -101,20 +101,21 @@ function geometryToMultiLineString(
   geom: GeoJSON.BaseGeometry,
   pointsPerCircle = 16,
 ) {
-  let mls: GeoJSON.Position[][] = [];
+  const mls: GeoJSON.Position[][] = [];
+
   switch (geom.type) {
     case 'Point':
       if (geom.radius) {
-        const coords = PointCircle.create(
-          geom.coordinates,
-          geom.radius,
-        ).toPolygon({pointsPerCircle}).coordinates;
+        const coords = Circle.create(geom.coordinates, geom.radius).toPolygon({
+          pointsPerCircle,
+        }).coordinates;
         mls.push(...coords);
       }
       break;
+
     case 'MultiPoint':
       if (geom.radius) {
-        const coords = MultiPointCircle.create(
+        const coords = MultiCircle.create(
           geom.coordinates,
           geom.radius,
         ).toPolygon({pointsPerCircle}).coordinates;
@@ -123,21 +124,26 @@ function geometryToMultiLineString(
         });
       }
       break;
+
     case 'LineString':
       mls.push(geom.coordinates);
       break;
+
     case 'MultiLineString':
     case 'Polygon':
       geom.coordinates.forEach((coord) => {
         mls.push(coord);
       });
       break;
+
     case 'MultiPolygon':
       geom.coordinates.forEach((polygon) => {
         polygon.forEach((ring) => {
           mls.push(ring);
         });
       });
+      break;
+
     default:
       throw new Error('Unknown geometry type.');
   }

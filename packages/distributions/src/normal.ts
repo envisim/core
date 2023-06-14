@@ -108,7 +108,7 @@ class Normal extends Distribution<INormalParams> {
       const R = Exponential.random(n2, {rate: 0.5}, {rand}).map(Math.sqrt);
       const T = rand.floatArray(n2).map((e) => e * c);
 
-      const s = new Array(n);
+      const s = new Array<number>(n);
       for (let i = 0; i < n1; i++) {
         s[i] = params.mu + params.sigma * (R[i] * Math.cos(T[i]));
         s[n1 + i] = params.mu + params.sigma * (R[i] * Math.sin(T[i]));
@@ -410,15 +410,17 @@ class FoldedNormal extends Distribution<INormalParams> {
       if (params.mu === 0.0) return x0 * params.sigma * Math.SQRT1_2;
 
       if (params.mu > 10.0) {
-        let xs = x0 * params.sigma + params.mu;
+        const xs = x0 * params.sigma + params.mu;
         return xs < 0.0 ? 0.0 : xs;
       }
 
       if (x0 < 0.0) x0 = 0.0;
 
-      let f, F: number;
+      let f: number;
+      let F: number;
       let delta = 1.0;
       F = 0.0;
+
       while (Math.abs(delta) > EPS) {
         f =
           (Math.exp(-Math.pow(x0 - params.mu, 2) / c2) +
@@ -432,6 +434,7 @@ class FoldedNormal extends Distribution<INormalParams> {
         delta = (F - y) / f;
         x0 -= delta;
       }
+
       return x0;
     };
 

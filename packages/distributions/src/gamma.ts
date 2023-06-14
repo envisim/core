@@ -36,7 +36,8 @@ class Gamma extends Distribution<IShapeScaleParams> {
     params: IShapeScaleParams = {...shapeScaleDefault},
   ): T {
     const support = this.checkParameters(params);
-    let {shape, scale} = params;
+    let shape = params.shape;
+    const scale = params.scale;
     const c = logGammaFunction(shape) + shape * Math.log(scale);
     shape -= 1.0;
 

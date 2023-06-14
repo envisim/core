@@ -11,13 +11,12 @@ import {EPS, FRAC2_9} from './utils-consts.js';
  * Journal of the Royal Statistical Society. Series C (Applied Statistics), 24(3), 385-388.
  * https://doi.org/10.2307/2347113
  */
-export const chiSquaredQuantile91 = (p: number, df: number): number => {
+export function chiSquaredQuantile91(p: number, df: number): number {
   if (df <= 0.0) throw new RangeError('df must be positive');
 
   // FIX
   // if (p < 0.000002) return 0.0;
   // if (p > 0.999998) return Infinity;
-
   const xx = df * 0.5;
   const logxx = Math.log(xx);
   const logp = Math.log(p);
@@ -71,7 +70,6 @@ export const chiSquaredQuantile91 = (p: number, df: number): number => {
   // 3
   else {
     // let x = standardNormalQuantile(p);
-
     // Starting approximation using wilson andhilferty estimate
     p1 = FRAC2_9 / df;
     ch = df * Math.pow(stdNormalQuantile(p) * Math.sqrt(p1) + 1.0 - p1, 3);
@@ -118,4 +116,4 @@ export const chiSquaredQuantile91 = (p: number, df: number): number => {
 
   // 6
   return ch;
-};
+}

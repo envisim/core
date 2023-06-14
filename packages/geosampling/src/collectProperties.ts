@@ -9,13 +9,13 @@ import {
   PointCollection,
   LineCollection,
   AreaCollection,
-  copy,
   forwardAzimuth,
   intersectLineLineFeatures,
   intersectAreaAreaFeatures,
   intersectLineAreaFeatures,
   intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
+import {copy} from '@envisim/utils';
 
 import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
 

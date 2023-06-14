@@ -1,11 +1,11 @@
 import {
-  copy,
   distance,
   intersectPointAreaFeatures,
   PointFeature,
   PointCollection,
   AreaCollection,
 } from '@envisim/geojson-utils';
+import {copy} from '@envisim/utils';
 
 import {
   samplePointsOnAreas,

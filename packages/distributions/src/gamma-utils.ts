@@ -27,24 +27,24 @@ const LOGGAMMACOEFS = {
  * 1-24.
  * https://doi.org/10.1145/3365983
  */
-const logGammaFunctionInternal = (x: number): number => {
+function logGammaFunctionInternal(x: number): number {
   const p = x - 0.5;
   const csum = LOGGAMMACOEFS.c.reduce(
     (t, c, i) => t + c / (x + i),
     LOGGAMMACOEFS.c0,
   );
   return Math.log(2.0 * SQRTEBYPI * csum) - p + p * Math.log(p + 10.900511);
-};
+}
 
-export const logGammaFunction = (x: number): number => {
+export function logGammaFunction(x: number): number {
   if (x < 0.0) return NaN;
   if (x === 0.0) return Infinity;
   if (x === 0.5) return LOGSQRTPI;
   if (Number.isInteger(x) && x > 0 && x <= 11) return LOGKFAC[x - 1];
   return logGammaFunctionInternal(x);
-};
+}
 
-export const gammaFunction = (x: number): number => {
+export function gammaFunction(x: number): number {
   if (x <= 0) return NaN;
   if (x === 0.5) return SQRTPI;
   if (Number.isInteger(x) && x > 0 && x <= 11) return KFAC[x - 1];
@@ -54,18 +54,19 @@ export const gammaFunction = (x: number): number => {
   }
 
   return Math.exp(logGammaFunctionInternal(x));
-};
+}
 
-const pLim = (x: number): number => {
+function pLim(x: number): number {
   if (x < -9.0) return 5.0 * Math.sqrt(-x) - 5.0;
   if (x <= 0.0) return 0.0;
   return x;
-};
+}
 
 interface gSeries {
   (s: number, x: number, n: number): {a: number; b: number};
 }
-const gSeries15 = (s: number, x: number, n: number): {a: number; b: number} => {
+
+function gSeries15(s: number, x: number, n: number): {a: number; b: number} {
   const ret = {
     a: 1.0,
     b: s - 1.0 + n,
@@ -76,27 +77,27 @@ const gSeries15 = (s: number, x: number, n: number): {a: number; b: number} => {
   const ns = n >> 1;
   ret.a = n % 2 === 0 ? -(s - 1.0 + ns) * x : ns * x;
   return ret;
-};
+}
 
-const gSeries16 = (s: number, x: number, n: number): {a: number; b: number} => {
+function gSeries16(s: number, x: number, n: number): {a: number; b: number} {
   const ret = {
     a: 1.0,
     b: x + (n << 1) - s - 1,
   };
   if (n > 1) ret.a = -(n - 1) * (n - s - 1);
   return ret;
-};
+}
 
-const gFunction1 = (s: number, x: number, fun: gSeries): number => {
+function gFunction1(s: number, x: number, fun: gSeries): number {
   const dm = 1e-100;
-  let {a: a1, b: b1} = fun(s, x, 1);
+  const {a: a1, b: b1} = fun(s, x, 1);
   let f = a1 / b1;
   let c = a1 / dm;
   let d = 1.0 / b1;
   let delta = 0.0;
 
   for (let n = 2; Math.abs(delta - 1.0) >= EPS; n++) {
-    let {a, b} = fun(s, x, n);
+    const {a, b} = fun(s, x, n);
     d = d * a + b;
     if (d === 0.0) d = dm;
     c = b + a / c;
@@ -107,9 +108,9 @@ const gFunction1 = (s: number, x: number, fun: gSeries): number => {
   }
 
   return f;
-};
+}
 
-const gFunction2_17 = (s: number, x: number, logGammaFn: number): number => {
+function gFunction2_17(s: number, x: number, logGammaFn: number): number {
   // x is negative, thus s is integer
   const t = -x;
   let c = 1.0 / t;
@@ -131,7 +132,7 @@ const gFunction2_17 = (s: number, x: number, logGammaFn: number): number => {
   }
 
   return (neg * Math.exp(-t + logGammaFn - (s - 1) * Math.log(t)) + z) / t;
-};
+}
 
 /*
  * gFunction, based on Alg. 3
@@ -140,7 +141,7 @@ const gFunction2_17 = (s: number, x: number, logGammaFn: number): number => {
  * ACM Transactions on Mathematical Software (TOMS), 46(1), 1-24.
  * https://doi.org/10.1145/3365983
  */
-const gFunction = (a: number, x: number, logGammaFn: number): number => {
+function gFunction(a: number, x: number, logGammaFn: number): number {
   if (a <= 0.0) return NaN;
   if (x < 0 && !Number.isInteger(a)) return NaN;
   const alim = pLim(x);
@@ -148,13 +149,13 @@ const gFunction = (a: number, x: number, logGammaFn: number): number => {
   if (x >= 0.0) return gFunction1(a, x, gSeries16);
   // a must be integer
   return gFunction2_17(a, x, logGammaFn);
-};
+}
 
-export const lowerGammaFunction = (
+export function lowerGammaFunction(
   a: number,
   x: number,
   lgammaFn?: number,
-): number => {
+): number {
   if (a < 0 || x < 0.0) return NaN;
   if (a === 1) return 1.0 - Math.exp(-x);
 
@@ -162,13 +163,13 @@ export const lowerGammaFunction = (
   const ge = gFunction(a, x, lgf) * Math.exp(-x + a * Math.log(x));
 
   return x > a ? Math.exp(lgf) - ge : ge;
-};
+}
 
-export const upperGammaFunction = (
+export function upperGammaFunction(
   a: number,
   x: number,
   lgammaFn?: number,
-): number => {
+): number {
   if (a < 0 || x < 0.0) return NaN;
   if (a === 1) return Math.exp(-x);
 
@@ -176,39 +177,39 @@ export const upperGammaFunction = (
   const ge = gFunction(a, x, lgf) * Math.exp(-x + a * Math.log(x));
 
   return x <= a ? Math.exp(lgf) - ge : ge;
-};
+}
 
-export const regularizedLowerGammaFunction = (
+export function regularizedLowerGammaFunction(
   a: number,
   x: number,
   lgammaFn?: number,
-): number => {
+): number {
   if (a < 0.0 || x < 0.0) return NaN;
   if (x === 0) return 0.0;
   if (a === 0) return x === a ? 0.0 : 1.0;
   const lgf = lgammaFn ?? logGammaFunction(a);
   const ge = gFunction(a, x, lgf) * Math.exp(-x + a * Math.log(x) - lgf);
   return x <= a ? ge : 1.0 - ge;
-};
+}
 
-export const regularizedUpperGammaFunction = (
+export function regularizedUpperGammaFunction(
   a: number,
   x: number,
   lgammaFn?: number,
-): number => {
+): number {
   return 1.0 - regularizedLowerGammaFunction(a, x, lgammaFn);
-};
+}
 
 /*
  * Newton's method on chi square
  * Inspired by R: https://bugs.r-project.org/show_bug.cgi?id=2214
  */
-export const gammaQuantile = (
+export function gammaQuantile(
   p: number,
   shape: number,
   scale: number,
   lgammaFn?: number,
-): number => {
+): number {
   const ch0 = chiSquaredQuantile91(p, 2.0 * shape);
 
   let x0 = 0.5 * scale * ch0;
@@ -228,4 +229,4 @@ export const gammaQuantile = (
   }
 
   return x0;
-};
+}

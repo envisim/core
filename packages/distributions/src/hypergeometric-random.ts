@@ -25,16 +25,15 @@ interface IHypergeometricRandom {
  * Journal of Statistical Computation and Simulation, 22(2), 127-145.
  * https://doi.org/10.1080/00949658508810839
  */
-export const randomHypergeometric = (
+export function randomHypergeometric(
   numberR: number,
   params: IHypergeometricParams,
   rand: Random,
-): number[] => {
-  const rv = new Array(numberR);
+): number[] {
+  const rv = new Array<number>(numberR);
   // n1 = K
   // n2 = N - K
   // n = k
-
   // H2PE 0.0
   const n = params.N;
   let n1 = params.K;
@@ -109,9 +108,9 @@ export const randomHypergeometric = (
   for (let i = 0; i < numberR; i++)
     rv[i] = randomHypergeometric_inner(rand, params, constants);
   return rv;
-};
+}
 
-const randomHypergeometric_inner = (
+function randomHypergeometric_inner(
   rand: Random,
   params: IHypergeometricParams,
   {
@@ -128,7 +127,7 @@ const randomHypergeometric_inner = (
     p2,
     p3,
   }: IHypergeometricRandom,
-): number => {
+): number {
   // H2PE 1
   let i: number, f: number, u: number, v: number;
   let y: number = 0;
@@ -228,4 +227,4 @@ const randomHypergeometric_inner = (
     return params.K <= params.N - params.K ? y : params.n - y;
   if (params.K <= params.N - params.K) return params.K - y;
   return params.n - params.N + params.K + y;
-};
+}

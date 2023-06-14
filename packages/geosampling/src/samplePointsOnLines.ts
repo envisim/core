@@ -32,18 +32,20 @@ function samplePointsOnGeometry(
   distances: number[],
   maxDist: number,
 ) {
-  let points = [];
+  const points: GeoJSON.Position[] = [];
   let segmentLength = 0;
   let fraction = 0;
   switch (geoJSON.type) {
-    case 'LineString':
-      let lineStringCoords = geoJSON.coordinates;
+    case 'LineString': {
+      const lineStringCoords = geoJSON.coordinates;
+
       for (let i = 0; i < lineStringCoords.length - 1; i++) {
         segmentLength = lengthOfSegment(
           lineStringCoords[i],
           lineStringCoords[i + 1],
           maxDist,
         );
+
         for (let l = track.currentIndex; l < distances.length; l++) {
           if (distances[l] < track.dt + segmentLength) {
             fraction = (distances[l] - track.dt) / segmentLength;
@@ -57,11 +59,16 @@ function samplePointsOnGeometry(
             track.currentIndex += 1;
           }
         }
+
         track.dt += segmentLength;
       }
+
       break;
-    case 'MultiLineString':
-      let mlsCoords = geoJSON.coordinates;
+    }
+
+    case 'MultiLineString': {
+      const mlsCoords = geoJSON.coordinates;
+
       for (let i = 0; i < mlsCoords.length; i++) {
         for (let j = 0; j < mlsCoords[i].length - 1; j++) {
           segmentLength = lengthOfSegment(
@@ -69,6 +76,7 @@ function samplePointsOnGeometry(
             mlsCoords[i][j + 1],
             maxDist,
           );
+
           for (let l = track.currentIndex; l < distances.length; l++) {
             if (distances[l] < track.dt + segmentLength) {
               fraction = (distances[l] - track.dt) / segmentLength;
@@ -78,13 +86,18 @@ function samplePointsOnGeometry(
               track.currentIndex += 1;
             }
           }
+
           track.dt += segmentLength;
         }
       }
+
       break;
+    }
+
     default:
       throw new Error('Unknown GeoJSON LineObject.');
   }
+
   return points;
 }
 
@@ -159,20 +172,23 @@ export function samplePointsOnLines(
         .map(() => rand.float() * L)
         .sort((a, b) => a - b);
       break;
-    case 'systematic':
-      let start = (rand.float() * L) / sampleSize;
+
+    case 'systematic': {
+      const start = (rand.float() * L) / sampleSize;
       distances = new Array(sampleSize)
         .fill(0)
         .map((_val, index) => (index * L) / sampleSize + start);
       break;
+    }
+
     default:
       throw new Error('Unknown method');
   }
 
-  let track = {dt: 0, currentIndex: 0};
+  const track = {dt: 0, currentIndex: 0};
   let points: GeoJSON.Position[] = [];
   let parentIndex: number[] = [];
-  let designWeight = L / sampleSize;
+  const designWeight = L / sampleSize;
 
   collection.features.forEach((feature, index) => {
     const geom = feature.geometry;
@@ -195,12 +211,14 @@ export function samplePointsOnLines(
   const features: PointFeature[] = points.map((coords, index): PointFeature => {
     // transfer design weights if the frame has been sampled before
     let dw = designWeight;
-    let parentFeature = collection.features[parentIndex[index]];
+    const parentFeature = collection.features[parentIndex[index]];
+
     if (parentFeature.properties?._designWeight) {
       dw = dw * parentFeature.properties._designWeight;
     }
 
     return PointFeature.create(Point.create(coords), {_designWeight: dw});
   });
+
   return PointCollection.create(features);
 }
