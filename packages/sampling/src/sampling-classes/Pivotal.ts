@@ -101,7 +101,7 @@ export class Pivotal extends SamplingBase {
   }
 
   drawLpm1(): void {
-    while (true) {
+    for (;;) {
       this.pair[0] = this.idx.draw(this.rand);
       this.tree.findNeighbours(this.store, this.pair[0]);
       let len = this.store.getSize();
@@ -163,7 +163,7 @@ export class Pivotal extends SamplingBase {
     // If there is no history, we draw a unit at random
     if (this.history.length == 0) this.history.push(this.idx.draw(this.rand));
 
-    while (true) {
+    for (;;) {
       // Set the first unit to the last in history
       this.pair[0] = arrayBack(this.history);
       // Find this units nearest neighbours

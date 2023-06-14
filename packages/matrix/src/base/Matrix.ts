@@ -369,7 +369,7 @@ export class Matrix extends BaseMatrix {
    * Calculates the column maximum values
    * @group Column operations
    */
-  colMaxs(asRow: boolean = false): ColumnVector {
+  colMaxs(): ColumnVector {
     const s = ColumnVector.create(0.0, this._ncol);
 
     return s.map(

@@ -655,7 +655,7 @@ export abstract class BaseMatrix {
    * @group Statistics
    */
   mode(): number[] {
-    const s = new Map();
+    const s = new Map<number, number>();
 
     this.forEach((e) => {
       s.set(e, (s.get(e) ?? 0) + 1);
@@ -777,7 +777,7 @@ export abstract class BaseMatrix {
     let str = '[';
 
     if (pretty === true) {
-      const maxLen = new Array(this._ncol).fill(0);
+      const maxLen = new Array<number>(this._ncol).fill(0);
       const vals = this._e.map((v) => v.toFixed(digits));
       maxLen.forEach((_, c) => {
         maxLen[c] = Math.max(
@@ -815,7 +815,7 @@ export abstract class BaseMatrix {
     if (this._ncol !== mat._nrow)
       throw new RangeError('Dimensions of matrices does not match');
 
-    const s = new Array(this._nrow * mat._ncol);
+    const s = new Array<number>(this._nrow * mat._ncol);
 
     for (let r = 0; r < this._nrow; r++) {
       for (let c = 0; c < mat._ncol; c++) {

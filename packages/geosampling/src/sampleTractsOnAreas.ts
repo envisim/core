@@ -116,7 +116,7 @@ function sampleTractsOnAreas(
   // intersect functions automatically.
 
   switch (tractType) {
-    case 'point':
+    case 'point': {
       const pointFeatures: GeoJSON.PointFeature[] = [];
       featureCollection.features.forEach((feature) => {
         const dw = feature.properties?._designWeight || 1;
@@ -139,12 +139,14 @@ function sampleTractsOnAreas(
           pointFeatures.push(newFeature);
         }
       });
+
       return intersectPointSampleAreaFrame(
         PointCollection.create(pointFeatures),
         collection,
       );
+    }
 
-    case 'line':
+    case 'line': {
       const lineFeatures: GeoJSON.LineFeature[] = [];
       featureCollection.features.forEach((feature) => {
         const dw = feature.properties?._designWeight || 1;
@@ -171,12 +173,14 @@ function sampleTractsOnAreas(
           lineFeatures.push(newFeature);
         }
       });
+
       return intersectLineSampleAreaFrame(
         LineCollection.create(lineFeatures),
         collection,
       );
+    }
 
-    case 'area':
+    case 'area': {
       const areaFeatures: GeoJSON.AreaFeature[] = [];
       featureCollection.features.forEach((feature) => {
         const dw = feature.properties?._designWeight || 1;
@@ -203,10 +207,13 @@ function sampleTractsOnAreas(
           areaFeatures.push(newFeature);
         }
       });
+
       return intersectAreaSampleAreaFrame(
         AreaCollection.create(areaFeatures),
         collection,
       );
+    }
+
     default:
       throw new Error('Tract type is unknown.');
   }

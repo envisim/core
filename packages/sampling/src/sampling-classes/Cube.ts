@@ -16,8 +16,6 @@ export enum CubeMethod {
 export class Cube extends SamplingBase {
   setDirect: boolean = false;
 
-  runInternal: () => void = () => {};
-
   method: CubeMethod;
 
   pbalance: number = 0;
