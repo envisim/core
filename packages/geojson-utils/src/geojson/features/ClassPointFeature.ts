@@ -13,6 +13,11 @@ export class PointFeature
     return obj instanceof PointFeature;
   }
 
+  static assert(obj: unknown, msg?: string): obj is PointFeature {
+    if (obj instanceof PointFeature) return true;
+    throw new TypeError(msg ?? 'Expected PointFeature');
+  }
+
   static create(
     geometry: GJ.PointGeometry,
     properties: GJ.FeatureProperties = {},

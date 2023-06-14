@@ -1,8 +1,4 @@
-import {
-  arrayLikeToArray,
-  arrayLikeToColumnVector,
-  TArrayLike,
-} from '@envisim/matrix';
+import {arrayLikeToArray, ColumnVector, TArrayLike} from '@envisim/matrix';
 
 import {IOptions, optionsDefaultRand, PartialPick} from './types.js';
 
@@ -18,7 +14,7 @@ export const discrete = (
   prob: TArrayLike,
   {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number => {
-  const p = arrayLikeToArray(prob);
+  const p = arrayLikeToArray(prob, true);
   const N = p.length;
   const rn = rand.float();
   let psum = 0.0;
@@ -45,9 +41,9 @@ export const discreteArr = (
   n: number,
   {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
-  const p = arrayLikeToArray(prob);
+  const p = arrayLikeToArray(prob, true);
   const N = p.length;
-  const s = new Array(n).fill(N - 1);
+  const s = new Array<number>(n).fill(N - 1);
 
   for (let i = 0; i < n; i++) {
     const re = rand.float();
@@ -79,9 +75,9 @@ export const ppswr = (
   n: number,
   {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
 ): number[] => {
-  const p = arrayLikeToColumnVector(prob);
+  const p = new ColumnVector(prob, false);
   const psum = p.sum();
-  p.divideScalar(psum, true);
+  p.divide(psum, true);
 
   return discreteArr(p, n, {rand}).sort((a, b) => a - b);
 };

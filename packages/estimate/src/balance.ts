@@ -1,11 +1,7 @@
-import {
-  arrayLikeToArray,
-  isArrayLike,
-  Matrix,
-  TArrayLike,
-} from '@envisim/matrix';
+import {Matrix, TArrayLike} from '@envisim/matrix';
 import {NearestNeighbour} from '@envisim/sampling';
 
+import {BaseVector} from '../../matrix/dist/es/BaseVector.js';
 import {parseAndCheckSampleArray} from './utils.js';
 
 /**
@@ -21,12 +17,12 @@ export function spatialBalanceVO(
   prob: TArrayLike,
 ): number {
   const N = xm.nrow;
-  const sampleArr = parseAndCheckSampleArray(sample, N);
+  const sampleArr = parseAndCheckSampleArray(sample, N, true);
 
   if (prob.length !== N)
     throw new RangeError('xm and prob must have same number of rows');
 
-  const incl = new Array(sampleArr.length).fill(0.0);
+  const incl = new Array<number>(sampleArr.length).fill(0.0);
   const nn = new NearestNeighbour(xm.extractRows(sampleArr), 10);
 
   for (let i = 0; i < N; i++) {
@@ -65,18 +61,18 @@ export function spatialBalanceSS(
 ): number {
   const N = xm.nrow;
   const p = xm.ncol;
-  const sampleArr = parseAndCheckSampleArray(sample, N);
+  const sampleArr = parseAndCheckSampleArray(sample, N, true);
 
   let mat = xm;
-  if (isArrayLike(prob)) {
+  if (Array.isArray(prob) || BaseVector.isBaseVector(prob)) {
     if (prob.length !== N)
       throw new RangeError('xm and prob must have same number of rows');
     mat = xm.copy();
 
-    mat.mapInPlace((e: number, i: number): number => {
-      const r = mat.indexToRow(i);
+    mat.map((e: number, i: number): number => {
+      const r = mat.rowOfIndex(i);
       return e / (prob.at(r) as number);
-    });
+    }, true);
   }
 
   const means = new Array(p).fill(0.0);

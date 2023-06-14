@@ -15,6 +15,11 @@ export class MultiCircle
     return obj instanceof MultiCircle;
   }
 
+  static assert(obj: unknown, msg?: string): obj is MultiCircle {
+    if (obj instanceof MultiCircle) return true;
+    throw new TypeError(msg ?? 'Expected MultiCircle');
+  }
+
   static create(
     coordinates: GJ.MultiCircle['coordinates'],
     radius: number,

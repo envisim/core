@@ -1,9 +1,4 @@
-import {
-  arrayLikeToArray,
-  arrayLikeToColumnVector,
-  Matrix,
-  TArrayLike,
-} from '@envisim/matrix';
+import {ColumnVector, Matrix, TArrayLike} from '@envisim/matrix';
 import {NearestNeighbour} from '@envisim/sampling';
 
 import {parseAndCheckSampleArray} from './utils.js';
@@ -19,8 +14,8 @@ import {parseAndCheckSampleArray} from './utils.js';
  * @returns the Horvitz-Thompson estimate, $\hat\{Y\}$.
  */
 export function horvitzThompson(y: TArrayLike, prob: TArrayLike): number {
-  const ys = arrayLikeToColumnVector(y);
-  const ps = arrayLikeToColumnVector(prob);
+  const ys = new ColumnVector(y, false);
+  const ps = new ColumnVector(prob, true);
 
   return ys.divide(ps, true).sum();
 }
@@ -41,9 +36,9 @@ export function hansenHurwitz(
   expected: TArrayLike,
   inclusions: TArrayLike,
 ): number {
-  const ys = arrayLikeToColumnVector(y);
-  const es = arrayLikeToColumnVector(expected);
-  const ss = arrayLikeToColumnVector(inclusions);
+  const ys = new ColumnVector(y, false);
+  const es = new ColumnVector(expected, true);
+  const ss = new ColumnVector(inclusions, true);
 
   return ys.multiply(ss, true).divide(es, true).sum();
 }
@@ -66,9 +61,9 @@ export function ratioEstimator(
   totalX: number,
   prob: TArrayLike,
 ): number {
-  const ys = arrayLikeToColumnVector(y);
-  const xs = arrayLikeToColumnVector(x);
-  const ps = arrayLikeToColumnVector(prob);
+  const ys = new ColumnVector(y, false);
+  const xs = new ColumnVector(x, false);
+  const ps = new ColumnVector(prob, true);
 
   if (typeof totalX !== 'number') throw new TypeError('totalX must be number');
   if (ys.nrow !== xs.nrow) throw new RangeError('y and x must have same size');
@@ -85,8 +80,8 @@ export function ratioEstimator(
  * @returns the wr estimate, $\hat\{Y\}$.
  */
 export function wrEstimator(y: TArrayLike, prob: TArrayLike): number {
-  const ys = arrayLikeToColumnVector(y);
-  const ps = arrayLikeToColumnVector(prob);
+  const ys = new ColumnVector(y, false);
+  const ps = new ColumnVector(prob, true);
 
   return ys.divide(ps, true).mean();
 }
@@ -108,7 +103,7 @@ export function nearestNeighbourEstimator(
   sample: TArrayLike,
 ): number {
   const N = xm.nrow;
-  const sampleArr = parseAndCheckSampleArray(sample, N);
+  const sampleArr = parseAndCheckSampleArray(sample, N, true);
   const n = sampleArr.length;
 
   if (y.length !== n)

@@ -13,6 +13,11 @@ export class AreaCollection
     return obj instanceof AreaCollection;
   }
 
+  static assert(obj: unknown, msg?: string): obj is AreaCollection {
+    if (obj instanceof AreaCollection) return true;
+    throw new TypeError(msg ?? 'Expected AreaCollection');
+  }
+
   static create(
     features: GJ.AreaFeature[],
     shallow: boolean = true,

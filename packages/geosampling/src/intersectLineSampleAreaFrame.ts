@@ -9,26 +9,25 @@ import {
  * Intersects a sample of lines with an area frame and transfers _designWeight
  * to sample of lines (if frame features have design weights).
  *
- * @param sample - A GeoJSON LineFeatureCollection.
- * @param frame - A GeoJSON AreaFeatureCollection.
- * @returns - A LineCollection.
+ * @param sample
+ * @param frame
  */
-export const intersectLineSampleAreaFrame = (
+export function intersectLineSampleAreaFrame(
   sample: LineCollection,
   frame: AreaCollection,
-): LineCollection => {
+): LineCollection {
   const newFeatures: LineFeature[] = [];
+
   // Intersect with all polygons and push results to newFeatures.
   // if intersection, then compute new designWeight as product of the features design weights.
-  sample.features.forEach((sampleFeature) => {
-    frame.features.forEach((frameFeature) => {
+  frame.forEach((frameFeature) => {
+    sample.forEach((sampleFeature) => {
       const intersect = intersectLineAreaFeatures(sampleFeature, frameFeature);
 
       if (intersect) {
-        let newFeature = intersect;
         let dw = 1; // designWeight
         // Transfer the properties from sampleFeature to newFeature without copy.
-        newFeature.properties = sampleFeature.properties || {};
+        intersect.properties = sampleFeature.properties || {};
         if (frameFeature.properties?._designWeight) {
           dw *= frameFeature.properties._designWeight;
         }
@@ -36,13 +35,10 @@ export const intersectLineSampleAreaFrame = (
           dw *= sampleFeature.properties._designWeight;
         }
         // Update the design weight.
-        newFeature.properties._designWeight = dw;
-        newFeatures.push(newFeature);
+        intersect.properties._designWeight = dw;
+        newFeatures.push(intersect);
       }
     });
   });
-  return new LineCollection({
-    type: 'FeatureCollection',
-    features: newFeatures,
-  });
-};
+  return new LineCollection({features: newFeatures}, true);
+}

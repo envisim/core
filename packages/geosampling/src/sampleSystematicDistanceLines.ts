@@ -1,10 +1,13 @@
-import {copy, distancePointToLine} from '@envisim/geojson-utils';
+import {
+  intersectPointAreaFeatures,
+  PointCollection,
+  PointFeature,
+  AreaCollection,
+} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
-import {effectiveHalfWidth} from './sampleDistanceUtils.js';
-import {sampleLinesOnAreas} from './sampleLinesOnAreas.js';
-import {typeOfFrame} from './typeOfFrame.js';
+import {effectiveHalfWidth, DetectionFunction} from './sampleDistanceUtils.js';
+import {sampleSystematicLinesOnAreas} from './sampleSystematicLinesOnAreas.js';
 
 export type TsampleDistanceLinesOpts = {
   rotation?: number;
@@ -16,35 +19,23 @@ export type TsampleDistanceLinesOpts = {
  * Selects a line sample on an area frame and collect point objects from a base
  * layer using a detection function to (randomly) determine inclusion.
  *
- * @param frame - A GeoJSON FeatureCollection of Polygon/MultiPolygon features.
- * @param distBetween - The distance in meters between lines.
- * @param base - A GeoJSON FeatureCollection of single Point features.
- * @param detectionFunction - The detection function.
- * @param cutoff - Positive number, the maximum distance for detection.
- * @param opts - An object containing distBetween, rotation, rand.
- * @param opts.rotation - Optional fixed rotation of the lines.
- * @param opts.rand - An optional instance of Random.
- * @returns - Resulting GeoJSON FeatureCollection.
+ * @param frame
+ * @param distBetween the distance in meters between lines.
+ * @param base a PointCollection of single Point features.
+ * @param detectionFunction the detection function.
+ * @param cutoff positive number, the maximum distance for detection.
+ * @param opts an object containing distBetween, rotation, rand.
+ * @param opts.rotation optional fixed rotation of the lines.
+ * @param opts.rand an optional instance of Random.
  */
-export const sampleDistanceLines = (
-  frame: GeoJSON.FeatureCollection,
+export function sampleSystematicDistanceLines(
+  frame: AreaCollection,
   distBetween: number,
-  base: GeoJSON.FeatureCollection,
-  detectionFunction: Function,
+  base: PointCollection,
+  detectionFunction: DetectionFunction,
   cutoff: number,
   opts: TsampleDistanceLinesOpts,
-): GeoJSON.FeatureCollection => {
-  // Check types first
-  const frameType = typeOfFrame(frame);
-  const baseType = typeOfFrame(base);
-  if (frameType !== 'area') {
-    throw new Error(
-      'Parameter frame must be a FeatureCollection of Polygons/MultiPolygons.',
-    );
-  }
-  if (baseType !== 'point') {
-    throw new Error('Parameter base must be a FeatureCollection of Points.');
-  }
+): PointCollection {
   // Compute effective half width
   const effHalfWidth = effectiveHalfWidth(detectionFunction, cutoff);
   // Get random generator
@@ -52,22 +43,23 @@ export const sampleDistanceLines = (
   opts.rand = rand;
   // Compute design weight for this selection
   const dw = distBetween / (effHalfWidth * 2);
-
   // Select sample of lines
-  const lineSample = sampleLinesOnAreas(frame, distBetween, opts);
+  const lineSample = sampleSystematicLinesOnAreas(frame, distBetween, opts);
   // To store sampled features
-  const sampledFeatures: GeoJSON.Feature[] = [];
+  const sampledFeatures: PointFeature[] = [];
 
   // Find selected points in base layer and check if
   // seleccted base point is in frame and transfer _designWeight
-  base.features.forEach((pointFeature) => {
+  base.forEach((pointFeature) => {
     if (pointFeature.geometry.type === 'Point') {
       const basePointCoords = pointFeature.geometry.coordinates;
 
-      lineSample.features.forEach((sampleLine, sampleLineIndex) => {
+      lineSample.forEach((sampleLine, sampleLineIndex) => {
         const type = sampleLine.geometry.type;
+
         if (type === 'LineString' || type === 'MultiLineString') {
-          const dist = distancePointToLine(pointFeature, sampleLine);
+          const dist = sampleLine.distanceToPosition(basePointCoords);
+
           if (dist < cutoff && rand.float() < detectionFunction(dist)) {
             // Check if base point exists in this frame (frame could be part/stratum)
             for (let i = 0; i < frame.features.length; i++) {
@@ -76,7 +68,8 @@ export const sampleDistanceLines = (
                 pointFeature,
                 frameFeature,
               );
-              if (intersect.geoJSON) {
+
+              if (intersect) {
                 // Follow the design weight
                 // This selection
                 let designWeight = dw;
@@ -84,13 +77,13 @@ export const sampleDistanceLines = (
                 if (frameFeature.properties?._designWeight) {
                   designWeight *= frameFeature.properties._designWeight;
                 }
-                const newFeature = copy(pointFeature);
-                if (!newFeature.properties) {
-                  newFeature.properties = {};
-                }
+
+                const newFeature = new PointFeature(pointFeature, false);
+
                 newFeature.properties._designWeight = designWeight;
                 newFeature.properties._parent = sampleLineIndex;
                 newFeature.properties._distance = dist;
+
                 sampledFeatures.push(newFeature);
                 break;
               }
@@ -104,8 +97,5 @@ export const sampleDistanceLines = (
       );
     }
   });
-  return {
-    type: 'FeatureCollection',
-    features: sampledFeatures,
-  };
-};
+  return new PointCollection({features: sampledFeatures}, true);
+}

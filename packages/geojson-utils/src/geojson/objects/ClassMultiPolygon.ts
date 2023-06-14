@@ -15,6 +15,11 @@ export class MultiPolygon
     return obj instanceof MultiPolygon;
   }
 
+  static assert(obj: unknown, msg?: string): obj is MultiPolygon {
+    if (obj instanceof MultiPolygon) return true;
+    throw new TypeError(msg ?? 'Expected MultiPolygon');
+  }
+
   static create(
     coordinates: GJ.MultiPolygon['coordinates'],
     shallow: boolean = true,

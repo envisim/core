@@ -14,6 +14,11 @@ export class MultiLineString
     return obj instanceof MultiLineString;
   }
 
+  static assert(obj: unknown, msg?: string): obj is MultiLineString {
+    if (obj instanceof MultiLineString) return true;
+    throw new TypeError(msg ?? 'Expected MultiLineString');
+  }
+
   static create(
     coordinates: GJ.MultiLineString['coordinates'],
     shallow: boolean = true,

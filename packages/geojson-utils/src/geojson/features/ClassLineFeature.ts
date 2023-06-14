@@ -13,6 +13,11 @@ export class LineFeature
     return obj instanceof LineFeature;
   }
 
+  static assert(obj: unknown, msg?: string): obj is LineFeature {
+    if (obj instanceof LineFeature) return true;
+    throw new TypeError(msg ?? 'Expected LineFeature');
+  }
+
   static create(
     geometry: GJ.LineGeometry,
     properties: GJ.FeatureProperties = {},

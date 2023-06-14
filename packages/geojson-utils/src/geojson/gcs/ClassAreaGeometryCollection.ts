@@ -12,6 +12,11 @@ export class AreaGeometryCollection
     return obj instanceof AreaGeometryCollection;
   }
 
+  static assert(obj: unknown, msg?: string): obj is AreaGeometryCollection {
+    if (obj instanceof AreaGeometryCollection) return true;
+    throw new TypeError(msg ?? 'Expected AreaGeometryCollection');
+  }
+
   static create(
     geometries: GJ.AreaObject[],
     shallow: boolean = true,

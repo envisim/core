@@ -32,9 +32,9 @@ function intersectPolygonPolygon(
   if (intersection.length === 0) return null;
 
   if (intersection.length === 1)
-    return Polygon.create(intersection[0] as GJ.Position[][]);
+    return Polygon.create(intersection[0] as GJ.Position[][], true);
 
-  return MultiPolygon.create(intersection as GJ.Position[][][]);
+  return MultiPolygon.create(intersection as GJ.Position[][][], true);
 }
 
 /**
@@ -52,11 +52,11 @@ function intersectCircleCircle(
 
     // Check if circle 1 is fully within circle 2
     if (dist + p1.radius < p2.radius)
-      return Circle.create([...p1.coordinates], p1.radius);
+      return Circle.create([...p1.coordinates], p1.radius, true);
 
     // Check if circle 2 is fully within circle 1
     if (dist + p2.radius < p1.radius)
-      return Circle.create([...p2.coordinates], p2.radius);
+      return Circle.create([...p2.coordinates], p2.radius, true);
 
     // Need to intersect polygons
     const intersect = intersectPolygonPolygon(
@@ -84,7 +84,7 @@ function intersectCirclePolygon(
 
   if (dist <= -p1.radius) {
     // Circle fully within polygon
-    return Circle.create([...p1.coordinates], p1.radius);
+    return Circle.create([...p1.coordinates], p1.radius, true);
   }
 
   if (dist < p1.radius) {
@@ -128,7 +128,7 @@ function intersectPolygonAF(
 
       case 'MultiPoint':
         g2.coordinates.forEach((coords) => {
-          const circle = Circle.create(coords, g2.radius);
+          const circle = Circle.create(coords, g2.radius, true);
           isc = intersectCirclePolygon(circle, g1, pointsPerCircle);
           if (isc) geoms.push(isc);
           return;
@@ -171,7 +171,7 @@ function intersectCircleAF(
 
       case 'MultiPoint': {
         const circles2 = g2.coordinates.map((coords) =>
-          Circle.create(coords, g2.radius),
+          Circle.create(coords, g2.radius, true),
         );
 
         circles1.forEach((circle1: Circle) => {
@@ -217,7 +217,7 @@ export function intersectAreaAreaFeatures(
       g1.type === 'Point'
         ? [g1]
         : g1.coordinates.map((coords: GJ.Position) =>
-            Circle.create(coords, g1.radius),
+            Circle.create(coords, g1.radius, true),
           );
 
     intersectCircleAF(geoms, circles, g1.getBBox(), feature2, pointsPerCircle);
@@ -225,11 +225,15 @@ export function intersectAreaAreaFeatures(
 
   if (geoms.length === 0) return null;
 
-  if (geoms.length === 1) return AreaFeature.create(geoms[0], {});
+  if (geoms.length === 1) return AreaFeature.create(geoms[0], {}, true);
 
   // TODO?: Might be possible to check if all geometries are of the same type,
   // e.g. all Circle and make MultiCircle instead of GeometryCollection
   // or MultiPolygon instead of GeometryCollection of Polygons/MultiPolygons
   // etc... For now keep as GeometryCollection.
-  return AreaFeature.create(AreaGeometryCollection.create(geoms), {});
+  return AreaFeature.create(
+    AreaGeometryCollection.create(geoms, true),
+    {},
+    true,
+  );
 }

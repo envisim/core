@@ -113,8 +113,8 @@ function lineStringInPolygon(
   points.push([...line[line.length - 1]]);
 
   // 2. Check each midpoint for in/out and build new (multi-)linestring.
-  const mls = [];
-  let ls = [];
+  const mls: GJ.Position[][] = [];
+  let ls: GJ.Position[] = [];
   let mp: GJ.Position;
   let pushed = -1;
 
@@ -157,7 +157,7 @@ function multiLineStringInMultiPolygon(
   polygon: GJ.Position[][][],
 ) {
   const mls: GJ.Position[][] = [];
-  let part;
+  let part: GJ.Position[][];
 
   for (let i = 0; i < line.length; i++) {
     for (let j = 0; j < polygon.length; j++) {
@@ -228,7 +228,7 @@ export function intersectLineAreaFeatures(
   if (newCoords.length === 0) return null;
 
   if (newCoords.length === 1)
-    return LineFeature.create(LineString.create(newCoords[0]), {});
+    return LineFeature.create(LineString.create(newCoords[0], true), {}, true);
 
-  return LineFeature.create(MultiLineString.create(newCoords), {});
+  return LineFeature.create(MultiLineString.create(newCoords, true), {}, true);
 }

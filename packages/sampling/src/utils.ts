@@ -1,9 +1,4 @@
-import {
-  arrayLikeToColumnVector,
-  ColumnVector,
-  IIteratorReturn,
-  TArrayLike,
-} from '@envisim/matrix';
+import {ColumnVector, MatrixIteratorReturn, TArrayLike} from '@envisim/matrix';
 
 import {IOptions, optionsDefaultEps} from './types.js';
 
@@ -24,14 +19,14 @@ export const inclusionProbabilities = (
     throw new RangeError('Every element in arr must be positive');
   }
 
-  const prob = arrayLikeToColumnVector(arr);
+  const prob = new ColumnVector(arr, false);
   const psum = prob.sum();
-  prob.multiplyScalar(n / psum, true);
+  prob.multiply(n / psum, true);
   let pmax = prob.max();
 
   let n1: number, sp: number;
   const it = prob.iterator();
-  let res: IIteratorReturn;
+  let res: MatrixIteratorReturn;
   while (pmax > 1.0) {
     n1 = 0;
     sp = 0;

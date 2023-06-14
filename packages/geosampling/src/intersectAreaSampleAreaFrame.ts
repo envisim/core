@@ -1,5 +1,5 @@
 import {
-  GeoJSON,
+  AreaFeature,
   AreaCollection,
   intersectAreaAreaFeatures,
 } from '@envisim/geojson-utils';
@@ -8,24 +8,22 @@ import {
  * Intersects a sample of area with an area frame and transfers _designWeight
  * to sample (if frame features have design weights).
  *
- * @param sample - A GeoJSON AreaFeatureCollection.
- * @param frame - A GeoJSON AreaFeatureCollection.
- * @returns An AreaCollection.
+ * @param sample
+ * @param frame
  */
-export const intersectAreaSampleAreaFrame = (
+export function intersectAreaSampleAreaFrame(
   sample: AreaCollection,
   frame: AreaCollection,
-): AreaCollection => {
-  const newFeatures: GeoJSON.AreaFeature[] = [];
+): AreaCollection {
+  const newFeatures: AreaFeature[] = [];
 
   // Intersect with all area features and push results to newFeatures.
   // If intersection, then compute new designWeight as product of the features design weights.
-  sample.features.forEach((sampleFeature) => {
-    frame.features.forEach((frameFeature) => {
+  frame.forEach((frameFeature) => {
+    sample.forEach((sampleFeature) => {
       const intersect = intersectAreaAreaFeatures(sampleFeature, frameFeature);
 
       if (intersect) {
-        let newFeature = intersect;
         let dw = 1;
         if (frameFeature.properties?._designWeight) {
           dw *= frameFeature.properties._designWeight;
@@ -33,15 +31,10 @@ export const intersectAreaSampleAreaFrame = (
         if (sampleFeature.properties?._designWeight) {
           dw *= sampleFeature.properties._designWeight;
         }
-        if (newFeature?.properties) {
-          newFeature.properties._designWeight = dw;
-        }
-        newFeatures.push(newFeature);
+        intersect.properties._designWeight = dw;
+        newFeatures.push(intersect);
       }
     });
   });
-  return new AreaCollection({
-    type: 'FeatureCollection',
-    features: newFeatures,
-  });
-};
+  return new AreaCollection({features: newFeatures}, true);
+}

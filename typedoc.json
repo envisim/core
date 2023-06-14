@@ -35,6 +35,9 @@
     },
     "@envisim/sampling": {
       "*": "https://github.com/envisim/core/tree/main/packages/sampling/docs"
+    },
+    "@envisim/utils": {
+      "*": "https://github.com/envisim/core/tree/main/packages/utils/docs"
     }
   }
 }

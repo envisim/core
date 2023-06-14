@@ -13,6 +13,11 @@ export class PointCollection
     return obj instanceof PointCollection;
   }
 
+  static assert(obj: unknown, msg?: string): obj is PointCollection {
+    if (obj instanceof PointCollection) return true;
+    throw new TypeError(msg ?? 'Expected PointCollection');
+  }
+
   static create(
     features: GJ.PointFeature[],
     shallow: boolean = true,

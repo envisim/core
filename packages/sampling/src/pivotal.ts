@@ -27,16 +27,16 @@ export function lpm1(
     treeBucketSize = optionsDefaultTreeBucketSize,
   }: IOptions = {},
 ): number[] {
-  if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
+  Matrix.assert(xm);
 
   const N = xm.nrow;
 
-  let p: number[] | number;
+  let p;
 
   if (typeof prob === 'number') {
-    p = prob;
+    p = prob as number;
   } else {
-    p = arrayLikeToArray(prob) as number[];
+    p = arrayLikeToArray(prob, true) as number[];
     if (p.length !== N)
       throw new RangeError('Rows in xm must match length of prob');
   }
@@ -73,16 +73,16 @@ export function lpm2(
     treeBucketSize = optionsDefaultTreeBucketSize,
   }: IOptions = {},
 ): number[] {
-  if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
+  Matrix.assert(xm);
 
   const N = xm.nrow;
 
-  let p: number[] | number;
+  let p;
 
   if (typeof prob === 'number') {
-    p = prob;
+    p = prob as number;
   } else {
-    p = arrayLikeToArray(prob) as number[];
+    p = arrayLikeToArray(prob, true) as number[];
     if (p.length !== N)
       throw new RangeError('Rows in xm must match length of prob');
   }
@@ -119,16 +119,16 @@ export function lpm1s(
     treeBucketSize = optionsDefaultTreeBucketSize,
   }: IOptions = {},
 ): number[] {
-  if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
+  Matrix.assert(xm);
 
   const N = xm.nrow;
 
-  let p: number[] | number;
+  let p;
 
   if (typeof prob === 'number') {
-    p = prob;
+    p = prob as number;
   } else {
-    p = arrayLikeToArray(prob) as number[];
+    p = arrayLikeToArray(prob, true) as number[];
     if (p.length !== N)
       throw new RangeError('Rows in xm must match length of prob');
   }
@@ -161,7 +161,7 @@ export function rpm(
     eps = optionsDefaultEps,
   }: PartialPick<IOptions, 'rand' | 'eps'> = {},
 ): number[] {
-  const p = arrayLikeToArray(prob) as number[];
+  const p = arrayLikeToArray(prob, true);
   const N = p.length;
 
   const lpm = new Pivotal(PivotalMethod.RPM, p, undefined, N, N, eps, rand);
@@ -184,7 +184,7 @@ export function spm(
     eps = optionsDefaultEps,
   }: PartialPick<IOptions, 'rand' | 'eps'> = {},
 ): number[] {
-  const p = arrayLikeToArray(prob) as number[];
+  const p = arrayLikeToArray(prob, true);
   const N = p.length;
 
   const lpm = new Pivotal(PivotalMethod.SPM, p, undefined, N, N, eps, rand);
