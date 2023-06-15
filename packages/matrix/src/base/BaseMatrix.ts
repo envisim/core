@@ -36,9 +36,9 @@ const mathMethods1 = [
 ] as const;
 const mathMethods2 = ['max', 'min', 'pow'] as const;
 
-type TMathMethods =
-  | (typeof mathMethods1)[number]
-  | (typeof mathMethods2)[number];
+type TMathMethods1 = (typeof mathMethods1)[number];
+type TMathMethods2 = (typeof mathMethods2)[number];
+type TMathMethods = TMathMethods1 | TMathMethods2;
 
 export abstract class BaseMatrix {
   /**
@@ -72,7 +72,7 @@ export abstract class BaseMatrix {
   protected _nelements: number = 1;
 
   /** Abstract base class */
-  constructor(arr: number | number[], nrow: number, ncol: number) {
+  constructor(arr: number[], nrow: number, ncol: number) {
     if (!Number.isInteger(nrow) || nrow <= 0)
       throw new TypeError('nrow must be positive integer');
     if (!Number.isInteger(ncol) || ncol <= 0)
@@ -81,11 +81,6 @@ export abstract class BaseMatrix {
     this._nrow = nrow;
     this._ncol = ncol;
     this._nelements = nrow * ncol;
-
-    if (typeof arr === 'number') {
-      this._e = new Array<number>(nrow * ncol).fill(arr);
-      return;
-    }
 
     if (
       !Array.isArray(arr) ||
@@ -389,11 +384,11 @@ export abstract class BaseMatrix {
    */
   map(callback: MatrixCallback<number>, inPlace: boolean = false): this {
     if (inPlace === true) {
-      this._e.map(callback);
+      this._e = this._e.map(callback);
       return this;
     }
 
-    return this.copy().map(callback, false) as this;
+    return this.copy().map(callback, true) as this;
   }
 
   /**
@@ -570,13 +565,15 @@ export abstract class BaseMatrix {
    * @group Basic operators
    */
   math(method: TMathMethods, arg: number = 0, inPlace: boolean = false): this {
-    if (method in mathMethods1) {
+    if (mathMethods1.includes(method as TMathMethods1)) {
       return this.map(Math[method], inPlace);
-    } else if (method in mathMethods2) {
+    } else if (mathMethods2.includes(method as TMathMethods2)) {
       return this.map((e) => Math[method](e, arg), inPlace);
     }
 
-    throw new TypeError('method does not match any supported method in Math.');
+    throw new TypeError(
+      `${method} does not match any supported method in Math.`,
+    );
   }
 
   /**
@@ -658,7 +655,7 @@ export abstract class BaseMatrix {
    * @group Statistics
    */
   mode(): number[] {
-    const s = new Map();
+    const s = new Map<number, number>();
 
     this.forEach((e) => {
       s.set(e, (s.get(e) ?? 0) + 1);
@@ -780,7 +777,7 @@ export abstract class BaseMatrix {
     let str = '[';
 
     if (pretty === true) {
-      const maxLen = new Array(this._ncol).fill(0);
+      const maxLen = new Array<number>(this._ncol).fill(0);
       const vals = this._e.map((v) => v.toFixed(digits));
       maxLen.forEach((_, c) => {
         maxLen[c] = Math.max(
@@ -818,7 +815,7 @@ export abstract class BaseMatrix {
     if (this._ncol !== mat._nrow)
       throw new RangeError('Dimensions of matrices does not match');
 
-    const s = new Array(this._nrow * mat._ncol);
+    const s = new Array<number>(this._nrow * mat._ncol);
 
     for (let r = 0; r < this._nrow; r++) {
       for (let c = 0; c < mat._ncol; c++) {

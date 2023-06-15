@@ -19,7 +19,7 @@ export abstract class BaseGeometryCollection<
   }
 
   setBBox(force: boolean = false): GJ.BBox {
-    const bboxArray: GJ.BBox[] = new Array(this.geometries.length);
+    const bboxArray = new Array<GJ.BBox>(this.geometries.length);
 
     if (force === true) {
       this.forEach((geom: T, index: number) => {

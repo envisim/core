@@ -1,7 +1,6 @@
-import {Matrix, TArrayLike} from '@envisim/matrix';
+import {Matrix, TArrayLike, isVector} from '@envisim/matrix';
 import {NearestNeighbour} from '@envisim/sampling';
 
-import {BaseVector} from '../../matrix/dist/es/BaseVector.js';
 import {parseAndCheckSampleArray} from './utils.js';
 
 /**
@@ -64,7 +63,7 @@ export function spatialBalanceSS(
   const sampleArr = parseAndCheckSampleArray(sample, N, true);
 
   let mat = xm;
-  if (Array.isArray(prob) || BaseVector.isBaseVector(prob)) {
+  if (Array.isArray(prob) || isVector(prob)) {
     if (prob.length !== N)
       throw new RangeError('xm and prob must have same number of rows');
     mat = xm.copy();
@@ -75,7 +74,7 @@ export function spatialBalanceSS(
     }, true);
   }
 
-  const means = new Array(p).fill(0.0);
+  const means = new Array<number>(p).fill(0.0);
   let total = 0.0;
   let result = 0.0;
   const nn = new NearestNeighbour(mat.extractRows(sampleArr), 10);

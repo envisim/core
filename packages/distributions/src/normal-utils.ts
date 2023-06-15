@@ -36,11 +36,11 @@ const NORMALQCOEFVALS = [
   3.387132872796366608, 1.0, 1.42343711074968357734, 1.0, 6.6579046435011037772,
   1.0,
 ];
-const normalQCoefs = (a: number, r: number): number => {
+function normalQCoefs(a: number, r: number): number {
   return (
     NORMALQCOEFS[a].reduce((t, c) => (t + c) * r, 0.0) + NORMALQCOEFVALS[a]
   );
-};
+}
 
 /*
  * Wichura, M. J. (1988).
@@ -48,7 +48,7 @@ const normalQCoefs = (a: number, r: number): number => {
  * Journal of the Royal Statistical Society. Series C (Applied Statistics), 37(3), 477-484.
  * https://doi.org/10.2307/2347330
  */
-export const stdNormalQuantile = (p: number): number => {
+export function stdNormalQuantile(p: number): number {
   if (p === 0.0) return -Infinity;
   if (p === 1.0) return Infinity;
   const q = p - 0.5;
@@ -71,7 +71,7 @@ export const stdNormalQuantile = (p: number): number => {
   }
 
   return q < 0.0 ? -val : val;
-};
+}
 
 const COEFSCDF = {
   a: [
@@ -114,7 +114,7 @@ const COEFSCDF = {
  * https://doi.org/10.1090/S0025-5718-1969-0247736-4
  * 715:6559
  */
-export const errorFunction = (x: number): number => {
+export function errorFunction(x: number): number {
   const y = Math.abs(x);
 
   let xnum, xden, ysq, res, i: number;
@@ -164,8 +164,8 @@ export const errorFunction = (x: number): number => {
   ysq = ((y * 16.0) | 0) / 16.0;
   res *= Math.exp(-ysq * ysq) * Math.exp(-(y - ysq) * (y + ysq));
   return x < 0.0 ? res - 1.0 : 1.0 - res;
-};
+}
 
-export const stdNormalCDF = (z: number): number => {
+export function stdNormalCDF(z: number): number {
   return 0.5 + errorFunction(z / Math.SQRT2) * 0.5;
-};
+}

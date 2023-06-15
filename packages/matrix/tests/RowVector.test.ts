@@ -1,5 +1,5 @@
-import {ColumnVector, RowVector} from '../src/index';
-import {createTable} from './_createTable.testf';
+import {ColumnVector, RowVector} from '../src/index.js';
+import {createTable} from './_createTable.testf.js';
 
 describe('RowVector', () => {
   const r1content = [1, 0, 4, 3, 5, -1];
@@ -15,8 +15,8 @@ describe('RowVector', () => {
     expect(r1.ncol).toBe(6);
     expect(r1.nelements).toBe(6);
     expect(r1.nrow).toBe(1);
-    expect(r1.size[0]).toBe(1);
-    expect(r1.size[1]).toBe(6);
+    expect(r1.size()[0]).toBe(1);
+    expect(r1.size()[1]).toBe(6);
     expect(r1.at(2)).toBe(4);
     expect(r1.atRC(0, 2)).toBe(4);
     expect(r2.ed(2, 10)).toBe(10);

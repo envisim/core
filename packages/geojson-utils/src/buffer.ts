@@ -1,11 +1,17 @@
-// @ts-ignore
+// @ts-expect-error turf-buffer needs to include the exports.types directive
 import turfBuffer from '@turf/buffer';
 
 import type * as GJ from './types/geojson.js';
 import {AreaCollection} from './geojson/index.js';
 
 type BufferOpts = {
+  /**
+   * The radius/distance to buffer in meters
+   */
   radius?: number;
+  /**
+   * The number of steps in the buffer.
+   */
   steps?: number;
 };
 
@@ -14,20 +20,22 @@ type BufferOpts = {
  * May result in overlapping geometries. Use unionOfPolygons() on resulting
  * FeatureCollection to union overlapping polygons.
  *
- * @param geoJSON - The GeoJSON FeatureCollection to buffer.
- * @param opts - Options object.
- * @param opts.radius - The radius/distance to buffer in meters.
- * @param opts.steps - The number of steps in the buffer.
- * @returns - A GeoJSON FeatureCollection with result of buffering. An empty FeatureCollection if failed.
+ * @param geoJSON The AreaCollection to buffer.
+ * @param opts
+ * @returns An buffered AreaCollection, or `null` if buffering failed.
  */
-export const buffer = (
-  geoJSON: GJ.FeatureCollection,
+export function buffer(
+  geoJSON: AreaCollection,
   opts: BufferOpts,
-): AreaCollection => {
+): AreaCollection | null {
   const radius = opts.radius ?? 0;
   const turfCollection = turfBuffer(geoJSON, radius / 1000, {
     units: 'kilometers',
     steps: opts.steps ?? 10,
-  });
+  }) as GJ.AreaFeatureCollection;
+
+  if (!turfCollection.features || turfCollection.features.length === 0)
+    return null;
+
   return new AreaCollection(turfCollection, true);
-};
+}

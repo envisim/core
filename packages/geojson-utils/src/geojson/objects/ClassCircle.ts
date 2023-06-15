@@ -47,7 +47,7 @@ export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
     // Check shallow for bbox, as this is the only prop in need of copy
     const bbox: GJ.BBox | undefined =
       shallow === true ? this.bbox : this.bbox ? [...this.bbox] : undefined;
-    const coordinates: GJ.Position[] = new Array(pointsPerCircle);
+    const coordinates = new Array<GJ.Position>(pointsPerCircle);
 
     // Use the radius that gives equal area to the polygon for best approx.
     const v = Math.PI / pointsPerCircle;

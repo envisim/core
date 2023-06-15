@@ -109,7 +109,7 @@ export function nearestNeighbourEstimator(
   if (y.length !== n)
     throw new RangeError('y and sample must have the same length');
 
-  const ni = new Array(n).fill(0.0);
+  const ni = new Array<number>(n).fill(0.0);
   const nn = new NearestNeighbour(xm.extractRows(sampleArr), 10);
 
   for (let i = 0; i < N; i++) {

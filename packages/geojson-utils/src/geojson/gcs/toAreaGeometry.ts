@@ -50,6 +50,7 @@ function toAreaGeometry(
           !AreaGeometryCollection.isGeometryCollection(geometry)
           ? new AreaGeometryCollection(geometry, shallow)
           : geometry;
+      throw new TypeError('GeometryCollection not allowed');
 
     default:
       throw new TypeError('type not supported');

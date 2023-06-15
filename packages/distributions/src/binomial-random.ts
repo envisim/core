@@ -51,12 +51,12 @@ interface IRandomBinomialSmall {
  * Communications of the ACM, 31(2), 216-222.
  * https://doi.org/10.1145/42372.42381
  */
-const randomBinomialLarge = (
+function randomBinomialLarge(
   n: number,
   n0: number,
   p0: number,
   rand: Random,
-): number[] => {
+): number[] {
   const upperTail = p0 > 0.5;
   const p = PQFUN(p0, upperTail);
   const q = 1.0 - p;
@@ -101,13 +101,13 @@ const randomBinomialLarge = (
     p4,
   };
 
-  const rv = new Array(n);
+  const rv = new Array<number>(n);
   for (let i = 0; i < n; i++)
     rv[i] = randomBinomialLarge_inner(rand, constants);
   return rv;
-};
+}
 
-const randomBinomialLarge_inner = (
+function randomBinomialLarge_inner(
   rand: Random,
   {
     upperTail,
@@ -129,7 +129,7 @@ const randomBinomialLarge_inner = (
     p3,
     p4,
   }: IRandomBinomialLarge,
-): number => {
+): number {
   let A: number, f: number, i: number, k: number;
   let t: number, u: number, v: number, x: number, y: number;
   let rho: number, x1: number, f1: number, z: number, w: number;
@@ -215,14 +215,14 @@ const randomBinomialLarge_inner = (
     'binomial (randomBinomialLarge) did not resolve in 1e5 iterations',
   );
   return NaN;
-};
+}
 
-const randomBinomialSmall = (
+function randomBinomialSmall(
   n: number,
   n0: number,
   p0: number,
   rand: Random,
-): number[] => {
+): number[] {
   const upperTail: boolean = p0 > 0.5;
   const p = PQFUN(p0, upperTail);
   const q = 1.0 - p;
@@ -238,16 +238,16 @@ const randomBinomialSmall = (
     pmf0,
   };
 
-  const rv = new Array(n);
+  const rv = new Array<number>(n);
   for (let i = 0; i < n; i++)
     rv[i] = randomBinomialSmall_inner(rand, constants);
   return rv;
-};
+}
 
-const randomBinomialSmall_inner = (
+function randomBinomialSmall_inner(
   rand: Random,
   {upperTail, n0, frac, delta, pmf0}: IRandomBinomialSmall,
-): number => {
+): number {
   let u = rand.float();
   let pmf = pmf0;
 
@@ -259,14 +259,14 @@ const randomBinomialSmall_inner = (
   }
 
   return upperTail ? n0 - k : k;
-};
+}
 
-export const randomBinomial = (
+export function randomBinomial(
   n: number,
   n0: number,
   p0: number,
   rand: Random,
-): number[] => {
+): number[] {
   if (n0 * p0 <= 30.0) return randomBinomialSmall(n, n0, p0, rand);
   return randomBinomialLarge(n, n0, p0, rand);
-};
+}

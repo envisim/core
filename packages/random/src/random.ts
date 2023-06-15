@@ -52,7 +52,7 @@ class Random {
   private p = this.o;
   // declare our intermediate variables array
   /** @ignore */
-  private s = new Array(this.o);
+  private s = new Array<number>(this.o);
 
   // general purpose local
   /** @ignore */
@@ -182,6 +182,7 @@ class Random {
     // remove any/all leading spaces
     inStr = inStr.replace(/(^\s*)|(\s*$)/gi, '');
     // remove any/all control characters
+    /* eslint no-control-regex: "off" */
     inStr = inStr.replace(/[\x00-\x1F]/gi, '');
     // remove any/all trailing spaces
     inStr = inStr.replace(/\n /, '\n');
@@ -211,7 +212,9 @@ class Random {
   // time
   /** Adds entropy to Uheprng. */
   addEntropy(...args: string[] | number[]): this {
-    this.hash(this.k++ + new Date().getTime() + args.join('') + Math.random());
+    this.hash(
+      [this.k++, new Date().getTime(), ...args, Math.random()].join(''),
+    );
 
     return this;
   }
@@ -251,7 +254,7 @@ class Random {
 
   /** @returns An array of (uniform) numbers on the interval `[0.0, 1.0)` */
   floatArray(n: number): number[] {
-    const s = new Array(n);
+    const s = new Array<number>(n);
     for (let i = 0; i < n; i++) s[i] = this.float();
     return s;
   }

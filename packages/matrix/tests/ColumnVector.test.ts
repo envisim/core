@@ -1,5 +1,11 @@
-import {ColumnVector, Matrix, RowVector, sequence} from '../src/index';
-import {createTable} from './_createTable.testf';
+import {
+  ColumnVector,
+  Matrix,
+  RowVector,
+  sequence,
+  regressionCoefficients,
+} from '../src/index.js';
+import {createTable} from './_createTable.testf.js';
 
 describe('ColumnVector', () => {
   const c1content = [1, 0, 4, 3, 5, -1];
@@ -15,8 +21,8 @@ describe('ColumnVector', () => {
     expect(c1.ncol).toBe(1);
     expect(c1.nelements).toBe(6);
     expect(c1.nrow).toBe(6);
-    expect(c1.size[0]).toBe(6);
-    expect(c1.size[1]).toBe(1);
+    expect(c1.size()[0]).toBe(6);
+    expect(c1.size()[1]).toBe(1);
     expect(c1.at(2)).toBe(4);
     expect(c1.atRC(2, 0)).toBe(4);
     expect(c2.ed(2, 10)).toBe(10);
@@ -62,17 +68,15 @@ describe('ColumnVector', () => {
 
   const c3 = sequence(1, 6, 1);
   const c1_cumsum = new ColumnVector([1, 1, 5, 8, 13, 12]);
-  const m1 = new Matrix([1, 0, 4, 3, 5, -1, -2, 1, 2], 3, 3);
+  const m1 = new Matrix([1, 1, 1, 1, 0, 4, 3, 5, -1], {nrow: 3, ncol: 3});
   const c4 = new ColumnVector([1, 0, 3]);
-  const c4_beta = new ColumnVector([
-    0.79365079365, 0.01587301587, -0.07936507937,
-  ]);
+  const c4_beta = new ColumnVector([2.5, 0.0, -0.5]);
 
   test('statistics', () => {
     expect(c1.correlation(c3)).toBeCloseTo(0.09035079029);
     expect(c1.covariance(c3)).toBeCloseTo(0.4);
     expect(c1.cumulativeSum().isEqualTo(c1_cumsum)).toBe(true);
-    expect(c4.regressionCoefficients(m1).isCloseTo(c4_beta)).toBe(true);
+    expect(regressionCoefficients(c4, m1).isCloseTo(c4_beta)).toBe(true);
   });
 
   /* 1, 0, 4, 3, 5, -1 */

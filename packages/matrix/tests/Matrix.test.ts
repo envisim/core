@@ -1,17 +1,22 @@
-import {ColumnVector, Matrix, RowVector, identityMatrix} from '../src/index';
-import {createTable} from './_createTable.testf';
+import {
+  ColumnVector,
+  Matrix,
+  RowVector,
+  identityMatrix,
+  matrixDims,
+} from '../src/index.js';
+import {createTable} from './_createTable.testf.js';
 
 describe('Matrix', () => {
-  const m1 = new Matrix([1, 0, 4, 3, 5, -1, -2, 1, 2], 3, 3);
-  const m1b = new Matrix([1, 3, -2, 0, 5, 1, 4, -1, 2], 3, 3, true);
-  const m1t = new Matrix([1, 3, -2, 0, 5, 1, 4, -1, 2], 3, 3);
+  const m1 = new Matrix([1, 0, 4, 3, 5, -1, -2, 1, 2], matrixDims(3, 3));
+  const m1b = new Matrix([1, 3, -2, 0, 5, 1, 4, -1, 2], matrixDims(3, 3, true));
+  const m1t = new Matrix([1, 3, -2, 0, 5, 1, 4, -1, 2], matrixDims(3, 3));
   const m1c2 = new ColumnVector([3, 5, -1]);
   const m1r2 = new RowVector([0, 5, 1]);
-  const m1c23 = new Matrix([3, 5, -1, -2, 1, 2], 3, 2);
-  const m1r12 = new Matrix([1, 3, -2, 0, 5, 1], 2, 3, true);
-  const m1cr23 = new Matrix([5, -1, 1, 2], 2, 2);
+  const m1c23 = new Matrix([3, 5, -1, -2, 1, 2], matrixDims(3, 2));
+  const m1r12 = new Matrix([1, 3, -2, 0, 5, 1], matrixDims(2, 3, true));
+  const m1cr23 = new Matrix([5, -1, 1, 2], matrixDims(2, 2));
   const m1diag = new ColumnVector([1, 5, 2]);
-
   test('initialization', () => {
     expect(m1.isEqualTo(m1b)).toBe(true);
     expect(m1.isEqualTo(m1t)).toBe(false);
@@ -36,8 +41,8 @@ describe('Matrix', () => {
   test('accessors', () => {
     expect(m1.nrow).toBe(3);
     expect(m1cr23.ncol).toBe(2);
-    expect(m1.nrow).toBe(m1.size[0]);
-    expect(m1.ncol).toBe(m1.size[1]);
+    expect(m1.nrow).toBe(m1.size()[0]);
+    expect(m1.ncol).toBe(m1.size()[1]);
     expect(m1.nelements).toBe(9);
     expect(m1.diagonal().isEqualTo(m1diag)).toBe(true);
     expect(m1.at(5)).toBe(-1);
@@ -60,20 +65,22 @@ describe('Matrix', () => {
    *  5 1
    * -1 2
    */
-  const m2 = new Matrix([5, -1, 1, 2], 2, 2);
-  const m2p2 = new Matrix([7, 1, 3, 4], 2, 2);
-  const m2pp = new Matrix([10, -2, 2, 4], 2, 2);
-  const m2dd = new Matrix([1, 1, 1, 1], 2, 2);
-  const m2d2 = new Matrix([2.5, -0.5, 0.5, 1], 2, 2);
-  const m2abs = new Matrix([5, 1, 1, 2], 2, 2);
-  const m2pow2 = new Matrix([25, 1, 1, 4], 2, 2);
-  const m2mmultm2 = new Matrix([25 - 1, -5 - 2, 5 + 2, -1 + 4], 2, 2);
-  const m2mod2 = new Matrix([1, -1, 1, 0], 2, 2);
-  const m2modm = new Matrix([2, 0, 0, 0], 2, 2);
-  const m2m2 = new Matrix([10, -2, 2, 4], 2, 2);
-  const m2snap0 = new Matrix([5.4, -1.1, 0.9, 2.2], 2, 2);
-  const m2mi2 = new Matrix([3, -3, -1, 0], 2, 2);
-  const m2_0 = new Matrix(0, 2, 2);
+  const m2 = new Matrix([5, -1, 1, 2], matrixDims(2, 2));
+  const m2p2 = new Matrix([7, 1, 3, 4], matrixDims(2, 2));
+  const m2pp = new Matrix([10, -2, 2, 4], matrixDims(2, 2));
+  const m2dd = new Matrix([1, 1, 1, 1], matrixDims(2, 2));
+  const m2d2 = new Matrix([2.5, -0.5, 0.5, 1], matrixDims(2, 2));
+  const m2abs = new Matrix([5, 1, 1, 2], matrixDims(2, 2));
+  const m2pow2 = new Matrix([25, 1, 1, 4], matrixDims(2, 2));
+  const m2mmultm2 = new Matrix(
+    [25 - 1, -5 - 2, 5 + 2, -1 + 4],
+    matrixDims(2, 2),
+  );
+  const m2mod2 = new Matrix([1, -1, 1, 0], matrixDims(2, 2));
+  const m2modm = new Matrix([2, 0, 0, 0], matrixDims(2, 2));
+  const m2m2 = new Matrix([10, -2, 2, 4], matrixDims(2, 2));
+  const m2mi2 = new Matrix([3, -3, -1, 0], matrixDims(2, 2));
+  const m2_0 = Matrix.create(0, matrixDims(2, 2));
 
   test('basic operators', () => {
     expect(m2.add(m2).isEqualTo(m2pp)).toBe(true);
@@ -99,8 +106,7 @@ describe('Matrix', () => {
   const m2colsums = new ColumnVector([4, 3]);
   const m2colstd1 = new Matrix(
     [3 / Math.sqrt(18), -3 / Math.sqrt(18), -Math.sqrt(0.5), Math.sqrt(0.5)],
-    2,
-    2,
+    matrixDims(2, 2),
   );
   const m2colstd2 = identityMatrix(2);
 
@@ -119,10 +125,10 @@ describe('Matrix', () => {
    *  5 1
    * -1 2
    */
-  const m2cov = new Matrix([18, -3, -3, 0.5], 2, 2);
-  const m3 = new Matrix([1, 3, 3, 4], 2, 2);
-  const m2matstd1 = new Matrix([1.3, -1.1, -0.3, 0.1], 2, 2);
-  const m2matstd2 = new Matrix([1, 0, 1 / 3, 0.5], 2, 2);
+  const m2cov = new Matrix([18, -3, -3, 0.5], matrixDims(2, 2));
+  const m3 = new Matrix([1, 3, 3, 4], matrixDims(2, 2));
+  const m2matstd1 = new Matrix([1.3, -1.1, -0.3, 0.1], matrixDims(2, 2));
+  const m2matstd2 = new Matrix([1, 0, 1 / 3, 0.5], matrixDims(2, 2));
 
   test('statistics', () => {
     expect(m2.covariance().isEqualTo(m2cov)).toBe(true);
@@ -161,12 +167,17 @@ describe('Matrix', () => {
       -1 / 63,
       5 / 63,
     ],
-    3,
-    3,
+    matrixDims(3, 3),
   );
-  const m1id = new Matrix([11, 4, -20, -4, 10, 13, 13, -1, 5], 3, 3).divide(63);
+  const m1id = new Matrix(
+    [11, 4, -20, -4, 10, 13, 13, -1, 5],
+    matrixDims(3, 3),
+  ).divide(63);
   const identity3 = identityMatrix(3);
-  const m1triangular = new Matrix([1, 0, 0, 3, 5, 0, -2, 1, 63 / 5], 3, 3);
+  const m1triangular = new Matrix(
+    [1, 0, 0, 3, 5, 0, -2, 1, 63 / 5],
+    matrixDims(3, 3),
+  );
 
   test('linear algebra', () => {
     expect(m1.determinant()).toBe(m1determinant);

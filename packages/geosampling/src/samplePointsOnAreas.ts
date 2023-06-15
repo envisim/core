@@ -8,10 +8,9 @@ import {
   PointFeature,
   PointCollection,
   AreaCollection,
-  copy,
   AreaGeometryCollection,
-  PointCircle,
-  MultiPointCircle,
+  Circle,
+  MultiCircle,
   bbox4,
   longitudeCenter,
   longitudeDistance,
@@ -114,24 +113,24 @@ export function samplePointsOnAreas(
     let geom = feature.geometry;
     if (AreaGeometryCollection.isGeometryCollection(geom)) {
       geom.geometries.forEach((geometry) => {
-        if (
-          PointCircle.isObject(geometry) ||
-          MultiPointCircle.isObject(geometry)
-        ) {
+        if (Circle.isObject(geometry) || MultiCircle.isObject(geometry)) {
           geometry = geometry.toPolygon();
         }
       });
     } else {
-      if (PointCircle.isObject(geom) || MultiPointCircle.isObject(geom)) {
+      if (Circle.isObject(geom) || MultiCircle.isObject(geom)) {
         geom = geom.toPolygon();
       }
     }
   });
 
   // Buffer the Collection if needed.
+  // THIS NEEDS FIXING
+  // BUFFERED IS SET TO GJ
   let buffered: AreaCollection;
   if (radius > 0) {
     buffered = buffer(unionOfPolygons(gj), {
+      // HERE, MAYBE NULL
       radius: radius,
       steps: 10,
     });
@@ -139,7 +138,7 @@ export function samplePointsOnAreas(
       throw new Error('Buffering failed.');
     }
   } else {
-    buffered = gj;
+    buffered = gj; // HERE, UNBUFFERING???
   }
 
   // Pre-calculations for both metods 'uniform' and 'systematic'.
@@ -150,7 +149,7 @@ export function samplePointsOnAreas(
   const parentIndex: number[] = [];
   let pointLonLat: GeoJSON.Position;
   switch (method) {
-    case 'uniform':
+    case 'uniform': {
       // Store number of iterations and number of hits.
       let iterations = 0;
       let hits = 0;
@@ -187,8 +186,11 @@ export function samplePointsOnAreas(
         }
         iterations += 1;
       }
+
       break;
-    case 'systematic':
+    }
+
+    case 'systematic': {
       // Precalculations for systematic sampling.
       const boxHeight = distance([box[0], box[1]], [box[0], box[3]]);
       const latPerMeter = (box[3] - box[1]) / boxHeight;
@@ -240,7 +242,10 @@ export function samplePointsOnAreas(
           }
         }
       }
+
       break;
+    }
+
     default:
       throw new Error('Unknown method.');
   }
@@ -249,7 +254,7 @@ export function samplePointsOnAreas(
     // Transfer design weights here.
     pointFeatures.forEach((pf: PointFeature, i) => {
       let dw = 1;
-      let feature = gj.features[parentIndex[i]];
+      const feature = gj.features[parentIndex[i]];
       if (feature.properties?._designWeight) {
         dw = feature.properties._designWeight;
         if (pf.properties) {

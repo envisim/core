@@ -34,6 +34,7 @@ function toPointGeometry(
           !PointGeometryCollection.isGeometryCollection(geometry)
           ? new PointGeometryCollection(geometry, shallow)
           : geometry;
+      throw new TypeError('GeometryCollection not allowed');
 
     default:
       throw new TypeError('type not supported');

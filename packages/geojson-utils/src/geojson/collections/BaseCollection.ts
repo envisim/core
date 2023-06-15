@@ -25,7 +25,7 @@ export abstract class BaseCollection<
    * @returns the bounding box.
    */
   setBBox(force: boolean = false): GJ.BBox {
-    const bboxArray: GJ.BBox[] = new Array(this.features.length);
+    const bboxArray = new Array<GJ.BBox>(this.features.length);
 
     if (force === true) {
       this.forEach((feature: Feature<T>, index: number) => {

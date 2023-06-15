@@ -34,12 +34,12 @@ interface IRandomBetaSmall {
 }
 
 // alpha, beta < 1
-const sakasegawaB00 = (
+function sakasegawaB00(
   n: number,
   a0: number,
   b0: number,
   rand: Random,
-): number[] => {
+): number[] {
   let t = (1.0 - a0) / (2.0 - a0 - b0);
   let s = (b0 - a0) * (1.0 - a0 - b0);
   let r = PQMULTFUN(a0);
@@ -53,15 +53,15 @@ const sakasegawaB00 = (
 
   const constants: ISakasegawaB00 = {a0, b0, t, s, r, p, q, c};
 
-  const rv = new Array(n);
+  const rv = new Array<number>(n);
   for (let i = 0; i < n; i++) rv[i] = sakasegawaB00_inner(rand, constants);
   return rv;
-};
+}
 
-const sakasegawaB00_inner = (
+function sakasegawaB00_inner(
   rand: Random,
   {a0, b0, t, s, r, p, q, c}: ISakasegawaB00,
-): number => {
+): number {
   let u1: number, u2: number, x: number;
 
   let run = 1;
@@ -94,14 +94,14 @@ const sakasegawaB00_inner = (
   // Should not happen, solution is found in average 1.36 iter.
   console.warn('beta (sakasegawaB00) did not resolve in 1e5 iterations');
   return NaN;
-};
+}
 
-const randomBetaLarge = (
+function randomBetaLarge(
   n: number,
   a0: number,
   b0: number,
   rand: Random,
-): number[] => {
+): number[] {
   const alpha = a0 + b0;
   const beta = Math.sqrt((alpha - 2.0) * (2 * a0 * b0 - alpha));
 
@@ -122,15 +122,15 @@ const randomBetaLarge = (
 
   constants.gamma += constants.a;
 
-  const rv = new Array(n);
+  const rv = new Array<number>(n);
   for (let i = 0; i < n; i++) rv[i] = randomBetaLarge_inner(rand, constants);
   return rv;
-};
+}
 
-const randomBetaLarge_inner = (
+function randomBetaLarge_inner(
   rand: Random,
   {a0small, alpha, beta, gamma, a, b}: IRandomBetaLarge,
-): number => {
+): number {
   let u: number, v: number, w: number, z: number;
   let r: number, s: number, t: number;
   let run = 1;
@@ -157,14 +157,14 @@ const randomBetaLarge_inner = (
   // Should not happen, solution is found in (max) average 4 iter.
   console.warn('beta (randomBetaLarge) did not resolve in 1e5 iterations');
   return NaN;
-};
+}
 
-const randomBetaSmall = (
+function randomBetaSmall(
   n: number,
   a0: number,
   b0: number,
   rand: Random,
-): number[] => {
+): number[] {
   const a0small: boolean = a0 <= b0;
   let a: number, b: number;
 
@@ -193,15 +193,15 @@ const randomBetaSmall = (
     b,
   };
 
-  const rv = new Array(n);
+  const rv = new Array<number>(n);
   for (let i = 0; i < n; i++) rv[i] = randomBetaSmall_inner(rand, constants);
   return rv;
-};
+}
 
-const randomBetaSmall_inner = (
+function randomBetaSmall_inner(
   rand: Random,
   {a0small, alpha, beta, kappa1, kappa2, a, b}: IRandomBetaSmall,
-): number => {
+): number {
   let u1: number, u2: number, v: number, y: number, z: number;
   let w: number = 0.0;
 
@@ -242,7 +242,7 @@ const randomBetaSmall_inner = (
   }
 
   return (a0small ? b : w) / (b + w);
-};
+}
 
 /*
  * Returns a random Beta(alpha, beta)
@@ -259,12 +259,12 @@ const randomBetaSmall_inner = (
  * Communications of the ACM 21(4), 317-322.
  * https://doi.org/10.1145/359460.359482
  */
-export const randomBeta = (
+export function randomBeta(
   n: number,
   alpha: number,
   beta: number,
   rand: Random,
-): number[] => {
+): number[] {
   if (alpha === 1.0 && beta === 1.0) return rand.floatArray(n);
   if (alpha === 1.0) {
     const pow = 1.0 / beta;
@@ -280,4 +280,4 @@ export const randomBeta = (
     return randomBetaSmall(n, alpha, beta, rand);
   }
   return randomBetaLarge(n, alpha, beta, rand);
-};
+}

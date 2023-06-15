@@ -1,6 +1,6 @@
 import type * as GJ from '../../types/geojson.js';
 import type {GeomEachCallback} from '../callback-types.js';
-import {AreaGeometry, toAreaGeometry} from '../gcs/index.js';
+import {toAreaGeometry} from '../gcs/index.js';
 import type {AreaObject} from '../objects/index.js';
 import {OptionalParam} from '../util-types.js';
 import {BaseFeature} from './BaseFeature.js';

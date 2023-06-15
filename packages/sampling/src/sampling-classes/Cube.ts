@@ -16,8 +16,6 @@ export enum CubeMethod {
 export class Cube extends SamplingBase {
   setDirect: boolean = false;
 
-  runInternal: () => void = () => {};
-
   method: CubeMethod;
 
   pbalance: number = 0;
@@ -43,6 +41,7 @@ export class Cube extends SamplingBase {
 
     this.setDirect = true;
     this.method = method;
+    this.pbalance = xxbalance.ncol;
 
     switch (this.method) {
       case CubeMethod.CUBE:
@@ -61,7 +60,6 @@ export class Cube extends SamplingBase {
 
     this.init(probabilities);
 
-    this.pbalance = xxbalance.ncol;
     this.amat = new Array<number>(this.N * this.pbalance);
     this.bmat = new Array<number>((this.pbalance + 1) * this.pbalance);
     this.uvec = new Array<number>(this.pbalance + 1);

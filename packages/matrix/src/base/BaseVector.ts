@@ -26,7 +26,7 @@ export abstract class BaseVector extends BaseMatrix {
     throw new TypeError(msg ?? 'Expected BaseVector');
   }
 
-  constructor(arr: number | number[], nrow: number, ncol: number) {
+  constructor(arr: number[], nrow: number, ncol: number) {
     super(arr, nrow, ncol);
   }
 

@@ -33,13 +33,13 @@ describe('buffer', () => {
   });
 
   const collection = AreaCollection.create([polygon1, polygon2]);
-  //console.log(area(polygon));
-  //console.log(length(polygon));
-  const b = buffer(unionOfPolygons(collection), {radius: 10, steps: 10});
-  //console.log(area(b));
-  //console.log(JSON.stringify(b, null, 2));
+  const b = buffer(unionOfPolygons(collection), {
+    radius: 10,
+    steps: 10,
+  }) as AreaCollection;
 
   test('buffer', () => {
+    expect(b).not.toBeNull();
     expect(b.features.length).toBe(1);
   });
 });

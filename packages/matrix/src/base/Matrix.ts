@@ -4,7 +4,7 @@ import {reducedRowEchelonForm} from '@envisim/utils';
 import {BaseMatrix} from './BaseMatrix.js';
 import {ColumnVector} from './ColumnVector.js';
 import {RowVector} from './RowVector.js';
-import {MatrixByRow, MatrixDims} from './types.js';
+import {MatrixByRow, MatrixDims} from './matrixDims.js';
 
 export class Matrix extends BaseMatrix {
   /**
@@ -116,15 +116,17 @@ export class Matrix extends BaseMatrix {
     shallow: boolean = false,
   ) {
     if (Array.isArray(arr)) {
-      super(
-        shallow === true ? arr : arr.slice(),
-        dims.nrow ?? arr.length,
-        dims.ncol ?? 1,
-      );
+      let nrow = dims.nrow ?? arr.length;
+      let ncol = dims.ncol ?? 1;
 
-      return dims.byRow === true && this._nrow > 0 && this._ncol > 0
-        ? this.transpose()
-        : this;
+      if (dims.byRow === true) {
+        nrow = dims.ncol ?? 1;
+        ncol = dims.nrow ?? arr.length;
+      }
+
+      super(shallow === true ? arr : arr.slice(), nrow, ncol);
+
+      return dims.byRow === true ? this.transpose() : this;
     }
 
     if (BaseMatrix.isBaseMatrix(arr)) {
@@ -147,7 +149,7 @@ export class Matrix extends BaseMatrix {
    * @group Accessors
    */
   extractColumn(col: number): ColumnVector {
-    if (!Number.isInteger(col) || col < 0 || col <= this._ncol)
+    if (!Number.isInteger(col) || col < 0 || col >= this._ncol)
       throw new RangeError('columnIndex out of bounds');
 
     return new ColumnVector(
@@ -160,14 +162,15 @@ export class Matrix extends BaseMatrix {
    * @group Accessors
    */
   extractRow(row: number): RowVector {
-    if (!Number.isInteger(row) || row < 0 || row <= this._nrow)
+    if (!Number.isInteger(row) || row < 0 || row >= this._nrow)
       throw new RangeError('columnIndex out of bounds');
 
     const s = new Array<number>(this._ncol);
-    for (let i = row, j = 0; i < this._nelements; row += this._ncol, j++)
+
+    for (let i = row, j = 0; i < this._nelements; i += this._nrow, j++)
       s[j] = this._e[i];
 
-    return new RowVector(s);
+    return new RowVector(s, true);
   }
 
   /**
@@ -262,7 +265,7 @@ export class Matrix extends BaseMatrix {
    * @group Copy methods
    */
   transpose(): Matrix {
-    const s = Matrix.create(0, {nrow: this._nrow, ncol: this._ncol});
+    const s = Matrix.create(0, {nrow: this._ncol, ncol: this._nrow});
 
     this.forEach((e, i) => {
       s.edRC(this.colOfIndex(i), this.rowOfIndex(i), e);
@@ -289,9 +292,9 @@ export class Matrix extends BaseMatrix {
    */
   diagonal(): ColumnVector {
     const rc = Math.min(this._nrow, this._ncol);
-    const s = ColumnVector.create(0.0, rc);
-
-    return s.map((_, i) => this.atRC(i, i), true);
+    const s = new Array<number>(rc);
+    for (let i = 0; i < rc; i++) s[i] = this.atRC(i, i);
+    return new ColumnVector(s, true);
   }
 
   // Column operations
@@ -366,7 +369,7 @@ export class Matrix extends BaseMatrix {
    * Calculates the column maximum values
    * @group Column operations
    */
-  colMaxs(asRow: boolean = false): ColumnVector {
+  colMaxs(): ColumnVector {
     const s = ColumnVector.create(0.0, this._ncol);
 
     return s.map(
@@ -446,13 +449,14 @@ export class Matrix extends BaseMatrix {
    * @group Linear algebra
    */
   reducedRowEchelon(eps: number = 1e-9, inPlace: boolean = false): Matrix {
+    const mIdx = (r: number, c: number) => c * this._nrow + r;
     if (inPlace === true) {
-      reducedRowEchelonForm(this._e, this._nrow, this._ncol, eps);
+      reducedRowEchelonForm(this._e, this._nrow, this._ncol, eps, mIdx);
       return this;
     }
 
     const s = this.slice();
-    reducedRowEchelonForm(s, this._nrow, this._ncol, eps);
+    reducedRowEchelonForm(s, this._nrow, this._ncol, eps, mIdx);
     return new Matrix(s, {nrow: this._nrow, ncol: this._ncol}, true);
   }
 
@@ -497,9 +501,7 @@ export class Matrix extends BaseMatrix {
    * @group Linear algebra
    */
   determinant(): number {
-    if (!this.isSquare()) {
-      throw new Error('Matrix must be square');
-    }
+    if (!this.isSquare()) throw new Error('Matrix must be square');
 
     return this.rightTriangular().diagonal().prod();
   }
@@ -508,7 +510,7 @@ export class Matrix extends BaseMatrix {
    * @returns the inverse of the matrix
    * @group Linear algebra
    */
-  inverse(): Matrix | null {
+  inverse(eps: number = 1e-9): Matrix | null {
     if (!this.isSquare()) throw new Error('Matrix is not square.');
 
     if (this.determinant() === 0) {
@@ -519,7 +521,7 @@ export class Matrix extends BaseMatrix {
     const sim = Matrix.cbind(
       this,
       identityMatrix(this._nrow),
-    ).reducedRowEchelon();
+    ).reducedRowEchelon(eps, true);
 
     return new Matrix(
       sim.internal.slice(this._nelements),
@@ -554,7 +556,7 @@ export function diagonalMatrix(
   nrow?: number,
 ): Matrix {
   if (typeof arr === 'number') {
-    if (typeof nrow !== 'number' || Number.isInteger(nrow))
+    if (typeof nrow !== 'number' || !Number.isInteger(nrow))
       throw new TypeError('nrow must be defined and integer if arr is number');
 
     const s = Matrix.create(0.0, {nrow, ncol: nrow});

@@ -22,9 +22,6 @@ export const randomOptionsDefault: {rand: Random; eps: number} = {
 };
 
 /** @group Parameter interfaces */
-export interface IEmptyParams {}
-
-/** @group Parameter interfaces */
 export interface IBenfordMantissaParams {
   /** @defaultValue 10 */
   base: number;

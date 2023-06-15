@@ -3,17 +3,17 @@ import {logGammaFunction} from './gamma-utils.js';
 const SAE = -20; //9;
 const EPS = Math.pow(10, SAE);
 
-export const betaFunction = (alpha: number, beta: number): number => {
+export function betaFunction(alpha: number, beta: number): number {
   return Math.exp(logBetaFunction(alpha, beta));
-};
+}
 
-export const logBetaFunction = (alpha: number, beta: number): number => {
+export function logBetaFunction(alpha: number, beta: number): number {
   return (
     logGammaFunction(alpha) +
     logGammaFunction(beta) -
     logGammaFunction(alpha + beta)
   );
-};
+}
 
 /*
  * Majumder, K. L., & Bhattacharjee, G. P. (1973).
@@ -28,12 +28,12 @@ export const logBetaFunction = (alpha: number, beta: number): number => {
  * Journal of the Royal Statistical Society. Series C (Applied Statistics), 26(1), 111-114.
  * https://doi.org/10.2307/2346887
  */
-export const regularizedBetaFunction = (
+export function regularizedBetaFunction(
   x: number,
   alpha: number,
   beta: number,
   logbetafn?: number,
-): number => {
+): number {
   if (x < 0.0 || 1.0 < x) return NaN;
   if (alpha <= 0.0 || beta <= 0.0) return NaN;
   if (x === 0.0 || x === 1.0) return x;
@@ -82,17 +82,17 @@ export const regularizedBetaFunction = (
     (ret * Math.exp(alpha * Math.log(x) + (beta - 1.0) * Math.log(cx) - bf)) /
     alpha
   );
-};
+}
 
-export const incompleteBetaFunction = (
+export function incompleteBetaFunction(
   x: number,
   alpha: number,
   beta: number,
   logbetafn?: number,
-): number => {
+): number {
   const bf = logbetafn ?? logBetaFunction(alpha, beta);
   return Math.exp(bf) * regularizedBetaFunction(x, alpha, beta, bf);
-};
+}
 
 /*
  * Majumder, K. L., & Bhattacharjee, G. P. (1973).
@@ -118,12 +118,12 @@ export const incompleteBetaFunction = (
  * Journal of the Royal Statistical Society. Series C (Applied Statistics), 40(1), 236.
  * https://doi.org/10.2307/2347939
  */
-export const inverseRegularizedBetaFunction = (
+export function inverseRegularizedBetaFunction(
   p: number,
   alpha: number,
   beta: number,
   logbetafn?: number,
-): number => {
+): number {
   /* AS 64:
    * p = alpha
    * q = beta
@@ -237,7 +237,7 @@ export const inverseRegularizedBetaFunction = (
 
   // 12 -- shouldn't come to this
   return ret;
-};
+}
 
 /*
  * Press, W. H., Teukolsky, S. A., Vetterling, W. T., & Flannery, B. P. (1996).
@@ -245,14 +245,14 @@ export const inverseRegularizedBetaFunction = (
  * Cambridge University Press.
  * ISBN: 9780521430647
  */
-export const betaContinuedFraction = (
+export function betaContinuedFraction(
   x: number,
   alpha: number,
   beta: number,
-): number => {
-  let qab = alpha + beta;
-  let qap = alpha + 1.0;
-  let qam = alpha - 1.0;
+): number {
+  const qab = alpha + beta;
+  const qap = alpha + 1.0;
+  const qam = alpha - 1.0;
   let c = 1;
   let d = 1.0 - (qab * x) / qap;
   if (Math.abs(d) < Number.EPSILON) d = Number.EPSILON;
@@ -282,4 +282,4 @@ export const betaContinuedFraction = (
   }
 
   return h;
-};
+}

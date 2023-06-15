@@ -79,7 +79,8 @@ export type LineGeometry = LineObject | LineGeometryCollection;
 export type AreaGeometry = AreaObject | AreaGeometryCollection;
 
 // Features
-export type FeatureProperties = {[name: string]: any} | null;
+export type NumericProperties = {[name: string]: number};
+export type FeatureProperties = NumericProperties | null;
 export interface Feature<T extends Geometry | null>
   extends GeoJsonObject<'Feature'> {
   type: 'Feature';
@@ -103,83 +104,4 @@ export interface LineFeatureCollection extends FeatureCollection {
 }
 export interface AreaFeatureCollection extends FeatureCollection {
   features: AreaFeature[];
-}
-
-export function isPointObject(obj: any): obj is PointObject {
-  return (
-    (obj?.type === 'Point' || obj?.type === 'MultiPoint') &&
-    typeof obj?.radius !== 'number'
-  );
-}
-
-export function isPointGeometry(
-  obj: any,
-  shallow: boolean = true,
-): obj is PointGeometry {
-  if (typeof obj?.type !== 'string') return false;
-  if (isPointObject(obj) === true) return true;
-
-  if (
-    obj.type !== 'GeometryCollection' ||
-    Array.isArray(obj?.geometries) ||
-    obj.geometries.length === 0
-  )
-    return false;
-
-  if (shallow === true) return isPointObject(obj.geometries[0]);
-  return obj.geometries.every((g: any) => isPointObject(g));
-}
-
-export function isLineObject(obj: any): obj is LineObject {
-  return obj?.type === 'LineString' || obj?.type === 'MultiLineString';
-}
-
-export function isLineGeometry(
-  obj: any,
-  shallow: boolean = true,
-): obj is LineGeometry {
-  if (typeof obj?.type !== 'string') return false;
-  if (isLineObject(obj) === true) return true;
-
-  if (
-    obj.type !== 'GeometryCollection' ||
-    Array.isArray(obj?.geometries) ||
-    obj.geometries.length === 0
-  )
-    return false;
-
-  if (shallow === true) return isLineObject(obj.geometries[0]);
-  return obj.geometries.every((g: any) => isLineObject(g));
-}
-
-export function isAreaObject(obj: any): obj is AreaObject {
-  return (
-    ((obj?.type === 'Point' || obj?.type === 'MultiPoint') &&
-      typeof obj?.radius === 'number') ||
-    obj?.type === 'Polygon' ||
-    obj?.type === 'MultiPolygon'
-  );
-}
-
-export function isAreaGeometry(
-  obj: any,
-  shallow: boolean = true,
-): obj is AreaGeometry {
-  if (typeof obj?.type !== 'string') return false;
-  if (isAreaObject(obj) === true) return true;
-
-  if (
-    obj.type !== 'GeometryCollection' ||
-    Array.isArray(obj?.geometries) ||
-    obj.geometries.length === 0
-  )
-    return false;
-
-  if (shallow === true) return isAreaObject(obj.geometries[0]);
-  return obj.geometries.every((g: any) => isAreaObject(g));
-}
-
-export function isBaseGeometry(obj: any): obj is BaseGeometry {
-  if (typeof obj?.type !== 'string') return false;
-  return isPointObject(obj) || isLineObject(obj) || isAreaObject(obj);
 }

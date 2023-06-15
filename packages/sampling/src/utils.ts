@@ -25,7 +25,7 @@ export const inclusionProbabilities = (
   let pmax = prob.max();
 
   let n1: number, sp: number;
-  let it = prob.iterator();
+  const it = prob.iterator();
   let res: MatrixIteratorReturn;
   while (pmax > 1.0) {
     n1 = 0;

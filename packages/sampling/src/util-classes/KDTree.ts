@@ -110,7 +110,7 @@ export class KDTree {
     if (spread == 0.0) return 0;
 
     const n = to - fr;
-    let dti = this.dt.nrow * node.split;
+    const dti = this.dt.nrow * node.split;
     let l = 0;
     let r = n;
     let lbig = -Number.MAX_VALUE;
@@ -210,7 +210,7 @@ export class KDTree {
   }
 
   unitExists(id: number): boolean {
-    let node = this.findNode(id);
+    const node = this.findNode(id);
 
     if (node == null) throw new Error('node error');
 

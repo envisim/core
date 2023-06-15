@@ -22,15 +22,15 @@ import {binomialCoefficient} from './utils.js';
  * R-project.
  * https://bugs.r-project.org/show_bug.cgi?id=6772
  */
-export const hypergeometricCDF = (
-  x: number, // kk
-  N: number, // mm
-  K: number, // ll
-  n: number, // nn
+export function hypergeometricCDF(
+  x: number,
+  N: number,
+  K: number,
+  n: number,
   pmf: (y: number, nk: number, kn: number) => number,
-): number => {
-  let NK = K;
-  let KN = N - K;
+): number {
+  const NK = K;
+  const KN = N - K;
   let xx = x;
 
   if (x < Math.max(0, n - KN)) return 0.0;
@@ -47,20 +47,20 @@ export const hypergeometricCDF = (
   }
 
   return s * pmf(x, NK, KN);
-};
+}
 
-export const hypergeometricQuantile = (
+export function hypergeometricQuantile(
   quantile: number,
   N: number,
   K: number,
   n: number,
-): number => {
+): number {
   if (quantile < 0.0 || quantile > 1.0) return NaN;
   let NK = K;
   let KN = N - K;
-  let k0 = Math.max(0, n - KN);
+  const k0 = Math.max(0, n - KN);
   if (quantile === 0.0) return k0;
-  let k1 = Math.min(n, K);
+  const k1 = Math.min(n, K);
   if (quantile === 1.0) return Math.min(n, K);
 
   let nk = k0;
@@ -82,4 +82,4 @@ export const hypergeometricQuantile = (
   }
 
   return nk;
-};
+}

@@ -22,9 +22,7 @@ export const data = new Matrix(
     0.94467527, 0.7176185, 0.66079779, 0.9919061, 0.62911404, 0.3800352,
     0.06178627, 0.7774452,
   ],
-  10,
-  2,
-  true,
+  {nrow: 10, ncol: 2, byRow: true},
 );
 
 export function createIndexedTable(arr: number[]): number[][] {
