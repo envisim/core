@@ -1,5 +1,3 @@
-import {Position} from '../types/geojson.js';
-
 /**
  * @param p the longitude to normalize
  * @param norm the normalizing factor
