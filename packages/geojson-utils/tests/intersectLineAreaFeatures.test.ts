@@ -1,57 +1,116 @@
 import {
   AreaFeature,
   LineFeature,
+  LineString,
   intersectLineAreaFeatures,
+  GeoJSON,
 } from '../src/index.js';
 import './_equalArrays.testf';
 
 describe('intersectLinePolygonFeatures', () => {
-  const polygon = AreaFeature.create({
-    type: 'Polygon',
-    coordinates: [
-      [
-        [-0.5, -0.5],
-        [0.5, -0.5],
-        [0.5, 0.5],
-        [-0.5, 0.5],
-        [-0.5, -0.5],
-      ],
+  const polycoords: GeoJSON.Position[][] = [
+    [
+      [-0.5, -0.5],
+      [0.5, -0.5],
+      [0.5, 0.5],
+      [-0.5, 0.5],
+      [-0.5, -0.5],
     ],
-  });
-
-  const line = LineFeature.create({
-    type: 'LineString',
-    coordinates: [
-      [-2, 0],
-      [-0.5, 0],
-      [0, 0.1],
-      [0.1, 0],
-      [0.4, 0],
-      [0.5, 0],
-      [2, 0],
-    ],
-  });
-
-  const intersection = intersectLineAreaFeatures(line, polygon);
-  let coords = [
-    [2, 2],
-    [3, 3],
-    [3, 3],
-    [3, 3],
-    [3, 3],
   ];
+  const polycoords2: GeoJSON.Position[][] = [
+    [
+      [0.0, -1.0],
+      [0.0, 1.0],
+      [1.0, 1.0],
+      [1.0, -1.0],
+      [0.0, -1.0],
+    ],
+  ];
+  const linecoords: GeoJSON.Position[] = [
+    [-2, 0],
+    [-0.5, 0],
+    [0, 0.1],
+    [0.1, 0],
+    [0.4, 0],
+    [0.5, 0],
+    [2, 0],
+  ];
+  const line = LineFeature.create(
+    {
+      type: 'LineString',
+      coordinates: linecoords,
+    },
+    {},
+    true,
+  );
 
-  if (intersection) {
-    if (intersection.geometry.type === 'LineString') {
-      coords = intersection.geometry.coordinates;
-      // console.log(JSON.stringify(intersection.geoJSON, null, 2));
-      // console.log(coords);
-      // expected coords are [[-0.5,0],[0.5,0]]
-    }
-  }
+  test('Simple polygon', () => {
+    const polygon = AreaFeature.create({
+      type: 'Polygon',
+      coordinates: polycoords,
+    });
 
-  test('intersectLinePolygonFeatures', () => {
-    expect(coords[0]).arrayToAlmostEqual([-0.5, 0], 1e-9);
-    expect(coords[4]).arrayToAlmostEqual([0.5, 0], 1e-9);
+    const intersection = intersectLineAreaFeatures(
+      line,
+      polygon,
+    ) as LineFeature;
+    expect(intersection).not.toBeNull();
+
+    expect(LineString.isObject(intersection.geometry)).toBe(true);
+    const coords = (intersection.geometry as LineString).coordinates;
+
+    expect(coords.length).toBe(5);
+    expect(coords[0]).arrayToAlmostEqual(linecoords[1], 1e-9);
+    expect(coords[1]).arrayToAlmostEqual(linecoords[2], 1e-9);
+    expect(coords[2]).arrayToAlmostEqual(linecoords[3], 1e-9);
+    expect(coords[3]).arrayToAlmostEqual(linecoords[4], 1e-9);
+    expect(coords[4]).arrayToAlmostEqual(linecoords[5], 1e-9);
+  });
+
+  test('Overlapping multipolygon', () => {
+    const polygon = AreaFeature.create({
+      type: 'MultiPolygon',
+      coordinates: [polycoords, polycoords],
+    });
+
+    const intersection = intersectLineAreaFeatures(
+      line,
+      polygon,
+    ) as LineFeature;
+    expect(intersection).not.toBeNull();
+
+    expect(LineString.isObject(intersection.geometry)).toBe(true);
+    const coords = (intersection.geometry as LineString).coordinates;
+
+    expect(coords.length).toBe(5);
+    expect(coords[0]).arrayToAlmostEqual(linecoords[1], 1e-9);
+    expect(coords[1]).arrayToAlmostEqual(linecoords[2], 1e-9);
+    expect(coords[2]).arrayToAlmostEqual(linecoords[3], 1e-9);
+    expect(coords[3]).arrayToAlmostEqual(linecoords[4], 1e-9);
+    expect(coords[4]).arrayToAlmostEqual(linecoords[5], 1e-9);
+  });
+
+  test('Three multipolygons', () => {
+    const polygon = AreaFeature.create({
+      type: 'MultiPolygon',
+      coordinates: [polycoords, polycoords, polycoords2],
+    });
+
+    const intersection = intersectLineAreaFeatures(
+      line,
+      polygon,
+    ) as LineFeature;
+    expect(intersection).not.toBeNull();
+
+    expect(LineString.isObject(intersection.geometry)).toBe(true);
+    const coords = (intersection.geometry as LineString).coordinates;
+
+    expect(coords.length).toBe(6);
+    expect(coords[0]).arrayToAlmostEqual(linecoords[1], 1e-9);
+    expect(coords[1]).arrayToAlmostEqual(linecoords[2], 1e-9);
+    expect(coords[2]).arrayToAlmostEqual(linecoords[3], 1e-9);
+    expect(coords[3]).arrayToAlmostEqual(linecoords[4], 1e-9);
+    expect(coords[4]).arrayToAlmostEqual(linecoords[5], 1e-9);
+    expect(coords[5]).arrayToAlmostEqual([1.0, 0.0], 1e-9);
   });
 });
