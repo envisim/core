@@ -1,175 +1,16 @@
 import type * as GJ from './types/geojson.js';
 import {
-  AreaObject,
   AreaFeature,
   LineFeature,
   LineString,
   MultiLineString,
-  LineObject,
+  MultiPolygon,
+  Polygon,
+  Circle,
 } from './geojson/index.js';
 import {bboxInBBox} from './utils/bbox.js';
-import {intersectSegments} from './utils/intersectSegments.js';
+import {Segment} from './utils/intersectSegments.js';
 import {pointInSinglePolygonPosition} from './utils/pointInPolygonPosition.js';
-
-type sortArrayElement = [GJ.Position, number];
-
-// IntersectSegments can be replaced by intersectGreatCircleSegments
-// if we want to treat segments as geodesics.
-
-/**
- * @internal
- * Can be replaced by distance if we want to treat segments as geodesics.
- */
-function squaredEuclideanDistOnSegment(
-  p1: GJ.Position,
-  p2: GJ.Position,
-): number {
-  const dx = p1[0] - p2[0];
-  const dy = p1[1] - p2[1];
-  return dx * dx + dy * dy;
-}
-
-/**
- * @internal
- * Can be replaced by intermediate if we want to treat segments as geodesics.
- */
-function midpoint(p1: GJ.Position, p2: GJ.Position): GJ.Position {
-  return [(p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2];
-}
-
-/**
- * @internal
- * @returns all intersection points between a line segment and a polygon, or
- * an empty array if no intersections.
- */
-function lineSegmentPolygonIntersectPoints(
-  segment: GJ.Position[],
-  polygon: GJ.Position[][],
-): GJ.Position[] {
-  const p: GJ.Position[] = [];
-  let q: GJ.Position | null;
-
-  for (let i = 0; i < polygon.length; i++) {
-    for (let j = 0; j < polygon[i].length - 1; j++) {
-      q = intersectSegments(segment, [
-        [polygon[i][j][0], polygon[i][j][1]],
-        [polygon[i][j + 1][0], polygon[i][j + 1][1]],
-      ]);
-
-      if (q) {
-        p.push(q);
-      }
-    }
-  }
-
-  return p;
-}
-
-/**
- * @internal
- * @returns coordinates array of (multi-)line in polygon (intersection),
- * or an empty array if no intersection
- */
-function lineStringInPolygon(
-  line: GJ.Position[],
-  polygon: GJ.Position[][],
-): GJ.Position[][] {
-  // 1. Build new linestring with all intersection-points added in order.
-  const points: GJ.Position[] = [];
-  let intersectionpoints: GJ.Position[] = [];
-
-  for (let i = 0; i < line.length - 1; i++) {
-    points.push([...line[i]]);
-    intersectionpoints = lineSegmentPolygonIntersectPoints(
-      [line[i], line[i + 1]],
-      polygon,
-    );
-
-    if (intersectionpoints.length > 0) {
-      // Sort and add/push points here.
-      const sortArray: sortArrayElement[] = intersectionpoints
-        .map(
-          (v: GJ.Position): sortArrayElement => [
-            v,
-            squaredEuclideanDistOnSegment(v, line[i]),
-          ],
-        )
-        .sort((a, b) => a[1] - b[1]);
-
-      const maxSqDist = squaredEuclideanDistOnSegment(line[i], line[i + 1]);
-
-      for (let j = 0; j < sortArray.length; j++) {
-        const sqDist = sortArray[j][1];
-
-        // Make sure not to add points equal to segment points.
-        if (sqDist > 0 && sqDist < maxSqDist) {
-          points.push(sortArray[j][0]);
-        }
-      }
-    }
-  }
-
-  // Add last point.
-  points.push([...line[line.length - 1]]);
-
-  // 2. Check each midpoint for in/out and build new (multi-)linestring.
-  const mls: GJ.Position[][] = [];
-  let ls: GJ.Position[] = [];
-  let mp: GJ.Position;
-  let pushed = -1;
-
-  for (let i = 0; i < points.length - 1; i++) {
-    mp = midpoint(points[i], points[i + 1]);
-
-    if (pointInSinglePolygonPosition(mp, polygon)) {
-      // This segment is in the Polygon.
-      if (pushed < i) {
-        ls.push(points[i]);
-      }
-
-      ls.push(points[i + 1]);
-      pushed = i + 1;
-    } else if (pushed === i) {
-      // Previous segment was in, but not this one. This ends a linestring.
-      // Push linestring to mls and clear linestring.
-      mls.push(ls);
-      ls = [];
-    }
-  }
-
-  if (pushed === points.length - 1) {
-    // The final segment was in, but the linestring has not been pushed yet.
-    mls.push(ls);
-  }
-
-  return mls;
-}
-
-/**
- * @internal
- * Helper function for possible multi-geometries.
-
- * @returns array of coordinates for MultiLineString inside MultiPolygon,
- * or an empty array if no intersection.
- */
-function multiLineStringInMultiPolygon(
-  line: GJ.Position[][],
-  polygon: GJ.Position[][][],
-) {
-  const mls: GJ.Position[][] = [];
-  let part: GJ.Position[][];
-
-  for (let i = 0; i < line.length; i++) {
-    for (let j = 0; j < polygon.length; j++) {
-      part = lineStringInPolygon(line[i], polygon[j]);
-
-      if (part.length > 0) {
-        mls.push(...part);
-      }
-    }
-  }
-  return mls;
-}
 
 /**
  * Computes the intersection between a LineFeature
@@ -191,44 +32,230 @@ export function intersectLineAreaFeatures(
   )
     return null;
 
-  // Build MultiLineString coordinates for LineFeature
-  const mls: GJ.Position[][] = [];
-  lineFeature.geomEach((lg: LineObject) => {
-    if (lg.type === 'LineString') {
-      mls.push(lg.coordinates);
+  const geometry = lineFeature.geometry;
+  let multiLineString: GJ.Position[][];
+  const areas: GJ.Position[][][] = [];
+
+  // Construct the MultiLineString by fetching all LineStrings
+  if (LineString.isObject(geometry)) {
+    multiLineString = [geometry.coordinates];
+  } else if (MultiLineString.isObject(geometry)) {
+    multiLineString = geometry.coordinates;
+  } else {
+    // A LineGC should really be a MultiLineString
+    multiLineString = [];
+    geometry.geomEach((geom) => {
+      if (LineString.isObject(geom)) multiLineString.push(geom.coordinates);
+      else multiLineString.push(...geom.coordinates);
+    });
+  }
+
+  // Construct the MultiPolygon (areas) by fetching all polygons
+  areaFeature.geomEach((geom) => {
+    if (Polygon.isObject(geom)) {
+      areas.push(geom.coordinates);
+    } else if (MultiPolygon.isObject(geom)) {
+      areas.push(...geom.coordinates);
+    } else if (Circle.isObject(geom)) {
+      areas.push(geom.toPolygon({pointsPerCircle}).coordinates);
     } else {
-      mls.push(...lg.coordinates);
+      areas.push(...geom.toPolygon({pointsPerCircle}).coordinates);
     }
   });
 
-  // Build MultiPolygon coordinates for AreaFeature
-  const mp: GJ.Position[][][] = [];
-  areaFeature.geomEach((ag: AreaObject) => {
-    switch (ag.type) {
-      case 'Polygon':
-        mp.push(ag.coordinates);
-        break;
+  // Since lineStringInAreaFeature returns MultiLineString, we need to flatten
+  const coords = multiLineString.flatMap((ls) =>
+    lineStringInPolygons(ls, areas),
+  );
 
-      case 'MultiPolygon':
-        mp.push(...ag.coordinates);
-        break;
+  if (coords.length === 0) return null;
 
-      case 'Point':
-        mp.push(ag.toPolygon({pointsPerCircle}).coordinates);
-        break;
+  // We don't need to claim Multi if there is only one LineString left
+  if (coords.length === 1)
+    return LineFeature.create(LineString.create(coords[0], true), {}, true);
 
-      case 'MultiPoint':
-        mp.push(...ag.toPolygon({pointsPerCircle}).coordinates);
-        break;
+  return LineFeature.create(MultiLineString.create(coords, true), {}, true);
+}
+
+/**
+ * @internal
+ * @returns the coordinates of a MultiLineString containing the intersect
+ */
+function lineStringInPolygons(
+  lineString: GJ.Position[],
+  areas: GJ.Position[][][],
+): GJ.Position[][] {
+  const mls: GJ.Position[][] = [];
+  let ls: GJ.Position[] = [];
+
+  for (let i = 1; i < lineString.length; i++) {
+    const seg = new Segment(lineString[i - 1], lineString[i]);
+    const vals = segmentIntersectsAreas(seg, areas);
+
+    if (vals.length === 0) {
+      ls.push(seg.a);
+      continue;
     }
-  });
 
-  const newCoords = multiLineStringInMultiPolygon(mls, mp);
+    if (vals[0] === 0.0) {
+      if (ls.length > 0) {
+        ls.push(seg.a);
+        mls.push(ls);
+        ls = [];
+      }
+    } else {
+      ls.push(seg.a, seg.position(vals[0]));
+      mls.push(ls);
+      ls = [];
+    }
 
-  if (newCoords.length === 0) return null;
+    for (let i = 1; i < vals.length - 1; i++) {
+      ls.push(seg.position(vals[i]));
+      if (i % 2 === 0) {
+        mls.push(ls);
+        ls = [];
+      }
+    }
 
-  if (newCoords.length === 1)
-    return LineFeature.create(LineString.create(newCoords[0], true), {}, true);
+    if (vals[vals.length - 1] < 1.0) {
+      ls.push(seg.position(vals[i]));
+    }
+  }
 
-  return LineFeature.create(MultiLineString.create(newCoords, true), {}, true);
+  if (ls.length > 0) {
+    const plast = lineString[lineString.length - 1];
+    ls.push([plast[0], plast[1]]);
+    mls.push(ls);
+  }
+
+  return mls;
+}
+
+/**
+ * @internal
+ * @returns the parametric values, in pairs, which contains the excluded
+ * segments from all polygons
+ */
+function segmentIntersectsAreas(
+  segment: Segment,
+  areas: GJ.Position[][][],
+): number[] {
+  const values: number[] = [0.0, 1.0];
+
+  for (let i = 0; i < areas.length; i++) {
+    segmentIntersectsArea(segment, values, areas[i]);
+    if (values.length === 0) break;
+  }
+
+  return values;
+}
+
+/**
+ * @internal
+ * @returns the parametric values, in pairs, which contains the excluded
+ * segments from one polygon
+ */
+function segmentIntersectsArea(
+  segment: Segment,
+  values: number[],
+  area: GJ.Position[][],
+): void {
+  const tarr: number[] = [];
+  const vsmall = values[0];
+
+  for (let i = 0; i < area.length; i++) {
+    for (let j = 1; j < area[i].length; j++) {
+      const t = segment.parameter(area[i][j - 1], area[i][j]);
+      if (t && t > vsmall) tarr.push(t);
+    }
+  }
+
+  if (tarr.length > 0) tarr.sort();
+
+  // Remove all if there is no t's
+  if (tarr.length === 0) {
+    if (
+      pointInSinglePolygonPosition(segment.midPosition(values[0], 1.0), area)
+    ) {
+      values.splice(0);
+    }
+
+    return;
+  }
+
+  let i = 0;
+  // Make sure that i points to a t that marks the end of an ex-zone
+  if (
+    pointInSinglePolygonPosition(segment.midPosition(values[0], tarr[0]), area)
+  ) {
+    if (tarr[0] === values[1]) {
+      values.splice(0, 2);
+    } else {
+      values[0] = tarr[0];
+    }
+    i = 1;
+  }
+
+  // values is assumed to be even-length
+  // going until < tarr.len -1 makes sure that we treat tarr as even
+  let j = 0;
+  while (j < values.length && i < tarr.length - 1) {
+    // Increment t if t1 < v0
+    // Increment v if t0 > v1
+    // Cases:
+    // a- t0 === t1 implies nothing to do                  next t
+    // b- t1 < v0 implies t0 < v0                          next t
+    // c- t0 > v1 implies t1 > v1                          next v
+    // d- t0 <= v0, t1 => v1 => remove the seg and cont    ------
+    // e- t0 <= v0, t1 in v  => replace v0 with t1         next t
+    // f- t0 in v , t1 in v  => place t within v           next t, v
+    // g- t0 in v , t1 >  v1 => replace v1 with t0         next v
+    if (tarr[i] === tarr[i + 1]) {
+      // a
+      i += 2;
+    } else if (tarr[i + 1] <= values[j]) {
+      // b
+      i += 2;
+    } else if (tarr[i] >= values[j + 1]) {
+      // c
+      j += 2;
+    } else if (tarr[i] <= values[j]) {
+      if (tarr[i + 1] >= values[j + 1]) {
+        // d
+        values.splice(j, 2);
+      } else {
+        // e
+        values[j] = tarr[i + 1];
+        i += 2;
+      }
+    } else if (tarr[i] > values[j]) {
+      if (tarr[i + 1] < values[j + 1]) {
+        // f
+        values.splice(j, 0, tarr[i], tarr[i + 1]);
+        i += 2;
+        j += 2;
+      } else {
+        // g
+        values[j + 1] = tarr[i];
+        j += 2;
+      }
+    }
+  }
+
+  // if tarr was odd, the last i point to the end of an ex-zone
+  // thus, we can remove all remaining
+  if (i < tarr.length && tarr.length % 2 === 1) {
+    while (j < values.length) {
+      if (tarr[i] >= values[j + 1]) {
+        j += 2;
+      } else if (tarr[i] <= values[j]) {
+        break;
+      } else {
+        values[j + 1] = tarr[i];
+        j += 2;
+      }
+    }
+
+    values.splice(j);
+  }
 }
