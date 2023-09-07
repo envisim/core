@@ -14,6 +14,7 @@ import {
 
 import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
 
+// This function transfers properties (in place) to intersect.
 function transferProperties(
   intersect: PointFeature | LineFeature | AreaFeature,
   frameFeature: PointFeature | LineFeature | AreaFeature,
@@ -104,90 +105,90 @@ function collectIntersects(
     PointCollection.isCollection(frame) &&
     AreaCollection.isCollection(base)
   ) {
-    const newFeatures: PointFeature[] = [];
+    const features: PointFeature[] = [];
     frame.features.forEach((frameFeature, index) => {
       base.features.forEach((baseFeature) => {
         const intersect = intersectPointAreaFeatures(frameFeature, baseFeature);
         if (intersect) {
           transferProperties(intersect, frameFeature, baseFeature, index);
-          newFeatures.push(intersect);
+          features.push(intersect);
         }
       });
     });
-    return PointCollection.create(newFeatures, true);
+    return new PointCollection({features}, true);
   }
 
   if (LineCollection.isCollection(frame) && LineCollection.isCollection(base)) {
-    const newFeatures: PointFeature[] = [];
+    const features: PointFeature[] = [];
     frame.features.forEach((frameFeature, index) => {
       base.features.forEach((baseFeature) => {
         const intersect = intersectLineLineFeatures(frameFeature, baseFeature);
         if (intersect) {
           transferProperties(intersect, frameFeature, baseFeature, index);
-          newFeatures.push(intersect);
+          features.push(intersect);
         }
       });
     });
-    return PointCollection.create(newFeatures, true);
+    return new PointCollection({features}, true);
   }
 
   if (LineCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
-    const newFeatures: LineFeature[] = [];
+    const features: LineFeature[] = [];
     frame.features.forEach((frameFeature, index) => {
       base.features.forEach((baseFeature) => {
         const intersect = intersectLineAreaFeatures(frameFeature, baseFeature);
         if (intersect) {
           transferProperties(intersect, frameFeature, baseFeature, index);
-          newFeatures.push(intersect);
+          features.push(intersect);
         }
       });
     });
-    return LineCollection.create(newFeatures, true);
+    return new LineCollection({features}, true);
   }
 
   if (
     AreaCollection.isCollection(frame) &&
     PointCollection.isCollection(base)
   ) {
-    const newFeatures: PointFeature[] = [];
+    const features: PointFeature[] = [];
     frame.features.forEach((frameFeature, index) => {
       base.features.forEach((baseFeature) => {
         const intersect = intersectPointAreaFeatures(baseFeature, frameFeature);
         if (intersect) {
           transferProperties(intersect, frameFeature, baseFeature, index);
-          newFeatures.push(intersect);
+          features.push(intersect);
         }
       });
     });
-    return PointCollection.create(newFeatures, true);
+    return new PointCollection({features}, true);
   }
 
   if (AreaCollection.isCollection(frame) && LineCollection.isCollection(base)) {
-    const newFeatures: LineFeature[] = [];
+    const features: LineFeature[] = [];
     frame.features.forEach((frameFeature, index) => {
       base.features.forEach((baseFeature) => {
         const intersect = intersectLineAreaFeatures(baseFeature, frameFeature);
         if (intersect) {
           transferProperties(intersect, frameFeature, baseFeature, index);
-          newFeatures.push(intersect);
+          features.push(intersect);
         }
       });
     });
-    return LineCollection.create(newFeatures, true);
+    return new LineCollection({features}, true);
   }
 
   if (AreaCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
-    const newFeatures: AreaFeature[] = [];
+    const features: AreaFeature[] = [];
     frame.features.forEach((frameFeature, index) => {
       base.features.forEach((baseFeature) => {
         const intersect = intersectAreaAreaFeatures(frameFeature, baseFeature);
         if (intersect) {
           transferProperties(intersect, frameFeature, baseFeature, index);
-          newFeatures.push(intersect);
+          features.push(intersect);
         }
       });
     });
-    return AreaCollection.create(newFeatures, true);
+    return new AreaCollection({features}, true);
   }
 
   throw new Error('Unvalid collect operation.');
