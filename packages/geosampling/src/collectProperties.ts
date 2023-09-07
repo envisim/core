@@ -14,8 +14,8 @@ import {
   intersectLineAreaFeatures,
   intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
-import {copy} from '@envisim/utils';
 
+//import {copy} from '@envisim/utils';
 import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
 
 // So far, a categorical property value is assumed to be a string
@@ -40,7 +40,7 @@ type TaggregateOpts = {
 };
 
 // A function to aggregate properties from a features to another.
-const aggregate = (opts: TaggregateOpts) => {
+function aggregate(opts: TaggregateOpts) {
   // If line collects from line an additional factor is needed
   let factor = 1;
   if (LineFeature.isFeature(opts.from) && LineFeature.isFeature(opts.to)) {
@@ -49,7 +49,7 @@ const aggregate = (opts: TaggregateOpts) => {
       // as long as it has been randomly rotated.
       factor = Math.PI / (2 * opts.from.length(Infinity));
     } else {
-      // Here the line that collects should be "straight",
+      // Here the line that collects should be straight,
       // which is why we can use the first segment of the line
       // to find the direction of the line.
       let azimuth = 0;
@@ -91,7 +91,7 @@ const aggregate = (opts: TaggregateOpts) => {
       }
     }
   });
-};
+}
 
 // Not sure if we should collect in place or create a new collection.
 // If we collect in place, we only need to return a record of the
@@ -111,6 +111,15 @@ type TcollectWithAreas = {
   collection: AreaCollection;
 };
 
+/**
+ * Collect properties to a frame collection from a base collection, given a
+ * record of properties to be collected. Categorical properties are collected as
+ * multiple numerical properties, one for each category to be collected.
+ * @param frame
+ * @param base
+ * @param properties
+ * @returns an object containing the collection and a record of added properties.
+ */
 function collectProperties(
   frame: PointCollection,
   base: AreaCollection,
@@ -190,10 +199,9 @@ function collectProperties(
       });
     });
     return {properties: newProperties, collection: frame};
-  } else if (
-    LineCollection.isCollection(frame) &&
-    LineCollection.isCollection(base)
-  ) {
+  }
+
+  if (LineCollection.isCollection(frame) && LineCollection.isCollection(base)) {
     // Lines collect from lines.
     frame.features.forEach((frameFeature) => {
       const frameUnitSize = frameFeature.length(Infinity);
@@ -213,10 +221,9 @@ function collectProperties(
       });
     });
     return {properties: newProperties, collection: frame};
-  } else if (
-    LineCollection.isCollection(frame) &&
-    AreaCollection.isCollection(base)
-  ) {
+  }
+
+  if (LineCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
     // Lines collect from areas.
     frame.features.forEach((frameFeature) => {
       const frameUnitSize = frameFeature.length(Infinity);
@@ -236,7 +243,9 @@ function collectProperties(
       });
     });
     return {properties: newProperties, collection: frame};
-  } else if (
+  }
+
+  if (
     AreaCollection.isCollection(frame) &&
     PointCollection.isCollection(base)
   ) {
@@ -259,10 +268,9 @@ function collectProperties(
       });
     });
     return {properties: newProperties, collection: frame};
-  } else if (
-    AreaCollection.isCollection(frame) &&
-    LineCollection.isCollection(base)
-  ) {
+  }
+
+  if (AreaCollection.isCollection(frame) && LineCollection.isCollection(base)) {
     // Areas collect from lines.
     frame.features.forEach((frameFeature) => {
       const frameUnitSize = frameFeature.area();
@@ -282,10 +290,9 @@ function collectProperties(
       });
     });
     return {properties: newProperties, collection: frame};
-  } else if (
-    AreaCollection.isCollection(frame) &&
-    AreaCollection.isCollection(base)
-  ) {
+  }
+
+  if (AreaCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
     // Areas collect from areas.
     frame.features.forEach((frameFeature) => {
       const sampleUnitSize = frameFeature.area();

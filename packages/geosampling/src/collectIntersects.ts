@@ -27,8 +27,13 @@ function transferProperties(
     LineFeature.isFeature(baseFeature)
   ) {
     if (frameFeature.properties?._randomRotation === true) {
+      // Here the line that collects can be any curve,
+      // as long as it has been randomly rotated.
       factor = Math.PI / (2 * baseFeature.length(Infinity));
     } else {
+      // Here the line that collects should be straight,
+      // which is why we can use the first segment of the line
+      // to find the direction of the line.
       let azimuth = 0;
       if (frameFeature.geometry.type === 'LineString') {
         azimuth = forwardAzimuth(
@@ -50,17 +55,17 @@ function transferProperties(
     intersect.properties[key] = baseFeature.properties[key];
   });
 
-  // Transfer designWeight to newFeature from sampleFeature
+  // Transfer designWeight to newFeature from frameFeature
   if (frameFeature.properties?._designWeight) {
     intersect.properties._designWeight =
       frameFeature.properties._designWeight * factor;
   }
-  // Transfer index of parent sample unit as _parent
+  // Transfer index of parent frame unit as _parent
   intersect.properties._parent = index;
 }
 
 /**
- * Collect intersect of features as the new sample from base-collection
+ * Collect intersect of features as the new frame from base-collection
  * @param frame
  * @param base
  */
@@ -92,16 +97,8 @@ function collectIntersects(
   frame: PointCollection | LineCollection | AreaCollection,
   base: PointCollection | LineCollection | AreaCollection,
 ): PointCollection | LineCollection | AreaCollection {
-  // The same frame object may be included in multiple intersects
+  // The same base object may be included in multiple intersects
   // as collection is done for each frame feature.
-
-  // frame type, base type => new type
-  // point, area => point
-  // line, line => point
-  // line, area => line
-  // area, point => point
-  // area, line => line
-  // area, area => area
 
   if (
     PointCollection.isCollection(frame) &&
