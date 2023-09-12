@@ -75,6 +75,10 @@ export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
     return Math.PI * this.radius ** 2;
   }
 
+  centroid(): GJ.Position {
+    return [...this.coordinates];
+  }
+
   geomEach(
     callback: GeomEachCallback<Circle>,
     featureIndex: number = -1,

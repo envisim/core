@@ -42,6 +42,8 @@ export abstract class BaseGeometryCollection<
     );
   }
 
+  abstract centroid(): GJ.Position;
+
   /* GEOMETRYCOLLECTION SPECIFIC */
   forEach(callback: ForEachCallback<T>): void {
     this.geometries.forEach(callback);

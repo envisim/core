@@ -1,6 +1,7 @@
 import type * as GJ from '../../types/geojson.js';
 import {areaOfPolygonLonLat} from '../../utils/area.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
+import {centroidOfPolygon} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {pointInSinglePolygonPosition} from '../../utils/pointInPolygonPosition.js';
 import type {GeomEachCallback} from '../callback-types.js';
@@ -34,6 +35,10 @@ export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
 
   area(dist: number = Infinity): number {
     return areaOfPolygonLonLat(this.coordinates, dist);
+  }
+
+  centroid(): GJ.Position {
+    return centroidOfPolygon(this.coordinates, this.getBBox()).centroid;
   }
 
   geomEach(

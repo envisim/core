@@ -1,4 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
+import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import {AreaFeature} from '../features/index.js';
 import {AreaObject} from '../objects/index.js';
@@ -45,6 +46,16 @@ export class AreaCollection
       }
       return Math.min(prev, d);
     }, Infinity);
+  }
+
+  centroid(): GJ.Position {
+    const centroids = this.features.map((feature: AreaFeature) => {
+      return {
+        centroid: feature.centroid(),
+        weight: feature.area(),
+      };
+    });
+    return centroidFromMultipleCentroids(centroids, this.getBBox()).centroid;
   }
 
   /* COLLECTION SPECIFIC */

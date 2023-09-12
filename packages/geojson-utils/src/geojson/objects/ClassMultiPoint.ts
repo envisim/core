@@ -1,5 +1,6 @@
 import type * as GJ from '../../types/geojson.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
+import {centroidOfMultiPoint} from '../../utils/centroid.js';
 import {distance} from '../../utils/distance.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import type {OptionalParam} from '../util-types.js';
@@ -38,6 +39,10 @@ export class MultiPoint
 
   count(): number {
     return this.coordinates.length;
+  }
+
+  centroid(): GJ.Position {
+    return centroidOfMultiPoint(this.coordinates, this.getBBox()).centroid;
   }
 
   geomEach(

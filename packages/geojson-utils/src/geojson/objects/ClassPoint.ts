@@ -33,6 +33,10 @@ export class Point extends BasePointObject<GJ.Point> implements GJ.Point {
     return 1;
   }
 
+  centroid(): GJ.Position {
+    return [...this.coordinates];
+  }
+
   geomEach(callback: GeomEachCallback<Point>, featureIndex: number = -1): void {
     callback(this, featureIndex, -1);
   }

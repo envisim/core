@@ -1,4 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
+import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import {PointFeature} from '../features/index.js';
 import {PointObject} from '../objects/index.js';
@@ -34,6 +35,16 @@ export class PointCollection
     this.features = obj.features.map((f: GJ.PointFeature) => {
       return new PointFeature(f, shallow);
     });
+  }
+
+  centroid(): GJ.Position {
+    const centroids = this.features.map((feature: PointFeature) => {
+      return {
+        centroid: feature.centroid(),
+        weight: feature.count(),
+      };
+    });
+    return centroidFromMultipleCentroids(centroids, this.getBBox()).centroid;
   }
 
   /* COLLECTION SPECIFIC */

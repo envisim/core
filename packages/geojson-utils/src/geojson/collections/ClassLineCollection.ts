@@ -1,4 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
+import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import {LineFeature} from '../features/index.js';
 import {LineObject} from '../objects/index.js';
@@ -34,6 +35,16 @@ export class LineCollection
     this.features = obj.features.map((f: GJ.LineFeature) => {
       return new LineFeature(f, shallow);
     });
+  }
+
+  centroid(): GJ.Position {
+    const centroids = this.features.map((feature: LineFeature) => {
+      return {
+        centroid: feature.centroid(),
+        weight: feature.length(),
+      };
+    });
+    return centroidFromMultipleCentroids(centroids, this.getBBox()).centroid;
   }
 
   /* COLLECTION SPECIFIC */
