@@ -4,11 +4,36 @@ import {distance} from './distance.js';
 import {intermediate} from './intermediate.js';
 import {azimuthalEquidistant} from './projections.js';
 
+// The centroid is the geographic center that minimizes the mean squared
+// distance to all the points in the feature/features.
+//
+// An iterative method to find the centroid with high accuracy is presented in:
+//
+// Rogerson, P. A. (2015). A new method for finding geographic centers,
+// with application to us states. The Professional Geographer, 67(4), 686-694.
+//
+// The method (for a polygon) is based on using the azimuthal equidistant projection,
+// with an initial guess of the centroid, on the vertices of the polygon. Then
+// compute the planar centroid using standard formula for polygon and project
+// back the resulting point to longitude and latitude. The process can be
+// iterated with the new centroid as initial guess and is said to converge rapidly.
+// i.e. the distance between the initial guess and the resulting centroid goes
+// to zero quickly as the iterations continue.
+
+// Here, the initial guess is the center of the bounding box and we use the
+// azimuthal equidistant projection, but only run the process once.
+// TODO?: Add iterations to improve accuracy.
+
 export type Tcentroid = {
   centroid: GJ.Position;
   weight: number;
 };
 
+/**
+ * Compute the centroid of centroids
+ * @param centroids
+ * @param bbox
+ */
 export function centroidFromMultipleCentroids(
   centroids: Tcentroid[],
   bbox: GJ.BBox,
@@ -31,6 +56,11 @@ export function centroidFromMultipleCentroids(
   return {centroid: proj.unproject([Cx, Cy]), weight: total};
 }
 
+/**
+ * Computes the centroid from the coordinates of a LineString
+ * @param coords
+ * @param bbox
+ */
 export function centroidOfLineString(
   coords: GJ.Position[],
   bbox: GJ.BBox,
@@ -46,6 +76,11 @@ export function centroidOfLineString(
   return centroidFromMultipleCentroids(centroids, bbox);
 }
 
+/**
+ * Computes the centroid from the coordinates of a MultiLineString
+ * @param coords
+ * @param bbox
+ */
 export function centroidOfMultiLineString(
   coords: GJ.Position[][],
   bbox: GJ.BBox,
@@ -54,6 +89,11 @@ export function centroidOfMultiLineString(
   return centroidFromMultipleCentroids(centroids, bbox);
 }
 
+/**
+ * Computes the centroid from the coordinates of a MultiPoint
+ * @param coords
+ * @param bbox
+ */
 export function centroidOfMultiPoint(
   coords: GJ.Position[],
   bbox: GJ.BBox,
@@ -64,6 +104,11 @@ export function centroidOfMultiPoint(
   return centroidFromMultipleCentroids(centroids, bbox);
 }
 
+/**
+ * Computes the centroid from the coordinates of a polygon ring
+ * @param coords
+ * @param bbox
+ */
 function centroidOfRing(coords: GJ.Position[], bbox: GJ.BBox): Tcentroid {
   const center = bboxCenter(bbox);
   const proj = azimuthalEquidistant(center);
@@ -85,6 +130,11 @@ function centroidOfRing(coords: GJ.Position[], bbox: GJ.BBox): Tcentroid {
   return {centroid: proj.unproject([Cx, Cy]), weight: Math.abs(A)};
 }
 
+/**
+ * Computes the centroid from the coordinates of a Polygon
+ * @param coords
+ * @param bbox
+ */
 export function centroidOfPolygon(
   coords: GJ.Position[][],
   bbox: GJ.BBox,
@@ -100,6 +150,11 @@ export function centroidOfPolygon(
   return centroidFromMultipleCentroids(centroids, bbox);
 }
 
+/**
+ * Computes the centroid from the coordinates of a MultiPolygon
+ * @param coords
+ * @param bbox
+ */
 export function centroidOfMultiPolygon(
   coords: GJ.Position[][][],
   bbox: GJ.BBox,
