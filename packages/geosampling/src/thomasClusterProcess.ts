@@ -121,7 +121,7 @@ export function thomasClusterProcess(
       // If child is in input collection, then push child.
       if (pointInBBox(coordinates, box)) {
         for (let j = 0; j < nrOfFeatures; j++) {
-          if (pointInAreaFeature(coordinates, collection.features[i])) {
+          if (pointInAreaFeature(coordinates, collection.features[j])) {
             const child = PointFeature.create(
               Point.create(coordinates),
               {},
