@@ -36,14 +36,15 @@ export class PointGeometryCollection
     );
   }
 
-  centroid(): GJ.Position {
+  centroid(iterations: number = 2): GJ.Position {
     const centroids = this.geometries.map((geom: PointObject) => {
       return {
-        centroid: geom.centroid(),
+        centroid: geom.centroid(iterations),
         weight: geom.count(),
       };
     });
-    return centroidFromMultipleCentroids(centroids, this.getBBox()).centroid;
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
+      .centroid;
   }
 
   /* POINT SPECIFIC */

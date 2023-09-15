@@ -42,8 +42,9 @@ export class LineString
     return lengthOfLineString(this.coordinates, dist);
   }
 
-  centroid(): GJ.Position {
-    return centroidOfLineString(this.coordinates, this.getBBox()).centroid;
+  centroid(iterations: number = 2): GJ.Position {
+    return centroidOfLineString(this.coordinates, this.getBBox(), iterations)
+      .centroid;
   }
 
   geomEach(

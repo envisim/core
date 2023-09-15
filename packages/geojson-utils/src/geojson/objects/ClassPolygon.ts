@@ -37,8 +37,9 @@ export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
     return areaOfPolygonLonLat(this.coordinates, dist);
   }
 
-  centroid(): GJ.Position {
-    return centroidOfPolygon(this.coordinates, this.getBBox()).centroid;
+  centroid(iterations: number = 2): GJ.Position {
+    return centroidOfPolygon(this.coordinates, this.getBBox(), iterations)
+      .centroid;
   }
 
   geomEach(

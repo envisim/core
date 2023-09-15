@@ -22,5 +22,5 @@ export abstract class BaseGeometry<
   abstract get size(): number;
   abstract geomEach(callback: GeomEachCallback<T>, featureIndex: number): void;
   abstract distanceToPosition(coords: GJ.Position): number;
-  abstract centroid(): GJ.Position;
+  abstract centroid(iterations: number): GJ.Position;
 }

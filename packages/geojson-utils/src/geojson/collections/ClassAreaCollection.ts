@@ -48,14 +48,15 @@ export class AreaCollection
     }, Infinity);
   }
 
-  centroid(): GJ.Position {
+  centroid(iterations: number = 2): GJ.Position {
     const centroids = this.features.map((feature: AreaFeature) => {
       return {
         centroid: feature.centroid(),
         weight: feature.area(),
       };
     });
-    return centroidFromMultipleCentroids(centroids, this.getBBox()).centroid;
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
+      .centroid;
   }
 
   /* COLLECTION SPECIFIC */

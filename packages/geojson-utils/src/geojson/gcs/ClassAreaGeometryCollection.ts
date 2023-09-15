@@ -47,14 +47,15 @@ export class AreaGeometryCollection
     }, Infinity);
   }
 
-  centroid(): GJ.Position {
+  centroid(iterations: number = 2): GJ.Position {
     const centroids = this.geometries.map((geom: AreaObject) => {
       return {
-        centroid: geom.centroid(),
+        centroid: geom.centroid(iterations),
         weight: geom.area(),
       };
     });
-    return centroidFromMultipleCentroids(centroids, this.getBBox()).centroid;
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
+      .centroid;
   }
 
   /* AREA SPECIFIC */

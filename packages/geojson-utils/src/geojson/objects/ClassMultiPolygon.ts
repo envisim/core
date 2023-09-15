@@ -46,8 +46,9 @@ export class MultiPolygon
     );
   }
 
-  centroid(): GJ.Position {
-    return centroidOfMultiPolygon(this.coordinates, this.getBBox()).centroid;
+  centroid(iterations: number = 2): GJ.Position {
+    return centroidOfMultiPolygon(this.coordinates, this.getBBox(), iterations)
+      .centroid;
   }
 
   geomEach(

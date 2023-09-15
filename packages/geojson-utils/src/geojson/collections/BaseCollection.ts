@@ -47,7 +47,7 @@ export abstract class BaseCollection<
     }, Infinity);
   }
 
-  abstract centroid(): GJ.Position;
+  abstract centroid(iterations: number): GJ.Position;
 
   /* COLLECTION SPECIFIC */
   /* === FOR EACH === */

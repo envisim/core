@@ -45,8 +45,12 @@ export class MultiLineString
     );
   }
 
-  centroid(): GJ.Position {
-    return centroidOfMultiLineString(this.coordinates, this.getBBox()).centroid;
+  centroid(iterations: number = 2): GJ.Position {
+    return centroidOfMultiLineString(
+      this.coordinates,
+      this.getBBox(),
+      iterations,
+    ).centroid;
   }
 
   geomEach(

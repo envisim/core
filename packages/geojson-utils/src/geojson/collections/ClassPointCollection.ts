@@ -37,14 +37,15 @@ export class PointCollection
     });
   }
 
-  centroid(): GJ.Position {
+  centroid(iterations: number = 2): GJ.Position {
     const centroids = this.features.map((feature: PointFeature) => {
       return {
         centroid: feature.centroid(),
         weight: feature.count(),
       };
     });
-    return centroidFromMultipleCentroids(centroids, this.getBBox()).centroid;
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
+      .centroid;
   }
 
   /* COLLECTION SPECIFIC */

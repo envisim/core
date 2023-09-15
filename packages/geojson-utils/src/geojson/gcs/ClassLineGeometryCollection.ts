@@ -36,14 +36,15 @@ export class LineGeometryCollection
     );
   }
 
-  centroid(): GJ.Position {
+  centroid(iterations: number = 2): GJ.Position {
     const centroids = this.geometries.map((geom: LineObject) => {
       return {
-        centroid: geom.centroid(),
+        centroid: geom.centroid(iterations),
         weight: geom.length(),
       };
     });
-    return centroidFromMultipleCentroids(centroids, this.getBBox()).centroid;
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
+      .centroid;
   }
 
   /* LINE SPECIFIC */

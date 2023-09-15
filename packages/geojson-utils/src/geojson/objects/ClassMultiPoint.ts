@@ -41,8 +41,9 @@ export class MultiPoint
     return this.coordinates.length;
   }
 
-  centroid(): GJ.Position {
-    return centroidOfMultiPoint(this.coordinates, this.getBBox()).centroid;
+  centroid(iterations: number = 2): GJ.Position {
+    return centroidOfMultiPoint(this.coordinates, this.getBBox(), iterations)
+      .centroid;
   }
 
   geomEach(

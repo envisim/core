@@ -42,8 +42,8 @@ abstract class BaseFeature<
     return this.geometry.distanceToPosition(coords);
   }
 
-  centroid(): GJ.Position {
-    return this.geometry.centroid();
+  centroid(iterations: number = 2): GJ.Position {
+    return this.geometry.centroid(iterations);
   }
 
   /* FEATURE SPECIFIC */

@@ -91,8 +91,9 @@ export class MultiCircle
     return this.coordinates.length * Math.PI * this.radius ** 2;
   }
 
-  centroid(): GJ.Position {
-    return centroidOfMultiPoint(this.coordinates, this.getBBox()).centroid;
+  centroid(iterations: number = 2): GJ.Position {
+    return centroidOfMultiPoint(this.coordinates, this.getBBox(), iterations)
+      .centroid;
   }
 
   geomEach(
