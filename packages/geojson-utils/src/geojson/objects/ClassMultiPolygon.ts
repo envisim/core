@@ -1,7 +1,10 @@
 import type * as GJ from '../../types/geojson.js';
 import {areaOfPolygonLonLat} from '../../utils/area.js';
 import {bboxFromPositions, unionOfBBoxes} from '../../utils/bbox.js';
-import {centroidOfMultiPolygon} from '../../utils/centroid.js';
+import {
+  centroidOfPolygon,
+  centroidFromMultipleCentroids,
+} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {pointInSinglePolygonPosition} from '../../utils/pointInPolygonPosition.js';
 import type {GeomEachCallback} from '../callback-types.js';
@@ -47,8 +50,11 @@ export class MultiPolygon
   }
 
   centroid(iterations: number = 2): GJ.Position {
-    return centroidOfMultiPolygon(this.coordinates, this.getBBox(), iterations)
-      .centroid;
+    const bbox = this.getBBox();
+    const centroids = this.coordinates.map((coord) =>
+      centroidOfPolygon(coord, bbox, iterations),
+    );
+    return centroidFromMultipleCentroids(centroids, bbox, iterations).centroid;
   }
 
   geomEach(

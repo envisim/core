@@ -1,6 +1,9 @@
 import type * as GJ from '../../types/geojson.js';
 import {bboxFromPositions, unionOfBBoxes} from '../../utils/bbox.js';
-import {centroidOfMultiLineString} from '../../utils/centroid.js';
+import {
+  centroidOfLineString,
+  centroidFromMultipleCentroids,
+} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import type {GeomEachCallback} from '../callback-types.js';
@@ -46,11 +49,11 @@ export class MultiLineString
   }
 
   centroid(iterations: number = 2): GJ.Position {
-    return centroidOfMultiLineString(
-      this.coordinates,
-      this.getBBox(),
-      iterations,
-    ).centroid;
+    const bbox = this.getBBox();
+    const centroids = this.coordinates.map((coord) =>
+      centroidOfLineString(coord, bbox, iterations),
+    );
+    return centroidFromMultipleCentroids(centroids, bbox, iterations).centroid;
   }
 
   geomEach(

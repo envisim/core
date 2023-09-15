@@ -85,40 +85,6 @@ export function centroidOfLineString(
 }
 
 /**
- * Computes the centroid from the coordinates of a MultiLineString
- * @param coords
- * @param bbox
- * @param iterations
- */
-export function centroidOfMultiLineString(
-  coords: GJ.Position[][],
-  bbox: GJ.BBox,
-  iterations: number = 2,
-): WeightedCentroid {
-  const centroids = coords.map((coord) =>
-    centroidOfLineString(coord, bbox, iterations),
-  );
-  return centroidFromMultipleCentroids(centroids, bbox, iterations);
-}
-
-/**
- * Computes the centroid from the coordinates of a MultiPoint
- * @param coords
- * @param bbox
- * @param iterations
- */
-export function centroidOfMultiPoint(
-  coords: GJ.Position[],
-  bbox: GJ.BBox,
-  iterations: number = 2,
-): WeightedCentroid {
-  const centroids = coords.map((coord) => {
-    return {centroid: coord, weight: 1};
-  });
-  return centroidFromMultipleCentroids(centroids, bbox, iterations);
-}
-
-/**
  * Computes the centroid from the coordinates of a polygon ring
  * @param coords
  * @param bbox
@@ -172,22 +138,5 @@ export function centroidOfPolygon(
     }
     return c;
   });
-  return centroidFromMultipleCentroids(centroids, bbox, iterations);
-}
-
-/**
- * Computes the centroid from the coordinates of a MultiPolygon
- * @param coords
- * @param bbox
- * @param iterations
- */
-export function centroidOfMultiPolygon(
-  coords: GJ.Position[][][],
-  bbox: GJ.BBox,
-  iterations: number = 2,
-): WeightedCentroid {
-  const centroids = coords.map((coord) =>
-    centroidOfPolygon(coord, bbox, iterations),
-  );
   return centroidFromMultipleCentroids(centroids, bbox, iterations);
 }

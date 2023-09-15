@@ -1,6 +1,6 @@
 import type * as GJ from '../../types/geojson.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
-import {centroidOfMultiPoint} from '../../utils/centroid.js';
+import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {destination} from '../../utils/destination.js';
 import {distance} from '../../utils/distance.js';
 import type {GeomEachCallback} from '../callback-types.js';
@@ -92,7 +92,11 @@ export class MultiCircle
   }
 
   centroid(iterations: number = 2): GJ.Position {
-    return centroidOfMultiPoint(this.coordinates, this.getBBox(), iterations)
+    const centroids = this.coordinates.map((coord) => ({
+      centroid: coord,
+      weight: Math.PI * this.radius ** 2,
+    }));
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
       .centroid;
   }
 
