@@ -1,4 +1,5 @@
 import type * as GJ from '../types/geojson.js';
+import {areaOfPolygonLonLat} from './area.js';
 import {bboxCenter} from './bbox.js';
 import {distance} from './distance.js';
 import {intermediate} from './intermediate.js';
@@ -21,10 +22,9 @@ import {azimuthalEquidistant} from './projections.js';
 // to zero quickly as the iterations continue.
 
 // Here, the initial guess is the center of the bounding box and we use the
-// azimuthal equidistant projection, but only run the process once.
-// TODO?: Add iterations to improve accuracy.
+// azimuthal equidistant projection for the WGS84 ellipsoid.
 
-export type Tcentroid = {
+export type WeightedCentroid = {
   centroid: GJ.Position;
   weight: number;
 };
@@ -33,39 +33,47 @@ export type Tcentroid = {
  * Compute the centroid of centroids
  * @param centroids
  * @param bbox
+ * @param iterations
  */
 export function centroidFromMultipleCentroids(
-  centroids: Tcentroid[],
+  centroids: WeightedCentroid[],
   bbox: GJ.BBox,
-): Tcentroid {
-  const center = bboxCenter(bbox);
-  const proj = azimuthalEquidistant(center);
+  iterations: number = 2,
+): WeightedCentroid {
+  let center = bboxCenter(bbox);
   let total = 0.0;
-  let Cx = 0.0;
-  let Cy = 0.0;
-  for (let i = 0; i < centroids.length; i++) {
-    const c = centroids[i];
-    const p = proj.project(c.centroid);
-    const weight = c.weight;
-    total += weight;
-    Cx += p[0] * weight;
-    Cy += p[1] * weight;
+  for (let i = 0; i < iterations; i++) {
+    let proj = azimuthalEquidistant(center);
+    total = 0.0;
+    let Cx = 0.0;
+    let Cy = 0.0;
+    for (let k = 0; k < centroids.length; k++) {
+      const c = centroids[k];
+      const p = proj.project(c.centroid);
+      const weight = c.weight;
+      total += weight;
+      Cx += p[0] * weight;
+      Cy += p[1] * weight;
+    }
+    Cx /= total;
+    Cy /= total;
+    center = proj.unproject([Cx, Cy]);
   }
-  Cx /= total;
-  Cy /= total;
-  return {centroid: proj.unproject([Cx, Cy]), weight: total};
+  return {centroid: center, weight: total};
 }
 
 /**
  * Computes the centroid from the coordinates of a LineString
  * @param coords
  * @param bbox
+ * @param iterations
  */
 export function centroidOfLineString(
   coords: GJ.Position[],
   bbox: GJ.BBox,
-): Tcentroid {
-  const centroids: Tcentroid[] = [];
+  iterations: number = 2,
+): WeightedCentroid {
+  const centroids: WeightedCentroid[] = [];
   const count = coords.length - 1;
   for (let i = 0; i < count; i++) {
     centroids.push({
@@ -73,92 +81,113 @@ export function centroidOfLineString(
       weight: distance(coords[i], coords[i + 1]),
     });
   }
-  return centroidFromMultipleCentroids(centroids, bbox);
+  return centroidFromMultipleCentroids(centroids, bbox, iterations);
 }
 
 /**
  * Computes the centroid from the coordinates of a MultiLineString
  * @param coords
  * @param bbox
+ * @param iterations
  */
 export function centroidOfMultiLineString(
   coords: GJ.Position[][],
   bbox: GJ.BBox,
-): Tcentroid {
-  const centroids = coords.map((coord) => centroidOfLineString(coord, bbox));
-  return centroidFromMultipleCentroids(centroids, bbox);
+  iterations: number = 2,
+): WeightedCentroid {
+  const centroids = coords.map((coord) =>
+    centroidOfLineString(coord, bbox, iterations),
+  );
+  return centroidFromMultipleCentroids(centroids, bbox, iterations);
 }
 
 /**
  * Computes the centroid from the coordinates of a MultiPoint
  * @param coords
  * @param bbox
+ * @param iterations
  */
 export function centroidOfMultiPoint(
   coords: GJ.Position[],
   bbox: GJ.BBox,
-): Tcentroid {
+  iterations: number = 2,
+): WeightedCentroid {
   const centroids = coords.map((coord) => {
     return {centroid: coord, weight: 1};
   });
-  return centroidFromMultipleCentroids(centroids, bbox);
+  return centroidFromMultipleCentroids(centroids, bbox, iterations);
 }
 
 /**
  * Computes the centroid from the coordinates of a polygon ring
  * @param coords
  * @param bbox
+ * @param iterations
  */
-function centroidOfRing(coords: GJ.Position[], bbox: GJ.BBox): Tcentroid {
-  const center = bboxCenter(bbox);
-  const proj = azimuthalEquidistant(center);
-  const xy = coords.map((coord) => proj.project(coord));
-  let Cx = 0.0;
-  let Cy = 0.0;
+function centroidOfRing(
+  coords: GJ.Position[],
+  bbox: GJ.BBox,
+  iterations: number = 2,
+): WeightedCentroid {
+  let center = bboxCenter(bbox);
   let A = 0.0;
-  const count = xy.length;
-  for (let i = 0; i < count; i++) {
-    const j = (i + 1) % count;
-    const part = xy[i][0] * xy[j][1] - xy[j][0] * xy[i][1];
-    Cx += (xy[i][0] + xy[j][0]) * part;
-    Cy += (xy[i][1] + xy[j][1]) * part;
-    A += part;
+  for (let i = 0; i < iterations; i++) {
+    const proj = azimuthalEquidistant(center);
+    const xy = coords.map((coord) => proj.project(coord));
+    let Cx = 0.0;
+    let Cy = 0.0;
+    A = 0.0;
+    const count = xy.length;
+    for (let j = 0; j < count; j++) {
+      const k = (j + 1) % count;
+      const part = xy[j][0] * xy[k][1] - xy[k][0] * xy[j][1];
+      Cx += (xy[j][0] + xy[k][0]) * part;
+      Cy += (xy[j][1] + xy[k][1]) * part;
+      A += part;
+    }
+    A /= 2;
+    Cx /= 6 * A;
+    Cy /= 6 * A;
+    center = proj.unproject([Cx, Cy]);
   }
-  A /= 2;
-  Cx /= 6 * A;
-  Cy /= 6 * A;
-  return {centroid: proj.unproject([Cx, Cy]), weight: Math.abs(A)};
+  return {centroid: center, weight: areaOfPolygonLonLat([coords])};
 }
 
 /**
  * Computes the centroid from the coordinates of a Polygon
  * @param coords
  * @param bbox
+ * @param iterations
  */
 export function centroidOfPolygon(
   coords: GJ.Position[][],
   bbox: GJ.BBox,
-): Tcentroid {
+  iterations: number = 2,
+): WeightedCentroid {
   const centroids = coords.map((coord, index) => {
-    const c = centroidOfRing(coord, bbox);
+    const c = centroidOfRing(coord, bbox, iterations);
     if (index > 0) {
       // negative weights for holes
       c.weight = -c.weight;
     }
     return c;
   });
-  return centroidFromMultipleCentroids(centroids, bbox);
+  return centroidFromMultipleCentroids(centroids, bbox, iterations);
 }
 
 /**
  * Computes the centroid from the coordinates of a MultiPolygon
  * @param coords
  * @param bbox
+ * @param iterations
  */
 export function centroidOfMultiPolygon(
   coords: GJ.Position[][][],
   bbox: GJ.BBox,
-): Tcentroid {
-  const centroids = coords.map((coord) => centroidOfPolygon(coord, bbox));
-  return centroidFromMultipleCentroids(centroids, bbox);
+  iterations: number = 2,
+): WeightedCentroid {
+  const centroids = coords.map((coord) =>
+    centroidOfPolygon(coord, bbox, iterations),
+  );
+  return centroidFromMultipleCentroids(centroids, bbox, iterations);
 }

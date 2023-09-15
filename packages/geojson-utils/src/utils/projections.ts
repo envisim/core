@@ -9,29 +9,10 @@ const geodDirectOpts = geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE;
 // Constants
 const toDeg = 180 / Math.PI;
 const toRad = Math.PI / 180;
-const PI_4 = Math.PI / 4;
 
 type Projection = {
-  project: Function;
-  unproject: Function;
-};
-
-/**
- * Web Mercator projection.
- * @returns - Web Mercator projection.
- */
-export const webMercator = (): Projection => {
-  return {
-    project: (coord: GJ.Position): GJ.Position => {
-      return [coord[0], Math.log(Math.tan((coord[1] / 90 + 1) * PI_4)) * toDeg];
-    },
-    unproject: (coord: GJ.Position): GJ.Position => {
-      return [
-        coord[0],
-        (Math.atan(Math.exp(coord[1] / toDeg)) / PI_4 - 1) * 90,
-      ];
-    },
-  };
+  project: (coord: GJ.Position) => GJ.Position;
+  unproject: (coord: GJ.Position) => GJ.Position;
 };
 
 /**
@@ -42,7 +23,7 @@ export const webMercator = (): Projection => {
  */
 export const azimuthalEquidistant = (refCoord: GJ.Position): Projection => {
   return {
-    project: (coord: GJ.Position): number[] => {
+    project: (coord: GJ.Position): GJ.Position => {
       const result = geod.Inverse(
         refCoord[1],
         refCoord[0],
@@ -58,7 +39,7 @@ export const azimuthalEquidistant = (refCoord: GJ.Position): Projection => {
       }
       throw new Error('Not able to project.');
     },
-    unproject: (coord: number[]): GJ.Position => {
+    unproject: (coord: GJ.Position): GJ.Position => {
       const dist = (coord[0] ** 2 + coord[1] ** 2) ** 0.5;
       const angle = Math.atan2(coord[1], coord[0]) * toDeg;
       const result = geod.Direct(
@@ -72,29 +53,6 @@ export const azimuthalEquidistant = (refCoord: GJ.Position): Projection => {
         return [result.lon2, result.lat2];
       }
       throw new Error('Not able to unproject.');
-    },
-  };
-};
-
-type Cartesian = [number, number, number];
-
-/**
- * Project [lon,lat] to/from cartesian [x,y,z] on unit sphere
- * @returns - Cartesian projection
- */
-export const cartesian = (): Projection => {
-  return {
-    project: (coord: GJ.Position): Cartesian => {
-      const sinLon = Math.sin(coord[0] * toRad);
-      const cosLon = Math.cos(coord[0] * toRad);
-      const sinLat = Math.sin((90 - coord[1]) * toRad);
-      const cosLat = Math.cos((90 - coord[1]) * toRad);
-      return [sinLat * cosLon, sinLat * sinLon, cosLat];
-    },
-    unproject: (coord: Cartesian): GJ.Position => {
-      const lon = Math.atan2(coord[1], coord[0]) * toDeg;
-      const lat = 90 - Math.acos(coord[2]) * toDeg;
-      return [lon, lat];
     },
   };
 };
