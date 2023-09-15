@@ -4,6 +4,7 @@ import {
   checkInRange,
   checkLongitudeInRange,
   longitudeDistance,
+  longitudeCenter,
 } from './position.js';
 
 enum BBoxEnum {
@@ -252,13 +253,23 @@ export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox {
 
 /**
  * Converts a bounding box of possible length 6 to a bounding box of length 4.
- * @param bbox - A bounding box.
- * @returns - A bounding box of length 4.
+ * @param bbox - a bounding box.
+ * @returns - a bounding box of length 4.
  */
-export const bbox4 = (bbox: GJ.BBox): [number, number, number, number] => {
+export function bbox4(bbox: GJ.BBox): [number, number, number, number] {
   if (bbox.length === 6) {
     return [bbox[0], bbox[1], bbox[3], bbox[4]];
   }
 
   return [...bbox] as [number, number, number, number];
-};
+}
+
+/**
+ * Computes the center (in longitude and latitude only) of a bounding box
+ * @param bbox - a bounding box
+ * @returns - the center of the bounding box
+ */
+export function bboxCenter(bbox: GJ.BBox): GJ.Position {
+  const box = bbox4(bbox);
+  return [longitudeCenter(box[0], box[2]), (box[1] + box[3]) / 2];
+}

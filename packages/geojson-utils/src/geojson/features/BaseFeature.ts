@@ -42,6 +42,10 @@ abstract class BaseFeature<
     return this.geometry.distanceToPosition(coords);
   }
 
+  centroid(iterations: number = 2): GJ.Position {
+    return this.geometry.centroid(iterations);
+  }
+
   /* FEATURE SPECIFIC */
   abstract geomEach(callback: GeomEachCallback<T>, featureIndex: number): void;
 

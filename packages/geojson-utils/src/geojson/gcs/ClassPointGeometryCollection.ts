@@ -1,4 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
+import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import type {PointObject} from '../objects/index.js';
 import {OptionalParam} from '../util-types.js';
 import {BaseGeometryCollection} from './BaseGeometryCollection.js';
@@ -33,6 +34,17 @@ export class PointGeometryCollection
     this.geometries = obj.geometries.map((g: GJ.PointObject) =>
       toPointGeometry(g, shallow, false),
     );
+  }
+
+  centroid(iterations: number = 2): GJ.Position {
+    const centroids = this.geometries.map((geom: PointObject) => {
+      return {
+        centroid: geom.centroid(iterations),
+        weight: geom.count(),
+      };
+    });
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
+      .centroid;
   }
 
   /* POINT SPECIFIC */

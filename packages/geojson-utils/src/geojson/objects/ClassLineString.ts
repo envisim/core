@@ -1,5 +1,6 @@
 import type * as GJ from '../../types/geojson.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
+import {centroidOfLineString} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import type {GeomEachCallback} from '../callback-types.js';
@@ -39,6 +40,11 @@ export class LineString
 
   length(dist: number = Infinity): number {
     return lengthOfLineString(this.coordinates, dist);
+  }
+
+  centroid(iterations: number = 2): GJ.Position {
+    return centroidOfLineString(this.coordinates, this.getBBox(), iterations)
+      .centroid;
   }
 
   geomEach(

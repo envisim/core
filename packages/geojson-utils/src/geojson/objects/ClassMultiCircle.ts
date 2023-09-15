@@ -1,5 +1,6 @@
 import type * as GJ from '../../types/geojson.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
+import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {destination} from '../../utils/destination.js';
 import {distance} from '../../utils/distance.js';
 import type {GeomEachCallback} from '../callback-types.js';
@@ -88,6 +89,15 @@ export class MultiCircle
 
   area(): number {
     return this.coordinates.length * Math.PI * this.radius ** 2;
+  }
+
+  centroid(iterations: number = 2): GJ.Position {
+    const centroids = this.coordinates.map((coord) => ({
+      centroid: coord,
+      weight: Math.PI * this.radius ** 2,
+    }));
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
+      .centroid;
   }
 
   geomEach(
