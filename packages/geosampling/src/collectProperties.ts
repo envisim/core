@@ -15,7 +15,6 @@ import {
   intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
 
-//import {copy} from '@envisim/utils';
 import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
 
 // So far, a categorical property value is assumed to be a string
@@ -25,46 +24,80 @@ import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
 
 // TODO: A helper function is needed to create property records for collections.
 
-// A type for a map from "old" id to "new" id. The ids are the (internal) property names.
-type IdMap = {[key: string]: string};
-
 // A type for an object to hold all the data we need to aggregate from
 // one feature to another.
-type TaggregateOpts = {
-  to: PointFeature | LineFeature | AreaFeature;
-  from: PointFeature | LineFeature | AreaFeature;
+type AggregateOpts = {
   toSize: number;
   intersectSize: number;
   properties: IPropertyRecord;
-  idMap: IdMap;
+  idMap: Record<string, string>;
 };
 
-// A function to aggregate properties from a features to another.
-function aggregate(opts: TaggregateOpts) {
+/**
+ * A function to aggregate properties from a features to another.
+ * @param to the feature to aggregate to.
+ * @param from the feature to aggregate from.
+ * @param opts object with additional information needed to aggregate properties.
+ */
+function aggregateInPlace(
+  to: PointFeature,
+  from: AreaFeature,
+  opts: AggregateOpts,
+): void;
+function aggregateInPlace(
+  to: LineFeature,
+  from: LineFeature,
+  opts: AggregateOpts,
+): void;
+function aggregateInPlace(
+  to: LineFeature,
+  from: AreaFeature,
+  opts: AggregateOpts,
+): void;
+function aggregateInPlace(
+  to: AreaFeature,
+  from: PointFeature,
+  opts: AggregateOpts,
+): void;
+function aggregateInPlace(
+  to: AreaFeature,
+  from: LineFeature,
+  opts: AggregateOpts,
+): void;
+function aggregateInPlace(
+  to: AreaFeature,
+  from: AreaFeature,
+  opts: AggregateOpts,
+): void;
+function aggregateInPlace(
+  to: PointFeature | LineFeature | AreaFeature,
+  from: PointFeature | LineFeature | AreaFeature,
+  opts: AggregateOpts,
+): void {
   // If line collects from line an additional factor is needed
   let factor = 1;
-  if (LineFeature.isFeature(opts.from) && LineFeature.isFeature(opts.to)) {
-    if (opts.to.properties?._randomRotation === true) {
+  if (LineFeature.isFeature(from) && LineFeature.isFeature(to)) {
+    if (to.properties?._randomRotation === true) {
       // Here the line that collects can be any curve,
       // as long as it has been randomly rotated.
-      factor = Math.PI / (2 * opts.from.length(Infinity));
+      factor = Math.PI / (2 * from.length(Infinity));
     } else {
       // Here the line that collects should be straight,
       // which is why we can use the first segment of the line
       // to find the direction of the line.
       let azimuth = 0;
-      if (opts.to.geometry.type === 'LineString') {
+      if (to.geometry.type === 'LineString') {
         azimuth = forwardAzimuth(
-          opts.to.geometry.coordinates[0],
-          opts.to.geometry.coordinates[1],
+          to.geometry.coordinates[0],
+          to.geometry.coordinates[1],
         );
-      } else if (opts.to.geometry.type === 'MultiLineString') {
+      } else if (to.geometry.type === 'MultiLineString') {
         azimuth = forwardAzimuth(
-          opts.to.geometry.coordinates[0][0],
-          opts.to.geometry.coordinates[0][1],
+          to.geometry.coordinates[0][0],
+          to.geometry.coordinates[0][1],
         );
       }
-      factor = 1 / projectedLengthOfFeature(opts.from, azimuth);
+      factor = 1 / projectedLengthOfFeature(from, azimuth);
     }
   }
 
@@ -73,20 +106,18 @@ function aggregate(opts: TaggregateOpts) {
   Object.keys(opts.properties).forEach((key) => {
     const property = opts.properties[key];
 
-    if (opts.to.properties && opts.from.properties) {
+    if (to.properties && from.properties) {
       if (property.type === 'numerical' && property.id) {
         const newId = opts.idMap[property.id];
-        opts.to.properties[newId] +=
-          ((opts.from.properties[property.id] * opts.intersectSize) /
-            opts.toSize) *
+        to.properties[newId] +=
+          ((from.properties[property.id] * opts.intersectSize) / opts.toSize) *
           factor;
       }
       if (property.type === 'categorical' && property.id) {
-        const getNewId = property.id + '-' + opts.from.properties[property.id];
+        const getNewId = property.id + '-' + from.properties[property.id];
         const newId = opts.idMap[getNewId];
-        if (opts.to.properties[newId]) {
-          opts.to.properties[newId] +=
-            (opts.intersectSize / opts.toSize) * factor;
+        if (to.properties[newId]) {
+          to.properties[newId] += (opts.intersectSize / opts.toSize) * factor;
         }
       }
     }
@@ -94,22 +125,16 @@ function aggregate(opts: TaggregateOpts) {
 }
 
 // Not sure if we should collect in place or create a new collection.
-// If we collect in place, we only need to return a record of the
+// If we collect in place, then we only need to return a record of the
 // added properties. For now we collect in place, and return the same collection,
 // together with a record of added properties.
 
-type TcollectWithPoints = {
+interface TCollect<
+  T extends PointCollection | LineCollection | AreaCollection,
+> {
   properties: IPropertyRecord;
-  collection: PointCollection;
-};
-type TcollectWithLines = {
-  properties: IPropertyRecord;
-  collection: LineCollection;
-};
-type TcollectWithAreas = {
-  properties: IPropertyRecord;
-  collection: AreaCollection;
-};
+  collection: T;
+}
 
 /**
  * Collect properties to a frame collection from a base collection, given a
@@ -120,31 +145,31 @@ type TcollectWithAreas = {
  * @param properties
  * @returns an object containing the collection and a record of added properties.
  */
-function collectProperties(
+export function collectProperties(
   frame: PointCollection,
   base: AreaCollection,
   properties: IPropertyRecord,
-): TcollectWithPoints;
-function collectProperties(
+): TCollect<PointCollection>;
+export function collectProperties(
   frame: LineCollection,
   base: LineCollection | AreaCollection,
   properties: IPropertyRecord,
-): TcollectWithLines;
-function collectProperties(
+): TCollect<LineCollection>;
+export function collectProperties(
   frame: AreaCollection,
   base: PointCollection | LineCollection | AreaCollection,
   properties: IPropertyRecord,
-): TcollectWithAreas;
-function collectProperties(
+): TCollect<AreaCollection>;
+export function collectProperties(
   frame: PointCollection | LineCollection | AreaCollection,
   base: PointCollection | LineCollection | AreaCollection,
   properties: IPropertyRecord,
-): TcollectWithPoints | TcollectWithLines | TcollectWithAreas {
+): TCollect<PointCollection | LineCollection | AreaCollection> {
   // Create an id map from input properties to output properties
   // and a record of new (numerical) properties. If the property to
   // be collected is categorical, the new id is found by "id-value".
 
-  const idMap: IdMap = {};
+  const idMap: Record<string, string> = {};
   const newProperties: IPropertyRecord = {};
   Object.keys(properties).forEach((id: string) => {
     let property = properties[id];
@@ -187,9 +212,7 @@ function collectProperties(
         const intersect = intersectPointAreaFeatures(frameFeature, baseFeature);
         if (intersect) {
           const intersectSize = intersect.count();
-          aggregate({
-            to: frameFeature,
-            from: baseFeature,
+          aggregateInPlace(frameFeature, baseFeature, {
             toSize: frameUnitSize,
             intersectSize: intersectSize,
             properties: properties,
@@ -209,9 +232,7 @@ function collectProperties(
         const intersect = intersectLineLineFeatures(frameFeature, baseFeature);
         if (intersect) {
           const intersectSize = intersect.count();
-          aggregate({
-            to: frameFeature,
-            from: baseFeature,
+          aggregateInPlace(frameFeature, baseFeature, {
             toSize: frameUnitSize,
             intersectSize: intersectSize,
             properties: properties,
@@ -231,9 +252,7 @@ function collectProperties(
         const intersect = intersectLineAreaFeatures(frameFeature, baseFeature);
         if (intersect) {
           const intersectSize = intersect.length(Infinity);
-          aggregate({
-            to: frameFeature,
-            from: baseFeature,
+          aggregateInPlace(frameFeature, baseFeature, {
             toSize: frameUnitSize,
             intersectSize: intersectSize,
             properties: properties,
@@ -256,9 +275,7 @@ function collectProperties(
         const intersect = intersectPointAreaFeatures(baseFeature, frameFeature);
         if (intersect) {
           const intersectSize = intersect.count();
-          aggregate({
-            to: frameFeature,
-            from: baseFeature,
+          aggregateInPlace(frameFeature, baseFeature, {
             toSize: frameUnitSize,
             intersectSize: intersectSize,
             properties: properties,
@@ -278,9 +295,7 @@ function collectProperties(
         const intersect = intersectLineAreaFeatures(baseFeature, frameFeature);
         if (intersect) {
           const intersectSize = intersect.length(Infinity);
-          aggregate({
-            to: frameFeature,
-            from: baseFeature,
+          aggregateInPlace(frameFeature, baseFeature, {
             toSize: frameUnitSize,
             intersectSize: intersectSize,
             properties: properties,
@@ -295,15 +310,13 @@ function collectProperties(
   if (AreaCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
     // Areas collect from areas.
     frame.features.forEach((frameFeature) => {
-      const sampleUnitSize = frameFeature.area();
+      const frameUnitSize = frameFeature.area();
       base.features.forEach((baseFeature) => {
         const intersect = intersectAreaAreaFeatures(frameFeature, baseFeature);
         if (intersect) {
           const intersectSize = intersect.area();
-          aggregate({
-            to: frameFeature,
-            from: baseFeature,
-            toSize: sampleUnitSize,
+          aggregateInPlace(frameFeature, baseFeature, {
+            toSize: frameUnitSize,
             intersectSize: intersectSize,
             properties: properties,
             idMap: idMap,
@@ -315,4 +328,3 @@ function collectProperties(
   }
   throw new Error('Invalid collect operation.');
 }
-export {collectProperties};
