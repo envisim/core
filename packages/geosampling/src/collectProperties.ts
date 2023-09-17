@@ -27,7 +27,6 @@ import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
 // A type for an object to hold all the data we need to aggregate from
 // one feature to another.
 type AggregateOpts = {
-  toSize: number;
   intersectSize: number;
   properties: IPropertyRecord;
   idMap: Record<string, string>;
@@ -110,14 +109,13 @@ function aggregateInPlace(
       if (property.type === 'numerical' && property.id) {
         const newId = opts.idMap[property.id];
         to.properties[newId] +=
-          ((from.properties[property.id] * opts.intersectSize) / opts.toSize) *
-          factor;
+          from.properties[property.id] * opts.intersectSize * factor;
       }
       if (property.type === 'categorical' && property.id) {
         const getNewId = property.id + '-' + from.properties[property.id];
         const newId = opts.idMap[getNewId];
         if (to.properties[newId]) {
-          to.properties[newId] += (opts.intersectSize / opts.toSize) * factor;
+          to.properties[newId] += opts.intersectSize * factor;
         }
       }
     }
@@ -207,13 +205,11 @@ export function collectProperties(
   ) {
     // Points collect from areas.
     frame.features.forEach((frameFeature) => {
-      const frameUnitSize = frameFeature.count();
       base.features.forEach((baseFeature) => {
         const intersect = intersectPointAreaFeatures(frameFeature, baseFeature);
         if (intersect) {
           const intersectSize = intersect.count();
           aggregateInPlace(frameFeature, baseFeature, {
-            toSize: frameUnitSize,
             intersectSize: intersectSize,
             properties: properties,
             idMap: idMap,
@@ -227,13 +223,11 @@ export function collectProperties(
   if (LineCollection.isCollection(frame) && LineCollection.isCollection(base)) {
     // Lines collect from lines.
     frame.features.forEach((frameFeature) => {
-      const frameUnitSize = frameFeature.length(Infinity);
       base.features.forEach((baseFeature) => {
         const intersect = intersectLineLineFeatures(frameFeature, baseFeature);
         if (intersect) {
           const intersectSize = intersect.count();
           aggregateInPlace(frameFeature, baseFeature, {
-            toSize: frameUnitSize,
             intersectSize: intersectSize,
             properties: properties,
             idMap: idMap,
@@ -247,13 +241,11 @@ export function collectProperties(
   if (LineCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
     // Lines collect from areas.
     frame.features.forEach((frameFeature) => {
-      const frameUnitSize = frameFeature.length(Infinity);
       base.features.forEach((baseFeature) => {
         const intersect = intersectLineAreaFeatures(frameFeature, baseFeature);
         if (intersect) {
           const intersectSize = intersect.length(Infinity);
           aggregateInPlace(frameFeature, baseFeature, {
-            toSize: frameUnitSize,
             intersectSize: intersectSize,
             properties: properties,
             idMap: idMap,
@@ -270,13 +262,11 @@ export function collectProperties(
   ) {
     // Areas collect from points.
     frame.features.forEach((frameFeature) => {
-      const frameUnitSize = frameFeature.area();
       base.features.forEach((baseFeature) => {
         const intersect = intersectPointAreaFeatures(baseFeature, frameFeature);
         if (intersect) {
           const intersectSize = intersect.count();
           aggregateInPlace(frameFeature, baseFeature, {
-            toSize: frameUnitSize,
             intersectSize: intersectSize,
             properties: properties,
             idMap: idMap,
@@ -290,13 +280,11 @@ export function collectProperties(
   if (AreaCollection.isCollection(frame) && LineCollection.isCollection(base)) {
     // Areas collect from lines.
     frame.features.forEach((frameFeature) => {
-      const frameUnitSize = frameFeature.area();
       base.features.forEach((baseFeature) => {
         const intersect = intersectLineAreaFeatures(baseFeature, frameFeature);
         if (intersect) {
           const intersectSize = intersect.length(Infinity);
           aggregateInPlace(frameFeature, baseFeature, {
-            toSize: frameUnitSize,
             intersectSize: intersectSize,
             properties: properties,
             idMap: idMap,
@@ -310,13 +298,11 @@ export function collectProperties(
   if (AreaCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
     // Areas collect from areas.
     frame.features.forEach((frameFeature) => {
-      const frameUnitSize = frameFeature.area();
       base.features.forEach((baseFeature) => {
         const intersect = intersectAreaAreaFeatures(frameFeature, baseFeature);
         if (intersect) {
           const intersectSize = intersect.area();
           aggregateInPlace(frameFeature, baseFeature, {
-            toSize: frameUnitSize,
             intersectSize: intersectSize,
             properties: properties,
             idMap: idMap,
