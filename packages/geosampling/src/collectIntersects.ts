@@ -14,8 +14,51 @@ import {
 
 import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
 
-// This function transfers properties (in place) to intersect.
-function transferProperties(
+/**
+ * Transfer properties in place to the intersect from the base feature and
+ * transfer _designWeight and _parent to the intersect from the frame feature.
+ * @param intersect
+ * @param frameFeature
+ * @param baseFeature
+ * @param index
+ */
+function transferPropertiesInPlace(
+  intersect: PointFeature,
+  frameFeature: PointFeature,
+  baseFeature: AreaFeature,
+  index: number,
+): void;
+function transferPropertiesInPlace(
+  intersect: PointFeature,
+  frameFeature: LineFeature,
+  baseFeature: LineFeature,
+  index: number,
+): void;
+function transferPropertiesInPlace(
+  intersect: LineFeature,
+  frameFeature: LineFeature,
+  baseFeature: AreaFeature,
+  index: number,
+): void;
+function transferPropertiesInPlace(
+  intersect: PointFeature,
+  frameFeature: AreaFeature,
+  baseFeature: PointFeature,
+  index: number,
+): void;
+function transferPropertiesInPlace(
+  intersect: LineFeature,
+  frameFeature: AreaFeature,
+  baseFeature: LineFeature,
+  index: number,
+): void;
+function transferPropertiesInPlace(
+  intersect: AreaFeature,
+  frameFeature: AreaFeature,
+  baseFeature: AreaFeature,
+  index: number,
+): void;
+function transferPropertiesInPlace(
   intersect: PointFeature | LineFeature | AreaFeature,
   frameFeature: PointFeature | LineFeature | AreaFeature,
   baseFeature: PointFeature | LineFeature | AreaFeature,
@@ -66,35 +109,35 @@ function transferProperties(
 }
 
 /**
- * Collect intersect of features as the new frame from base-collection
+ * Collect intersect of features as the new frame from base-collection.
  * @param frame
  * @param base
  */
-function collectIntersects(
+export function collectIntersects(
   frame: PointCollection,
   base: AreaCollection,
 ): PointCollection;
-function collectIntersects(
+export function collectIntersects(
   frame: LineCollection,
   base: LineCollection,
 ): PointCollection;
-function collectIntersects(
+export function collectIntersects(
   frame: LineCollection,
   base: AreaCollection,
 ): LineCollection;
-function collectIntersects(
+export function collectIntersects(
   frame: AreaCollection,
   base: PointCollection,
 ): PointCollection;
-function collectIntersects(
+export function collectIntersects(
   frame: AreaCollection,
   base: LineCollection,
 ): LineCollection;
-function collectIntersects(
+export function collectIntersects(
   frame: AreaCollection,
   base: AreaCollection,
 ): AreaCollection;
-function collectIntersects(
+export function collectIntersects(
   frame: PointCollection | LineCollection | AreaCollection,
   base: PointCollection | LineCollection | AreaCollection,
 ): PointCollection | LineCollection | AreaCollection {
@@ -110,7 +153,12 @@ function collectIntersects(
       base.features.forEach((baseFeature) => {
         const intersect = intersectPointAreaFeatures(frameFeature, baseFeature);
         if (intersect) {
-          transferProperties(intersect, frameFeature, baseFeature, index);
+          transferPropertiesInPlace(
+            intersect,
+            frameFeature,
+            baseFeature,
+            index,
+          );
           features.push(intersect);
         }
       });
@@ -124,7 +172,12 @@ function collectIntersects(
       base.features.forEach((baseFeature) => {
         const intersect = intersectLineLineFeatures(frameFeature, baseFeature);
         if (intersect) {
-          transferProperties(intersect, frameFeature, baseFeature, index);
+          transferPropertiesInPlace(
+            intersect,
+            frameFeature,
+            baseFeature,
+            index,
+          );
           features.push(intersect);
         }
       });
@@ -138,7 +191,12 @@ function collectIntersects(
       base.features.forEach((baseFeature) => {
         const intersect = intersectLineAreaFeatures(frameFeature, baseFeature);
         if (intersect) {
-          transferProperties(intersect, frameFeature, baseFeature, index);
+          transferPropertiesInPlace(
+            intersect,
+            frameFeature,
+            baseFeature,
+            index,
+          );
           features.push(intersect);
         }
       });
@@ -155,7 +213,12 @@ function collectIntersects(
       base.features.forEach((baseFeature) => {
         const intersect = intersectPointAreaFeatures(baseFeature, frameFeature);
         if (intersect) {
-          transferProperties(intersect, frameFeature, baseFeature, index);
+          transferPropertiesInPlace(
+            intersect,
+            frameFeature,
+            baseFeature,
+            index,
+          );
           features.push(intersect);
         }
       });
@@ -169,7 +232,12 @@ function collectIntersects(
       base.features.forEach((baseFeature) => {
         const intersect = intersectLineAreaFeatures(baseFeature, frameFeature);
         if (intersect) {
-          transferProperties(intersect, frameFeature, baseFeature, index);
+          transferPropertiesInPlace(
+            intersect,
+            frameFeature,
+            baseFeature,
+            index,
+          );
           features.push(intersect);
         }
       });
@@ -183,7 +251,12 @@ function collectIntersects(
       base.features.forEach((baseFeature) => {
         const intersect = intersectAreaAreaFeatures(frameFeature, baseFeature);
         if (intersect) {
-          transferProperties(intersect, frameFeature, baseFeature, index);
+          transferPropertiesInPlace(
+            intersect,
+            frameFeature,
+            baseFeature,
+            index,
+          );
           features.push(intersect);
         }
       });
@@ -193,4 +266,3 @@ function collectIntersects(
 
   throw new Error('Unvalid collect operation.');
 }
-export {collectIntersects};
