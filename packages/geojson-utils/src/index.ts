@@ -35,6 +35,12 @@ export {
   checkInRange,
 } from './utils/position.js';
 export {rotateCoord} from './utils/rotateCoord.js';
+export {
+  rhumbDestination,
+  rhumbDistance,
+  rhumbForwardAzimuth,
+  rhumbIntermediate,
+} from './utils/rhumb.js';
 
 // Dependent
 export {buffer} from './buffer.js';
