@@ -212,7 +212,7 @@ function inverseRhumbLine(
     lambda12 = lambda12 > 0 ? lambda12 - 2 * Math.PI : lambda12 + 2 * Math.PI;
   }
   const res: {azi12?: number; s12?: number} = {};
-  // Forward azimuth
+  // Compute forward azimuth
   if (output === 1 || output === 3) {
     res.azi12 = Math.atan(lambda12 / psi12) * toDeg;
   }
@@ -234,18 +234,30 @@ function inverseRhumbLine(
   return res;
 }
 
+// Exports start here
+
 // See: The area of rhumb polygons
 // Results seem to match https://geographiclib.sourceforge.io/cgi-bin/RhumbSolve
 // closely, but precision is slightly less here due to use of the
 // simpler algorithm for the phi1 close to phi2 case.
 // Internal function.
-function directRhumbLine(
-  p: GJ.Position,
+
+/**
+ * Computes the destination point on a rhumb line given a point,
+ * a distance and an azimuth.
+ *
+ * @param origin point coordinates [lon,lat].
+ * @param dist the distance in meters.
+ * @param azimuth azimuth (angle) clockwise from north in degrees.
+ * @returns the coordinates [lon,lat] of the destination point.
+ */
+export function rhumbDestination(
+  origin: GJ.Position,
   dist: number,
   azimuth: number,
 ): GJ.Position {
   const s12 = dist;
-  const phi1 = p[1] * toRad;
+  const phi1 = origin[1] * toRad;
   const alpha12 = azimuth * toRad;
   const mu12 = (s12 / R) * Math.cos(alpha12);
   const mu1 = auxiliary(phi1, C_mu_phi);
@@ -277,7 +289,7 @@ function directRhumbLine(
   } else {
     lambda12 *= psi12 / (mu12 * R);
   }
-  const lambda1 = p[0] * toRad;
+  const lambda1 = origin[0] * toRad;
   const lambda2 = lambda1 + lambda12;
   let lon2 = lambda2 * toDeg;
   lon2 = ((lon2 + 540) % 360) - 180;
@@ -289,12 +301,10 @@ function directRhumbLine(
   return [lon2, lat2];
 }
 
-// Exports start here
-
 /**
  * Computes the area of a rhumb polygon ring
  * @param ring
- * @returns - the area in square meters.
+ * @returns the area in square meters.
  */
 export function rhumbAreaOfRing(ring: GJ.Position[]): number {
   const o = ring.map((coord) => {
@@ -343,30 +353,13 @@ export function rhumbAreaOfRing(ring: GJ.Position[]): number {
 // In sampling of points on lines, use rhumbIntermediate.
 
 /**
- * Computes the destination point on a rhumb line given a point,
- * a distance and an azimuth.
- *
- * @param origin - Point coordinates [lon,lat].
- * @param dist - The distance in meters.
- * @param azimuth - Azimuth (angle) clockwise from north in degrees.
- * @returns - The coordinates [lon,lat] of the destination point.
- */
-export function rhumbDestination(
-  origin: GJ.Position,
-  dist: number,
-  azimuth: number,
-): GJ.Position {
-  return directRhumbLine(origin, dist, azimuth);
-}
-
-/**
  * Computes the forward azimuth (angle from north) from the first point
  * to the second point for a rhumb line between the points.
  * The azimuth takes values in the range -180 to +180.
  *
- * @param p1 - Point coordinates [lon,lat] for first point.
- * @param p2 - Point coordinates [lon,lat] for second point.
- * @returns - The forward azimuth in degrees.
+ * @param p1 point coordinates [lon,lat] for first point.
+ * @param p2 point coordinates [lon,lat] for second point.
+ * @returns the forward azimuth in degrees.
  */
 export function rhumbForwardAzimuth(p1: GJ.Position, p2: GJ.Position): number {
   return inverseRhumbLine(p1, p2, 1).azi12 || 0;
@@ -375,9 +368,9 @@ export function rhumbForwardAzimuth(p1: GJ.Position, p2: GJ.Position): number {
 /**
  * Computes the distance in meters along a rhumb line between two point coordinates.
  *
- * @param p1 - Point coordinates [lon,lat].
- * @param p2 - Point coordinates [lon,lat].
- * @returns - The distance in meters.
+ * @param p1 point coordinates [lon,lat].
+ * @param p2 point coordinates [lon,lat].
+ * @returns the distance in meters.
  */
 export function rhumbDistance(p1: GJ.Position, p2: GJ.Position): number {
   return inverseRhumbLine(p1, p2, 2).s12 || 0;
@@ -387,10 +380,10 @@ export function rhumbDistance(p1: GJ.Position, p2: GJ.Position): number {
  * Computes an intermediate point on a rhumb line given a start point,
  * an end point and the fraction of the distance.
  *
- * @param p1 - Point coordinates [lon,lat] for start point.
- * @param p2 - Point coordinates [lon,lat] for end point.
- * @param fraction - The fraction of distance between the points.
- * @returns - The coordinates [lon,lat] of the intermediate point.
+ * @param p1 point coordinates [lon,lat] for start point.
+ * @param p2 point coordinates [lon,lat] for end point.
+ * @param fraction the fraction of distance between the points.
+ * @returns the coordinates [lon,lat] of the intermediate point.
  */
 export function rhumbIntermediate(
   p1: GJ.Position,
