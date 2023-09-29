@@ -38,8 +38,8 @@ export class LineString
     return 1;
   }
 
-  length(dist: number = Infinity): number {
-    return lengthOfLineString(this.coordinates, dist);
+  length(): number {
+    return lengthOfLineString(this.coordinates);
   }
 
   centroid(iterations: number = 2): GJ.Position {

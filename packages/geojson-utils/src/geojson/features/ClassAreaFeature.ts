@@ -44,7 +44,7 @@ export class AreaFeature
   }
 
   /* AREA SPECIFIC */
-  area(dist: number = Infinity): number {
-    return this.geometry.area(dist);
+  area(): number {
+    return this.geometry.area();
   }
 }

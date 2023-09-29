@@ -73,7 +73,7 @@ export class AreaCollection
   }
 
   /* AREA SPECIFIC */
-  area(dist: number = Infinity): number {
-    return this.features.reduce((prev, curr) => prev + curr.area(dist), 0);
+  area(): number {
+    return this.features.reduce((prev, curr) => prev + curr.area(), 0);
   }
 }
