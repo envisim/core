@@ -8,9 +8,9 @@ describe('area', () => {
     [12.751410965460195, 63.53080548838537],
     [12.888806360606111, 61.4879814554327],
   ];
-  // rhumb area of the ring according to
-  // https://geographiclib.sourceforge.io/cgi-bin/Planimeter
-  const area = 48909672712.3;
+  // plate carrée area of ring
+  const area = 49046961795.9875;
+
   const area0 = areaOfPolygonLonLat([ring]);
 
   test('area', () => {
