@@ -346,12 +346,6 @@ export function rhumbAreaOfRing(ring: GJ.Position[]): number {
   return Math.abs(S);
 }
 
-// COMMENTS:
-// Use rhumbDistance to compute length of GeoJSON segments.
-// Use above area for area of rings. We can then skip the "dist" argument to length
-// and area computations.
-// In sampling of points on lines, use rhumbIntermediate.
-
 /**
  * Computes the forward azimuth (angle from north) from the first point
  * to the second point for a rhumb line between the points.
@@ -395,4 +389,143 @@ export function rhumbIntermediate(
   const azi12 = res.azi12 || 0;
   const s12 = res.s12 || 0;
   return rhumbDestination(p1, s12 * fraction, azi12);
+}
+
+/* From Charles Karney (personal communication)
+The result for the area under a plate carree edge is
+
+   S12 = (lambda2 - lambda1)* (F(phi2) - F(phi1)) / (phi2 - phi1)
+
+where
+
+   F'(phi) = sin(xi), xi = authalic latitude
+   F(phi) = -cos(phi) *
+            ([1, cos(2*phi), cos(4*phi), ... ] . M . [1, n, n^2, ...]^T)
+
+Accurate to order n^6, M is the 7 x 7 matrix
+
+1,-4/9,-274/675,-2468/19845,48142/1488375,3814124/108056025,-35827479502/9587270818125;
+0,-4/9,-112/675,4012/19845,306496/1488375,1613548/21611205,-5765564176/9587270818125;
+0,0,6/25,8/49,-43132/496125,-4668968/36018675,-197327562308/3195756939375;
+0,0,0,-8/49,-544/3969,330052/7203735,2313624304/25566055515;
+0,0,0,0,10/81,3400/29403,-399980/14907321;
+0,0,0,0,0,-12/121,-2032/20449;
+0,0,0,0,0,0,14/169;
+
+If you use this result, please verify it carefully (e.g., by breaking up
+the plate carree lines into short geodesic segments and using Planimeter
+to compute the area).  Use f = 1/50 for checking to make sure the
+ellipsoidal corrections are right.
+*/
+
+/*
+My implementation of Charles Karneys suggestion. Simple test fine for WGS84, but
+I have not tested with f = 1/50.
+*/
+
+const M = [
+  [
+    1,
+    -4 / 9,
+    -274 / 675,
+    -2468 / 19845,
+    48142 / 1488375,
+    3814124 / 108056025,
+    -35827479502 / 9587270818125,
+  ],
+  [
+    0,
+    -4 / 9,
+    -112 / 675,
+    4012 / 19845,
+    306496 / 1488375,
+    1613548 / 21611205,
+    -5765564176 / 9587270818125,
+  ],
+  [
+    0,
+    0,
+    6 / 25,
+    8 / 49,
+    -43132 / 496125,
+    -4668968 / 36018675,
+    -197327562308 / 3195756939375,
+  ],
+  [0, 0, 0, -8 / 49, -544 / 3969, 330052 / 7203735, 2313624304 / 25566055515],
+  [0, 0, 0, 0, 10 / 81, 3400 / 29403, -399980 / 14907321],
+  [0, 0, 0, 0, 0, -12 / 121, -2032 / 20449],
+  [0, 0, 0, 0, 0, 0, 14 / 169],
+];
+
+const N7 = [1, ...N];
+
+function F(phi: number): number {
+  const C = [1, ...[2, 4, 6, 8, 10, 12].map((x) => Math.cos(x * phi))];
+  return (
+    -Math.cos(phi) *
+    ((M[0][0] * N7[0] +
+      M[0][1] * N7[1] +
+      M[0][2] * N7[2] +
+      M[0][3] * N7[3] +
+      M[0][4] * N7[4] +
+      M[0][5] * N7[5] +
+      M[0][6] * N7[6]) *
+      C[0] +
+      (M[1][1] * N7[1] +
+        M[1][2] * N7[2] +
+        M[1][3] * N7[3] +
+        M[1][4] * N7[4] +
+        M[1][5] * N7[5] +
+        M[1][6] * N7[6]) *
+        C[1] +
+      (M[2][2] * N7[2] +
+        M[2][3] * N7[3] +
+        M[2][4] * N7[4] +
+        M[2][5] * N7[5] +
+        M[2][6] * N7[6]) *
+        C[2] +
+      (M[3][3] * N7[3] + M[3][4] * N7[4] + M[3][5] * N7[5] + M[3][6] * N7[6]) *
+        C[3] +
+      (M[4][4] * N7[4] + M[4][5] * N7[5] + M[4][6] * N7[6]) * C[4] +
+      (M[5][5] * N7[5] + M[5][6] * N7[6]) * C[5] +
+      M[6][6] * N7[6] * C[6])
+  );
+}
+
+/**
+ * Computes the area of a polygon ring where the segments are
+ * defined as [lon1 + t * (lon2 - lon1), lat1 + t * (lat2 - lat1)], for
+ * 0 <= t <= 1.
+ * @param ring
+ * @returns the area in square meters.
+ */
+export function plateCarreeAreaOfRing(ring: GJ.Position[]): number {
+  const o = ring.map((coord) => {
+    const lambda = coord[0] * toRad;
+    const phi = coord[1] * toRad;
+    const Fphi = F(phi);
+    return {lambda, phi, Fphi};
+  });
+  const nr = ring.length;
+  let S = 0; // Aggregate the area under the GeoJSON segments.
+  const transitionPointDegrees = 0.001;
+  for (let i = 1; i < nr; i++) {
+    const o1 = o[i - 1];
+    const o2 = o[i];
+    let lambda12 = o2.lambda - o1.lambda;
+    if (Math.abs(lambda12) > Math.PI) {
+      lambda12 = lambda12 > 0 ? lambda12 - 2 * Math.PI : lambda12 + 2 * Math.PI;
+    }
+    let S12 = c2 * lambda12;
+    if (Math.abs(o2.phi - o1.phi) * toDeg < transitionPointDegrees) {
+      const xi = auxiliary((o2.phi + o1.phi) / 2, C_xi_phi);
+      S12 *= Math.sin(xi);
+    } else {
+      S12 *= (o2.Fphi - o1.Fphi) / (o2.phi - o1.phi);
+    }
+    S += S12;
+  }
+  // Needs a correction if the ring encloses a pole.
+  // GeoJSON polygons should not enclose a pole. This correction is skipped for now.
+  return Math.abs(S);
 }
