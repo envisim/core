@@ -11,7 +11,8 @@ export type {
 } from './types/property.js';
 
 // Utils
-export {areaOfPolygonLonLat} from './utils/area.js';
+export {areaOfPolygonLonLat, geodesicAreaOfRing} from './utils/area.js';
+export {rhumbAreaOfRing, plateCarreeAreaOfRing} from './utils/rhumb.js';
 export {
   pointInBBox,
   bboxInBBox,
