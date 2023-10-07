@@ -2,8 +2,8 @@ import type * as GJ from '../types/geojson.js';
 import {distance} from '../index.js';
 
 /**
- * Computes the approximate length of a GeoJSON segment, where the segment is
- * of type plate carré.
+ * Computes the approximate length of a segment, where the segment is
+ * of type plate carrée.
  * @param p1 start point [lon,lat]
  * @param p2 end point [lon,lat]
  * @returns the length of the segment in meters.
