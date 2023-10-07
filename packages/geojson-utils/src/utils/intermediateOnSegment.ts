@@ -42,13 +42,13 @@ export function intermediateOnSegment(
       positions.push([...prev]);
     }
     const distToPlaceAt = fraction * L;
-    for (let i = 0; i < positions.length - 1; i++) {
+    for (let i = 1; i < positions.length; i++) {
       if (cumdists[i] >= distToPlaceAt) {
         const t =
-          (cumdists[i] - distToPlaceAt) / (cumdists[i + 1] - cumdists[i]);
+          (distToPlaceAt - cumdists[i - 1]) / (cumdists[i] - cumdists[i - 1]);
         return [
-          positions[i][0] + t * (positions[i + 1][0] - positions[i][0]),
-          positions[i][1] + t * (positions[i + 1][1] - positions[i][1]),
+          positions[i - 1][0] + t * (positions[i][0] - positions[i - 1][0]),
+          positions[i - 1][1] + t * (positions[i][1] - positions[i - 1][1]),
         ];
       }
     }
