@@ -1,8 +1,8 @@
 import type * as GJ from '../types/geojson.js';
 import {areaOfPolygonLonLat} from './area.js';
 import {bboxCenter} from './bbox.js';
-import {distance} from './distance.js';
-import {intermediate} from './intermediate.js';
+import {intermediateOnSegment} from './intermediateOnSegment.js';
+import {lengthOfSegment} from './length.js';
 import {azimuthalEquidistant} from './projections.js';
 
 // The centroid is the geographic center that minimizes the mean squared
@@ -77,8 +77,8 @@ export function centroidOfLineString(
   const count = coords.length - 1;
   for (let i = 0; i < count; i++) {
     centroids.push({
-      centroid: intermediate(coords[i], coords[i + 1], 0.5),
-      weight: distance(coords[i], coords[i + 1]),
+      centroid: intermediateOnSegment(coords[i], coords[i + 1], 0.5),
+      weight: lengthOfSegment(coords[i], coords[i + 1]),
     });
   }
   return centroidFromMultipleCentroids(centroids, bbox, iterations);
