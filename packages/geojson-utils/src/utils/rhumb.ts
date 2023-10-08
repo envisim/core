@@ -240,7 +240,6 @@ function inverseRhumbLine(
 // Results seem to match https://geographiclib.sourceforge.io/cgi-bin/RhumbSolve
 // closely, but precision is slightly less here due to use of the
 // simpler algorithm for the phi1 close to phi2 case.
-// Internal function.
 
 /**
  * Computes the destination point on a rhumb line given a point,
