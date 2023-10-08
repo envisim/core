@@ -42,6 +42,7 @@ export {
   rhumbForwardAzimuth,
   rhumbIntermediate,
 } from './utils/rhumb.js';
+export {intermediateOnSegment} from './utils/intermediateOnSegment.js';
 
 // Dependent
 export {buffer} from './buffer.js';
