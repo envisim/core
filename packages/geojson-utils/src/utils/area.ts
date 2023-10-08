@@ -10,6 +10,12 @@ interface GeodesicPolygon {
   Compute(a0: boolean, a1: boolean): {area: number};
 }
 
+/**
+ * Computes the area of a polygon ring where the segments are the shortest
+ * (geodesic) paths between the points.
+ * @param coords coordinates of a polygon ring.
+ * @returns the area in square meters.
+ */
 export function geodesicAreaOfRing(coords: GJ.Position[]): number {
   const p = geod.Polygon(false) as GeodesicPolygon;
   const n = coords.length;
