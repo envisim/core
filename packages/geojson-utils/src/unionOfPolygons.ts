@@ -35,11 +35,6 @@ export function unionOfPolygons(
     }
   });
 
-  if (geoms.length < 2) {
-    // A single geometry, copy and return as a new AreaCollection
-    return new AreaCollection(collection, false);
-  }
-
   const union = polygonClipping.union(
     geoms[geoms.length - 1],
     ...geoms.slice(-1),
