@@ -11,8 +11,7 @@ export type {
 } from './types/property.js';
 
 // Utils
-export {areaOfPolygonLonLat, geodesicAreaOfRing} from './utils/area.js';
-export {rhumbAreaOfRing, plateCarreeAreaOfRing} from './utils/rhumb.js';
+export {areaOfPolygonLonLat} from './utils/area.js';
 export {
   pointInBBox,
   bboxInBBox,
@@ -36,12 +35,6 @@ export {
   checkInRange,
 } from './utils/position.js';
 export {rotateCoord} from './utils/rotateCoord.js';
-export {
-  rhumbDestination,
-  rhumbDistance,
-  rhumbForwardAzimuth,
-  rhumbIntermediate,
-} from './utils/rhumb.js';
 export {intermediateOnSegment} from './utils/intermediateOnSegment.js';
 
 // Dependent
