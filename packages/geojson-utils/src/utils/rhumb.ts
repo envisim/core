@@ -187,21 +187,25 @@ function auxiliary(from: number, C: number[][]): number {
   );
 }
 
+const rhumbAzi12 = 1 << 0;
+const rhumbS12 = 1 << 1;
+const rhumbOutmask = {
+  azi12: rhumbAzi12,
+  s12: rhumbS12,
+  both: rhumbAzi12 | rhumbS12,
+};
 // See: The area of rhumb polygons
 // Results seem to match https://geographiclib.sourceforge.io/cgi-bin/RhumbSolve
 // closely, but precision is slightly less here due to use of the
 // simpler algorithm for the phi1 close to phi2 case. At worst, if there is no
 // mistake in the implementation, the distance could be off by 0.1 mm, but often
 // it is much better than that.
-// If output = 1, then only the azimuth (azi12) is computed.
-// If output = 2, then only the distance (s12) is computed.
-// If output = 3, then both are computed.
 // Internal function.
 function inverseRhumbLine(
   p1: GJ.Position,
   p2: GJ.Position,
-  output: number = 3,
-) {
+  output: number = rhumbOutmask.both,
+): {azi12?: number; s12?: number} {
   const phi1 = p1[1] * toRad;
   const phi2 = p2[1] * toRad;
   const psi1 = psiFromPhi(phi1);
@@ -213,11 +217,11 @@ function inverseRhumbLine(
   }
   const res: {azi12?: number; s12?: number} = {};
   // Compute forward azimuth
-  if (output === 1 || output === 3) {
+  if (output & rhumbAzi12) {
     res.azi12 = Math.atan(lambda12 / psi12) * toDeg;
   }
   // Compute distance s12
-  if (output === 2 || output === 3) {
+  if (output & rhumbS12) {
     const transitionPointDegrees = 0.001;
     let s12 = Math.sqrt(lambda12 ** 2 + psi12 ** 2);
     if (Math.abs(phi1 - phi2) * toDeg < transitionPointDegrees) {
@@ -355,7 +359,7 @@ export function rhumbAreaOfRing(ring: GJ.Position[]): number {
  * @returns the forward azimuth in degrees.
  */
 export function rhumbForwardAzimuth(p1: GJ.Position, p2: GJ.Position): number {
-  return inverseRhumbLine(p1, p2, 1).azi12 || 0;
+  return inverseRhumbLine(p1, p2, rhumbOutmask.azi12).azi12 || 0;
 }
 
 /**
@@ -366,7 +370,7 @@ export function rhumbForwardAzimuth(p1: GJ.Position, p2: GJ.Position): number {
  * @returns the distance in meters.
  */
 export function rhumbDistance(p1: GJ.Position, p2: GJ.Position): number {
-  return inverseRhumbLine(p1, p2, 2).s12 || 0;
+  return inverseRhumbLine(p1, p2, rhumbOutmask.s12).s12 || 0;
 }
 
 /**
@@ -383,7 +387,7 @@ export function rhumbIntermediate(
   p2: GJ.Position,
   fraction: number,
 ): GJ.Position {
-  const res = inverseRhumbLine(p1, p2, 3);
+  const res = inverseRhumbLine(p1, p2, rhumbOutmask.both);
   // Here both s12 and azi12 are needed.
   const azi12 = res.azi12 || 0;
   const s12 = res.s12 || 0;
