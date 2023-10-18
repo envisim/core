@@ -19,13 +19,12 @@ export {
   unionOfBBoxes,
   bboxFromPositions,
 } from './utils/bbox.js';
-export {destination} from './utils/destination.js';
-export {distance} from './utils/distance.js';
+export {Geodesic} from './utils/Geodesic.js';
+export {Rhumb} from './utils/Rhumb.js';
+export {PlateCarree} from './utils/PlateCarree.js';
 export {distancePositionToSegment} from './utils/distancePositionToSegment.js';
-export {forwardAzimuth} from './utils/forwardAzimuth.js';
-export {intermediate} from './utils/intermediate.js';
 export {intersectSegments, Segment} from './utils/intersectSegments.js';
-export {lengthOfLineString, lengthOfSegment} from './utils/length.js';
+export {lengthOfLineString} from './utils/length.js';
 export {pointInSinglePolygonPosition} from './utils/pointInPolygonPosition.js';
 export {
   normalizeLongitude,
@@ -35,7 +34,6 @@ export {
   checkInRange,
 } from './utils/position.js';
 export {rotateCoord} from './utils/rotateCoord.js';
-export {intermediateOnSegment} from './utils/intermediateOnSegment.js';
 
 // Dependent
 export {buffer} from './buffer.js';
