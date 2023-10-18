@@ -1,32 +1,5 @@
-import geodesic from 'geographiclib-geodesic';
-
 import type * as GJ from '../types/geojson.js';
-import {plateCarreeAreaOfRing} from './rhumb.js';
-
-const geod = geodesic.Geodesic.WGS84;
-
-interface GeodesicPolygon {
-  AddPoint(a0: number, a1: number): void;
-  Compute(a0: boolean, a1: boolean): {area: number};
-}
-
-/**
- * Computes the area of a polygon ring where the segments are the shortest
- * (geodesic) paths between the points.
- * @param coords coordinates of a polygon ring.
- * @returns the area in square meters.
- */
-export function geodesicAreaOfRing(coords: GJ.Position[]): number {
-  const p = geod.Polygon(false) as GeodesicPolygon;
-  const n = coords.length;
-
-  for (let i = 0; i < n; i++) {
-    // add point as (lat,lon)
-    p.AddPoint(coords[i][1], coords[i][0]);
-  }
-  // compute and return area
-  return Math.abs(p.Compute(false, true).area);
-}
+import {PlateCarree} from './PlateCarree.js';
 
 /**
  * Computes the plate carrée area of a Polygon (not MultiPolygon)
@@ -35,10 +8,10 @@ export function geodesicAreaOfRing(coords: GJ.Position[]): number {
  */
 export const areaOfPolygonLonLat = (points: GJ.Position[][]): number => {
   // Full area of outer ring.
-  let area = plateCarreeAreaOfRing(points[0]);
+  let area = PlateCarree.areaOfRing(points[0]);
   // Now substract area of any holes.
   for (let i = 1; i < points.length; i++) {
-    area = area - plateCarreeAreaOfRing(points[i]);
+    area = area - PlateCarree.areaOfRing(points[i]);
   }
   return area;
 };
