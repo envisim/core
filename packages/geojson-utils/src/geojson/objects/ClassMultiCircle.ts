@@ -1,8 +1,7 @@
 import type * as GJ from '../../types/geojson.js';
+import {Geodesic} from '../../utils/Geodesic.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
-import {destination} from '../../utils/destination.js';
-import {distance} from '../../utils/distance.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
@@ -72,7 +71,7 @@ export class MultiCircle
       const coords = new Array<GJ.Position>(pointsPerCircle);
       for (let j = 0; j < pointsPerCircle; j++) {
         const angle = 360.0 - (j / pointsPerCircle) * 360.0;
-        coords[j] = destination(this.coordinates[i], radius, angle);
+        coords[j] = Geodesic.destination(this.coordinates[i], radius, angle);
       }
       // Close the polygon by adding the first point as the last
       coords.push([...coords[0]]);
@@ -110,7 +109,7 @@ export class MultiCircle
   distanceToPosition(coords: GJ.Position): number {
     return (
       this.coordinates.reduce((prev, curr) => {
-        return Math.min(prev, distance(coords, curr));
+        return Math.min(prev, Geodesic.distance(coords, curr));
       }, Infinity) - this.radius
     );
   }
@@ -120,10 +119,10 @@ export class MultiCircle
     const pos1: GJ.Position = [bbox[0], bbox[1]];
     const pos2: GJ.Position =
       bbox.length === 4 ? [bbox[2], bbox[3]] : [bbox[3], bbox[4]];
-    const west = destination(pos1, this.radius, 270.0)[0];
-    const south = destination(pos1, this.radius, 180.0)[1];
-    const east = destination(pos2, this.radius, 90.0)[0];
-    const north = destination(pos2, this.radius, 0.0)[1];
+    const west = Geodesic.destination(pos1, this.radius, 270.0)[0];
+    const south = Geodesic.destination(pos1, this.radius, 180.0)[1];
+    const east = Geodesic.destination(pos2, this.radius, 90.0)[0];
+    const north = Geodesic.destination(pos2, this.radius, 0.0)[1];
 
     if (bbox.length === 4) {
       this.bbox = [west, south, east, north];
