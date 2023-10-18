@@ -118,7 +118,7 @@ export class Geodesic {
    * @param coords coordinates of a polygon ring.
    * @returns the area in square meters.
    */
-  static AreaOfRing(coords: GJ.Position[]): number {
+  static areaOfRing(coords: GJ.Position[]): number {
     const p = geod.Polygon(false) as GeodesicPolygon;
     const n = coords.length;
 
