@@ -1,5 +1,5 @@
 import type * as GJ from '../types/geojson.js';
-import {destination} from './destination.js';
+import {Geodesic} from './Geodesic.js';
 import {
   checkInRange,
   checkLongitudeInRange,
@@ -43,10 +43,10 @@ export function getPositionsForCircle(
   point: GJ.Position,
   radius: number,
 ): GJ.Position[] {
-  const top = destination(point, radius, 0);
-  const right = destination(point, radius, 90);
-  const bottom = destination(point, radius, 180);
-  const left = destination(point, radius, 270);
+  const top = Geodesic.destination(point, radius, 0);
+  const right = Geodesic.destination(point, radius, 90);
+  const bottom = Geodesic.destination(point, radius, 180);
+  const left = Geodesic.destination(point, radius, 270);
   return [top, right, bottom, left];
 }
 
