@@ -245,153 +245,157 @@ function inverseRhumbLine(
 // closely, but precision is slightly less here due to use of the
 // simpler algorithm for the phi1 close to phi2 case.
 
-/**
- * Computes the destination point on a rhumb line given a point,
- * a distance and an azimuth.
- *
- * @param origin point coordinates [lon,lat].
- * @param dist the distance in meters.
- * @param azimuth azimuth (angle) clockwise from north in degrees.
- * @returns the coordinates [lon,lat] of the destination point.
- */
-export function rhumbDestination(
-  origin: GJ.Position,
-  dist: number,
-  azimuth: number,
-): GJ.Position {
-  const s12 = dist;
-  const phi1 = origin[1] * toRad;
-  const alpha12 = azimuth * toRad;
-  const mu12 = (s12 / R) * Math.cos(alpha12);
-  const mu1 = auxiliary(phi1, C_mu_phi);
-  let mu2 = mu12 + mu1;
-  // If mu2 is outside of [-pi/2, pi/2], then it should be replaced
-  // by its supplement. Because in this case, the rhumb line has spiraled
-  // infinately many times around the pole and lambda12 is then indeterminate.
-  if (Math.abs(mu2) > Math.PI / 2) {
-    mu2 = mu2 > 0 ? Math.PI - mu2 : -Math.PI - mu2;
+export class Rhumb {
+  /**
+   * Computes the distance in meters along a rhumb line between two point coordinates.
+   *
+   * @param p1 point coordinates [lon,lat].
+   * @param p2 point coordinates [lon,lat].
+   * @returns the distance in meters.
+   */
+  static distance(p1: GJ.Position, p2: GJ.Position): number {
+    return inverseRhumbLine(p1, p2, rhumbOutmask.s12).s12 || 0;
   }
-  // If mu2 = +/- pi/2, then psi12 = +/- Infinity, and lambda12 is indeterminate.
-  // In this case, throw an error (or return NaNs?)
-  // Should a tolerance be used here?
-  if (Math.abs(mu2) == Math.PI / 2) {
-    throw new Error('Rhumb line passes through a pole!');
-  }
-  const phi2 = auxiliary(mu2, C_phi_mu);
-  const psi1 = psiFromPhi(phi1);
-  const psi2 = psiFromPhi(phi2);
-  const psi12 = psi2 - psi1;
-  const transitionPointDegrees = 0.001;
-  let lambda12 = s12 * Math.sin(alpha12);
-  if (Math.abs(phi2 - phi1) * toDeg < transitionPointDegrees) {
-    // Special case if phi2 is approximately equal to phi1.
-    // In that case lambda12 = s12 * Math.sin(alpha12) / (a * Math.cos(beta)).
-    // where beta is evaluated at the midpoint of phi1 and phi2.
-    const beta = betaFromPhi((phi1 + phi2) / 2);
-    lambda12 /= a * Math.cos(beta);
-  } else {
-    lambda12 *= psi12 / (mu12 * R);
-  }
-  const lambda1 = origin[0] * toRad;
-  const lambda2 = lambda1 + lambda12;
-  let lon2 = lambda2 * toDeg;
-  lon2 = ((lon2 + 540) % 360) - 180;
-  let lat2 = phi2 * toDeg;
-  if (Math.abs(lat2) > 90) {
-    lat2 = lat2 > 0 ? 180 - lat2 : -180 - lat2;
-  }
-  // Return the destination point
-  return [lon2, lat2];
-}
 
-/**
- * Computes the area of a rhumb polygon ring
- * @param ring
- * @returns the area in square meters.
- */
-export function rhumbAreaOfRing(ring: GJ.Position[]): number {
-  const o = ring.map((coord) => {
-    const lambda = coord[0] * toRad;
-    const phi = coord[1] * toRad;
-    const chi = auxiliary(phi, C_chi_phi);
-    const psi = psiFromPhi(phi);
-    const beta = betaFromPhi(phi);
-    const p = p_0(chi) + p_beta(beta);
-    return {lambda, phi, chi, psi, beta, p};
-  });
-  const nr = ring.length;
-  let S = 0; // Aggregate the area under the rhumb segments.
-  const transitionPointDegrees = 0.001;
-  for (let i = 1; i < nr; i++) {
-    const o1 = o[i - 1];
-    const o2 = o[i];
-    let lambda12 = o2.lambda - o1.lambda;
-    if (Math.abs(lambda12) > Math.PI) {
-      lambda12 = lambda12 > 0 ? lambda12 - 2 * Math.PI : lambda12 + 2 * Math.PI;
+  /**
+   * Computes the destination point on a rhumb line given a point,
+   * a distance and an azimuth.
+   *
+   * @param origin point coordinates [lon,lat].
+   * @param dist the distance in meters.
+   * @param azimuth azimuth (angle) clockwise from north in degrees.
+   * @returns the coordinates [lon,lat] of the destination point.
+   */
+  static destination(
+    origin: GJ.Position,
+    dist: number,
+    azimuth: number,
+  ): GJ.Position {
+    const s12 = dist;
+    const phi1 = origin[1] * toRad;
+    const alpha12 = azimuth * toRad;
+    const mu12 = (s12 / R) * Math.cos(alpha12);
+    const mu1 = auxiliary(phi1, C_mu_phi);
+    let mu2 = mu12 + mu1;
+    // If mu2 is outside of [-pi/2, pi/2], then it should be replaced
+    // by its supplement. Because in this case, the rhumb line has spiraled
+    // infinately many times around the pole and lambda12 is then indeterminate.
+    if (Math.abs(mu2) > Math.PI / 2) {
+      mu2 = mu2 > 0 ? Math.PI - mu2 : -Math.PI - mu2;
     }
-    let S12 = c2 * lambda12;
-    if (Math.abs(o2.phi - o1.phi) * toDeg < transitionPointDegrees) {
-      const xi = auxiliary((o2.phi + o1.phi) / 2, C_xi_phi);
-      S12 *= Math.sin(xi);
+    // If mu2 = +/- pi/2, then psi12 = +/- Infinity, and lambda12 is indeterminate.
+    // In this case, throw an error (or return NaNs?)
+    // Should a tolerance be used here?
+    if (Math.abs(mu2) == Math.PI / 2) {
+      throw new Error('Rhumb line passes through a pole!');
+    }
+    const phi2 = auxiliary(mu2, C_phi_mu);
+    const psi1 = psiFromPhi(phi1);
+    const psi2 = psiFromPhi(phi2);
+    const psi12 = psi2 - psi1;
+    const transitionPointDegrees = 0.001;
+    let lambda12 = s12 * Math.sin(alpha12);
+    if (Math.abs(phi2 - phi1) * toDeg < transitionPointDegrees) {
+      // Special case if phi2 is approximately equal to phi1.
+      // In that case lambda12 = s12 * Math.sin(alpha12) / (a * Math.cos(beta)).
+      // where beta is evaluated at the midpoint of phi1 and phi2.
+      const beta = betaFromPhi((phi1 + phi2) / 2);
+      lambda12 /= a * Math.cos(beta);
     } else {
-      const p12 = o2.p - o1.p;
-      const psi12 = o2.psi - o1.psi;
-      S12 *= p12 / psi12;
+      lambda12 *= psi12 / (mu12 * R);
     }
-    S += S12;
+    const lambda1 = origin[0] * toRad;
+    const lambda2 = lambda1 + lambda12;
+    let lon2 = lambda2 * toDeg;
+    lon2 = ((lon2 + 540) % 360) - 180;
+    let lat2 = phi2 * toDeg;
+    if (Math.abs(lat2) > 90) {
+      lat2 = lat2 > 0 ? 180 - lat2 : -180 - lat2;
+    }
+    // Return the destination point
+    return [lon2, lat2];
   }
-  // Needs a correction if the ring encloses a pole.
-  // Matches closely the result at https://geographiclib.sourceforge.io/cgi-bin/Planimeter
-  // for rhumb polygons not enclosing a pole. Extreme cases has NOT been tested.
-  // If the ring encloses a pole, then the term 2 * Math.PI * c2 should be added to the result.
-  // See Karney 2013 for details.
-  // GeoJSON polygons should not enclose a pole. This correction is skipped for now.
-  return Math.abs(S);
-}
 
-/**
- * Computes the forward azimuth (angle from north) from the first point
- * to the second point for a rhumb line between the points.
- * The azimuth takes values in the range -180 to +180.
- *
- * @param p1 point coordinates [lon,lat] for first point.
- * @param p2 point coordinates [lon,lat] for second point.
- * @returns the forward azimuth in degrees.
- */
-export function rhumbForwardAzimuth(p1: GJ.Position, p2: GJ.Position): number {
-  return inverseRhumbLine(p1, p2, rhumbOutmask.azi12).azi12 || 0;
-}
+  /**
+   * Computes the forward azimuth (angle from north) from the first point
+   * to the second point for a rhumb line between the points.
+   * The azimuth takes values in the range -180 to +180.
+   *
+   * @param p1 point coordinates [lon,lat] for first point.
+   * @param p2 point coordinates [lon,lat] for second point.
+   * @returns the forward azimuth in degrees.
+   */
+  static forwardAzimuth(p1: GJ.Position, p2: GJ.Position): number {
+    return inverseRhumbLine(p1, p2, rhumbOutmask.azi12).azi12 || 0;
+  }
 
-/**
- * Computes the distance in meters along a rhumb line between two point coordinates.
- *
- * @param p1 point coordinates [lon,lat].
- * @param p2 point coordinates [lon,lat].
- * @returns the distance in meters.
- */
-export function rhumbDistance(p1: GJ.Position, p2: GJ.Position): number {
-  return inverseRhumbLine(p1, p2, rhumbOutmask.s12).s12 || 0;
-}
+  /**
+   * Computes an intermediate point on a rhumb line given a start point,
+   * an end point and the fraction of the distance.
+   *
+   * @param p1 point coordinates [lon,lat] for start point.
+   * @param p2 point coordinates [lon,lat] for end point.
+   * @param fraction the fraction of distance between the points.
+   * @returns the coordinates [lon,lat] of the intermediate point.
+   */
+  static intermediate(
+    p1: GJ.Position,
+    p2: GJ.Position,
+    fraction: number,
+  ): GJ.Position {
+    const res = inverseRhumbLine(p1, p2, rhumbOutmask.both);
+    // Here both s12 and azi12 are needed.
+    const azi12 = res.azi12 || 0;
+    const s12 = res.s12 || 0;
+    return Rhumb.destination(p1, s12 * fraction, azi12);
+  }
 
-/**
- * Computes an intermediate point on a rhumb line given a start point,
- * an end point and the fraction of the distance.
- *
- * @param p1 point coordinates [lon,lat] for start point.
- * @param p2 point coordinates [lon,lat] for end point.
- * @param fraction the fraction of distance between the points.
- * @returns the coordinates [lon,lat] of the intermediate point.
- */
-export function rhumbIntermediate(
-  p1: GJ.Position,
-  p2: GJ.Position,
-  fraction: number,
-): GJ.Position {
-  const res = inverseRhumbLine(p1, p2, rhumbOutmask.both);
-  // Here both s12 and azi12 are needed.
-  const azi12 = res.azi12 || 0;
-  const s12 = res.s12 || 0;
-  return rhumbDestination(p1, s12 * fraction, azi12);
+  /**
+   * Computes the area of a rhumb polygon ring
+   * @param ring
+   * @returns the area in square meters.
+   */
+  static areaOfRing(ring: GJ.Position[]): number {
+    const o = ring.map((coord) => {
+      const lambda = coord[0] * toRad;
+      const phi = coord[1] * toRad;
+      const chi = auxiliary(phi, C_chi_phi);
+      const psi = psiFromPhi(phi);
+      const beta = betaFromPhi(phi);
+      const p = p_0(chi) + p_beta(beta);
+      return {lambda, phi, chi, psi, beta, p};
+    });
+    const nr = ring.length;
+    let S = 0; // Aggregate the area under the rhumb segments.
+    const transitionPointDegrees = 0.001;
+    for (let i = 1; i < nr; i++) {
+      const o1 = o[i - 1];
+      const o2 = o[i];
+      let lambda12 = o2.lambda - o1.lambda;
+      if (Math.abs(lambda12) > Math.PI) {
+        lambda12 =
+          lambda12 > 0 ? lambda12 - 2 * Math.PI : lambda12 + 2 * Math.PI;
+      }
+      let S12 = c2 * lambda12;
+      if (Math.abs(o2.phi - o1.phi) * toDeg < transitionPointDegrees) {
+        const xi = auxiliary((o2.phi + o1.phi) / 2, C_xi_phi);
+        S12 *= Math.sin(xi);
+      } else {
+        const p12 = o2.p - o1.p;
+        const psi12 = o2.psi - o1.psi;
+        S12 *= p12 / psi12;
+      }
+      S += S12;
+    }
+    // Needs a correction if the ring encloses a pole.
+    // Matches closely the result at https://geographiclib.sourceforge.io/cgi-bin/Planimeter
+    // for rhumb polygons not enclosing a pole. Extreme cases has NOT been tested.
+    // If the ring encloses a pole, then the term 2 * Math.PI * c2 should be added to the result.
+    // See Karney 2013 for details.
+    // GeoJSON polygons should not enclose a pole. This correction is skipped for now.
+    return Math.abs(S);
+  }
+  // end Rhumb class
 }
 
 /* From Charles Karney (personal communication)
