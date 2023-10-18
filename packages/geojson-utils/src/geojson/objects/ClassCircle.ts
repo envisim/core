@@ -1,7 +1,6 @@
 import type * as GJ from '../../types/geojson.js';
+import {Geodesic} from '../../utils/Geodesic.js';
 import {bboxFromPositions, getPositionsForCircle} from '../../utils/bbox.js';
-import {destination} from '../../utils/destination.js';
-import {distance} from '../../utils/distance.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
@@ -58,7 +57,7 @@ export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
 
     for (let i = 0; i < pointsPerCircle; i++) {
       const angle = 360.0 - (i / pointsPerCircle) * 360.0;
-      coordinates[i] = destination(this.coordinates, radius, angle);
+      coordinates[i] = Geodesic.destination(this.coordinates, radius, angle);
     }
 
     // Close the polygon by adding the first point as the last
@@ -87,7 +86,7 @@ export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
   }
 
   distanceToPosition(coords: GJ.Position): number {
-    return distance(coords, this.coordinates) - this.radius;
+    return Geodesic.distance(coords, this.coordinates) - this.radius;
   }
 
   setBBox(): GJ.BBox {
