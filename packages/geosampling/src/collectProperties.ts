@@ -8,7 +8,7 @@ import {
   PointCollection,
   LineCollection,
   AreaCollection,
-  forwardAzimuth,
+  Geodesic,
   intersectLineLineFeatures,
   intersectAreaAreaFeatures,
   intersectLineAreaFeatures,
@@ -76,22 +76,22 @@ function aggregateInPlace(
   // If line collects from line an additional factor is needed
   let factor = 1;
   if (LineFeature.isFeature(from) && LineFeature.isFeature(to)) {
-    if (to.properties?._randomRotation === true) {
+    if (to.properties?._randomRotation === 1) {
       // Here the line that collects can be any curve,
       // as long as it has been randomly rotated.
-      factor = Math.PI / (2 * from.length(Infinity));
+      factor = Math.PI / (2 * from.length());
     } else {
       // Here the line that collects should be straight,
       // which is why we can use the first segment of the line
       // to find the direction of the line.
       let azimuth = 0;
       if (to.geometry.type === 'LineString') {
-        azimuth = forwardAzimuth(
+        azimuth = Geodesic.forwardAzimuth(
           to.geometry.coordinates[0],
           to.geometry.coordinates[1],
         );
       } else if (to.geometry.type === 'MultiLineString') {
-        azimuth = forwardAzimuth(
+        azimuth = Geodesic.forwardAzimuth(
           to.geometry.coordinates[0][0],
           to.geometry.coordinates[0][1],
         );
@@ -244,7 +244,7 @@ export function collectProperties(
       base.features.forEach((baseFeature) => {
         const intersect = intersectLineAreaFeatures(frameFeature, baseFeature);
         if (intersect) {
-          const intersectSize = intersect.length(Infinity);
+          const intersectSize = intersect.length();
           aggregateInPlace(frameFeature, baseFeature, {
             intersectSize: intersectSize,
             properties: properties,
@@ -283,7 +283,7 @@ export function collectProperties(
       base.features.forEach((baseFeature) => {
         const intersect = intersectLineAreaFeatures(baseFeature, frameFeature);
         if (intersect) {
-          const intersectSize = intersect.length(Infinity);
+          const intersectSize = intersect.length();
           aggregateInPlace(frameFeature, baseFeature, {
             intersectSize: intersectSize,
             properties: properties,
