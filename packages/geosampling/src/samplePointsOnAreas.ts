@@ -1,7 +1,7 @@
 import {
   GeoJSON,
   pointInAreaFeature,
-  distance,
+  Geodesic,
   buffer,
   unionOfPolygons,
   Point,
@@ -125,20 +125,20 @@ export function samplePointsOnAreas(
   });
 
   // Buffer the Collection if needed.
-  // THIS NEEDS FIXING
-  // BUFFERED IS SET TO GJ
-  let buffered: AreaCollection;
+
+  let buffered: AreaCollection | null;
   if (radius > 0) {
-    buffered = buffer(unionOfPolygons(gj), {
-      // HERE, MAYBE NULL
+    buffered = buffer(gj, {
       radius: radius,
       steps: 10,
     });
-    if (buffered.features.length === 0) {
+    if (buffered == null || buffered.features.length === 0) {
       throw new Error('Buffering failed.');
     }
+    buffered = unionOfPolygons(buffered);
   } else {
-    buffered = gj; // HERE, UNBUFFERING???
+    // Should union be used here as well?
+    buffered = gj;
   }
 
   // Pre-calculations for both metods 'uniform' and 'systematic'.
@@ -192,7 +192,7 @@ export function samplePointsOnAreas(
 
     case 'systematic': {
       // Precalculations for systematic sampling.
-      const boxHeight = distance([box[0], box[1]], [box[0], box[3]]);
+      const boxHeight = Geodesic.distance([box[0], box[1]], [box[0], box[3]]);
       const latPerMeter = (box[3] - box[1]) / boxHeight;
       // ratio = dx/dy
       // Compute distances in x (longitude) and y (latitude) between points in meters.
@@ -211,7 +211,10 @@ export function samplePointsOnAreas(
         const latCoord = box[1] + (yoff + j * dy) * latPerMeter;
 
         // Find longitudes per meter at this latitude.
-        const dLonMeter = distance([box[0], latCoord], [box[2], latCoord]);
+        const dLonMeter = Geodesic.distance(
+          [box[0], latCoord],
+          [box[2], latCoord],
+        );
         const lonPerMeter = longitudeDistance(box[0], box[2]) / dLonMeter;
 
         // Find how many points to place in the box at this latitude.
