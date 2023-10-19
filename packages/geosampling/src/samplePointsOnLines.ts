@@ -6,8 +6,7 @@ import {
   LineObject,
   LineGeometryCollection,
   LineCollection,
-  intermediate,
-  lengthOfSegment,
+  PlateCarree,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
@@ -30,7 +29,6 @@ function samplePointsOnGeometry(
   geoJSON: LineObject,
   track: Track,
   distances: number[],
-  maxDist: number,
 ) {
   const points: GeoJSON.Position[] = [];
   let segmentLength = 0;
@@ -40,17 +38,16 @@ function samplePointsOnGeometry(
       const lineStringCoords = geoJSON.coordinates;
 
       for (let i = 0; i < lineStringCoords.length - 1; i++) {
-        segmentLength = lengthOfSegment(
+        segmentLength = PlateCarree.distance(
           lineStringCoords[i],
           lineStringCoords[i + 1],
-          maxDist,
         );
 
         for (let l = track.currentIndex; l < distances.length; l++) {
           if (distances[l] < track.dt + segmentLength) {
             fraction = (distances[l] - track.dt) / segmentLength;
             points.push(
-              intermediate(
+              PlateCarree.intermediate(
                 lineStringCoords[i],
                 lineStringCoords[i + 1],
                 fraction,
@@ -71,17 +68,20 @@ function samplePointsOnGeometry(
 
       for (let i = 0; i < mlsCoords.length; i++) {
         for (let j = 0; j < mlsCoords[i].length - 1; j++) {
-          segmentLength = lengthOfSegment(
+          segmentLength = PlateCarree.distance(
             mlsCoords[i][j],
             mlsCoords[i][j + 1],
-            maxDist,
           );
 
           for (let l = track.currentIndex; l < distances.length; l++) {
             if (distances[l] < track.dt + segmentLength) {
               fraction = (distances[l] - track.dt) / segmentLength;
               points.push(
-                intermediate(mlsCoords[i][j], mlsCoords[i][j + 1], fraction),
+                PlateCarree.intermediate(
+                  mlsCoords[i][j],
+                  mlsCoords[i][j + 1],
+                  fraction,
+                ),
               );
               track.currentIndex += 1;
             }
@@ -106,18 +106,12 @@ function samplePointsOnGeometryCollection(
   geoJSON: LineGeometryCollection,
   track: Track,
   distances: number[],
-  maxDist: number,
 ): GeoJSON.Position[] {
   let points: GeoJSON.Position[] = [];
   let result: GeoJSON.Position[] = [];
 
   for (let i = 0; i < geoJSON.geometries.length; i++) {
-    result = samplePointsOnGeometry(
-      geoJSON.geometries[i],
-      track,
-      distances,
-      maxDist,
-    );
+    result = samplePointsOnGeometry(geoJSON.geometries[i], track, distances);
     points = points.concat(result);
   }
   return points;
@@ -131,13 +125,12 @@ function samplePointsOnGeometryCollection(
  * @param sampleSize an integer > 0 for number of points to sample.
  * @param opts an options object.
  * @param opts.rand an optional instance of Random.
- * @param opts.dist optional distance for start using interpolated points on segments.
  */
 export function samplePointsOnLines(
   collection: LineCollection,
   method: 'uniform' | 'systematic',
   sampleSize: number,
-  opts: {rand?: Random; dist?: number} = {},
+  opts: {rand?: Random} = {},
 ): PointCollection {
   if (!LineCollection.isCollection(collection)) {
     throw new Error('Input geoJSON must be a LineCollection.');
@@ -156,9 +149,8 @@ export function samplePointsOnLines(
   }
 
   const rand = opts.rand ?? new Random();
-  const maxDist = opts.dist ?? Infinity;
 
-  const L = collection.length(maxDist); // total length of input geoJSON
+  const L = collection.length(); // total length of input geoJSON
   if (L === 0) {
     throw new Error('Input GeoJSON has zero length.');
   }
@@ -194,14 +186,9 @@ export function samplePointsOnLines(
     const geom = feature.geometry;
     let result;
     if (geom.type === 'GeometryCollection') {
-      result = samplePointsOnGeometryCollection(
-        geom,
-        track,
-        distances,
-        maxDist,
-      );
+      result = samplePointsOnGeometryCollection(geom, track, distances);
     } else {
-      result = samplePointsOnGeometry(geom, track, distances, maxDist);
+      result = samplePointsOnGeometry(geom, track, distances);
     }
 
     points = points.concat(result);
