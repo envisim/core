@@ -41,9 +41,9 @@ export class MultiLineString
     return this.coordinates.length;
   }
 
-  length(dist: number = Infinity): number {
+  length(): number {
     return this.coordinates.reduce(
-      (prev, curr) => prev + lengthOfLineString(curr, dist),
+      (prev, curr) => prev + lengthOfLineString(curr),
       0,
     );
   }

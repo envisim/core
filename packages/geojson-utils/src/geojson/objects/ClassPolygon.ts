@@ -33,8 +33,8 @@ export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
     return 1;
   }
 
-  area(dist: number = Infinity): number {
-    return areaOfPolygonLonLat(this.coordinates, dist);
+  area(): number {
+    return areaOfPolygonLonLat(this.coordinates);
   }
 
   centroid(iterations: number = 2): GJ.Position {

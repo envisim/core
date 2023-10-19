@@ -1,5 +1,5 @@
 import {GeoJSON} from '@envisim/geojson-utils';
-import {destination} from '@envisim/geojson-utils';
+import {Geodesic} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 import {copy} from '@envisim/utils';
 
@@ -37,7 +37,7 @@ function placePoint(
   const dist = Math.sqrt(point[0] * point[0] + point[1] * point[1]);
   const angle =
     90 - (Math.atan2(point[1], point[0]) * 180) / Math.PI + rotation;
-  return destination(position, dist, angle);
+  return Geodesic.destination(position, dist, angle);
 }
 
 // Internal.
@@ -509,9 +509,7 @@ export function squareCircleAreaTract(
         },
       ],
     },
-    properties: {
-      _radius: r,
-    },
+    properties: {},
   };
 }
 

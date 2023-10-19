@@ -4,7 +4,7 @@ import {
   pointInBBox,
   bbox4,
   pointInAreaFeature,
-  destination,
+  Geodesic,
   Point,
   PointFeature,
   PointCollection,
@@ -32,7 +32,7 @@ function randomPositionInCluster(
   const azimuth = (90 - theta * toDeg + 360) % 360;
   // Randomize radius (distance from center).
   const dist = radius * Math.sqrt(rand.float());
-  return destination(center, dist, azimuth);
+  return Geodesic.destination(center, dist, azimuth);
 }
 
 /**
@@ -62,10 +62,10 @@ export function maternClusterProcess(
   // Expand box by radius of cluster, as parent points should
   // be allowed outside of area. This is to avoid edge effects.
   const dist = Math.SQRT2 * radiusOfCluster;
-  const westSouth = destination([box[0], box[1]], dist, 225);
-  const eastSouth = destination([box[1], box[1]], dist, 135);
-  const westNorth = destination([box[0], box[2]], dist, 315);
-  const eastNorth = destination([box[1], box[2]], dist, 45);
+  const westSouth = Geodesic.destination([box[0], box[1]], dist, 225);
+  const eastSouth = Geodesic.destination([box[1], box[1]], dist, 135);
+  const westNorth = Geodesic.destination([box[0], box[2]], dist, 315);
+  const eastNorth = Geodesic.destination([box[1], box[2]], dist, 45);
   // Expanded box as polygon coordinates counterclockwise.
   const expandedBoxPolygonCoords = [
     [westNorth, westSouth, eastSouth, eastNorth, westNorth],
@@ -80,9 +80,7 @@ export function maternClusterProcess(
 
   const A = expandedBoxPolygon.area();
   // TODO?: The expanded box polygon may overlap antimeridian
-  // and be incorrect GeoJSON. However, the area calculation
-  // should still be correct as geographic-lib does not require
-  // split over antimeridian.
+  // and be incorrect GeoJSON.
   const muParents = intensityOfParents * A;
   const nrOfParents = Poisson.random(1, {rate: muParents}, {rand: rand})[0];
 

@@ -59,7 +59,7 @@ export class AreaGeometryCollection
   }
 
   /* AREA SPECIFIC */
-  area(dist: number = Infinity): number {
-    return this.geometries.reduce((prev, curr) => prev + curr.area(dist), 0);
+  area(): number {
+    return this.geometries.reduce((prev, curr) => prev + curr.area(), 0);
   }
 }

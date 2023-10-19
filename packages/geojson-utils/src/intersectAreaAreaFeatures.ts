@@ -9,8 +9,8 @@ import {
   Circle,
   Polygon,
 } from './geojson/index.js';
+import {Geodesic} from './utils/Geodesic.js';
 import {bboxInBBox} from './utils/bbox.js';
-import {distance} from './utils/distance.js';
 
 /**
  * @internal
@@ -45,7 +45,7 @@ function intersectCircleCircle(
   p2: Circle,
   pointsPerCircle: number = 16,
 ): Polygon | Circle | null {
-  const dist = distance(p1.coordinates, p2.coordinates);
+  const dist = Geodesic.distance(p1.coordinates, p2.coordinates);
 
   if (dist < p1.radius + p2.radius) {
     // Intersection

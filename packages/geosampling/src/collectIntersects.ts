@@ -1,5 +1,5 @@
 import {
-  forwardAzimuth,
+  Geodesic,
   intersectPointAreaFeatures,
   intersectLineLineFeatures,
   intersectLineAreaFeatures,
@@ -70,22 +70,22 @@ function transferPropertiesInPlace(
     LineFeature.isFeature(frameFeature) &&
     LineFeature.isFeature(baseFeature)
   ) {
-    if (frameFeature.properties?._randomRotation === true) {
+    if (frameFeature.properties?._randomRotation === 1) {
       // Here the line that collects can be any curve,
       // as long as it has been randomly rotated.
-      factor = Math.PI / (2 * baseFeature.length(Infinity));
+      factor = Math.PI / (2 * baseFeature.length());
     } else {
       // Here the line that collects should be straight,
       // which is why we can use the first segment of the line
       // to find the direction of the line.
       let azimuth = 0;
       if (frameFeature.geometry.type === 'LineString') {
-        azimuth = forwardAzimuth(
+        azimuth = Geodesic.forwardAzimuth(
           frameFeature.geometry.coordinates[0],
           frameFeature.geometry.coordinates[1],
         );
       } else if (frameFeature.geometry.type === 'MultiLineString') {
-        azimuth = forwardAzimuth(
+        azimuth = Geodesic.forwardAzimuth(
           frameFeature.geometry.coordinates[0][0],
           frameFeature.geometry.coordinates[0][1],
         );

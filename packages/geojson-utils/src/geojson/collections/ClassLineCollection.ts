@@ -62,7 +62,7 @@ export class LineCollection
   }
 
   /* LINE SPECIFIC */
-  length(dist: number = Infinity): number {
-    return this.features.reduce((prev, curr) => prev + curr.length(dist), 0);
+  length(): number {
+    return this.features.reduce((prev, curr) => prev + curr.length(), 0);
   }
 }

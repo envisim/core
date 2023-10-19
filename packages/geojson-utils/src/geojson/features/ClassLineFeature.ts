@@ -44,7 +44,7 @@ export class LineFeature
   }
 
   /* LINE SPECIFIC */
-  length(dist: number = Infinity): number {
-    return this.geometry.length(dist);
+  length(): number {
+    return this.geometry.length();
   }
 }

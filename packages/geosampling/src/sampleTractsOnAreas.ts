@@ -166,7 +166,7 @@ function sampleTractsOnAreas(
           if (newFeature.properties) {
             newFeature.properties._designWeight = dw / sizeOfTract;
             if (randomRotation) {
-              newFeature.properties._randomRotation = true;
+              newFeature.properties._randomRotation = 1;
             }
           }
           // TODO?: fix dual geometries for antimeridian here
@@ -200,7 +200,7 @@ function sampleTractsOnAreas(
           if (newFeature.properties) {
             newFeature.properties._designWeight = dw / sizeOfTract;
             if (randomRotation) {
-              newFeature.properties._randomRotation = true;
+              newFeature.properties._randomRotation = 1;
             }
           }
           // TODO?: fix dual geometries for antimeridian here

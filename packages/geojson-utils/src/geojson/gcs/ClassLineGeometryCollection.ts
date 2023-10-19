@@ -48,7 +48,7 @@ export class LineGeometryCollection
   }
 
   /* LINE SPECIFIC */
-  length(dist: number = Infinity): number {
-    return this.geometries.reduce((prev, curr) => prev + curr.length(dist), 0);
+  length(): number {
+    return this.geometries.reduce((prev, curr) => prev + curr.length(), 0);
   }
 }

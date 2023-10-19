@@ -42,9 +42,9 @@ export class MultiPolygon
     return this.coordinates.length;
   }
 
-  area(dist: number = Infinity): number {
+  area(): number {
     return this.coordinates.reduce(
-      (prev, curr) => prev + areaOfPolygonLonLat(curr, dist),
+      (prev, curr) => prev + areaOfPolygonLonLat(curr),
       0,
     );
   }

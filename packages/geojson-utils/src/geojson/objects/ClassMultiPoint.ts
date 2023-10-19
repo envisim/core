@@ -1,7 +1,7 @@
 import type * as GJ from '../../types/geojson.js';
+import {Geodesic} from '../../utils/Geodesic.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
-import {distance} from '../../utils/distance.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BasePointObject} from './BasePointObject.js';
@@ -59,7 +59,7 @@ export class MultiPoint
 
   distanceToPosition(coords: GJ.Position): number {
     return this.coordinates.reduce(
-      (prev, curr) => Math.min(prev, distance(curr, coords)),
+      (prev, curr) => Math.min(prev, Geodesic.distance(curr, coords)),
       Infinity,
     );
   }

@@ -18,11 +18,11 @@ export {
 } from './sampleDistanceUtils.js';
 
 // Sampling methods callable from engine
-export {sampleFinite, sampleFiniteStratified} from './sampling/sampleFinite.js';
-export {
-  sampleContinuous,
-  sampleContinuousStratified,
-} from './sampling/sampleContinuous.js';
+//export {sampleFinite, sampleFiniteStratified} from './sampling/sampleFinite.js';
+//export {
+//  sampleContinuous,
+//  sampleContinuousStratified,
+//} from './sampling/sampleContinuous.js';
 
 // Maybe these two should only be internal
 export {typeOfTract} from './typeOfTract.js';
