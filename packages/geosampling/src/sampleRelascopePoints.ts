@@ -1,5 +1,5 @@
 import {
-  distance,
+  Geodesic,
   intersectPointAreaFeatures,
   PointFeature,
   PointCollection,
@@ -69,7 +69,7 @@ export function sampleRelascopePoints(
 
       pointSample.features.forEach((samplePoint, samplePointIndex) => {
         if (samplePoint.geometry.type === 'Point') {
-          const dist = distance(
+          const dist = Geodesic.distance(
             basePointCoords,
             samplePoint.geometry.coordinates,
           );
