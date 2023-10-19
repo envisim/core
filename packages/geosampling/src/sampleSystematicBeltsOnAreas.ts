@@ -2,8 +2,7 @@ import {
   GeoJSON,
   AreaCollection,
   Polygon,
-  destination,
-  distance,
+  Geodesic,
   rotateCoord,
   bbox4,
   longitudeCenter,
@@ -50,7 +49,7 @@ export const sampleSystematicBeltsOnAreas = (
   const randomStart = rand.float() * distBetween;
 
   const latPerMeter =
-    (box[3] - box[1]) / distance([box[0], box[1]], [box[0], box[3]]);
+    (box[3] - box[1]) / Geodesic.distance([box[0], box[1]], [box[0], box[3]]);
 
   const refCoord: GeoJSON.Position = [
     longitudeCenter(box[0], box[2]),
@@ -58,8 +57,8 @@ export const sampleSystematicBeltsOnAreas = (
   ];
 
   const maxRadius = Math.max(
-    distance([box[0], box[1]], refCoord),
-    distance([box[2], box[3]], refCoord),
+    Geodesic.distance([box[0], box[1]], refCoord),
+    Geodesic.distance([box[2], box[3]], refCoord),
   );
 
   let smallestAtLat = 0;
@@ -72,9 +71,17 @@ export const sampleSystematicBeltsOnAreas = (
     smallestAtLat = box[3];
   }
 
-  const minLon = destination([refCoord[0], smallestAtLat], maxRadius, 270)[0];
-  const maxLon = destination([refCoord[0], smallestAtLat], maxRadius, 90)[0];
-  const minLat = destination(refCoord, maxRadius + halfWidth, 180)[1];
+  const minLon = Geodesic.destination(
+    [refCoord[0], smallestAtLat],
+    maxRadius,
+    270,
+  )[0];
+  const maxLon = Geodesic.destination(
+    [refCoord[0], smallestAtLat],
+    maxRadius,
+    90,
+  )[0];
+  const minLat = Geodesic.destination(refCoord, maxRadius + halfWidth, 180)[1];
   const lonDist = longitudeDistance(minLon, maxLon);
   const numLines = Math.ceil((2 * maxRadius) / distBetween);
 
