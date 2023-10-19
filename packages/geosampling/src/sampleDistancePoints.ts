@@ -1,5 +1,5 @@
 import {
-  distance,
+  Geodesic,
   intersectPointAreaFeatures,
   AreaCollection,
   PointCollection,
@@ -68,7 +68,7 @@ export function sampleDistancePoints(
 
       pointSample.features.forEach((samplePoint, samplePointIndex) => {
         if (samplePoint.geometry.type === 'Point') {
-          const dist = distance(
+          const dist = Geodesic.distance(
             basePointCoords,
             samplePoint.geometry.coordinates,
           );
