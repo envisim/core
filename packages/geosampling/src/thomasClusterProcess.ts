@@ -5,7 +5,7 @@ import {
   pointInBBox,
   bbox4,
   pointInAreaFeature,
-  destination,
+  Geodesic,
   Point,
   PointFeature,
   PointCollection,
@@ -37,7 +37,7 @@ function randomPositionInCluster(
   const dist = Math.sqrt(xy[0] * xy[0] + xy[1] * xy[1]);
   // Compute destination point from center via
   // distance and angle.
-  return destination(center, dist, azimuth);
+  return Geodesic.destination(center, dist, azimuth);
 }
 
 /**
@@ -67,10 +67,10 @@ export function thomasClusterProcess(
   // Extend box by 4 * sigmaOfCluster to avoid edge effects.
   // Same as spatstat default in R.
   const dist = Math.SQRT2 * 4 * sigmaOfCluster;
-  const westSouth = destination([box[0], box[1]], dist, 225);
-  const eastSouth = destination([box[1], box[1]], dist, 135);
-  const westNorth = destination([box[0], box[2]], dist, 315);
-  const eastNorth = destination([box[1], box[2]], dist, 45);
+  const westSouth = Geodesic.destination([box[0], box[1]], dist, 225);
+  const eastSouth = Geodesic.destination([box[1], box[1]], dist, 135);
+  const westNorth = Geodesic.destination([box[0], box[2]], dist, 315);
+  const eastNorth = Geodesic.destination([box[1], box[2]], dist, 45);
   // Expanded box as polygon coordinates counterclockwise.
   const expandedBoxPolygonCoords = [
     [westNorth, westSouth, eastSouth, eastNorth, westNorth],
@@ -84,9 +84,7 @@ export function thomasClusterProcess(
   // Generate parents in expanded box.
   const A = expandedBoxPolygon.area();
   // TODO?: The expanded box polygon may overlap antimeridian
-  // and be incorrect GeoJSON. However, the area calculation
-  // should still be correct as geographic-lib does not require
-  // split over antimeridian.
+  // and be incorrect GeoJSON.
 
   const muParents = intensityOfParents * A;
   const nrOfParents = Poisson.random(1, {rate: muParents}, {rand: rand})[0];
