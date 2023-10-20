@@ -62,4 +62,8 @@ export class AreaGeometryCollection
   area(): number {
     return this.geometries.reduce((prev, curr) => prev + curr.area(), 0);
   }
+
+  perimeter(): number {
+    return this.geometries.reduce((prev, curr) => prev + curr.perimeter(), 0);
+  }
 }

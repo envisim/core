@@ -47,4 +47,8 @@ export class AreaFeature
   area(): number {
     return this.geometry.area();
   }
+
+  perimeter(): number {
+    return this.geometry.perimeter();
+  }
 }

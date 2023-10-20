@@ -74,6 +74,10 @@ export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
     return Math.PI * this.radius ** 2;
   }
 
+  perimeter(): number {
+    return Math.PI * this.radius * 2;
+  }
+
   centroid(): GJ.Position {
     return [...this.coordinates];
   }

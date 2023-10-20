@@ -3,6 +3,7 @@ import {areaOfPolygonLonLat} from '../../utils/area.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidOfPolygon} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
+import {lengthOfLineString} from '../../utils/length.js';
 import {pointInSinglePolygonPosition} from '../../utils/pointInPolygonPosition.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import type {OptionalParam} from '../util-types.js';
@@ -35,6 +36,13 @@ export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
 
   area(): number {
     return areaOfPolygonLonLat(this.coordinates);
+  }
+
+  perimeter(): number {
+    return this.coordinates.reduce(
+      (prev, curr) => prev + lengthOfLineString(curr),
+      0,
+    );
   }
 
   centroid(iterations: number = 2): GJ.Position {
