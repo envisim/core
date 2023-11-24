@@ -76,4 +76,8 @@ export class AreaCollection
   area(): number {
     return this.features.reduce((prev, curr) => prev + curr.area(), 0);
   }
+
+  perimeter(): number {
+    return this.features.reduce((prev, curr) => prev + curr.perimeter(), 0);
+  }
 }

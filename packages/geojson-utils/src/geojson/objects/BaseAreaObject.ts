@@ -9,4 +9,5 @@ export abstract class BaseAreaObject<
   }
 
   abstract area(): number;
+  abstract perimeter(): number;
 }

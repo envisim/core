@@ -90,6 +90,10 @@ export class MultiCircle
     return this.coordinates.length * Math.PI * this.radius ** 2;
   }
 
+  perimeter(): number {
+    return this.coordinates.length * Math.PI * this.radius * 2;
+  }
+
   centroid(iterations: number = 2): GJ.Position {
     const centroids = this.coordinates.map((coord) => ({
       centroid: coord,

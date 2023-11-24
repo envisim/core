@@ -6,6 +6,7 @@ import {
   centroidFromMultipleCentroids,
 } from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
+import {lengthOfLineString} from '../../utils/length.js';
 import {pointInSinglePolygonPosition} from '../../utils/pointInPolygonPosition.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import type {OptionalParam} from '../util-types.js';
@@ -45,6 +46,14 @@ export class MultiPolygon
   area(): number {
     return this.coordinates.reduce(
       (prev, curr) => prev + areaOfPolygonLonLat(curr),
+      0,
+    );
+  }
+
+  perimeter(): number {
+    return this.coordinates.reduce(
+      (prev, curr) =>
+        prev + curr.reduce((prev, curr) => prev + lengthOfLineString(curr), 0),
       0,
     );
   }
