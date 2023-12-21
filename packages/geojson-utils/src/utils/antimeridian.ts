@@ -12,7 +12,10 @@ function equalPositions(a: GJ.Position, b: GJ.Position): boolean {
 }
 // Internal function that makes sure to not add duplicate positions
 function addPosition(arr: GJ.Position[], coord: GJ.Position) {
-  if (!equalPositions(arr[arr.length - 1], coord)) {
+  if (arr.length > 0 && !equalPositions(arr[arr.length - 1], coord)) {
+    arr.push(coord);
+  }
+  if (arr.length === 0) {
     arr.push(coord);
   }
 }
