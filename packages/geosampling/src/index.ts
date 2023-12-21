@@ -3,7 +3,7 @@ export {samplePointsOnLines} from './samplePointsOnLines.js';
 export {samplePointsOnAreas} from './samplePointsOnAreas.js';
 export {sampleSystematicLinesOnAreas} from './sampleSystematicLinesOnAreas.js';
 export {sampleSystematicBeltsOnAreas} from './sampleSystematicBeltsOnAreas.js';
-export {sampleTractsOnAreas} from './sampleTractsOnAreas.js';
+export {sampleFeaturesOnAreas} from './sampleFeaturesOnAreas.js';
 export {sampleRelascopePoints} from './sampleRelascopePoints.js';
 export {sampleDistancePoints} from './sampleDistancePoints.js';
 export {sampleSystematicDistanceLines} from './sampleSystematicDistanceLines.js';
@@ -25,23 +25,23 @@ export {
 //} from './sampling/sampleContinuous.js';
 
 // Maybe these two should only be internal
-export {typeOfTract} from './typeOfTract.js';
+export {typeOfFeature} from './typeOfFeature.js';
 
-// Model tracts
+// Model features/tracts
 export {
-  straightLineTract,
-  ellLineTract,
-  rectangularLineTract,
-  squareLineTract,
-  regularPolygonLineTract,
-  circularLineTract,
-  circleAreaTract,
-  squareCircleAreaTract,
-  regularPolygonAreaTract,
-  squareAreaTract,
-  pointTract,
-  squarePointTract,
-} from './modelTract.js';
+  straightLineFeature,
+  ellLineFeature,
+  rectangularLineFeature,
+  squareLineFeature,
+  regularPolygonLineFeature,
+  circularLineFeature,
+  circleAreaFeature,
+  squareCircleAreaFeature,
+  regularPolygonAreaFeature,
+  squareAreaFeature,
+  pointFeature,
+  squarePointFeature,
+} from './modelFeature.js';
 
 // Collection from layers
 export {collectProperties} from './collectProperties.js';
