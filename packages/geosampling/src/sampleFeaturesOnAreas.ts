@@ -10,12 +10,12 @@ import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
 import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
 import {intersectPointSampleAreaFrame} from './intersectPointSampleAreaFrame.js';
 import {
-  placeModelTract,
-  radiusOfModelTract,
-  sizeOfModelTract,
-} from './modelTract.js';
+  placeModelFeature,
+  radiusOfModelFeature,
+  sizeOfModelFeature,
+} from './modelFeature.js';
 import {samplePointsOnAreas} from './samplePointsOnAreas.js';
-import {typeOfTract} from './typeOfTract.js';
+import {typeOfFeature} from './typeOfFeature.js';
 
 export type TsampleTractsOnAreasOpts = {
   rotation?: number;
@@ -32,7 +32,7 @@ type Method = 'uniform' | 'systematic';
  * @param collection
  * @param method the method to use "uniform" or "systematic".
  * @param sampleSize expected sample size integer > 0.
- * @param modelTract a GeoJSON model tract.
+ * @param modelFeature a GeoJSON model tract.
  * @param opts an options object.
  * @param opts.rotation the rotation angle in degrees.
  * @param opts.randomRotation boolean true/false for random rotation of individual tract (always true for line tract).
@@ -43,38 +43,41 @@ type Method = 'uniform' | 'systematic';
 
 // create overload signatures for different return types
 // PointCollection, LineCollection, AreaCollection
-function sampleTractsOnAreas(
+function sampleFeaturesOnAreas(
   collection: AreaCollection,
   method: Method,
   sampleSize: number,
-  modelTract: GeoJSON.PointFeature,
+  modelFeature: GeoJSON.PointFeature,
   opts?: TsampleTractsOnAreasOpts,
 ): PointCollection;
-function sampleTractsOnAreas(
+function sampleFeaturesOnAreas(
   collection: AreaCollection,
   method: Method,
   sampleSize: number,
-  modelTract: GeoJSON.LineFeature,
+  modelFeature: GeoJSON.LineFeature,
   opts?: TsampleTractsOnAreasOpts,
 ): LineCollection;
-function sampleTractsOnAreas(
+function sampleFeaturesOnAreas(
   collection: AreaCollection,
   method: Method,
   sampleSize: number,
-  modelTract: GeoJSON.AreaFeature,
+  modelFeature: GeoJSON.AreaFeature,
   opts?: TsampleTractsOnAreasOpts,
 ): AreaCollection;
-function sampleTractsOnAreas(
+function sampleFeaturesOnAreas(
   collection: AreaCollection,
   method: Method,
   sampleSize: number,
-  modelTract: GeoJSON.PointFeature | GeoJSON.LineFeature | GeoJSON.AreaFeature,
+  modelFeature:
+    | GeoJSON.PointFeature
+    | GeoJSON.LineFeature
+    | GeoJSON.AreaFeature,
   opts: TsampleTractsOnAreasOpts = {},
 ): PointCollection | LineCollection | AreaCollection {
   if (!AreaCollection.isCollection(collection)) {
     throw new Error('Input collection must be an AreaCollection.');
   }
-  const tractType = typeOfTract(modelTract);
+  const tractType = typeOfFeature(modelFeature);
 
   // Set default options.
   const rotation = opts.rotation ?? 0;
@@ -87,8 +90,8 @@ function sampleTractsOnAreas(
   }
 
   // Compute radius and size of the model tract.
-  const radius = radiusOfModelTract(modelTract);
-  const sizeOfTract = sizeOfModelTract(modelTract);
+  const radius = radiusOfModelFeature(modelFeature);
+  const sizeOfTract = sizeOfModelFeature(modelFeature);
 
   // Select first a sample of points and use radius as buffer.
   const featureCollection = samplePointsOnAreas(
@@ -124,8 +127,8 @@ function sampleTractsOnAreas(
         let newFeature: GeoJSON.PointFeature;
 
         if (feature.geometry.type === 'Point') {
-          newFeature = placeModelTract(
-            modelTract as GeoJSON.PointFeature,
+          newFeature = placeModelFeature(
+            modelFeature as GeoJSON.PointFeature,
             feature.geometry.coordinates,
             {
               rotation: rotation,
@@ -154,8 +157,8 @@ function sampleTractsOnAreas(
         let newFeature: GeoJSON.LineFeature;
 
         if (feature.geometry.type === 'Point') {
-          newFeature = placeModelTract(
-            modelTract as GeoJSON.LineFeature,
+          newFeature = placeModelFeature(
+            modelFeature as GeoJSON.LineFeature,
             feature.geometry.coordinates,
             {
               rotation: rotation,
@@ -188,8 +191,8 @@ function sampleTractsOnAreas(
         let newFeature: GeoJSON.AreaFeature;
 
         if (feature.geometry.type === 'Point') {
-          newFeature = placeModelTract(
-            modelTract as GeoJSON.AreaFeature,
+          newFeature = placeModelFeature(
+            modelFeature as GeoJSON.AreaFeature,
             feature.geometry.coordinates,
             {
               rotation: rotation,
@@ -219,4 +222,4 @@ function sampleTractsOnAreas(
   }
 }
 
-export {sampleTractsOnAreas};
+export {sampleFeaturesOnAreas};
