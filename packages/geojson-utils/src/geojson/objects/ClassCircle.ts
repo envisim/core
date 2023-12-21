@@ -1,9 +1,11 @@
 import type * as GJ from '../../types/geojson.js';
 import {Geodesic} from '../../utils/Geodesic.js';
+import {cutAreaGeometry} from '../../utils/antimeridian.js';
 import {bboxFromPositions, getPositionsForCircle} from '../../utils/bbox.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
+import {MultiPolygon} from './ClassMultiPolygon.js';
 import {Polygon} from './ClassPolygon.js';
 
 export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
@@ -40,12 +42,15 @@ export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
   }
 
   toPolygon({
-    shallow = true,
+    //shallow = true,
     pointsPerCircle = 16,
-  }: {shallow?: boolean; pointsPerCircle?: number} = {}): Polygon {
+  }: {
+    //shallow?: boolean;
+    pointsPerCircle?: number;
+  } = {}): Polygon | MultiPolygon {
     // Check shallow for bbox, as this is the only prop in need of copy
-    const bbox: GJ.BBox | undefined =
-      shallow === true ? this.bbox : this.bbox ? [...this.bbox] : undefined;
+    // const bbox: GJ.BBox | undefined =
+    // shallow === true ? this.bbox : this.bbox ? [...this.bbox] : undefined;
     const coordinates = new Array<GJ.Position>(pointsPerCircle);
 
     // Use the radius that gives equal area to the polygon for best approx.
@@ -62,8 +67,21 @@ export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
 
     // Close the polygon by adding the first point as the last
     coordinates.push([...coordinates[0]]);
-
-    return new Polygon({coordinates: [coordinates], bbox}, true);
+    // Create initial Polygon
+    const polygon = new Polygon({coordinates: [coordinates]}, true);
+    // Check if it is closer than new radius to antimeridian
+    if (
+      Geodesic.distance([180, this.coordinates[1]], this.coordinates) < radius
+    ) {
+      // Run cut to see if it was needed
+      const poly = cutAreaGeometry(polygon);
+      if (poly.type === 'Polygon') {
+        return polygon;
+      } else if (poly.type === 'MultiPolygon') {
+        return new MultiPolygon(poly);
+      }
+    }
+    return polygon;
   }
 
   get size(): number {

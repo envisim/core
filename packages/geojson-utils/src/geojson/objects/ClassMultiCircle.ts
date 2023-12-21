@@ -1,11 +1,13 @@
 import type * as GJ from '../../types/geojson.js';
 import {Geodesic} from '../../utils/Geodesic.js';
+import {cutAreaGeometry} from '../../utils/antimeridian.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import type {GeomEachCallback} from '../callback-types.js';
 import type {OptionalParam} from '../util-types.js';
 import {BaseAreaObject} from './BaseAreaObject.js';
 import {MultiPolygon} from './ClassMultiPolygon.js';
+import {Polygon} from './ClassPolygon.js';
 
 export class MultiCircle
   extends BaseAreaObject<GJ.MultiCircle>
@@ -47,18 +49,13 @@ export class MultiCircle
   }
 
   toPolygon({
-    shallow = true,
     pointsPerCircle = 16,
-  }: {shallow?: boolean; pointsPerCircle?: number} = {}): MultiPolygon {
-    // Check shallow for bbox, as this is the only prop in need of copy
-    const bbox: GJ.BBox | undefined =
-      shallow === true ? this.bbox : this.bbox ? [...this.bbox] : undefined;
-
+  }: {pointsPerCircle?: number} = {}): MultiPolygon {
     // Early return
     if (this.coordinates.length === 0)
-      return new MultiPolygon({coordinates: [], bbox}, true);
+      return new MultiPolygon({coordinates: []}, true);
 
-    const coordinates = new Array<GJ.Position[][]>(this.coordinates.length);
+    const coordinates: GJ.Position[][][] = [];
 
     // Use the radius that gives equal area to the polygon for best approx.
     const v = Math.PI / pointsPerCircle;
@@ -75,11 +72,24 @@ export class MultiCircle
       }
       // Close the polygon by adding the first point as the last
       coords.push([...coords[0]]);
-
-      coordinates[i] = [coords];
+      // check if this polygon should be cut at antimeridian
+      if (
+        Geodesic.distance(this.coordinates[i], [180, this.coordinates[i][1]]) <
+        radius
+      ) {
+        const pol = cutAreaGeometry(new Polygon({coordinates: [coords]}));
+        if (pol.type === 'Polygon') {
+          coordinates.push(pol.coordinates);
+        } else if (pol.type === 'MultiPolygon') {
+          pol.coordinates.forEach((polygon) => {
+            coordinates.push(polygon);
+          });
+        }
+      } else {
+        coordinates.push([coords]);
+      }
     }
-
-    return new MultiPolygon({coordinates, bbox}, true);
+    return new MultiPolygon({coordinates}, true);
   }
 
   get size(): number {
