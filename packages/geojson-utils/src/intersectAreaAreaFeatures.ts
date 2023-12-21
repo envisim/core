@@ -44,7 +44,7 @@ function intersectCircleCircle(
   p1: Circle,
   p2: Circle,
   pointsPerCircle: number = 16,
-): Polygon | Circle | null {
+): MultiPolygon | Polygon | Circle | null {
   const dist = Geodesic.distance(p1.coordinates, p2.coordinates);
 
   if (dist < p1.radius + p2.radius) {
@@ -64,8 +64,9 @@ function intersectCircleCircle(
       p2.toPolygon({pointsPerCircle}),
     );
 
-    // Return the intersect if it is, as expected, a Polygon (not MultyPolygon)
-    if (Polygon.isObject(intersect)) return intersect;
+    // Return the intersect if it is, as expected, a Polygon or MultyPolygon
+    if (Polygon.isObject(intersect) || MultiPolygon.isObject(intersect))
+      return intersect;
   }
 
   // No intersect
