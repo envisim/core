@@ -10,6 +10,7 @@ import {
   longitudeDistance,
   normalizeLongitude,
   LineFeature,
+  cutLineGeometry,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
@@ -99,15 +100,13 @@ export function sampleSystematicLinesOnAreas(
         ),
       );
     }
-    // TODO?: thisLine may cross antimeridian and thus produce
-    // wrong result in intersect below. We may need to create
-    // dual geometries.
+    // Cut at antimeridian if needed
+    const lineGeom = cutLineGeometry({
+      type: 'LineString',
+      coordinates: thisLine,
+    });
     lineFeatures.push(
-      LineFeature.create(
-        LineString.create(thisLine, true),
-        {_designWeight: distBetween},
-        true,
-      ),
+      LineFeature.create(lineGeom, {_designWeight: distBetween}, true),
     );
   }
   return intersectLineSampleAreaFrame(
