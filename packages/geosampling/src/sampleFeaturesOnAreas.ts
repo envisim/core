@@ -27,7 +27,7 @@ export type TsampleTractsOnAreasOpts = {
 type Method = 'uniform' | 'systematic';
 
 /**
- * Select a sample of tracts on areas.
+ * Select a sample of features/tracts on areas.
  *
  * @param collection
  * @param method the method to use "uniform" or "systematic".
@@ -110,14 +110,7 @@ function sampleFeaturesOnAreas(
     return featureCollection;
   }
 
-  // Transform the Features by placing a model tract on each point.
-
-  // TODO: check if new single geometries cross antimeridian
-  // and see if they then can be split.
-  // Maybe create dual geometries, one with all negative longitude (outside range -180)
-  // and one with all positive longitude (outside range +180) and they will be cut in the below
-  // intersect functions automatically.
-
+  // Transform the point features by placing a model feature on each point.
   switch (tractType) {
     case 'point': {
       const pointFeatures: GeoJSON.PointFeature[] = [];
@@ -134,6 +127,8 @@ function sampleFeaturesOnAreas(
               rotation: rotation,
               randomRotation: randomRotation,
               rand: rand,
+              type: tractType,
+              radius: radius,
             },
           );
           if (newFeature.properties) {
@@ -164,6 +159,8 @@ function sampleFeaturesOnAreas(
               rotation: rotation,
               randomRotation: randomRotation,
               rand: rand,
+              type: tractType,
+              radius: radius,
             },
           );
           if (newFeature.properties) {
@@ -172,7 +169,6 @@ function sampleFeaturesOnAreas(
               newFeature.properties._randomRotation = 1;
             }
           }
-          // TODO?: fix dual geometries for antimeridian here
           lineFeatures.push(newFeature);
         }
       });
@@ -198,6 +194,8 @@ function sampleFeaturesOnAreas(
               rotation: rotation,
               randomRotation: randomRotation,
               rand: rand,
+              type: tractType,
+              radius: radius,
             },
           );
           if (newFeature.properties) {
@@ -206,7 +204,6 @@ function sampleFeaturesOnAreas(
               newFeature.properties._randomRotation = 1;
             }
           }
-          // TODO?: fix dual geometries for antimeridian here
           areaFeatures.push(newFeature);
         }
       });
