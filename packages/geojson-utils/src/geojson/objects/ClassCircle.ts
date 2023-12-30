@@ -42,15 +42,10 @@ export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
   }
 
   toPolygon({
-    //shallow = true,
     pointsPerCircle = 16,
   }: {
-    //shallow?: boolean;
     pointsPerCircle?: number;
   } = {}): Polygon | MultiPolygon {
-    // Check shallow for bbox, as this is the only prop in need of copy
-    // const bbox: GJ.BBox | undefined =
-    // shallow === true ? this.bbox : this.bbox ? [...this.bbox] : undefined;
     const coordinates = new Array<GJ.Position>(pointsPerCircle);
 
     // Use the radius that gives equal area to the polygon for best approx.
@@ -75,9 +70,7 @@ export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
     ) {
       // Run cut to see if it was needed
       const poly = cutAreaGeometry(polygon);
-      if (poly.type === 'Polygon') {
-        return polygon;
-      } else if (poly.type === 'MultiPolygon') {
+      if (poly.type === 'MultiPolygon') {
         return new MultiPolygon(poly);
       }
     }
