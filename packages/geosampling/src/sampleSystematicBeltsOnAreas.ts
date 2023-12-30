@@ -121,9 +121,8 @@ export const sampleSystematicBeltsOnAreas = (
     rings.push(thisRing);
   }
   const features = rings.map((coords) => {
-    const areaGeom = cutAreaGeometry({type: 'Polygon', coordinates: [coords]});
     return AreaFeature.create(
-      areaGeom,
+      cutAreaGeometry(new Polygon({coordinates: [coords]}, true)),
       {_designWeight: distBetween / (halfWidth * 2)},
       true,
     );
