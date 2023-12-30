@@ -119,6 +119,8 @@ type PlaceOpts = {
  * @param opts.rotation angel of rotation in degrees from north.
  * @param opts.randomRotation boolean true/false for a random rotation (default false).
  * @param opts.rand optional instance of Random.
+ * @param opts.radius optional radius of modelFeature.
+ * @param opts.type optional type of modelFeature ('point','line','area').
  * @returns a GeoJSON Point/Line/AreaFeature.
  */
 function placeModelFeature(
