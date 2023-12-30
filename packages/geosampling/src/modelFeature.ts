@@ -45,19 +45,23 @@ function placePoint(
 
 // Internal.
 function setCoordinatesForGeometry(
-  geoJSON: GeoJSON.Geometry,
+  geometry: GeoJSON.Geometry,
   position: GeoJSON.Position,
   rotation: number,
 ): void {
-  switch (geoJSON.type) {
+  switch (geometry.type) {
     case 'Point':
-      geoJSON.coordinates = placePoint(geoJSON.coordinates, position, rotation);
+      geometry.coordinates = placePoint(
+        geometry.coordinates,
+        position,
+        rotation,
+      );
       break;
     case 'MultiPoint':
     case 'LineString':
-      for (let i = 0; geoJSON.coordinates; i++) {
-        geoJSON.coordinates[i] = placePoint(
-          geoJSON.coordinates[i],
+      for (let i = 0; geometry.coordinates; i++) {
+        geometry.coordinates[i] = placePoint(
+          geometry.coordinates[i],
           position,
           rotation,
         );
@@ -65,10 +69,10 @@ function setCoordinatesForGeometry(
       break;
     case 'MultiLineString':
     case 'Polygon':
-      for (let i = 0; i < geoJSON.coordinates.length; i++) {
-        for (let j = 0; j < geoJSON.coordinates[i].length; j++) {
-          geoJSON.coordinates[i][j] = placePoint(
-            geoJSON.coordinates[i][j],
+      for (let i = 0; i < geometry.coordinates.length; i++) {
+        for (let j = 0; j < geometry.coordinates[i].length; j++) {
+          geometry.coordinates[i][j] = placePoint(
+            geometry.coordinates[i][j],
             position,
             rotation,
           );
@@ -76,11 +80,11 @@ function setCoordinatesForGeometry(
       }
       break;
     case 'MultiPolygon':
-      for (let i = 0; i < geoJSON.coordinates.length; i++) {
-        for (let j = 0; j < geoJSON.coordinates[i].length; j++) {
-          for (let k = 0; k < geoJSON.coordinates[i][j].length; k++) {
-            geoJSON.coordinates[i][j][k] = placePoint(
-              geoJSON.coordinates[i][j][k],
+      for (let i = 0; i < geometry.coordinates.length; i++) {
+        for (let j = 0; j < geometry.coordinates[i].length; j++) {
+          for (let k = 0; k < geometry.coordinates[i][j].length; k++) {
+            geometry.coordinates[i][j][k] = placePoint(
+              geometry.coordinates[i][j][k],
               position,
               rotation,
             );
@@ -89,8 +93,8 @@ function setCoordinatesForGeometry(
       }
       break;
     case 'GeometryCollection':
-      for (let i = 0; i < geoJSON.geometries.length; i++) {
-        setCoordinatesForGeometry(geoJSON.geometries[i], position, rotation);
+      for (let i = 0; i < geometry.geometries.length; i++) {
+        setCoordinatesForGeometry(geometry.geometries[i], position, rotation);
       }
       break;
     default:
@@ -150,11 +154,12 @@ function placeModelFeature(
   if (feature.type !== 'Feature') {
     throw new Error('modelFeature is not of type Feature.');
   }
-  setCoordinatesForGeometry(feature.geometry, position, rotation);
-  // feature.properties._center = position.slice();
-  // check if antimeridian cut may be needed here
   const radius = opts.radius ?? radiusOfGeometry(feature.geometry);
   const type = opts.type ?? typeOfFeature(feature);
+  setCoordinatesForGeometry(feature.geometry, position, rotation);
+
+  // check if antimeridian cut may be needed here
+
   if (Geodesic.distance(position, [180, position[1]]) < radius) {
     // May need cut if area or line as the distance to the antimeridian is less than the radius
     if (type === 'area') {
