@@ -34,7 +34,7 @@ export {
   rectangularLineFeature,
   squareLineFeature,
   regularPolygonLineFeature,
-  circularLineFeature,
+  circleLineFeature,
   circleAreaFeature,
   squareCircleAreaFeature,
   regularPolygonAreaFeature,
