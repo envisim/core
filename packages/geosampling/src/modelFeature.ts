@@ -1,4 +1,4 @@
-import {GeoJSON} from '@envisim/geojson-utils';
+import type {GeoJSON} from '@envisim/geojson-utils';
 import {Geodesic} from '@envisim/geojson-utils';
 import {cutLineGeometry, cutAreaGeometry} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
@@ -8,28 +8,7 @@ import {typeOfFeature} from './typeOfFeature.js';
 
 // This file has a set of functions to deal with a model
 // feature (tract), which is a GeoJSON feature with cartesian
-// coordinates relative to (0,0).
-//
-// Exports are:
-// placeModelFeature
-// radiusOfModelFeature
-// sizeOfModelFeature
-//
-// straightLineFeature
-// ellLineFeature
-// rectangularLineFeature
-// squareLineFeature
-// regularPolygonLineFeature
-// circleLineFeature
-//
-// circleAreaFeature
-// squareCircleAreaFeature
-// rectangularAreaFeature
-// squareAreaFeature
-// regularPolygonAreaFeature
-//
-// pointFeature
-// squarePointFeature
+// coordinates in meters relative to (0,0).
 
 // Internal.
 function placePoint(
@@ -676,7 +655,7 @@ export function regularPolygonLineFeature(
  * @param radius the radius of the circle in meters.
  * @returns a model feature.
  */
-export function circularLineFeature(radius: number): GeoJSON.LineFeature {
+export function circleLineFeature(radius: number): GeoJSON.LineFeature {
   const n = 36;
   const v = Math.PI / n;
   // use the radius that gives equal area to the polygon for best approximation
