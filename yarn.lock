@@ -587,7 +587,6 @@ __metadata:
     "@envisim/random": "workspace:*"
     "@envisim/sampling": "workspace:*"
     "@envisim/utils": "workspace:*"
-    "@types/geodesy": ^2.2.3
     "@types/geojson": ^7946.0.10
     "@types/jest": ^29.5.2
     "@types/node": ^20.3.1
@@ -1711,13 +1710,6 @@ __metadata:
   dependencies:
     "@babel/types": ^7.3.0
   checksum: d20953338b2f012ab7750932ece0a78e7d1645b0a6ff42d49be90f55e9998085da1374a9786a7da252df89555c6586695ba4d1d4b4e88ab2b9f306bcd35e00d3
-  languageName: node
-  linkType: hard
-
-"@types/geodesy@npm:^2.2.3":
-  version: 2.2.3
-  resolution: "@types/geodesy@npm:2.2.3"
-  checksum: ba104adee9c5c81a3eae73189ee37d26155623d54bbb67043d7497ea9a017135dfcb521958dd249e804e55706836454d9c15638c3e170d34499dc5cf7b243a0d
   languageName: node
   linkType: hard
 
