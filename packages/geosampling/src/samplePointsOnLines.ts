@@ -10,13 +10,6 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-// Comment: For now, length is computed with option for dist,
-// for entire line and individual segments, but
-// intermediate places new points on fraction of distance on a
-// geodesic path between points instead of on the segment line.
-// This is ok in applications, which are unlikely to use very long segments.
-// We may consider creating intermediateOnSegment function.
-
 // Type for keeping track of distance travelled (dt) and index of sample point
 // to be placed next (currentIndex).
 type Track = {

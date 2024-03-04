@@ -1,14 +1,15 @@
 import {
-  GeoJSON,
   AreaCollection,
-  Polygon,
+  AreaFeature,
+  GeoJSON,
   Geodesic,
-  rotateCoord,
+  Polygon,
   bbox4,
+  cutAreaGeometry,
   longitudeCenter,
   longitudeDistance,
   normalizeLongitude,
-  AreaFeature,
+  rotateCoord,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
@@ -117,14 +118,11 @@ export const sampleSystematicBeltsOnAreas = (
     }
     // Close the polygon by adding first coordinate at the end.
     thisRing.push([...thisRing[0]]);
-    // TODO?: thisRing may cross antimeridian and thus produce
-    // wrong result in intersect below. We may need to create
-    // dual geometries.
     rings.push(thisRing);
   }
   const features = rings.map((coords) => {
     return AreaFeature.create(
-      Polygon.create([coords], true),
+      cutAreaGeometry(new Polygon({coordinates: [coords]}, true)),
       {_designWeight: distBetween / (halfWidth * 2)},
       true,
     );

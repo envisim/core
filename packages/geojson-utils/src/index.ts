@@ -34,6 +34,7 @@ export {
   checkInRange,
 } from './utils/position.js';
 export {rotateCoord} from './utils/rotateCoord.js';
+export {cutLineGeometry, cutAreaGeometry} from './utils/antimeridian.js';
 
 // Dependent
 export {buffer} from './buffer.js';

@@ -1,12 +1,12 @@
 import type * as GJ from './types/geojson.js';
 import {
   AreaFeature,
+  Circle,
   LineFeature,
   LineString,
   MultiLineString,
   MultiPolygon,
   Polygon,
-  Circle,
 } from './geojson/index.js';
 import {bboxInBBox} from './utils/bbox.js';
 import {Segment} from './utils/intersectSegments.js';
@@ -57,7 +57,14 @@ export function intersectLineAreaFeatures(
     } else if (MultiPolygon.isObject(geom)) {
       areas.push(...geom.coordinates);
     } else if (Circle.isObject(geom)) {
-      areas.push(geom.toPolygon({pointsPerCircle}).coordinates);
+      const circlePolygon = geom.toPolygon({pointsPerCircle});
+      if (circlePolygon.type === 'Polygon') {
+        areas.push(circlePolygon.coordinates);
+      } else if (circlePolygon.type === 'MultiPolygon') {
+        circlePolygon.coordinates.forEach((polCoords) => {
+          areas.push(polCoords);
+        });
+      }
     } else {
       areas.push(...geom.toPolygon({pointsPerCircle}).coordinates);
     }

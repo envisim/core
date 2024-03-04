@@ -1,11 +1,9 @@
 import {describe, expect, test} from 'vitest';
 
-import {AreaCollection, AreaFeature, GeoJSON} from '@envisim/geojson-utils';
+import {pointFeature, squareAreaFeature} from '../src/modelFeature.js';
+import {sampleFeaturesOnAreas} from '../src/sampleFeaturesOnAreas.js';
 
-import {pointTract, squareAreaTract} from '../src/modelTract.js';
-import {sampleTractsOnAreas} from '../src/sampleTractsOnAreas.js';
-
-describe('sampleTractsOnAreas', () => {
+describe('sampleFeaturesOnAreas', () => {
   const polygon: GeoJSON.Polygon = {
     type: 'Polygon',
     coordinates: [
@@ -19,15 +17,15 @@ describe('sampleTractsOnAreas', () => {
     ],
   };
   const frame = AreaCollection.create([AreaFeature.create(polygon, {})]);
-  const tract = squareAreaTract(10);
-  const sample = sampleTractsOnAreas(frame, 'uniform', 10, tract);
+  const tract = squareAreaFeature(10);
+  const sample = sampleFeaturesOnAreas(frame, 'uniform', 10, tract);
   //console.log(JSON.stringify(sample, null, 2));
 
-  const tract2 = pointTract();
-  const sample2 = sampleTractsOnAreas(frame, 'uniform', 10, tract2);
+  const tract2 = pointFeature();
+  const sample2 = sampleFeaturesOnAreas(frame, 'uniform', 10, tract2);
   //console.log(JSON.stringify(sample2, null, 2));
 
-  test('sampleTractsOnAreas', () => {
+  test('sampleFeaturesOnAreas', () => {
     expect(sample.features.length).toBe(10);
     expect(sample2.features.length).toBe(10);
   });
