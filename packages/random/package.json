@@ -2,14 +2,14 @@
   "name": "@envisim/random",
   "type": "module",
   "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "lint": "eslint src/",
     "test": "vitest run"
   },
-  "files": [
-    "dist"
-  ],
   "devDependencies": {
     "@envisim/eslint-config": "workspace:*",
     "@envisim/ts-config": "workspace:*",

@@ -12,7 +12,10 @@ export default {
   arrowParens: 'always',
   endOfLine: 'lf',
   singleAttributePerLine: false,
-  plugins: ['@trivago/prettier-plugin-sort-imports'],
+  plugins: [
+    'prettier-plugin-packagejson',
+    '@trivago/prettier-plugin-sort-imports',
+  ],
   importOrder: [
     '^@types/(.*)$',
     '<THIRD_PARTY_MODULES>',
