@@ -1,0 +1,28 @@
+{
+  "name": "@envisim/geojson-utils",
+  "type": "module",
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src/",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@envisim/utils": "workspace:*",
+    "@turf/buffer": "^6.5.0",
+    "geographiclib-geodesic": "^2.0.0",
+    "polygon-clipping": "^0.15.7",
+    "tslib": "^2.6.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@envisim/eslint-config": "workspace:*",
+    "@envisim/ts-config": "workspace:*",
+    "@types/uuid": "^9.0.8",
+    "typescript": "^5.3.3",
+    "vitest": "^1.3.1"
+  }
+}

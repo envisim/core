@@ -1,0 +1,28 @@
+export default {
+  printWidth: 80,
+  tabWidth: 2,
+  useTabs: false,
+  semi: true,
+  singleQuote: true,
+  quoteProps: 'consistent',
+  jsxSingleQuote: false,
+  trailingComma: 'all',
+  bracketSpacing: false,
+  bracketSameLine: false,
+  arrowParens: 'always',
+  endOfLine: 'lf',
+  singleAttributePerLine: false,
+  plugins: [
+    'prettier-plugin-packagejson',
+    '@trivago/prettier-plugin-sort-imports',
+  ],
+  importOrder: [
+    '^@types/(.*)$',
+    '<THIRD_PARTY_MODULES>',
+    '^@envisim/(.*)$',
+    '^[./]',
+  ],
+  importOrderSeparation: true,
+  importOrderSortSpecifiers: true,
+  importOrderGroupNamespaceSpecifiers: true,
+};

@@ -1,0 +1,9 @@
+{
+  "name": "@envisim/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "typescript-eslint": "^7.1.0"
+  }
+}

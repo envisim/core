@@ -1,0 +1,26 @@
+import {copy} from '@envisim/utils';
+
+import type * as GJ from '../../types/geojson.js';
+import {GeoJsonObject} from '../ClassGeoJsonObject.js';
+import type {GeomEachCallback} from '../callback-types.js';
+
+export abstract class BaseGeometry<
+  T extends GJ.BaseGeometry,
+> extends GeoJsonObject<T['type']> {
+  coordinates: T['coordinates'];
+
+  constructor(obj: GJ.BaseGeometry, shallow: boolean = true) {
+    super(obj, shallow);
+
+    if (shallow === true) {
+      this.coordinates = obj.coordinates;
+    } else {
+      this.coordinates = copy(obj.coordinates);
+    }
+  }
+
+  abstract override get size(): number;
+  abstract geomEach(callback: GeomEachCallback<T>, featureIndex: number): void;
+  abstract override distanceToPosition(coords: GJ.Position): number;
+  abstract centroid(iterations: number): GJ.Position;
+}

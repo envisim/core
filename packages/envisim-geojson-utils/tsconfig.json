@@ -1,0 +1,9 @@
+{
+  "extends": "@envisim/ts-config/base.json",
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules", "tests"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src"
+  }
+}

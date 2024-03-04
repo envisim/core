@@ -1,0 +1,19 @@
+{
+  "name": "@envisim/utils",
+  "type": "module",
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src/",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@envisim/eslint-config": "workspace:*",
+    "@envisim/ts-config": "workspace:*",
+    "typescript": "^5.3.3",
+    "vitest": "^1.3.1"
+  }
+}

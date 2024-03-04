@@ -1,12 +1,26 @@
-dist
-*.md
+# Package managers
 node_modules
 yarn.lock
 .yarn
-.git
-.vscode
-LICENSE
 .pnp*
+pnpm-lock.yaml
 
+# IDEs and editors
+.vscode
+
+# .git
+.git
+
+# Logs
+logs
+*.log
+
+# Local files
+dist
+*.md
+LICENSE
 .eslintignore
 .prettierignore
+
+# File endings
+*.yaml
