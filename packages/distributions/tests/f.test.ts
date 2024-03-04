@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {FRatio as Dist} from '../src/f.js';
 import {distTests, fromTo} from './_distributions.testf';
 

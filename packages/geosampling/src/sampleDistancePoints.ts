@@ -1,16 +1,16 @@
 import {
-  Geodesic,
-  intersectPointAreaFeatures,
   AreaCollection,
+  Geodesic,
   PointCollection,
   PointFeature,
+  intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {effectiveRadius, DetectionFunction} from './sampleDistanceUtils.js';
+import {DetectionFunction, effectiveRadius} from './sampleDistanceUtils.js';
 import {
-  samplePointsOnAreas,
   TsamplePointsOnAreasOpts,
+  samplePointsOnAreas,
 } from './samplePointsOnAreas.js';
 
 /**
@@ -83,22 +83,22 @@ export function sampleDistancePoints(
               if (intersect) {
                 // Follow the design weight
                 let dw = 1 / (Math.PI * effRadius * effRadius);
-                if (samplePoint.properties?._designWeight) {
-                  dw *= samplePoint.properties._designWeight;
+                if (samplePoint.properties?.['_designWeight']) {
+                  dw *= samplePoint.properties['_designWeight'];
                 }
                 // If buffer = 0, then sample point has already collected
                 // design weight from frame. If buffer > 0, then we need
                 // to collect the weight here.
-                if (frameFeature.properties?._designWeight && buffer > 0) {
-                  dw *= frameFeature.properties._designWeight;
+                if (frameFeature.properties?.['_designWeight'] && buffer > 0) {
+                  dw *= frameFeature.properties['_designWeight'];
                 }
                 const newFeature = new PointFeature(pointFeature, false);
                 if (!newFeature.properties) {
                   newFeature.properties = {};
                 }
-                newFeature.properties._designWeight = dw;
-                newFeature.properties._parent = samplePointIndex;
-                newFeature.properties._distance = dist;
+                newFeature.properties['_designWeight'] = dw;
+                newFeature.properties['_parent'] = samplePointIndex;
+                newFeature.properties['_distance'] = dist;
                 sampledFeatures.push(newFeature);
                 break;
               }

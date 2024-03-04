@@ -19,8 +19,8 @@ export abstract class BaseGeometry<
     }
   }
 
-  abstract get size(): number;
+  abstract override get size(): number;
   abstract geomEach(callback: GeomEachCallback<T>, featureIndex: number): void;
-  abstract distanceToPosition(coords: GJ.Position): number;
+  abstract override distanceToPosition(coords: GJ.Position): number;
   abstract centroid(iterations: number): GJ.Position;
 }

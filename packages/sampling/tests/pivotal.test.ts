@@ -1,3 +1,5 @@
+import {describe, expect, test} from 'vitest';
+
 import {lpm2, rpm, spm} from '../src/index';
 import {Pivotal, PivotalMethod} from '../src/sampling-classes/Pivotal';
 import {RandomMock} from './_Random.testf';

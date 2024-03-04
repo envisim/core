@@ -1,4 +1,6 @@
-import {PointCollection, GeoJSON as GJ} from '../src/index.js';
+import {describe, expect, test} from 'vitest';
+
+import {GeoJSON as GJ, PointCollection} from '../src/index.js';
 
 describe('geomEach', () => {
   const geoJSON1 = new PointCollection({

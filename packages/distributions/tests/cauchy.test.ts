@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {Cauchy as Dist} from '../src/cauchy';
 import {distTests, fromTo} from './_distributions.testf';
 

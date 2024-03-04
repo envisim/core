@@ -1,9 +1,11 @@
+import {describe, expect, test} from 'vitest';
+
 import {
   AreaFeature,
+  GeoJSON,
   LineFeature,
   LineString,
   intersectLineAreaFeatures,
-  GeoJSON,
 } from '../src/index.js';
 import './_equalArrays.testf';
 

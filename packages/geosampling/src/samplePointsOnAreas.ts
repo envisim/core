@@ -1,20 +1,20 @@
 import {
-  GeoJSON,
-  pointInAreaFeature,
-  Geodesic,
-  buffer,
-  unionOfPolygons,
-  Point,
-  PointFeature,
-  PointCollection,
   AreaCollection,
   AreaGeometryCollection,
   Circle,
+  GeoJSON,
+  Geodesic,
   MultiCircle,
+  Point,
+  PointCollection,
+  PointFeature,
   bbox4,
+  buffer,
   longitudeCenter,
   longitudeDistance,
   normalizeLongitude,
+  pointInAreaFeature,
+  unionOfPolygons,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
@@ -258,10 +258,10 @@ export function samplePointsOnAreas(
     pointFeatures.forEach((pf: PointFeature, i) => {
       let dw = 1;
       const feature = gj.features[parentIndex[i]];
-      if (feature.properties?._designWeight) {
-        dw = feature.properties._designWeight;
+      if (feature.properties?.['_designWeight']) {
+        dw = feature.properties['_designWeight'];
         if (pf.properties) {
-          pf.properties._designWeight *= dw;
+          pf.properties['_designWeight'] *= dw;
         }
       }
     });

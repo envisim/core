@@ -1,5 +1,7 @@
+import {describe, expect, test} from 'vitest';
+
 import {factorial, logFactorial} from '../src/utils';
-import {createTable, fromTo, PRECISION} from './_distributions.testf';
+import {PRECISION, createTable, fromTo} from './_distributions.testf';
 
 describe('factorial', () => {
   const x = fromTo(0, 10, 1);

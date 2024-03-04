@@ -29,6 +29,7 @@ export function buffer(
   opts: BufferOpts,
 ): AreaCollection | null {
   const radius = opts.radius ?? 0;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const turfCollection = turfBuffer(geoJSON, radius / 1000, {
     units: 'kilometers',
     steps: opts.steps ?? 10,

@@ -21,7 +21,7 @@ export abstract class BaseVector extends BaseMatrix {
    * @group Static methods
    * @group Property methods
    */
-  static assert(obj: unknown, msg?: string): obj is BaseVector {
+  static override assert(obj: unknown, msg?: string): obj is BaseVector {
     if (obj instanceof BaseVector) return true;
     throw new TypeError(msg ?? 'Expected BaseVector');
   }
@@ -31,8 +31,8 @@ export abstract class BaseVector extends BaseMatrix {
   }
 
   abstract create(arr: number[]): BaseVector;
-  abstract copy(): BaseVector;
-  abstract transpose(): BaseVector;
+  abstract override copy(): BaseVector;
+  abstract override transpose(): BaseVector;
 
   /**
    * Performs matrix multiplication this * mat
@@ -252,7 +252,7 @@ export abstract class BaseVector extends BaseMatrix {
     const s = this.unique()._e;
 
     for (let i = s.length - 1; i >= 0; i--) {
-      if (vec.indexOf(s[i]) < 0) s.splice(i, 1);
+      if (vec.indexOf(s[i]!) < 0) s.splice(i, 1);
     }
 
     return this.create(s).sort();

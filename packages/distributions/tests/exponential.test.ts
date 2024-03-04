@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {Exponential as Dist} from '../src/exponential';
 import {distTests, fromTo} from './_distributions.testf';
 

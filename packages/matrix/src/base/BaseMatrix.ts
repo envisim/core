@@ -186,7 +186,9 @@ export abstract class BaseMatrix {
    */
   isCloseTo(mat: BaseMatrix, eps: number = 1e-9): boolean {
     if (!this.hasSizeOf(mat)) return false;
-    return this._e.every((e, i) => e - eps < mat._e[i] && mat._e[i] < e + eps);
+    return this._e.every(
+      (e, i) => e - eps < mat._e[i]! && mat._e[i]! < e + eps,
+    );
   }
 
   /**
@@ -244,7 +246,7 @@ export abstract class BaseMatrix {
       index += this._nelements;
     }
 
-    const value = callback(this._e[index], index);
+    const value = callback(this._e[index]!, index);
     this._e[index] = value;
     return value;
   }
@@ -713,10 +715,10 @@ export abstract class BaseMatrix {
         continue;
       }
 
-      unit = p[i] * n - 1.0;
+      unit = p[i]! * n - 1.0;
       low = Math.floor(unit);
       high = Math.ceil(unit);
-      res[i] = s[low] + (unit - low) * (s[high] - s[low]);
+      res[i] = s[low]! + (unit - low) * (s[high]! - s[low]!);
     }
 
     return res;
@@ -730,10 +732,10 @@ export abstract class BaseMatrix {
     const s = this.slice().sort((a, b) => a - b);
     let n = s.length;
 
-    if ((n & 1) === 1) return s[(n - 1) >> 1];
+    if ((n & 1) === 1) return s[(n - 1) >> 1]!;
 
     n = n >> 1;
-    return (s[n] + s[n - 1]) * 0.5;
+    return (s[n]! + s[n - 1]!) * 0.5;
   }
 
   /**
@@ -791,7 +793,7 @@ export abstract class BaseMatrix {
       str += '\n';
       for (let r = 0; r < this._nrow; r++) {
         for (let c = 0; c < this._ncol; c++) {
-          str += vals[c * this._nrow + r].padStart(maxLen[c] + 1);
+          str += vals[c * this._nrow + r]!.padStart(maxLen[c]! + 1);
         }
         str += '\n';
       }

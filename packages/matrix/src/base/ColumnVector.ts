@@ -21,7 +21,7 @@ export class ColumnVector extends BaseVector {
    * @group Static methods
    * @group Property methods
    */
-  static assert(obj: unknown, msg?: string): obj is ColumnVector {
+  static override assert(obj: unknown, msg?: string): obj is ColumnVector {
     if (obj instanceof ColumnVector) return true;
     throw new TypeError(msg ?? 'Expected ColumnVector');
   }
@@ -78,7 +78,7 @@ export class ColumnVector extends BaseVector {
     const s = ColumnVector.create(0.0, rows.length);
 
     for (let i = 0; i < rows.length; i++) {
-      s.ed(i, this.at(rows[i]));
+      s.ed(i, this.at(rows[i]!));
     }
 
     return s;

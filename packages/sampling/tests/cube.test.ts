@@ -1,3 +1,5 @@
+import {describe, expect, test} from 'vitest';
+
 import {Matrix} from '@envisim/matrix';
 
 import {cube, lcube} from '../src/index';

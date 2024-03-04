@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {Pareto as Dist} from '../src/pareto';
 import {distTests, fromTo} from './_distributions.testf';
 

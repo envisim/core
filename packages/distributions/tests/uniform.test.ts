@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {
   Uniform as Dist,
   UniformDiscrete as Dist2,

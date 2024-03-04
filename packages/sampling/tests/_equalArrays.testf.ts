@@ -1,3 +1,5 @@
+import {expect} from 'vitest';
+
 export const arraysAreEqual = (a: number[], b: number[]): boolean => {
   if (a === b) return true;
   if (a == null || b == null) return false;

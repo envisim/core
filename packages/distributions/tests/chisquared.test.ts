@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {ChiSquared as Dist} from '../src/chisquared';
 import {distTests, fromTo} from './_distributions.testf';
 

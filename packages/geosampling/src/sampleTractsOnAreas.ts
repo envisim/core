@@ -1,8 +1,8 @@
 import {
-  GeoJSON,
-  PointCollection,
-  LineCollection,
   AreaCollection,
+  GeoJSON,
+  LineCollection,
+  PointCollection,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
@@ -119,7 +119,7 @@ function sampleTractsOnAreas(
     case 'point': {
       const pointFeatures: GeoJSON.PointFeature[] = [];
       featureCollection.features.forEach((feature) => {
-        const dw = feature.properties?._designWeight || 1;
+        const dw = feature.properties?.['_designWeight'] || 1;
 
         let newFeature: GeoJSON.PointFeature;
 
@@ -134,7 +134,7 @@ function sampleTractsOnAreas(
             },
           );
           if (newFeature.properties) {
-            newFeature.properties._designWeight = dw / sizeOfTract;
+            newFeature.properties['_designWeight'] = dw / sizeOfTract;
           }
           pointFeatures.push(newFeature);
         }
@@ -149,7 +149,7 @@ function sampleTractsOnAreas(
     case 'line': {
       const lineFeatures: GeoJSON.LineFeature[] = [];
       featureCollection.features.forEach((feature) => {
-        const dw = feature.properties?._designWeight || 1;
+        const dw = feature.properties?.['_designWeight'] || 1;
 
         let newFeature: GeoJSON.LineFeature;
 
@@ -164,9 +164,9 @@ function sampleTractsOnAreas(
             },
           );
           if (newFeature.properties) {
-            newFeature.properties._designWeight = dw / sizeOfTract;
+            newFeature.properties['_designWeight'] = dw / sizeOfTract;
             if (randomRotation) {
-              newFeature.properties._randomRotation = 1;
+              newFeature.properties['_randomRotation'] = 1;
             }
           }
           // TODO?: fix dual geometries for antimeridian here
@@ -183,7 +183,7 @@ function sampleTractsOnAreas(
     case 'area': {
       const areaFeatures: GeoJSON.AreaFeature[] = [];
       featureCollection.features.forEach((feature) => {
-        const dw = feature.properties?._designWeight || 1;
+        const dw = feature.properties?.['_designWeight'] || 1;
 
         let newFeature: GeoJSON.AreaFeature;
 
@@ -198,9 +198,9 @@ function sampleTractsOnAreas(
             },
           );
           if (newFeature.properties) {
-            newFeature.properties._designWeight = dw / sizeOfTract;
+            newFeature.properties['_designWeight'] = dw / sizeOfTract;
             if (randomRotation) {
-              newFeature.properties._randomRotation = 1;
+              newFeature.properties['_randomRotation'] = 1;
             }
           }
           // TODO?: fix dual geometries for antimeridian here

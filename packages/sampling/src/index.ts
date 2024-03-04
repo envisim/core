@@ -13,8 +13,8 @@ export {NearestNeighbour} from './util-classes/NearestNeighbour.js';
 
 // Types
 export {
-  IOptions,
   optionsDefaultEps,
   optionsDefaultRand,
   optionsDefaultTreeBucketSize,
 } from './types.js';
+export type {IOptions} from './types.js';

@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {Gamma as Dist} from '../src/gamma';
 import {distTests, fromTo} from './_distributions.testf';
 

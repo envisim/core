@@ -1,8 +1,10 @@
-import {sampford, pareto, brewer} from '../src/index';
-import {RandomMock} from './_Random.testf';
+import {describe, expect, test} from 'vitest';
+
+// import {brewer, pareto, sampford} from '../src/index';
+// import {RandomMock} from './_Random.testf';
 
 describe('pips', () => {
-  const rand = new RandomMock();
+  // const rand = new RandomMock();
 
   // test('sampford', () => {
   //   // a

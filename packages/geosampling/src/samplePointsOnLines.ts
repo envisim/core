@@ -1,12 +1,12 @@
 import type {GeoJSON} from '@envisim/geojson-utils';
 import {
-  Point,
-  PointFeature,
-  PointCollection,
-  LineObject,
-  LineGeometryCollection,
   LineCollection,
+  LineGeometryCollection,
+  LineObject,
   PlateCarree,
+  Point,
+  PointCollection,
+  PointFeature,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
@@ -200,8 +200,8 @@ export function samplePointsOnLines(
     let dw = designWeight;
     const parentFeature = collection.features[parentIndex[index]];
 
-    if (parentFeature.properties?._designWeight) {
-      dw = dw * parentFeature.properties._designWeight;
+    if (parentFeature.properties?.['_designWeight']) {
+      dw = dw * parentFeature.properties['_designWeight'];
     }
 
     return PointFeature.create(Point.create(coords), {_designWeight: dw});

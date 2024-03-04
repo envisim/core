@@ -17,7 +17,7 @@ const LOGGAMMACOEFS = {
     1.70970543404441224307e-2, -5.71926117404305781283e-4,
     4.63399473359905636708e-6, -2.7199490848860770391e-9,
   ],
-};
+} as const;
 
 /*
  * logGammaFunctionInternal, based on ALG 4 in (however an error is in alg.)
@@ -31,7 +31,7 @@ function logGammaFunctionInternal(x: number): number {
   const p = x - 0.5;
   const csum = LOGGAMMACOEFS.c.reduce(
     (t, c, i) => t + c / (x + i),
-    LOGGAMMACOEFS.c0,
+    LOGGAMMACOEFS.c0 as number,
   );
   return Math.log(2.0 * SQRTEBYPI * csum) - p + p * Math.log(p + 10.900511);
 }

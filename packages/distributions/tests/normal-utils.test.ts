@@ -1,5 +1,7 @@
+import {describe, expect, test} from 'vitest';
+
 import {errorFunction, stdNormalQuantile} from '../src/normal-utils';
-import {createTable, fromTo, PRECISION} from './_distributions.testf';
+import {PRECISION, createTable, fromTo} from './_distributions.testf';
 
 describe('errorFunction', () => {
   const x = [

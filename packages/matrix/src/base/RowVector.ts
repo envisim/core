@@ -19,7 +19,7 @@ export class RowVector extends BaseVector {
    * @group Static methods
    * @group Property methods
    */
-  static assert(obj: unknown, msg?: string): obj is RowVector {
+  static override assert(obj: unknown, msg?: string): obj is RowVector {
     if (obj instanceof RowVector) return true;
     throw new TypeError(msg ?? 'Expected RowVector');
   }
@@ -76,7 +76,7 @@ export class RowVector extends BaseVector {
     const s = RowVector.create(0.0, cols.length);
 
     for (let i = 0; i < cols.length; i++) {
-      s.ed(i, this.at(cols[i]));
+      s.ed(i, this.at(cols[i]!));
     }
 
     return s;

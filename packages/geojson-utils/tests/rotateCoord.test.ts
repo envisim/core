@@ -1,4 +1,6 @@
-import {rotateCoord, GeoJSON as GJ} from '../src/index.js';
+import {describe, expect, test} from 'vitest';
+
+import {GeoJSON as GJ, rotateCoord} from '../src/index.js';
 
 describe('rotateCoord', () => {
   const coord: GJ.Position = [0, 45];

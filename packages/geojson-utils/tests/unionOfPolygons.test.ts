@@ -1,9 +1,11 @@
+import {describe, expect, test} from 'vitest';
+
 import {
-  unionOfPolygons,
-  MultiPolygon,
-  AreaFeature,
   AreaCollection,
+  AreaFeature,
   GeoJSON as GJ,
+  MultiPolygon,
+  unionOfPolygons,
 } from '../src/index.js';
 
 describe('unionOfPolygons', () => {

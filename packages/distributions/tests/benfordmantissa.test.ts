@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {BenfordMantissa as Dist} from '../src/benfordmantissa';
 import {distTests, fromTo} from './_distributions.testf';
 

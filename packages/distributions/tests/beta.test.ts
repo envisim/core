@@ -1,5 +1,7 @@
+import {describe} from 'vitest';
+
 import {Beta as Dist, BetaPrime as Dist2} from '../src/beta';
-import {distTests, fromTo, QARR} from './_distributions.testf';
+import {QARR, distTests, fromTo} from './_distributions.testf';
 
 describe('beta (2, 5)', () => {
   const pdf = [

@@ -23,7 +23,7 @@ export class Matrix extends BaseMatrix {
    * @group Static methods
    * @group Property methods
    */
-  static assert(obj: unknown, msg?: string): obj is Matrix {
+  static override assert(obj: unknown, msg?: string): obj is Matrix {
     if (obj instanceof Matrix) return true;
     throw new TypeError(msg ?? 'Expected Matrix');
   }
@@ -38,7 +38,7 @@ export class Matrix extends BaseMatrix {
       throw new TypeError('Not all arguments are of type BaseMatrix');
     if (matrices.length === 0) throw new Error('Nothing to cbind');
 
-    const nrow = matrices[0].nrow;
+    const nrow = matrices[0]!.nrow;
 
     if (!matrices.every((m) => nrow === m.nrow))
       throw new RangeError('Dimensions of matrices does not match');
@@ -62,7 +62,7 @@ export class Matrix extends BaseMatrix {
       throw new TypeError('Not all arguments are of type BaseMatrix');
     if (matrices.length === 0) throw new Error('Nothing to cbind');
 
-    const ncol = matrices[0].ncol;
+    const ncol = matrices[0]!.ncol;
 
     if (!matrices.every((m) => ncol === m.ncol))
       throw new RangeError('Dimensions of matrices does not match');
@@ -74,13 +74,13 @@ export class Matrix extends BaseMatrix {
     let rows = 0;
 
     for (let i = 0; i < matrices.length; i++) {
-      for (let col = 0; col < matrices[i].ncol; col++) {
-        for (let row = 0; row < matrices[i].nrow; row++) {
-          s.edRC(row + rows, col, matrices[i].atRC(row, col));
+      for (let col = 0; col < matrices[i]!.ncol; col++) {
+        for (let row = 0; row < matrices[i]!.nrow; row++) {
+          s.edRC(row + rows, col, matrices[i]!.atRC(row, col));
         }
       }
 
-      rows += matrices[i].nrow;
+      rows += matrices[i]!.nrow;
     }
 
     return s;
@@ -168,7 +168,7 @@ export class Matrix extends BaseMatrix {
     const s = new Array<number>(this._ncol);
 
     for (let i = row, j = 0; i < this._nelements; i += this._nrow, j++)
-      s[j] = this._e[i];
+      s[j] = this._e[i]!;
 
     return new RowVector(s, true);
   }
@@ -188,7 +188,7 @@ export class Matrix extends BaseMatrix {
       s._e.splice(
         c * this._nrow,
         (c + 1) * this._nrow,
-        ...this._e.slice(cols[c] * this._nrow, (cols[c] + 1) * this._nrow),
+        ...this._e.slice(cols[c]! * this._nrow, (cols[c]! + 1) * this._nrow),
       );
     }
 
@@ -208,7 +208,7 @@ export class Matrix extends BaseMatrix {
 
     for (let r = 0; r < rows.length; r++) {
       for (let c = 0; c < this._ncol; c++) {
-        s.edRC(r, c, this.atRC(rows[r], c));
+        s.edRC(r, c, this.atRC(rows[r]!, c));
       }
     }
 

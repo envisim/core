@@ -1,7 +1,9 @@
+import {describe, expect, test} from 'vitest';
+
 import {
-  buffer,
   AreaCollection,
   AreaFeature,
+  buffer,
   unionOfPolygons,
 } from '../src/index.js';
 

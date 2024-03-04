@@ -38,7 +38,7 @@ export class AreaCollection
   }
 
   /* GEOJSON COMMON */
-  distanceToPosition(coords: GJ.Position): number {
+  override distanceToPosition(coords: GJ.Position): number {
     return this.features.reduce((prev, curr) => {
       const d = curr.geometry.distanceToPosition(coords);
       if (prev <= 0 && d <= 0) {

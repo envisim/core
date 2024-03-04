@@ -28,14 +28,14 @@ export function intersectLineSampleAreaFrame(
         let dw = 1; // designWeight
         // Transfer the properties from sampleFeature to newFeature without copy.
         intersect.properties = sampleFeature.properties || {};
-        if (frameFeature.properties?._designWeight) {
-          dw *= frameFeature.properties._designWeight;
+        if (frameFeature.properties?.['_designWeight']) {
+          dw *= frameFeature.properties['_designWeight'];
         }
-        if (sampleFeature.properties?._designWeight) {
-          dw *= sampleFeature.properties._designWeight;
+        if (sampleFeature.properties?.['_designWeight']) {
+          dw *= sampleFeature.properties['_designWeight'];
         }
         // Update the design weight.
-        intersect.properties._designWeight = dw;
+        intersect.properties['_designWeight'] = dw;
         newFeatures.push(intersect);
       }
     });

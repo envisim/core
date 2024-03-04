@@ -1,3 +1,5 @@
+import {describe, expect, test} from 'vitest';
+
 import {Polygon} from '../src/index.js';
 
 describe('centroid', () => {

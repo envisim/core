@@ -1,4 +1,6 @@
-import {Geodesic, GeoJSON as GJ} from '../src/index.js';
+import {describe, expect, test} from 'vitest';
+
+import {GeoJSON as GJ, Geodesic} from '../src/index.js';
 
 describe('Geodesic.distance', () => {
   const p1: GJ.Position = [0, 90]; // North pole

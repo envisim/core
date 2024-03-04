@@ -1,9 +1,11 @@
+import {describe, expect, test} from 'vitest';
+
 import {
   ColumnVector,
   Matrix,
   RowVector,
-  sequence,
   regressionCoefficients,
+  sequence,
 } from '../src/index.js';
 import {createTable} from './_createTable.testf.js';
 
@@ -51,9 +53,9 @@ describe('ColumnVector', () => {
 
   const c1_c1p2 = new ColumnVector([...c1content, ...c1p2.internal]);
   const c1p2_c1 = new ColumnVector([...c1p2.internal, ...c1content]);
-  const c1r2 = new RowVector([4]);
+  // const c1r2 = new RowVector([4]);
   const c1r24 = new ColumnVector([4, 5]);
-  const c1r23 = new ColumnVector([4, 3]);
+  // const c1r23 = new ColumnVector([4, 3]);
   const c1_positive = new ColumnVector([1, 4, 3, 5]);
   const r1 = new RowVector(c1content);
 

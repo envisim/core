@@ -1,3 +1,5 @@
+import {describe, expect, test} from 'vitest';
+
 import {randomSystematic, systematic} from '../src/index';
 import {RandomMock} from './_Random.testf';
 import './_equalArrays.testf';

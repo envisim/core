@@ -1,4 +1,6 @@
-import {GeoJSON, AreaFeature, AreaCollection} from '@envisim/geojson-utils';
+import {describe, expect, test} from 'vitest';
+
+import {AreaCollection, AreaFeature, GeoJSON} from '@envisim/geojson-utils';
 
 import {samplePointsOnAreas} from '../src/samplePointsOnAreas.js';
 

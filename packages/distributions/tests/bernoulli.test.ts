@@ -1,9 +1,7 @@
-import {Random} from '@envisim/random';
+import {describe, expect, test} from 'vitest';
 
 import {Bernoulli} from '../src/bernoulli';
 import {RANDN, RPRECISION} from './_distributions.testf';
-
-const rand = new Random('test');
 
 describe('bernoulli', () => {
   const pdf = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];

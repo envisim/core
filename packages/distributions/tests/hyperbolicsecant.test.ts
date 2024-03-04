@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {HyperbolicSecant as Dist} from '../src/hyperbolicsecant';
 import {distTests, fromTo} from './_distributions.testf';
 

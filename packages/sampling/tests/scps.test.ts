@@ -1,3 +1,5 @@
+import {describe, expect, test} from 'vitest';
+
 import {lcps, scps} from '../src/index';
 import {Cps, CpsMethod} from '../src/sampling-classes/Cps';
 import {RandomMock} from './_Random.testf';

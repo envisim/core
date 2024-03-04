@@ -1,6 +1,8 @@
+import {describe} from 'vitest';
+
 import {Beta} from '../src/beta';
 import {Semicircle as Dist} from '../src/semicircle';
-import {distTests, fromTo, QARR} from './_distributions.testf';
+import {QARR, distTests, fromTo} from './_distributions.testf';
 
 describe('semicircle(3)', () => {
   const params = {radius: 3};

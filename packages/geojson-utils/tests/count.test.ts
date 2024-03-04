@@ -1,3 +1,5 @@
+import {describe, expect, test} from 'vitest';
+
 import {MultiPoint} from '../src/index.js';
 
 describe('count', () => {

@@ -1,12 +1,12 @@
 import {
-  intersectPointAreaFeatures,
+  AreaCollection,
   PointCollection,
   PointFeature,
-  AreaCollection,
+  intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {effectiveHalfWidth, DetectionFunction} from './sampleDistanceUtils.js';
+import {DetectionFunction, effectiveHalfWidth} from './sampleDistanceUtils.js';
 import {sampleSystematicLinesOnAreas} from './sampleSystematicLinesOnAreas.js';
 
 export type TsampleDistanceLinesOpts = {
@@ -74,15 +74,15 @@ export function sampleSystematicDistanceLines(
                 // This selection
                 let designWeight = dw;
                 // All previous selections
-                if (frameFeature.properties?._designWeight) {
-                  designWeight *= frameFeature.properties._designWeight;
+                if (frameFeature.properties?.['_designWeight']) {
+                  designWeight *= frameFeature.properties['_designWeight'];
                 }
 
                 const newFeature = new PointFeature(pointFeature, false);
 
-                newFeature.properties._designWeight = designWeight;
-                newFeature.properties._parent = sampleLineIndex;
-                newFeature.properties._distance = dist;
+                newFeature.properties['_designWeight'] = designWeight;
+                newFeature.properties['_parent'] = sampleLineIndex;
+                newFeature.properties['_distance'] = dist;
 
                 sampledFeatures.push(newFeature);
                 break;

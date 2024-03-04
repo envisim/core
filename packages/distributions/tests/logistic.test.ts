@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {Logistic as Dist} from '../src/logistic';
 import {distTests, fromTo} from './_distributions.testf';
 

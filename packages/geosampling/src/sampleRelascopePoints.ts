@@ -1,15 +1,15 @@
 import {
-  Geodesic,
-  intersectPointAreaFeatures,
-  PointFeature,
-  PointCollection,
   AreaCollection,
+  Geodesic,
+  PointCollection,
+  PointFeature,
+  intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
 import {copy} from '@envisim/utils';
 
 import {
-  samplePointsOnAreas,
   TsamplePointsOnAreasOpts,
+  samplePointsOnAreas,
 } from './samplePointsOnAreas.js';
 
 // TODO: Decide if we should implement correction by adding the correct buffer.
@@ -84,21 +84,21 @@ export function sampleRelascopePoints(
               if (intersect) {
                 // Follow the design weight
                 let dw = 1 / (Math.PI * radius * radius);
-                if (samplePoint.properties?._designWeight) {
-                  dw *= samplePoint.properties._designWeight;
+                if (samplePoint.properties?.['_designWeight']) {
+                  dw *= samplePoint.properties['_designWeight'];
                 }
                 // If buffer = 0, then sample point has already collected
                 // design weight from frame. If buffer > 0, then we need to
                 // collect the weight here.
-                if (frameFeature.properties?._designWeight && buffer > 0) {
-                  dw *= frameFeature.properties._designWeight;
+                if (frameFeature.properties?.['_designWeight'] && buffer > 0) {
+                  dw *= frameFeature.properties['_designWeight'];
                 }
                 const newFeature = copy(pointFeature);
                 if (!newFeature.properties) {
                   newFeature.properties = {};
                 }
-                newFeature.properties._designWeight = dw;
-                newFeature.properties._parent = samplePointIndex;
+                newFeature.properties['_designWeight'] = dw;
+                newFeature.properties['_parent'] = samplePointIndex;
                 sampledFeatures.push(newFeature);
                 break;
               }

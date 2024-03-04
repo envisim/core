@@ -1,10 +1,12 @@
+import {describe, expect, test} from 'vitest';
+
 import {
   gammaFunction,
   logGammaFunction,
   regularizedLowerGammaFunction,
   regularizedUpperGammaFunction,
 } from '../src/gamma-utils';
-import {createTable, fromTo, PRECISION} from './_distributions.testf';
+import {PRECISION, createTable, fromTo} from './_distributions.testf';
 
 describe('gamma', () => {
   const x = fromTo(0.5, 10, 0.5);

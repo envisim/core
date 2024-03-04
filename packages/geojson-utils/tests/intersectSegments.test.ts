@@ -1,4 +1,6 @@
-import {intersectSegments, GeoJSON as GJ, Segment} from '../src/index.js';
+import {describe, expect, test} from 'vitest';
+
+import {GeoJSON as GJ, Segment, intersectSegments} from '../src/index.js';
 import './_equalArrays.testf';
 
 describe('intersectSegments', () => {

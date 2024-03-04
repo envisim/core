@@ -1,4 +1,6 @@
-import {PlateCarree, GeoJSON as GJ} from '../src/index.js';
+import {describe, expect, test} from 'vitest';
+
+import {GeoJSON as GJ, PlateCarree} from '../src/index.js';
 
 describe('intermediateOnSegment', () => {
   const p1: GJ.Position = [0, 0];

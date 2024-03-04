@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {Hypergeometric as Dist} from '../src/hypergeometric';
 import {distTests, fromTo} from './_distributions.testf';
 

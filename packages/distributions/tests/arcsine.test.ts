@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {Arcsine as Dist} from '../src/arcsine';
 import {distTests, fromTo} from './_distributions.testf';
 

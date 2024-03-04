@@ -1,3 +1,5 @@
+import {describe, expect, test} from 'vitest';
+
 import {ColumnVector, RowVector} from '../src/index.js';
 import {createTable} from './_createTable.testf.js';
 
@@ -45,7 +47,7 @@ describe('RowVector', () => {
 
   const r1_r1p2 = new RowVector([...r1content, ...r1p2.internal]);
   const r1p2_r1 = new RowVector([...r1p2.internal, ...r1content]);
-  const r1c2 = new RowVector([4]);
+  // const r1c2 = new RowVector([4]);
   const r1c23 = new RowVector([4, 3]);
   const r1_positive = new RowVector([1, 4, 3, 5]);
   const c1 = new ColumnVector(r1content);

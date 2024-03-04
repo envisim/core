@@ -43,16 +43,16 @@
 class Random {
   // set the 'order' number of ENTROPY-holding 32-bit values
   /** @ignore */
-  private o = 48;
+  private o: number = 48;
   // init the 'carry' used by the multiply-with-carry (MWC) algorithm
   /** @ignore */
-  private c = 1;
+  private c: number = 1;
   // init the 'phase' (max-1) of the intermediate variable pointer
   /** @ignore */
-  private p = this.o;
+  private p: number = this.o;
   // declare our intermediate variables array
   /** @ignore */
-  private s = new Array<number>(this.o);
+  private s: number[] = new Array<number>(this.o);
 
   // general purpose local
   /** @ignore */
@@ -125,9 +125,9 @@ class Random {
   /** @ignore */
   private rawprng(): number {
     if (++this.p >= this.o) this.p = 0;
-    const t = 1768863 * this.s[this.p] + this.c * 2.3283064365386963e-10; // 2^-32
+    const t = 1768863 * this.s[this.p]! + this.c * 2.3283064365386963e-10; // 2^-32
     this.s[this.p] = t - (this.c = t | 0);
-    return this.s[this.p];
+    return this.s[this.p]!;
   }
 
   // this EXPORTED function is the default function returned by this library.
@@ -167,8 +167,8 @@ class Random {
   private hash(...args: number[] | string[]): void {
     for (let i = 0; i < args.length; i++) {
       for (let j = 0; j < this.o; j++) {
-        this.s[j] -= this.mash(args[i]);
-        if (this.s[j] < 0) this.s[j] += 1;
+        this.s[j] -= this.mash(args[i]!);
+        if (this.s[j]! < 0) this.s[j] += 1;
       }
     }
   }
@@ -201,7 +201,7 @@ class Random {
       for (let j = 0; j < this.o; j++) {
         //	"mash" it into the UHEPRNG state
         this.s[j] -= this.mash(this.k);
-        if (this.s[j] < 0) this.s[j] += 1;
+        if (this.s[j]! < 0) this.s[j] += 1;
       }
     }
 

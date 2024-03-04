@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {Geometric as Dist} from '../src/geometric';
 import {distTests, fromTo} from './_distributions.testf';
 

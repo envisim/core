@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {Weibull as Dist} from '../src/weibull';
 import {distTests, fromTo} from './_distributions.testf';
 

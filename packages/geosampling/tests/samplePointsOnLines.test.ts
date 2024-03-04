@@ -1,4 +1,6 @@
-import {GeoJSON, LineFeature, LineCollection} from '@envisim/geojson-utils';
+import {describe, expect, test} from 'vitest';
+
+import {GeoJSON, LineCollection, LineFeature} from '@envisim/geojson-utils';
 
 import {samplePointsOnLines} from '../src/samplePointsOnLines.js';
 

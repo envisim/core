@@ -1,4 +1,6 @@
-import {areaOfPolygonLonLat, GeoJSON as GJ} from '../src/index.js';
+import {describe, expect, test} from 'vitest';
+
+import {GeoJSON as GJ, areaOfPolygonLonLat} from '../src/index.js';
 
 describe('area', () => {
   const ring: GJ.Position[] = [

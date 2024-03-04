@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {ExtremeValue as Dist} from '../src/extremevalue';
 import {distTests, fromTo} from './_distributions.testf';
 

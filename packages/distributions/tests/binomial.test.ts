@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {Binomial as Dist, NegativeBinomial as Dist2} from '../src/binomial';
 import {distTests, fromTo} from './_distributions.testf';
 

@@ -1,15 +1,15 @@
 import {
-  Geodesic,
-  intersectPointAreaFeatures,
-  intersectLineLineFeatures,
-  intersectLineAreaFeatures,
-  intersectAreaAreaFeatures,
-  PointFeature,
-  LineFeature,
-  AreaFeature,
-  PointCollection,
-  LineCollection,
   AreaCollection,
+  AreaFeature,
+  Geodesic,
+  LineCollection,
+  LineFeature,
+  PointCollection,
+  PointFeature,
+  intersectAreaAreaFeatures,
+  intersectLineAreaFeatures,
+  intersectLineLineFeatures,
+  intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
 
 import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
@@ -70,7 +70,7 @@ function transferPropertiesInPlace(
     LineFeature.isFeature(frameFeature) &&
     LineFeature.isFeature(baseFeature)
   ) {
-    if (frameFeature.properties?._randomRotation === 1) {
+    if (frameFeature.properties?.['_randomRotation'] === 1) {
       // Here the line that collects can be any curve,
       // as long as it has been randomly rotated.
       factor = Math.PI / (2 * baseFeature.length());
@@ -100,12 +100,12 @@ function transferPropertiesInPlace(
   });
 
   // Transfer designWeight to newFeature from frameFeature
-  if (frameFeature.properties?._designWeight) {
-    intersect.properties._designWeight =
-      frameFeature.properties._designWeight * factor;
+  if (frameFeature.properties?.['_designWeight']) {
+    intersect.properties['_designWeight'] =
+      frameFeature.properties['_designWeight'] * factor;
   }
   // Transfer index of parent frame unit as _parent
-  intersect.properties._parent = index;
+  intersect.properties['_parent'] = index;
 }
 
 /**

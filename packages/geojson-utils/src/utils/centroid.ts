@@ -41,7 +41,7 @@ export function centroidFromMultipleCentroids(
   let center = bboxCenter(bbox);
   let total = 0.0;
   for (let i = 0; i < iterations; i++) {
-    let proj = azimuthalEquidistant(center);
+    const proj = azimuthalEquidistant(center);
     total = 0.0;
     let Cx = 0.0;
     let Cy = 0.0;

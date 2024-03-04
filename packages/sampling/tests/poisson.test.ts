@@ -1,3 +1,5 @@
+import {describe, expect, test} from 'vitest';
+
 import {conditionalPoisson, poisson} from '../src/index';
 import {RandomMock} from './_Random.testf';
 import './_equalArrays.testf';

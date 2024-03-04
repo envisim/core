@@ -1,4 +1,6 @@
-import {LineString, GeoJSON as GJ} from '../src/index.js';
+import {describe, expect, test} from 'vitest';
+
+import {GeoJSON as GJ, LineString} from '../src/index.js';
 
 describe('length', () => {
   let p1: GJ.Position = [0, 90]; // North pole

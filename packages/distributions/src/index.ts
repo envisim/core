@@ -68,7 +68,7 @@ export {
 export {UQuadratic, uQuadratic} from './uquadratic.js';
 export {Weibull, weibull} from './weibull.js';
 
-export {
+export type {
   IRandomOptions,
   // Params
   IBenfordMantissaParams,

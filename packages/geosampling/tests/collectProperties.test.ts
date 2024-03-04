@@ -1,10 +1,12 @@
+import {describe, expect, test} from 'vitest';
+
 import {
-  GeoJSON,
-  PointFeature,
-  PointCollection,
-  AreaFeature,
   AreaCollection,
+  AreaFeature,
+  GeoJSON,
   IPropertyRecord,
+  PointCollection,
+  PointFeature,
 } from '@envisim/geojson-utils';
 
 import {collectProperties} from '../src/collectProperties.js';

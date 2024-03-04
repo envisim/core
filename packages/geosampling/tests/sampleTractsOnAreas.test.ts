@@ -1,6 +1,8 @@
-import {GeoJSON, AreaFeature, AreaCollection} from '@envisim/geojson-utils';
+import {describe, expect, test} from 'vitest';
 
-import {squareAreaTract, pointTract} from '../src/modelTract.js';
+import {AreaCollection, AreaFeature, GeoJSON} from '@envisim/geojson-utils';
+
+import {pointTract, squareAreaTract} from '../src/modelTract.js';
 import {sampleTractsOnAreas} from '../src/sampleTractsOnAreas.js';
 
 describe('sampleTractsOnAreas', () => {

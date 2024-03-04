@@ -2,16 +2,16 @@ import {v4 as uuidv4} from 'uuid';
 
 import {IPropertyRecord} from '@envisim/geojson-utils';
 import {
-  PointFeature,
-  LineFeature,
-  AreaFeature,
-  PointCollection,
-  LineCollection,
   AreaCollection,
+  AreaFeature,
   Geodesic,
-  intersectLineLineFeatures,
+  LineCollection,
+  LineFeature,
+  PointCollection,
+  PointFeature,
   intersectAreaAreaFeatures,
   intersectLineAreaFeatures,
+  intersectLineLineFeatures,
   intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
 
@@ -76,7 +76,7 @@ function aggregateInPlace(
   // If line collects from line an additional factor is needed
   let factor = 1;
   if (LineFeature.isFeature(from) && LineFeature.isFeature(to)) {
-    if (to.properties?._randomRotation === 1) {
+    if (to.properties?.['_randomRotation'] === 1) {
       // Here the line that collects can be any curve,
       // as long as it has been randomly rotated.
       factor = Math.PI / (2 * from.length());
@@ -170,7 +170,7 @@ export function collectProperties(
   const idMap: Record<string, string> = {};
   const newProperties: IPropertyRecord = {};
   Object.keys(properties).forEach((id: string) => {
-    let property = properties[id];
+    const property = properties[id];
     if (property.type === 'numerical') {
       idMap[property.id] = uuidv4();
       const newId = idMap[property.id];

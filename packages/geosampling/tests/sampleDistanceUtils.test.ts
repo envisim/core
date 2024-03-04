@@ -1,7 +1,9 @@
+import {describe, expect, test} from 'vitest';
+
 import {
-  integrate,
   effectiveRadius,
   halfNormalDetectionFunction,
+  integrate,
   uniformDetectionFunction,
 } from '../src/sampleDistanceUtils.js';
 

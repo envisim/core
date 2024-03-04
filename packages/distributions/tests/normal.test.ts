@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {
   Normal as Dist,
   LogNormal as Dist2,

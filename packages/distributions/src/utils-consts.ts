@@ -11,11 +11,13 @@ export const SQRT2PI = 2.5066282746310002; // Math.sqrt(2.0 * Math.PI);
 export const SQRTMPI = 0.5641895835477563; // 1 / SQRTPI
 export const LOGSQRTPI = 0.5723649429247001; // Math.log(Math.PI) / 2.0
 export const LOGSQRT2PI = 0.9189385332046727; // Math.log(Math.sqrt(2 * Math.PI))
-export const KFAC = [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800];
+export const KFAC = [
+  1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800,
+] as const;
 export const LOGKFAC = [
   0.0, 0.0, 0.6931471805599453, 1.791759469228055, 3.1780538303479458,
   4.787491742782046, 6.579251212010101, 8.525161361065415, 10.60460290274525,
   12.801827480081469, 15.104412573075516,
-]; // Math.log(k!), k = 0,...,10
+] as const; // Math.log(k!), k = 0,...,10
 export const HALFPI = 1.5707963267948966; // Math.PI * 0.5;
 export const EPS = 1e-12; // Smol

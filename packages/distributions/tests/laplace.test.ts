@@ -1,3 +1,5 @@
+import {describe} from 'vitest';
+
 import {Laplace as Dist} from '../src/laplace';
 import {distTests, fromTo} from './_distributions.testf';
 

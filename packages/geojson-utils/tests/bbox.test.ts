@@ -1,10 +1,12 @@
+import {describe, expect, test} from 'vitest';
+
 import {
-  Polygon,
   GeoJSON as GJ,
-  pointInBBox,
-  bboxInBBox,
-  unionOfBBoxes,
+  Polygon,
   bboxFromPositions,
+  bboxInBBox,
+  pointInBBox,
+  unionOfBBoxes,
 } from '../src/index.js';
 import './_equalArrays.testf';
 

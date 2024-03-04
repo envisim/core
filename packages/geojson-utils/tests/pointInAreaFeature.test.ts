@@ -1,3 +1,5 @@
+import {describe, expect, test} from 'vitest';
+
 import {AreaFeature, GeoJSON as GJ, pointInAreaFeature} from '../src/index.js';
 
 describe('pointInAreaFeature', () => {

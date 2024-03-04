@@ -1,6 +1,6 @@
 import {
-  AreaFeature,
   AreaCollection,
+  AreaFeature,
   intersectAreaAreaFeatures,
 } from '@envisim/geojson-utils';
 
@@ -25,13 +25,13 @@ export function intersectAreaSampleAreaFrame(
 
       if (intersect) {
         let dw = 1;
-        if (frameFeature.properties?._designWeight) {
-          dw *= frameFeature.properties._designWeight;
+        if (frameFeature.properties?.['_designWeight']) {
+          dw *= frameFeature.properties['_designWeight'];
         }
-        if (sampleFeature.properties?._designWeight) {
-          dw *= sampleFeature.properties._designWeight;
+        if (sampleFeature.properties?.['_designWeight']) {
+          dw *= sampleFeature.properties['_designWeight'];
         }
-        intersect.properties._designWeight = dw;
+        intersect.properties['_designWeight'] = dw;
         newFeatures.push(intersect);
       }
     });
