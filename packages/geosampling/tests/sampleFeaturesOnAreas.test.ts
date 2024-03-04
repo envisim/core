@@ -1,5 +1,7 @@
 import {describe, expect, test} from 'vitest';
 
+import {AreaCollection, AreaFeature, GeoJSON} from '@envisim/geojson-utils';
+
 import {pointFeature, squareAreaFeature} from '../src/modelFeature.js';
 import {sampleFeaturesOnAreas} from '../src/sampleFeaturesOnAreas.js';
 

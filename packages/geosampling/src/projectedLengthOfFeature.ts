@@ -1,11 +1,12 @@
 import geodesic from 'geographiclib-geodesic';
 
 import {
-  GeoJSON,
-  Circle,
-  MultiCircle,
-  LineFeature,
   AreaFeature,
+  Circle,
+  GeoJSON,
+  LineFeature,
+  MultiCircle,
+  Polygon,
   bbox4,
   longitudeCenter,
 } from '@envisim/geojson-utils';
@@ -106,10 +107,18 @@ function geometryToMultiLineString(
   switch (geom.type) {
     case 'Point':
       if (geom.radius) {
-        const coords = Circle.create(geom.coordinates, geom.radius).toPolygon({
+        const polygon = Circle.create(geom.coordinates, geom.radius).toPolygon({
           pointsPerCircle,
-        }).coordinates;
-        mls.push(...coords);
+        });
+
+        if (Polygon.isObject(polygon)) {
+          mls.push(...polygon.coordinates);
+          break;
+        } else {
+          polygon.coordinates.forEach((coord) => {
+            mls.push(...coord);
+          });
+        }
       }
       break;
 

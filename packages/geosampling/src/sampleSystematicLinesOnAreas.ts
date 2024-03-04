@@ -4,7 +4,6 @@ import {
   Geodesic,
   LineCollection,
   LineFeature,
-  LineString,
   bbox4,
   cutLineGeometry,
   longitudeCenter,

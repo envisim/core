@@ -1,3 +1,5 @@
+import {describe, expect, test} from 'vitest';
+
 import {GeoJSON as GJ} from '../src/index.js';
 import {cutAreaGeometry, cutLineGeometry} from '../src/utils/antimeridian.js';
 

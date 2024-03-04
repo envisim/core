@@ -94,19 +94,22 @@ function cutLineStringCoords(ls: GJ.Position[]): GJ.Position[][] {
  * @returns the cut LineGeometry
  */
 export function cutLineGeometry(g: GJ.LineGeometry): GJ.LineGeometry {
-  const type = g.type;
+  const gjType = g.type;
   let mls: GJ.Position[][] = [];
   let imls: GJ.Position[][] = [];
-  switch (type) {
+
+  switch (gjType) {
     case 'LineString':
       mls = cutLineStringCoords(g.coordinates);
       break;
+
     case 'MultiLineString':
       g.coordinates.forEach((ls) => {
         imls = cutLineStringCoords(ls);
         imls.forEach((ls) => mls.push(ls));
       });
       break;
+
     case 'GeometryCollection':
       g.geometries.forEach((geom) => {
         switch (geom.type) {
@@ -123,10 +126,13 @@ export function cutLineGeometry(g: GJ.LineGeometry): GJ.LineGeometry {
         }
       });
       break;
+
     default:
-      throw new Error(`Invalid type: ${type}`);
+      throw new Error('Invalid type');
   }
+
   if (mls.length === 1) return {type: 'LineString', coordinates: mls[0]};
+
   return {type: 'MultiLineString', coordinates: mls};
 }
 
@@ -230,7 +236,7 @@ export function cutAreaGeometry(g: GJ.AreaGeometry): GJ.AreaGeometry {
       }
       return geom;
     default:
-      throw new Error(`Invalid type: ${type}`);
+      throw new Error('Invalid type');
   }
 }
 
