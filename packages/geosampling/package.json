@@ -22,7 +22,6 @@
     "test": "yarn node --experimental-vm-modules $(yarn bin jest)"
   },
   "devDependencies": {
-    "@types/geodesy": "^2.2.3",
     "@types/geojson": "^7946.0.10",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.1",
@@ -41,9 +40,6 @@
     "@envisim/random": "workspace:*",
     "@envisim/sampling": "workspace:*",
     "@envisim/utils": "workspace:*",
-    "@turf/buffer": "^6.5.0",
-    "@turf/intersect": "^6.5.0",
-    "geodesy": "^2.4.0",
     "geographiclib-geodesic": "^2.0.0",
     "uuid": "^9.0.0"
   }

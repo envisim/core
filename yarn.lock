@@ -587,14 +587,10 @@ __metadata:
     "@envisim/random": "workspace:*"
     "@envisim/sampling": "workspace:*"
     "@envisim/utils": "workspace:*"
-    "@turf/buffer": ^6.5.0
-    "@turf/intersect": ^6.5.0
-    "@types/geodesy": ^2.2.3
     "@types/geojson": ^7946.0.10
     "@types/jest": ^29.5.2
     "@types/node": ^20.3.1
     "@types/uuid": ^9.0.1
-    geodesy: ^2.4.0
     geographiclib-geodesic: ^2.0.0
     jest: ^29.5.0
     npm-run-all: ^4.1.5
@@ -1656,26 +1652,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@turf/intersect@npm:^6.5.0":
-  version: 6.5.0
-  resolution: "@turf/intersect@npm:6.5.0"
-  dependencies:
-    "@turf/helpers": ^6.5.0
-    "@turf/invariant": ^6.5.0
-    polygon-clipping: ^0.15.3
-  checksum: 014e071cb3a2073bb4a1c82d9106a3e65b3761dc7c2b7226c88e6dbff9038556e821948b9d03202c1aabe7b6269fa90f47551393056f5e9e2b34131aa61c2f08
-  languageName: node
-  linkType: hard
-
-"@turf/invariant@npm:^6.5.0":
-  version: 6.5.0
-  resolution: "@turf/invariant@npm:6.5.0"
-  dependencies:
-    "@turf/helpers": ^6.5.0
-  checksum: f45109ee41429d4aab49db9cfcc68f832cadf18b16c1b2c7031f0a6e52545bc4d64d0efd0a980f4d05f22532ed89d6e915aeaab9db44865898d4d030221d968e
-  languageName: node
-  linkType: hard
-
 "@turf/meta@npm:^6.5.0":
   version: 6.5.0
   resolution: "@turf/meta@npm:6.5.0"
@@ -1734,13 +1710,6 @@ __metadata:
   dependencies:
     "@babel/types": ^7.3.0
   checksum: d20953338b2f012ab7750932ece0a78e7d1645b0a6ff42d49be90f55e9998085da1374a9786a7da252df89555c6586695ba4d1d4b4e88ab2b9f306bcd35e00d3
-  languageName: node
-  linkType: hard
-
-"@types/geodesy@npm:^2.2.3":
-  version: 2.2.3
-  resolution: "@types/geodesy@npm:2.2.3"
-  checksum: ba104adee9c5c81a3eae73189ee37d26155623d54bbb67043d7497ea9a017135dfcb521958dd249e804e55706836454d9c15638c3e170d34499dc5cf7b243a0d
   languageName: node
   linkType: hard
 
@@ -3957,13 +3926,6 @@ __metadata:
   version: 1.0.0-beta.2
   resolution: "gensync@npm:1.0.0-beta.2"
   checksum: a7437e58c6be12aa6c90f7730eac7fa9833dc78872b4ad2963d2031b00a3367a93f98aec75f9aaac7220848e4026d67a8655e870b24f20a543d103c0d65952ec
-  languageName: node
-  linkType: hard
-
-"geodesy@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "geodesy@npm:2.4.0"
-  checksum: 78c458c62a6bd315a3c108754040548519b8478fbbe4ace299c34483c68a7a0a7e9abae213dcf53c89f0317569dfbc7dcad77a4b4f1265b9dc96c252e1402e76
   languageName: node
   linkType: hard
 

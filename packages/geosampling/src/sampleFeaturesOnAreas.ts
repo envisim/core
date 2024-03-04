@@ -10,12 +10,12 @@ import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
 import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
 import {intersectPointSampleAreaFrame} from './intersectPointSampleAreaFrame.js';
 import {
-  placeModelTract,
-  radiusOfModelTract,
-  sizeOfModelTract,
-} from './modelTract.js';
+  placeModelFeature,
+  radiusOfModelFeature,
+  sizeOfModelFeature,
+} from './modelFeature.js';
 import {samplePointsOnAreas} from './samplePointsOnAreas.js';
-import {typeOfTract} from './typeOfTract.js';
+import {typeOfFeature} from './typeOfFeature.js';
 
 export type TsampleTractsOnAreasOpts = {
   rotation?: number;
@@ -27,12 +27,12 @@ export type TsampleTractsOnAreasOpts = {
 type Method = 'uniform' | 'systematic';
 
 /**
- * Select a sample of tracts on areas.
+ * Select a sample of features/tracts on areas.
  *
  * @param collection
  * @param method the method to use "uniform" or "systematic".
  * @param sampleSize expected sample size integer > 0.
- * @param modelTract a GeoJSON model tract.
+ * @param modelFeature a GeoJSON model tract.
  * @param opts an options object.
  * @param opts.rotation the rotation angle in degrees.
  * @param opts.randomRotation boolean true/false for random rotation of individual tract (always true for line tract).
@@ -43,38 +43,41 @@ type Method = 'uniform' | 'systematic';
 
 // create overload signatures for different return types
 // PointCollection, LineCollection, AreaCollection
-function sampleTractsOnAreas(
+function sampleFeaturesOnAreas(
   collection: AreaCollection,
   method: Method,
   sampleSize: number,
-  modelTract: GeoJSON.PointFeature,
+  modelFeature: GeoJSON.PointFeature,
   opts?: TsampleTractsOnAreasOpts,
 ): PointCollection;
-function sampleTractsOnAreas(
+function sampleFeaturesOnAreas(
   collection: AreaCollection,
   method: Method,
   sampleSize: number,
-  modelTract: GeoJSON.LineFeature,
+  modelFeature: GeoJSON.LineFeature,
   opts?: TsampleTractsOnAreasOpts,
 ): LineCollection;
-function sampleTractsOnAreas(
+function sampleFeaturesOnAreas(
   collection: AreaCollection,
   method: Method,
   sampleSize: number,
-  modelTract: GeoJSON.AreaFeature,
+  modelFeature: GeoJSON.AreaFeature,
   opts?: TsampleTractsOnAreasOpts,
 ): AreaCollection;
-function sampleTractsOnAreas(
+function sampleFeaturesOnAreas(
   collection: AreaCollection,
   method: Method,
   sampleSize: number,
-  modelTract: GeoJSON.PointFeature | GeoJSON.LineFeature | GeoJSON.AreaFeature,
+  modelFeature:
+    | GeoJSON.PointFeature
+    | GeoJSON.LineFeature
+    | GeoJSON.AreaFeature,
   opts: TsampleTractsOnAreasOpts = {},
 ): PointCollection | LineCollection | AreaCollection {
   if (!AreaCollection.isCollection(collection)) {
     throw new Error('Input collection must be an AreaCollection.');
   }
-  const tractType = typeOfTract(modelTract);
+  const tractType = typeOfFeature(modelFeature);
 
   // Set default options.
   const rotation = opts.rotation ?? 0;
@@ -87,8 +90,8 @@ function sampleTractsOnAreas(
   }
 
   // Compute radius and size of the model tract.
-  const radius = radiusOfModelTract(modelTract);
-  const sizeOfTract = sizeOfModelTract(modelTract);
+  const radius = radiusOfModelFeature(modelFeature);
+  const sizeOfTract = sizeOfModelFeature(modelFeature);
 
   // Select first a sample of points and use radius as buffer.
   const featureCollection = samplePointsOnAreas(
@@ -107,14 +110,7 @@ function sampleTractsOnAreas(
     return featureCollection;
   }
 
-  // Transform the Features by placing a model tract on each point.
-
-  // TODO: check if new single geometries cross antimeridian
-  // and see if they then can be split.
-  // Maybe create dual geometries, one with all negative longitude (outside range -180)
-  // and one with all positive longitude (outside range +180) and they will be cut in the below
-  // intersect functions automatically.
-
+  // Transform the point features by placing a model feature on each point.
   switch (tractType) {
     case 'point': {
       const pointFeatures: GeoJSON.PointFeature[] = [];
@@ -124,13 +120,15 @@ function sampleTractsOnAreas(
         let newFeature: GeoJSON.PointFeature;
 
         if (feature.geometry.type === 'Point') {
-          newFeature = placeModelTract(
-            modelTract as GeoJSON.PointFeature,
+          newFeature = placeModelFeature(
+            modelFeature as GeoJSON.PointFeature,
             feature.geometry.coordinates,
             {
               rotation: rotation,
               randomRotation: randomRotation,
               rand: rand,
+              type: tractType,
+              radius: radius,
             },
           );
           if (newFeature.properties) {
@@ -154,13 +152,15 @@ function sampleTractsOnAreas(
         let newFeature: GeoJSON.LineFeature;
 
         if (feature.geometry.type === 'Point') {
-          newFeature = placeModelTract(
-            modelTract as GeoJSON.LineFeature,
+          newFeature = placeModelFeature(
+            modelFeature as GeoJSON.LineFeature,
             feature.geometry.coordinates,
             {
               rotation: rotation,
               randomRotation: randomRotation,
               rand: rand,
+              type: tractType,
+              radius: radius,
             },
           );
           if (newFeature.properties) {
@@ -169,7 +169,6 @@ function sampleTractsOnAreas(
               newFeature.properties._randomRotation = 1;
             }
           }
-          // TODO?: fix dual geometries for antimeridian here
           lineFeatures.push(newFeature);
         }
       });
@@ -188,13 +187,15 @@ function sampleTractsOnAreas(
         let newFeature: GeoJSON.AreaFeature;
 
         if (feature.geometry.type === 'Point') {
-          newFeature = placeModelTract(
-            modelTract as GeoJSON.AreaFeature,
+          newFeature = placeModelFeature(
+            modelFeature as GeoJSON.AreaFeature,
             feature.geometry.coordinates,
             {
               rotation: rotation,
               randomRotation: randomRotation,
               rand: rand,
+              type: tractType,
+              radius: radius,
             },
           );
           if (newFeature.properties) {
@@ -203,7 +204,6 @@ function sampleTractsOnAreas(
               newFeature.properties._randomRotation = 1;
             }
           }
-          // TODO?: fix dual geometries for antimeridian here
           areaFeatures.push(newFeature);
         }
       });
@@ -219,4 +219,4 @@ function sampleTractsOnAreas(
   }
 }
 
-export {sampleTractsOnAreas};
+export {sampleFeaturesOnAreas};
