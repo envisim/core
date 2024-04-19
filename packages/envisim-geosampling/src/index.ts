@@ -38,6 +38,7 @@ export {
   circleAreaFeature,
   squareCircleAreaFeature,
   regularPolygonAreaFeature,
+  rectangularAreaFeature,
   squareAreaFeature,
   pointFeature,
   squarePointFeature,
