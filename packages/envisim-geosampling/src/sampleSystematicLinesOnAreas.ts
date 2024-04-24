@@ -18,6 +18,7 @@ import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
 export type TsampleLinesOnAreasOpts = {
   rotation?: number;
   rand?: Random;
+  pointsPerCircle?: number;
 };
 
 /**
@@ -38,6 +39,7 @@ export function sampleSystematicLinesOnAreas(
     throw new Error('Input distBetween must be a positive number.');
   }
 
+  const pointsPerCircle = opts.pointsPerCircle ?? 16;
   const rotation = opts.rotation ?? 0;
   const rand = opts.rand ?? new Random();
   const numPointsPerLine = 20;
@@ -111,5 +113,6 @@ export function sampleSystematicLinesOnAreas(
   return intersectLineSampleAreaFrame(
     LineCollection.create(lineFeatures, true),
     collection,
+    pointsPerCircle,
   );
 }
