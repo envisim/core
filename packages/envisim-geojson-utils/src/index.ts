@@ -1,5 +1,6 @@
 // GeoJSON
 export * from './geojson/index.js';
+export {Layer} from './layer/Layer.js';
 
 // Types
 export type * as GeoJSON from './types/geojson.js';
