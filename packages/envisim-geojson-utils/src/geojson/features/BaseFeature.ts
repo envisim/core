@@ -12,7 +12,7 @@ abstract class BaseFeature<
   geometry!: Geometry<T>;
   properties: GJ.NumericProperties;
 
-  constructor(obj: GJ.Feature<GJ.Geometry>, shallow: boolean = true) {
+  constructor(obj: GJ.BaseFeature<GJ.Geometry>, shallow: boolean = true) {
     super(obj, shallow);
 
     this.properties =
