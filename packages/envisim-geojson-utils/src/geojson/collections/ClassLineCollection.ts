@@ -40,7 +40,7 @@ export class LineCollection
   centroid(iterations: number = 2): GJ.Position {
     const centroids = this.features.map((feature: LineFeature) => {
       return {
-        centroid: feature.centroid(),
+        centroid: feature.centroid(iterations),
         weight: feature.length(),
       };
     });
