@@ -22,7 +22,6 @@ export type TsampleTractsOnAreasOpts = {
   randomRotation?: boolean;
   ratio?: number;
   rand?: Random;
-  pointsPerCircle?: number;
 };
 
 type Method = 'uniform' | 'systematic';
@@ -84,7 +83,6 @@ function sampleFeaturesOnAreas(
   const rotation = opts.rotation ?? 0;
   let randomRotation = opts.randomRotation ?? false;
   const rand = opts.rand ?? new Random();
-  const pointsPerCircle = opts.pointsPerCircle ?? 16;
 
   // Force randomRotation for type line!
   if (tractType === 'line') {
@@ -178,7 +176,6 @@ function sampleFeaturesOnAreas(
       return intersectLineSampleAreaFrame(
         LineCollection.create(lineFeatures),
         collection,
-        pointsPerCircle,
       );
     }
 
@@ -214,7 +211,6 @@ function sampleFeaturesOnAreas(
       return intersectAreaSampleAreaFrame(
         AreaCollection.create(areaFeatures),
         collection,
-        pointsPerCircle,
       );
     }
 
