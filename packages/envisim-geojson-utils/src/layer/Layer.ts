@@ -50,13 +50,13 @@ export class Layer<
     return 'area';
   }
 
-  toJSON(): GJ.FeatureCollection {
+  toJSON(): GJ.BaseFeatureCollection {
     // TODO: Convert Circles or not?
     // maybe add as parameter?
-    const json: GJ.FeatureCollection = copy(this.collection);
+    const json: GJ.BaseFeatureCollection = copy(this.collection);
     json.features.forEach((feature) => {
       const oldProps = feature.properties ?? {};
-      const newProps: GJ.FeatureProperties = {};
+      const newProps: GJ.FeatureProperties<string | number> = {};
 
       for (const key in this.propertyRecord) {
         const property = this.propertyRecord[key];
@@ -129,7 +129,7 @@ function recordKeyFromName(
  * @returns a new Layer
  */
 function createLayer(
-  collection: GJ.FeatureCollection,
+  collection: GJ.BaseFeatureCollection,
 ): Layer<AreaCollection | LineCollection | PointCollection> {
   if (collection.type !== 'FeatureCollection') {
     throw new Error('A FeatureCollection is required to make a Layer');
@@ -178,7 +178,7 @@ function createLayer(
       throw new Error('All features must have the same geometry dimension');
     }
 
-    const props: GJ.FeatureProperties = feature.properties ?? {};
+    const props: GJ.FeatureProperties<any> = feature.properties ?? {};
 
     for (const name in props) {
       const value = props[name];
@@ -196,7 +196,7 @@ function createLayer(
       }
     }
 
-    const newProps: GJ.FeatureProperties = {};
+    const newProps: GJ.FeatureProperties<number> = {};
 
     for (const key in propertyRecord) {
       const record = propertyRecord[key];
