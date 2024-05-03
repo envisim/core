@@ -79,31 +79,32 @@ export type LineGeometry = LineObject | LineGeometryCollection;
 export type AreaGeometry = AreaObject | AreaGeometryCollection;
 
 // Features
-export type NumericProperties = {[name: string]: number};
-export type NumericFeatureProperties = NumericProperties | null;
-export type FeatureProperties = {[name: string]: any} | null;
+export type FeatureProperties<P = number> = {[name: string]: P} | null;
 
-export interface Feature extends GeoJsonObject<'Feature'> {
+export interface BaseFeature<T extends Geometry | null, P = any> {
   type: 'Feature';
-  geometry: Geometry;
-  properties: FeatureProperties;
+  geometry: T;
+  properties: FeatureProperties<P>;
 }
-
-export interface BaseFeature<T extends Geometry | null>
+export interface Feature<T extends Geometry | null, P = number>
   extends GeoJsonObject<'Feature'> {
   type: 'Feature';
   geometry: T;
-  properties: NumericFeatureProperties;
+  properties: FeatureProperties<P>;
 }
-
-export type PointFeature = BaseFeature<PointGeometry>;
-export type LineFeature = BaseFeature<LineGeometry>;
-export type AreaFeature = BaseFeature<AreaGeometry>;
+export type PointFeature = Feature<PointGeometry>;
+export type LineFeature = Feature<LineGeometry>;
+export type AreaFeature = Feature<AreaGeometry>;
 
 // FeatureCollections
+export interface BaseFeatureCollection
+  extends GeoJsonObject<'FeatureCollection'> {
+  type: 'FeatureCollection';
+  features: BaseFeature<Geometry>[];
+}
 export interface FeatureCollection extends GeoJsonObject<'FeatureCollection'> {
   type: 'FeatureCollection';
-  features: Feature[];
+  features: Feature<Geometry>[];
 }
 export interface PointFeatureCollection extends FeatureCollection {
   features: PointFeature[];

@@ -10,9 +10,9 @@ abstract class BaseFeature<
   T extends AreaObject | LineObject | PointObject,
 > extends GeoJsonObject<'Feature'> {
   geometry!: Geometry<T>;
-  properties: GJ.NumericProperties;
+  properties: GJ.FeatureProperties<number>;
 
-  constructor(obj: GJ.BaseFeature<GJ.Geometry>, shallow: boolean = true) {
+  constructor(obj: GJ.Feature<GJ.Geometry>, shallow: boolean = true) {
     super(obj, shallow);
 
     this.properties =
@@ -50,16 +50,23 @@ abstract class BaseFeature<
   abstract geomEach(callback: GeomEachCallback<T>, featureIndex: number): void;
 
   initProperty(property: string, defaultValue: number = 0.0): void {
-    if (!Object.prototype.hasOwnProperty.call(this.properties, property))
+    if (
+      !Object.prototype.hasOwnProperty.call(this.properties, property) &&
+      this.properties
+    )
       this.properties[property] = defaultValue;
   }
 
   removeProperty(property: string): void {
-    delete this.properties[property];
+    if (this.properties) {
+      delete this.properties[property];
+    }
   }
 
   setProperty(property: string, value: number): void {
-    this.properties[property] = value;
+    if (this.properties) {
+      this.properties[property] = value;
+    }
   }
 }
 
