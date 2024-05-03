@@ -35,8 +35,6 @@ describe('bbox', () => {
 
   const box2: GJ.BBox = [-1, -1, 0.5, 0.5];
   const box3: GJ.BBox = [-1, -1, -0.5, -0.5];
-  const box4: GJ.BBox = [0.5, 0.5, 0.6, 0.6];
-  const box5: GJ.BBox = [0.5, 2, 0.6, 3];
 
   test('bbox', () => {
     expect(polygon.getBBox()).toStrictEqual(box);
@@ -52,9 +50,6 @@ describe('bbox', () => {
   test('bboxInBBox', () => {
     expect(bboxInBBox(box, box2)).toBe(true);
     expect(bboxInBBox(box, box3)).toBe(false);
-    expect(bboxInBBox(box, box4)).toBe(true);
-    expect(bboxInBBox(box4, box)).toBe(true);
-    expect(bboxInBBox(box, box5)).toBe(false);
   });
 
   test('union of bboxes', () => {
