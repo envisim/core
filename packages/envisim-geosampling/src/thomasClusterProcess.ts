@@ -68,9 +68,9 @@ export function thomasClusterProcess(
   // Same as spatstat default in R.
   const dist = Math.SQRT2 * 4 * sigmaOfCluster;
   const westSouth = Geodesic.destination([box[0], box[1]], dist, 225);
-  const eastSouth = Geodesic.destination([box[2], box[1]], dist, 135);
-  const westNorth = Geodesic.destination([box[0], box[3]], dist, 315);
-  const eastNorth = Geodesic.destination([box[2], box[3]], dist, 45);
+  const eastSouth = Geodesic.destination([box[1], box[1]], dist, 135);
+  const westNorth = Geodesic.destination([box[0], box[2]], dist, 315);
+  const eastNorth = Geodesic.destination([box[1], box[2]], dist, 45);
   // Expanded box as polygon coordinates counterclockwise.
   const expandedBoxPolygonCoords = [
     [westNorth, westSouth, eastSouth, eastNorth, westNorth],
@@ -88,10 +88,6 @@ export function thomasClusterProcess(
 
   const muParents = intensityOfParents * A;
   const nrOfParents = Poisson.random(1, {rate: muParents}, {rand: rand})[0];
-
-  if (nrOfParents === 0) {
-    return new PointCollection({features: []}, true);
-  }
 
   const parentsInBox = uniformPositionsInBBox(
     [...westSouth, ...eastNorth] as GeoJSON.BBox,
