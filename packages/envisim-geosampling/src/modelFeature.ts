@@ -589,20 +589,20 @@ export function squarePointFeature(sideLength: number): GeoJSON.PointFeature {
  * Returns a model area feature as a regular polygon.
  *
  * @param sides the number of sides/vertices.
- * @param radius the radius in meters.
+ * @param sideLength the side length in meters.
  * @returns a model feature.
  */
 export function regularPolygonAreaFeature(
   sides: number,
-  radius: number,
+  sideLength: number,
 ): GeoJSON.AreaFeature {
   const n = Math.max(Math.round(sides || 3), 3);
-  const r = Math.max(radius, 0.05);
+  const length = sideLength || 100;
+  const r = length / (2 * Math.sin(Math.PI / n));
   const coordinates: GeoJSON.Position[] = [];
-  const startAngle = -Math.PI / n - Math.PI / 2;
 
   for (let i = 0; i < n + 1; i++) {
-    const angle = startAngle + (i / n) * 2 * Math.PI;
+    const angle = (i / n) * 2 * Math.PI;
     coordinates.push([r * Math.cos(angle), r * Math.sin(angle)]);
   }
 
@@ -620,20 +620,20 @@ export function regularPolygonAreaFeature(
  * Returns a model line feature as a regular polygon.
  *
  * @param sides the number of sides/vertices.
- * @param radius the radius in meters.
+ * @param sideLength the side length in meters.
  * @returns a model feature.
  */
 export function regularPolygonLineFeature(
   sides: number,
-  radius: number,
+  sideLength: number,
 ): GeoJSON.LineFeature {
   const n = Math.max(Math.round(sides || 3), 3);
-  const r = Math.max(radius, 0.05);
+  const length = sideLength || 100;
+  const r = length / (2 * Math.sin(Math.PI / n));
   const coordinates: GeoJSON.Position[] = [];
-  const startAngle = -Math.PI / n - Math.PI / 2;
 
   for (let i = 0; i < n + 1; i++) {
-    const angle = startAngle + (i / n) * 2 * Math.PI;
+    const angle = (i / n) * 2 * Math.PI;
     coordinates.push([r * Math.cos(angle), r * Math.sin(angle)]);
   }
 
@@ -641,37 +641,6 @@ export function regularPolygonLineFeature(
     type: 'Feature',
     geometry: {
       type: 'LineString',
-      coordinates: coordinates,
-    },
-    properties: {},
-  };
-}
-
-/**
- * Returns a model point feature as a regular polygon.
- *
- * @param sides the number of sides/vertices.
- * @param radius the radius in meters.
- * @returns a model feature.
- */
-export function regularPolygonPointFeature(
-  sides: number,
-  radius: number,
-): GeoJSON.PointFeature {
-  const n = Math.max(Math.round(sides || 3), 3);
-  const r = Math.max(radius, 0.05);
-  const coordinates: GeoJSON.Position[] = [];
-  const startAngle = -Math.PI / n - Math.PI / 2;
-
-  for (let i = 0; i < n; i++) {
-    const angle = startAngle + (i / n) * 2 * Math.PI;
-    coordinates.push([r * Math.cos(angle), r * Math.sin(angle)]);
-  }
-
-  return {
-    type: 'Feature',
-    geometry: {
-      type: 'MultiPoint',
       coordinates: coordinates,
     },
     properties: {},
@@ -692,5 +661,7 @@ export function circleLineFeature(radius: number): GeoJSON.LineFeature {
   // use the radius that gives equal area to the polygon for best approximation
   let r = radius > 0 ? radius : 10;
   r = Math.sqrt((Math.PI * Math.pow(r, 2)) / (n * Math.sin(v) * Math.cos(v)));
-  return regularPolygonLineFeature(n, r);
+  // compute sidelength
+  const sideLength = 2 * r * Math.sin(v);
+  return regularPolygonLineFeature(n, sideLength);
 }
