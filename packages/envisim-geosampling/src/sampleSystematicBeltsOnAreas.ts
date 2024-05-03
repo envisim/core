@@ -18,7 +18,6 @@ import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
 export type TsampleBeltsOnAreasOpts = {
   rotation?: number;
   rand?: Random;
-  pointsPerCircle?: number;
 };
 /**
  * Selects a systematic sample of belts on areas.
@@ -44,7 +43,6 @@ export const sampleSystematicBeltsOnAreas = (
     throw new Error('Input halfWidth must be a number > 0.');
   }
 
-  const pointsPerCircle = opts.pointsPerCircle ?? 16;
   const rotation = opts.rotation ?? 0;
   const rand = opts.rand ?? new Random();
   const numPointsPerLine = 20;
@@ -132,6 +130,5 @@ export const sampleSystematicBeltsOnAreas = (
   return intersectAreaSampleAreaFrame(
     AreaCollection.create(features, true),
     collection,
-    pointsPerCircle,
   );
 };
