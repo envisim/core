@@ -15,7 +15,6 @@ import {
 export function intersectLineSampleAreaFrame(
   sample: LineCollection,
   frame: AreaCollection,
-  pointsPerCircle: number = 16,
 ): LineCollection {
   const newFeatures: LineFeature[] = [];
 
@@ -23,11 +22,7 @@ export function intersectLineSampleAreaFrame(
   // if intersection, then compute new designWeight as product of the features design weights.
   frame.forEach((frameFeature) => {
     sample.forEach((sampleFeature) => {
-      const intersect = intersectLineAreaFeatures(
-        sampleFeature,
-        frameFeature,
-        pointsPerCircle,
-      );
+      const intersect = intersectLineAreaFeatures(sampleFeature, frameFeature);
 
       if (intersect) {
         let dw = 1; // designWeight
