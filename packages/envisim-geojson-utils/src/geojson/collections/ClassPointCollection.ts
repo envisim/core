@@ -40,7 +40,7 @@ export class PointCollection
   centroid(iterations: number = 2): GJ.Position {
     const centroids = this.features.map((feature: PointFeature) => {
       return {
-        centroid: feature.centroid(iterations),
+        centroid: feature.centroid(),
         weight: feature.count(),
       };
     });

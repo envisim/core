@@ -51,7 +51,7 @@ export class AreaCollection
   centroid(iterations: number = 2): GJ.Position {
     const centroids = this.features.map((feature: AreaFeature) => {
       return {
-        centroid: feature.centroid(iterations),
+        centroid: feature.centroid(),
         weight: feature.area(),
       };
     });
