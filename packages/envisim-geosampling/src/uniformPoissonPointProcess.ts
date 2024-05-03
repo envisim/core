@@ -29,10 +29,5 @@ export function uniformPoissonPointProcess(
   const A = collection.area();
   const mu = intensity * A;
   const sampleSize = Poisson.random(1, {rate: mu}, {rand: rand})[0];
-
-  if (sampleSize === 0) {
-    return new PointCollection({features: []}, true);
-  }
-
   return uniformBinomialPointProcess(collection, sampleSize, {rand: rand});
 }
