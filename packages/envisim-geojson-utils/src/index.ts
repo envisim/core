@@ -3,6 +3,7 @@ export * from './geojson/index.js';
 
 // Types
 export type * as GeoJSON from './types/geojson.js';
+export * as typeGuards from './types/type-guards.js';
 export type {
   ICategoricalProperty,
   INumericalProperty,

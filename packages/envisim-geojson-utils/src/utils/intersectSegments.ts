@@ -12,7 +12,7 @@ import type * as GJ from '../types/geojson.js';
 export function intersectSegments(
   segment1: [GJ.Position, GJ.Position],
   segment2: [GJ.Position, GJ.Position],
-): GJ.PositionXY | null {
+): GJ.Position2 | null {
   // Given two segments:
   // - L1 = P11 + (P12 - P11)t, 0 <= t <= 1
   // - L2 = P21 + (P22 - P21)s, 0 <= s <= 1
@@ -72,19 +72,19 @@ export class Segment {
     return [this.p2[0], this.p2[1]];
   }
 
-  position(t: number): GJ.PositionXY {
+  position(t: number): GJ.Position2 {
     return [this.p1[0] + t * this.delta[0], this.p1[1] + t * this.delta[1]];
   }
 
-  midPosition(t1: number, t2: number): GJ.PositionXY {
+  midPosition(t1: number, t2: number): GJ.Position2 {
     return this.position((t1 + t2) * 0.5);
   }
 
-  midPositionArr(t: [number, number]): GJ.PositionXY {
+  midPositionArr(t: [number, number]): GJ.Position2 {
     return this.position((t[0] + t[1]) * 0.5);
   }
 
-  intersect(p1: GJ.Position, p2: GJ.Position): GJ.PositionXY | null {
+  intersect(p1: GJ.Position, p2: GJ.Position): GJ.Position2 | null {
     const t = this.parameter(p1, p2);
     if (t === null) return null;
     return this.position(t);
@@ -110,7 +110,7 @@ export class Segment {
     return tNumer / denom;
   }
 
-  intersectSegment(segment: Segment): GJ.PositionXY | null {
+  intersectSegment(segment: Segment): GJ.Position2 | null {
     const t = this.parameterSegment(segment);
     if (t === null) return null;
     return this.position(t);

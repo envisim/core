@@ -1,12 +1,11 @@
 import type * as GJ from '../../types/geojson.js';
-import type {GeomEachCallback} from '../callback-types.js';
-import {toLineGeometry} from '../gcs/index.js';
+import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {LineGeometry, toLineGeometry} from '../gcs/index.js';
 import type {LineObject} from '../objects/index.js';
-import {OptionalParam} from '../util-types.js';
-import {BaseFeature} from './BaseFeature.js';
+import {AbstractFeature} from './AbstractFeature.js';
 
 export class LineFeature
-  extends BaseFeature<LineObject>
+  extends AbstractFeature<LineObject, LineGeometry>
   implements GJ.LineFeature
 {
   static isFeature(obj: unknown): obj is LineFeature {

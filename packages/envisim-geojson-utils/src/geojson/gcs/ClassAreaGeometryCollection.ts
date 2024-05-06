@@ -1,12 +1,12 @@
 import type * as GJ from '../../types/geojson.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
+import type {OptionalParam} from '../base/index.js';
 import type {AreaObject} from '../objects/index.js';
-import {OptionalParam} from '../util-types.js';
-import {BaseGeometryCollection} from './BaseGeometryCollection.js';
+import {AbstractGeometryCollection} from './AbstractGeometryCollection.js';
 import {toAreaGeometry} from './toAreaGeometry.js';
 
 export class AreaGeometryCollection
-  extends BaseGeometryCollection<AreaObject>
+  extends AbstractGeometryCollection<AreaObject, GJ.AreaObject>
   implements GJ.AreaGeometryCollection
 {
   static isGeometryCollection(obj: unknown): obj is AreaGeometryCollection {

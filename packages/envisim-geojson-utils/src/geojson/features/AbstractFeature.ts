@@ -1,16 +1,16 @@
 import {copy} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {GeoJsonObject} from '../ClassGeoJsonObject.js';
-import {GeomEachCallback} from '../callback-types.js';
-import type {Geometry} from '../gcs/index.js';
+import {GeoJsonObject, type GeomEachCallback} from '../base/index.js';
+import type {AreaGeometry, LineGeometry, PointGeometry} from '../gcs/index.js';
 import type {AreaObject, LineObject, PointObject} from '../objects/index.js';
 
-abstract class BaseFeature<
+export abstract class AbstractFeature<
   T extends AreaObject | LineObject | PointObject,
+  G extends AreaGeometry | LineGeometry | PointGeometry,
 > extends GeoJsonObject<'Feature'> {
-  geometry!: Geometry<T>;
-  properties: GJ.NumericProperties;
+  geometry!: G;
+  properties: GJ.FeatureProperties<number>;
 
   constructor(obj: GJ.Feature<GJ.Geometry>, shallow: boolean = true) {
     super(obj, shallow);
@@ -62,5 +62,3 @@ abstract class BaseFeature<
     this.properties[property] = value;
   }
 }
-
-export {BaseFeature};

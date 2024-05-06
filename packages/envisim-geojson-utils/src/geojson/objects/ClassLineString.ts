@@ -3,12 +3,11 @@ import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidOfLineString} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
-import type {GeomEachCallback} from '../callback-types.js';
-import type {OptionalParam} from '../util-types.js';
-import {BaseLineObject} from './BaseLineObject.js';
+import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {AbstractLineObject} from './AbstractLineObject.js';
 
 export class LineString
-  extends BaseLineObject<GJ.LineString>
+  extends AbstractLineObject<GJ.LineString>
   implements GJ.LineString
 {
   static isObject(obj: unknown): obj is LineString {

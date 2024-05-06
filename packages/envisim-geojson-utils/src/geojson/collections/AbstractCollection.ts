@@ -1,14 +1,18 @@
 import type * as GJ from '../../types/geojson.js';
 import {unionOfBBoxes} from '../../utils/bbox.js';
-import {GeoJsonObject} from '../ClassGeoJsonObject.js';
-import type {ForEachCallback, GeomEachCallback} from '../callback-types.js';
-import {Feature} from '../features/index.js';
+import {
+  type ForEachCallback,
+  GeoJsonObject,
+  type GeomEachCallback,
+} from '../base/index.js';
+import {AreaFeature, LineFeature, PointFeature} from '../features/index.js';
 import {AreaObject, LineObject, PointObject} from '../objects/index.js';
 
-export abstract class BaseCollection<
+export abstract class AbstractCollection<
   T extends AreaObject | LineObject | PointObject,
+  F extends AreaFeature | LineFeature | PointFeature,
 > extends GeoJsonObject<'FeatureCollection'> {
-  features: Feature<T>[] = [];
+  features: F[] = [];
 
   constructor(obj: GJ.FeatureCollection, shallow: boolean = true) {
     super(obj, shallow);
@@ -28,11 +32,11 @@ export abstract class BaseCollection<
     const bboxArray = new Array<GJ.BBox>(this.features.length);
 
     if (force === true) {
-      this.forEach((feature: Feature<T>, index: number) => {
+      this.forEach((feature: F, index: number) => {
         bboxArray[index] = feature.geometry.setBBox(true);
       });
     } else {
-      this.forEach((feature: Feature<T>, index: number) => {
+      this.forEach((feature: F, index: number) => {
         bboxArray[index] = feature.geometry.getBBox();
       });
     }
@@ -51,14 +55,14 @@ export abstract class BaseCollection<
 
   /* COLLECTION SPECIFIC */
   /* === FOR EACH === */
-  forEach(callback: ForEachCallback<Feature<T>>): void {
+  forEach(callback: ForEachCallback<F>): void {
     this.features.forEach(callback);
   }
 
   abstract geomEach(callback: GeomEachCallback<T>): void;
 
   /* === ADD/REMOVE FEATURES === */
-  abstract addFeature(feature: Feature<T>, shallow: boolean): void;
+  abstract addFeature(feature: F, shallow: boolean): void;
 
   removeFeature(index: number): void {
     this.features.splice(index, 1);

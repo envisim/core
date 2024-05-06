@@ -2,13 +2,12 @@ import type * as GJ from '../../types/geojson.js';
 import {Geodesic} from '../../utils/Geodesic.js';
 import {cutAreaGeometry} from '../../utils/antimeridian.js';
 import {bboxFromPositions, getPositionsForCircle} from '../../utils/bbox.js';
-import type {GeomEachCallback} from '../callback-types.js';
-import type {OptionalParam} from '../util-types.js';
-import {BaseAreaObject} from './BaseAreaObject.js';
+import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {AbstractAreaObject} from './AbstractAreaObject.js';
 import {MultiPolygon} from './ClassMultiPolygon.js';
 import {Polygon} from './ClassPolygon.js';
 
-export class Circle extends BaseAreaObject<GJ.Circle> implements GJ.Circle {
+export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
   static isObject(obj: unknown): obj is Circle {
     return obj instanceof Circle;
   }

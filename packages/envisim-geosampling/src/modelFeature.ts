@@ -1,4 +1,4 @@
-import type {GeoJSON} from '@envisim/geojson-utils';
+import {type GeoJSON, typeGuards} from '@envisim/geojson-utils';
 import {Geodesic} from '@envisim/geojson-utils';
 import {cutAreaGeometry, cutLineGeometry} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
@@ -162,7 +162,7 @@ function radiusOfGeometry(geometry: GeoJSON.Geometry) {
   let maxRadius = 0;
   switch (geometry.type) {
     case 'Point':
-      if (geometry?.radius && geometry.radius > 0) {
+      if (typeGuards.isCircle(geometry)) {
         maxRadius =
           Math.sqrt(
             geometry.coordinates[0] * geometry.coordinates[0] +
@@ -178,7 +178,7 @@ function radiusOfGeometry(geometry: GeoJSON.Geometry) {
     case 'MultiPoint':
       geometry.coordinates.forEach((coord) => {
         const radius = Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]);
-        if (geometry?.radius && geometry.radius > 0) {
+        if (typeGuards.isMultiCircle(geometry)) {
           maxRadius = Math.max(maxRadius, radius + geometry.radius);
         } else {
           maxRadius = Math.max(maxRadius, radius);
@@ -281,59 +281,47 @@ function areaOfSinglePolygon(coords: GeoJSON.Position[][]): number {
 }
 
 // Internal.
-function sizeOfGeometry(geometry: GeoJSON.Geometry) {
-  let circles = false;
-  let size = 0;
-  let radius = 0;
-  if (
-    geometry.type != 'GeometryCollection' &&
-    geometry.radius &&
-    geometry.radius > 0
-  ) {
-    // Treat points as circles.
-    circles = true;
-    radius = geometry.radius;
-  }
+function sizeOfGeometry(geometry: GeoJSON.Geometry): number {
   switch (geometry.type) {
     case 'Point':
-      if (circles) {
-        size += Math.PI * radius * radius;
+      if (typeGuards.isCircle(geometry)) {
+        return Math.PI * geometry.radius * geometry.radius;
       } else {
-        size += 1;
+        return 1;
       }
-      break;
     case 'MultiPoint':
-      if (circles) {
-        size += Math.PI * radius * radius * geometry.coordinates.length;
+      if (typeGuards.isMultiCircle(geometry)) {
+        return (
+          Math.PI *
+          geometry.radius *
+          geometry.radius *
+          geometry.coordinates.length
+        );
       } else {
-        size += geometry.coordinates.length;
+        return geometry.coordinates.length;
       }
-      break;
     case 'LineString':
-      size = lengthOfLineString(geometry.coordinates);
-      break;
+      return lengthOfLineString(geometry.coordinates);
     case 'MultiLineString':
-      geometry.coordinates.forEach((coords) => {
-        size += lengthOfLineString(coords);
-      });
-      break;
+      return geometry.coordinates.reduce(
+        (size, coords) => size + lengthOfLineString(coords),
+        0.0,
+      );
     case 'Polygon':
-      size = areaOfSinglePolygon(geometry.coordinates);
-      break;
+      return areaOfSinglePolygon(geometry.coordinates);
     case 'MultiPolygon':
-      geometry.coordinates.forEach((coords) => {
-        size += areaOfSinglePolygon(coords);
-      });
-      break;
+      return geometry.coordinates.reduce(
+        (size, coords) => size + areaOfSinglePolygon(coords),
+        0.0,
+      );
     case 'GeometryCollection':
-      geometry.geometries.forEach((g) => {
-        size += sizeOfGeometry(g);
-      });
-      break;
+      return geometry.geometries.reduce(
+        (size, g) => size + sizeOfGeometry(g),
+        0.0,
+      );
     default:
       throw new Error('Not a geometry.');
   }
-  return size;
 }
 
 /**

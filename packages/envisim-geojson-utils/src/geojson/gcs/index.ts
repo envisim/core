@@ -13,15 +13,6 @@ export {
   PointGeometryCollection,
 };
 
-export type Geometry<T extends AreaObject | LineObject | PointObject> =
-  T extends AreaObject
-    ? AreaObject | AreaGeometryCollection
-    : T extends LineObject
-      ? LineObject | LineGeometryCollection
-      : T extends PointObject
-        ? PointObject | PointGeometryCollection
-        : never;
-
 export type AreaGeometry = AreaObject | AreaGeometryCollection;
 export type LineGeometry = LineObject | LineGeometryCollection;
 export type PointGeometry = PointObject | PointGeometryCollection;

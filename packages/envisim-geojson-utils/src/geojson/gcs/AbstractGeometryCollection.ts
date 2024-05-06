@@ -1,15 +1,19 @@
 import type * as GJ from '../../types/geojson.js';
 import {unionOfBBoxes} from '../../utils/bbox.js';
-import {GeoJsonObject} from '../ClassGeoJsonObject.js';
-import type {ForEachCallback, GeomEachCallback} from '../callback-types.js';
+import {
+  type ForEachCallback,
+  GeoJsonObject,
+  type GeomEachCallback,
+} from '../base/index.js';
 import type {AreaObject, LineObject, PointObject} from '../objects/index.js';
 
-export abstract class BaseGeometryCollection<
+export abstract class AbstractGeometryCollection<
   T extends AreaObject | LineObject | PointObject,
+  G extends GJ.Object,
 > extends GeoJsonObject<'GeometryCollection'> {
   geometries!: T[];
 
-  constructor(obj: GJ.GeometryCollection, shallow: boolean = true) {
+  constructor(obj: GJ.GeometryCollection<G>, shallow: boolean = true) {
     super(obj, shallow);
   }
 

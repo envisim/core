@@ -8,12 +8,11 @@ import {
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {pointInSinglePolygonPosition} from '../../utils/pointInPolygonPosition.js';
-import type {GeomEachCallback} from '../callback-types.js';
-import type {OptionalParam} from '../util-types.js';
-import {BaseAreaObject} from './BaseAreaObject.js';
+import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {AbstractAreaObject} from './AbstractAreaObject.js';
 
 export class MultiPolygon
-  extends BaseAreaObject<GJ.MultiPolygon>
+  extends AbstractAreaObject<GJ.MultiPolygon>
   implements GJ.MultiPolygon
 {
   static isObject(obj: unknown): obj is MultiPolygon {
