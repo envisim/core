@@ -8,14 +8,17 @@ import {Point} from './ClassPoint.js';
 import {Polygon} from './ClassPolygon.js';
 
 export {
+  // Points
   Point,
   MultiPoint,
-  Circle,
-  MultiCircle,
+  // Lines
   LineString,
   MultiLineString,
+  // Areas
   Polygon,
   MultiPolygon,
+  Circle,
+  MultiCircle,
 };
 
 export type AreaObject = Circle | MultiCircle | Polygon | MultiPolygon;

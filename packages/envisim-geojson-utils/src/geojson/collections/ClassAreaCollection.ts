@@ -1,13 +1,12 @@
 import type * as GJ from '../../types/geojson.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
-import type {GeomEachCallback} from '../callback-types.js';
+import type {GeomEachCallback, OptionalParam} from '../base/index.js';
 import {AreaFeature} from '../features/index.js';
 import {AreaObject} from '../objects/index.js';
-import {OptionalParam} from '../util-types.js';
-import {BaseCollection} from './BaseCollection.js';
+import {AbstractCollection} from './AbstractCollection.js';
 
 export class AreaCollection
-  extends BaseCollection<AreaObject>
+  extends AbstractCollection<AreaObject, AreaFeature>
   implements GJ.AreaFeatureCollection
 {
   static isCollection(obj: unknown): obj is AreaCollection {

@@ -1,4 +1,4 @@
-import type * as GJ from '../types/geojson.js';
+import type * as GJ from '../../types/geojson.js';
 
 export abstract class GeoJsonObject<T extends string>
   implements GJ.GeoJsonObject<T>

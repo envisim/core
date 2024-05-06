@@ -1,4 +1,4 @@
-import {GeoJSON} from '@envisim/geojson-utils';
+import {type GeoJSON, typeGuards} from '@envisim/geojson-utils';
 
 /**
  * Check for points/lines/areas and return first occurence. A feature must be of a
@@ -14,18 +14,19 @@ export function typeOfFeature(
     feature.geometry.type === 'GeometryCollection'
       ? feature.geometry.geometries[0]
       : feature.geometry;
-  const geomType = geom.type;
-  if (geomType === 'Polygon' || geomType === 'MultiPolygon') {
-    return 'area';
-  }
-  if (geomType === 'LineString' || geomType === 'MultiLineString') {
-    return 'line';
-  }
-  if (geomType === 'Point' || geomType === 'MultiPoint') {
-    if (geom.radius) {
+
+  switch (geom.type) {
+    case 'Polygon':
+    case 'MultiPolygon':
       return 'area';
-    }
-    return 'point';
+    case 'LineString':
+    case 'MultiLineString':
+      return 'line';
+    case 'Point':
+      return typeGuards.isCircle(geom) ? 'area' : 'point';
+    case 'MultiPoint':
+      return typeGuards.isMultiCircle(geom) ? 'area' : 'point';
+    default:
+      throw new Error('Could not resolve tract type.');
   }
-  throw new Error('Could not resolve tract type.');
 }

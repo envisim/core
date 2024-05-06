@@ -1,12 +1,12 @@
 import type * as GJ from '../../types/geojson.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
+import type {OptionalParam} from '../base/index.js';
 import type {PointObject} from '../objects/index.js';
-import {OptionalParam} from '../util-types.js';
-import {BaseGeometryCollection} from './BaseGeometryCollection.js';
+import {AbstractGeometryCollection} from './AbstractGeometryCollection.js';
 import {toPointGeometry} from './toPointGeometry.js';
 
 export class PointGeometryCollection
-  extends BaseGeometryCollection<PointObject>
+  extends AbstractGeometryCollection<PointObject, GJ.PointObject>
   implements GJ.PointGeometryCollection
 {
   static isGeometryCollection(obj: unknown): obj is PointGeometryCollection {

@@ -5,11 +5,13 @@ import {centroidOfPolygon} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {pointInSinglePolygonPosition} from '../../utils/pointInPolygonPosition.js';
-import type {GeomEachCallback} from '../callback-types.js';
-import type {OptionalParam} from '../util-types.js';
-import {BaseAreaObject} from './BaseAreaObject.js';
+import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {AbstractAreaObject} from './AbstractAreaObject.js';
 
-export class Polygon extends BaseAreaObject<GJ.Polygon> implements GJ.Polygon {
+export class Polygon
+  extends AbstractAreaObject<GJ.Polygon>
+  implements GJ.Polygon
+{
   static isObject(obj: unknown): obj is Polygon {
     return obj instanceof Polygon;
   }

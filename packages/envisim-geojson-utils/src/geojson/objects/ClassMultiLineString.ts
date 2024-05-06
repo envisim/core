@@ -6,12 +6,11 @@ import {
 } from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
-import type {GeomEachCallback} from '../callback-types.js';
-import type {OptionalParam} from '../util-types.js';
-import {BaseLineObject} from './BaseLineObject.js';
+import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {AbstractLineObject} from './AbstractLineObject.js';
 
 export class MultiLineString
-  extends BaseLineObject<GJ.MultiLineString>
+  extends AbstractLineObject<GJ.MultiLineString>
   implements GJ.MultiLineString
 {
   static isObject(obj: unknown): obj is MultiLineString {

@@ -1,10 +1,9 @@
 import type * as GJ from '../../types/geojson.js';
 import {Geodesic} from '../../utils/Geodesic.js';
-import type {GeomEachCallback} from '../callback-types.js';
-import type {OptionalParam} from '../util-types.js';
-import {BasePointObject} from './BasePointObject.js';
+import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {AbstractPointObject} from './AbstractPointObject.js';
 
-export class Point extends BasePointObject<GJ.Point> implements GJ.Point {
+export class Point extends AbstractPointObject<GJ.Point> implements GJ.Point {
   static isObject(obj: unknown): obj is Point {
     return obj instanceof Point;
   }

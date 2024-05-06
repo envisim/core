@@ -3,14 +3,13 @@ import {Geodesic} from '../../utils/Geodesic.js';
 import {cutAreaGeometry} from '../../utils/antimeridian.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
-import type {GeomEachCallback} from '../callback-types.js';
-import type {OptionalParam} from '../util-types.js';
-import {BaseAreaObject} from './BaseAreaObject.js';
+import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {AbstractAreaObject} from './AbstractAreaObject.js';
 import {MultiPolygon} from './ClassMultiPolygon.js';
 import {Polygon} from './ClassPolygon.js';
 
 export class MultiCircle
-  extends BaseAreaObject<GJ.MultiCircle>
+  extends AbstractAreaObject<GJ.MultiCircle>
   implements GJ.MultiCircle
 {
   static isObject(obj: unknown): obj is MultiCircle {
