@@ -38,8 +38,7 @@ describe('Layer', () => {
   };
 
   const layer = Layer.createAreaLayer(collection);
-  //console.log(layer.propertyRecord);
-  //console.log(JSON.stringify(layer, null, 2));
+
   test('Layer', () => {
     expect(AreaCollection.isCollection(layer.collection)).toBe(true);
     expect(Layer.isAreaLayer(layer)).toBe(true);
