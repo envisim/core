@@ -167,7 +167,7 @@ function recordKeyFromName(
   record: IPropertyRecord,
 ): string | null {
   for (const key in record) {
-    if (record[key].name === name && Object.hasOwn(record, key)) {
+    if (record[key].name === name) {
       return key;
     }
   }
