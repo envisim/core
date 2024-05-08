@@ -105,14 +105,12 @@ export class Layer<
       const newProps: GJ.FeatureProperties<number | string> = {};
 
       for (const key in this.propertyRecord) {
-        if (Object.hasOwn(this.propertyRecord, key)) {
-          const rec = this.propertyRecord[key];
-          const name = rec.name ?? rec.id;
-          if (rec.type === 'numerical') {
-            newProps[name] = oldProps[rec.id];
-          } else if (rec.type == 'categorical') {
-            newProps[name] = rec.values[oldProps[rec.id]];
-          }
+        const rec = this.propertyRecord[key];
+        const name = rec.name ?? rec.id;
+        if (rec.type === 'numerical') {
+          newProps[name] = oldProps[rec.id];
+        } else if (rec.type == 'categorical') {
+          newProps[name] = rec.values[oldProps[rec.id]];
         }
       }
       feature.properties = newProps;
@@ -197,31 +195,29 @@ function getPropertyRecord(
   ];
 
   for (const name in props) {
-    if (Object.hasOwn(props, name)) {
-      const value = props[name];
-      let id = '';
+    const value = props[name];
+    let id = '';
 
-      if (specialKeys.includes(name)) {
-        id = name;
-      } else {
-        id = uuidv4();
-      }
+    if (specialKeys.includes(name)) {
+      id = name;
+    } else {
+      id = uuidv4();
+    }
 
-      if (typeof value === 'number') {
-        record[id] = {type: 'numerical', name, id};
-      } else if (typeof value === 'string') {
-        record[id] = {
-          type: 'categorical',
-          name,
-          id,
-          values: [],
-        };
-      } else {
-        // TODO: Throw an error or ignore this?
-        throw new Error(
-          'Only type number or string are supported for properties',
-        );
-      }
+    if (typeof value === 'number') {
+      record[id] = {type: 'numerical', name, id};
+    } else if (typeof value === 'string') {
+      record[id] = {
+        type: 'categorical',
+        name,
+        id,
+        values: [],
+      };
+    } else {
+      // TODO: Throw an error or ignore this?
+      throw new Error(
+        'Only type number or string are supported for properties',
+      );
     }
   }
   // Add all values for categorical properties
@@ -229,20 +225,18 @@ function getPropertyRecord(
     const props: GJ.FeatureProperties<any> = feature.properties ?? {};
 
     for (const name in props) {
-      if (Object.hasOwn(props, name)) {
-        const value = props[name];
-        const recordKey = recordKeyFromName(name, record);
-        if (recordKey === null) {
-          throw new Error('All features must have the same set of properties');
-        }
-        const thisRecord = record[recordKey];
-        // Check if value is in values, otherwise push it
-        if (
-          thisRecord.type === 'categorical' &&
-          !thisRecord.values.includes(value.toString())
-        ) {
-          thisRecord.values.push(value.toString());
-        }
+      const value = props[name];
+      const recordKey = recordKeyFromName(name, record);
+      if (recordKey === null) {
+        throw new Error('All features must have the same set of properties');
+      }
+      const thisRecord = record[recordKey];
+      // Check if value is in values, otherwise push it
+      if (
+        thisRecord.type === 'categorical' &&
+        !thisRecord.values.includes(value.toString())
+      ) {
+        thisRecord.values.push(value.toString());
       }
     }
   });
@@ -263,26 +257,24 @@ function updateProperties(
   const newProps: GJ.FeatureProperties<number> = {};
 
   for (const key in record) {
-    if (Object.hasOwn(record, key)) {
-      const thisRecord = record[key];
-      const {name, type, id} = thisRecord;
+    const thisRecord = record[key];
+    const {name, type, id} = thisRecord;
 
-      if (name) {
-        if (type === 'numerical') {
-          if (typeof properties[name] !== 'number') {
-            throw new Error('The same property may not contain mixed types');
-          }
-          newProps[id] = properties[name];
-        } else if (type === 'categorical') {
-          if (typeof properties[name] !== 'string') {
-            throw new Error('The same property may not contain mixed types');
-          }
-          const index = thisRecord.values.indexOf(properties[name].toString());
-          if (index !== -1) {
-            newProps[id] = index;
-          } else {
-            throw new Error('Value not found in property record');
-          }
+    if (name) {
+      if (type === 'numerical') {
+        if (typeof properties[name] !== 'number') {
+          throw new Error('The same property may not contain mixed types');
+        }
+        newProps[id] = properties[name];
+      } else if (type === 'categorical') {
+        if (typeof properties[name] !== 'string') {
+          throw new Error('The same property may not contain mixed types');
+        }
+        const index = thisRecord.values.indexOf(properties[name].toString());
+        if (index !== -1) {
+          newProps[id] = index;
+        } else {
+          throw new Error('Value not found in property record');
         }
       }
     }
