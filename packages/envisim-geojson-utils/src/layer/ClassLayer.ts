@@ -281,9 +281,7 @@ function updateProperties(
           if (index !== -1) {
             newProps[id] = index;
           } else {
-            throw new Error(
-              'All features must contain the same set of properties',
-            );
+            throw new Error('Value not found in property record');
           }
         }
       }
