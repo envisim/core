@@ -77,11 +77,25 @@ export class Layer<
     return createNewAreaLayer(collection);
   }
 
-  constructor(collection: T, propertyRecord: IPropertyRecord) {
+  constructor(
+    collection: T,
+    propertyRecord: IPropertyRecord,
+    shallow: boolean = true,
+  ) {
     // TODO?: Check that all features have the properties
     // in the property record?
-    this.collection = collection;
-    this.propertyRecord = propertyRecord;
+
+    this.propertyRecord = shallow ? {...propertyRecord} : copy(propertyRecord);
+
+    if (AreaCollection.isCollection(collection)) {
+      this.collection = new AreaCollection(collection, shallow) as T;
+    } else if (LineCollection.isCollection(collection)) {
+      this.collection = new LineCollection(collection, shallow) as T;
+    } else if (PointCollection.isCollection(collection)) {
+      this.collection = new PointCollection(collection, shallow) as T;
+    } else {
+      throw new Error('Expected a collection.');
+    }
   }
 
   // TODO?: Should we have a get for type of layer?
