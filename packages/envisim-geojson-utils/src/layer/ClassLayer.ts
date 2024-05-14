@@ -12,6 +12,7 @@ import {
   PointCollection,
   PointFeature,
 } from '../index.js';
+import {PropertySpecialKeys} from '../types/property.js';
 import {isCircle, isMultiCircle} from '../types/type-guards.js';
 
 export class Layer<
@@ -98,24 +99,14 @@ export class Layer<
     }
   }
 
-  // TODO?: Should we have a get for type of layer?
-  get type(): string {
-    if (this.collection instanceof PointCollection) {
-      return 'point';
-    } else if (this.collection instanceof LineCollection) {
-      return 'line';
-    }
-    return 'area';
-  }
+  toGeoJSON(
+    convertCircles: boolean = true,
+    pointsPerCircle: number = 16,
+  ): GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, any>> {
+    const features: GJ.BaseFeature<GJ.Geometry, any>[] = [];
 
-  toJSON(): GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, any>> {
-    // TODO?: Convert Circles or not? Maybe add as parameter?
-    const collection: GJ.BaseFeatureCollection<
-      GJ.BaseFeature<GJ.Geometry, any>
-    > = copy(this.collection);
-
-    collection.features.forEach((feature) => {
-      const oldProps = feature.properties ?? {};
+    this.collection.forEach((feature) => {
+      const oldProps = feature.properties;
       const newProps: GJ.FeatureProperties<number | string> = {};
 
       for (const key in this.propertyRecord) {
@@ -127,9 +118,33 @@ export class Layer<
           newProps[name] = rec.values[oldProps[rec.id]];
         }
       }
-      feature.properties = newProps;
+      if (AreaFeature.isFeature(feature)) {
+        const newFeature = new AreaFeature(feature, false);
+        newFeature.geomEach((geom) => {
+          if (geom.type === 'Point') {
+            if (isCircle(geom) && convertCircles) {
+              geom = geom.toPolygon({pointsPerCircle});
+            }
+          } else if (geom.type === 'MultiPoint') {
+            if (isMultiCircle(geom) && convertCircles) {
+              geom = geom.toPolygon({pointsPerCircle});
+            }
+          }
+        });
+        features.push({
+          type: 'Feature',
+          geometry: newFeature.geometry,
+          properties: newProps,
+        });
+      } else {
+        features.push({
+          type: 'Feature',
+          geometry: copy(feature.geometry),
+          properties: newProps,
+        });
+      }
     });
-    return collection;
+    return {type: 'FeatureCollection', features: features};
   }
 }
 
@@ -149,51 +164,28 @@ function typeOfGeometry(geometry: GJ.BaseGeometry): string {
     });
     return type;
   }
-  if (geomType === 'Polygon' || geomType === 'MultiPolygon') {
-    return 'area';
-  }
-  if (geomType === 'LineString' || geomType === 'MultiLineString') {
-    return 'line';
-  }
-  if (geomType === 'Point') {
-    if (isCircle(geometry)) {
+  switch (geomType) {
+    case 'Polygon':
+    case 'MultiPolygon':
       return 'area';
-    }
-    return 'point';
+    case 'Point':
+      return isCircle(geometry) ? 'area' : 'point';
+    case 'MultiPoint':
+      return isMultiCircle(geometry) ? 'area' : 'point';
+    case 'LineString':
+    case 'MultiLineString':
+      return 'line';
+    default:
+      throw new Error('Unknown geometry type.');
   }
-  if (geomType === 'MultiPoint') {
-    if (isMultiCircle(geometry)) {
-      return 'area';
-    }
-    return 'point';
-  }
-  throw new Error('Could not resolve geometry type.');
 }
 
 /**
- * Internal function to get the record key from the property name
- * @param name
- * @param record
- * @returns key
- */
-function recordKeyFromName(
-  name: string,
-  record: IPropertyRecord,
-): string | null {
-  for (const key in record) {
-    if (record[key].name === name) {
-      return key;
-    }
-  }
-  return null;
-}
-
-/**
- * Internal function to get the property record from a collection
+ * Internal function to create the property record from a collection
  * @param collection
  * @returns the property record
  */
-function getPropertyRecord(
+function createPropertyRecord(
   collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, any>>,
 ): IPropertyRecord {
   const record: IPropertyRecord = {};
@@ -201,23 +193,9 @@ function getPropertyRecord(
   // set properties based on the first feature in the collection
   const props = collection.features[0].properties ?? {};
 
-  const specialKeys = [
-    '_designWeight',
-    '_parent',
-    '_randomRotation',
-    '_distance',
-  ];
-
   for (const name in props) {
     const value = props[name];
-    let id = '';
-
-    if (specialKeys.includes(name)) {
-      id = name;
-    } else {
-      id = uuidv4();
-    }
-
+    const id = PropertySpecialKeys.includes(name) ? name : uuidv4();
     if (typeof value === 'number') {
       record[id] = {type: 'numerical', name, id};
     } else if (typeof value === 'string') {
@@ -227,30 +205,19 @@ function getPropertyRecord(
         id,
         values: [],
       };
-    } else {
-      // TODO: Throw an error or ignore this?
-      throw new Error(
-        'Only type number or string are supported for properties',
-      );
     }
   }
   // Add all values for categorical properties
   collection.features.forEach((feature) => {
-    const props: GJ.FeatureProperties<any> = feature.properties ?? {};
+    const properties: GJ.FeatureProperties<any> = feature.properties ?? {};
 
-    for (const name in props) {
-      const value = props[name];
-      const recordKey = recordKeyFromName(name, record);
-      if (recordKey === null) {
-        throw new Error('All features must have the same set of properties');
-      }
-      const thisRecord = record[recordKey];
+    for (const key in record) {
+      const rec = record[key];
+      const name = rec.name ?? rec.id;
+      const value = properties[name].toString();
       // Check if value is in values, otherwise push it
-      if (
-        thisRecord.type === 'categorical' &&
-        !thisRecord.values.includes(value.toString())
-      ) {
-        thisRecord.values.push(value.toString());
+      if (rec.type === 'categorical' && !rec.values.includes(value)) {
+        rec.values.push(value);
       }
     }
   });
@@ -315,7 +282,7 @@ function createNewAreaLayer(
       (feature) => typeOfGeometry(feature.geometry) === 'area',
     ),
   };
-  layer.propertyRecord = getPropertyRecord(filtered);
+  layer.propertyRecord = createPropertyRecord(filtered);
 
   filtered.features.forEach((feature) => {
     const newFeature = copy(feature);
@@ -350,7 +317,7 @@ function createNewLineLayer(
       (feature) => typeOfGeometry(feature.geometry) === 'line',
     ),
   };
-  layer.propertyRecord = getPropertyRecord(filtered);
+  layer.propertyRecord = createPropertyRecord(filtered);
 
   filtered.features.forEach((feature) => {
     const newFeature = copy(feature);
@@ -385,7 +352,7 @@ function createNewPointLayer(
       (feature) => typeOfGeometry(feature.geometry) === 'point',
     ),
   };
-  layer.propertyRecord = getPropertyRecord(filtered);
+  layer.propertyRecord = createPropertyRecord(filtered);
 
   filtered.features.forEach((feature) => {
     const newFeature = copy(feature);

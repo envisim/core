@@ -42,6 +42,5 @@ describe('Layer', () => {
   test('Layer', () => {
     expect(AreaCollection.isCollection(layer.collection)).toBe(true);
     expect(Layer.isAreaLayer(layer)).toBe(true);
-    expect(layer.type).toBe('area');
   });
 });

@@ -19,3 +19,10 @@ export interface ICategoricalProperty extends IPropertyBase {
 export type IProperty = INumericalProperty | ICategoricalProperty;
 
 export type IPropertyRecord = Record<string, IProperty>;
+
+export const PropertySpecialKeys = [
+  '_designWeight',
+  '_parent',
+  '_randomRotation',
+  '_distance',
+];
