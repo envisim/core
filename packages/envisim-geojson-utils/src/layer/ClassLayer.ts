@@ -265,7 +265,9 @@ function updateProperties(
 
 /**
  * Internal function to create a new area layer from a GeoJSON
- * feature collection
+ * feature collection.
+ * Properties are set based on the first feature and only type
+ * number or string are supported.
  * @param collection
  * @returns a new area layer
  */
@@ -300,7 +302,9 @@ function createNewAreaLayer(
 
 /**
  * Internal function to create a new line layer from a GeoJSON
- * feature collection
+ * feature collection.
+ * Properties are set based on the first feature and only type
+ * number or string are supported.
  * @param collection
  * @returns a new line layer
  */
@@ -335,7 +339,9 @@ function createNewLineLayer(
 
 /**
  * Internal function to create a new point layer from a GeoJSON
- * feature collection
+ * feature collection.
+ * Properties are set based on the first feature and only type
+ * number or string are supported.
  * @param collection
  * @returns a new point layer
  */
