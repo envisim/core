@@ -78,6 +78,21 @@ export class Layer<
     return createNewAreaLayer(collection);
   }
 
+  /**
+   * Creates a new layer from a collection and a property record.
+   * A layer represents a collection of type PointCollection, LineCollection or
+   * AreaCollection and a record of the properties of the features. The
+   * properties must be rectangular (all features must have the same properties) and
+   * each property takes only numerical values. Categorical properties are supported
+   * via the property record. Static methods createPointLayer, createLineLayer and
+   * createAreaLayer converts string-valued properties to categorical properties.
+   * The property record is created using the properties found in the first feature
+   * in the collection. Properties of other types than number or string are not supported.
+   *
+   * @param collection
+   * @param propertyRecord
+   * @param shallow
+   */
   constructor(
     collection: T,
     propertyRecord: IPropertyRecord,
@@ -109,7 +124,7 @@ export class Layer<
       const oldProps = feature.properties;
       const newProps: GJ.FeatureProperties<number | string> = {};
 
-      for (const key in this.propertyRecord) {
+      Object.keys(this.propertyRecord).forEach((key) => {
         const rec = this.propertyRecord[key];
         const name = rec.name ?? rec.id;
         if (rec.type === 'numerical') {
@@ -117,7 +132,8 @@ export class Layer<
         } else if (rec.type == 'categorical') {
           newProps[name] = rec.values[oldProps[rec.id]];
         }
-      }
+      });
+
       if (AreaFeature.isFeature(feature)) {
         const newFeature = new AreaFeature(feature, false);
         newFeature.geomEach((geom) => {
@@ -158,8 +174,11 @@ function typeOfGeometry(geometry: GJ.BaseGeometry): string {
   if (geomType === 'GeometryCollection') {
     const type = typeOfGeometry(geometry.geometries[0]);
     geometry.geometries.forEach((geom) => {
+      if (geom.type === 'GeometryCollection') {
+        throw new Error('Nested geometry collections are not supported.');
+      }
       if (typeOfGeometry(geom) !== type) {
-        throw new Error('Mixed geometries are not supported');
+        throw new Error('Mixed geometries are not supported.');
       }
     });
     return type;
@@ -193,12 +212,21 @@ function createPropertyRecord(
   // set properties based on the first feature in the collection
   const props = collection.features[0].properties ?? {};
 
-  for (const name in props) {
+  Object.keys(props).forEach((name) => {
     const value = props[name];
-    const id = PropertySpecialKeys.includes(name) ? name : uuidv4();
-    if (typeof value === 'number') {
+    const specialKey = PropertySpecialKeys.includes(name);
+    const id = specialKey ? name : uuidv4();
+    const valueType = typeof value;
+
+    if (specialKey && valueType !== 'number') {
+      throw new Error(
+        `Property "${name}" is a special key and must be of type number.`,
+      );
+    }
+
+    if (valueType === 'number') {
       record[id] = {type: 'numerical', name, id};
-    } else if (typeof value === 'string') {
+    } else if (valueType === 'string') {
       record[id] = {
         type: 'categorical',
         name,
@@ -206,20 +234,22 @@ function createPropertyRecord(
         values: [],
       };
     }
-  }
+  });
   // Add all values for categorical properties
   collection.features.forEach((feature) => {
     const properties: GJ.FeatureProperties<any> = feature.properties ?? {};
 
-    for (const key in record) {
+    Object.keys(record).forEach((key) => {
       const rec = record[key];
       const name = rec.name ?? rec.id;
-      const value = properties[name].toString();
       // Check if value is in values, otherwise push it
-      if (rec.type === 'categorical' && !rec.values.includes(value)) {
-        rec.values.push(value);
+      if (rec.type === 'categorical') {
+        const value = properties[name].toString();
+        if (!rec.values.includes(value)) {
+          rec.values.push(value);
+        }
       }
-    }
+    });
   });
   return record;
 }
@@ -237,7 +267,7 @@ function updateProperties(
 ): GJ.FeatureProperties<number> {
   const newProps: GJ.FeatureProperties<number> = {};
 
-  for (const key in record) {
+  Object.keys(record).forEach((key) => {
     const thisRecord = record[key];
     const {name, type, id} = thisRecord;
 
@@ -259,15 +289,13 @@ function updateProperties(
         }
       }
     }
-  }
+  });
   return newProps;
 }
 
 /**
  * Internal function to create a new area layer from a GeoJSON
  * feature collection.
- * Properties are set based on the first feature and only type
- * number or string are supported.
  * @param collection
  * @returns a new area layer
  */
@@ -303,8 +331,6 @@ function createNewAreaLayer(
 /**
  * Internal function to create a new line layer from a GeoJSON
  * feature collection.
- * Properties are set based on the first feature and only type
- * number or string are supported.
  * @param collection
  * @returns a new line layer
  */
@@ -340,8 +366,6 @@ function createNewLineLayer(
 /**
  * Internal function to create a new point layer from a GeoJSON
  * feature collection.
- * Properties are set based on the first feature and only type
- * number or string are supported.
  * @param collection
  * @returns a new point layer
  */
