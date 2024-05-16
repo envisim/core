@@ -14,6 +14,10 @@ describe('Layer', () => {
     type: 'Polygon',
     coordinates: [ring],
   };
+  const line: GJ.LineString = {
+    type: 'LineString',
+    coordinates: ring,
+  };
   const feature1: GJ.BaseFeature<GJ.Geometry, any> = {
     type: 'Feature',
     geometry: poly,
@@ -25,7 +29,7 @@ describe('Layer', () => {
   };
   const feature2: GJ.BaseFeature<GJ.Geometry, any> = {
     type: 'Feature',
-    geometry: poly,
+    geometry: line,
     properties: {
       a: 'stringValue2',
       b: 2,
@@ -38,6 +42,9 @@ describe('Layer', () => {
   };
 
   const layer = Layer.createAreaLayer(collection);
+
+  /* console.log(JSON.stringify(layer.toGeoJSON(), null, 2));
+  console.log(layer.propertyRecord);*/
 
   test('Layer', () => {
     expect(AreaCollection.isCollection(layer.collection)).toBe(true);
