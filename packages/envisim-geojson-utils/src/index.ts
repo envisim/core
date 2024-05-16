@@ -1,24 +1,28 @@
 // GeoJSON
 export * from './geojson/index.js';
 
+// Layer
+export {Layer} from './layer/ClassLayer.js';
+
 // Types
 export type * as GeoJSON from './types/geojson.js';
 export * as typeGuards from './types/type-guards.js';
-export type {
-  ICategoricalProperty,
-  INumericalProperty,
-  IProperty,
-  IPropertyRecord,
+export {
+  type ICategoricalProperty,
+  type INumericalProperty,
+  type IProperty,
+  type IPropertyRecord,
+  PropertySpecialKeys,
 } from './types/property.js';
 
 // Utils
 export {areaOfPolygonLonLat} from './utils/area.js';
 export {
-  pointInBBox,
-  bboxInBBox,
   bbox4,
-  unionOfBBoxes,
   bboxFromPositions,
+  bboxInBBox,
+  pointInBBox,
+  unionOfBBoxes,
 } from './utils/bbox.js';
 export {Geodesic} from './utils/Geodesic.js';
 export {Rhumb} from './utils/Rhumb.js';
@@ -28,11 +32,11 @@ export {intersectSegments, Segment} from './utils/intersectSegments.js';
 export {lengthOfLineString} from './utils/length.js';
 export {pointInSinglePolygonPosition} from './utils/pointInPolygonPosition.js';
 export {
-  normalizeLongitude,
+  checkInRange,
   checkLongitudeInRange,
   longitudeDistance,
   longitudeCenter,
-  checkInRange,
+  normalizeLongitude,
 } from './utils/position.js';
 export {rotateCoord} from './utils/rotateCoord.js';
 export {cutLineGeometry, cutAreaGeometry} from './utils/antimeridian.js';
