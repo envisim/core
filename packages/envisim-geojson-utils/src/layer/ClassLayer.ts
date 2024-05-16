@@ -60,18 +60,35 @@ export class Layer<
     throw new TypeError(msg ?? 'Expected an AreaLayer');
   }
 
+  /**
+   * Creates a new Layer from a GeoJSON FeatureCollection.
+   *
+   * String-valued properties will be converted to categorical properties.
+   * Any nested geometry collection will be flattened and any non-accepted
+   * geometries will be disregarded.
+   * Any properties not explicitly defined on the first valid feature after
+   * removing non-accepted geometries will be disregarded.
+   * Properties of types other than number or string are not supported
+   * and will be silently ignored.
+   */
   static createPointLayer(
     collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
   ): Layer<PointCollection> {
     return createNewPointLayer(collection);
   }
 
+  /**
+   * {@inheritDoc Layer.createPointLayer}
+   */
   static createLineLayer(
     collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
   ): Layer<LineCollection> {
     return createNewLineLayer(collection);
   }
 
+  /**
+   * {@inheritDoc Layer.createPointLayer}
+   */
   static createAreaLayer(
     collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
   ): Layer<AreaCollection> {
@@ -80,17 +97,12 @@ export class Layer<
 
   /**
    * Creates a new layer from a collection and a property record.
+   * Categorical properties are supported via the property record.
+   *
    * A layer represents a collection of type PointCollection, LineCollection or
    * AreaCollection and a record of the properties of the features. The
    * properties must be rectangular (all features must have the same properties) and
-   * each property takes only numerical values. Categorical properties are supported
-   * via the property record. Static methods createPointLayer, createLineLayer and
-   * createAreaLayer converts string-valued properties to categorical properties.
-   * Any nested geometry collection will be flattened and any non-accepted geometries
-   * will be disregarded. Any properties not explicitly defined on the first valid
-   * feature after removing non-accepted geometries will be disregarded.
-   * Properties of types other than number or string are not supported
-   * and will be silently ignored.
+   * each property takes only numerical values.
    *
    * @param collection
    * @param propertyRecord
@@ -163,6 +175,7 @@ export class Layer<
         });
       }
     });
+
     return {type: 'FeatureCollection', features: features};
   }
 }
@@ -203,10 +216,9 @@ function createPropertyRecord(
   const props = collection.features[0].properties ?? {};
 
   Object.keys(props).forEach((name) => {
-    const value = props[name];
     const specialKey = PropertySpecialKeys.includes(name);
     const id = specialKey ? name : uuidv4();
-    const valueType = typeof value;
+    const valueType = typeof props[name];
 
     if (specialKey && valueType !== 'number') {
       throw new Error(
@@ -225,6 +237,7 @@ function createPropertyRecord(
       };
     }
   });
+
   // Add all values for categorical properties
   collection.features.forEach((feature) => {
     const properties: GJ.FeatureProperties<any> = feature.properties ?? {};
@@ -234,13 +247,23 @@ function createPropertyRecord(
       const name = rec.name ?? rec.id;
       // Check if value is in values, otherwise push it
       if (rec.type === 'categorical') {
-        const value = properties[name].toString();
+        let value: unknown = properties[name];
+
+        if (typeof value === 'number') {
+          value = value.toString();
+        }
+
+        if (typeof value !== 'string') {
+          return;
+        }
+
         if (!rec.values.includes(value)) {
           rec.values.push(value);
         }
       }
     });
   });
+
   return record;
 }
 
@@ -262,16 +285,21 @@ function updateProperties(
     const {name, type, id} = thisRecord;
 
     if (name) {
+      const propertyValue: unknown = properties[name];
+
       if (type === 'numerical') {
-        if (typeof properties[name] !== 'number') {
+        if (typeof propertyValue !== 'number') {
           throw new Error('The same property may not contain mixed types');
         }
-        newProps[id] = properties[name];
+
+        newProps[id] = propertyValue;
       } else if (type === 'categorical') {
-        if (typeof properties[name] !== 'string') {
+        if (typeof propertyValue !== 'string') {
           throw new Error('The same property may not contain mixed types');
         }
-        const index = thisRecord.values.indexOf(properties[name].toString());
+
+        const index = thisRecord.values.indexOf(propertyValue);
+
         if (index !== -1) {
           newProps[id] = index;
         } else {
@@ -280,6 +308,7 @@ function updateProperties(
       }
     }
   });
+
   return newProps;
 }
 
@@ -342,6 +371,7 @@ function filterCollection(
       }
     }
   });
+
   return newCollection;
 }
 
