@@ -87,9 +87,9 @@ export class Layer<
    * via the property record. Static methods createPointLayer, createLineLayer and
    * createAreaLayer converts string-valued properties to categorical properties.
    * Any nested geometry collection will be flattened and any non-accepted geometries
-   * will be disregarded. The property record is created using the properties
-   * found in the first valid feature after removing non-accepted geometries.
-   * Properties of other types than number or string are not supported
+   * will be disregarded. Any properties not explicitly defined on the first valid
+   * feature after removing non-accepted geometries will be disregarded.
+   * Properties of types other than number or string are not supported
    * and will be silently ignored.
    *
    * @param collection
