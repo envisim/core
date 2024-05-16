@@ -43,20 +43,21 @@ export interface MultiCircle extends BaseObject<'MultiPoint', Position[]> {
 }
 export type AreaObject = Polygon | MultiPolygon | Circle | MultiCircle;
 
-export type Object = PointObject | LineObject | AreaObject;
+export type SingleTypeObject = PointObject | LineObject | AreaObject;
 
 // GEOMETRY COLLECTIONS
 export interface BaseGeometryCollection<G extends BaseGeometry = BaseGeometry>
   extends GeoJsonObject<'GeometryCollection'> {
   geometries: G[];
 }
-export type GeometryCollection<O extends Object> = BaseGeometryCollection<O>;
+export type GeometryCollection<O extends SingleTypeObject> =
+  BaseGeometryCollection<O>;
 export type PointGeometryCollection = GeometryCollection<PointObject>;
 export type LineGeometryCollection = GeometryCollection<LineObject>;
 export type AreaGeometryCollection = GeometryCollection<AreaObject>;
 
 // GEOMETRIES
-export type BaseGeometry = Object | BaseGeometryCollection;
+export type BaseGeometry = SingleTypeObject | BaseGeometryCollection;
 export type PointGeometry = PointObject | PointGeometryCollection;
 export type LineGeometry = LineObject | LineGeometryCollection;
 export type AreaGeometry = AreaObject | AreaGeometryCollection;

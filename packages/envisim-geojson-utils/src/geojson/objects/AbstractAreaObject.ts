@@ -1,9 +1,9 @@
 import type * as GJ from '../../types/geojson.js';
-import {AbstractObject} from './AbstractObject.js';
+import {AbstractSingleTypeObject} from './AbstractSingleTypeObject.js';
 
 export abstract class AbstractAreaObject<
   T extends GJ.AreaObject,
-> extends AbstractObject<T> {
+> extends AbstractSingleTypeObject<T> {
   constructor(obj: GJ.AreaObject, shallow: boolean = true) {
     super(obj, shallow);
   }

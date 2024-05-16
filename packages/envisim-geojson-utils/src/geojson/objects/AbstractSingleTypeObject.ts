@@ -3,12 +3,12 @@ import {copy} from '@envisim/utils';
 import type * as GJ from '../../types/geojson.js';
 import {GeoJsonObject, type GeomEachCallback} from '../base/index.js';
 
-export abstract class AbstractObject<T extends GJ.Object> extends GeoJsonObject<
-  T['type']
-> {
+export abstract class AbstractSingleTypeObject<
+  T extends GJ.SingleTypeObject,
+> extends GeoJsonObject<T['type']> {
   coordinates: T['coordinates'];
 
-  constructor(obj: GJ.Object, shallow: boolean = true) {
+  constructor(obj: GJ.SingleTypeObject, shallow: boolean = true) {
     super(obj, shallow);
 
     if (shallow === true) {
