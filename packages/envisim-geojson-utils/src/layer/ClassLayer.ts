@@ -61,19 +61,19 @@ export class Layer<
   }
 
   static createPointLayer(
-    collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, any>>,
+    collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
   ): Layer<PointCollection> {
     return createNewPointLayer(collection);
   }
 
   static createLineLayer(
-    collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, any>>,
+    collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
   ): Layer<LineCollection> {
     return createNewLineLayer(collection);
   }
 
   static createAreaLayer(
-    collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, any>>,
+    collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
   ): Layer<AreaCollection> {
     return createNewAreaLayer(collection);
   }
@@ -86,8 +86,11 @@ export class Layer<
    * each property takes only numerical values. Categorical properties are supported
    * via the property record. Static methods createPointLayer, createLineLayer and
    * createAreaLayer converts string-valued properties to categorical properties.
-   * The property record is created using the properties found in the first feature
-   * in the collection. Properties of other types than number or string are not supported.
+   * Any nested geometry collection will be flattened and any non-accepted geometries
+   * will be disregarded. The property record is created using the properties
+   * found in the first valid feature after removing non-accepted geometries.
+   * Properties of other types than number or string are not supported
+   * and will be silently ignored.
    *
    * @param collection
    * @param propertyRecord
@@ -117,8 +120,8 @@ export class Layer<
   toGeoJSON(
     convertCircles: boolean = true,
     pointsPerCircle: number = 16,
-  ): GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, any>> {
-    const features: GJ.BaseFeature<GJ.Geometry, any>[] = [];
+  ): GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, number | string>> {
+    const features: GJ.BaseFeature<GJ.Geometry, number | string>[] = [];
 
     this.collection.forEach((feature) => {
       const oldProps = feature.properties;
@@ -169,21 +172,8 @@ export class Layer<
  * @param geometry
  * @returns 'point', 'line', or 'area'
  */
-function typeOfGeometry(geometry: GJ.BaseGeometry): string {
-  const geomType = geometry.type;
-  if (geomType === 'GeometryCollection') {
-    const type = typeOfGeometry(geometry.geometries[0]);
-    geometry.geometries.forEach((geom) => {
-      if (geom.type === 'GeometryCollection') {
-        throw new Error('Nested geometry collections are not supported.');
-      }
-      if (typeOfGeometry(geom) !== type) {
-        throw new Error('Mixed geometries are not supported.');
-      }
-    });
-    return type;
-  }
-  switch (geomType) {
+function typeOfGeometry(geometry: GJ.Object): string {
+  switch (geometry.type) {
     case 'Polygon':
     case 'MultiPolygon':
       return 'area';
@@ -205,7 +195,7 @@ function typeOfGeometry(geometry: GJ.BaseGeometry): string {
  * @returns the property record
  */
 function createPropertyRecord(
-  collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, any>>,
+  collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
 ): IPropertyRecord {
   const record: IPropertyRecord = {};
 
@@ -294,24 +284,82 @@ function updateProperties(
 }
 
 /**
+ * Internal function to flatten and filter out geometries
+ * of correct type and push them to the collector array.
+ * @param geometries an array of geometries
+ * @param collector an array to push geometries to
+ * @param type the type to filter out
+ */
+function flattenAndFilterGeometries(
+  geometries: GJ.BaseGeometry[],
+  collector: GJ.Geometry[],
+  type: 'point' | 'line' | 'area',
+): void {
+  geometries.forEach((geometry) => {
+    if (geometry.type === 'GeometryCollection') {
+      flattenAndFilterGeometries(geometry.geometries, collector, type);
+    } else if (typeOfGeometry(geometry) === type) {
+      collector.push(geometry);
+    }
+  });
+}
+
+/**
+ * Internal function to flatten nested geometry collections and
+ * filter out geometries of a given type.
+ * @param collection
+ * @param type
+ * @returns
+ */
+function filterCollection(
+  collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
+  type: 'point' | 'line' | 'area',
+): GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>> {
+  const newCollection: GJ.BaseFeatureCollection<
+    GJ.BaseFeature<GJ.BaseGeometry, any>
+  > = {type: 'FeatureCollection', features: []};
+
+  collection.features.forEach((feature) => {
+    const geom = feature.geometry;
+    const geoms = geom.type === 'GeometryCollection' ? geom.geometries : [geom];
+
+    const flattened: GJ.Object[] = [];
+    flattenAndFilterGeometries(geoms, flattened, type);
+
+    if (flattened.length > 0) {
+      if (flattened.length === 1) {
+        newCollection.features.push({
+          type: 'Feature',
+          geometry: flattened[0],
+          properties: feature.properties,
+        });
+      } else {
+        newCollection.features.push({
+          type: 'Feature',
+          geometry: {type: 'GeometryCollection', geometries: flattened},
+          properties: feature.properties,
+        });
+      }
+    }
+  });
+  return newCollection;
+}
+
+/**
  * Internal function to create a new area layer from a GeoJSON
  * feature collection.
  * @param collection
  * @returns a new area layer
  */
 function createNewAreaLayer(
-  collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, any>>,
+  collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
 ): Layer<AreaCollection> {
   const layer: Layer<AreaCollection> = new Layer(
     new AreaCollection({type: 'FeatureCollection', features: []}),
     {},
   );
-  const filtered: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, any>> = {
-    type: 'FeatureCollection',
-    features: collection.features.filter(
-      (feature) => typeOfGeometry(feature.geometry) === 'area',
-    ),
-  };
+  const filtered = filterCollection(collection, 'area');
+
   layer.propertyRecord = createPropertyRecord(filtered);
 
   filtered.features.forEach((feature) => {
@@ -335,18 +383,14 @@ function createNewAreaLayer(
  * @returns a new line layer
  */
 function createNewLineLayer(
-  collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, any>>,
+  collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
 ): Layer<LineCollection> {
   const layer: Layer<LineCollection> = new Layer(
     new LineCollection({type: 'FeatureCollection', features: []}),
     {},
   );
-  const filtered: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, any>> = {
-    type: 'FeatureCollection',
-    features: collection.features.filter(
-      (feature) => typeOfGeometry(feature.geometry) === 'line',
-    ),
-  };
+  const filtered = filterCollection(collection, 'line');
+
   layer.propertyRecord = createPropertyRecord(filtered);
 
   filtered.features.forEach((feature) => {
@@ -370,18 +414,14 @@ function createNewLineLayer(
  * @returns a new point layer
  */
 function createNewPointLayer(
-  collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, any>>,
+  collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
 ): Layer<PointCollection> {
   const layer: Layer<PointCollection> = new Layer(
     new PointCollection({type: 'FeatureCollection', features: []}),
     {},
   );
-  const filtered: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, any>> = {
-    type: 'FeatureCollection',
-    features: collection.features.filter(
-      (feature) => typeOfGeometry(feature.geometry) === 'point',
-    ),
-  };
+  const filtered = filterCollection(collection, 'point');
+
   layer.propertyRecord = createPropertyRecord(filtered);
 
   filtered.features.forEach((feature) => {
