@@ -172,7 +172,7 @@ export class Layer<
  * @param geometry
  * @returns 'point', 'line', or 'area'
  */
-function typeOfGeometry(geometry: GJ.Object): string {
+function typeOfGeometry(geometry: GJ.SingleTypeObject): string {
   switch (geometry.type) {
     case 'Polygon':
     case 'MultiPolygon':
@@ -323,7 +323,7 @@ function filterCollection(
     const geom = feature.geometry;
     const geoms = geom.type === 'GeometryCollection' ? geom.geometries : [geom];
 
-    const flattened: GJ.Object[] = [];
+    const flattened: GJ.SingleTypeObject[] = [];
     flattenAndFilterGeometries(geoms, flattened, type);
 
     if (flattened.length > 0) {
