@@ -9,7 +9,7 @@ import type {AreaObject, LineObject, PointObject} from '../objects/index.js';
 
 export abstract class AbstractGeometryCollection<
   T extends AreaObject | LineObject | PointObject,
-  G extends GJ.Object,
+  G extends GJ.SingleTypeObject,
 > extends GeoJsonObject<'GeometryCollection'> {
   geometries!: T[];
 
