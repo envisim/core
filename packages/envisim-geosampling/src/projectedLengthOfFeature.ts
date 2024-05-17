@@ -3,7 +3,7 @@ import geodesic from 'geographiclib-geodesic';
 import {
   AreaFeature,
   Circle,
-  type GeoJSON,
+  type GeoJSON as GJ,
   LineFeature,
   MultiCircle,
   Polygon,
@@ -24,8 +24,8 @@ const toRad = Math.PI / 180;
 
 // Internal, used for computing projected length.
 function distCoordsForLineString(
-  lineString: GeoJSON.Position[],
-  refPointLonLat: GeoJSON.Position,
+  lineString: GJ.Position[],
+  refPointLonLat: GJ.Position,
   azimuth: number,
 ): TdistCoord[] {
   let minDist = Infinity;
@@ -56,8 +56,8 @@ function distCoordsForLineString(
 
 // Internal, used for computing projected length.
 function distCoordsForMultiLineString(
-  multiLineString: GeoJSON.Position[][],
-  refPointLonLat: GeoJSON.Position,
+  multiLineString: GJ.Position[][],
+  refPointLonLat: GJ.Position,
   azimuth: number,
 ): TdistCoord[] {
   let distCoords: TdistCoord[] = [];
@@ -100,10 +100,10 @@ function lengthFromDistCoords(distCoords: TdistCoord[]): number {
 }
 
 function geometryToMultiLineString(
-  geom: GeoJSON.BaseGeometry,
+  geom: GJ.BaseGeometry,
   pointsPerCircle = 16,
 ) {
-  const mls: GeoJSON.Position[][] = [];
+  const mls: GJ.Position[][] = [];
 
   switch (geom.type) {
     case 'Point':
@@ -174,7 +174,7 @@ export function projectedLengthOfFeature(
   pointsPerCircle = 16,
 ): number {
   // 1. build one MultiLineString of the feature geometries
-  let coords: GeoJSON.Position[][] = [];
+  let coords: GJ.Position[][] = [];
   const geom = feature.geometry;
   if (geom.type === 'GeometryCollection') {
     geom.geometries.forEach((geometry) => {
@@ -190,7 +190,7 @@ export function projectedLengthOfFeature(
   // 2. Compute reference coordinate as center of box
   const box = bbox4(feature.geometry.getBBox());
 
-  const refCoord: GeoJSON.Position = [
+  const refCoord: GJ.Position = [
     longitudeCenter(box[0], box[2]),
     box[1] + (box[3] - box[1]) / 2,
   ];

@@ -1,5 +1,6 @@
-import type {GeoJSON} from '@envisim/geojson-utils';
 import {
+  type GeoJSON as GJ,
+  Layer,
   LineCollection,
   LineGeometryCollection,
   LineObject,
@@ -23,7 +24,7 @@ function samplePointsOnGeometry(
   track: Track,
   distances: number[],
 ) {
-  const points: GeoJSON.Position[] = [];
+  const points: GJ.Position[] = [];
   let segmentLength = 0;
   let fraction = 0;
   switch (geoJSON.type) {
@@ -99,9 +100,9 @@ function samplePointsOnGeometryCollection(
   geoJSON: LineGeometryCollection,
   track: Track,
   distances: number[],
-): GeoJSON.Position[] {
-  let points: GeoJSON.Position[] = [];
-  let result: GeoJSON.Position[] = [];
+): GJ.Position[] {
+  let points: GJ.Position[] = [];
+  let result: GJ.Position[] = [];
 
   for (let i = 0; i < geoJSON.geometries.length; i++) {
     result = samplePointsOnGeometry(geoJSON.geometries[i], track, distances);
@@ -111,22 +112,22 @@ function samplePointsOnGeometryCollection(
 }
 
 /**
- * Selects points according to method and sampleSize on a LineCollection.
+ * Selects points according to method and sampleSize on a line layer.
  *
- * @param collection
+ * @param layer a line layer.
  * @param method the method to use. Either 'uniform' or 'systematic'.
  * @param sampleSize an integer > 0 for number of points to sample.
  * @param opts an options object.
  * @param opts.rand an optional instance of Random.
  */
 export function samplePointsOnLines(
-  collection: LineCollection,
+  layer: Layer<LineCollection>,
   method: 'uniform' | 'systematic',
   sampleSize: number,
   opts: {rand?: Random} = {},
-): PointCollection {
-  if (!LineCollection.isCollection(collection)) {
-    throw new Error('Input geoJSON must be a LineCollection.');
+): Layer<PointCollection> {
+  if (!Layer.isLineLayer(layer)) {
+    throw new Error('Input layer must be a line layer.');
   }
 
   if (method !== 'systematic' && method !== 'uniform') {
@@ -143,9 +144,9 @@ export function samplePointsOnLines(
 
   const rand = opts.rand ?? new Random();
 
-  const L = collection.length(); // total length of input geoJSON
+  const L = layer.collection.length(); // total length of input geoJSON
   if (L === 0) {
-    throw new Error('Input GeoJSON has zero length.');
+    throw new Error('Input layer has zero length.');
   }
 
   let distances: number[] = []; // Holds sample points as distances from 0 to L.
@@ -171,11 +172,11 @@ export function samplePointsOnLines(
   }
 
   const track = {dt: 0, currentIndex: 0};
-  let points: GeoJSON.Position[] = [];
+  let points: GJ.Position[] = [];
   let parentIndex: number[] = [];
   const designWeight = L / sampleSize;
 
-  collection.features.forEach((feature, index) => {
+  layer.collection.features.forEach((feature, index) => {
     const geom = feature.geometry;
     let result;
     if (geom.type === 'GeometryCollection') {
@@ -191,7 +192,7 @@ export function samplePointsOnLines(
   const features: PointFeature[] = points.map((coords, index): PointFeature => {
     // transfer design weights if the frame has been sampled before
     let dw = designWeight;
-    const parentFeature = collection.features[parentIndex[index]];
+    const parentFeature = layer.collection.features[parentIndex[index]];
 
     if (parentFeature.properties?.['_designWeight']) {
       dw = dw * parentFeature.properties['_designWeight'];
@@ -200,5 +201,15 @@ export function samplePointsOnLines(
     return PointFeature.create(Point.create(coords), {_designWeight: dw});
   });
 
-  return PointCollection.create(features);
+  return new Layer(
+    new PointCollection({features}, true),
+    {
+      _designWeight: {
+        id: '_designWeight',
+        name: '_designWeight',
+        type: 'numerical',
+      },
+    },
+    true,
+  );
 }

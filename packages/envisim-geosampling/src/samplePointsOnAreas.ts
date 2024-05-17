@@ -2,8 +2,10 @@ import {
   AreaCollection,
   AreaGeometryCollection,
   Circle,
-  GeoJSON,
+  type GeoJSON as GJ,
   Geodesic,
+  type IPropertyRecord,
+  Layer,
   MultiCircle,
   Point,
   PointCollection,
@@ -30,15 +32,15 @@ const toDeg = 180 / Math.PI;
  * @returns - Array of GeoJSON positions.
  */
 export function uniformPositionsInBBox(
-  box: GeoJSON.BBox,
+  box: GJ.BBox,
   n: number,
   opts: {rand: Random},
-): GeoJSON.Position[] {
+): GJ.Position[] {
   const bbox = bbox4(box);
   const y1 = (Math.cos((90 - bbox[1]) * toRad) + 1) / 2;
   const y2 = (Math.cos((90 - bbox[3]) * toRad) + 1) / 2;
   const lonDist = longitudeDistance(bbox[0], bbox[2]);
-  const positions: GeoJSON.Position[] = [];
+  const positions: GJ.Position[] = [];
   const rand = opts.rand ?? new Random();
   if (n < 0) {
     throw new Error('n must be non-negative.');
@@ -71,7 +73,7 @@ export type TsamplePointsOnAreasOpts = {
  * Selects points on areas (if features have bbox, it is used in pointInPolygon
  * to reject point outside bbox if buffer is zero).
  *
- * @param collection
+ * @param layer an area layer
  * @param method the method to use "uniform" or "systematic"
  * @param sampleSize the expected sample size as integer > 0.
  * @param opts an optional options object.
@@ -80,13 +82,13 @@ export type TsamplePointsOnAreasOpts = {
  * @param opts.rand an optional instance of Random.
  */
 export function samplePointsOnAreas(
-  collection: AreaCollection,
+  layer: Layer<AreaCollection>,
   method: 'uniform' | 'systematic',
   sampleSize: number,
   opts: TsamplePointsOnAreasOpts = {},
-): PointCollection {
-  if (!AreaCollection.isCollection(collection)) {
-    throw new Error('Input collection must be an AreaCollection.');
+): Layer<PointCollection> {
+  if (!Layer.isAreaLayer(layer)) {
+    throw new Error('Input layer must be an area layer.');
   }
 
   if (method !== 'systematic' && method !== 'uniform') {
@@ -106,7 +108,7 @@ export function samplePointsOnAreas(
   const rand = opts.rand ?? new Random();
 
   // copy the collection
-  const gj = new AreaCollection(collection, false);
+  const gj = new AreaCollection(layer.collection, false);
 
   // Make polygons of possible circles
   gj.features.forEach((feature) => {
@@ -147,7 +149,7 @@ export function samplePointsOnAreas(
   const box = bbox4(buffered.getBBox());
   const pointFeatures = [];
   const parentIndex: number[] = [];
-  let pointLonLat: GeoJSON.Position;
+  let pointLonLat: GJ.Position;
   switch (method) {
     case 'uniform': {
       // Store number of iterations and number of hits.
@@ -203,7 +205,6 @@ export function samplePointsOnAreas(
       const xoff = rand.float() * dx;
       const yoff = rand.float() * dy;
       const centerLon = longitudeCenter(box[0], box[2]);
-      //const centerLon = box[0] + (box[2] - box[0]) / 2;
       // Compute maximum number of points in latitude direction.
       const ny = Math.ceil(boxHeight / dy);
       // Generate the points.
@@ -252,7 +253,7 @@ export function samplePointsOnAreas(
     default:
       throw new Error('Unknown method.');
   }
-
+  const propertyRecord: IPropertyRecord = {};
   if (radius === 0) {
     // Transfer design weights here.
     pointFeatures.forEach((pf: PointFeature, i) => {
@@ -265,9 +266,15 @@ export function samplePointsOnAreas(
         }
       }
     });
+    propertyRecord['_designWeight'] = {
+      id: '_designWeight',
+      name: '_designWeight',
+      type: 'numerical',
+    };
   }
   // parentIndex refer to buffered features, so
   // may not be used to transfer design weights
   // from parents unless buffer is 0.
-  return new PointCollection({features: pointFeatures}, true);
+  const collection = new PointCollection({features: pointFeatures}, true);
+  return new Layer(collection, propertyRecord, true);
 }

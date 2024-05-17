@@ -1,10 +1,10 @@
-import {Poisson} from '@envisim/distributions';
-import {Normal} from '@envisim/distributions';
+import {Normal, Poisson} from '@envisim/distributions';
 import {
   AreaCollection,
   AreaFeature,
-  GeoJSON,
+  type GeoJSON as GJ,
   Geodesic,
+  Layer,
   Point,
   PointCollection,
   PointFeature,
@@ -23,10 +23,10 @@ const toDeg = 180 / Math.PI;
 // Internal. Generates point with normally distributed offsets around center.
 // Sigma is standard deviation.
 function randomPositionInCluster(
-  center: GeoJSON.Position,
+  center: GJ.Position,
   sigma: number,
   rand: Random,
-): GeoJSON.Position {
+): GJ.Position {
   // Generate two independent Normal(0,sigma).
   const xy = Normal.random(2, {mu: 0, sigma: sigma}, {rand});
   // Compute angle.
@@ -42,9 +42,9 @@ function randomPositionInCluster(
 
 /**
  * Generates points from a Thomas cluster point process
- * on areas of input AreaCollection.
+ * on areas of input area layer.
  *
- * @param collection
+ * @param layer an area layer.
  * @param intensityOfParents number of parent points / clusters per square meter.
  * @param meanOfCluster mean number of points per cluster.
  * @param sigmaOfCluster standard deviation in meters in Normal distributions for generating points offset in cluster.
@@ -52,25 +52,25 @@ function randomPositionInCluster(
  * @param opts.rand an optional instance of Random.
  */
 export function thomasClusterProcess(
-  collection: AreaCollection,
+  layer: Layer<AreaCollection>,
   intensityOfParents: number,
   meanOfCluster: number,
   sigmaOfCluster: number,
   opts: {rand?: Random} = {},
-): PointCollection {
-  if (!AreaCollection.isCollection(collection)) {
-    throw new Error('Input collection must be an Areaollection.');
+): Layer<PointCollection> {
+  if (!Layer.isAreaLayer(layer)) {
+    throw new Error('Input layer must be an area layer.');
   }
 
   const rand = opts.rand ?? new Random();
-  const box = bbox4(collection.getBBox());
+  const box = bbox4(layer.collection.getBBox());
   // Extend box by 4 * sigmaOfCluster to avoid edge effects.
   // Same as spatstat default in R.
   const dist = Math.SQRT2 * 4 * sigmaOfCluster;
   const westSouth = Geodesic.destination([box[0], box[1]], dist, 225);
-  const eastSouth = Geodesic.destination([box[1], box[1]], dist, 135);
-  const westNorth = Geodesic.destination([box[0], box[2]], dist, 315);
-  const eastNorth = Geodesic.destination([box[1], box[2]], dist, 45);
+  const eastSouth = Geodesic.destination([box[2], box[1]], dist, 135);
+  const westNorth = Geodesic.destination([box[0], box[3]], dist, 315);
+  const eastNorth = Geodesic.destination([box[2], box[3]], dist, 45);
   // Expanded box as polygon coordinates counterclockwise.
   const expandedBoxPolygonCoords = [
     [westNorth, westSouth, eastSouth, eastNorth, westNorth],
@@ -90,7 +90,7 @@ export function thomasClusterProcess(
   const nrOfParents = Poisson.random(1, {rate: muParents}, {rand: rand})[0];
 
   const parentsInBox = uniformPositionsInBBox(
-    [...westSouth, ...eastNorth] as GeoJSON.BBox,
+    [...westSouth, ...eastNorth] as GJ.BBox,
     nrOfParents,
     {rand},
   );
@@ -107,7 +107,7 @@ export function thomasClusterProcess(
   );
 
   // nr of features in collection
-  const nrOfFeatures = collection.features.length;
+  const nrOfFeatures = layer.collection.features.length;
 
   parentsInBox.forEach((coords, index: number) => {
     // Generate the child points and push if they are inside
@@ -119,7 +119,7 @@ export function thomasClusterProcess(
       // If child is in input collection, then push child.
       if (pointInBBox(coordinates, box)) {
         for (let j = 0; j < nrOfFeatures; j++) {
-          if (pointInAreaFeature(coordinates, collection.features[j])) {
+          if (pointInAreaFeature(coordinates, layer.collection.features[j])) {
             const child = PointFeature.create(
               Point.create(coordinates),
               {},
@@ -132,5 +132,5 @@ export function thomasClusterProcess(
       }
     }
   });
-  return new PointCollection({features: features}, true);
+  return new Layer(new PointCollection({features}, true), {}, true);
 }

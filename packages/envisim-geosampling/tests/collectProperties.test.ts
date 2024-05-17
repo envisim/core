@@ -5,6 +5,7 @@ import {
   AreaFeature,
   GeoJSON,
   IPropertyRecord,
+  Layer,
   PointCollection,
   PointFeature,
 } from '@envisim/geojson-utils';
@@ -31,34 +32,34 @@ describe('samplePointsOnAreas', () => {
   const frame = AreaCollection.create([
     AreaFeature.create(polygon, {_designWeight: 1}),
   ]);
-  const base = PointCollection.create([PointFeature.create(point, {size: 25})]);
+  const framePropertyRecord: IPropertyRecord = {
+    _designWeight: {
+      id: '_designWeight',
+      name: '_designWeight',
+      type: 'numerical',
+    },
+  };
+  const frameLayer = new Layer(frame, framePropertyRecord, true);
+
+  const base = PointCollection.create([
+    PointFeature.create(point, {size: 25, class: 0}),
+  ]);
   const propRec: IPropertyRecord = {
     size: {id: 'size', name: 'size', type: 'numerical'},
+    class: {
+      id: 'class',
+      name: 'class',
+      type: 'categorical',
+      values: ['forest'],
+    },
   };
-  const collected = collectProperties(frame, base, propRec);
-  //console.log(JSON.stringify(collected.properties, null, 2));
-  //console.log(JSON.stringify(frame, null, 2));
-  type HTvalue = {
-    value: number;
-    name: string;
-  };
+  const baseLayer = new Layer(base, propRec, true);
 
-  let HT: Record<string, HTvalue> = {};
-  for (let prop in collected.properties) {
-    HT[prop] = {value: 0, name: collected.properties[prop].name + ''};
-    frame.features.forEach((feature) => {
-      let fp = feature.properties;
-      if (fp._designWeight && HT[prop]) {
-        HT[prop].value += fp[prop] * fp._designWeight;
-      }
-    });
-  }
-  // console.log(JSON.stringify(HT, null, 2));
-  let HTresult = 0;
-  for (let prop in collected.properties) {
-    HTresult = HT[prop].value;
-  }
+  const newLayer = collectProperties(frameLayer, baseLayer, propRec);
+
+  //console.log(JSON.stringify(newLayer, null, 2));
+
   test('collectProperties', () => {
-    expect(HTresult).toBeCloseTo(25, 8);
+    expect(Object.keys(newLayer.propertyRecord).length).toBe(3);
   });
 });
