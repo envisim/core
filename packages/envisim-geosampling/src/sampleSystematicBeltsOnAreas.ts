@@ -37,9 +37,6 @@ export const sampleSystematicBeltsOnAreas = (
   halfWidth: number,
   opts: TsampleBeltsOnAreasOpts = {rotation: 0},
 ): Layer<AreaCollection> => {
-  if (!Layer.isAreaLayer(layer)) {
-    throw new Error('Input layer must be an area layer.');
-  }
 
   if (typeof distBetween !== 'number' || distBetween <= 0) {
     throw new Error('Input distBetween must be a positive number.');
