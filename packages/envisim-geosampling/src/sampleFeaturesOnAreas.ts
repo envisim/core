@@ -74,9 +74,6 @@ function sampleFeaturesOnAreas(
   modelFeature: GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
   opts: TsampleTractsOnAreasOpts = {},
 ): Layer<PointCollection | LineCollection | AreaCollection> {
-  if (!Layer.isAreaLayer(layer)) {
-    throw new Error('Input layer must be an area layer.');
-  }
   const tractType = typeOfFeature(modelFeature);
 
   // Set default options.
