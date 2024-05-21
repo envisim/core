@@ -46,13 +46,6 @@ export function sampleRelascopePoints(
   factor: number,
   opts: TsamplePointsOnAreasOpts,
 ): Layer<PointCollection> {
-  if (!Layer.isAreaLayer(frameLayer)) {
-    throw new Error('Input frameLayer must be an area layer.');
-  }
-
-  if (!Layer.isPointLayer(baseLayer)) {
-    throw new Error('Input baseLayer must be a point layer.');
-  }
 
   // Square root of relascope factor
   const sqrtRf = Math.sqrt(factor);
