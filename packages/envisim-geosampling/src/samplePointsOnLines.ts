@@ -126,9 +126,6 @@ export function samplePointsOnLines(
   sampleSize: number,
   opts: {rand?: Random} = {},
 ): Layer<PointCollection> {
-  if (!Layer.isLineLayer(layer)) {
-    throw new Error('Input layer must be a line layer.');
-  }
 
   if (method !== 'systematic' && method !== 'uniform') {
     throw new Error("Input method must be either 'uniform' or 'systematic'.");
