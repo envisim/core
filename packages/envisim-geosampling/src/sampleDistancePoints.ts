@@ -43,9 +43,6 @@ export function sampleDistancePoints(
   // Check input first
 
 
-  if (!Layer.isPointLayer(baseLayer)) {
-    throw new Error('Parameter baseLayer must be a point layer.');
-  }
 
   // Compute effective radius
   const effRadius = effectiveRadius(detectionFunction, cutoff);
