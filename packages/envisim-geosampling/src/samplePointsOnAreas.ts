@@ -87,9 +87,6 @@ export function samplePointsOnAreas(
   sampleSize: number,
   opts: TsamplePointsOnAreasOpts = {},
 ): Layer<PointCollection> {
-  if (!Layer.isAreaLayer(layer)) {
-    throw new Error('Input layer must be an area layer.');
-  }
 
   if (method !== 'systematic' && method !== 'uniform') {
     throw new Error("Input method must be either'uniform' or 'systematic'");
