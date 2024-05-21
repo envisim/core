@@ -21,9 +21,6 @@ export function uniformPoissonPointProcess(
   intensity: number,
   opts: {rand?: Random} = {},
 ): Layer<PointCollection> {
-  if (!Layer.isAreaLayer(layer)) {
-    throw new Error('Input layer must be an area layer.');
-  }
 
   const rand = opts.rand ?? new Random();
   const A = layer.collection.area();
