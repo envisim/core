@@ -58,9 +58,6 @@ export function thomasClusterProcess(
   sigmaOfCluster: number,
   opts: {rand?: Random} = {},
 ): Layer<PointCollection> {
-  if (!Layer.isAreaLayer(layer)) {
-    throw new Error('Input layer must be an area layer.');
-  }
 
   const rand = opts.rand ?? new Random();
   const box = bbox4(layer.collection.getBBox());
