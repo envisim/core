@@ -42,9 +42,6 @@ export function sampleDistancePoints(
 ): Layer<PointCollection> {
   // Check input first
 
-  if (!Layer.isAreaLayer(frameLayer)) {
-    throw new Error('Parameter frameLayer must be an area layer.');
-  }
 
   if (!Layer.isPointLayer(baseLayer)) {
     throw new Error('Parameter baseLayer must be a point layer.');
