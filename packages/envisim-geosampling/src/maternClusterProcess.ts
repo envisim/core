@@ -2,8 +2,9 @@ import {Poisson} from '@envisim/distributions';
 import {
   AreaCollection,
   AreaFeature,
-  GeoJSON,
+  type GeoJSON as GJ,
   Geodesic,
+  Layer,
   Point,
   PointCollection,
   PointFeature,
@@ -22,10 +23,10 @@ const toDeg = 180 / Math.PI;
 // Internal. Generates a point uniformly in a disk of radius around center point.
 // See e.g. https://mathworld.wolfram.com/DiskPointPicking.html
 function randomPositionInCluster(
-  center: GeoJSON.Position,
+  center: GJ.Position,
   radius: number,
   rand: Random,
-): GeoJSON.Position {
+): GJ.Position {
   // Randomize angle.
   const theta = rand.float() * 2 * Math.PI;
   // Compute azimuth = angle from north in degrees clockwise.
@@ -37,9 +38,9 @@ function randomPositionInCluster(
 
 /**
  * Generates points from a Matérn cluster point process
- * on an AreaCollection.
+ * on an area layer.
  *
- * @param collection
+ * @param layer an area layer.
  * @param intensityOfParents number of parent points / clusters per square meter.
  * @param meanOfCluster mean number of points per cluster.
  * @param radiusOfCluster radius in meters of a (circular) cluster.
@@ -47,25 +48,25 @@ function randomPositionInCluster(
  * @param opts.rand an optional instance of Random.
  */
 export function maternClusterProcess(
-  collection: AreaCollection,
+  layer: Layer<AreaCollection>,
   intensityOfParents: number,
   meanOfCluster: number,
   radiusOfCluster: number,
   opts: {rand?: Random} = {},
-): PointCollection {
-  if (!AreaCollection.isCollection(collection)) {
-    throw new Error('Input collection must be an Areaollection.');
+): Layer<PointCollection> {
+  if (!Layer.isAreaLayer(layer)) {
+    throw new Error('Input layer must be an area layer.');
   }
 
   const rand = opts.rand ?? new Random();
-  const box = bbox4(collection.getBBox());
+  const box = bbox4(layer.collection.getBBox());
   // Expand box by radius of cluster, as parent points should
   // be allowed outside of area. This is to avoid edge effects.
   const dist = Math.SQRT2 * radiusOfCluster;
   const westSouth = Geodesic.destination([box[0], box[1]], dist, 225);
-  const eastSouth = Geodesic.destination([box[1], box[1]], dist, 135);
-  const westNorth = Geodesic.destination([box[0], box[2]], dist, 315);
-  const eastNorth = Geodesic.destination([box[1], box[2]], dist, 45);
+  const eastSouth = Geodesic.destination([box[2], box[1]], dist, 135);
+  const westNorth = Geodesic.destination([box[0], box[3]], dist, 315);
+  const eastNorth = Geodesic.destination([box[2], box[3]], dist, 45);
   // Expanded box as polygon coordinates counterclockwise.
   const expandedBoxPolygonCoords = [
     [westNorth, westSouth, eastSouth, eastNorth, westNorth],
@@ -85,7 +86,7 @@ export function maternClusterProcess(
   const nrOfParents = Poisson.random(1, {rate: muParents}, {rand: rand})[0];
 
   const parentsInBox = uniformPositionsInBBox(
-    [...westSouth, ...eastNorth] as GeoJSON.BBox,
+    [...westSouth, ...eastNorth] as GJ.BBox,
     nrOfParents,
     {rand},
   );
@@ -102,7 +103,7 @@ export function maternClusterProcess(
   );
 
   // nr of features in collection
-  const nrOfFeatures = collection.features.length;
+  const nrOfFeatures = layer.collection.features.length;
 
   parentsInBox.forEach((coords, index: number) => {
     // Generate the child points and push if they are inside
@@ -118,7 +119,7 @@ export function maternClusterProcess(
       // If child is in input collection, then push child.
       if (pointInBBox(coordinates, box)) {
         for (let j = 0; j < nrOfFeatures; j++) {
-          if (pointInAreaFeature(coordinates, collection.features[j])) {
+          if (pointInAreaFeature(coordinates, layer.collection.features[j])) {
             const child = PointFeature.create(
               Point.create(coordinates),
               {},
@@ -131,5 +132,5 @@ export function maternClusterProcess(
       }
     }
   });
-  return new PointCollection({features: features}, true);
+  return new Layer(new PointCollection({features}, true), {}, true);
 }

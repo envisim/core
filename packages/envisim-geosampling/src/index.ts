@@ -29,15 +29,19 @@ export {typeOfFeature} from './typeOfFeature.js';
 
 // Model features/tracts
 export {
+  radiusOfModelFeature,
+  sizeOfModelFeature,
   straightLineFeature,
   ellLineFeature,
   rectangularLineFeature,
   squareLineFeature,
   regularPolygonLineFeature,
+  regularPolygonPointFeature,
   circleLineFeature,
   circleAreaFeature,
   squareCircleAreaFeature,
   regularPolygonAreaFeature,
+  rectangularAreaFeature,
   squareAreaFeature,
   pointFeature,
   squarePointFeature,

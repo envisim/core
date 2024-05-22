@@ -1,14 +1,14 @@
-import {type GeoJSON, typeGuards} from '@envisim/geojson-utils';
+import {type GeoJSON as GJ, typeGuards} from '@envisim/geojson-utils';
 
 /**
  * Check for points/lines/areas and return first occurence. A feature must be of a
  * single type. Geometries of different dimensions must not be mixed in a feature.
  *
- * @param geoJSON a GeoJSON Point/Line/AreaFeature.
+ * @param feature a Point/Line/AreaFeature.
  * @returns first occurence of point/line/area.
  */
 export function typeOfFeature(
-  feature: GeoJSON.PointFeature | GeoJSON.LineFeature | GeoJSON.AreaFeature,
+  feature: GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
 ): string {
   const geom =
     feature.geometry.type === 'GeometryCollection'

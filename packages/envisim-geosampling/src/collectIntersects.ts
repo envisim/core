@@ -1,7 +1,10 @@
 import {
   AreaCollection,
   AreaFeature,
+  type GeoJSON as GJ,
   Geodesic,
+  type IPropertyRecord,
+  Layer,
   LineCollection,
   LineFeature,
   PointCollection,
@@ -11,12 +14,14 @@ import {
   intersectLineLineFeatures,
   intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
+import {copy} from '@envisim/utils';
 
 import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
 
 /**
- * Transfer properties in place to the intersect from the base feature and
- * transfer _designWeight and _parent to the intersect from the frame feature.
+ * Internal function to transfer properties in place to the intersect from the
+ * base feature and transfer _designWeight and _parent to the intersect from
+ * the frame feature.
  * @param intersect
  * @param frameFeature
  * @param baseFeature
@@ -109,40 +114,94 @@ function transferPropertiesInPlace(
 }
 
 /**
+ * Internal function to fix the property record and update
+ * values of categorical properties.
+ * @param record
+ * @param features
+ */
+function updateRecordAndPropsInPlace(
+  record: IPropertyRecord,
+  features: GJ.Feature[],
+): void {
+  Object.keys(record).forEach((key) => {
+    const rec = record[key];
+    if (rec.type === 'categorical') {
+      const values: string[] = [];
+      features.forEach((feature) => {
+        const props = feature.properties;
+        if (props) {
+          const oldIndex = props[rec.id];
+          if (!values.includes(rec.values[oldIndex])) {
+            // value does not exist
+            // push new value
+            values.push(rec.values[oldIndex]);
+            // set new index
+            props[rec.id] = values.length - 1;
+          } else {
+            // value already exists
+            // set new index
+            props[rec.id] = values.indexOf(rec.values[oldIndex]);
+          }
+        }
+      });
+      rec.values = values;
+    }
+  });
+  // categorical values are updated, now add design props to the record
+  record['_designWeight'] = {
+    id: '_designWeight',
+    name: '_designWeight',
+    type: 'numerical',
+  };
+  record['_parent'] = {
+    id: '_parent',
+    name: '_parent',
+    type: 'numerical',
+  };
+}
+
+/**
  * Collect intersect of features as the new frame from base-collection.
- * @param frame
- * @param base
+ * @param frameLayer
+ * @param baseLayer
  */
 export function collectIntersects(
-  frame: PointCollection,
-  base: AreaCollection,
-): PointCollection;
+  frameLayer: Layer<PointCollection>,
+  baseLayer: Layer<AreaCollection>,
+): Layer<PointCollection>;
 export function collectIntersects(
-  frame: LineCollection,
-  base: LineCollection,
-): PointCollection;
+  frameLayer: Layer<LineCollection>,
+  baseLayer: Layer<LineCollection>,
+): Layer<PointCollection>;
 export function collectIntersects(
-  frame: LineCollection,
-  base: AreaCollection,
-): LineCollection;
+  frameLayer: Layer<LineCollection>,
+  baseLayer: Layer<AreaCollection>,
+): Layer<LineCollection>;
 export function collectIntersects(
-  frame: AreaCollection,
-  base: PointCollection,
-): PointCollection;
+  frameLayer: Layer<AreaCollection>,
+  baseLayer: Layer<PointCollection>,
+): Layer<PointCollection>;
 export function collectIntersects(
-  frame: AreaCollection,
-  base: LineCollection,
-): LineCollection;
+  frameLayer: Layer<AreaCollection>,
+  baseLayer: Layer<LineCollection>,
+): Layer<LineCollection>;
 export function collectIntersects(
-  frame: AreaCollection,
-  base: AreaCollection,
-): AreaCollection;
+  frameLayer: Layer<AreaCollection>,
+  baseLayer: Layer<AreaCollection>,
+): Layer<AreaCollection>;
 export function collectIntersects(
-  frame: PointCollection | LineCollection | AreaCollection,
-  base: PointCollection | LineCollection | AreaCollection,
-): PointCollection | LineCollection | AreaCollection {
+  frameLayer: Layer<PointCollection | LineCollection | AreaCollection>,
+  baseLayer: Layer<PointCollection | LineCollection | AreaCollection>,
+): Layer<PointCollection | LineCollection | AreaCollection> {
   // The same base object may be included in multiple intersects
   // as collection is done for each frame feature.
+  const frame = frameLayer.collection;
+  const base = baseLayer.collection;
+  // The resulting layer contains all props from base layer
+  // but values need to be updated for categorical props and
+  // two design properties must be added to the new property
+  // record. Set initial record here.
+  const record = copy(baseLayer.propertyRecord);
 
   if (
     PointCollection.isCollection(frame) &&
@@ -163,7 +222,8 @@ export function collectIntersects(
         }
       });
     });
-    return new PointCollection({features}, true);
+    updateRecordAndPropsInPlace(record, features);
+    return new Layer(new PointCollection({features}, true), record, true);
   }
 
   if (LineCollection.isCollection(frame) && LineCollection.isCollection(base)) {
@@ -182,7 +242,8 @@ export function collectIntersects(
         }
       });
     });
-    return new PointCollection({features}, true);
+    updateRecordAndPropsInPlace(record, features);
+    return new Layer(new PointCollection({features}, true), record, true);
   }
 
   if (LineCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
@@ -201,7 +262,8 @@ export function collectIntersects(
         }
       });
     });
-    return new LineCollection({features}, true);
+    updateRecordAndPropsInPlace(record, features);
+    return new Layer(new LineCollection({features}, true), record, true);
   }
 
   if (
@@ -223,7 +285,8 @@ export function collectIntersects(
         }
       });
     });
-    return new PointCollection({features}, true);
+    updateRecordAndPropsInPlace(record, features);
+    return new Layer(new PointCollection({features}, true), record, true);
   }
 
   if (AreaCollection.isCollection(frame) && LineCollection.isCollection(base)) {
@@ -242,7 +305,8 @@ export function collectIntersects(
         }
       });
     });
-    return new LineCollection({features}, true);
+    updateRecordAndPropsInPlace(record, features);
+    return new Layer(new LineCollection({features}, true), record, true);
   }
 
   if (AreaCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
@@ -261,7 +325,8 @@ export function collectIntersects(
         }
       });
     });
-    return new AreaCollection({features}, true);
+    updateRecordAndPropsInPlace(record, features);
+    return new Layer(new AreaCollection({features}, true), record, true);
   }
 
   throw new Error('Unvalid collect operation.');

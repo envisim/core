@@ -1,7 +1,8 @@
 import {
   AreaCollection,
-  GeoJSON,
+  type GeoJSON as GJ,
   Geodesic,
+  Layer,
   LineCollection,
   LineFeature,
   bbox4,
@@ -18,37 +19,39 @@ import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
 export type TsampleLinesOnAreasOpts = {
   rotation?: number;
   rand?: Random;
+  pointsPerCircle?: number;
 };
 
 /**
  * Selects a sample of lines systematically over all areas.
  *
- * @param collection
+ * @param layer an area layer.
  * @param distBetween distance in meters between the parallell lines.
  * @param opts an options object.
  * @param opts.rotation rotation angle in degrees.
  * @param opts.rand optional instance of Random.
  */
 export function sampleSystematicLinesOnAreas(
-  collection: AreaCollection,
+  layer: Layer<AreaCollection>,
   distBetween: number,
   opts: TsampleLinesOnAreasOpts,
-): LineCollection {
+): Layer<LineCollection> {
   if (typeof distBetween !== 'number' || distBetween <= 0) {
     throw new Error('Input distBetween must be a positive number.');
   }
 
+  const pointsPerCircle = opts.pointsPerCircle ?? 16;
   const rotation = opts.rotation ?? 0;
   const rand = opts.rand ?? new Random();
   const numPointsPerLine = 20;
 
-  const box = bbox4(collection.getBBox());
+  const box = bbox4(layer.collection.getBBox());
   const randomStart = rand.float() * distBetween;
 
   const latPerMeter =
     (box[3] - box[1]) / Geodesic.distance([box[0], box[1]], [box[0], box[3]]);
 
-  const refCoord: GeoJSON.Position = [
+  const refCoord: GJ.Position = [
     longitudeCenter(box[0], box[2]),
     box[1] + (box[3] - box[1]) / 2,
   ];
@@ -108,8 +111,20 @@ export function sampleSystematicLinesOnAreas(
       LineFeature.create(lineGeom, {_designWeight: distBetween}, true),
     );
   }
-  return intersectLineSampleAreaFrame(
+  const collection = intersectLineSampleAreaFrame(
     LineCollection.create(lineFeatures, true),
+    layer.collection,
+    pointsPerCircle,
+  );
+  return new Layer(
     collection,
+    {
+      _designWeight: {
+        id: '_designWeight',
+        name: '_designWeight',
+        type: 'numerical',
+      },
+    },
+    true,
   );
 }

@@ -1,6 +1,11 @@
 import {describe, expect, test} from 'vitest';
 
-import {GeoJSON, LineCollection, LineFeature} from '@envisim/geojson-utils';
+import {
+  GeoJSON,
+  Layer,
+  LineCollection,
+  LineFeature,
+} from '@envisim/geojson-utils';
 
 import {samplePointsOnLines} from '../src/samplePointsOnLines.js';
 
@@ -15,11 +20,12 @@ describe('samplePointsOnLines', () => {
       [0, 0],
     ],
   };
-  const frame = LineCollection.create([LineFeature.create(ls, {})]);
+  const collection = LineCollection.create([LineFeature.create(ls, {})]);
+  const frame = new Layer(collection, {});
   const sample = samplePointsOnLines(frame, 'uniform', 10);
   //console.log(JSON.stringify(sample, null, 2));
 
   test('samplePointsOnLines', () => {
-    expect(sample.features.length).toBe(10);
+    expect(sample.collection.features.length).toBe(10);
   });
 });

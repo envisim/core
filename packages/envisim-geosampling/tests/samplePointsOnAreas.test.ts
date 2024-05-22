@@ -1,6 +1,11 @@
 import {describe, expect, test} from 'vitest';
 
-import {AreaCollection, AreaFeature, GeoJSON} from '@envisim/geojson-utils';
+import {
+  AreaCollection,
+  AreaFeature,
+  GeoJSON,
+  Layer,
+} from '@envisim/geojson-utils';
 
 import {samplePointsOnAreas} from '../src/samplePointsOnAreas.js';
 
@@ -17,11 +22,12 @@ describe('samplePointsOnAreas', () => {
       ],
     ],
   };
-  const frame = AreaCollection.create([AreaFeature.create(polygon, {})]);
+  const collection = AreaCollection.create([AreaFeature.create(polygon, {})]);
+  const frame = new Layer(collection, {});
   const sample = samplePointsOnAreas(frame, 'uniform', 10, {buffer: 10});
   //console.log(JSON.stringify(sample, null, 2));
 
   test('samplePointsOnAreas', () => {
-    expect(sample.features.length).toBe(10);
+    expect(sample.collection.features.length).toBe(10);
   });
 });

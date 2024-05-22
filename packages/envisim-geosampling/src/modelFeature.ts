@@ -1,6 +1,10 @@
-import {type GeoJSON, typeGuards} from '@envisim/geojson-utils';
-import {Geodesic} from '@envisim/geojson-utils';
-import {cutAreaGeometry, cutLineGeometry} from '@envisim/geojson-utils';
+import {
+  type GeoJSON as GJ,
+  Geodesic,
+  cutAreaGeometry,
+  cutLineGeometry,
+  typeGuards,
+} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 import {copy} from '@envisim/utils';
 
@@ -12,10 +16,10 @@ import {typeOfFeature} from './typeOfFeature.js';
 
 // Internal.
 function placePoint(
-  point: GeoJSON.Position,
-  position: GeoJSON.Position,
+  point: GJ.Position,
+  position: GJ.Position,
   rotation: number,
-): GeoJSON.Position {
+): GJ.Position {
   const dist = Math.sqrt(point[0] * point[0] + point[1] * point[1]);
   const angle =
     90 - (Math.atan2(point[1], point[0]) * 180) / Math.PI + rotation;
@@ -24,8 +28,8 @@ function placePoint(
 
 // Internal.
 function setCoordinatesForGeometry(
-  geometry: GeoJSON.Geometry,
-  position: GeoJSON.Position,
+  geometry: GJ.Geometry,
+  position: GJ.Position,
   rotation: number,
 ): void {
   switch (geometry.type) {
@@ -103,26 +107,23 @@ type PlaceOpts = {
  * @returns a GeoJSON Point/Line/AreaFeature.
  */
 function placeModelFeature(
-  modelFeature: GeoJSON.PointFeature,
-  position: GeoJSON.Position,
+  modelFeature: GJ.PointFeature,
+  position: GJ.Position,
   opts: PlaceOpts,
-): GeoJSON.PointFeature;
+): GJ.PointFeature;
 function placeModelFeature(
-  modelFeature: GeoJSON.LineFeature,
-  position: GeoJSON.Position,
+  modelFeature: GJ.LineFeature,
+  position: GJ.Position,
   opts: PlaceOpts,
-): GeoJSON.LineFeature;
+): GJ.LineFeature;
 function placeModelFeature(
-  modelFeature: GeoJSON.AreaFeature,
-  position: GeoJSON.Position,
+  modelFeature: GJ.AreaFeature,
+  position: GJ.Position,
   opts: PlaceOpts,
-): GeoJSON.AreaFeature;
+): GJ.AreaFeature;
 function placeModelFeature(
-  modelFeature:
-    | GeoJSON.PointFeature
-    | GeoJSON.LineFeature
-    | GeoJSON.AreaFeature,
-  position: GeoJSON.Position,
+  modelFeature: GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
+  position: GJ.Position,
   opts: PlaceOpts = {rotation: 0, randomRotation: false, rand: new Random()},
 ) {
   let rotation = opts.rotation ?? 0;
@@ -144,13 +145,9 @@ function placeModelFeature(
   if (Geodesic.distance(position, [180, position[1]]) < radius) {
     // May need cut if area or line as the distance to the antimeridian is less than the radius
     if (type === 'area') {
-      feature.geometry = cutAreaGeometry(
-        feature.geometry as GeoJSON.AreaGeometry,
-      );
+      feature.geometry = cutAreaGeometry(feature.geometry as GJ.AreaGeometry);
     } else if (type === 'line') {
-      feature.geometry = cutLineGeometry(
-        feature.geometry as GeoJSON.LineGeometry,
-      );
+      feature.geometry = cutLineGeometry(feature.geometry as GJ.LineGeometry);
     }
   }
   return feature;
@@ -158,7 +155,7 @@ function placeModelFeature(
 export {placeModelFeature};
 
 // Internal, not coordinates in longitude and latitude.
-function radiusOfGeometry(geometry: GeoJSON.Geometry) {
+function radiusOfGeometry(geometry: GJ.Geometry) {
   let maxRadius = 0;
   switch (geometry.type) {
     case 'Point':
@@ -241,13 +238,13 @@ function radiusOfGeometry(geometry: GeoJSON.Geometry) {
  * @returns the radius of the model feature from (0,0).
  */
 export function radiusOfModelFeature(
-  feature: GeoJSON.PointFeature | GeoJSON.LineFeature | GeoJSON.AreaFeature,
+  feature: GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
 ): number {
   return radiusOfGeometry(feature.geometry);
 }
 
 // Internal.
-function lengthOfLineString(coords: GeoJSON.Position[]) {
+function lengthOfLineString(coords: GJ.Position[]) {
   let L = 0;
   for (let i = 0; i < coords.length - 1; i++) {
     L += Math.sqrt(
@@ -259,7 +256,7 @@ function lengthOfLineString(coords: GeoJSON.Position[]) {
 }
 
 // Internal.
-function areaOfRing(coords: GeoJSON.Position[]): number {
+function areaOfRing(coords: GJ.Position[]): number {
   let area = 0; // Accumulates area in the loop
   let j = coords.length - 1; // The last vertex is the 'previous' one to the first
   const n = coords.length;
@@ -271,7 +268,7 @@ function areaOfRing(coords: GeoJSON.Position[]): number {
 }
 
 // Internal.
-function areaOfSinglePolygon(coords: GeoJSON.Position[][]): number {
+function areaOfSinglePolygon(coords: GJ.Position[][]): number {
   let area = areaOfRing(coords[0]); // full area
   const n = coords.length;
   for (let i = 1; i < n; i++) {
@@ -281,7 +278,7 @@ function areaOfSinglePolygon(coords: GeoJSON.Position[][]): number {
 }
 
 // Internal.
-function sizeOfGeometry(geometry: GeoJSON.Geometry): number {
+function sizeOfGeometry(geometry: GJ.Geometry): number {
   switch (geometry.type) {
     case 'Point':
       if (typeGuards.isCircle(geometry)) {
@@ -333,7 +330,7 @@ function sizeOfGeometry(geometry: GeoJSON.Geometry): number {
  * @returns the size of the model feature.
  */
 export function sizeOfModelFeature(
-  feature: GeoJSON.PointFeature | GeoJSON.LineFeature | GeoJSON.AreaFeature,
+  feature: GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
 ): number {
   return sizeOfGeometry(feature.geometry);
 }
@@ -347,7 +344,7 @@ export function sizeOfModelFeature(
  * @param length the length of the line in meters.
  * @returns a model feature.
  */
-export function straightLineFeature(length: number): GeoJSON.LineFeature {
+export function straightLineFeature(length: number): GJ.LineFeature {
   const sideLength = length || 100;
   const halfSide = sideLength / 2;
   return {
@@ -369,7 +366,7 @@ export function straightLineFeature(length: number): GeoJSON.LineFeature {
  * @param sideLength length of side in meters.
  * @returns a model feature.
  */
-export function ellLineFeature(sideLength: number): GeoJSON.LineFeature {
+export function ellLineFeature(sideLength: number): GJ.LineFeature {
   const length = sideLength || 100;
   const halfSide = length / 2;
   return {
@@ -396,7 +393,7 @@ export function ellLineFeature(sideLength: number): GeoJSON.LineFeature {
 export function rectangularLineFeature(
   sideLength1: number,
   sideLength2: number,
-): GeoJSON.LineFeature {
+): GJ.LineFeature {
   const halfSide1 = (sideLength1 || 100) / 2;
   const halfSide2 = (sideLength2 || 100) / 2;
   return {
@@ -422,7 +419,7 @@ export function rectangularLineFeature(
  * @param sideLength2 length of side south-north in meters.
  * @returns a model feature.
  */
-export function squareLineFeature(sideLength: number): GeoJSON.LineFeature {
+export function squareLineFeature(sideLength: number): GJ.LineFeature {
   return rectangularLineFeature(sideLength, sideLength);
 }
 
@@ -432,7 +429,7 @@ export function squareLineFeature(sideLength: number): GeoJSON.LineFeature {
  * @param radius the radius in meters.
  * @returns a model tract.
  */
-export function circleAreaFeature(radius: number): GeoJSON.AreaFeature {
+export function circleAreaFeature(radius: number): GJ.AreaFeature {
   const r = radius || 10;
   return {
     type: 'Feature',
@@ -456,7 +453,7 @@ export function circleAreaFeature(radius: number): GeoJSON.AreaFeature {
 export function squareCircleAreaFeature(
   sideLength: number,
   radius: number,
-): GeoJSON.AreaFeature {
+): GJ.AreaFeature {
   const r = radius || 10;
   const length = sideLength || 100;
   const halfSide = length / 2;
@@ -501,7 +498,7 @@ export function squareCircleAreaFeature(
 export function rectangularAreaFeature(
   sideLength1: number,
   sideLength2: number,
-): GeoJSON.AreaFeature {
+): GJ.AreaFeature {
   const halfSide1 = (sideLength1 || 100) / 2;
   const halfSide2 = (sideLength2 || 100) / 2;
   return {
@@ -528,7 +525,7 @@ export function rectangularAreaFeature(
  * @param sideLength length of side in meters.
  * @returns a model feature.
  */
-export function squareAreaFeature(sideLength: number): GeoJSON.AreaFeature {
+export function squareAreaFeature(sideLength: number): GJ.AreaFeature {
   return rectangularAreaFeature(sideLength, sideLength);
 }
 
@@ -537,7 +534,7 @@ export function squareAreaFeature(sideLength: number): GeoJSON.AreaFeature {
  *
  * @returns a model point feature.
  */
-export function pointFeature(): GeoJSON.PointFeature {
+export function pointFeature(): GJ.PointFeature {
   return {
     type: 'Feature',
     geometry: {
@@ -555,7 +552,7 @@ export function pointFeature(): GeoJSON.PointFeature {
  * @param sideLength the side length in meters.
  * @returns a model feature.
  */
-export function squarePointFeature(sideLength: number): GeoJSON.PointFeature {
+export function squarePointFeature(sideLength: number): GJ.PointFeature {
   const length = sideLength || 100;
   const halfSide = length / 2;
   return {
@@ -577,20 +574,20 @@ export function squarePointFeature(sideLength: number): GeoJSON.PointFeature {
  * Returns a model area feature as a regular polygon.
  *
  * @param sides the number of sides/vertices.
- * @param sideLength the side length in meters.
+ * @param radius the radius in meters.
  * @returns a model feature.
  */
 export function regularPolygonAreaFeature(
   sides: number,
-  sideLength: number,
-): GeoJSON.AreaFeature {
+  radius: number,
+): GJ.AreaFeature {
   const n = Math.max(Math.round(sides || 3), 3);
-  const length = sideLength || 100;
-  const r = length / (2 * Math.sin(Math.PI / n));
-  const coordinates: GeoJSON.Position[] = [];
+  const r = Math.max(radius, 0.05);
+  const coordinates: GJ.Position[] = [];
+  const startAngle = -Math.PI / n - Math.PI / 2;
 
   for (let i = 0; i < n + 1; i++) {
-    const angle = (i / n) * 2 * Math.PI;
+    const angle = startAngle + (i / n) * 2 * Math.PI;
     coordinates.push([r * Math.cos(angle), r * Math.sin(angle)]);
   }
 
@@ -608,20 +605,20 @@ export function regularPolygonAreaFeature(
  * Returns a model line feature as a regular polygon.
  *
  * @param sides the number of sides/vertices.
- * @param sideLength the side length in meters.
+ * @param radius the radius in meters.
  * @returns a model feature.
  */
 export function regularPolygonLineFeature(
   sides: number,
-  sideLength: number,
-): GeoJSON.LineFeature {
+  radius: number,
+): GJ.LineFeature {
   const n = Math.max(Math.round(sides || 3), 3);
-  const length = sideLength || 100;
-  const r = length / (2 * Math.sin(Math.PI / n));
-  const coordinates: GeoJSON.Position[] = [];
+  const r = Math.max(radius, 0.05);
+  const coordinates: GJ.Position[] = [];
+  const startAngle = -Math.PI / n - Math.PI / 2;
 
   for (let i = 0; i < n + 1; i++) {
-    const angle = (i / n) * 2 * Math.PI;
+    const angle = startAngle + (i / n) * 2 * Math.PI;
     coordinates.push([r * Math.cos(angle), r * Math.sin(angle)]);
   }
 
@@ -636,6 +633,37 @@ export function regularPolygonLineFeature(
 }
 
 /**
+ * Returns a model point feature as a regular polygon.
+ *
+ * @param sides the number of sides/vertices.
+ * @param radius the radius in meters.
+ * @returns a model feature.
+ */
+export function regularPolygonPointFeature(
+  sides: number,
+  radius: number,
+): GJ.PointFeature {
+  const n = Math.max(Math.round(sides || 3), 3);
+  const r = Math.max(radius, 0.05);
+  const coordinates: GJ.Position[] = [];
+  const startAngle = -Math.PI / n - Math.PI / 2;
+
+  for (let i = 0; i < n; i++) {
+    const angle = startAngle + (i / n) * 2 * Math.PI;
+    coordinates.push([r * Math.cos(angle), r * Math.sin(angle)]);
+  }
+
+  return {
+    type: 'Feature',
+    geometry: {
+      type: 'MultiPoint',
+      coordinates: coordinates,
+    },
+    properties: {},
+  };
+}
+
+/**
  * Returns a circular model line feature as a regular polygon with 36
  * sides. The area of the polygon matches the area of a circle with
  * the given radius.
@@ -643,13 +671,11 @@ export function regularPolygonLineFeature(
  * @param radius the radius of the circle in meters.
  * @returns a model feature.
  */
-export function circleLineFeature(radius: number): GeoJSON.LineFeature {
+export function circleLineFeature(radius: number): GJ.LineFeature {
   const n = 36;
   const v = Math.PI / n;
   // use the radius that gives equal area to the polygon for best approximation
   let r = radius > 0 ? radius : 10;
   r = Math.sqrt((Math.PI * Math.pow(r, 2)) / (n * Math.sin(v) * Math.cos(v)));
-  // compute sidelength
-  const sideLength = 2 * r * Math.sin(v);
-  return regularPolygonLineFeature(n, sideLength);
+  return regularPolygonLineFeature(n, r);
 }

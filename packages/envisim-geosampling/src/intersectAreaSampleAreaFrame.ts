@@ -14,6 +14,7 @@ import {
 export function intersectAreaSampleAreaFrame(
   sample: AreaCollection,
   frame: AreaCollection,
+  pointsPerCircle: number = 16,
 ): AreaCollection {
   const newFeatures: AreaFeature[] = [];
 
@@ -21,7 +22,11 @@ export function intersectAreaSampleAreaFrame(
   // If intersection, then compute new designWeight as product of the features design weights.
   frame.forEach((frameFeature) => {
     sample.forEach((sampleFeature) => {
-      const intersect = intersectAreaAreaFeatures(sampleFeature, frameFeature);
+      const intersect = intersectAreaAreaFeatures(
+        sampleFeature,
+        frameFeature,
+        pointsPerCircle,
+      );
 
       if (intersect) {
         let dw = 1;

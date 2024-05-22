@@ -1,8 +1,9 @@
 import {
   AreaCollection,
   AreaFeature,
-  GeoJSON,
+  type GeoJSON as GJ,
   Geodesic,
+  Layer,
   Polygon,
   bbox4,
   cutAreaGeometry,
@@ -18,11 +19,12 @@ import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
 export type TsampleBeltsOnAreasOpts = {
   rotation?: number;
   rand?: Random;
+  pointsPerCircle?: number;
 };
 /**
  * Selects a systematic sample of belts on areas.
  *
- * @param collection
+ * @param layer
  * @param distBetween distance > 0 in meters between center lines.
  * @param halfWidth half the width of the belt (= 0 for line sampling).
  * @param opts an options object.
@@ -30,11 +32,12 @@ export type TsampleBeltsOnAreasOpts = {
  * @param opts.rand an optional instance of Random.
  */
 export const sampleSystematicBeltsOnAreas = (
-  collection: AreaCollection,
+  layer: Layer<AreaCollection>,
   distBetween: number,
   halfWidth: number,
   opts: TsampleBeltsOnAreasOpts = {rotation: 0},
-): AreaCollection => {
+): Layer<AreaCollection> => {
+
   if (typeof distBetween !== 'number' || distBetween <= 0) {
     throw new Error('Input distBetween must be a positive number.');
   }
@@ -43,16 +46,17 @@ export const sampleSystematicBeltsOnAreas = (
     throw new Error('Input halfWidth must be a number > 0.');
   }
 
+  const pointsPerCircle = opts.pointsPerCircle ?? 16;
   const rotation = opts.rotation ?? 0;
   const rand = opts.rand ?? new Random();
   const numPointsPerLine = 20;
-  const box = bbox4(collection.getBBox());
+  const box = bbox4(layer.collection.getBBox());
   const randomStart = rand.float() * distBetween;
 
   const latPerMeter =
     (box[3] - box[1]) / Geodesic.distance([box[0], box[1]], [box[0], box[3]]);
 
-  const refCoord: GeoJSON.Position = [
+  const refCoord: GJ.Position = [
     longitudeCenter(box[0], box[2]),
     box[1] + (box[3] - box[1]) / 2,
   ];
@@ -86,10 +90,10 @@ export const sampleSystematicBeltsOnAreas = (
   const lonDist = longitudeDistance(minLon, maxLon);
   const numLines = Math.ceil((2 * maxRadius) / distBetween);
 
-  const rings: GeoJSON.Position[][] = [];
+  const rings: GJ.Position[][] = [];
   for (let i = 0; i < numLines; i++) {
     const latitude = minLat + (randomStart + i * distBetween) * latPerMeter;
-    const thisRing: GeoJSON.Position[] = [];
+    const thisRing: GJ.Position[] = [];
     // First side of belt (counterclockwise).
     for (let j = 0; j < numPointsPerLine; j++) {
       thisRing.push(
@@ -127,8 +131,20 @@ export const sampleSystematicBeltsOnAreas = (
       true,
     );
   });
-  return intersectAreaSampleAreaFrame(
-    AreaCollection.create(features, true),
-    collection,
+
+  return new Layer(
+    intersectAreaSampleAreaFrame(
+      AreaCollection.create(features, true),
+      layer.collection,
+      pointsPerCircle,
+    ),
+    {
+      _designWeight: {
+        id: '_designWeight',
+        name: '_designWeight',
+        type: 'numerical',
+      },
+    },
+    true,
   );
 };
