@@ -1,4 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
+import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import type {GeomEachCallback, OptionalParam} from '../base/index.js';
 import {LineFeature} from '../features/index.js';
@@ -34,6 +35,10 @@ export class LineCollection
     this.features = obj.features.map((f: GJ.LineFeature) => {
       return new LineFeature(f, shallow);
     });
+  }
+
+  geometricPrimitive(): GeometricPrimitive.LINE {
+    return GeometricPrimitive.LINE;
   }
 
   centroid(iterations: number = 2): GJ.Position {

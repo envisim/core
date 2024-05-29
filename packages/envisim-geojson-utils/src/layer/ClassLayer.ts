@@ -3,6 +3,7 @@ import {v4 as uuidv4} from 'uuid';
 import {copy} from '@envisim/utils';
 
 import * as GJ from '../types/geojson.js';
+import {GeometricPrimitive} from '../geometric-primitive/GeometricPrimitive.js';
 import {
   AreaCollection,
   AreaFeature,
@@ -127,6 +128,10 @@ export class Layer<
     } else {
       throw new Error('Expected a collection.');
     }
+  }
+
+  geometricPrimitive(): GeometricPrimitive {
+    return this.collection.geometricPrimitive();
   }
 
   toGeoJSON(

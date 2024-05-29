@@ -1,4 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
+import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import type {OptionalParam} from '../base/index.js';
 import type {PointObject} from '../objects/index.js';
@@ -34,6 +35,10 @@ export class PointGeometryCollection
     this.geometries = obj.geometries.map((g: GJ.PointObject) =>
       toPointGeometry(g, shallow, false),
     );
+  }
+
+  geometricPrimitive(): GeometricPrimitive.POINT {
+    return GeometricPrimitive.POINT;
   }
 
   centroid(iterations: number = 2): GJ.Position {

@@ -1,4 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
+import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
 import type {GeomEachCallback, OptionalParam} from '../base/index.js';
 import {PointGeometry, toPointGeometry} from '../gcs/index.js';
 import type {PointObject} from '../objects/index.js';
@@ -32,6 +33,10 @@ export class PointFeature
     super({...obj, type: 'Feature'}, shallow);
 
     this.geometry = toPointGeometry(obj.geometry, shallow);
+  }
+
+  geometricPrimitive(): GeometricPrimitive.POINT {
+    return GeometricPrimitive.POINT;
   }
 
   /* FEATURE SPECIFIC */
