@@ -1,202 +1,317 @@
-// import * as sampling from '@envisim/sampling';
-// import {
-//   copy,
-//   createCollection,
-//   filterCollectionByIndices,
-//   filterCollectionByPropertyValue,
-//   IPropertyRecord,
-//   mergeCollections,
-//   sizeOfCollection,
-// } from '@envisim/geojson-utils';
+import * as sampling from '@envisim/sampling';
+import {
+  AreaCollection,
+  AreaFeature,
+  Layer,
+  LineCollection,
+  LineFeature,
+  PointCollection,
+  PointFeature,
+} from '@envisim/geojson-utils';
+import {copy} from '@envisim/utils';
 
-// import type {IPropsStratification, ISampleOptionsFinite} from './types.js';
-// import {
-//   drawprobsFromCollection,
-//   inclprobsFromCollection,
-//   matrixFromCollectionProps,
-//   categoriesFromValidProps,
-// } from './utils.js';
+import type {IPropsStratification, ISampleOptionsFinite} from './types.js';
+import {
+  balancingMatrixFromLayerProps,
+  drawprobsFromLayer,
+  inclprobsFromLayer,
+  spreadMatrixFromLayerProps,
+} from './utils.js';
 
-// export function sampleFinite(
-//   methodName: string,
-//   collection: GeoJSON.FeatureCollection,
-//   sampleOptions: ISampleOptionsFinite,
-//   validProps: IPropertyRecord = {},
-// ): GeoJSON.FeatureCollection {
-//   let idx: number[];
+/**
+ * Select a sample from a layer using sampling methods for a finite
+ * population.
+ *
+ * @param methodName the name of the method to use
+ * @param layer
+ * @param sampleOptions
+ */
+function sampleFinite(
+  methodName: string,
+  layer: Layer<AreaCollection>,
+  sampleOptions: ISampleOptionsFinite,
+): Layer<AreaCollection>;
+function sampleFinite(
+  methodName: string,
+  layer: Layer<LineCollection>,
+  sampleOptions: ISampleOptionsFinite,
+): Layer<LineCollection>;
+function sampleFinite(
+  methodName: string,
+  layer: Layer<PointCollection>,
+  sampleOptions: ISampleOptionsFinite,
+): Layer<PointCollection>;
+function sampleFinite(
+  methodName: string,
+  layer: Layer<AreaCollection | LineCollection | PointCollection>,
+  sampleOptions: ISampleOptionsFinite,
+): Layer<AreaCollection | LineCollection | PointCollection> {
+  let idx: number[];
 
-//   if (sampleOptions.sampleSize === 0) {
-//     return createCollection();
-//   }
+  // Select the correct method, and save indices of the FeatureCollection
+  switch (methodName) {
+    // Standard
+    case 'srswr':
+    case 'srswor':
+      idx = sampling[methodName](
+        sampleOptions.sampleSize,
+        layer.collection.size,
+        {rand: sampleOptions.rand},
+      );
+      break;
 
-//   // Select the correct method, and save indices of the FeatureCollection
-//   switch (methodName) {
-//     // Standard
-//     case 'srs':
-//     case 'srswr':
-//     case 'srswor':
-//       idx = sampling[methodName](
-//         sampleOptions.sampleSize,
-//         sizeOfCollection(collection),
-//         {rand: sampleOptions.rand},
-//       );
-//       break;
+    // Standard w/ incprobs
+    case 'systematic':
+    case 'randomSystematic':
+    case 'poisson':
+    case 'rpm':
+    case 'spm':
+    case 'sampford':
+    case 'pareto':
+    case 'brewer':
+      idx = sampling[methodName](inclprobsFromLayer(layer, sampleOptions), {
+        rand: sampleOptions.rand,
+      });
+      break;
 
-//     // Standard w/ incprobs
-//     case 'systematic':
-//     case 'randomSystematic':
-//     case 'poisson':
-//     case 'randomPivotal':
-//       idx = sampling[methodName](
-//         inclprobsFromCollection(collection, sampleOptions, validProps),
-//         {rand: sampleOptions.rand},
-//       );
-//       break;
+    // Standard w/ drawprob
+    case 'ppswr':
+      idx = sampling[methodName](
+        drawprobsFromLayer(layer, sampleOptions),
+        sampleOptions.sampleSize,
+        {rand: sampleOptions.rand},
+      );
+      break;
 
-//     // Standard w/ drawprob
-//     case 'ppswr':
-//       idx = sampling[methodName](
-//         drawprobsFromCollection(collection, sampleOptions, validProps),
-//         sampleOptions.sampleSize,
-//         {rand: sampleOptions.rand},
-//       );
-//       break;
+    // Spreading
+    case 'lpm1':
+    case 'lpm2':
+    case 'scps':
+      if (
+        !Array.isArray(sampleOptions.spreadOn) ||
+        (sampleOptions.spreadOn.length === 0 && !sampleOptions.spreadGeo)
+      ) {
+        idx = sampling['randomSystematic'](
+          inclprobsFromLayer(layer, sampleOptions),
+          {
+            rand: sampleOptions.rand,
+          },
+        );
+      } else {
+        idx = sampling[methodName](
+          inclprobsFromLayer(layer, sampleOptions),
+          spreadMatrixFromLayerProps(
+            layer,
+            sampleOptions.spreadOn ?? [],
+            sampleOptions.spreadGeo,
+          ),
+          {
+            rand: sampleOptions.rand,
+          },
+        );
+      }
+      break;
 
-//     // Spreading
-//     case 'lpm':
-//     case 'lpm1':
-//     case 'lpm2':
-//     case 'scps':
-//       if (
-//         !Array.isArray(sampleOptions.spreadOn) ||
-//         sampleOptions.spreadOn.length === 0
-//       ) {
-//         return sampleFinite(
-//           'randomSystematic',
-//           collection,
-//           sampleOptions,
-//           validProps,
-//         );
-//       }
+    // Balancing
+    case 'cube':
+      if (
+        !Array.isArray(sampleOptions.balanceOn) ||
+        sampleOptions.balanceOn.length === 0
+      ) {
+        idx = sampling['randomSystematic'](
+          inclprobsFromLayer(layer, sampleOptions),
+          {
+            rand: sampleOptions.rand,
+          },
+        );
+      } else {
+        idx = sampling[methodName](
+          inclprobsFromLayer(layer, sampleOptions),
+          balancingMatrixFromLayerProps(layer, sampleOptions.balanceOn ?? []),
+          {rand: sampleOptions.rand},
+        );
+      }
+      break;
 
-//       idx = sampling[methodName](
-//         inclprobsFromCollection(collection, sampleOptions, validProps),
-//         matrixFromCollectionProps(
-//           collection,
-//           sampleOptions.spreadOn ?? [],
-//           validProps,
-//         ),
-//         {
-//           rand: sampleOptions.rand,
-//           categorical: categoriesFromValidProps(
-//             sampleOptions.spreadOn ?? [],
-//             validProps,
-//           ),
-//           distfun: sampling.distanceGS,
-//         },
-//       );
-//       break;
+    // Balancing + spreading
+    case 'lcube':
+      idx = sampling[methodName](
+        inclprobsFromLayer(layer, sampleOptions),
+        balancingMatrixFromLayerProps(layer, sampleOptions.balanceOn ?? []),
+        spreadMatrixFromLayerProps(
+          layer,
+          sampleOptions.spreadOn ?? [],
+          sampleOptions.spreadGeo,
+        ),
+        {
+          rand: sampleOptions.rand,
+        },
+      );
+      break;
 
-//     // Balancing
-//     case 'cube':
-//       if (
-//         !Array.isArray(sampleOptions.balanceOn) ||
-//         sampleOptions.balanceOn.length === 0
-//       ) {
-//         return sampleFinite(
-//           'randomSystematic',
-//           collection,
-//           sampleOptions,
-//           validProps,
-//         );
-//       }
+    // Default throw
+    default:
+      throw new TypeError('method is not valid');
+  }
 
-//       idx = sampling[methodName](
-//         inclprobsFromCollection(collection, sampleOptions, validProps),
-//         matrixFromCollectionProps(
-//           collection,
-//           sampleOptions.balanceOn ?? [],
-//           validProps,
-//         ),
-//         {rand: sampleOptions.rand},
-//       );
-//       break;
+  if (Layer.isAreaLayer(layer)) {
+    const features = idx.map((i) => layer.collection.features[i]);
+    return new Layer(
+      new AreaCollection({features}, false),
+      copy(layer.propertyRecord),
+      true,
+    );
+  }
+  if (Layer.isLineLayer(layer)) {
+    const features = idx.map((i) => layer.collection.features[i]);
+    return new Layer(
+      new LineCollection({features}, false),
+      copy(layer.propertyRecord),
+      true,
+    );
+  }
+  if (Layer.isPointLayer(layer)) {
+    const features = idx.map((i) => layer.collection.features[i]);
+    return new Layer(
+      new PointCollection({features}, false),
+      copy(layer.propertyRecord),
+      true,
+    );
+  }
+  throw new TypeError('expected layer');
+}
+export {sampleFinite};
 
-//     // Balancing + spreading
-//     case 'localcube':
-//       idx = sampling[methodName](
-//         inclprobsFromCollection(collection, sampleOptions, validProps),
-//         matrixFromCollectionProps(
-//           collection,
-//           sampleOptions.balanceOn ?? [],
-//           validProps,
-//         ),
-//         matrixFromCollectionProps(
-//           collection,
-//           sampleOptions.spreadOn ?? [],
-//           validProps,
-//         ),
-//         {
-//           rand: sampleOptions.rand,
-//           categorical: categoriesFromValidProps(
-//             sampleOptions.spreadOn ?? [],
-//             validProps,
-//           ),
-//           distfun: sampling.distanceGS,
-//         },
-//       );
-//       break;
+/**
+ * Select a stratified sample from a layer using sampling methods for a finite
+ * population.
+ *
+ * @param methodName the name of the method to use
+ * @param layer
+ * @param sampleOptions
+ * @param stratification
+ */
+function sampleFiniteStratified(
+  methodName: string,
+  layer: Layer<AreaCollection>,
+  sampleOptions: ISampleOptionsFinite,
+  stratification: IPropsStratification,
+): Layer<AreaCollection>;
+function sampleFiniteStratified(
+  methodName: string,
+  layer: Layer<LineCollection>,
+  sampleOptions: ISampleOptionsFinite,
+  stratification: IPropsStratification,
+): Layer<LineCollection>;
+function sampleFiniteStratified(
+  methodName: string,
+  layer: Layer<PointCollection>,
+  sampleOptions: ISampleOptionsFinite,
+  stratification: IPropsStratification,
+): Layer<PointCollection>;
+function sampleFiniteStratified(
+  methodName: string,
+  layer: Layer<AreaCollection | LineCollection | PointCollection>,
+  sampleOptions: ISampleOptionsFinite,
+  stratification: IPropsStratification,
+): Layer<AreaCollection | LineCollection | PointCollection> {
+  if (!(stratification.stratify in layer.propertyRecord))
+    throw new Error(
+      'stratification is not possible as property record does not contain the required property',
+    );
 
-//     // Default throw
-//     default:
-//       throw new TypeError('method is not valid');
-//   }
+  // The ID of the property
+  const property = stratification.stratify;
+  // The current property object
+  const propertyObj = layer.propertyRecord[property];
 
-//   return copy(filterCollectionByIndices(collection, idx));
-// }
+  // We only allow stratification on categorical variables
+  if (propertyObj.type !== 'categorical')
+    throw new Error(
+      'stratification is only possible to perform on categorical properties',
+    );
 
-// export function sampleFiniteStratified(
-//   methodName: string,
-//   collection: GeoJSON.FeatureCollection,
-//   sampleOptions: ISampleOptionsFinite,
-//   validProps: IPropertyRecord,
-//   stratification: IPropsStratification,
-// ): GeoJSON.FeatureCollection {
-//   if (!(stratification.stratify in validProps))
-//     throw new Error(
-//       'stratification is not possible as validProps does not contain the required property',
-//     );
+  const sampleSizeFallback: number =
+    sampleOptions.sampleSize / propertyObj.values.length;
 
-//   // The ID of the property
-//   const property = stratification.stratify;
-//   // The current property object
-//   const propertyObj = validProps[property];
+  /*
+   * For each value of the property, run sampleFinite.
+   * If sampleSize is not defined on stratification, use sampleSizeFallback.
+   * Merge the returning FeatureCollections
+   */
 
-//   // We only allow stratification on categorical variables
-//   if (propertyObj.type !== 'categorical')
-//     throw new Error(
-//       'stratification is only possible to perform on categorical properties',
-//     );
+  if (Layer.isAreaLayer(layer)) {
+    let features: AreaFeature[] = [];
+    propertyObj.values.forEach((_v, i) => {
+      const stratumFeatures = layer.collection.features.filter(
+        (f) => f.properties[property] === i,
+      );
+      const stratumLayer = new Layer(
+        new AreaCollection({features: stratumFeatures}, true),
+        layer.propertyRecord,
+        true,
+      );
+      const sampledFeatures = sampleFinite(methodName, stratumLayer, {
+        ...sampleOptions,
+        sampleSize: stratification.sampleSize[i] ?? sampleSizeFallback,
+      }).collection.features;
+      features = [...features, ...sampledFeatures];
+    });
+    return new Layer(
+      new AreaCollection({features}, true),
+      copy(layer.propertyRecord),
+      true,
+    );
+  }
 
-//   const sampleSizeFallback: number =
-//     sampleOptions.sampleSize / propertyObj.values.length;
+  if (Layer.isLineLayer(layer)) {
+    let features: LineFeature[] = [];
+    propertyObj.values.forEach((_v, i) => {
+      const stratumFeatures = layer.collection.features.filter(
+        (f) => f.properties[property] === i,
+      );
+      const stratumLayer = new Layer(
+        new LineCollection({features: stratumFeatures}, true),
+        layer.propertyRecord,
+        true,
+      );
+      const sampledFeatures = sampleFinite(methodName, stratumLayer, {
+        ...sampleOptions,
+        sampleSize: stratification.sampleSize[i] ?? sampleSizeFallback,
+      }).collection.features;
+      features = [...features, ...sampledFeatures];
+    });
+    return new Layer(
+      new LineCollection({features}, true),
+      copy(layer.propertyRecord),
+      true,
+    );
+  }
 
-//   /*
-//    * For each value of the property, run sampleFinite.
-//    * If sampleSize is not defined on stratification, use sampleSizeFallback.
-//    * Merge the returning FeatureCollections
-//    */
-//   return mergeCollections(
-//     ...propertyObj.values.map((e, i) =>
-//       sampleFinite(
-//         methodName,
-//         filterCollectionByPropertyValue(collection, property, e),
-//         {
-//           ...sampleOptions,
-//           sampleSize: stratification.sampleSize[i] ?? sampleSizeFallback,
-//         },
-//         validProps,
-//       ),
-//     ),
-//   );
-// }
+  if (Layer.isPointLayer(layer)) {
+    let features: PointFeature[] = [];
+    propertyObj.values.forEach((_v, i) => {
+      const stratumFeatures = layer.collection.features.filter(
+        (f) => f.properties[property] === i,
+      );
+      const stratumLayer = new Layer(
+        new PointCollection({features: stratumFeatures}, true),
+        layer.propertyRecord,
+        true,
+      );
+      const sampledFeatures = sampleFinite(methodName, stratumLayer, {
+        ...sampleOptions,
+        sampleSize: stratification.sampleSize[i] ?? sampleSizeFallback,
+      }).collection.features;
+      features = [...features, ...sampledFeatures];
+    });
+    return new Layer(
+      new PointCollection({features}, true),
+      copy(layer.propertyRecord),
+      true,
+    );
+  }
+  throw new TypeError('expected a layer');
+}
+
+export {sampleFiniteStratified};
