@@ -45,7 +45,7 @@ export interface IPropsStratification {
  * @param layer
  * @param sampleOptions
  */
-function sampleFinite<
+export function sampleFinite<
   T extends AreaCollection | LineCollection | PointCollection,
 >(
   methodName: string,
@@ -189,7 +189,6 @@ function sampleFinite<
 
   throw new TypeError('expected layer');
 }
-export {sampleFinite};
 
 /**
  * Select a stratified sample from a layer using sampling methods for a finite
@@ -200,7 +199,7 @@ export {sampleFinite};
  * @param sampleOptions
  * @param stratification
  */
-function sampleFiniteStratified<
+export function sampleFiniteStratified<
   T extends AreaCollection | LineCollection | PointCollection,
 >(
   methodName: string,
@@ -322,5 +321,3 @@ function sampleFiniteStratified<
 
   throw new TypeError('expected a layer');
 }
-
-export {sampleFiniteStratified};
