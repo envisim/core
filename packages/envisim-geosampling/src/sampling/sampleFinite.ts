@@ -8,15 +8,34 @@ import {
   PointCollection,
   PointFeature,
 } from '@envisim/geojson-utils';
+import type {Random} from '@envisim/random';
 import {copy} from '@envisim/utils';
 
-import type {IPropsStratification, ISampleOptionsFinite} from './types.js';
 import {
-  balancingMatrixFromLayerProps,
+  balancingMatrixFromLayer,
   drawprobsFromLayer,
   inclprobsFromLayer,
-  spreadMatrixFromLayerProps,
+  spreadMatrixFromLayer,
 } from './utils.js';
+
+interface ISampleOptionsBase {
+  rand: Random;
+  sampleSize: number;
+  probabilitiesFrom?: string | null;
+}
+
+export interface ISampleOptionsFinite extends ISampleOptionsBase {
+  spreadOn?: string[];
+  balanceOn?: string[];
+  spreadGeo?: boolean;
+}
+
+export interface IPropsStratification {
+  /** The property to perform the stratification on. */
+  stratify: string;
+  /** An array with expected sample size for each value defined on the property record. */
+  sampleSize: number[];
+}
 
 /**
  * Select a sample from a layer using sampling methods for a finite
@@ -87,7 +106,7 @@ function sampleFinite<
       } else {
         idx = sampling[methodName](
           inclprobsFromLayer(layer, sampleOptions),
-          spreadMatrixFromLayerProps(
+          spreadMatrixFromLayer(
             layer,
             sampleOptions.spreadOn ?? [],
             sampleOptions.spreadGeo,
@@ -114,7 +133,7 @@ function sampleFinite<
       } else {
         idx = sampling[methodName](
           inclprobsFromLayer(layer, sampleOptions),
-          balancingMatrixFromLayerProps(layer, sampleOptions.balanceOn ?? []),
+          balancingMatrixFromLayer(layer, sampleOptions.balanceOn ?? []),
           {rand: sampleOptions.rand},
         );
       }
@@ -124,8 +143,8 @@ function sampleFinite<
     case 'lcube':
       idx = sampling[methodName](
         inclprobsFromLayer(layer, sampleOptions),
-        balancingMatrixFromLayerProps(layer, sampleOptions.balanceOn ?? []),
-        spreadMatrixFromLayerProps(
+        balancingMatrixFromLayer(layer, sampleOptions.balanceOn ?? []),
+        spreadMatrixFromLayer(
           layer,
           sampleOptions.spreadOn ?? [],
           sampleOptions.spreadGeo,
@@ -149,6 +168,7 @@ function sampleFinite<
       true,
     ) as Layer<T>;
   }
+
   if (Layer.isLineLayer(layer)) {
     const features = idx.map((i) => layer.collection.features[i]);
     return new Layer(
@@ -157,6 +177,7 @@ function sampleFinite<
       true,
     ) as Layer<T>;
   }
+
   if (Layer.isPointLayer(layer)) {
     const features = idx.map((i) => layer.collection.features[i]);
     return new Layer(
@@ -165,6 +186,7 @@ function sampleFinite<
       true,
     ) as Layer<T>;
   }
+
   throw new TypeError('expected layer');
 }
 export {sampleFinite};
@@ -213,21 +235,26 @@ function sampleFiniteStratified<
 
   if (Layer.isAreaLayer(layer)) {
     let features: AreaFeature[] = [];
+
     propertyObj.values.forEach((_v, i) => {
       const stratumFeatures = layer.collection.features.filter(
         (f) => f.properties[property] === i,
       );
+
       const stratumLayer = new Layer(
         new AreaCollection({features: stratumFeatures}, true),
         layer.propertyRecord,
         true,
       );
+
       const sampledFeatures = sampleFinite(methodName, stratumLayer, {
         ...sampleOptions,
         sampleSize: stratification.sampleSize[i] ?? sampleSizeFallback,
       }).collection.features;
+
       features = [...features, ...sampledFeatures];
     });
+
     return new Layer(
       new AreaCollection({features}, true),
       copy(layer.propertyRecord),
@@ -237,21 +264,26 @@ function sampleFiniteStratified<
 
   if (Layer.isLineLayer(layer)) {
     let features: LineFeature[] = [];
+
     propertyObj.values.forEach((_v, i) => {
       const stratumFeatures = layer.collection.features.filter(
         (f) => f.properties[property] === i,
       );
+
       const stratumLayer = new Layer(
         new LineCollection({features: stratumFeatures}, true),
         layer.propertyRecord,
         true,
       );
+
       const sampledFeatures = sampleFinite(methodName, stratumLayer, {
         ...sampleOptions,
         sampleSize: stratification.sampleSize[i] ?? sampleSizeFallback,
       }).collection.features;
+
       features = [...features, ...sampledFeatures];
     });
+
     return new Layer(
       new LineCollection({features}, true),
       copy(layer.propertyRecord),
@@ -261,27 +293,33 @@ function sampleFiniteStratified<
 
   if (Layer.isPointLayer(layer)) {
     let features: PointFeature[] = [];
+
     propertyObj.values.forEach((_v, i) => {
       const stratumFeatures = layer.collection.features.filter(
         (f) => f.properties[property] === i,
       );
+
       const stratumLayer = new Layer(
         new PointCollection({features: stratumFeatures}, true),
         layer.propertyRecord,
         true,
       );
+
       const sampledFeatures = sampleFinite(methodName, stratumLayer, {
         ...sampleOptions,
         sampleSize: stratification.sampleSize[i] ?? sampleSizeFallback,
       }).collection.features;
+
       features = [...features, ...sampledFeatures];
     });
+
     return new Layer(
       new PointCollection({features}, true),
       copy(layer.propertyRecord),
       true,
     ) as Layer<T>;
   }
+
   throw new TypeError('expected a layer');
 }
 
