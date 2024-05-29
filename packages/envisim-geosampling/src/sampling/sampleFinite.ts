@@ -147,7 +147,7 @@ function sampleFinite<
       new AreaCollection({features}, false),
       copy(layer.propertyRecord),
       true,
-    );
+    ) as Layer<T>;
   }
   if (Layer.isLineLayer(layer)) {
     const features = idx.map((i) => layer.collection.features[i]);
@@ -155,7 +155,7 @@ function sampleFinite<
       new LineCollection({features}, false),
       copy(layer.propertyRecord),
       true,
-    );
+    ) as Layer<T>;
   }
   if (Layer.isPointLayer(layer)) {
     const features = idx.map((i) => layer.collection.features[i]);
@@ -163,7 +163,7 @@ function sampleFinite<
       new PointCollection({features}, false),
       copy(layer.propertyRecord),
       true,
-    );
+    ) as Layer<T>;
   }
   throw new TypeError('expected layer');
 }
@@ -178,30 +178,14 @@ export {sampleFinite};
  * @param sampleOptions
  * @param stratification
  */
-function sampleFiniteStratified(
+function sampleFiniteStratified<
+  T extends AreaCollection | LineCollection | PointCollection,
+>(
   methodName: string,
-  layer: Layer<AreaCollection>,
+  layer: Layer<T>,
   sampleOptions: ISampleOptionsFinite,
   stratification: IPropsStratification,
-): Layer<AreaCollection>;
-function sampleFiniteStratified(
-  methodName: string,
-  layer: Layer<LineCollection>,
-  sampleOptions: ISampleOptionsFinite,
-  stratification: IPropsStratification,
-): Layer<LineCollection>;
-function sampleFiniteStratified(
-  methodName: string,
-  layer: Layer<PointCollection>,
-  sampleOptions: ISampleOptionsFinite,
-  stratification: IPropsStratification,
-): Layer<PointCollection>;
-function sampleFiniteStratified(
-  methodName: string,
-  layer: Layer<AreaCollection | LineCollection | PointCollection>,
-  sampleOptions: ISampleOptionsFinite,
-  stratification: IPropsStratification,
-): Layer<AreaCollection | LineCollection | PointCollection> {
+): Layer<T> {
   if (!(stratification.stratify in layer.propertyRecord))
     throw new Error(
       'stratification is not possible as property record does not contain the required property',
@@ -248,7 +232,7 @@ function sampleFiniteStratified(
       new AreaCollection({features}, true),
       copy(layer.propertyRecord),
       true,
-    );
+    ) as Layer<T>;
   }
 
   if (Layer.isLineLayer(layer)) {
@@ -272,7 +256,7 @@ function sampleFiniteStratified(
       new LineCollection({features}, true),
       copy(layer.propertyRecord),
       true,
-    );
+    ) as Layer<T>;
   }
 
   if (Layer.isPointLayer(layer)) {
@@ -296,7 +280,7 @@ function sampleFiniteStratified(
       new PointCollection({features}, true),
       copy(layer.propertyRecord),
       true,
-    );
+    ) as Layer<T>;
   }
   throw new TypeError('expected a layer');
 }
