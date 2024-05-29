@@ -19,6 +19,7 @@ import {
 } from './utils.js';
 
 interface ISampleOptionsBase {
+  methodName: string;
   rand: Random;
   sampleSize: number;
   probabilitiesFrom?: string | null;
@@ -30,40 +31,26 @@ export interface ISampleOptionsFinite extends ISampleOptionsBase {
   spreadGeo?: boolean;
 }
 
-export interface IPropsStratification {
-  /** The property to perform the stratification on. */
-  stratify: string;
-  /** An array with expected sample size for each value defined on the property record. */
-  sampleSize: number[];
-}
-
 /**
  * Select a sample from a layer using sampling methods for a finite
  * population.
  *
- * @param methodName the name of the method to use
  * @param layer
- * @param sampleOptions
+ * @param opts
  */
 export function sampleFinite<
   T extends AreaCollection | LineCollection | PointCollection,
->(
-  methodName: string,
-  layer: Layer<T>,
-  sampleOptions: ISampleOptionsFinite,
-): Layer<T> {
+>(layer: Layer<T>, opts: ISampleOptionsFinite): Layer<T> {
   let idx: number[];
 
   // Select the correct method, and save indices of the FeatureCollection
-  switch (methodName) {
+  switch (opts.methodName) {
     // Standard
     case 'srswr':
     case 'srswor':
-      idx = sampling[methodName](
-        sampleOptions.sampleSize,
-        layer.collection.size,
-        {rand: sampleOptions.rand},
-      );
+      idx = sampling[opts.methodName](opts.sampleSize, layer.collection.size, {
+        rand: opts.rand,
+      });
       break;
 
     // Standard w/ incprobs
@@ -75,17 +62,17 @@ export function sampleFinite<
     case 'sampford':
     case 'pareto':
     case 'brewer':
-      idx = sampling[methodName](inclprobsFromLayer(layer, sampleOptions), {
-        rand: sampleOptions.rand,
+      idx = sampling[opts.methodName](inclprobsFromLayer(layer, opts), {
+        rand: opts.rand,
       });
       break;
 
     // Standard w/ drawprob
     case 'ppswr':
-      idx = sampling[methodName](
-        drawprobsFromLayer(layer, sampleOptions),
-        sampleOptions.sampleSize,
-        {rand: sampleOptions.rand},
+      idx = sampling[opts.methodName](
+        drawprobsFromLayer(layer, opts),
+        opts.sampleSize,
+        {rand: opts.rand},
       );
       break;
 
@@ -94,25 +81,18 @@ export function sampleFinite<
     case 'lpm2':
     case 'scps':
       if (
-        !Array.isArray(sampleOptions.spreadOn) ||
-        (sampleOptions.spreadOn.length === 0 && !sampleOptions.spreadGeo)
+        !Array.isArray(opts.spreadOn) ||
+        (opts.spreadOn.length === 0 && !opts.spreadGeo)
       ) {
-        idx = sampling['randomSystematic'](
-          inclprobsFromLayer(layer, sampleOptions),
-          {
-            rand: sampleOptions.rand,
-          },
-        );
+        idx = sampling['randomSystematic'](inclprobsFromLayer(layer, opts), {
+          rand: opts.rand,
+        });
       } else {
-        idx = sampling[methodName](
-          inclprobsFromLayer(layer, sampleOptions),
-          spreadMatrixFromLayer(
-            layer,
-            sampleOptions.spreadOn ?? [],
-            sampleOptions.spreadGeo,
-          ),
+        idx = sampling[opts.methodName](
+          inclprobsFromLayer(layer, opts),
+          spreadMatrixFromLayer(layer, opts.spreadOn ?? [], opts.spreadGeo),
           {
-            rand: sampleOptions.rand,
+            rand: opts.rand,
           },
         );
       }
@@ -120,37 +100,27 @@ export function sampleFinite<
 
     // Balancing
     case 'cube':
-      if (
-        !Array.isArray(sampleOptions.balanceOn) ||
-        sampleOptions.balanceOn.length === 0
-      ) {
-        idx = sampling['randomSystematic'](
-          inclprobsFromLayer(layer, sampleOptions),
-          {
-            rand: sampleOptions.rand,
-          },
-        );
+      if (!Array.isArray(opts.balanceOn) || opts.balanceOn.length === 0) {
+        idx = sampling['randomSystematic'](inclprobsFromLayer(layer, opts), {
+          rand: opts.rand,
+        });
       } else {
-        idx = sampling[methodName](
-          inclprobsFromLayer(layer, sampleOptions),
-          balancingMatrixFromLayer(layer, sampleOptions.balanceOn ?? []),
-          {rand: sampleOptions.rand},
+        idx = sampling[opts.methodName](
+          inclprobsFromLayer(layer, opts),
+          balancingMatrixFromLayer(layer, opts.balanceOn ?? []),
+          {rand: opts.rand},
         );
       }
       break;
 
     // Balancing + spreading
     case 'lcube':
-      idx = sampling[methodName](
-        inclprobsFromLayer(layer, sampleOptions),
-        balancingMatrixFromLayer(layer, sampleOptions.balanceOn ?? []),
-        spreadMatrixFromLayer(
-          layer,
-          sampleOptions.spreadOn ?? [],
-          sampleOptions.spreadGeo,
-        ),
+      idx = sampling[opts.methodName](
+        inclprobsFromLayer(layer, opts),
+        balancingMatrixFromLayer(layer, opts.balanceOn ?? []),
+        spreadMatrixFromLayer(layer, opts.spreadOn ?? [], opts.spreadGeo),
         {
-          rand: sampleOptions.rand,
+          rand: opts.rand,
         },
       );
       break;
@@ -194,28 +164,24 @@ export function sampleFinite<
  * Select a stratified sample from a layer using sampling methods for a finite
  * population.
  *
- * @param methodName the name of the method to use
  * @param layer
- * @param sampleOptions
- * @param stratification
+ * @param stratifyOn
+ * @param opts
  */
 export function sampleFiniteStratified<
   T extends AreaCollection | LineCollection | PointCollection,
 >(
-  methodName: string,
   layer: Layer<T>,
-  sampleOptions: ISampleOptionsFinite,
-  stratification: IPropsStratification,
+  stratifyOn: string,
+  opts: ISampleOptionsFinite | ISampleOptionsFinite[],
 ): Layer<T> {
-  if (!(stratification.stratify in layer.propertyRecord))
+  if (!(stratifyOn in layer.propertyRecord))
     throw new Error(
       'stratification is not possible as property record does not contain the required property',
     );
 
-  // The ID of the property
-  const property = stratification.stratify;
   // The current property object
-  const propertyObj = layer.propertyRecord[property];
+  const propertyObj = layer.propertyRecord[stratifyOn];
 
   // We only allow stratification on categorical variables
   if (propertyObj.type !== 'categorical')
@@ -223,13 +189,21 @@ export function sampleFiniteStratified<
       'stratification is only possible to perform on categorical properties',
     );
 
-  const sampleSizeFallback: number =
-    sampleOptions.sampleSize / propertyObj.values.length;
+  // Make an array of opts if it is not provided as an array
+  const fixedOpts = Array.isArray(opts)
+    ? opts
+    : new Array(propertyObj.values.length).fill(opts);
+
+  // Make sure it is of correct length
+  if (fixedOpts.length !== propertyObj.values.length) {
+    throw new Error(
+      'length of provided opts array does not match number of strata',
+    );
+  }
 
   /*
    * For each value of the property, run sampleFinite.
-   * If sampleSize is not defined on stratification, use sampleSizeFallback.
-   * Merge the returning FeatureCollections
+   * Merge the returning features into a single array.
    */
 
   if (Layer.isAreaLayer(layer)) {
@@ -237,7 +211,7 @@ export function sampleFiniteStratified<
 
     propertyObj.values.forEach((_v, i) => {
       const stratumFeatures = layer.collection.features.filter(
-        (f) => f.properties[property] === i,
+        (f) => f.properties[stratifyOn] === i,
       );
 
       const stratumLayer = new Layer(
@@ -246,10 +220,8 @@ export function sampleFiniteStratified<
         true,
       );
 
-      const sampledFeatures = sampleFinite(methodName, stratumLayer, {
-        ...sampleOptions,
-        sampleSize: stratification.sampleSize[i] ?? sampleSizeFallback,
-      }).collection.features;
+      const sampledFeatures = sampleFinite(stratumLayer, fixedOpts[i])
+        .collection.features;
 
       features = [...features, ...sampledFeatures];
     });
@@ -266,7 +238,7 @@ export function sampleFiniteStratified<
 
     propertyObj.values.forEach((_v, i) => {
       const stratumFeatures = layer.collection.features.filter(
-        (f) => f.properties[property] === i,
+        (f) => f.properties[stratifyOn] === i,
       );
 
       const stratumLayer = new Layer(
@@ -275,10 +247,8 @@ export function sampleFiniteStratified<
         true,
       );
 
-      const sampledFeatures = sampleFinite(methodName, stratumLayer, {
-        ...sampleOptions,
-        sampleSize: stratification.sampleSize[i] ?? sampleSizeFallback,
-      }).collection.features;
+      const sampledFeatures = sampleFinite(stratumLayer, fixedOpts[i])
+        .collection.features;
 
       features = [...features, ...sampledFeatures];
     });
@@ -295,7 +265,7 @@ export function sampleFiniteStratified<
 
     propertyObj.values.forEach((_v, i) => {
       const stratumFeatures = layer.collection.features.filter(
-        (f) => f.properties[property] === i,
+        (f) => f.properties[stratifyOn] === i,
       );
 
       const stratumLayer = new Layer(
@@ -304,10 +274,8 @@ export function sampleFiniteStratified<
         true,
       );
 
-      const sampledFeatures = sampleFinite(methodName, stratumLayer, {
-        ...sampleOptions,
-        sampleSize: stratification.sampleSize[i] ?? sampleSizeFallback,
-      }).collection.features;
+      const sampledFeatures = sampleFinite(stratumLayer, fixedOpts[i])
+        .collection.features;
 
       features = [...features, ...sampledFeatures];
     });
