@@ -62,6 +62,16 @@ function extractCategoricalProperty(
   return props;
 }
 
+/**
+ * Get a matrix of variables to spread the sample on.
+ * Categorical properties with h categories are collected
+ * as h-1 columns of indicators. Numerical properties are
+ * standardized.
+ *
+ * @param layer
+ * @param properties array of properties to spread on.
+ * @param spreadGeo if true includes spatial coordinates.
+ */
 export function spreadMatrixFromLayerProps(
   layer: Layer<AreaCollection | LineCollection | PointCollection>,
   properties: string[],
@@ -107,6 +117,15 @@ export function spreadMatrixFromLayerProps(
   return Matrix.cbind(...newprops);
 }
 
+/**
+ * Get a matrix of variables to balance the sample on.
+ * A constant is automatically included as the last balancing variable.
+ * If unequal probabilities, then the same property as used for
+ * inclusion probabilities should be included as the first
+ * property if a fixed sample size is desired.
+ * @param layer
+ * @param properties an array of properties to balance on.
+ */
 export function balancingMatrixFromLayerProps(
   layer: Layer<AreaCollection | LineCollection | PointCollection>,
   properties: string[],
@@ -116,11 +135,6 @@ export function balancingMatrixFromLayerProps(
     throw new Error('all properties not present on property record');
 
   const newprops: ColumnVector[] = [];
-  const N = layer.collection.size;
-
-  // Always balance on a constant
-  newprops.push(new ColumnVector(new Array(N).fill(1), true));
-
   properties.forEach((prop) => {
     // Collect numerical properties, no standardization here
     if (rec[prop].type === 'numerical') {
@@ -139,6 +153,10 @@ export function balancingMatrixFromLayerProps(
       }
     }
   });
+  // Always balance on a constant
+  const N = layer.collection.size;
+  newprops.push(new ColumnVector(new Array(N).fill(1), true));
+
   return Matrix.cbind(...newprops);
 }
 
@@ -171,6 +189,12 @@ function probsFromLayer(
   return prop;
 }
 
+/**
+ * Computes the drawing propabilities from a layer and options.
+ *
+ * @param layer
+ * @param options
+ */
 export function drawprobsFromLayer(
   layer: Layer<AreaCollection | LineCollection | PointCollection>,
   options: ISampleOptionsFinite,
@@ -181,6 +205,12 @@ export function drawprobsFromLayer(
   return probs.map((e) => e / sum, true);
 }
 
+/**
+ * Computes the inclusion propabilities from a layer and options.
+ *
+ * @param layer
+ * @param options
+ */
 export function inclprobsFromLayer(
   layer: Layer<AreaCollection | LineCollection | PointCollection>,
   options: ISampleOptionsFinite,
