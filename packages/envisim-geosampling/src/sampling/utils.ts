@@ -72,7 +72,7 @@ function extractCategoricalProperty(
  * @param properties array of properties to spread on.
  * @param spreadGeo if true includes spatial coordinates.
  */
-export function spreadMatrixFromLayerProps(
+export function spreadMatrixFromLayer(
   layer: Layer<AreaCollection | LineCollection | PointCollection>,
   properties: string[],
   spreadGeo: boolean = true,
@@ -126,7 +126,7 @@ export function spreadMatrixFromLayerProps(
  * @param layer
  * @param properties an array of properties to balance on.
  */
-export function balancingMatrixFromLayerProps(
+export function balancingMatrixFromLayer(
   layer: Layer<AreaCollection | LineCollection | PointCollection>,
   properties: string[],
 ): Matrix {
