@@ -26,26 +26,13 @@ import {
  * @param layer
  * @param sampleOptions
  */
-function sampleFinite(
+function sampleFinite<
+  T extends AreaCollection | LineCollection | PointCollection,
+>(
   methodName: string,
-  layer: Layer<AreaCollection>,
+  layer: Layer<T>,
   sampleOptions: ISampleOptionsFinite,
-): Layer<AreaCollection>;
-function sampleFinite(
-  methodName: string,
-  layer: Layer<LineCollection>,
-  sampleOptions: ISampleOptionsFinite,
-): Layer<LineCollection>;
-function sampleFinite(
-  methodName: string,
-  layer: Layer<PointCollection>,
-  sampleOptions: ISampleOptionsFinite,
-): Layer<PointCollection>;
-function sampleFinite(
-  methodName: string,
-  layer: Layer<AreaCollection | LineCollection | PointCollection>,
-  sampleOptions: ISampleOptionsFinite,
-): Layer<AreaCollection | LineCollection | PointCollection> {
+): Layer<T> {
   let idx: number[];
 
   // Select the correct method, and save indices of the FeatureCollection
