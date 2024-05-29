@@ -3,33 +3,33 @@ import {GeometricPrimitive} from './GeometricPrimitive.js';
 
 export function GetGeometryPrimitive(
   obj: never,
-  exhaustive?: boolean,
   allowGC?: boolean,
+  exhaustive?: boolean,
 ): GeometricPrimitive.NONE;
 export function GetGeometryPrimitive(
   obj: GJ.PointGeometry,
-  exhaustive?: boolean,
   allowGC?: boolean,
+  exhaustive?: boolean,
 ): GeometricPrimitive.POINT;
 export function GetGeometryPrimitive(
   obj: GJ.LineGeometry,
-  exhaustive?: boolean,
   allowGC?: boolean,
+  exhaustive?: boolean,
 ): GeometricPrimitive.LINE;
 export function GetGeometryPrimitive(
   obj: GJ.AreaGeometry,
-  exhaustive?: boolean,
   allowGC?: boolean,
+  exhaustive?: boolean,
 ): GeometricPrimitive.AREA;
 export function GetGeometryPrimitive(
   obj: GJ.BaseGeometry,
-  exhaustive?: boolean,
   allowGC?: boolean,
+  exhaustive?: boolean,
 ): GeometricPrimitive;
 export function GetGeometryPrimitive(
   obj: GJ.BaseGeometry,
-  exhaustive: boolean = false,
   allowGC: boolean = true,
+  exhaustive: boolean = false,
 ): GeometricPrimitive {
   switch (obj.type) {
     case 'Point':
@@ -94,7 +94,7 @@ export function GetFeaturePrimitive(
   obj: GJ.BaseFeature,
   exhaustive: boolean = false,
 ): GeometricPrimitive {
-  return GetGeometryPrimitive(obj.geometry, exhaustive);
+  return GetGeometryPrimitive(obj.geometry, true, exhaustive);
 }
 
 export function GetCollectionPrimitive(
@@ -125,7 +125,7 @@ export function GetCollectionPrimitive(
     return GeometricPrimitive.NONE;
   }
 
-  const gp = GetGeometryPrimitive(obj.features[0].geometry);
+  const gp = GetGeometryPrimitive(obj.features[0].geometry, true, exhaustive);
 
   if (
     obj.features.length === 1 ||

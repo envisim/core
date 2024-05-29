@@ -7,6 +7,7 @@ import {GeometricPrimitive} from '../geometric-primitive/GeometricPrimitive.js';
 import {
   AreaCollection,
   AreaFeature,
+  GetGeometryPrimitive,
   IPropertyRecord,
   LineCollection,
   LineFeature,
@@ -186,28 +187,6 @@ export class Layer<
 }
 
 /**
- * Internal function to check type of geometry
- * @param geometry
- * @returns 'point', 'line', or 'area'
- */
-function typeOfGeometry(geometry: GJ.SingleTypeObject): string {
-  switch (geometry.type) {
-    case 'Polygon':
-    case 'MultiPolygon':
-      return 'area';
-    case 'Point':
-      return isCircle(geometry) ? 'area' : 'point';
-    case 'MultiPoint':
-      return isMultiCircle(geometry) ? 'area' : 'point';
-    case 'LineString':
-    case 'MultiLineString':
-      return 'line';
-    default:
-      throw new Error('Unknown geometry type.');
-  }
-}
-
-/**
  * Internal function to create the property record from a collection
  * @param collection
  * @returns the property record
@@ -322,17 +301,17 @@ function updateProperties(
  * of correct type and push them to the collector array.
  * @param geometries an array of geometries
  * @param collector an array to push geometries to
- * @param type the type to filter out
+ * @param primitive the type to filter out
  */
 function flattenAndFilterGeometries(
   geometries: GJ.BaseGeometry[],
   collector: GJ.Geometry[],
-  type: 'point' | 'line' | 'area',
+  primitive: GeometricPrimitive,
 ): void {
   geometries.forEach((geometry) => {
     if (geometry.type === 'GeometryCollection') {
-      flattenAndFilterGeometries(geometry.geometries, collector, type);
-    } else if (typeOfGeometry(geometry) === type) {
+      flattenAndFilterGeometries(geometry.geometries, collector, primitive);
+    } else if (GetGeometryPrimitive(geometry, false, false) === primitive) {
       collector.push(geometry);
     }
   });
@@ -347,7 +326,7 @@ function flattenAndFilterGeometries(
  */
 function filterCollection(
   collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
-  type: 'point' | 'line' | 'area',
+  primitive: GeometricPrimitive,
 ): GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>> {
   const newCollection: GJ.BaseFeatureCollection<
     GJ.BaseFeature<GJ.BaseGeometry, any>
@@ -358,7 +337,7 @@ function filterCollection(
     const geoms = geom.type === 'GeometryCollection' ? geom.geometries : [geom];
 
     const flattened: GJ.SingleTypeObject[] = [];
-    flattenAndFilterGeometries(geoms, flattened, type);
+    flattenAndFilterGeometries(geoms, flattened, primitive);
 
     if (flattened.length > 0) {
       if (flattened.length === 1) {
@@ -393,7 +372,7 @@ function createNewAreaLayer(
     new AreaCollection({type: 'FeatureCollection', features: []}),
     {},
   );
-  const filtered = filterCollection(collection, 'area');
+  const filtered = filterCollection(collection, GeometricPrimitive.AREA);
 
   layer.propertyRecord = createPropertyRecord(filtered);
 
@@ -424,7 +403,7 @@ function createNewLineLayer(
     new LineCollection({type: 'FeatureCollection', features: []}),
     {},
   );
-  const filtered = filterCollection(collection, 'line');
+  const filtered = filterCollection(collection, GeometricPrimitive.LINE);
 
   layer.propertyRecord = createPropertyRecord(filtered);
 
@@ -455,7 +434,7 @@ function createNewPointLayer(
     new PointCollection({type: 'FeatureCollection', features: []}),
     {},
   );
-  const filtered = filterCollection(collection, 'point');
+  const filtered = filterCollection(collection, GeometricPrimitive.POINT);
 
   layer.propertyRecord = createPropertyRecord(filtered);
 
