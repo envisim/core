@@ -188,8 +188,10 @@ export function sampleLineToPointStratified(
       true,
     );
 
-    const sampledFeatures = sampleLineToPoint(stratumLayer, fixedOpts[i])
-      .collection.features;
+    const sampledFeatures = sampleLineToPoint(
+      stratumLayer,
+      fixedOpts[i] as TsampleLineToPointOpts,
+    ).collection.features;
 
     features = [...features, ...sampledFeatures];
   });
@@ -249,8 +251,10 @@ export function sampleAreaToPointStratified(
       true,
     );
 
-    const sampledFeatures = sampleAreaToPoint(stratumLayer, fixedOpts[i])
-      .collection.features;
+    const sampledFeatures = sampleAreaToPoint(
+      stratumLayer,
+      fixedOpts[i] as TsampleAreaToPointOpts,
+    ).collection.features;
 
     features = [...features, ...sampledFeatures];
   });
@@ -313,8 +317,10 @@ export function sampleAreaToAreaStratified(
       true,
     );
 
-    const sampledFeatures = sampleAreaToArea(stratumLayer, fixedOpts[i])
-      .collection.features;
+    const sampledFeatures = sampleAreaToArea(
+      stratumLayer,
+      fixedOpts[i] as TsampleAreaToAreaOpts,
+    ).collection.features;
 
     features = [...features, ...sampledFeatures];
   });
@@ -377,8 +383,10 @@ export function sampleAreaToLineStratified(
       true,
     );
 
-    const sampledFeatures = sampleAreaToLine(stratumLayer, fixedOpts[i])
-      .collection.features;
+    const sampledFeatures = sampleAreaToLine(
+      stratumLayer,
+      fixedOpts[i] as TsampleAreaToLineOpts,
+    ).collection.features;
 
     features = [...features, ...sampledFeatures];
   });

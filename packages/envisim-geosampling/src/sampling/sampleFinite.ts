@@ -220,8 +220,10 @@ export function sampleFiniteStratified<
         true,
       );
 
-      const sampledFeatures = sampleFinite(stratumLayer, fixedOpts[i])
-        .collection.features;
+      const sampledFeatures = sampleFinite(
+        stratumLayer,
+        fixedOpts[i] as ISampleOptionsFinite,
+      ).collection.features;
 
       features = [...features, ...sampledFeatures];
     });
@@ -247,8 +249,10 @@ export function sampleFiniteStratified<
         true,
       );
 
-      const sampledFeatures = sampleFinite(stratumLayer, fixedOpts[i])
-        .collection.features;
+      const sampledFeatures = sampleFinite(
+        stratumLayer,
+        fixedOpts[i] as ISampleOptionsFinite,
+      ).collection.features;
 
       features = [...features, ...sampledFeatures];
     });
@@ -274,8 +278,10 @@ export function sampleFiniteStratified<
         true,
       );
 
-      const sampledFeatures = sampleFinite(stratumLayer, fixedOpts[i])
-        .collection.features;
+      const sampledFeatures = sampleFinite(
+        stratumLayer,
+        fixedOpts[i] as ISampleOptionsFinite,
+      ).collection.features;
 
       features = [...features, ...sampledFeatures];
     });
