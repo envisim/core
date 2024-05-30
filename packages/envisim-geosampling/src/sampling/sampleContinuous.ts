@@ -64,7 +64,7 @@ export function sampleAreaToArea(
     );
   }
   throw new Error(
-    'methodName does not match available methods belt or areaFeature',
+    'methodName does not match available methods systematicBelt or areaFeature',
   );
 }
 
