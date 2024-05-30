@@ -59,10 +59,17 @@ export class LineCollection
     });
   }
 
-  addFeature(feature: LineFeature, shallow: boolean = true): void {
-    this.features.push(
-      shallow === false ? new LineFeature(feature, false) : feature,
-    );
+  addFeature(
+    feature: OptionalParam<GJ.LineFeature, 'type'>,
+    shallow: boolean = true,
+  ): void {
+    if (LineFeature.isFeature(feature)) {
+      this.features.push(
+        shallow === false ? new LineFeature(feature, false) : feature,
+      );
+    } else {
+      this.features.push(new LineFeature(feature, shallow));
+    }
   }
 
   /* LINE SPECIFIC */

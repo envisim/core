@@ -59,10 +59,17 @@ export class PointCollection
     });
   }
 
-  addFeature(feature: PointFeature, shallow: boolean = true): void {
-    this.features.push(
-      shallow === false ? new PointFeature(feature, false) : feature,
-    );
+  addFeature(
+    feature: OptionalParam<GJ.PointFeature, 'type'>,
+    shallow: boolean = true,
+  ): void {
+    if (PointFeature.isFeature(feature)) {
+      this.features.push(
+        shallow === false ? new PointFeature(feature, false) : feature,
+      );
+    } else {
+      this.features.push(new PointFeature(feature, shallow));
+    }
   }
 
   /* POINT SPECIFIC */

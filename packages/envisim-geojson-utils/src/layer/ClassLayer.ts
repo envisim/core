@@ -4,15 +4,13 @@ import {copy} from '@envisim/utils';
 
 import * as GJ from '../types/geojson.js';
 import {GeometricPrimitive} from '../geometric-primitive/GeometricPrimitive.js';
+import {AssertGeometryPrimitive} from '../geometric-primitive/GetGeoJsonPrimitive.js';
 import {
   AreaCollection,
   AreaFeature,
-  GetGeometryPrimitive,
   IPropertyRecord,
   LineCollection,
-  LineFeature,
   PointCollection,
-  PointFeature,
 } from '../index.js';
 import {PropertySpecialKeys} from '../types/property.js';
 import {isCircle, isMultiCircle} from '../types/type-guards.js';
@@ -73,28 +71,74 @@ export class Layer<
    * Properties of types other than number or string are not supported
    * and will be silently ignored.
    */
-  static createPointLayer(
+  static createLayer(
     collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
-  ): Layer<PointCollection> {
-    return createNewPointLayer(collection);
-  }
+    type: GeometricPrimitive.POINT,
+  ): Layer<PointCollection>;
+  static createLayer(
+    collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
+    type: GeometricPrimitive.LINE,
+  ): Layer<LineCollection>;
+  static createLayer(
+    collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
+    type: GeometricPrimitive.AREA,
+  ): Layer<AreaCollection>;
+  static createLayer(
+    collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
+    type: GeometricPrimitive,
+  ): Layer<PointCollection | LineCollection | AreaCollection> {
+    switch (type) {
+      case GeometricPrimitive.POINT: {
+        const newCollection = new PointCollection({
+          type: 'FeatureCollection',
+          features: [],
+        });
+        const [newFeatures, propertyRecord] = prepareFeatures(
+          collection.features,
+          type,
+        );
+        newFeatures.forEach((feat) => {
+          newCollection.addFeature(feat);
+        });
 
-  /**
-   * {@inheritDoc Layer.createPointLayer}
-   */
-  static createLineLayer(
-    collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
-  ): Layer<LineCollection> {
-    return createNewLineLayer(collection);
-  }
+        return new Layer(newCollection, propertyRecord);
+      }
 
-  /**
-   * {@inheritDoc Layer.createPointLayer}
-   */
-  static createAreaLayer(
-    collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
-  ): Layer<AreaCollection> {
-    return createNewAreaLayer(collection);
+      case GeometricPrimitive.LINE: {
+        const newCollection = new LineCollection({
+          type: 'FeatureCollection',
+          features: [],
+        });
+        const [newFeatures, propertyRecord] = prepareFeatures(
+          collection.features,
+          type,
+        );
+        newFeatures.forEach((feat) => {
+          newCollection.addFeature(feat);
+        });
+
+        return new Layer(newCollection, propertyRecord);
+      }
+
+      case GeometricPrimitive.AREA: {
+        const newCollection = new AreaCollection({
+          type: 'FeatureCollection',
+          features: [],
+        });
+        const [newFeatures, propertyRecord] = prepareFeatures(
+          collection.features,
+          type,
+        );
+        newFeatures.forEach((feat) => {
+          newCollection.addFeature(feat);
+        });
+
+        return new Layer(newCollection, propertyRecord);
+      }
+
+      default:
+        throw new Error('GeometricPrimitive not supported');
+    }
   }
 
   /**
@@ -186,268 +230,150 @@ export class Layer<
   }
 }
 
-/**
- * Internal function to create the property record from a collection
- * @param collection
- * @returns the property record
- */
-function createPropertyRecord(
-  collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
-): IPropertyRecord {
-  const record: IPropertyRecord = {};
+function flatMapGeometryCollections(
+  geometry: GJ.BaseGeometry,
+  primitive: GeometricPrimitive.POINT,
+): GJ.PointObject | GJ.PointObject[];
+function flatMapGeometryCollections(
+  geometry: GJ.BaseGeometry,
+  primitive: GeometricPrimitive.LINE,
+): GJ.LineObject | GJ.LineObject[];
+function flatMapGeometryCollections(
+  geometry: GJ.BaseGeometry,
+  primitive: GeometricPrimitive.AREA,
+): GJ.AreaObject | GJ.AreaObject[];
+function flatMapGeometryCollections(
+  geometry: GJ.BaseGeometry,
+  primitive: GeometricPrimitive,
+): GJ.SingleTypeObject | GJ.SingleTypeObject[] {
+  if (geometry.type !== 'GeometryCollection') {
+    return AssertGeometryPrimitive(geometry, primitive, false) ? geometry : [];
+  }
 
-  // set properties based on the first feature in the collection
-  const props = collection.features[0].properties ?? {};
+  return geometry.geometries.flatMap(flatMapGeometryCollections);
+}
 
-  Object.keys(props).forEach((name) => {
-    const specialKey = PropertySpecialKeys.includes(name);
-    const id = specialKey ? name : uuidv4();
-    const valueType = typeof props[name];
+function prepareFeatures(
+  features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
+  primitive: GeometricPrimitive.POINT,
+): [GJ.PointFeature[], IPropertyRecord];
+function prepareFeatures(
+  features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
+  primitive: GeometricPrimitive.LINE,
+): [GJ.LineFeature[], IPropertyRecord];
+function prepareFeatures(
+  features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
+  primitive: GeometricPrimitive.AREA,
+): [GJ.AreaFeature[], IPropertyRecord];
+function prepareFeatures(
+  features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
+  primitive: GeometricPrimitive,
+): [GJ.Feature[], IPropertyRecord] {
+  const propertyRecord: IPropertyRecord = {};
+  let propertyRecordIsSet = false;
 
-    if (specialKey && valueType !== 'number') {
-      throw new Error(
-        `Property "${name}" is a special key and must be of type number.`,
+  const newFeatures = features.flatMap(({geometry, properties}) => {
+    let newGeometry: GJ.Geometry;
+    const newProperties: GJ.FeatureProperties = {};
+
+    // Set newGeometry
+    if (geometry.type === 'GeometryCollection') {
+      // flatMapGeometryCollections will flatten out all nested GC's
+      const geometries = geometry.geometries.flatMap(
+        flatMapGeometryCollections,
       );
+
+      if (geometries.length === 0) {
+        return [];
+      } else if (geometries.length === 1) {
+        // Maximum flattness
+        newGeometry = geometries[0];
+      } else {
+        newGeometry = {
+          type: 'GeometryCollection',
+          geometries,
+        };
+      }
+    } else {
+      if (!AssertGeometryPrimitive(geometry, primitive)) {
+        return [];
+      }
+
+      newGeometry = geometry;
     }
 
-    if (valueType === 'number') {
-      record[id] = {type: 'numerical', name, id};
-    } else if (valueType === 'string') {
-      record[id] = {
-        type: 'categorical',
-        name,
-        id,
-        values: [],
-      };
+    if (propertyRecordIsSet === false) {
+      // Since all features must have the same set of properties, we choose the first
+      // accepted feature to create our property list from.
+      Object.entries(properties ?? {}).forEach(([name, prop]) => {
+        const isSpecialKey = PropertySpecialKeys.includes(name);
+        const id = isSpecialKey ? name : uuidv4();
+        const valueType = typeof prop;
+
+        if (valueType === 'number') {
+          propertyRecord[id] = {type: 'numerical', name, id};
+        } else if (isSpecialKey) {
+          throw new Error(
+            `Property ${prop} is a reserved property and must be a number`,
+          );
+        } else if (valueType === 'string') {
+          propertyRecord[id] = {type: 'categorical', name, id, values: []};
+        }
+      });
+
+      propertyRecordIsSet = true;
     }
-  });
 
-  // Add all values for categorical properties
-  collection.features.forEach((feature) => {
-    const properties: GJ.FeatureProperties<any> = feature.properties ?? {};
+    const orgProps = properties ?? {};
 
-    Object.keys(record).forEach((key) => {
-      const rec = record[key];
-      const name = rec.name ?? rec.id;
-      // Check if value is in values, otherwise push it
-      if (rec.type === 'categorical') {
-        let value: unknown = properties[name];
+    Object.values(propertyRecord).forEach((prop) => {
+      const name = prop.name ?? '';
 
-        if (typeof value === 'number') {
-          value = value.toString();
+      // If the prop does not exist on the feature, we have a problem
+      if (!Object.hasOwn(orgProps, name)) {
+        throw new Error('All features must have the same properties.');
+      }
+
+      const value: unknown = orgProps[name];
+
+      // Add numerical property
+      if (prop.type === 'numerical') {
+        if (typeof value !== 'number') {
+          throw new Error(
+            'All features must have the same types on the properties.',
+          );
         }
 
+        newProperties[prop.id] = value;
+        return;
+      }
+
+      // Add categorical property
+      // We fill the value array, as new values are encountered.
+      if (prop.type === 'categorical') {
         if (typeof value !== 'string') {
-          return;
+          throw new Error(
+            'All features must have the same types on the properties.',
+          );
         }
 
-        if (!rec.values.includes(value)) {
-          rec.values.push(value);
+        let valueIndex = prop.values.indexOf(value);
+
+        if (valueIndex === -1) {
+          valueIndex = prop.values.push(value) - 1;
         }
+
+        newProperties[prop.id] = valueIndex;
+        return;
       }
     });
+
+    return {
+      type: 'Feature' as const,
+      geometry: newGeometry,
+      properties: newProperties,
+    };
   });
 
-  return record;
-}
-
-/**
- * Internal function to update properties to numeric values
- * based on a property record
- * @param properties
- * @param record
- * @returns the new properties object
- */
-function updateProperties(
-  properties: GJ.FeatureProperties<any>,
-  record: IPropertyRecord,
-): GJ.FeatureProperties<number> {
-  const newProps: GJ.FeatureProperties<number> = {};
-
-  Object.keys(record).forEach((key) => {
-    const thisRecord = record[key];
-    const {name, type, id} = thisRecord;
-
-    if (name) {
-      const propertyValue: unknown = properties[name];
-
-      if (type === 'numerical') {
-        if (typeof propertyValue !== 'number') {
-          throw new Error('The same property may not contain mixed types');
-        }
-
-        newProps[id] = propertyValue;
-      } else if (type === 'categorical') {
-        if (typeof propertyValue !== 'string') {
-          throw new Error('The same property may not contain mixed types');
-        }
-
-        const index = thisRecord.values.indexOf(propertyValue);
-
-        if (index !== -1) {
-          newProps[id] = index;
-        } else {
-          throw new Error('Value not found in property record');
-        }
-      }
-    }
-  });
-
-  return newProps;
-}
-
-/**
- * Internal function to flatten and filter out geometries
- * of correct type and push them to the collector array.
- * @param geometries an array of geometries
- * @param collector an array to push geometries to
- * @param primitive the type to filter out
- */
-function flattenAndFilterGeometries(
-  geometries: GJ.BaseGeometry[],
-  collector: GJ.Geometry[],
-  primitive: GeometricPrimitive,
-): void {
-  geometries.forEach((geometry) => {
-    if (geometry.type === 'GeometryCollection') {
-      flattenAndFilterGeometries(geometry.geometries, collector, primitive);
-    } else if (GetGeometryPrimitive(geometry, false, false) === primitive) {
-      collector.push(geometry);
-    }
-  });
-}
-
-/**
- * Internal function to flatten nested geometry collections and
- * filter out geometries of a given type.
- * @param collection
- * @param type
- * @returns
- */
-function filterCollection(
-  collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
-  primitive: GeometricPrimitive,
-): GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>> {
-  const newCollection: GJ.BaseFeatureCollection<
-    GJ.BaseFeature<GJ.BaseGeometry, any>
-  > = {type: 'FeatureCollection', features: []};
-
-  collection.features.forEach((feature) => {
-    const geom = feature.geometry;
-    const geoms = geom.type === 'GeometryCollection' ? geom.geometries : [geom];
-
-    const flattened: GJ.SingleTypeObject[] = [];
-    flattenAndFilterGeometries(geoms, flattened, primitive);
-
-    if (flattened.length > 0) {
-      if (flattened.length === 1) {
-        newCollection.features.push({
-          type: 'Feature',
-          geometry: flattened[0],
-          properties: feature.properties,
-        });
-      } else {
-        newCollection.features.push({
-          type: 'Feature',
-          geometry: {type: 'GeometryCollection', geometries: flattened},
-          properties: feature.properties,
-        });
-      }
-    }
-  });
-
-  return newCollection;
-}
-
-/**
- * Internal function to create a new area layer from a GeoJSON
- * feature collection.
- * @param collection
- * @returns a new area layer
- */
-function createNewAreaLayer(
-  collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
-): Layer<AreaCollection> {
-  const layer: Layer<AreaCollection> = new Layer(
-    new AreaCollection({type: 'FeatureCollection', features: []}),
-    {},
-  );
-  const filtered = filterCollection(collection, GeometricPrimitive.AREA);
-
-  layer.propertyRecord = createPropertyRecord(filtered);
-
-  filtered.features.forEach((feature) => {
-    const newFeature = copy(feature);
-    newFeature.properties = updateProperties(
-      newFeature.properties ?? {},
-      layer.propertyRecord,
-    );
-    layer.collection.addFeature(
-      new AreaFeature(newFeature as GJ.AreaFeature, true),
-    );
-  });
-
-  return layer;
-}
-
-/**
- * Internal function to create a new line layer from a GeoJSON
- * feature collection.
- * @param collection
- * @returns a new line layer
- */
-function createNewLineLayer(
-  collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
-): Layer<LineCollection> {
-  const layer: Layer<LineCollection> = new Layer(
-    new LineCollection({type: 'FeatureCollection', features: []}),
-    {},
-  );
-  const filtered = filterCollection(collection, GeometricPrimitive.LINE);
-
-  layer.propertyRecord = createPropertyRecord(filtered);
-
-  filtered.features.forEach((feature) => {
-    const newFeature = copy(feature);
-    newFeature.properties = updateProperties(
-      newFeature.properties ?? {},
-      layer.propertyRecord,
-    );
-    layer.collection.addFeature(
-      new LineFeature(newFeature as GJ.LineFeature, true),
-    );
-  });
-
-  return layer;
-}
-
-/**
- * Internal function to create a new point layer from a GeoJSON
- * feature collection.
- * @param collection
- * @returns a new point layer
- */
-function createNewPointLayer(
-  collection: GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>,
-): Layer<PointCollection> {
-  const layer: Layer<PointCollection> = new Layer(
-    new PointCollection({type: 'FeatureCollection', features: []}),
-    {},
-  );
-  const filtered = filterCollection(collection, GeometricPrimitive.POINT);
-
-  layer.propertyRecord = createPropertyRecord(filtered);
-
-  filtered.features.forEach((feature) => {
-    const newFeature = copy(feature);
-    newFeature.properties = updateProperties(
-      newFeature.properties ?? {},
-      layer.propertyRecord,
-    );
-    layer.collection.addFeature(
-      new PointFeature(newFeature as GJ.PointFeature, true),
-    );
-  });
-
-  return layer;
+  return [newFeatures, propertyRecord];
 }
