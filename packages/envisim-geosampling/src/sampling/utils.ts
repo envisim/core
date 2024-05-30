@@ -7,7 +7,7 @@ import {
 import {bbox4, longitudeCenter} from '@envisim/geojson-utils';
 import {ColumnVector, Matrix} from '@envisim/matrix';
 
-import type {ISampleOptionsFinite} from './types.js';
+import type {ISampleOptionsFinite} from './sampleFinite.js';
 
 /**
  * Get a numerical property as a ColumnVector
