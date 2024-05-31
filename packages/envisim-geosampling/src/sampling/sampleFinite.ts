@@ -42,13 +42,31 @@ export function sampleFinite<
   T extends AreaCollection | LineCollection | PointCollection,
 >(layer: Layer<T>, opts: ISampleOptionsFinite): Layer<T> {
   let idx: number[];
-
+  let mu: number[];
+  let n: number;
+  const N = layer.collection.size;
   // Select the correct method, and save indices of the FeatureCollection
   switch (opts.methodName) {
     // Standard
     case 'srswr':
+      n = opts.sampleSize;
+      // Compute expected number of inclusions / inclusion probabilities
+      mu = new Array(N).fill(n / N) as number[];
+
+      // Get selected indexes
+      idx = sampling[opts.methodName](n, N, {
+        rand: opts.rand,
+      });
+
+      break;
     case 'srswor':
-      idx = sampling[opts.methodName](opts.sampleSize, layer.collection.size, {
+      n = Math.min(opts.sampleSize, N);
+
+      // Compute expected number of inclusions / inclusion probabilities
+      mu = new Array(N).fill(n / N) as number[];
+
+      // Get selected indexes
+      idx = sampling[opts.methodName](n, N, {
         rand: opts.rand,
       });
       break;
@@ -62,13 +80,23 @@ export function sampleFinite<
     case 'sampford':
     case 'pareto':
     case 'brewer':
-      idx = sampling[opts.methodName](inclprobsFromLayer(layer, opts), {
+      // Compute expected number of inclusions / inclusion probabilities
+      mu = inclprobsFromLayer(layer, opts).toArray();
+
+      // Get selected indexes
+      idx = sampling[opts.methodName](mu, {
         rand: opts.rand,
       });
       break;
 
     // Standard w/ drawprob
     case 'ppswr':
+      n = opts.sampleSize; // TODO: Check if methods do corrections to n
+
+      // Compute expected number of inclusions / inclusion probabilities
+      mu = drawprobsFromLayer(layer, opts).multiply(n, true).toArray();
+
+      // Get selected indexes
       idx = sampling[opts.methodName](
         drawprobsFromLayer(layer, opts),
         opts.sampleSize,
@@ -80,16 +108,20 @@ export function sampleFinite<
     case 'lpm1':
     case 'lpm2':
     case 'scps':
+      // Compute expected number of inclusions / inclusion probabilities
+      mu = inclprobsFromLayer(layer, opts).toArray();
+
+      // Get selected indexes
       if (
         !Array.isArray(opts.spreadOn) ||
         (opts.spreadOn.length === 0 && !opts.spreadGeo)
       ) {
-        idx = sampling['randomSystematic'](inclprobsFromLayer(layer, opts), {
+        idx = sampling['rpm'](mu, {
           rand: opts.rand,
         });
       } else {
         idx = sampling[opts.methodName](
-          inclprobsFromLayer(layer, opts),
+          mu,
           spreadMatrixFromLayer(layer, opts.spreadOn ?? [], opts.spreadGeo),
           {
             rand: opts.rand,
@@ -100,13 +132,17 @@ export function sampleFinite<
 
     // Balancing
     case 'cube':
+      // Compute expected number of inclusions / inclusion probabilities
+      mu = inclprobsFromLayer(layer, opts).toArray();
+
+      // Get selected indexes
       if (!Array.isArray(opts.balanceOn) || opts.balanceOn.length === 0) {
-        idx = sampling['randomSystematic'](inclprobsFromLayer(layer, opts), {
+        idx = sampling['rpm'](mu, {
           rand: opts.rand,
         });
       } else {
         idx = sampling[opts.methodName](
-          inclprobsFromLayer(layer, opts),
+          mu,
           balancingMatrixFromLayer(layer, opts.balanceOn ?? []),
           {rand: opts.rand},
         );
@@ -115,8 +151,12 @@ export function sampleFinite<
 
     // Balancing + spreading
     case 'lcube':
+      // Compute expected number of inclusions / inclusion probabilities
+      mu = inclprobsFromLayer(layer, opts).toArray();
+
+      // Get selected indexes
       idx = sampling[opts.methodName](
-        inclprobsFromLayer(layer, opts),
+        mu,
         balancingMatrixFromLayer(layer, opts.balanceOn ?? []),
         spreadMatrixFromLayer(layer, opts.spreadOn ?? [], opts.spreadGeo),
         {
@@ -131,30 +171,123 @@ export function sampleFinite<
   }
 
   if (Layer.isAreaLayer(layer)) {
-    const features = idx.map((i) => layer.collection.features[i]);
-    return new Layer(
-      new AreaCollection({features}, false),
+    // To store selected features
+    const features: AreaFeature[] = [];
+
+    // For each selected feature
+    idx.forEach((i) => {
+      // Copy selected feature
+      const frameFeature = layer.collection.features[i];
+      const feature = new AreaFeature(frameFeature, false);
+
+      // Fix _designWeight for selected feature
+      if (Object.hasOwn(feature.properties, '_designWeight')) {
+        feature.properties['_designWeight'] *= 1 / mu[i];
+      } else {
+        feature.properties['_designWeight'] = 1 / mu[i];
+      }
+
+      // Push new feature
+      features.push(feature);
+    });
+
+    // Make the new layer
+    const newLayer = new Layer(
+      new AreaCollection({features}, true),
       copy(layer.propertyRecord),
       true,
     ) as Layer<T>;
+
+    // Add _designWeight to propertyRecord if it does not exist
+    if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
+      newLayer.propertyRecord['_designWeight'] = {
+        type: 'numerical',
+        id: '_designWeight',
+        name: '_designWeight',
+      };
+    }
+
+    return newLayer;
   }
 
   if (Layer.isLineLayer(layer)) {
-    const features = idx.map((i) => layer.collection.features[i]);
-    return new Layer(
-      new LineCollection({features}, false),
+    // To store selected features
+    const features: LineFeature[] = [];
+
+    // For each selected feature
+    idx.forEach((i) => {
+      // Copy selected feature
+      const frameFeature = layer.collection.features[i];
+      const feature = new LineFeature(frameFeature, false);
+
+      // Fix _designWeight for selected feature
+      if (Object.hasOwn(feature.properties, '_designWeight')) {
+        feature.properties['_designWeight'] *= 1 / mu[i];
+      } else {
+        feature.properties['_designWeight'] = 1 / mu[i];
+      }
+
+      // Push new feature
+      features.push(feature);
+    });
+
+    // Make the new layer
+    const newLayer = new Layer(
+      new LineCollection({features}, true),
       copy(layer.propertyRecord),
       true,
     ) as Layer<T>;
+
+    // Add _designWeight to propertyRecord if it does not exist
+    if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
+      newLayer.propertyRecord['_designWeight'] = {
+        type: 'numerical',
+        id: '_designWeight',
+        name: '_designWeight',
+      };
+    }
+
+    return newLayer;
   }
 
   if (Layer.isPointLayer(layer)) {
-    const features = idx.map((i) => layer.collection.features[i]);
-    return new Layer(
-      new PointCollection({features}, false),
+    // To store selected features
+    const features: PointFeature[] = [];
+
+    // For each selected feature
+    idx.forEach((i) => {
+      // Copy selected feature
+      const frameFeature = layer.collection.features[i];
+      const feature = new PointFeature(frameFeature, false);
+
+      // Fix _designWeight for selected feature
+      if (Object.hasOwn(feature.properties, '_designWeight')) {
+        feature.properties['_designWeight'] *= 1 / mu[i];
+      } else {
+        feature.properties['_designWeight'] = 1 / mu[i];
+      }
+
+      // Push new feature
+      features.push(feature);
+    });
+
+    // Make the new layer
+    const newLayer = new Layer(
+      new PointCollection({features}, true),
       copy(layer.propertyRecord),
       true,
     ) as Layer<T>;
+
+    // Add _designWeight to propertyRecord if it does not exist
+    if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
+      newLayer.propertyRecord['_designWeight'] = {
+        type: 'numerical',
+        id: '_designWeight',
+        name: '_designWeight',
+      };
+    }
+
+    return newLayer;
   }
 
   throw new TypeError('expected layer');
@@ -228,11 +361,23 @@ export function sampleFiniteStratified<
       features = [...features, ...sampledFeatures];
     });
 
-    return new Layer(
+    // Make the new layer
+    const newLayer = new Layer(
       new AreaCollection({features}, true),
       copy(layer.propertyRecord),
       true,
     ) as Layer<T>;
+
+    // Add _designWeight to propertyRecord if it does not exist
+    if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
+      newLayer.propertyRecord['_designWeight'] = {
+        type: 'numerical',
+        id: '_designWeight',
+        name: '_designWeight',
+      };
+    }
+
+    return newLayer;
   }
 
   if (Layer.isLineLayer(layer)) {
@@ -257,11 +402,23 @@ export function sampleFiniteStratified<
       features = [...features, ...sampledFeatures];
     });
 
-    return new Layer(
+    // Make the new layer
+    const newLayer = new Layer(
       new LineCollection({features}, true),
       copy(layer.propertyRecord),
       true,
     ) as Layer<T>;
+
+    // Add _designWeight to propertyRecord if it does not exist
+    if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
+      newLayer.propertyRecord['_designWeight'] = {
+        type: 'numerical',
+        id: '_designWeight',
+        name: '_designWeight',
+      };
+    }
+
+    return newLayer;
   }
 
   if (Layer.isPointLayer(layer)) {
@@ -286,11 +443,23 @@ export function sampleFiniteStratified<
       features = [...features, ...sampledFeatures];
     });
 
-    return new Layer(
+    // Make the new layer
+    const newLayer = new Layer(
       new PointCollection({features}, true),
       copy(layer.propertyRecord),
       true,
     ) as Layer<T>;
+
+    // Add _designWeight to propertyRecord if it does not exist
+    if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
+      newLayer.propertyRecord['_designWeight'] = {
+        type: 'numerical',
+        id: '_designWeight',
+        name: '_designWeight',
+      };
+    }
+
+    return newLayer;
   }
 
   throw new TypeError('expected a layer');
