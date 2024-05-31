@@ -1,7 +1,10 @@
+import {type OptionalParam} from '@envisim/utils';
+
 import type * as GJ from '../../types/geojson.js';
-import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
+import {type GeomEachCallback} from '../base/index.js';
 import {LineGeometry, toLineGeometry} from '../gcs/index.js';
-import type {LineObject} from '../objects/index.js';
+import {type LineObject} from '../objects/index.js';
 import {AbstractFeature} from './AbstractFeature.js';
 
 export class LineFeature
@@ -32,6 +35,10 @@ export class LineFeature
     super({...obj, type: 'Feature'}, shallow);
 
     this.geometry = toLineGeometry(obj.geometry, shallow);
+  }
+
+  geometricPrimitive(): GeometricPrimitive.LINE {
+    return GeometricPrimitive.LINE;
   }
 
   /* FEATURE SPECIFIC */

@@ -1,7 +1,10 @@
+import {type OptionalParam} from '@envisim/utils';
+
 import type * as GJ from '../../types/geojson.js';
-import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
+import {type GeomEachCallback} from '../base/index.js';
 import {AreaGeometry, toAreaGeometry} from '../gcs/index.js';
-import type {AreaObject} from '../objects/index.js';
+import {type AreaObject} from '../objects/index.js';
 import {AbstractFeature} from './AbstractFeature.js';
 
 export class AreaFeature
@@ -32,6 +35,10 @@ export class AreaFeature
     super({...obj, type: 'Feature'}, shallow);
 
     this.geometry = toAreaGeometry(obj.geometry, shallow);
+  }
+
+  geometricPrimitive(): GeometricPrimitive.AREA {
+    return GeometricPrimitive.AREA;
   }
 
   /* FEATURE SPECIFIC */

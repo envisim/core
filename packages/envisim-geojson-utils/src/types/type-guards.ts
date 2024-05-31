@@ -23,7 +23,7 @@ export function isMultiCircle(
   checkPositiveRadius: boolean = false,
 ): obj is GJ.MultiCircle {
   return (
-    !Object.hasOwn(obj, 'radius') &&
+    Object.hasOwn(obj, 'radius') &&
     (!checkPositiveRadius || (obj as GJ.MultiCircle).radius > 0.0)
   );
 }
