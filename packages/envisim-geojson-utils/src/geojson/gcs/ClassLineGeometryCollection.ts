@@ -14,9 +14,11 @@ export class LineGeometryCollection
     return obj instanceof LineGeometryCollection;
   }
 
-  static assert(obj: unknown, msg?: string): obj is LineGeometryCollection {
-    if (obj instanceof LineGeometryCollection) return true;
-    throw new TypeError(msg ?? 'Expected LineGeometryCollection');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected LineGeometryCollection',
+  ): asserts obj is LineGeometryCollection {
+    if (!(obj instanceof LineGeometryCollection)) throw new TypeError(msg);
   }
 
   static create(

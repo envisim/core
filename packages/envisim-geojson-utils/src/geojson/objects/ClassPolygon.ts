@@ -16,9 +16,11 @@ export class Polygon
     return obj instanceof Polygon;
   }
 
-  static assert(obj: unknown, msg?: string): obj is Polygon {
-    if (obj instanceof Polygon) return true;
-    throw new TypeError(msg ?? 'Expected Polygon');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected Polygon',
+  ): asserts obj is Polygon {
+    if (!(obj instanceof Polygon)) throw new TypeError(msg);
   }
 
   static create(

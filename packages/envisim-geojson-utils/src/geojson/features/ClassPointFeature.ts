@@ -13,9 +13,11 @@ export class PointFeature
     return obj instanceof PointFeature;
   }
 
-  static assert(obj: unknown, msg?: string): obj is PointFeature {
-    if (obj instanceof PointFeature) return true;
-    throw new TypeError(msg ?? 'Expected PointFeature');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected PointFeature',
+  ): asserts obj is PointFeature {
+    if (!(obj instanceof PointFeature)) throw new TypeError(msg);
   }
 
   static create(

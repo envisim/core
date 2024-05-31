@@ -13,15 +13,16 @@ export class RowVector extends BaseVector {
   }
 
   /**
-   * @param msg message to pass, defaults to `"Expected RowVector"`
-   * @returns `true` if `obj` is RowVector
+   * @param msg message to pass
    * @throws TypeError if `obj` is not RowVector
    * @group Static methods
    * @group Property methods
    */
-  static override assert(obj: unknown, msg?: string): obj is RowVector {
-    if (obj instanceof RowVector) return true;
-    throw new TypeError(msg ?? 'Expected RowVector');
+  static override assert(
+    obj: unknown,
+    msg: string = 'Expected RowVector',
+  ): asserts obj is RowVector {
+    if (!(obj instanceof RowVector)) throw new TypeError(msg);
   }
 
   /**
