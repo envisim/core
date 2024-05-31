@@ -13,9 +13,11 @@ export class MultiPoint
     return obj instanceof MultiPoint;
   }
 
-  static assert(obj: unknown, msg?: string): obj is MultiPoint {
-    if (obj instanceof MultiPoint) return true;
-    throw new TypeError(msg ?? 'Expected MultiPoint');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected MultiPoint',
+  ): asserts obj is MultiPoint {
+    if (!(obj instanceof MultiPoint)) throw new TypeError(msg);
   }
 
   static create(

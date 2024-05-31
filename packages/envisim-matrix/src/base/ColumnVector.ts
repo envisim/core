@@ -15,15 +15,16 @@ export class ColumnVector extends BaseVector {
   }
 
   /**
-   * @param msg message to pass, defaults to `"Expected ColumnVector"`
-   * @returns `true` if `obj` is ColumnVector
+   * @param msg message to pass
    * @throws TypeError if `obj` is not ColumnVector
    * @group Static methods
    * @group Property methods
    */
-  static override assert(obj: unknown, msg?: string): obj is ColumnVector {
-    if (obj instanceof ColumnVector) return true;
-    throw new TypeError(msg ?? 'Expected ColumnVector');
+  static override assert(
+    obj: unknown,
+    msg: string = 'Expected ColumnVector',
+  ): asserts obj is ColumnVector {
+    if (!(obj instanceof ColumnVector)) throw new TypeError(msg);
   }
 
   /**

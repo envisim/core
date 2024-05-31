@@ -16,9 +16,11 @@ export class MultiCircle
     return obj instanceof MultiCircle;
   }
 
-  static assert(obj: unknown, msg?: string): obj is MultiCircle {
-    if (obj instanceof MultiCircle) return true;
-    throw new TypeError(msg ?? 'Expected MultiCircle');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected MultiCircle',
+  ): asserts obj is MultiCircle {
+    if (!(obj instanceof MultiCircle)) throw new TypeError(msg);
   }
 
   static create(

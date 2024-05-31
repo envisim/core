@@ -51,15 +51,16 @@ export abstract class BaseMatrix {
   }
 
   /**
-   * @param msg message to pass, defaults to `"Expected BaseMatrix"`
-   * @returns `true` if `obj` is BaseMatrix
+   * @param msg message to pass
    * @throws TypeError if `obj` is not BaseMatrix
    * @group Static methods
    * @group Property methods
    */
-  static assert(obj: unknown, msg?: string): obj is BaseMatrix {
-    if (obj instanceof BaseMatrix) return true;
-    throw new TypeError(msg ?? 'Expected BaseMatrix');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected BaseMatrix',
+  ): asserts obj is BaseMatrix {
+    if (!(obj instanceof BaseMatrix)) throw new TypeError(msg);
   }
 
   /** @internal */

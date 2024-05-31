@@ -14,9 +14,11 @@ export class PointCollection
     return obj instanceof PointCollection;
   }
 
-  static assert(obj: unknown, msg?: string): obj is PointCollection {
-    if (obj instanceof PointCollection) return true;
-    throw new TypeError(msg ?? 'Expected PointCollection');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected PointCollection',
+  ): asserts obj is PointCollection {
+    if (!(obj instanceof PointCollection)) throw new TypeError(msg);
   }
 
   static create(

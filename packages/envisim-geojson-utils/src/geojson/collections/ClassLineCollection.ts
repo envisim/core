@@ -14,9 +14,11 @@ export class LineCollection
     return obj instanceof LineCollection;
   }
 
-  static assert(obj: unknown, msg?: string): obj is LineCollection {
-    if (obj instanceof LineCollection) return true;
-    throw new TypeError(msg ?? 'Expected LineCollection');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected LineCollection',
+  ): asserts obj is LineCollection {
+    if (!(obj instanceof LineCollection)) throw new TypeError(msg);
   }
 
   static create(
