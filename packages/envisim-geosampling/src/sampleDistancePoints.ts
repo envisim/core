@@ -15,11 +15,10 @@ import {
   samplePointsOnAreas,
 } from './samplePointsOnAreas.js';
 
-export interface SampleDistancePointsOptions {
-  baseLayer: Layer<PointCollection>;
+export interface SampleDistancePointsOptions
+  extends SamplePointsOnAreasOptions {
   detectionFunction: DetectionFunction;
   cutoff: number;
-  samplePointsOnAreasOptions: SamplePointsOnAreasOptions;
 }
 
 /**
@@ -33,20 +32,21 @@ export interface SampleDistancePointsOptions {
  */
 export function sampleDistancePoints(
   layer: Layer<AreaCollection>,
+  baseLayer: Layer<PointCollection>,
   opts: SampleDistancePointsOptions,
 ): Layer<PointCollection> {
   // Check input first
-  let {baseLayer, detectionFunction, cutoff} = opts;
+  let {detectionFunction, cutoff} = opts;
 
-  const rand = opts.samplePointsOnAreasOptions.rand ?? new Random();
+  const rand = opts.rand ?? new Random();
   // Compute effective radius
   const effRadius = effectiveRadius(detectionFunction, cutoff);
 
   // Select sample of points (optional buffer via opts)
-  const buffer = opts.samplePointsOnAreasOptions.buffer ?? cutoff;
+  const buffer = opts.buffer ?? cutoff;
   //opts.samplePointsOnAreasOptions.buffer = buffer;
   const pointSample = samplePointsOnAreas(layer, {
-    ...opts.samplePointsOnAreasOptions,
+    ...opts,
     buffer,
   });
   // To store sampled features
