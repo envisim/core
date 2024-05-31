@@ -1,5 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
-import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
+import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {AbstractSingleTypeObject} from './AbstractSingleTypeObject.js';
 
 export abstract class AbstractAreaObject<

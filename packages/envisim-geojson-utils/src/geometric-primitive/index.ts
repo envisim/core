@@ -1,6 +1,8 @@
-export {GeometricPrimitive} from './GeometricPrimitive.js';
+export {GeometricPrimitive} from './EnumGeometricPrimitive.js';
+
 export {
-  GetGeometryPrimitive,
-  GetFeaturePrimitive,
-  GetCollectionPrimitive,
-} from './GetGeoJsonPrimitive.js';
+  getGeometryPrimitive,
+  isGeometryPrimitive,
+  getFeaturePrimitive,
+  getCollectionPrimitive,
+} from './get-geojson-primitive.js';

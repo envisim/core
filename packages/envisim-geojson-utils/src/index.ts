@@ -18,9 +18,10 @@ export {
 // GeometricPrimitive
 export {
   GeometricPrimitive,
-  GetGeometryPrimitive,
-  GetFeaturePrimitive,
-  GetCollectionPrimitive,
+  getGeometryPrimitive,
+  isGeometryPrimitive,
+  getFeaturePrimitive,
+  getCollectionPrimitive,
 } from './geometric-primitive/index.js';
 
 // Utils

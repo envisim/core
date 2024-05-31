@@ -1,7 +1,7 @@
 import * as GJ from '../types/geojson.js';
-import {GeometricPrimitive} from './GeometricPrimitive.js';
+import {GeometricPrimitive} from './EnumGeometricPrimitive.js';
 
-export function GetGeometryPrimitive(
+export function getGeometryPrimitive(
   obj: GJ.BaseGeometry,
   allowGC: boolean = true,
   exhaustive: boolean = false,
@@ -29,13 +29,13 @@ export function GetGeometryPrimitive(
       return GeometricPrimitive.NONE;
     }
 
-    const gp = GetGeometryPrimitive(obj.geometries[0], false, false);
+    const gp = getGeometryPrimitive(obj.geometries[0], false, false);
 
     if (
       obj.geometries.length === 1 ||
       exhaustive === false ||
       obj.geometries.every(
-        (geom) => gp === GetGeometryPrimitive(geom, false, false),
+        (geom) => gp === getGeometryPrimitive(geom, false, false),
       )
     ) {
       return gp;
@@ -45,42 +45,42 @@ export function GetGeometryPrimitive(
   return GeometricPrimitive.NONE;
 }
 
-export function AssertGeometryPrimitive(
+export function isGeometryPrimitive(
   obj: GJ.BaseGeometry,
   primitive: GeometricPrimitive.POINT,
   exhaustive?: boolean,
 ): obj is GJ.PointGeometry;
-export function AssertGeometryPrimitive(
+export function isGeometryPrimitive(
   obj: GJ.BaseGeometry,
   primitive: GeometricPrimitive.LINE,
   exhaustive?: boolean,
 ): obj is GJ.LineGeometry;
-export function AssertGeometryPrimitive(
+export function isGeometryPrimitive(
   obj: GJ.BaseGeometry,
   primitive: GeometricPrimitive.AREA,
   exhaustive?: boolean,
 ): obj is GJ.AreaGeometry;
-export function AssertGeometryPrimitive(
+export function isGeometryPrimitive(
   obj: GJ.BaseGeometry,
   primitive: GeometricPrimitive,
   exhaustive?: boolean,
 ): obj is never;
-export function AssertGeometryPrimitive(
+export function isGeometryPrimitive(
   obj: GJ.BaseGeometry,
   primitive: GeometricPrimitive,
   exhaustive: boolean = false,
 ): obj is GJ.BaseGeometry {
-  return GetGeometryPrimitive(obj, true, exhaustive) === primitive;
+  return getGeometryPrimitive(obj, true, exhaustive) === primitive;
 }
 
-export function GetFeaturePrimitive(
+export function getFeaturePrimitive(
   obj: GJ.BaseFeature,
   exhaustive: boolean = false,
 ): GeometricPrimitive {
-  return GetGeometryPrimitive(obj.geometry, true, exhaustive);
+  return getGeometryPrimitive(obj.geometry, true, exhaustive);
 }
 
-export function GetCollectionPrimitive(
+export function getCollectionPrimitive(
   obj: GJ.BaseFeatureCollection,
   exhaustive: boolean = false,
 ): GeometricPrimitive {
@@ -88,13 +88,13 @@ export function GetCollectionPrimitive(
     return GeometricPrimitive.NONE;
   }
 
-  const gp = GetGeometryPrimitive(obj.features[0].geometry, true, exhaustive);
+  const gp = getGeometryPrimitive(obj.features[0].geometry, true, exhaustive);
 
   if (
     obj.features.length === 1 ||
     exhaustive === false ||
     obj.features.every(
-      (feat) => gp === GetGeometryPrimitive(feat.geometry, true, true),
+      (feat) => gp === getGeometryPrimitive(feat.geometry, true, true),
     )
   ) {
     return gp;

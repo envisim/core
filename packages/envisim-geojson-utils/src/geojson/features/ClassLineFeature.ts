@@ -1,7 +1,7 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
+import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {LineGeometry, toLineGeometry} from '../gcs/index.js';
 import {type LineObject} from '../objects/index.js';

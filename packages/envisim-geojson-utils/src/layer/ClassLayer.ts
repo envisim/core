@@ -3,8 +3,10 @@ import {v4 as uuidv4} from 'uuid';
 import {copy} from '@envisim/utils';
 
 import * as GJ from '../types/geojson.js';
-import {GeometricPrimitive} from '../geometric-primitive/GeometricPrimitive.js';
-import {AssertGeometryPrimitive} from '../geometric-primitive/GetGeoJsonPrimitive.js';
+import {
+  GeometricPrimitive,
+  isGeometryPrimitive,
+} from '../geometric-primitive/index.js';
 import {
   AreaCollection,
   AreaFeature,
@@ -281,7 +283,7 @@ function flatMapGeometryCollections(
   primitive: GeometricPrimitive,
 ): GJ.SingleTypeObject | GJ.SingleTypeObject[] {
   if (geometry.type !== 'GeometryCollection') {
-    return AssertGeometryPrimitive(geometry, primitive, false) ? geometry : [];
+    return isGeometryPrimitive(geometry, primitive, false) ? geometry : [];
   }
 
   return geometry.geometries.flatMap(flatMapGeometryCollections);
@@ -329,7 +331,7 @@ function prepareFeatures(
         };
       }
     } else {
-      if (!AssertGeometryPrimitive(geometry, primitive)) {
+      if (!isGeometryPrimitive(geometry, primitive)) {
         return [];
       }
 
