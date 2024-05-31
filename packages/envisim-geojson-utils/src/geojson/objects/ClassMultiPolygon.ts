@@ -21,9 +21,11 @@ export class MultiPolygon
     return obj instanceof MultiPolygon;
   }
 
-  static assert(obj: unknown, msg?: string): obj is MultiPolygon {
-    if (obj instanceof MultiPolygon) return true;
-    throw new TypeError(msg ?? 'Expected MultiPolygon');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected MultiPolygon',
+  ): asserts obj is MultiPolygon {
+    if (!(obj instanceof MultiPolygon)) throw new TypeError(msg);
   }
 
   static create(

@@ -14,9 +14,11 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     return obj instanceof Circle;
   }
 
-  static assert(obj: unknown, msg?: string): obj is Circle {
-    if (obj instanceof Circle) return true;
-    throw new TypeError(msg ?? 'Expected Circle');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected Circle',
+  ): asserts obj is Circle {
+    if (!(obj instanceof Circle)) throw new TypeError(msg);
   }
 
   static create(

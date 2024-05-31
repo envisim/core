@@ -15,15 +15,16 @@ export abstract class BaseVector extends BaseMatrix {
   }
 
   /**
-   * @param msg message to pass, defaults to `"Expected BaseVector"`
-   * @returns `true` if `obj` is BaseVector
+   * @param msg message to pass
    * @throws TypeError if `obj` is not BaseVector
    * @group Static methods
    * @group Property methods
    */
-  static override assert(obj: unknown, msg?: string): obj is BaseVector {
-    if (obj instanceof BaseVector) return true;
-    throw new TypeError(msg ?? 'Expected BaseVector');
+  static override assert(
+    obj: unknown,
+    msg: string = 'Expected BaseVector',
+  ): asserts obj is BaseVector {
+    if (!(obj instanceof BaseVector)) throw new TypeError(msg);
   }
 
   constructor(arr: number[], nrow: number, ncol: number) {

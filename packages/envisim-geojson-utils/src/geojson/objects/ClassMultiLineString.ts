@@ -19,9 +19,11 @@ export class MultiLineString
     return obj instanceof MultiLineString;
   }
 
-  static assert(obj: unknown, msg?: string): obj is MultiLineString {
-    if (obj instanceof MultiLineString) return true;
-    throw new TypeError(msg ?? 'Expected MultiLineString');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected MultiLineString',
+  ): asserts obj is MultiLineString {
+    if (!(obj instanceof MultiLineString)) throw new TypeError(msg);
   }
 
   static create(

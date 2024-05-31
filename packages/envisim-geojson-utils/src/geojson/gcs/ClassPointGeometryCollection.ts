@@ -15,9 +15,11 @@ export class PointGeometryCollection
     return obj instanceof PointGeometryCollection;
   }
 
-  static assert(obj: unknown, msg?: string): obj is PointGeometryCollection {
-    if (obj instanceof PointGeometryCollection) return true;
-    throw new TypeError(msg ?? 'Expected PointGeometryCollection');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected PointGeometryCollection',
+  ): asserts obj is PointGeometryCollection {
+    if (!(obj instanceof PointGeometryCollection)) throw new TypeError(msg);
   }
 
   static create(

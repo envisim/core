@@ -10,9 +10,11 @@ export class Point extends AbstractPointObject<GJ.Point> implements GJ.Point {
     return obj instanceof Point;
   }
 
-  static assert(obj: unknown, msg?: string): obj is Point {
-    if (obj instanceof Point) return true;
-    throw new TypeError(msg ?? 'Expected Point');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected Point',
+  ): asserts obj is Point {
+    if (!(obj instanceof Point)) throw new TypeError(msg);
   }
 
   static create(

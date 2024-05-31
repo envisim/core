@@ -16,9 +16,11 @@ export class LineString
     return obj instanceof LineString;
   }
 
-  static assert(obj: unknown, msg?: string): obj is LineString {
-    if (obj instanceof LineString) return true;
-    throw new TypeError(msg ?? 'Expected LineString');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected LineString',
+  ): asserts obj is LineString {
+    if (!(obj instanceof LineString)) throw new TypeError(msg);
   }
 
   static create(

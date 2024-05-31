@@ -16,9 +16,11 @@ export class AreaCollection
     return obj instanceof AreaCollection;
   }
 
-  static assert(obj: unknown, msg?: string): obj is AreaCollection {
-    if (obj instanceof AreaCollection) return true;
-    throw new TypeError(msg ?? 'Expected AreaCollection');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected AreaCollection',
+  ): asserts obj is AreaCollection {
+    if (!(obj instanceof AreaCollection)) throw new TypeError(msg);
   }
 
   static create(

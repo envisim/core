@@ -15,9 +15,11 @@ export class AreaGeometryCollection
     return obj instanceof AreaGeometryCollection;
   }
 
-  static assert(obj: unknown, msg?: string): obj is AreaGeometryCollection {
-    if (obj instanceof AreaGeometryCollection) return true;
-    throw new TypeError(msg ?? 'Expected AreaGeometryCollection');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected AreaGeometryCollection',
+  ): asserts obj is AreaGeometryCollection {
+    if (!(obj instanceof AreaGeometryCollection)) throw new TypeError(msg);
   }
 
   static create(

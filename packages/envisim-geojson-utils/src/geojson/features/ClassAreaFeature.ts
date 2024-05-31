@@ -15,9 +15,11 @@ export class AreaFeature
     return obj instanceof AreaFeature;
   }
 
-  static assert(obj: unknown, msg?: string): obj is AreaFeature {
-    if (obj instanceof AreaFeature) return true;
-    throw new TypeError(msg ?? 'Expected AreaFeature');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected AreaFeature',
+  ): asserts obj is AreaFeature {
+    if (!(obj instanceof AreaFeature)) throw new TypeError(msg);
   }
 
   static create(

@@ -15,9 +15,11 @@ export class LineFeature
     return obj instanceof LineFeature;
   }
 
-  static assert(obj: unknown, msg?: string): obj is LineFeature {
-    if (obj instanceof LineFeature) return true;
-    throw new TypeError(msg ?? 'Expected LineFeature');
+  static assert(
+    obj: unknown,
+    msg: string = 'Expected LineFeature',
+  ): asserts obj is LineFeature {
+    if (!(obj instanceof LineFeature)) throw new TypeError(msg);
   }
 
   static create(
