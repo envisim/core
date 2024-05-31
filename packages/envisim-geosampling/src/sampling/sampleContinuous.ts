@@ -176,6 +176,7 @@ export function sampleLineToPointStratified(
    * Merge the returning features into a single array.
    */
   let features: PointFeature[] = [];
+  let sampleLayer = new Layer(new PointCollection({features}, true), {}, true);
 
   propertyObj.values.forEach((_v, i) => {
     const stratumFeatures = layer.collection.features.filter(
@@ -188,17 +189,17 @@ export function sampleLineToPointStratified(
       true,
     );
 
-    const sampledFeatures = sampleLineToPoint(
+    sampleLayer = sampleLineToPoint(
       stratumLayer,
       fixedOpts[i] as TsampleLineToPointOpts,
-    ).collection.features;
+    );
 
-    features = [...features, ...sampledFeatures];
+    features = [...features, ...sampleLayer.collection.features];
   });
-
+  // Recieves propertyRecord from the last sample layer
   return new Layer(
     new PointCollection({features}, true),
-    copy(layer.propertyRecord),
+    copy(sampleLayer.propertyRecord),
     true,
   );
 }
@@ -239,6 +240,7 @@ export function sampleAreaToPointStratified(
    * Merge the returning features into a single array.
    */
   let features: PointFeature[] = [];
+  let sampleLayer = new Layer(new PointCollection({features}, true), {}, true);
 
   propertyObj.values.forEach((_v, i) => {
     const stratumFeatures = layer.collection.features.filter(
@@ -251,17 +253,18 @@ export function sampleAreaToPointStratified(
       true,
     );
 
-    const sampledFeatures = sampleAreaToPoint(
+    sampleLayer = sampleAreaToPoint(
       stratumLayer,
       fixedOpts[i] as TsampleAreaToPointOpts,
-    ).collection.features;
+    );
 
-    features = [...features, ...sampledFeatures];
+    features = [...features, ...sampleLayer.collection.features];
   });
 
+  // Recieves propertyRecord from the last sample layer
   return new Layer(
     new PointCollection({features}, true),
-    copy(layer.propertyRecord),
+    copy(sampleLayer.propertyRecord),
     true,
   );
 }
@@ -305,6 +308,7 @@ export function sampleAreaToAreaStratified(
    * Merge the returning features into a single array.
    */
   let features: AreaFeature[] = [];
+  let sampleLayer = new Layer(new AreaCollection({features}, true), {}, true);
 
   propertyObj.values.forEach((_v, i) => {
     const stratumFeatures = layer.collection.features.filter(
@@ -317,17 +321,18 @@ export function sampleAreaToAreaStratified(
       true,
     );
 
-    const sampledFeatures = sampleAreaToArea(
+    sampleLayer = sampleAreaToArea(
       stratumLayer,
       fixedOpts[i] as TsampleAreaToAreaOpts,
-    ).collection.features;
+    );
 
-    features = [...features, ...sampledFeatures];
+    features = [...features, ...sampleLayer.collection.features];
   });
 
+  // Recieves propertyRecord from the last sample layer
   return new Layer(
     new AreaCollection({features}, true),
-    copy(layer.propertyRecord),
+    copy(sampleLayer.propertyRecord),
     true,
   );
 }
@@ -371,6 +376,7 @@ export function sampleAreaToLineStratified(
    * Merge the returning features into a single array.
    */
   let features: LineFeature[] = [];
+  let sampleLayer = new Layer(new LineCollection({features}, true), {}, true);
 
   propertyObj.values.forEach((_v, i) => {
     const stratumFeatures = layer.collection.features.filter(
@@ -383,17 +389,18 @@ export function sampleAreaToLineStratified(
       true,
     );
 
-    const sampledFeatures = sampleAreaToLine(
+    sampleLayer = sampleAreaToLine(
       stratumLayer,
       fixedOpts[i] as TsampleAreaToLineOpts,
-    ).collection.features;
+    );
 
-    features = [...features, ...sampledFeatures];
+    features = [...features, ...sampleLayer.collection.features];
   });
 
+  // Recieves propertyRecord from the last sample layer
   return new Layer(
     new LineCollection({features}, true),
-    copy(layer.propertyRecord),
+    copy(sampleLayer.propertyRecord),
     true,
   );
 }
