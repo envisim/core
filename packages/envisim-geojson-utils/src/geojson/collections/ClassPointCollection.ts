@@ -1,6 +1,7 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {PointFeature} from '../features/index.js';
@@ -38,6 +39,10 @@ export class PointCollection
     });
   }
 
+  geometricPrimitive(): GeometricPrimitive.POINT {
+    return GeometricPrimitive.POINT;
+  }
+
   centroid(iterations: number = 2): GJ.Position {
     const centroids = this.features.map((feature: PointFeature) => {
       return {
@@ -56,10 +61,17 @@ export class PointCollection
     });
   }
 
-  addFeature(feature: PointFeature, shallow: boolean = true): void {
-    this.features.push(
-      shallow === false ? new PointFeature(feature, false) : feature,
-    );
+  addFeature(
+    feature: OptionalParam<GJ.PointFeature, 'type'>,
+    shallow: boolean = true,
+  ): void {
+    if (PointFeature.isFeature(feature)) {
+      this.features.push(
+        shallow === false ? new PointFeature(feature, false) : feature,
+      );
+    } else {
+      this.features.push(new PointFeature(feature, shallow));
+    }
   }
 
   /* POINT SPECIFIC */

@@ -1,4 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
+import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
 import {AbstractSingleTypeObject} from './AbstractSingleTypeObject.js';
 
 export abstract class AbstractPointObject<
@@ -6,6 +7,10 @@ export abstract class AbstractPointObject<
 > extends AbstractSingleTypeObject<T> {
   constructor(obj: GJ.PointObject, shallow: boolean = true) {
     super(obj, shallow);
+  }
+
+  geometricPrimitive(): GeometricPrimitive.POINT {
+    return GeometricPrimitive.POINT;
   }
 
   abstract count(): number;

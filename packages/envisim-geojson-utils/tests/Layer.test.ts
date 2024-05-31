@@ -1,6 +1,11 @@
 import {describe, expect, test} from 'vitest';
 
-import {AreaCollection, GeoJSON as GJ, Layer} from '../src/index.js';
+import {
+  AreaCollection,
+  GeoJSON as GJ,
+  GeometricPrimitive,
+  Layer,
+} from '../src/index.js';
 
 describe('Layer', () => {
   const ring: GJ.Position[] = [
@@ -41,13 +46,10 @@ describe('Layer', () => {
     features: [feature1, feature2],
   };
 
-  const layer = Layer.createAreaLayer(collection);
-
-  /* console.log(JSON.stringify(layer.toGeoJSON(), null, 2));
-  console.log(layer.propertyRecord);*/
+  const layer = Layer.createLayer(collection, GeometricPrimitive.AREA);
 
   test('Layer', () => {
     expect(AreaCollection.isCollection(layer.collection)).toBe(true);
-    expect(Layer.isAreaLayer(layer)).toBe(true);
+    expect(Layer.isLayer(layer, GeometricPrimitive.AREA)).toBe(true);
   });
 });

@@ -1,6 +1,7 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {LineFeature} from '../features/index.js';
@@ -38,6 +39,10 @@ export class LineCollection
     });
   }
 
+  geometricPrimitive(): GeometricPrimitive.LINE {
+    return GeometricPrimitive.LINE;
+  }
+
   centroid(iterations: number = 2): GJ.Position {
     const centroids = this.features.map((feature: LineFeature) => {
       return {
@@ -56,10 +61,17 @@ export class LineCollection
     });
   }
 
-  addFeature(feature: LineFeature, shallow: boolean = true): void {
-    this.features.push(
-      shallow === false ? new LineFeature(feature, false) : feature,
-    );
+  addFeature(
+    feature: OptionalParam<GJ.LineFeature, 'type'>,
+    shallow: boolean = true,
+  ): void {
+    if (LineFeature.isFeature(feature)) {
+      this.features.push(
+        shallow === false ? new LineFeature(feature, false) : feature,
+      );
+    } else {
+      this.features.push(new LineFeature(feature, shallow));
+    }
   }
 
   /* LINE SPECIFIC */

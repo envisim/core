@@ -1,4 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
+import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
 
 export abstract class GeoJsonObject<T extends string>
   implements GJ.GeoJsonObject<T>
@@ -16,6 +17,7 @@ export abstract class GeoJsonObject<T extends string>
     }
   }
 
+  abstract geometricPrimitive(): GeometricPrimitive;
   abstract get size(): number;
 
   abstract setBBox(force?: boolean): GJ.BBox;

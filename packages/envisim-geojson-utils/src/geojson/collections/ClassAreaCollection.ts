@@ -1,6 +1,7 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {AreaFeature} from '../features/index.js';
@@ -38,6 +39,10 @@ export class AreaCollection
     });
   }
 
+  geometricPrimitive(): GeometricPrimitive.AREA {
+    return GeometricPrimitive.AREA;
+  }
+
   /* GEOJSON COMMON */
   override distanceToPosition(coords: GJ.Position): number {
     return this.features.reduce((prev, curr) => {
@@ -67,10 +72,17 @@ export class AreaCollection
     });
   }
 
-  addFeature(feature: AreaFeature, shallow: boolean = true): void {
-    this.features.push(
-      shallow === false ? new AreaFeature(feature, false) : feature,
-    );
+  addFeature(
+    feature: OptionalParam<GJ.AreaFeature, 'type'>,
+    shallow: boolean = true,
+  ): void {
+    if (AreaFeature.isFeature(feature)) {
+      this.features.push(
+        shallow === false ? new AreaFeature(feature, false) : feature,
+      );
+    } else {
+      this.features.push(new AreaFeature(feature, shallow));
+    }
   }
 
   /* AREA SPECIFIC */
