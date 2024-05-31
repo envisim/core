@@ -55,7 +55,7 @@ export function maternClusterProcess(
   radiusOfCluster: number,
   opts: {rand?: Random} = {},
 ): Layer<PointCollection> {
-  Layer.assertLayer(layer, GeometricPrimitive.AREA);
+  Layer.assert(layer, GeometricPrimitive.AREA);
 
   const rand = opts.rand ?? new Random();
   const box = bbox4(layer.collection.getBBox());

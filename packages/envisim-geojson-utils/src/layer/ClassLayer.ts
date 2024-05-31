@@ -56,32 +56,28 @@ export class Layer<
     }
   }
 
-  static assertLayer(
+  static assert(
     obj: unknown,
     type: GeometricPrimitive.POINT,
     msg?: string,
   ): asserts obj is Layer<PointCollection>;
-  static assertLayer(
+  static assert(
     obj: unknown,
     type: GeometricPrimitive.LINE,
     msg?: string,
   ): asserts obj is Layer<LineCollection>;
-  static assertLayer(
+  static assert(
     obj: unknown,
     type: GeometricPrimitive.AREA,
     msg?: string,
   ): asserts obj is Layer<AreaCollection>;
-  static assertLayer<
+  static assert<
     T extends
       | Layer<PointCollection>
       | Layer<LineCollection>
       | Layer<AreaCollection>,
   >(obj: unknown, type: GeometricPrimitive, msg?: string): asserts obj is T;
-  static assertLayer(
-    obj: unknown,
-    type: GeometricPrimitive,
-    msg?: string,
-  ): boolean {
+  static assert(obj: unknown, type: GeometricPrimitive, msg?: string): boolean {
     if (Layer.isLayer(obj, type)) {
       return true;
     }
