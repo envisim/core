@@ -1,7 +1,7 @@
-import {TArrayLike, arrayLikeToArray, sequence} from '@envisim/matrix';
+import {arrayLikeToArray, sequence} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
 
-import {IOptions, PartialPick, optionsDefaultRand} from './types.js';
+import {type PipsOptions, baseOptions} from './base-options/index.js';
 
 /**
  * Selects A systematic (pips) sample.
@@ -36,34 +36,32 @@ const _systematic = (
 /**
  * Selects a systematic (pips) sample.
  *
- * @param prob - inclusion probabilities of size N.
  * @param options
  * @returns sample indices.
  */
-export const systematic = (
-  prob: TArrayLike,
-  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
-): number[] => {
-  const p = arrayLikeToArray(prob, true);
+export function systematic({
+  probabilities,
+  rand = baseOptions.rand,
+}: PipsOptions): number[] {
+  const p = arrayLikeToArray(probabilities, true);
   return _systematic(p, (i) => i, rand);
-};
+}
 
 /**
  * Selects a systematic (pips) sample with initial randomization of order of the units.
  *
- * @param prob - inclusion probabilities of size N.
  * @param options
  * @returns sample indices.
  */
-export const randomSystematic = (
-  prob: TArrayLike,
-  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
-): number[] => {
-  const p = arrayLikeToArray(prob, true);
+export function randomSystematic({
+  probabilities,
+  rand = baseOptions.rand,
+}: PipsOptions): number[] {
+  const p = arrayLikeToArray(probabilities, true);
   const N = p.length;
   const index = sequence(0, N - 1, 1)
     .sortRandom(true, rand)
     .toArray();
 
   return _systematic(p, (i) => index[i], rand).sort((a, b) => a - b);
-};
+}

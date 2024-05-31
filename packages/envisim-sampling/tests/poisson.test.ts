@@ -1,6 +1,6 @@
 import {describe, expect, test} from 'vitest';
 
-import {conditionalPoisson, poisson} from '../src/index';
+import {conditionalPoissonSampling, poissonSampling} from '../src/index';
 import {RandomMock} from './_Random.testf';
 import './_equalArrays.testf';
 
@@ -10,16 +10,24 @@ describe('poisson', () => {
   const rand = new RandomMock(rv_arr);
 
   test('poisson', () => {
-    expect(poisson(pi_arr, {rand})).arrayToEqual([1, 2, 4]);
-    expect(poisson(pi_arr, {rand})).not.arrayToEqual([1, 2]);
+    expect(poissonSampling({probabilities: pi_arr, rand})).arrayToEqual([
+      1, 2, 4,
+    ]);
+    expect(poissonSampling({probabilities: pi_arr, rand})).not.arrayToEqual([
+      1, 2,
+    ]);
   });
 
   const pi_arr2 = [0.4, 0.99];
 
   test('conditional poisson', () => {
     rand.resetCounter();
-    expect(conditionalPoisson(pi_arr2, 2, {rand})).arrayToEqual([0, 1]);
+    expect(
+      conditionalPoissonSampling({probabilities: pi_arr2, n: 2, rand}),
+    ).arrayToEqual([0, 1]);
     rand.resetCounter();
-    expect(conditionalPoisson(pi_arr2, 1, {rand})).arrayToEqual([1]);
+    expect(
+      conditionalPoissonSampling({probabilities: pi_arr2, n: 1, rand}),
+    ).arrayToEqual([1]);
   });
 });

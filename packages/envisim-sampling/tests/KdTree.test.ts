@@ -1,15 +1,14 @@
 import {describe, expect, test} from 'vitest';
 
-import {KDStore} from '../src/util-classes/KDStore';
-import {KDTree} from '../src/util-classes/KDTree';
+import {KdStore, KdTree} from '../src/util-classes/index.js';
 import {createIndexedTable, data} from './_data.testf';
 
 describe('KDTree', () => {
-  let store = new KDStore(10, 1);
-  let kd: KDTree;
+  let store = new KdStore(10, 1);
+  let kd: KdTree;
   let res: number[];
 
-  kd = new KDTree(data, 2);
+  kd = new KdTree(data, 2);
 
   res = [1, 0, 8, 5, 9, 3, 5, 2, 3, 4];
   test.each(createIndexedTable(res))('findNeighbour %i', (i, e) => {

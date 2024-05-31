@@ -1,20 +1,23 @@
-import {ColumnVector, TArrayLike, arrayLikeToArray} from '@envisim/matrix';
+import {ColumnVector, arrayLikeToArray} from '@envisim/matrix';
 
-import {IOptions, PartialPick, optionsDefaultRand} from './types.js';
+import {
+  type FixedSizedOptions,
+  type PipsOptions,
+  baseOptions,
+} from './base-options/index.js';
 
 /**
  * Generation of a random number between 0 and length of prob according to prob
  * a discrete random variable on 0,2,...,length-1.
  *
- * @param prob - inclusion probabilities of size N.
  * @param options
  * @returns the selected index.
  */
-export const discrete = (
-  prob: TArrayLike,
-  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
-): number => {
-  const p = arrayLikeToArray(prob, true);
+export function discrete({
+  probabilities,
+  rand = baseOptions.rand,
+}: PipsOptions): number {
+  const p = arrayLikeToArray(probabilities, true);
   const N = p.length;
   const rn = rand.float();
   let psum = 0.0;
@@ -25,23 +28,21 @@ export const discrete = (
   }
 
   return N - 1;
-};
+}
 
 /**
  * Generation of an array of random numbers between 0 and length of prob,
  * according to prob.
  *
- * @param prob - inclusion probabilities of size N.
- * @param n - the number of elements in the returning array
  * @param options
  * @returns sample indices.
  */
-export const discreteArr = (
-  prob: TArrayLike,
-  n: number,
-  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
-): number[] => {
-  const p = arrayLikeToArray(prob, true);
+export function discreteArr({
+  n,
+  probabilities,
+  rand = baseOptions.rand,
+}: FixedSizedOptions & PipsOptions): number[] {
+  const p = arrayLikeToArray(probabilities, true);
   const N = p.length;
   const s = new Array<number>(n).fill(N - 1);
 
@@ -60,24 +61,22 @@ export const discreteArr = (
   }
 
   return s;
-};
+}
 
 /**
  * Selects a pps sample with replacement.
  *
- * @param prob - inclusion probabilities of size N.
- * @param n - sample size.
  * @param options
  * @returns sample indices.
  */
-export const ppswr = (
-  prob: TArrayLike,
-  n: number,
-  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
-): number[] => {
-  const p = new ColumnVector(prob, false);
+export function ppswr({
+  n,
+  probabilities,
+  rand = baseOptions.rand,
+}: FixedSizedOptions & PipsOptions): number[] {
+  const p = new ColumnVector(probabilities, false);
   const psum = p.sum();
   p.divide(psum, true);
 
-  return discreteArr(p, n, {rand}).sort((a, b) => a - b);
-};
+  return discreteArr({probabilities: p, n, rand}).sort((a, b) => a - b);
+}

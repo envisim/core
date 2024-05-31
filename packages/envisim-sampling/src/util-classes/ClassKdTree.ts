@@ -1,4 +1,4 @@
-import {Matrix, RowVector} from '@envisim/matrix';
+import {type Matrix, type RowVector} from '@envisim/matrix';
 import {swap} from '@envisim/utils';
 
 import {KdNode} from './ClassKdNode.js';

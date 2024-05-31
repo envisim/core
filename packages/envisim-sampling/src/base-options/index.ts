@@ -32,7 +32,21 @@ export interface PipsOptions extends BaseOptions {
   probabilities: TArrayLike;
 }
 
+export interface FixedSizedOptions extends BaseOptions {
+  /**
+   * Sample size
+   */
+  n: number;
+}
+
 export interface AuxiliaryOptions extends PipsOptions {
+  /**
+   * Matrix of auxiliary variables
+   */
+  auxiliaries: Matrix;
+}
+
+export interface AuxiliaryFixedSizedOptions extends FixedSizedOptions {
   /**
    * Matrix of auxiliary variables
    */

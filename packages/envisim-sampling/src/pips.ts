@@ -1,32 +1,26 @@
-import {ColumnVector, TArrayLike, arrayLikeToArray} from '@envisim/matrix';
+import {ColumnVector, arrayLikeToArray} from '@envisim/matrix';
 
-import {conditionalPoisson} from './poisson.js';
+import {type PipsOptions, baseOptions} from './base-options/index.js';
+import {conditionalPoissonSampling} from './poisson.js';
 import {discrete} from './pps.js';
-import {
-  IOptions,
-  PartialPick,
-  optionsDefaultEps,
-  optionsDefaultRand,
-} from './types.js';
 
 /**
  * Selects a Sampford (pips) sample using the rejective method.
  *
- * @param prob - inclusion probabilities of size N.
  * @param options
  * @returns sample indices.
  */
-export const sampford = (
-  prob: TArrayLike,
-  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
-): number[] => {
-  const p = new ColumnVector(prob, false);
+export function sampford({
+  probabilities,
+  rand = baseOptions.rand,
+}: PipsOptions): number[] {
+  const p = new ColumnVector(probabilities, false);
   const psum = p.sum();
   const q = p.divide(psum);
   const n = Math.round(psum);
 
   if (n <= 1) {
-    return [discrete(q, {rand})];
+    return [discrete({probabilities: q, rand})];
   }
 
   let found = false;
@@ -35,9 +29,9 @@ export const sampford = (
   let s: number[] = [];
 
   while (found === false) {
-    nr1 = discrete(q, {rand});
+    nr1 = discrete({probabilities: q, rand});
 
-    s = conditionalPoisson(prob, n - 1, {rand});
+    s = conditionalPoissonSampling({n: n - 1, probabilities, rand});
     found2 = false;
 
     for (let i = 0; i < s.length; i++) {
@@ -53,23 +47,20 @@ export const sampford = (
   }
 
   return s.sort((a, b) => a - b);
-};
+}
 
 /**
  * Selects a Pareto (pips) sample without replacement.
  *
- * @param prob - inclusion probabilities of size N.
  * @param options
  * @returns sample indices.
  */
-export const pareto = (
-  prob: TArrayLike,
-  {
-    rand = optionsDefaultRand,
-    eps = optionsDefaultEps,
-  }: PartialPick<IOptions, 'rand' | 'eps'> = {},
-): number[] => {
-  const p = arrayLikeToArray(prob, true);
+export function pareto({
+  probabilities,
+  rand = baseOptions.rand,
+  eps = baseOptions.eps,
+}: PipsOptions): number[] {
+  const p = arrayLikeToArray(probabilities, true);
   const psum = p.reduce((t: number, c: number) => t + c);
   const n = Math.round(psum);
 
@@ -84,23 +75,20 @@ export const pareto = (
     .slice(0, n)
     .map((e: [number, number]) => e[0])
     .sort((a: number, b: number) => a - b);
-};
+}
 
 /**
  * Selects a (pips) sample without replacement using Brewers method.
  *
- * @param prob - inclusion probabilities of size N.
  * @param options
  * @returns sample indices.
  */
-export const brewer = (
-  prob: TArrayLike,
-  {
-    rand = optionsDefaultRand,
-    eps = optionsDefaultEps,
-  }: PartialPick<IOptions, 'rand' | 'eps'> = {},
-): number[] => {
-  const pr = arrayLikeToArray(prob, false);
+export function brewer({
+  probabilities,
+  rand = baseOptions.rand,
+  eps = baseOptions.eps,
+}: PipsOptions): number[] {
+  const pr = arrayLikeToArray(probabilities, false);
   const N = pr.length;
 
   const s = [];
@@ -134,11 +122,11 @@ export const brewer = (
       pk[j] /= psum;
     });
 
-    u = discrete(pk, {rand});
+    u = discrete({probabilities: pk, rand});
     s.push(u);
     I[u - 1] = 1;
     del1 += pr[u - 1];
   }
 
   return s.sort((a, b) => a - b);
-};
+}

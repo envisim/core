@@ -1,4 +1,4 @@
-import {Matrix} from '@envisim/matrix';
+import {type Matrix} from '@envisim/matrix';
 import {Random} from '@envisim/random';
 import {swap} from '@envisim/utils';
 

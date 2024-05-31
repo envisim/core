@@ -1,50 +1,37 @@
-import {Matrix, TArrayLike, arrayLikeToArray} from '@envisim/matrix';
+import {arrayLikeToArray} from '@envisim/matrix';
 
-import {Pivotal, PivotalMethod} from './sampling-classes/Pivotal.js';
 import {
-  IOptions,
-  PartialPick,
-  optionsDefaultEps,
-  optionsDefaultRand,
-  optionsDefaultTreeBucketSize,
-} from './types.js';
+  type AuxiliaryFixedSizedOptions,
+  type AuxiliaryOptions,
+  type PipsOptions,
+  baseOptions,
+} from './base-options/index.js';
+import {Pivotal, PivotalMethod} from './sampling-classes/index.js';
+import {arrayLikeToArrayAndCheckSize} from './utils.js';
 
 /**
  * Selects a (pips) sample using the local pivotal method 1.
  *
- * @param prob - inclusion probabilities of size N,
- *   or a number `n` indicating equal inclusion probabilities `n / N`.
- * @param xm - matrix of auxilliary variables of size N*p.
  * @param options
  * @returns sample indices.
  */
-export function lpm1(
-  prob: TArrayLike | number,
-  xm: Matrix,
-  {
-    rand = optionsDefaultRand,
-    eps = optionsDefaultEps,
-    treeBucketSize = optionsDefaultTreeBucketSize,
-  }: IOptions = {},
-): number[] {
-  Matrix.assert(xm);
-
-  const N = xm.nrow;
-
-  let p;
-
-  if (typeof prob === 'number') {
-    p = prob as number;
-  } else {
-    p = arrayLikeToArray(prob, true) as number[];
-    if (p.length !== N)
-      throw new RangeError('Rows in xm must match length of prob');
-  }
+export function lpm1({
+  auxiliaries,
+  rand = baseOptions.rand,
+  eps = baseOptions.eps,
+  treeBucketSize = baseOptions.treeBucketSize,
+  ...options
+}: AuxiliaryOptions | AuxiliaryFixedSizedOptions): number[] {
+  const N = auxiliaries.nrow;
+  const p =
+    'n' in options
+      ? options.n
+      : arrayLikeToArrayAndCheckSize(options.probabilities, N);
 
   const lpm = new Pivotal(
     PivotalMethod.LPM1,
     p,
-    xm,
+    auxiliaries,
     N,
     treeBucketSize,
     eps,
@@ -58,39 +45,26 @@ export function lpm1(
 /**
  * Selects a (pips) sample using the local pivotal method 2.
  *
- * @param prob - inclusion probabilities of size N,
- *   or a number `n` indicating equal inclusion probabilities `n / N`.
- * @param xm - matrix of auxilliary variables of size N *p.
  * @param options
  * @returns sample indices.
  */
-export function lpm2(
-  prob: TArrayLike | number,
-  xm: Matrix,
-  {
-    rand = optionsDefaultRand,
-    eps = optionsDefaultEps,
-    treeBucketSize = optionsDefaultTreeBucketSize,
-  }: IOptions = {},
-): number[] {
-  Matrix.assert(xm);
-
-  const N = xm.nrow;
-
-  let p;
-
-  if (typeof prob === 'number') {
-    p = prob as number;
-  } else {
-    p = arrayLikeToArray(prob, true) as number[];
-    if (p.length !== N)
-      throw new RangeError('Rows in xm must match length of prob');
-  }
+export function lpm2({
+  auxiliaries,
+  rand = baseOptions.rand,
+  eps = baseOptions.eps,
+  treeBucketSize = baseOptions.treeBucketSize,
+  ...options
+}: AuxiliaryOptions | AuxiliaryFixedSizedOptions): number[] {
+  const N = auxiliaries.nrow;
+  const p =
+    'n' in options
+      ? options.n
+      : arrayLikeToArrayAndCheckSize(options.probabilities, N);
 
   const lpm = new Pivotal(
     PivotalMethod.LPM2,
     p,
-    xm,
+    auxiliaries,
     N,
     treeBucketSize,
     eps,
@@ -110,33 +84,23 @@ export function lpm2(
  * @param options
  * @returns sample indices.
  */
-export function lpm1s(
-  prob: TArrayLike | number,
-  xm: Matrix,
-  {
-    rand = optionsDefaultRand,
-    eps = optionsDefaultEps,
-    treeBucketSize = optionsDefaultTreeBucketSize,
-  }: IOptions = {},
-): number[] {
-  Matrix.assert(xm);
-
-  const N = xm.nrow;
-
-  let p;
-
-  if (typeof prob === 'number') {
-    p = prob as number;
-  } else {
-    p = arrayLikeToArray(prob, true) as number[];
-    if (p.length !== N)
-      throw new RangeError('Rows in xm must match length of prob');
-  }
+export function lpm1s({
+  auxiliaries,
+  rand = baseOptions.rand,
+  eps = baseOptions.eps,
+  treeBucketSize = baseOptions.treeBucketSize,
+  ...options
+}: AuxiliaryOptions | AuxiliaryFixedSizedOptions): number[] {
+  const N = auxiliaries.nrow;
+  const p =
+    'n' in options
+      ? options.n
+      : arrayLikeToArrayAndCheckSize(options.probabilities, N);
 
   const lpm = new Pivotal(
     PivotalMethod.LPM1SEARCH,
     p,
-    xm,
+    auxiliaries,
     N,
     treeBucketSize,
     eps,
@@ -150,18 +114,15 @@ export function lpm1s(
 /**
  * Selects a (pips) sample using the random pivotal method.
  *
- * @param prob - inclusion probabilities of size N.
  * @param options
  * @returns sample indices.
  */
-export function rpm(
-  prob: TArrayLike,
-  {
-    rand = optionsDefaultRand,
-    eps = optionsDefaultEps,
-  }: PartialPick<IOptions, 'rand' | 'eps'> = {},
-): number[] {
-  const p = arrayLikeToArray(prob, true);
+export function rpm({
+  probabilities,
+  rand = baseOptions.rand,
+  eps = baseOptions.eps,
+}: PipsOptions): number[] {
+  const p = arrayLikeToArray(probabilities, true);
   const N = p.length;
 
   const lpm = new Pivotal(PivotalMethod.RPM, p, undefined, N, N, eps, rand);
@@ -173,18 +134,15 @@ export function rpm(
 /**
  * Selects a (pips) sample using the sequential pivotal method.
  *
- * @param prob - inclusion probabilities of size N.
  * @param options
  * @returns sample indices.
  */
-export function spm(
-  prob: TArrayLike,
-  {
-    rand = optionsDefaultRand,
-    eps = optionsDefaultEps,
-  }: PartialPick<IOptions, 'rand' | 'eps'> = {},
-): number[] {
-  const p = arrayLikeToArray(prob, true);
+export function spm({
+  probabilities,
+  rand = baseOptions.rand,
+  eps = baseOptions.eps,
+}: PipsOptions): number[] {
+  const p = arrayLikeToArray(probabilities, true);
   const N = p.length;
 
   const lpm = new Pivotal(PivotalMethod.SPM, p, undefined, N, N, eps, rand);
