@@ -9,7 +9,6 @@ import {
   PointFeature,
 } from '@envisim/geojson-utils';
 import {type Random} from '@envisim/random';
-import {copy} from '@envisim/utils';
 
 import {
   type TsampleTractsOnAreasOpts,
@@ -199,7 +198,7 @@ export function sampleLineToPointStratified(
   // Recieves propertyRecord from the last sample layer
   return new Layer(
     new PointCollection({features}, true),
-    copy(sampleLayer.propertyRecord),
+    sampleLayer.propertyRecord,
     true,
   );
 }
@@ -264,7 +263,7 @@ export function sampleAreaToPointStratified(
   // Recieves propertyRecord from the last sample layer
   return new Layer(
     new PointCollection({features}, true),
-    copy(sampleLayer.propertyRecord),
+    sampleLayer.propertyRecord,
     true,
   );
 }
@@ -332,7 +331,7 @@ export function sampleAreaToAreaStratified(
   // Recieves propertyRecord from the last sample layer
   return new Layer(
     new AreaCollection({features}, true),
-    copy(sampleLayer.propertyRecord),
+    sampleLayer.propertyRecord,
     true,
   );
 }
@@ -400,7 +399,7 @@ export function sampleAreaToLineStratified(
   // Recieves propertyRecord from the last sample layer
   return new Layer(
     new LineCollection({features}, true),
-    copy(sampleLayer.propertyRecord),
+    sampleLayer.propertyRecord,
     true,
   );
 }
