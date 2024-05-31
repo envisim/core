@@ -1,4 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
+import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import type {OptionalParam} from '../base/index.js';
 import type {AreaObject} from '../objects/index.js';
@@ -34,6 +35,10 @@ export class AreaGeometryCollection
     this.geometries = obj.geometries.map((g: GJ.AreaObject) =>
       toAreaGeometry(g, shallow, false),
     );
+  }
+
+  geometricPrimitive(): GeometricPrimitive.AREA {
+    return GeometricPrimitive.AREA;
   }
 
   /* GEOJSON COMMON */

@@ -15,6 +15,14 @@ export {
   PropertySpecialKeys,
 } from './types/property.js';
 
+// GeometricPrimitive
+export {
+  GeometricPrimitive,
+  GetGeometryPrimitive,
+  GetFeaturePrimitive,
+  GetCollectionPrimitive,
+} from './geometric-primitive/index.js';
+
 // Utils
 export {areaOfPolygonLonLat} from './utils/area.js';
 export {

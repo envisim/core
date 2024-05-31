@@ -1,4 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
+import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
 import type {GeomEachCallback, OptionalParam} from '../base/index.js';
 import {LineGeometry, toLineGeometry} from '../gcs/index.js';
 import type {LineObject} from '../objects/index.js';
@@ -32,6 +33,10 @@ export class LineFeature
     super({...obj, type: 'Feature'}, shallow);
 
     this.geometry = toLineGeometry(obj.geometry, shallow);
+  }
+
+  geometricPrimitive(): GeometricPrimitive.LINE {
+    return GeometricPrimitive.LINE;
   }
 
   /* FEATURE SPECIFIC */
