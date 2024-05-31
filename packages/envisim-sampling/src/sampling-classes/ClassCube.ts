@@ -1,19 +1,17 @@
 import {Matrix} from '@envisim/matrix';
 import {Random} from '@envisim/random';
-import {reducedRowEchelonForm} from '@envisim/utils';
+import {reducedRowEchelonForm, swap} from '@envisim/utils';
 
-import {optionsDefaultEps, optionsDefaultTreeBucketSize} from '../types.js';
-import {KDStore} from '../util-classes/KDStore.js';
-import {KDTree} from '../util-classes/KDTree.js';
-import {swap} from '../utils.js';
-import {SamplingBase} from './SamplingBase.js';
+import {baseOptions} from '../base-options/index.js';
+import {KdStore, KdTree} from '../util-classes/index.js';
+import {BaseSampling} from './ClassBaseSampling.js';
 
 export enum CubeMethod {
   CUBE,
   LCUBE,
 }
 
-export class Cube extends SamplingBase {
+export class Cube extends BaseSampling {
   setDirect: boolean = false;
 
   method: CubeMethod;
@@ -33,8 +31,8 @@ export class Cube extends SamplingBase {
     xxbalance: Matrix,
     N: number,
     xxspread: Matrix | undefined,
-    treeBucketSize: number = optionsDefaultTreeBucketSize,
-    eps: number = optionsDefaultEps,
+    treeBucketSize: number = baseOptions.treeBucketSize,
+    eps: number = baseOptions.eps,
     rand: Random = new Random(),
   ) {
     super(undefined, N, treeBucketSize, eps, rand, false);
@@ -51,8 +49,8 @@ export class Cube extends SamplingBase {
         this.draw = this.drawLcube;
         if (!Matrix.isMatrix(xxspread))
           throw new Error('xxspread is not Matrix');
-        this.tree = new KDTree(xxspread, treeBucketSize);
-        this.store = new KDStore(this.N, this.pbalance);
+        this.tree = new KdTree(xxspread, treeBucketSize);
+        this.store = new KdStore(this.N, this.pbalance);
         break;
     }
 

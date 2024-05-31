@@ -1,30 +1,24 @@
 import {Matrix, TArrayLike, arrayLikeToArray} from '@envisim/matrix';
 
-import {Cube, CubeMethod} from './sampling-classes/Cube.js';
 import {
-  IOptions,
-  PartialPick,
-  optionsDefaultEps,
-  optionsDefaultRand,
-  optionsDefaultTreeBucketSize,
-} from './types.js';
+  AuxiliaryOptions,
+  BaseOptions,
+  baseOptions,
+} from './base-options/index.js';
+import {Cube, CubeMethod} from './sampling-classes/index.js';
 
 /**
  * Selects a balanced (pips) sample using the cube method.
  *
- * @param prob - inclusion probabilities of size N.
- * @param xm - matrix of balancing variables of size N*p.
  * @param options
  * @returns sample indices.
  */
-export function cube(
-  prob: TArrayLike,
-  xm: Matrix,
-  {
-    rand = optionsDefaultRand,
-    eps = optionsDefaultEps,
-  }: PartialPick<IOptions, 'rand' | 'eps'> = {},
-): number[] {
+export function cube({
+  probabilities,
+  auxiliaries,
+  rand = baseOptions.rand,
+  eps = baseOptions.eps,
+}: AuxiliaryOptions): number[] {
   if (!Matrix.isMatrix(xm)) throw new TypeError('xm must be Matrix');
 
   const N = xm.nrow;

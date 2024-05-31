@@ -1,20 +1,20 @@
 import {Matrix, RowVector} from '@envisim/matrix';
+import {swap} from '@envisim/utils';
 
-import {swap} from '../utils.js';
-import {KDNode} from './KDNode.js';
-import {KDStore} from './KDStore.js';
+import {KdNode} from './ClassKdNode.js';
+import {KdStore} from './ClassKdStore.js';
 
-export class KDTree {
+export class KdTree {
   protected dt: Matrix;
   protected bucketSize: number = 40;
-  protected topNode: KDNode;
+  protected topNode: KdNode;
 
   protected liml: number[] = [];
   protected limr: number[] = [];
   protected splitUnits: number[];
 
-  static isKDTree(t: any): t is KDTree {
-    return t instanceof KDTree;
+  static isKDTree(t: any): t is KdTree {
+    return t instanceof KdTree;
   }
 
   constructor(dt: Matrix, bucketSize: number = 40) {
@@ -32,19 +32,19 @@ export class KDTree {
     for (let i = 0; i < this.dt.nrow; i++) this.splitUnits[i] = i;
 
     if (this.dt.nrow <= this.bucketSize) {
-      this.topNode = new KDNode(null, true);
+      this.topNode = new KdNode(null, true);
       this.topNode.replaceUnits(this.splitUnits, 0, this.dt.nrow);
 
       return this;
     }
 
-    this.topNode = new KDNode(null, false);
+    this.topNode = new KdNode(null, false);
     this.splitNode(this.topNode, 0, this.dt.nrow);
 
     return this;
   }
 
-  protected splitNode(node: KDNode, fr: number, to: number): void {
+  protected splitNode(node: KdNode, fr: number, to: number): void {
     const m = this.splitByMidpointSlide(node, fr, to);
 
     // Sanity check
@@ -58,25 +58,25 @@ export class KDTree {
     }
 
     if (m - fr <= this.bucketSize) {
-      node.cleft = new KDNode(node, true);
+      node.cleft = new KdNode(node, true);
       node.cleft.replaceUnits(this.splitUnits, fr, m);
     } else {
-      node.cleft = new KDNode(node, false);
+      node.cleft = new KdNode(node, false);
       this.splitNode(node.cleft, fr, m);
     }
 
     if (to - m <= this.bucketSize) {
-      node.cright = new KDNode(node, true);
+      node.cright = new KdNode(node, true);
       node.cright.replaceUnits(this.splitUnits, m, to);
     } else {
-      node.cright = new KDNode(node, false);
+      node.cright = new KdNode(node, false);
       this.splitNode(node.cright, m, to);
     }
 
     return;
   }
 
-  protected splitByMidpointSlide(node: KDNode, fr: number, to: number): number {
+  protected splitByMidpointSlide(node: KdNode, fr: number, to: number): number {
     const mins = this.liml.slice();
     const maxs = this.limr.slice();
 
@@ -199,8 +199,8 @@ export class KDTree {
     throw new Error('Something went wrong in splitting');
   }
 
-  protected findNode(id: number): KDNode | null {
-    let node: KDNode | null = this.topNode;
+  protected findNode(id: number): KdNode | null {
+    let node: KdNode | null = this.topNode;
 
     while (node != null && !node.terminal)
       node =
@@ -250,7 +250,7 @@ export class KDTree {
     return distance;
   }
 
-  findNeighbours(store: KDStore, id: number | RowVector): void {
+  findNeighbours(store: KdStore, id: number | RowVector): void {
     store.reset();
 
     if (this.topNode == null) throw new Error('topNode is null');
@@ -265,10 +265,10 @@ export class KDTree {
   }
 
   protected traverseNodesForNeighbours(
-    store: KDStore,
+    store: KdStore,
     id: number,
     unit: RowVector,
-    node: KDNode | null,
+    node: KdNode | null,
   ) {
     if (node == null) throw new Error('node is null');
 
@@ -296,10 +296,10 @@ export class KDTree {
   }
 
   protected searchNodeForNeighbour1(
-    store: KDStore,
+    store: KdStore,
     id: number,
     unit: RowVector,
-    node: KDNode,
+    node: KdNode,
   ): void {
     const nodeSize = node.getSize();
     // Node is empty, we can skip
@@ -332,10 +332,10 @@ export class KDTree {
   }
 
   protected searchNodeForNeighbours(
-    store: KDStore,
+    store: KdStore,
     id: number,
     unit: RowVector,
-    node: KDNode,
+    node: KdNode,
   ): void {
     const nodeSize = node.getSize();
     // Node is empty, we can skip
@@ -418,7 +418,7 @@ export class KDTree {
     return;
   }
 
-  findNeighboursCps(store: KDStore, probabilities: number[], id: number): void {
+  findNeighboursCps(store: KdStore, probabilities: number[], id: number): void {
     store.reset();
 
     if (this.topNode == null) throw new Error('topNode is null');
@@ -427,10 +427,10 @@ export class KDTree {
   }
 
   protected traverseNodesForNeighboursCps(
-    store: KDStore,
+    store: KdStore,
     probabilities: number[],
     id: number,
-    node: KDNode | null,
+    node: KdNode | null,
   ): void {
     if (node == null) throw new Error('node is null');
 
@@ -453,10 +453,10 @@ export class KDTree {
   }
 
   protected searchNodeForNeighboursCps(
-    store: KDStore,
+    store: KdStore,
     probabilities: number[],
     id: number,
-    node: KDNode,
+    node: KdNode,
   ): void {
     const nodeSize = node.getSize();
     // Node is empty, we can skip

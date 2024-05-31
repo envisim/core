@@ -1,7 +1,7 @@
-export class KDNode {
-  parent: KDNode | null;
-  cleft: KDNode | null = null;
-  cright: KDNode | null = null;
+export class KdNode {
+  parent: KdNode | null;
+  cleft: KdNode | null = null;
+  cright: KdNode | null = null;
   terminal: boolean = false;
 
   split: number = 0;
@@ -9,13 +9,13 @@ export class KDNode {
 
   units: number[] = [];
 
-  constructor(parent: KDNode | null, terminal: boolean) {
+  constructor(parent: KdNode | null, terminal: boolean) {
     this.parent = parent;
     this.terminal = terminal;
     return this;
   }
 
-  getSibling(): KDNode | null {
+  getSibling(): KdNode | null {
     if (this.parent == null) return null;
 
     return this == this.parent.cleft ? this.parent.cright : this.parent.cleft;

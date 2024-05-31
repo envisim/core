@@ -9,12 +9,4 @@ export {srswor, srswr} from './srs.js';
 export {systematic, randomSystematic} from './systematic.js';
 
 // Utils
-export {NearestNeighbour} from './util-classes/NearestNeighbour.js';
-
-// Types
-export {
-  optionsDefaultEps,
-  optionsDefaultRand,
-  optionsDefaultTreeBucketSize,
-} from './types.js';
-export type {IOptions} from './types.js';
+export {NearestNeighbour} from './util-classes/index.js';

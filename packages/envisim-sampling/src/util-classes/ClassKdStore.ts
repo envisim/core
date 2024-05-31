@@ -1,4 +1,4 @@
-export class KDStore {
+export class KdStore {
   N: number = 0;
   maxSize: number = 0;
 
@@ -8,8 +8,8 @@ export class KDStore {
   totalWeight: number = 0.0;
   weights: number[] = [];
 
-  static isKDStore(t: any): t is KDStore {
-    return t instanceof KDStore;
+  static isKDStore(t: any): t is KdStore {
+    return t instanceof KdStore;
   }
 
   constructor(N: number, maxSize: number) {

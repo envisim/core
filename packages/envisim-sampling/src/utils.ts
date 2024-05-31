@@ -68,14 +68,6 @@ export function arrayBack<T>(arr: T[]): T {
   return arr[arr.length - 1];
 }
 
-export function swap<T>(arr: T[], a: number, b: number): void {
-  if (a === b) return;
-
-  const t = arr[a];
-  arr[a] = arr[b];
-  arr[b] = t;
-}
-
 export function probability1(p: number, eps: number): boolean {
   return p >= 1.0 - eps;
 }

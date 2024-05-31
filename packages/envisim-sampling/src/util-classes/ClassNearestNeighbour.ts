@@ -1,13 +1,13 @@
 import {Matrix, RowVector} from '@envisim/matrix';
 
-import {KDStore} from './KDStore.js';
-import {KDTree} from './KDTree.js';
+import {KdStore} from './ClassKdStore.js';
+import {KdTree} from './ClassKdTree.js';
 
 export class NearestNeighbour {
   /**@ignore */
-  protected tree: KDTree;
+  protected tree: KdTree;
   /**@ignore */
-  protected store: KDStore;
+  protected store: KdStore;
 
   /**
    * Constructs a nearest neighbour searcher, using k-d-trees
@@ -17,8 +17,8 @@ export class NearestNeighbour {
    * @returns a nearest neighbour searcher.
    */
   constructor(dt: Matrix, bucketSize: number = 40) {
-    this.tree = new KDTree(dt, bucketSize);
-    this.store = new KDStore(dt.nrow, 1);
+    this.tree = new KdTree(dt, bucketSize);
+    this.store = new KdStore(dt.nrow, 1);
     return;
   }
 

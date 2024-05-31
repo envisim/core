@@ -1,12 +1,11 @@
 import {Matrix} from '@envisim/matrix';
 import {Random} from '@envisim/random';
+import {swap} from '@envisim/utils';
 
-import {optionsDefaultEps, optionsDefaultTreeBucketSize} from '../types.js';
-import {IndexList} from '../util-classes/IndexList.js';
-import {KDStore} from '../util-classes/KDStore.js';
-import {KDTree} from '../util-classes/KDTree.js';
-import {arrayBack, swap} from '../utils.js';
-import {SamplingBase} from './SamplingBase.js';
+import {baseOptions} from '../base-options/index.js';
+import {IndexList, KdStore, KdTree} from '../util-classes/index.js';
+import {arrayBack} from '../utils.js';
+import {BaseSampling} from './ClassBaseSampling.js';
 
 export enum PivotalMethod {
   LPM1,
@@ -16,7 +15,7 @@ export enum PivotalMethod {
   SPM,
 }
 
-export class Pivotal extends SamplingBase {
+export class Pivotal extends BaseSampling {
   setDirect: boolean = false;
   setRun: boolean = false;
 
@@ -32,8 +31,8 @@ export class Pivotal extends SamplingBase {
     probabilities: number | number[],
     xx: Matrix | undefined,
     N: number,
-    treeBucketSize: number = optionsDefaultTreeBucketSize,
-    eps: number = optionsDefaultEps,
+    treeBucketSize: number = baseOptions.treeBucketSize,
+    eps: number = baseOptions.eps,
     rand: Random = new Random(),
   ) {
     super(xx, N, treeBucketSize, eps, rand);
@@ -68,8 +67,8 @@ export class Pivotal extends SamplingBase {
       case PivotalMethod.LPM1:
       case PivotalMethod.LPM2:
       case PivotalMethod.LPM1SEARCH:
-        if (!KDTree.isKDTree(this.tree)) throw new Error('KDTree is not set');
-        if (!KDStore.isKDStore(this.store))
+        if (!KdTree.isKDTree(this.tree)) throw new Error('KDTree is not set');
+        if (!KdStore.isKDStore(this.store))
           throw new Error('KDStore is not set');
     }
 

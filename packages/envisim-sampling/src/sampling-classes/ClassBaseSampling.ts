@@ -1,23 +1,21 @@
 import {Matrix} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
 
-import {optionsDefaultEps} from '../types.js';
-import {IndexList} from '../util-classes/IndexList.js';
-import {KDStore} from '../util-classes/KDStore.js';
-import {KDTree} from '../util-classes/KDTree.js';
+import {baseOptions} from '../base-options/index.js';
+import {IndexList, KdStore, KdTree} from '../util-classes/index.js';
 import {probability01, probability1} from '../utils.js';
 
-export abstract class SamplingBase {
+export abstract class BaseSampling {
   draw!: () => void;
   setDraw: boolean = true;
 
   N: number;
-  eps: number = optionsDefaultEps;
+  eps: number = baseOptions.eps;
   rand: Random;
 
   idx!: IndexList;
-  tree!: KDTree;
-  store!: KDStore;
+  tree!: KdTree;
+  store!: KdStore;
 
   probabilities: number[];
   sample: number[] = [];
@@ -36,8 +34,8 @@ export abstract class SamplingBase {
     this.probabilities = new Array<number>(this.N);
 
     if (setTree === true && Matrix.isMatrix(xx)) {
-      this.tree = new KDTree(xx, treeBucketSize);
-      this.store = new KDStore(this.N, 1);
+      this.tree = new KdTree(xx, treeBucketSize);
+      this.store = new KdStore(this.N, 1);
     }
   }
 

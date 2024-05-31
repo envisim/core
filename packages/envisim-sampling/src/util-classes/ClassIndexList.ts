@@ -1,6 +1,5 @@
 import {Random} from '@envisim/random';
-
-import {swap} from '../utils.js';
+import {swap} from '@envisim/utils';
 
 export class IndexList {
   protected list: number[];

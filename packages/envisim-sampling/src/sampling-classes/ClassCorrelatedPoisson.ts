@@ -1,33 +1,33 @@
 import {Matrix} from '@envisim/matrix';
 import {Random} from '@envisim/random';
 
-import {optionsDefaultEps, optionsDefaultTreeBucketSize} from '../types.js';
-import {SamplingBase} from './SamplingBase.js';
+import {baseOptions} from '../base-options/index.js';
+import {BaseSampling} from './ClassBaseSampling.js';
 
-export enum CpsMethod {
+export enum CorrelatedPoissonMethod {
   LCPS,
   SCPS,
   SCPSCOORD,
 }
 
-export class Cps extends SamplingBase {
+export class CorrelatedPoisson extends BaseSampling {
   setDirect: boolean = false;
   setRandom: boolean = false;
 
   random: (id: number) => number = this.randomStd;
 
-  method: CpsMethod;
+  method: CorrelatedPoissonMethod;
   randomValues!: number[];
 
   drawUnit: number = 0;
 
   constructor(
-    method: CpsMethod,
+    method: CorrelatedPoissonMethod,
     probabilities: number[],
     xx: Matrix,
     N: number,
-    treeBucketSize: number = optionsDefaultTreeBucketSize,
-    eps: number = optionsDefaultEps,
+    treeBucketSize: number = baseOptions.treeBucketSize,
+    eps: number = baseOptions.eps,
     rand: Random = new Random(),
   ) {
     super(xx, N, treeBucketSize, eps, rand);
@@ -36,13 +36,13 @@ export class Cps extends SamplingBase {
     this.method = method;
 
     switch (this.method) {
-      case CpsMethod.LCPS:
+      case CorrelatedPoissonMethod.LCPS:
         this.draw = this.drawLcps;
         break;
-      case CpsMethod.SCPS:
+      case CorrelatedPoissonMethod.SCPS:
         this.draw = this.drawScps;
         break;
-      case CpsMethod.SCPSCOORD:
+      case CorrelatedPoissonMethod.SCPSCOORD:
         this.draw = this.drawScpsCoord;
         break;
       default:
