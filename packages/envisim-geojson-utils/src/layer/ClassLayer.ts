@@ -21,43 +21,81 @@ export class Layer<
   collection: T;
   propertyRecord: IPropertyRecord;
 
-  static isPointLayer(obj: unknown): obj is Layer<PointCollection> {
-    return obj instanceof Layer && obj.collection instanceof PointCollection;
-  }
-
-  static isLineLayer(obj: unknown): obj is Layer<LineCollection> {
-    return obj instanceof Layer && obj.collection instanceof LineCollection;
-  }
-
-  static isAreaLayer(obj: unknown): obj is Layer<AreaCollection> {
-    return obj instanceof Layer && obj.collection instanceof AreaCollection;
-  }
-
-  static assertPointLayer(
+  static isLayer(
     obj: unknown,
-    msg?: string,
-  ): obj is Layer<PointCollection> {
-    if (obj instanceof Layer && obj.collection instanceof PointCollection)
-      return true;
-    throw new TypeError(msg ?? 'Expected a PointLayer');
+    type: GeometricPrimitive.POINT,
+  ): obj is Layer<PointCollection>;
+  static isLayer(
+    obj: unknown,
+    type: GeometricPrimitive.LINE,
+  ): obj is Layer<LineCollection>;
+  static isLayer(
+    obj: unknown,
+    type: GeometricPrimitive.AREA,
+  ): obj is Layer<AreaCollection>;
+  static isLayer<
+    T extends
+      | Layer<PointCollection>
+      | Layer<LineCollection>
+      | Layer<AreaCollection>,
+  >(obj: unknown, type: GeometricPrimitive): obj is T;
+  static isLayer(obj: unknown, type: GeometricPrimitive): boolean {
+    if (!(obj instanceof Layer)) {
+      return false;
+    }
+
+    switch (type) {
+      case GeometricPrimitive.POINT:
+        return obj.collection instanceof PointCollection;
+      case GeometricPrimitive.LINE:
+        return obj.collection instanceof LineCollection;
+      case GeometricPrimitive.AREA:
+        return obj.collection instanceof AreaCollection;
+      default:
+        return false;
+    }
   }
 
-  static assertLineLayer(
+  static assertLayer(
     obj: unknown,
+    type: GeometricPrimitive.POINT,
     msg?: string,
-  ): obj is Layer<LineCollection> {
-    if (obj instanceof Layer && obj.collection instanceof LineCollection)
+  ): asserts obj is Layer<PointCollection>;
+  static assertLayer(
+    obj: unknown,
+    type: GeometricPrimitive.LINE,
+    msg?: string,
+  ): asserts obj is Layer<LineCollection>;
+  static assertLayer(
+    obj: unknown,
+    type: GeometricPrimitive.AREA,
+    msg?: string,
+  ): asserts obj is Layer<AreaCollection>;
+  static assertLayer<
+    T extends
+      | Layer<PointCollection>
+      | Layer<LineCollection>
+      | Layer<AreaCollection>,
+  >(obj: unknown, type: GeometricPrimitive, msg?: string): asserts obj is T;
+  static assertLayer(
+    obj: unknown,
+    type: GeometricPrimitive,
+    msg?: string,
+  ): boolean {
+    if (Layer.isLayer(obj, type)) {
       return true;
-    throw new TypeError(msg ?? 'Expected a LineLayer');
-  }
+    }
 
-  static assertAreaLayer(
-    obj: unknown,
-    msg?: string,
-  ): obj is Layer<AreaCollection> {
-    if (obj instanceof Layer && obj.collection instanceof AreaCollection)
-      return true;
-    throw new TypeError(msg ?? 'Expected an AreaLayer');
+    switch (type) {
+      case GeometricPrimitive.POINT:
+        throw new TypeError(msg ?? 'Expected Layer<PointCollection>');
+      case GeometricPrimitive.LINE:
+        throw new TypeError(msg ?? 'Expected Layer<LineCollection>');
+      case GeometricPrimitive.AREA:
+        throw new TypeError(msg ?? 'Expected Layer<AreaCollection>');
+      default:
+        throw new TypeError(msg ?? 'Expected Layer<T>');
+    }
   }
 
   /**

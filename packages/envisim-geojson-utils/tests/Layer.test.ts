@@ -48,11 +48,8 @@ describe('Layer', () => {
 
   const layer = Layer.createLayer(collection, GeometricPrimitive.AREA);
 
-  /* console.log(JSON.stringify(layer.toGeoJSON(), null, 2));
-  console.log(layer.propertyRecord);*/
-
   test('Layer', () => {
     expect(AreaCollection.isCollection(layer.collection)).toBe(true);
-    expect(Layer.isAreaLayer(layer)).toBe(true);
+    expect(Layer.isLayer(layer, GeometricPrimitive.AREA)).toBe(true);
   });
 });

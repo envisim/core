@@ -4,6 +4,7 @@ import {
   AreaFeature,
   type GeoJSON as GJ,
   Geodesic,
+  GeometricPrimitive,
   Layer,
   Point,
   PointCollection,
@@ -54,9 +55,7 @@ export function maternClusterProcess(
   radiusOfCluster: number,
   opts: {rand?: Random} = {},
 ): Layer<PointCollection> {
-  if (!Layer.isAreaLayer(layer)) {
-    throw new Error('Input layer must be an area layer.');
-  }
+  Layer.assertLayer(layer, GeometricPrimitive.AREA);
 
   const rand = opts.rand ?? new Random();
   const box = bbox4(layer.collection.getBBox());
