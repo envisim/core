@@ -16,27 +16,25 @@ import {Random} from '@envisim/random';
 
 import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
 
-export type TsampleBeltsOnAreasOpts = {
+export interface SampleBeltsOnAreasOptions {
+  distBetween: number;
+  halfWidth: number;
   rotation?: number;
   rand?: Random;
   pointsPerCircle?: number;
-};
+}
+
 /**
  * Selects a systematic sample of belts on areas.
  *
  * @param layer
- * @param distBetween distance > 0 in meters between center lines.
- * @param halfWidth half the width of the belt (= 0 for line sampling).
  * @param opts an options object.
- * @param opts.rotation rotation angle in degrees.
- * @param opts.rand an optional instance of Random.
  */
 export const sampleSystematicBeltsOnAreas = (
   layer: Layer<AreaCollection>,
-  distBetween: number,
-  halfWidth: number,
-  opts: TsampleBeltsOnAreasOpts = {rotation: 0},
+  opts: SampleBeltsOnAreasOptions,
 ): Layer<AreaCollection> => {
+  let {distBetween, halfWidth} = opts;
 
   if (typeof distBetween !== 'number' || distBetween <= 0) {
     throw new Error('Input distBetween must be a positive number.');
