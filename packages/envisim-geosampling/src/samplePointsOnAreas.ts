@@ -63,30 +63,26 @@ export function uniformPositionsInBBox(
   return positions;
 }
 
-export type TsamplePointsOnAreasOpts = {
+export interface SamplePointsOnAreasOptions {
+  method: 'uniform' | 'systematic';
+  sampleSize: number;
   buffer?: number;
   ratio?: number;
   rand?: Random;
-};
+}
 
 /**
  * Selects points on areas (if features have bbox, it is used in pointInPolygon
  * to reject point outside bbox if buffer is zero).
  *
  * @param layer an area layer
- * @param method the method to use "uniform" or "systematic"
- * @param sampleSize the expected sample size as integer > 0.
  * @param opts an optional options object.
- * @param opts.buffer an optional buffer in meters (default 0).
- * @param opts.ratio an optional ratio (dx/dy) for systematic sampling (default 1).
- * @param opts.rand an optional instance of Random.
  */
 export function samplePointsOnAreas(
   layer: Layer<AreaCollection>,
-  method: 'uniform' | 'systematic',
-  sampleSize: number,
-  opts: TsamplePointsOnAreasOpts = {},
+  opts: SamplePointsOnAreasOptions,
 ): Layer<PointCollection> {
+  let {method, sampleSize} = opts;
 
   if (method !== 'systematic' && method !== 'uniform') {
     throw new Error("Input method must be either'uniform' or 'systematic'");

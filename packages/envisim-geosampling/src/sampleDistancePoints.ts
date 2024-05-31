@@ -11,48 +11,44 @@ import {copy} from '@envisim/utils';
 
 import {DetectionFunction, effectiveRadius} from './sampleDistanceUtils.js';
 import {
-  TsamplePointsOnAreasOpts,
+  type SamplePointsOnAreasOptions,
   samplePointsOnAreas,
 } from './samplePointsOnAreas.js';
+
+export interface SampleDistancePointsOptions {
+  baseLayer: Layer<PointCollection>;
+  detectionFunction: DetectionFunction;
+  cutoff: number;
+  samplePointsOnAreasOptions: SamplePointsOnAreasOptions;
+}
 
 /**
  * Distance sampling with points. Selects a point sample on an area layer
  * and collect point objects from a base layer using a detection function
  * to (randomly) determine inclusion.
  *
- * @param frameLayer an area layer
- * @param method the method to use "uniform" or "systematic".
- * @param sampleSize the expected sample size of points as integer > 0.
- * @param baseLayer a PointCollection of single Point features.
- * @param detectionFunction the detection function.
- * @param cutoff the maximum detection distance in meters.
- * @param opts an object containing buffer, ratio (dx/dy), rand.
- * @param opts.buffer optional buffer in meters (default cutoff).
- * @param opts.ratio the ratio (dx/dy) for systematic sampling (default 1).
- * @param opts.rand an optional instance of Random.
+ * @param layer an area layer
+ * @param opts an options object.
+
  */
 export function sampleDistancePoints(
-  frameLayer: Layer<AreaCollection>,
-  method: 'uniform' | 'systematic',
-  sampleSize: number,
-  baseLayer: Layer<PointCollection>,
-  detectionFunction: DetectionFunction,
-  cutoff: number,
-  opts: TsamplePointsOnAreasOpts,
+  layer: Layer<AreaCollection>,
+  opts: SampleDistancePointsOptions,
 ): Layer<PointCollection> {
   // Check input first
+  let {baseLayer, detectionFunction, cutoff} = opts;
 
-
-
+  const rand = opts.samplePointsOnAreasOptions.rand ?? new Random();
   // Compute effective radius
   const effRadius = effectiveRadius(detectionFunction, cutoff);
-  // Set random generator
-  const rand = opts.rand ?? new Random();
-  opts.rand = rand;
+
   // Select sample of points (optional buffer via opts)
-  const buffer = opts.buffer ?? cutoff;
-  opts.buffer = buffer;
-  const pointSample = samplePointsOnAreas(frameLayer, method, sampleSize, opts);
+  const buffer = opts.samplePointsOnAreasOptions.buffer ?? cutoff;
+  //opts.samplePointsOnAreasOptions.buffer = buffer;
+  const pointSample = samplePointsOnAreas(layer, {
+    ...opts.samplePointsOnAreasOptions,
+    buffer,
+  });
   // To store sampled features
   const sampledFeatures: PointFeature[] = [];
 
@@ -71,8 +67,8 @@ export function sampleDistancePoints(
             );
             if (dist < cutoff && rand.float() < detectionFunction(dist)) {
               // Check if base point exists in this frame (frame could be part/stratum)
-              for (let i = 0; i < frameLayer.collection.features.length; i++) {
-                const frameFeature = frameLayer.collection.features[i];
+              for (let i = 0; i < layer.collection.features.length; i++) {
+                const frameFeature = layer.collection.features[i];
                 const intersect = intersectPointAreaFeatures(
                   pointFeature,
                   frameFeature,

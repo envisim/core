@@ -36,28 +36,28 @@ function randomPositionInCluster(
   return Geodesic.destination(center, dist, azimuth);
 }
 
+export interface MaternClusterProcessOptions {
+  intensityOfParents: number;
+  meanOfCluster: number;
+  radiusOfCluster: number;
+  rand?: Random;
+}
+
 /**
  * Generates points from a Matérn cluster point process
  * on an area layer.
  *
  * @param layer an area layer.
- * @param intensityOfParents number of parent points / clusters per square meter.
- * @param meanOfCluster mean number of points per cluster.
- * @param radiusOfCluster radius in meters of a (circular) cluster.
  * @param opts an optional options object.
- * @param opts.rand an optional instance of Random.
  */
 export function maternClusterProcess(
   layer: Layer<AreaCollection>,
-  intensityOfParents: number,
-  meanOfCluster: number,
-  radiusOfCluster: number,
-  opts: {rand?: Random} = {},
+  opts: MaternClusterProcessOptions,
 ): Layer<PointCollection> {
   if (!Layer.isAreaLayer(layer)) {
     throw new Error('Input layer must be an area layer.');
   }
-
+  const {intensityOfParents, meanOfCluster, radiusOfCluster} = opts;
   const rand = opts.rand ?? new Random();
   const box = bbox4(layer.collection.getBBox());
   // Expand box by radius of cluster, as parent points should
