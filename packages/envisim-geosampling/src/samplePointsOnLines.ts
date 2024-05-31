@@ -11,6 +11,12 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
+export interface SamplePointsOnLinesOptions {
+  method: 'uniform' | 'systematic';
+  sampleSize: number;
+  rand?: Random;
+}
+
 // Type for keeping track of distance travelled (dt) and index of sample point
 // to be placed next (currentIndex).
 type Track = {
@@ -115,18 +121,13 @@ function samplePointsOnGeometryCollection(
  * Selects points according to method and sampleSize on a line layer.
  *
  * @param layer a line layer.
- * @param method the method to use. Either 'uniform' or 'systematic'.
- * @param sampleSize an integer > 0 for number of points to sample.
  * @param opts an options object.
- * @param opts.rand an optional instance of Random.
  */
 export function samplePointsOnLines(
   layer: Layer<LineCollection>,
-  method: 'uniform' | 'systematic',
-  sampleSize: number,
-  opts: {rand?: Random} = {},
+  opts: SamplePointsOnLinesOptions,
 ): Layer<PointCollection> {
-
+  let {method, sampleSize} = opts;
   if (method !== 'systematic' && method !== 'uniform') {
     throw new Error("Input method must be either 'uniform' or 'systematic'.");
   }
