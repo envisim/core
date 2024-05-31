@@ -16,11 +16,12 @@ import {Random} from '@envisim/random';
 
 import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
 
-export type TsampleLinesOnAreasOpts = {
+export interface SampleLinesOnAreasOptions {
+  distBetween: number;
   rotation?: number;
   rand?: Random;
   pointsPerCircle?: number;
-};
+}
 
 /**
  * Selects a sample of lines systematically over all areas.
@@ -33,9 +34,9 @@ export type TsampleLinesOnAreasOpts = {
  */
 export function sampleSystematicLinesOnAreas(
   layer: Layer<AreaCollection>,
-  distBetween: number,
-  opts: TsampleLinesOnAreasOpts,
+  opts: SampleLinesOnAreasOptions,
 ): Layer<LineCollection> {
+  const distBetween = opts.distBetween;
   if (typeof distBetween !== 'number' || distBetween <= 0) {
     throw new Error('Input distBetween must be a positive number.');
   }
