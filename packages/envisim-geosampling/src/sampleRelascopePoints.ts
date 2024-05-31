@@ -9,9 +9,15 @@ import {
 import {copy} from '@envisim/utils';
 
 import {
-  TsamplePointsOnAreasOpts,
+  type SamplePointsOnAreasOptions,
   samplePointsOnAreas,
 } from './samplePointsOnAreas.js';
+
+export interface SampleRelascopePointsOptions
+  extends SamplePointsOnAreasOptions {
+  sizeProperty: string;
+  factor: number;
+}
 
 // TODO: Decide if we should implement correction by adding the correct buffer.
 // Probably deviates from common use to add buffer, but estimates will be biased
@@ -27,33 +33,22 @@ import {
  * quantities.
  *
  * @param frameLayer
- * @param method the method to use "uniform" or "systematic"
- * @param sampleSize the expected number of points as integer > 0.
  * @param baseLayer a PointCollection of single Point features.
- * @param sizeProperty the name of the size property in base which has numeric value in meters (e.g. diameter at breast hight).
- * @param factor positive number, the relascope factor.
  * @param opts an object containing buffer, ratio (dx/dy), rand
- * @param opts.buffer optional buffer in meters (default 0).
- * @param opts.ratio the ratio (dx/dy) for systematic sampling (default 1).
- * @param opts.rand an optional instance of Random.
  */
 export function sampleRelascopePoints(
   frameLayer: Layer<AreaCollection>,
-  method: 'uniform' | 'systematic',
-  sampleSize: number,
   baseLayer: Layer<PointCollection>,
-  sizeProperty: string,
-  factor: number,
-  opts: TsamplePointsOnAreasOpts,
+  opts: SampleRelascopePointsOptions,
 ): Layer<PointCollection> {
-
+  const {factor, sizeProperty} = opts;
   // Square root of relascope factor
   const sqrtRf = Math.sqrt(factor);
   // Set buffer
   const buffer = opts.buffer || 0;
   opts.buffer = buffer;
   // Select sample of points (optional buffer via opts)
-  const pointSample = samplePointsOnAreas(frameLayer, method, sampleSize, opts);
+  const pointSample = samplePointsOnAreas(frameLayer, opts);
   // To store sampled features
   const sampledFeatures: PointFeature[] = [];
   const baseFeatures = baseLayer.collection.features;
