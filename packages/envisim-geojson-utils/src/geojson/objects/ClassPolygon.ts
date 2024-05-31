@@ -1,3 +1,5 @@
+import {type OptionalParam} from '@envisim/utils';
+
 import type * as GJ from '../../types/geojson.js';
 import {areaOfPolygonLonLat} from '../../utils/area.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
@@ -5,7 +7,7 @@ import {centroidOfPolygon} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {pointInSinglePolygonPosition} from '../../utils/pointInPolygonPosition.js';
-import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {type GeomEachCallback} from '../base/index.js';
 import {AbstractAreaObject} from './AbstractAreaObject.js';
 
 export class Polygon

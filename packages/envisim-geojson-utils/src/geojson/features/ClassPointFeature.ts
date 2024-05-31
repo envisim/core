@@ -1,7 +1,9 @@
+import {type OptionalParam} from '@envisim/utils';
+
 import type * as GJ from '../../types/geojson.js';
-import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {type GeomEachCallback} from '../base/index.js';
 import {PointGeometry, toPointGeometry} from '../gcs/index.js';
-import type {PointObject} from '../objects/index.js';
+import {type PointObject} from '../objects/index.js';
 import {AbstractFeature} from './AbstractFeature.js';
 
 export class PointFeature

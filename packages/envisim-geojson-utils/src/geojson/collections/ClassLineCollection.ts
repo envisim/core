@@ -1,6 +1,8 @@
+import {type OptionalParam} from '@envisim/utils';
+
 import type * as GJ from '../../types/geojson.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
-import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {type GeomEachCallback} from '../base/index.js';
 import {LineFeature} from '../features/index.js';
 import {LineObject} from '../objects/index.js';
 import {AbstractCollection} from './AbstractCollection.js';

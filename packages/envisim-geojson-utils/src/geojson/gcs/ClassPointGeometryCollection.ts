@@ -1,7 +1,8 @@
+import {type OptionalParam} from '@envisim/utils';
+
 import type * as GJ from '../../types/geojson.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
-import type {OptionalParam} from '../base/index.js';
-import type {PointObject} from '../objects/index.js';
+import {type PointObject} from '../objects/index.js';
 import {AbstractGeometryCollection} from './AbstractGeometryCollection.js';
 import {toPointGeometry} from './toPointGeometry.js';
 
