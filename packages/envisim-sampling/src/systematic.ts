@@ -1,4 +1,4 @@
-import {arrayLikeToArray, sequence} from '@envisim/matrix';
+import {sequence, vectorToArray} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
 
 import {type PipsOptions, baseOptions} from './base-options/index.js';
@@ -17,7 +17,7 @@ const _systematic = (
   rand: Random,
 ): number[] => {
   const N = p.length;
-  const s = [];
+  const s: number[] = [];
 
   let r = rand.float();
   let psum = 0.0;
@@ -43,7 +43,7 @@ export function systematic({
   probabilities,
   rand = baseOptions.rand,
 }: PipsOptions): number[] {
-  const p = arrayLikeToArray(probabilities, true);
+  const p = vectorToArray(probabilities, true);
   return _systematic(p, (i) => i, rand);
 }
 
@@ -57,7 +57,7 @@ export function randomSystematic({
   probabilities,
   rand = baseOptions.rand,
 }: PipsOptions): number[] {
-  const p = arrayLikeToArray(probabilities, true);
+  const p = vectorToArray(probabilities, true);
   const N = p.length;
   const index = sequence(0, N - 1, 1)
     .sortRandom(true, rand)

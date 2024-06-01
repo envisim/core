@@ -1,4 +1,4 @@
-import {arrayLikeToArray} from '@envisim/matrix';
+import {vectorToArray, vectorToArrayOfLength} from '@envisim/matrix';
 
 import {
   type AuxiliaryFixedSizedOptions,
@@ -7,7 +7,6 @@ import {
   baseOptions,
 } from './base-options/index.js';
 import {Pivotal, PivotalMethod} from './sampling-classes/index.js';
-import {arrayLikeToArrayAndCheckSize} from './utils.js';
 
 /**
  * Selects a (pips) sample using the local pivotal method 1.
@@ -26,7 +25,7 @@ export function lpm1({
   const p =
     'n' in options
       ? options.n
-      : arrayLikeToArrayAndCheckSize(options.probabilities, N);
+      : vectorToArrayOfLength(options.probabilities, N, true, 'probabilities');
 
   const lpm = new Pivotal(
     PivotalMethod.LPM1,
@@ -59,7 +58,7 @@ export function lpm2({
   const p =
     'n' in options
       ? options.n
-      : arrayLikeToArrayAndCheckSize(options.probabilities, N);
+      : vectorToArrayOfLength(options.probabilities, N, true, 'probabilities');
 
   const lpm = new Pivotal(
     PivotalMethod.LPM2,
@@ -95,7 +94,7 @@ export function lpm1s({
   const p =
     'n' in options
       ? options.n
-      : arrayLikeToArrayAndCheckSize(options.probabilities, N);
+      : vectorToArrayOfLength(options.probabilities, N, true, 'probabilities');
 
   const lpm = new Pivotal(
     PivotalMethod.LPM1SEARCH,
@@ -122,7 +121,7 @@ export function rpm({
   rand = baseOptions.rand,
   eps = baseOptions.eps,
 }: PipsOptions): number[] {
-  const p = arrayLikeToArray(probabilities, true);
+  const p = vectorToArray(probabilities, true);
   const N = p.length;
 
   const lpm = new Pivotal(PivotalMethod.RPM, p, undefined, N, N, eps, rand);
@@ -142,7 +141,7 @@ export function spm({
   rand = baseOptions.rand,
   eps = baseOptions.eps,
 }: PipsOptions): number[] {
-  const p = arrayLikeToArray(probabilities, true);
+  const p = vectorToArray(probabilities, true);
   const N = p.length;
 
   const lpm = new Pivotal(PivotalMethod.SPM, p, undefined, N, N, eps, rand);

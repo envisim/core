@@ -1,4 +1,5 @@
 import {type FixedSizedOptions, baseOptions} from './base-options/index.js';
+import {assertSizeRange} from './utils.js';
 
 interface SrsOptions extends FixedSizedOptions {
   /**
@@ -14,11 +15,12 @@ interface SrsOptions extends FixedSizedOptions {
  * @returns sample indices.
  */
 export function srswor({n, N, rand = baseOptions.rand}: SrsOptions): number[] {
-  if (n === undefined || N === undefined || n < 0 || N <= 0)
-    throw new TypeError('n and N must be a positive number');
+  assertSizeRange(N, 1, Number.MAX_SAFE_INTEGER, 'N');
+  assertSizeRange(n, 0, N, 'n');
 
   const nn = Math.min(n, N);
-  const s = new Array<number>(nn);
+  const s: number[] = [];
+  s.length = nn;
   let ns = 0;
 
   for (let i = 0; i < N; i++) {
@@ -38,10 +40,11 @@ export function srswor({n, N, rand = baseOptions.rand}: SrsOptions): number[] {
  * @returns sample indices.
  */
 export function srswr({n, N, rand = baseOptions.rand}: SrsOptions): number[] {
-  if (n === undefined || N === undefined || n < 0 || N <= 0)
-    throw new TypeError('n and N must be number');
+  assertSizeRange(N, 1, Number.MAX_SAFE_INTEGER, 'N');
+  assertSizeRange(n, 0, N, 'n');
 
-  const s = new Array<number>(n);
+  const s: number[] = [];
+  s.length = n;
 
   for (let i = 0; i < n; i++) {
     s[i] = Math.floor(rand.float() * N);

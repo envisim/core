@@ -10,3 +10,4 @@ export {systematic, randomSystematic} from './systematic.js';
 
 // Utils
 export {NearestNeighbour} from './util-classes/index.js';
+export {inclusionProbabilities} from './inclusion-probabilities.js';

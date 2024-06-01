@@ -1,5 +1,3 @@
-import {ColumnVector} from '@envisim/matrix';
-
 import {
   type FixedSizedOptions,
   type PipsOptions,
@@ -16,16 +14,16 @@ export function poissonSampling({
   probabilities,
   rand = baseOptions.rand,
 }: PipsOptions): number[] {
-  const p = new ColumnVector(probabilities, true);
-  const N = p.length;
-  const s = new Array<number>(N);
+  const N = probabilities.length;
+  const s: number[] = [];
+  s.length = N;
 
   let j = 0;
-  p.forEach((e, i) => {
-    if (rand.float() < e) s[j++] = i;
+  probabilities.forEach((value, index) => {
+    if (rand.float() <= value) s[j++] = index;
   });
 
-  s.splice(j, N);
+  s.splice(j);
   return s;
 }
 
@@ -43,12 +41,11 @@ export function conditionalPoissonSampling({
 }: FixedSizedOptions & PipsOptions): number[] {
   // depends on poisson
   // sum(p) should be n or close to n
-  const p = new ColumnVector(probabilities, true);
   let s: number[] = [];
   let run: number = 0;
 
   while (s.length != n) {
-    s = poissonSampling({probabilities: p, rand});
+    s = poissonSampling({probabilities, rand});
 
     run++;
     if (run >= 1e5)

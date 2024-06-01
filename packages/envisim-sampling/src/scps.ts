@@ -1,11 +1,10 @@
-import {type TArrayLike} from '@envisim/matrix';
+import {type ColumnVector, vectorToArrayOfLength} from '@envisim/matrix';
 
 import {type AuxiliaryOptions, baseOptions} from './base-options/index.js';
 import {
   CorrelatedPoisson,
   CorrelatedPoissonMethod,
 } from './sampling-classes/index.js';
-import {arrayLikeToArrayAndCheckSize} from './utils.js';
 
 /**
  * Selects a Spatially Correlated Poisson Sample (SCPS)
@@ -21,7 +20,7 @@ export function scps({
   treeBucketSize = baseOptions.treeBucketSize,
 }: AuxiliaryOptions): number[] {
   const N = auxiliaries.nrow;
-  const p = arrayLikeToArrayAndCheckSize(probabilities, N);
+  const p = vectorToArrayOfLength(probabilities, N, true, 'probabilities');
 
   const cps = new CorrelatedPoisson(
     CorrelatedPoissonMethod.SCPS,
@@ -41,7 +40,7 @@ interface ScpsCoordinatedOptions extends AuxiliaryOptions {
   /**
    * Array of random values of size N
    */
-  random: TArrayLike;
+  random: ColumnVector | number[];
 }
 
 /**
@@ -59,8 +58,8 @@ export function scpsCoordinated({
   treeBucketSize = baseOptions.treeBucketSize,
 }: ScpsCoordinatedOptions): number[] {
   const N = auxiliaries.nrow;
-  const p = arrayLikeToArrayAndCheckSize(probabilities, N);
-  const randvals = arrayLikeToArrayAndCheckSize(random, N);
+  const p = vectorToArrayOfLength(probabilities, N, true, 'probabilities');
+  const randvals = vectorToArrayOfLength(random, N, true, 'random');
 
   const cps = new CorrelatedPoisson(
     CorrelatedPoissonMethod.LCPS,
@@ -91,7 +90,7 @@ export function lcps({
   treeBucketSize = baseOptions.treeBucketSize,
 }: AuxiliaryOptions): number[] {
   const N = auxiliaries.nrow;
-  const p = arrayLikeToArrayAndCheckSize(probabilities, N);
+  const p = vectorToArrayOfLength(probabilities, N, true, 'probabilities');
 
   const cps = new CorrelatedPoisson(
     CorrelatedPoissonMethod.LCPS,

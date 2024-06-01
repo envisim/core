@@ -1,10 +1,11 @@
-import {ColumnVector, arrayLikeToArray} from '@envisim/matrix';
+import {ColumnVector, vectorToArray} from '@envisim/matrix';
 
 import {
   type FixedSizedOptions,
   type PipsOptions,
   baseOptions,
 } from './base-options/index.js';
+import {assertSizeRange} from './utils.js';
 
 /**
  * Generation of a random number between 0 and length of prob according to prob
@@ -17,7 +18,7 @@ export function discrete({
   probabilities,
   rand = baseOptions.rand,
 }: PipsOptions): number {
-  const p = arrayLikeToArray(probabilities, true);
+  const p = vectorToArray(probabilities, true);
   const N = p.length;
   const rn = rand.float();
   let psum = 0.0;
@@ -42,9 +43,10 @@ export function discreteArr({
   probabilities,
   rand = baseOptions.rand,
 }: FixedSizedOptions & PipsOptions): number[] {
-  const p = arrayLikeToArray(probabilities, true);
+  const p = vectorToArray(probabilities, true);
   const N = p.length;
-  const s = new Array<number>(n).fill(N - 1);
+  assertSizeRange(n, 0, N, 'n');
+  const s = Array.from<number>({length: n}).fill(N - 1);
 
   for (let i = 0; i < n; i++) {
     const re = rand.float();

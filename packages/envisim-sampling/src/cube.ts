@@ -1,4 +1,4 @@
-import {type Matrix, arrayLikeToArray} from '@envisim/matrix';
+import {type Matrix, vectorToArrayOfLength} from '@envisim/matrix';
 
 import {
   type AuxiliaryOptions,
@@ -27,10 +27,7 @@ export function cube({
   eps = baseOptions.eps,
 }: CubeOptions): number[] {
   const N = balancing.nrow;
-  const p = arrayLikeToArray(probabilities, true);
-
-  if (p.length !== N)
-    throw new RangeError('Rows in xm must match length of prob');
+  const p = vectorToArrayOfLength(probabilities, N, true, 'probabilities');
 
   const cb = new Cube(
     CubeMethod.CUBE,
@@ -64,10 +61,8 @@ export function localCube({
   treeBucketSize = baseOptions.treeBucketSize,
 }: LocalCubeOptions): number[] {
   const N = balancing.nrow;
-  const p = arrayLikeToArray(probabilities, true);
+  const p = vectorToArrayOfLength(probabilities, N, true, 'probabilities');
 
-  if (p.length !== N)
-    throw new RangeError('Rows in xb must match length of prob');
   if (auxiliaries.nrow !== N)
     throw new RangeError('Rows in xb must match rows in xs');
 

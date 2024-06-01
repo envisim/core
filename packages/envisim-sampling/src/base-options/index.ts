@@ -1,4 +1,4 @@
-import {Matrix, TArrayLike} from '@envisim/matrix';
+import {ColumnVector, Matrix} from '@envisim/matrix';
 import {Random} from '@envisim/random';
 
 export interface BaseOptions {
@@ -29,7 +29,7 @@ export interface PipsOptions extends BaseOptions {
   /**
    * Inclusion probabilities of size N
    */
-  probabilities: TArrayLike;
+  probabilities: number[] | ColumnVector;
 }
 
 export interface FixedSizedOptions extends BaseOptions {
