@@ -1,6 +1,6 @@
 import {
-  AreaCollection,
   Geodesic,
+  GeometricPrimitive,
   Layer,
   PointCollection,
   PointFeature,
@@ -15,6 +15,7 @@ import {
 
 export interface SampleRelascopePointsOptions
   extends SamplePointsOnAreasOptions {
+  baseLayer: Layer<PointCollection>;
   sizeProperty: string;
   factor: number;
 }
@@ -32,27 +33,25 @@ export interface SampleRelascopePointsOptions
  * Default buffer is zero, which gives a negative bias for estimates of positive
  * quantities.
  *
- * @param frameLayer
- * @param baseLayer a PointCollection of single Point features.
- * @param opts an object containing buffer, ratio (dx/dy), rand
+ * @param opts an options object
  */
 export function sampleRelascopePoints(
-  frameLayer: Layer<AreaCollection>,
-  baseLayer: Layer<PointCollection>,
   opts: SampleRelascopePointsOptions,
 ): Layer<PointCollection> {
-  const {factor, sizeProperty} = opts;
+  const {layer, baseLayer, factor, sizeProperty} = opts;
+  Layer.assert(layer, GeometricPrimitive.AREA);
+
   // Square root of relascope factor
   const sqrtRf = Math.sqrt(factor);
   // Set buffer
   const buffer = opts.buffer || 0;
   opts.buffer = buffer;
   // Select sample of points (optional buffer via opts)
-  const pointSample = samplePointsOnAreas(frameLayer, opts);
+  const pointSample = samplePointsOnAreas(opts);
   // To store sampled features
   const sampledFeatures: PointFeature[] = [];
   const baseFeatures = baseLayer.collection.features;
-  const frameFeatures = frameLayer.collection.features;
+  const frameFeatures = layer.collection.features;
 
   // Find selected points in base layer and check if seleccted base point
   // is in frame and transfer _designWeight

@@ -4,6 +4,7 @@ import {
   Circle,
   type GeoJSON as GJ,
   Geodesic,
+  GeometricPrimitive,
   type IPropertyRecord,
   Layer,
   MultiCircle,
@@ -64,7 +65,8 @@ export function uniformPositionsInBBox(
 }
 
 export interface SamplePointsOnAreasOptions {
-  method: 'uniform' | 'systematic';
+  layer: Layer<AreaCollection>;
+  method: 'independent' | 'systematic';
   sampleSize: number;
   buffer?: number;
   ratio?: number;
@@ -79,12 +81,12 @@ export interface SamplePointsOnAreasOptions {
  * @param opts an optional options object.
  */
 export function samplePointsOnAreas(
-  layer: Layer<AreaCollection>,
   opts: SamplePointsOnAreasOptions,
 ): Layer<PointCollection> {
-  let {method, sampleSize} = opts;
+  const {layer, method, sampleSize} = opts;
+  Layer.assert(layer, GeometricPrimitive.AREA);
 
-  if (method !== 'systematic' && method !== 'uniform') {
+  if (method !== 'systematic' && method !== 'independent') {
     throw new Error("Input method must be either'uniform' or 'systematic'");
   }
 
@@ -97,7 +99,7 @@ export function samplePointsOnAreas(
   }
   // Set options.
   const radius = opts.buffer || 0;
-  const ratio = opts.ratio || 1;
+  const ratio = opts.ratio ?? 1;
   const rand = opts.rand ?? new Random();
 
   // copy the collection
@@ -144,7 +146,7 @@ export function samplePointsOnAreas(
   const parentIndex: number[] = [];
   let pointLonLat: GJ.Position;
   switch (method) {
-    case 'uniform': {
+    case 'independent': {
       // Store number of iterations and number of hits.
       let iterations = 0;
       let hits = 0;

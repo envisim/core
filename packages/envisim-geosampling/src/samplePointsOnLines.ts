@@ -1,5 +1,6 @@
 import {
   type GeoJSON as GJ,
+  GeometricPrimitive,
   Layer,
   LineCollection,
   LineGeometryCollection,
@@ -12,7 +13,8 @@ import {
 import {Random} from '@envisim/random';
 
 export interface SamplePointsOnLinesOptions {
-  method: 'uniform' | 'systematic';
+  layer: Layer<LineCollection>;
+  method: 'independent' | 'systematic';
   sampleSize: number;
   rand?: Random;
 }
@@ -124,12 +126,15 @@ function samplePointsOnGeometryCollection(
  * @param opts an options object.
  */
 export function samplePointsOnLines(
-  layer: Layer<LineCollection>,
   opts: SamplePointsOnLinesOptions,
 ): Layer<PointCollection> {
-  let {method, sampleSize} = opts;
-  if (method !== 'systematic' && method !== 'uniform') {
-    throw new Error("Input method must be either 'uniform' or 'systematic'.");
+  const {layer, method, sampleSize} = opts;
+  Layer.assert(layer, GeometricPrimitive.LINE);
+
+  if (method !== 'systematic' && method !== 'independent') {
+    throw new Error(
+      "Input method must be either 'independent' or 'systematic'.",
+    );
   }
 
   if (
@@ -150,7 +155,7 @@ export function samplePointsOnLines(
   let distances: number[] = []; // Holds sample points as distances from 0 to L.
 
   switch (method) {
-    case 'uniform':
+    case 'independent':
       distances = new Array(sampleSize)
         .fill(0)
         .map(() => rand.float() * L)

@@ -4,6 +4,7 @@ import {
   AreaFeature,
   type GeoJSON as GJ,
   Geodesic,
+  GeometricPrimitive,
   Layer,
   Point,
   PointCollection,
@@ -40,25 +41,26 @@ function randomPositionInCluster(
   return Geodesic.destination(center, dist, azimuth);
 }
 
+export interface ThomasClusterProcessOptions {
+  layer: Layer<AreaCollection>;
+  intensityOfParents: number;
+  meanOfCluster: number;
+  sigmaOfCluster: number;
+  rand?: Random;
+}
+
 /**
  * Generates points from a Thomas cluster point process
  * on areas of input area layer.
  *
- * @param layer an area layer.
- * @param intensityOfParents number of parent points / clusters per square meter.
- * @param meanOfCluster mean number of points per cluster.
- * @param sigmaOfCluster standard deviation in meters in Normal distributions for generating points offset in cluster.
- * @param opts an optional options object.
- * @param opts.rand an optional instance of Random.
+ * @param opts an options object.
+
  */
 export function thomasClusterProcess(
-  layer: Layer<AreaCollection>,
-  intensityOfParents: number,
-  meanOfCluster: number,
-  sigmaOfCluster: number,
-  opts: {rand?: Random} = {},
+  opts: ThomasClusterProcessOptions,
 ): Layer<PointCollection> {
-
+  const {layer, intensityOfParents, meanOfCluster, sigmaOfCluster} = opts;
+  Layer.assert(layer, GeometricPrimitive.AREA);
   const rand = opts.rand ?? new Random();
   const box = bbox4(layer.collection.getBBox());
   // Extend box by 4 * sigmaOfCluster to avoid edge effects.

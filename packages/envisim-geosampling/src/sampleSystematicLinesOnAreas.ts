@@ -2,6 +2,7 @@ import {
   AreaCollection,
   type GeoJSON as GJ,
   Geodesic,
+  GeometricPrimitive,
   Layer,
   LineCollection,
   LineFeature,
@@ -16,7 +17,8 @@ import {Random} from '@envisim/random';
 
 import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
 
-export interface SampleLinesOnAreasOptions {
+export interface SampleSystematicLinesOnAreasOptions {
+  layer: Layer<AreaCollection>;
   distBetween: number;
   rotation?: number;
   rand?: Random;
@@ -26,17 +28,14 @@ export interface SampleLinesOnAreasOptions {
 /**
  * Selects a sample of lines systematically over all areas.
  *
- * @param layer an area layer.
- * @param distBetween distance in meters between the parallell lines.
  * @param opts an options object.
- * @param opts.rotation rotation angle in degrees.
- * @param opts.rand optional instance of Random.
  */
 export function sampleSystematicLinesOnAreas(
-  layer: Layer<AreaCollection>,
-  opts: SampleLinesOnAreasOptions,
+  opts: SampleSystematicLinesOnAreasOptions,
 ): Layer<LineCollection> {
-  const distBetween = opts.distBetween;
+  const {layer, distBetween} = opts;
+  Layer.assert(layer, GeometricPrimitive.AREA);
+
   if (typeof distBetween !== 'number' || distBetween <= 0) {
     throw new Error('Input distBetween must be a positive number.');
   }

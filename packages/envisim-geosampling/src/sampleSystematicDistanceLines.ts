@@ -1,5 +1,4 @@
 import {
-  AreaCollection,
   Layer,
   PointCollection,
   PointFeature,
@@ -9,35 +8,30 @@ import {Random} from '@envisim/random';
 import {copy} from '@envisim/utils';
 
 import {DetectionFunction, effectiveHalfWidth} from './sampleDistanceUtils.js';
-import {sampleSystematicLinesOnAreas} from './sampleSystematicLinesOnAreas.js';
+import {
+  type SampleSystematicLinesOnAreasOptions,
+  sampleSystematicLinesOnAreas,
+} from './sampleSystematicLinesOnAreas.js';
 
-export type TsampleDistanceLinesOpts = {
-  rotation?: number;
-  rand?: Random;
-};
+export interface SampleSystematicDistanceLinesOptions
+  extends SampleSystematicLinesOnAreasOptions {
+  baseLayer: Layer<PointCollection>;
+  detectionFunction: DetectionFunction;
+  cutoff: number;
+}
 
 /**
  * Distance sampling with line transects.
  * Selects a line sample on an area frame and collect point objects from a base
  * layer using a detection function to (randomly) determine inclusion.
  *
- * @param frameLayer
- * @param distBetween the distance in meters between lines.
- * @param baseLayer a PointCollection of single Point features.
- * @param detectionFunction the detection function.
- * @param cutoff positive number, the maximum distance for detection.
- * @param opts an object containing distBetween, rotation, rand.
- * @param opts.rotation optional fixed rotation of the lines.
- * @param opts.rand an optional instance of Random.
+ * @param opts an options object.
+
  */
 export function sampleSystematicDistanceLines(
-  frameLayer: Layer<AreaCollection>,
-  distBetween: number,
-  baseLayer: Layer<PointCollection>,
-  detectionFunction: DetectionFunction,
-  cutoff: number,
-  opts: TsampleDistanceLinesOpts,
+  opts: SampleSystematicDistanceLinesOptions,
 ): Layer<PointCollection> {
+  const {layer, baseLayer, detectionFunction, cutoff, distBetween} = opts;
   // Compute effective half width
   const effHalfWidth = effectiveHalfWidth(detectionFunction, cutoff);
   // Get random generator
@@ -45,16 +39,13 @@ export function sampleSystematicDistanceLines(
   opts.rand = rand;
   // Compute design weight for this selection
   const dw = distBetween / (effHalfWidth * 2);
+
   // Select sample of lines
-  const lineFeatures = sampleSystematicLinesOnAreas(
-    frameLayer,
-    distBetween,
-    opts,
-  ).collection.features;
+  const lineFeatures = sampleSystematicLinesOnAreas(opts).collection.features;
   // To store sampled features
   const sampledFeatures: PointFeature[] = [];
   const baseFeatures = baseLayer.collection.features;
-  const frameFeatures = frameLayer.collection.features;
+  const frameFeatures = layer.collection.features;
   // Find selected points in base layer and check if
   // seleccted base point is in frame and transfer _designWeight
   baseFeatures.forEach((pointFeature) => {
@@ -87,7 +78,7 @@ export function sampleSystematicDistanceLines(
 
                 const newFeature = new PointFeature(pointFeature, false);
 
-                newFeature.properties['_designWeight'] = designWeight;
+                newFeature.properties['_designWeight'] *= designWeight;
                 newFeature.properties['_parent'] = sampleLineIndex;
                 newFeature.properties['_distance'] = dist;
 

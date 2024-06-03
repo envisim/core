@@ -1,8 +1,19 @@
 import {Poisson} from '@envisim/distributions';
-import {AreaCollection, Layer, PointCollection} from '@envisim/geojson-utils';
+import {
+  AreaCollection,
+  GeometricPrimitive,
+  Layer,
+  PointCollection,
+} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
 import {uniformBinomialPointProcess} from './uniformBinomialPointProcess.js';
+
+export interface UniformPoissonProcessOptions {
+  layer: Layer<AreaCollection>;
+  intensity: number;
+  rand?: Random;
+}
 
 /**
  * Generates points from a uniform Poisson point process
@@ -10,18 +21,14 @@ import {uniformBinomialPointProcess} from './uniformBinomialPointProcess.js';
  * random number of points, the points are generated uniformly
  * on a spherical model of the earth.
  *
- * @param layer an area layer.
- * @param intensity number of points per square meter.
- * @param opts an optional options object.
- * @param opts.rand an optional instance of Random.
- * @returns a PointCollection of generated points.
+ * @param opts an options object.
+
  */
 export function uniformPoissonPointProcess(
-  layer: Layer<AreaCollection>,
-  intensity: number,
-  opts: {rand?: Random} = {},
+  opts: UniformPoissonProcessOptions,
 ): Layer<PointCollection> {
-
+  const {layer, intensity} = opts;
+  Layer.assert(layer, GeometricPrimitive.AREA);
   const rand = opts.rand ?? new Random();
   const A = layer.collection.area();
   const mu = intensity * A;
@@ -29,5 +36,5 @@ export function uniformPoissonPointProcess(
   if (sampleSize === 0) {
     return new Layer(new PointCollection({features: []}, true), {}, true);
   }
-  return uniformBinomialPointProcess(layer, sampleSize, {rand: rand});
+  return uniformBinomialPointProcess({...opts, sampleSize});
 }
