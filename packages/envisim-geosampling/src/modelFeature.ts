@@ -1,14 +1,14 @@
 import {
   type GeoJSON as GJ,
   Geodesic,
+  GeometricPrimitive,
   cutAreaGeometry,
   cutLineGeometry,
+  getFeaturePrimitive,
   typeGuards,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 import {copy} from '@envisim/utils';
-
-import {typeOfFeature} from './typeOfFeature.js';
 
 // This file has a set of functions to deal with a model
 // feature (tract), which is a GeoJSON feature with cartesian
@@ -90,7 +90,10 @@ type PlaceOpts = {
   randomRotation: boolean;
   rand: Random;
   radius?: number;
-  type?: string;
+  type?:
+    | GeometricPrimitive.POINT
+    | GeometricPrimitive.LINE
+    | GeometricPrimitive.AREA;
 };
 
 /**
@@ -137,16 +140,16 @@ function placeModelFeature(
     throw new Error('modelFeature is not of type Feature.');
   }
   const radius = opts.radius ?? radiusOfGeometry(feature.geometry);
-  const type = opts.type ?? typeOfFeature(feature);
+  const type = opts.type ?? getFeaturePrimitive(feature);
   setCoordinatesForGeometry(feature.geometry, position, rotation);
 
   // check if antimeridian cut may be needed here
 
   if (Geodesic.distance(position, [180, position[1]]) < radius) {
     // May need cut if area or line as the distance to the antimeridian is less than the radius
-    if (type === 'area') {
+    if (type === GeometricPrimitive.AREA) {
       feature.geometry = cutAreaGeometry(feature.geometry as GJ.AreaGeometry);
-    } else if (type === 'line') {
+    } else if (type === GeometricPrimitive.LINE) {
       feature.geometry = cutLineGeometry(feature.geometry as GJ.LineGeometry);
     }
   }
