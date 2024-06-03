@@ -1,5 +1,4 @@
 import {
-  AreaCollection,
   Geodesic,
   Layer,
   PointCollection,
@@ -17,6 +16,7 @@ import {
 
 export interface SampleDistancePointsOptions
   extends SamplePointsOnAreasOptions {
+  baseLayer: Layer<PointCollection>;
   detectionFunction: DetectionFunction;
   cutoff: number;
 }
@@ -31,12 +31,10 @@ export interface SampleDistancePointsOptions
 
  */
 export function sampleDistancePoints(
-  layer: Layer<AreaCollection>,
-  baseLayer: Layer<PointCollection>,
   opts: SampleDistancePointsOptions,
 ): Layer<PointCollection> {
   // Check input first
-  let {detectionFunction, cutoff} = opts;
+  const {layer, baseLayer, detectionFunction, cutoff} = opts;
 
   const rand = opts.rand ?? new Random();
   // Compute effective radius
@@ -45,7 +43,7 @@ export function sampleDistancePoints(
   // Select sample of points (optional buffer via opts)
   const buffer = opts.buffer ?? cutoff;
   //opts.samplePointsOnAreasOptions.buffer = buffer;
-  const pointSample = samplePointsOnAreas(layer, {
+  const pointSample = samplePointsOnAreas({
     ...opts,
     buffer,
   });
