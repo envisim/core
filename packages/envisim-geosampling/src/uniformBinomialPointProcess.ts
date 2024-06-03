@@ -9,7 +9,6 @@ import {Random} from '@envisim/random';
 import {samplePointsOnAreas} from './samplePointsOnAreas.js';
 
 export interface UniformBinomialPointProcessOptions {
-  layer: Layer<AreaCollection>;
   sampleSize: number;
   rand?: Random;
 }
@@ -19,13 +18,18 @@ export interface UniformBinomialPointProcessOptions {
  * on areas of input area layer. The points are generated
  * uniformly on a spherical model of the earth.
  *
+ * @param layer
  * @param opts an options object.
  */
 export function uniformBinomialPointProcess(
+  layer: Layer<AreaCollection>,
   opts: UniformBinomialPointProcessOptions,
 ): Layer<PointCollection> {
-  Layer.assert(opts.layer, GeometricPrimitive.AREA);
-  const pointsLayer = samplePointsOnAreas({...opts, method: 'independent'});
+  Layer.assert(layer, GeometricPrimitive.AREA);
+  const pointsLayer = samplePointsOnAreas(layer, {
+    ...opts,
+    method: 'independent',
+  });
   // Remove _designWeight property
   pointsLayer.collection.forEach((feature) => {
     feature.properties = {};

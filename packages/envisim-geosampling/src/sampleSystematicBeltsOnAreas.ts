@@ -18,7 +18,6 @@ import {Random} from '@envisim/random';
 import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
 
 export interface SampleBeltsOnAreasOptions {
-  layer: Layer<AreaCollection>;
   distBetween: number;
   halfWidth: number;
   rotation?: number;
@@ -33,9 +32,10 @@ export interface SampleBeltsOnAreasOptions {
  * @param opts an options object.
  */
 export const sampleSystematicBeltsOnAreas = (
+  layer: Layer<AreaCollection>,
   opts: SampleBeltsOnAreasOptions,
 ): Layer<AreaCollection> => {
-  const {layer, distBetween, halfWidth} = opts;
+  const {distBetween, halfWidth} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
 
   if (typeof distBetween !== 'number' || distBetween <= 0) {

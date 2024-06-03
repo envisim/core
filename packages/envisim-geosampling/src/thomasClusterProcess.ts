@@ -42,7 +42,6 @@ function randomPositionInCluster(
 }
 
 export interface ThomasClusterProcessOptions {
-  layer: Layer<AreaCollection>;
   intensityOfParents: number;
   meanOfCluster: number;
   sigmaOfCluster: number;
@@ -57,9 +56,10 @@ export interface ThomasClusterProcessOptions {
 
  */
 export function thomasClusterProcess(
+  layer: Layer<AreaCollection>,
   opts: ThomasClusterProcessOptions,
 ): Layer<PointCollection> {
-  const {layer, intensityOfParents, meanOfCluster, sigmaOfCluster} = opts;
+  const {intensityOfParents, meanOfCluster, sigmaOfCluster} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
   const rand = opts.rand ?? new Random();
   const box = bbox4(layer.collection.getBBox());

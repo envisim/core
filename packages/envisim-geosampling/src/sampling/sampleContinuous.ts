@@ -8,142 +8,110 @@ import {
   PointCollection,
   PointFeature,
 } from '@envisim/geojson-utils';
-import {type Random} from '@envisim/random';
 
 import {
-  type TsampleTractsOnAreasOpts,
+  type SampleFeaturesOnAreasOptions,
   sampleFeaturesOnAreas,
 } from '../sampleFeaturesOnAreas.js';
-import {samplePointsOnLines} from '../samplePointsOnLines.js';
 import {
-  type TsampleBeltsOnAreasOpts,
+  SamplePointsOnLinesOptions,
+  samplePointsOnLines,
+} from '../samplePointsOnLines.js';
+import {
+  type SampleBeltsOnAreasOptions,
   sampleSystematicBeltsOnAreas,
 } from '../sampleSystematicBeltsOnAreas.js';
 import {
-  type TsampleLinesOnAreasOpts,
+  type SampleSystematicLinesOnAreasOptions,
   sampleSystematicLinesOnAreas,
 } from '../sampleSystematicLinesOnAreas.js';
 
-interface ISampleAreaFeaturesOnAreasOpts extends TsampleTractsOnAreasOpts {
-  modelFeature: GJ.AreaFeature;
-  design: 'uniform' | 'systematic';
-  sampleSize: number;
+interface SampleAreaToAreaFeatureOptions
+  extends SampleFeaturesOnAreasOptions<GJ.AreaFeature> {
   methodName: 'areaFeature';
 }
-
-interface ISampleBeltsOnAreasOpts extends TsampleBeltsOnAreasOpts {
-  distBetween: number;
-  halfWidth: number;
+interface SampleAreaToBeltOptions extends SampleBeltsOnAreasOptions {
   methodName: 'systematicBelt';
 }
 
-export type TsampleAreaToAreaOpts =
-  | ISampleAreaFeaturesOnAreasOpts
-  | ISampleBeltsOnAreasOpts;
+export type SampleAreaToAreaOptions =
+  | SampleAreaToAreaFeatureOptions
+  | SampleAreaToBeltOptions;
 
 export function sampleAreaToArea(
   layer: Layer<AreaCollection>,
-  opts: TsampleAreaToAreaOpts,
+  opts: SampleAreaToAreaOptions,
 ): Layer<AreaCollection> {
   if (opts.methodName === 'systematicBelt') {
-    return sampleSystematicBeltsOnAreas(
-      layer,
-      opts.distBetween,
-      opts.halfWidth,
-      opts,
-    );
+    return sampleSystematicBeltsOnAreas(layer, opts);
   }
   if (opts.methodName == 'areaFeature') {
-    return sampleFeaturesOnAreas(
-      layer,
-      opts.design,
-      opts.sampleSize,
-      opts.modelFeature,
-      opts,
-    );
+    return sampleFeaturesOnAreas(layer, opts);
   }
   throw new Error(
     'methodName does not match available methods systematicBelt or areaFeature',
   );
 }
 
-interface ISampleLinesOnAreasOpts extends TsampleLinesOnAreasOpts {
-  distBetween: number;
+interface SampleAreaToLineFeatureOptions
+  extends SampleFeaturesOnAreasOptions<GJ.LineFeature> {
+  methodName: 'lineFeature';
+}
+interface SampleAreaToSystematicLineOptions
+  extends SampleSystematicLinesOnAreasOptions {
   methodName: 'systematicLine';
 }
 
-interface ISampleLineFeaturesOnAreasOpts extends TsampleTractsOnAreasOpts {
-  modelFeature: GJ.LineFeature;
-  design: 'uniform' | 'systematic';
-  sampleSize: number;
-  methodName: 'lineFeature';
-}
-
-export type TsampleAreaToLineOpts =
-  | ISampleLineFeaturesOnAreasOpts
-  | ISampleLinesOnAreasOpts;
+export type SampleAreaToLineOptions =
+  | SampleAreaToLineFeatureOptions
+  | SampleAreaToSystematicLineOptions;
 
 export function sampleAreaToLine(
   layer: Layer<AreaCollection>,
-  opts: TsampleAreaToLineOpts,
+  opts: SampleAreaToLineOptions,
 ): Layer<LineCollection> {
   if (opts.methodName === 'systematicLine') {
-    return sampleSystematicLinesOnAreas(layer, opts.distBetween, opts);
+    return sampleSystematicLinesOnAreas(layer, opts);
   }
   if (opts.methodName == 'lineFeature') {
-    return sampleFeaturesOnAreas(
-      layer,
-      opts.design,
-      opts.sampleSize,
-      opts.modelFeature,
-      opts,
-    );
+    return sampleFeaturesOnAreas(layer, opts);
   }
   throw new Error(
     'methodName does not match available methods systematicLine or lineFeature',
   );
 }
 
-interface ISamplePointFeaturesOnAreasOpts extends TsampleTractsOnAreasOpts {
-  modelFeature: GJ.PointFeature;
-  design: 'uniform' | 'systematic';
-  sampleSize: number;
-}
-export type TsampleAreaToPointOpts = ISamplePointFeaturesOnAreasOpts;
+export interface SampleAreaToPointOptions
+  extends SampleFeaturesOnAreasOptions<GJ.PointFeature> {}
 
 export function sampleAreaToPoint(
   layer: Layer<AreaCollection>,
-  opts: TsampleAreaToPointOpts,
+  opts: SampleAreaToPointOptions,
 ): Layer<PointCollection> {
-  return sampleFeaturesOnAreas(
-    layer,
-    opts.design,
-    opts.sampleSize,
-    opts.modelFeature,
-    opts,
-  );
+  return sampleFeaturesOnAreas(layer, opts);
 }
 
-export type TsampleLineToPointOpts = {
-  design: 'uniform' | 'systematic';
-  sampleSize: number;
-  rand?: Random;
-};
+export interface SampleLineToPointOptions extends SamplePointsOnLinesOptions {}
 
 export function sampleLineToPoint(
   layer: Layer<LineCollection>,
-  opts: TsampleLineToPointOpts,
+  opts: SampleLineToPointOptions,
 ): Layer<PointCollection> {
-  return samplePointsOnLines(layer, opts.design, opts.sampleSize, opts);
+  return samplePointsOnLines(layer, opts);
+}
+
+export interface SampleLineToPointStratified {
+  stratifyOn: string;
+  strataOptions: SampleLineToPointOptions | SampleLineToPointOptions[];
 }
 
 // Stratification for each method.
 
 export function sampleLineToPointStratified(
   layer: Layer<LineCollection>,
-  stratifyOn: string,
-  opts: TsampleLineToPointOpts | TsampleLineToPointOpts[],
+  opts: SampleLineToPointStratified,
 ): Layer<PointCollection> {
+  const stratifyOn = opts.stratifyOn;
   if (!(stratifyOn in layer.propertyRecord))
     throw new Error(
       'stratification is not possible as property record does not contain the required property',
@@ -190,7 +158,7 @@ export function sampleLineToPointStratified(
 
     sampleLayer = sampleLineToPoint(
       stratumLayer,
-      fixedOpts[i] as TsampleLineToPointOpts,
+      fixedOpts[i] as SampleLineToPointOptions,
     );
 
     features = [...features, ...sampleLayer.collection.features];
@@ -203,11 +171,16 @@ export function sampleLineToPointStratified(
   );
 }
 
+export interface SampleAreaToPointStratified {
+  stratifyOn: string;
+  strataOptions: SampleAreaToPointOptions | SampleAreaToPointOptions[];
+}
+
 export function sampleAreaToPointStratified(
   layer: Layer<AreaCollection>,
-  stratifyOn: string,
-  opts: TsampleAreaToPointOpts | TsampleAreaToPointOpts[],
+  opts: SampleAreaToPointStratified,
 ): Layer<PointCollection> {
+  const stratifyOn = opts.stratifyOn;
   if (!(stratifyOn in layer.propertyRecord))
     throw new Error(
       'stratification is not possible as property record does not contain the required property',
@@ -254,7 +227,7 @@ export function sampleAreaToPointStratified(
 
     sampleLayer = sampleAreaToPoint(
       stratumLayer,
-      fixedOpts[i] as TsampleAreaToPointOpts,
+      fixedOpts[i] as SampleAreaToPointOptions,
     );
 
     features = [...features, ...sampleLayer.collection.features];
@@ -268,14 +241,16 @@ export function sampleAreaToPointStratified(
   );
 }
 
+export interface SampleAreaToAreaStratifiedOptions {
+  stratifyOn: string;
+  strataOptions: SampleAreaToAreaOptions | SampleAreaToAreaOptions[];
+}
+
 export function sampleAreaToAreaStratified(
   layer: Layer<AreaCollection>,
-  stratifyOn: string,
-  opts:
-    | TsampleAreaToAreaOpts
-    | ISampleAreaFeaturesOnAreasOpts[]
-    | ISampleBeltsOnAreasOpts[],
+  opts: SampleAreaToAreaStratifiedOptions,
 ): Layer<AreaCollection> {
+  const stratifyOn = opts.stratifyOn;
   if (!(stratifyOn in layer.propertyRecord))
     throw new Error(
       'stratification is not possible as property record does not contain the required property',
@@ -322,7 +297,7 @@ export function sampleAreaToAreaStratified(
 
     sampleLayer = sampleAreaToArea(
       stratumLayer,
-      fixedOpts[i] as TsampleAreaToAreaOpts,
+      fixedOpts[i] as SampleAreaToAreaOptions,
     );
 
     features = [...features, ...sampleLayer.collection.features];
@@ -336,14 +311,16 @@ export function sampleAreaToAreaStratified(
   );
 }
 
+export interface SampleAreaToLineStratified {
+  stratifyOn: string;
+  strataOptions: SampleAreaToLineOptions | SampleAreaToLineOptions[];
+}
+
 export function sampleAreaToLineStratified(
   layer: Layer<AreaCollection>,
-  stratifyOn: string,
-  opts:
-    | TsampleAreaToLineOpts
-    | ISampleLineFeaturesOnAreasOpts[]
-    | ISampleLinesOnAreasOpts[],
+  opts: SampleAreaToLineStratified,
 ): Layer<LineCollection> {
+  const stratifyOn = opts.stratifyOn;
   if (!(stratifyOn in layer.propertyRecord))
     throw new Error(
       'stratification is not possible as property record does not contain the required property',
@@ -390,7 +367,7 @@ export function sampleAreaToLineStratified(
 
     sampleLayer = sampleAreaToLine(
       stratumLayer,
-      fixedOpts[i] as TsampleAreaToLineOpts,
+      fixedOpts[i] as SampleAreaToLineOptions,
     );
 
     features = [...features, ...sampleLayer.collection.features];

@@ -7,7 +7,7 @@ import {
 import {bbox4, longitudeCenter} from '@envisim/geojson-utils';
 import {ColumnVector, Matrix} from '@envisim/matrix';
 
-import type {ISampleOptionsFinite} from './sampleFinite.js';
+import type {SampleFiniteOptions} from './sampleFinite.js';
 
 /**
  * Get a numerical property as a ColumnVector
@@ -162,7 +162,7 @@ export function balancingMatrixFromLayer(
 
 function probsFromLayer(
   layer: Layer<AreaCollection | LineCollection | PointCollection>,
-  {sampleSize, probabilitiesFrom}: ISampleOptionsFinite,
+  {sampleSize, probabilitiesFrom}: SampleFiniteOptions,
 ): ColumnVector {
   const N = layer.collection.size;
 
@@ -197,7 +197,7 @@ function probsFromLayer(
  */
 export function drawprobsFromLayer(
   layer: Layer<AreaCollection | LineCollection | PointCollection>,
-  options: ISampleOptionsFinite,
+  options: SampleFiniteOptions,
 ): ColumnVector {
   const probs = probsFromLayer(layer, options);
   const sum = probs.sum();
@@ -213,7 +213,7 @@ export function drawprobsFromLayer(
  */
 export function inclprobsFromLayer(
   layer: Layer<AreaCollection | LineCollection | PointCollection>,
-  options: ISampleOptionsFinite,
+  options: SampleFiniteOptions,
 ): ColumnVector {
   if (options.sampleSize <= 0) throw new RangeError('sampleSize is <= 0');
   const x = probsFromLayer(layer, options);

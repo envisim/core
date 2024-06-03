@@ -13,7 +13,6 @@ import {
 import {Random} from '@envisim/random';
 
 export interface SamplePointsOnLinesOptions {
-  layer: Layer<LineCollection>;
   method: 'independent' | 'systematic';
   sampleSize: number;
   rand?: Random;
@@ -126,9 +125,10 @@ function samplePointsOnGeometryCollection(
  * @param opts an options object.
  */
 export function samplePointsOnLines(
+  layer: Layer<LineCollection>,
   opts: SamplePointsOnLinesOptions,
 ): Layer<PointCollection> {
-  const {layer, method, sampleSize} = opts;
+  const {method, sampleSize} = opts;
   Layer.assert(layer, GeometricPrimitive.LINE);
 
   if (method !== 'systematic' && method !== 'independent') {

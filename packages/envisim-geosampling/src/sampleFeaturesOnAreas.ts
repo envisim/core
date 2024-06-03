@@ -22,7 +22,6 @@ import {samplePointsOnAreas} from './samplePointsOnAreas.js';
 export interface SampleFeaturesOnAreasOptions<
   T extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
 > {
-  layer: Layer<AreaCollection>;
   method: 'independent' | 'systematic';
   sampleSize: number;
   modelFeature: T;
@@ -42,20 +41,24 @@ export interface SampleFeaturesOnAreasOptions<
 // create overload signatures for different return types
 // PointCollection, LineCollection, AreaCollection
 function sampleFeaturesOnAreas(
+  layer: Layer<AreaCollection>,
   opts: SampleFeaturesOnAreasOptions<GJ.PointFeature>,
 ): Layer<PointCollection>;
 function sampleFeaturesOnAreas(
+  layer: Layer<AreaCollection>,
   opts: SampleFeaturesOnAreasOptions<GJ.LineFeature>,
 ): Layer<LineCollection>;
 function sampleFeaturesOnAreas(
+  layer: Layer<AreaCollection>,
   opts: SampleFeaturesOnAreasOptions<GJ.AreaFeature>,
 ): Layer<AreaCollection>;
 function sampleFeaturesOnAreas(
+  layer: Layer<AreaCollection>,
   opts: SampleFeaturesOnAreasOptions<
     GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature
   >,
 ): Layer<PointCollection | LineCollection | AreaCollection> {
-  const {layer, method, sampleSize, modelFeature} = opts;
+  const {method, sampleSize, modelFeature} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
 
   const tractType = getFeaturePrimitive(modelFeature);
@@ -76,8 +79,7 @@ function sampleFeaturesOnAreas(
   const sizeOfTract = sizeOfModelFeature(modelFeature);
 
   // Select first a sample of points and use radius as buffer.
-  const pointsLayer = samplePointsOnAreas({
-    layer,
+  const pointsLayer = samplePointsOnAreas(layer, {
     method,
     sampleSize,
     buffer: radius,

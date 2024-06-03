@@ -65,7 +65,6 @@ export function uniformPositionsInBBox(
 }
 
 export interface SamplePointsOnAreasOptions {
-  layer: Layer<AreaCollection>;
   method: 'independent' | 'systematic';
   sampleSize: number;
   buffer?: number;
@@ -81,9 +80,10 @@ export interface SamplePointsOnAreasOptions {
  * @param opts an optional options object.
  */
 export function samplePointsOnAreas(
+  layer: Layer<AreaCollection>,
   opts: SamplePointsOnAreasOptions,
 ): Layer<PointCollection> {
-  const {layer, method, sampleSize} = opts;
+  const {method, sampleSize} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
 
   if (method !== 'systematic' && method !== 'independent') {

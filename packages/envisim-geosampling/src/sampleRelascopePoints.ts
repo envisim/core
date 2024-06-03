@@ -1,4 +1,5 @@
 import {
+  AreaCollection,
   Geodesic,
   GeometricPrimitive,
   Layer,
@@ -33,12 +34,14 @@ export interface SampleRelascopePointsOptions
  * Default buffer is zero, which gives a negative bias for estimates of positive
  * quantities.
  *
+ * @param layer
  * @param opts an options object
  */
 export function sampleRelascopePoints(
+  layer: Layer<AreaCollection>,
   opts: SampleRelascopePointsOptions,
 ): Layer<PointCollection> {
-  const {layer, baseLayer, factor, sizeProperty} = opts;
+  const {baseLayer, factor, sizeProperty} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
 
   // Square root of relascope factor
@@ -47,7 +50,7 @@ export function sampleRelascopePoints(
   const buffer = opts.buffer || 0;
   opts.buffer = buffer;
   // Select sample of points (optional buffer via opts)
-  const pointSample = samplePointsOnAreas(opts);
+  const pointSample = samplePointsOnAreas(layer, opts);
   // To store sampled features
   const sampledFeatures: PointFeature[] = [];
   const baseFeatures = baseLayer.collection.features;

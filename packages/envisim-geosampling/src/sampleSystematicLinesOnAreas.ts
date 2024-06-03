@@ -18,7 +18,6 @@ import {Random} from '@envisim/random';
 import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
 
 export interface SampleSystematicLinesOnAreasOptions {
-  layer: Layer<AreaCollection>;
   distBetween: number;
   rotation?: number;
   rand?: Random;
@@ -28,12 +27,14 @@ export interface SampleSystematicLinesOnAreasOptions {
 /**
  * Selects a sample of lines systematically over all areas.
  *
+ * @param layer
  * @param opts an options object.
  */
 export function sampleSystematicLinesOnAreas(
+  layer: Layer<AreaCollection>,
   opts: SampleSystematicLinesOnAreasOptions,
 ): Layer<LineCollection> {
-  const {layer, distBetween} = opts;
+  const {distBetween} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
 
   if (typeof distBetween !== 'number' || distBetween <= 0) {

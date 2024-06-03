@@ -10,7 +10,6 @@ import {Random} from '@envisim/random';
 import {uniformBinomialPointProcess} from './uniformBinomialPointProcess.js';
 
 export interface UniformPoissonProcessOptions {
-  layer: Layer<AreaCollection>;
   intensity: number;
   rand?: Random;
 }
@@ -21,13 +20,15 @@ export interface UniformPoissonProcessOptions {
  * random number of points, the points are generated uniformly
  * on a spherical model of the earth.
  *
+ * @param layer
  * @param opts an options object.
 
  */
 export function uniformPoissonPointProcess(
+  layer: Layer<AreaCollection>,
   opts: UniformPoissonProcessOptions,
 ): Layer<PointCollection> {
-  const {layer, intensity} = opts;
+  const {intensity} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
   const rand = opts.rand ?? new Random();
   const A = layer.collection.area();
@@ -36,5 +37,5 @@ export function uniformPoissonPointProcess(
   if (sampleSize === 0) {
     return new Layer(new PointCollection({features: []}, true), {}, true);
   }
-  return uniformBinomialPointProcess({...opts, sampleSize});
+  return uniformBinomialPointProcess(layer, {...opts, sampleSize});
 }

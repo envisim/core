@@ -38,7 +38,6 @@ function randomPositionInCluster(
 }
 
 export interface MaternClusterProcessOptions {
-  layer: Layer<AreaCollection>;
   intensityOfParents: number;
   meanOfCluster: number;
   radiusOfCluster: number;
@@ -53,9 +52,10 @@ export interface MaternClusterProcessOptions {
  * @param opts an optional options object.
  */
 export function maternClusterProcess(
+  layer: Layer<AreaCollection>,
   opts: MaternClusterProcessOptions,
 ): Layer<PointCollection> {
-  const {layer, intensityOfParents, meanOfCluster, radiusOfCluster} = opts;
+  const {intensityOfParents, meanOfCluster, radiusOfCluster} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
 
   const rand = opts.rand ?? new Random();
