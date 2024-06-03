@@ -16,8 +16,18 @@ import {
 
 export interface SampleRelascopePointsOptions
   extends SamplePointsOnAreasOptions {
+  /**
+   * The point layer to collect objects from.
+   */
   baseLayer: Layer<PointCollection>;
+  /**
+   * The sizeProperty is the id of the proberty in the baseLayer that should
+   * be used as the size property and should be in meters (e.g. diameter in meters).
+   */
   sizeProperty: string;
+  /**
+   * The relascope factor to be used.
+   */
   factor: number;
 }
 
@@ -35,7 +45,7 @@ export interface SampleRelascopePointsOptions
  * quantities.
  *
  * @param layer
- * @param opts an options object
+ * @param opts
  */
 export function sampleRelascopePoints(
   layer: Layer<AreaCollection>,

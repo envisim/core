@@ -9,8 +9,15 @@ import {Random} from '@envisim/random';
 
 import {uniformBinomialPointProcess} from './uniformBinomialPointProcess.js';
 
-export interface UniformPoissonProcessOptions {
+interface UniformPoissonProcessOptions {
+  /**
+   * The intensity as mean number of points per square meters.
+   */
   intensity: number;
+  /**
+   * An instance of {@link random.Random}
+   * @defaultValue `new Random()`
+   */
   rand?: Random;
 }
 
@@ -21,7 +28,7 @@ export interface UniformPoissonProcessOptions {
  * on a spherical model of the earth.
  *
  * @param layer
- * @param opts an options object.
+ * @param opts 
 
  */
 export function uniformPoissonPointProcess(

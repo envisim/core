@@ -13,8 +13,18 @@ import {
 import {Random} from '@envisim/random';
 
 export interface SamplePointsOnLinesOptions {
+  /**
+   * The method to use to select points.
+   */
   method: 'independent' | 'systematic';
+  /**
+   * The number of points to select.
+   */
   sampleSize: number;
+  /**
+   * An instance of {@link random.Random}
+   * @defaultValue `new Random()`
+   */
   rand?: Random;
 }
 

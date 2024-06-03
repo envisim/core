@@ -18,9 +18,23 @@ import {Random} from '@envisim/random';
 import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
 
 export interface SampleSystematicLinesOnAreasOptions {
+  /**
+   * The distance in meters between the parallel lines.
+   */
   distBetween: number;
+  /**
+   * Optional fixed rotation angle in degrees.
+   */
   rotation?: number;
+  /**
+   * An instance of {@link random.Random}
+   * @defaultValue `new Random()`
+   */
   rand?: Random;
+  /**
+   * The number of points used when converting circles to polygons.
+   * @defaultValue `16`
+   */
   pointsPerCircle?: number;
 }
 

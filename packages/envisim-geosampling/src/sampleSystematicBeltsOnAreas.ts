@@ -18,10 +18,27 @@ import {Random} from '@envisim/random';
 import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
 
 export interface SampleBeltsOnAreasOptions {
+  /**
+   * The distance in meters between the center of the parallel belts.
+   */
   distBetween: number;
+  /**
+   * The half-width of the belt.
+   */
   halfWidth: number;
+  /**
+   * Optional fixed rotation angle in degrees.
+   */
   rotation?: number;
+  /**
+   * An instance of {@link random.Random}
+   * @defaultValue `new Random()`
+   */
   rand?: Random;
+  /**
+   * The number of points used when converting circles to polygons.
+   * @defaultValue `16`
+   */
   pointsPerCircle?: number;
 }
 

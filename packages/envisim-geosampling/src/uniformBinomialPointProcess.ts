@@ -8,8 +8,15 @@ import {Random} from '@envisim/random';
 
 import {samplePointsOnAreas} from './samplePointsOnAreas.js';
 
-export interface UniformBinomialPointProcessOptions {
+interface UniformBinomialPointProcessOptions {
+  /**
+   * The number of points to generate.
+   */
   sampleSize: number;
+  /**
+   * An instance of {@link random.Random}
+   * @defaultValue `new Random()`
+   */
   rand?: Random;
 }
 
@@ -19,7 +26,7 @@ export interface UniformBinomialPointProcessOptions {
  * uniformly on a spherical model of the earth.
  *
  * @param layer
- * @param opts an options object.
+ * @param opts
  */
 export function uniformBinomialPointProcess(
   layer: Layer<AreaCollection>,

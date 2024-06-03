@@ -21,16 +21,45 @@ import {
 } from './utils.js';
 
 export interface SampleFiniteOptions {
+  /**
+   * The name of the sampling method to call from sampling
+   */
   methodName: string;
+  /**
+   * The sample size to use. Should be non-negative integer.
+   */
   sampleSize: number;
+  /**
+   * The id of the numerical property to use to compute probabilities.
+   */
   probabilitiesFrom?: string | null;
+  /**
+   * An array of id's of properties to use to spread the sample.
+   * This apply to lpm1, lpm2, scps, localCube.
+   */
   spreadOn?: string[];
+  /**
+   * An array of id's of properties to use to balance the sample.
+   * This apply to cube and localCube.
+   */
   balanceOn?: string[];
+  /**
+   * Optional spread using geographical coordinates.
+   * This apply to lpm1, lpm2, scps, localCube.
+   * @defaultValue `true`
+   */
   spreadGeo?: boolean;
+  /**
+   * An instance of {@link random.Random}
+   * @defaultValue `new Random()`
+   */
   rand?: Random;
 }
 
 export interface SampleFiniteStratifiedOptions {
+  /**
+   * The id of the categorical property to stratify on.
+   */
   stratifyOn: string;
   strataOptions: SampleFiniteOptions | SampleFiniteOptions[];
 }
@@ -39,6 +68,7 @@ export interface SampleFiniteStratifiedOptions {
  * Select a sample from a layer using sampling methods for a finite
  * population.
  *
+ * @param layer
  * @param opts
  */
 export function sampleFinite<

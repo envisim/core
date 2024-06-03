@@ -65,10 +65,28 @@ export function uniformPositionsInBBox(
 }
 
 export interface SamplePointsOnAreasOptions {
+  /**
+   * The method to use to select points.
+   */
   method: 'independent' | 'systematic';
+  /**
+   * The (average) number of points to select.
+   */
   sampleSize: number;
+  /**
+   * Optional buffer in meters.
+   * @defaultValue `0.0`
+   */
   buffer?: number;
+  /**
+   * Optional ratio between distance in west-east direction to south-north direction.
+   *  * @defaultValue `1.0`
+   */
   ratio?: number;
+  /**
+   * An instance of {@link random.Random}
+   * @defaultValue `new Random()`
+   */
   rand?: Random;
 }
 
@@ -76,8 +94,8 @@ export interface SamplePointsOnAreasOptions {
  * Selects points on areas (if features have bbox, it is used in pointInPolygon
  * to reject point outside bbox if buffer is zero).
  *
- * @param layer an area layer
- * @param opts an optional options object.
+ * @param layer
+ * @param opts
  */
 export function samplePointsOnAreas(
   layer: Layer<AreaCollection>,

@@ -17,8 +17,18 @@ import {
 
 export interface SampleDistancePointsOptions
   extends SamplePointsOnAreasOptions {
+  /**
+   * The point layer to collect objects from.
+   */
   baseLayer: Layer<PointCollection>;
+  /**
+   * The detection function giving the detection probability as a
+   * function of distance.
+   */
   detectionFunction: DetectionFunction;
+  /**
+   * The cutoff distance in meters.
+   */
   cutoff: number;
 }
 

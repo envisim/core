@@ -41,10 +41,23 @@ function randomPositionInCluster(
   return Geodesic.destination(center, dist, azimuth);
 }
 
-export interface ThomasClusterProcessOptions {
+interface ThomasClusterProcessOptions {
+  /**
+   * The mean number of parent points per square meters.
+   */
   intensityOfParents: number;
+  /**
+   * The mean number of points in a cluster.
+   */
   meanOfCluster: number;
+  /**
+   * The standard deviation of distance to parent.
+   */
   sigmaOfCluster: number;
+  /**
+   * An instance of {@link random.Random}
+   * @defaultValue `new Random()`
+   */
   rand?: Random;
 }
 

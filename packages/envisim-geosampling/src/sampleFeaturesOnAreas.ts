@@ -22,24 +22,52 @@ import {samplePointsOnAreas} from './samplePointsOnAreas.js';
 export interface SampleFeaturesOnAreasOptions<
   T extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
 > {
+  /**
+   * The method to use for selection of points.
+   */
   method: 'independent' | 'systematic';
+  /**
+   * The (average) number of points to select.
+   */
   sampleSize: number;
+  /**
+   * A model feature of points or lines or areas to be placed on
+   * the selctedd points.
+   */
   modelFeature: T;
+  /**
+   * Optional rotation angle in degrees to rotate the model feature.
+   * @defaultValue `0.0`
+   */
   rotation?: number;
+  /**
+   * If true, then the model feature will be randomly rotated. Forced random rotation
+   * is used for line features.
+   */
   randomRotation?: boolean;
+  /**
+   * Optional ratio between distance in west-east direction to south-north direction.
+   * @defaultValue `1.0`
+   */
   ratio?: number;
+  /**
+   * An instance of {@link random.Random}
+   * @defaultValue `new Random()`
+   */
   rand?: Random;
+  /**
+   * The number of points used when converting circles to polygons.
+   * @defaultValue `16`
+   */
   pointsPerCircle?: number;
 }
 
 /**
  * Select a sample of features/tracts on areas.
  *
- * @param opts an options object.
+ * @param layer
+ * @param opts
  */
-
-// create overload signatures for different return types
-// PointCollection, LineCollection, AreaCollection
 function sampleFeaturesOnAreas(
   layer: Layer<AreaCollection>,
   opts: SampleFeaturesOnAreasOptions<GJ.PointFeature>,
