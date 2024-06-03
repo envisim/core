@@ -18,14 +18,17 @@ export {
 } from './sampleDistanceUtils.js';
 
 // Sampling methods callable from engine
-//export {sampleFinite, sampleFiniteStratified} from './sampling/sampleFinite.js';
-//export {
-//  sampleContinuous,
-//  sampleContinuousStratified,
-//} from './sampling/sampleContinuous.js';
-
-// Maybe these two should only be internal
-export {typeOfFeature} from './typeOfFeature.js';
+export {sampleFinite, sampleFiniteStratified} from './sampling/sampleFinite.js';
+export {
+  sampleAreaToArea,
+  sampleAreaToAreaStratified,
+  sampleAreaToLine,
+  sampleAreaToLineStratified,
+  sampleAreaToPoint,
+  sampleAreaToPointStratified,
+  sampleLineToPoint,
+  sampleLineToPointStratified,
+} from './sampling/sampleContinuous.js';
 
 // Model features/tracts
 export {
