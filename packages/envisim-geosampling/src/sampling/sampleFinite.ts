@@ -2,12 +2,14 @@ import * as sampling from '@envisim/sampling';
 import {
   AreaCollection,
   AreaFeature,
+  GeometricPrimitive,
   Layer,
   LineCollection,
   LineFeature,
   PointCollection,
   PointFeature,
 } from '@envisim/geojson-utils';
+import {ColumnVector} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
 import {copy} from '@envisim/utils';
 
@@ -45,6 +47,7 @@ export function sampleFinite<
   let mu: number[];
   let n: number;
   const N = layer.collection.size;
+  let probabilities: ColumnVector;
   // Select the correct method, and save indices of the FeatureCollection
   switch (opts.methodName) {
     // Standard
@@ -54,9 +57,7 @@ export function sampleFinite<
       mu = new Array(N).fill(n / N) as number[];
 
       // Get selected indexes
-      idx = sampling[opts.methodName](n, N, {
-        rand: opts.rand,
-      });
+      idx = sampling[opts.methodName]({n, N, rand: opts.rand});
 
       break;
     case 'srswor':
@@ -66,15 +67,13 @@ export function sampleFinite<
       mu = new Array(N).fill(n / N) as number[];
 
       // Get selected indexes
-      idx = sampling[opts.methodName](n, N, {
-        rand: opts.rand,
-      });
+      idx = sampling[opts.methodName]({n, N, rand: opts.rand});
       break;
 
     // Standard w/ incprobs
     case 'systematic':
     case 'randomSystematic':
-    case 'poisson':
+    case 'poissonSampling':
     case 'rpm':
     case 'spm':
     case 'sampford':
@@ -84,7 +83,8 @@ export function sampleFinite<
       mu = inclprobsFromLayer(layer, opts).toArray();
 
       // Get selected indexes
-      idx = sampling[opts.methodName](mu, {
+      idx = sampling[opts.methodName]({
+        probabilities: mu,
         rand: opts.rand,
       });
       break;
@@ -94,14 +94,15 @@ export function sampleFinite<
       n = opts.sampleSize; // TODO: Check if methods do corrections to n
 
       // Compute expected number of inclusions / inclusion probabilities
-      mu = drawprobsFromLayer(layer, opts).multiply(n, true).toArray();
+      probabilities = drawprobsFromLayer(layer, opts);
+      mu = probabilities.multiply(n, false).toArray();
 
       // Get selected indexes
-      idx = sampling[opts.methodName](
-        drawprobsFromLayer(layer, opts),
-        opts.sampleSize,
-        {rand: opts.rand},
-      );
+      idx = sampling[opts.methodName]({
+        probabilities: probabilities,
+        n: opts.sampleSize,
+        rand: opts.rand,
+      });
       break;
 
     // Spreading
@@ -116,17 +117,20 @@ export function sampleFinite<
         !Array.isArray(opts.spreadOn) ||
         (opts.spreadOn.length === 0 && !opts.spreadGeo)
       ) {
-        idx = sampling['rpm'](mu, {
+        idx = sampling['rpm']({
+          probabilities: mu,
           rand: opts.rand,
         });
       } else {
-        idx = sampling[opts.methodName](
-          mu,
-          spreadMatrixFromLayer(layer, opts.spreadOn ?? [], opts.spreadGeo),
-          {
-            rand: opts.rand,
-          },
-        );
+        idx = sampling[opts.methodName]({
+          probabilities: mu,
+          auxiliaries: spreadMatrixFromLayer(
+            layer,
+            opts.spreadOn ?? [],
+            opts.spreadGeo,
+          ),
+          rand: opts.rand,
+        });
       }
       break;
 
@@ -137,32 +141,35 @@ export function sampleFinite<
 
       // Get selected indexes
       if (!Array.isArray(opts.balanceOn) || opts.balanceOn.length === 0) {
-        idx = sampling['rpm'](mu, {
+        idx = sampling['rpm']({
+          probabilities: mu,
           rand: opts.rand,
         });
       } else {
-        idx = sampling[opts.methodName](
-          mu,
-          balancingMatrixFromLayer(layer, opts.balanceOn ?? []),
-          {rand: opts.rand},
-        );
+        idx = sampling[opts.methodName]({
+          probabilities: mu,
+          balancing: balancingMatrixFromLayer(layer, opts.balanceOn ?? []),
+          rand: opts.rand,
+        });
       }
       break;
 
     // Balancing + spreading
-    case 'lcube':
+    case 'localCube':
       // Compute expected number of inclusions / inclusion probabilities
       mu = inclprobsFromLayer(layer, opts).toArray();
 
       // Get selected indexes
-      idx = sampling[opts.methodName](
-        mu,
-        balancingMatrixFromLayer(layer, opts.balanceOn ?? []),
-        spreadMatrixFromLayer(layer, opts.spreadOn ?? [], opts.spreadGeo),
-        {
-          rand: opts.rand,
-        },
-      );
+      idx = sampling[opts.methodName]({
+        probabilities: mu,
+        balancing: balancingMatrixFromLayer(layer, opts.balanceOn ?? []),
+        auxiliaries: spreadMatrixFromLayer(
+          layer,
+          opts.spreadOn ?? [],
+          opts.spreadGeo,
+        ),
+        rand: opts.rand,
+      });
       break;
 
     // Default throw
@@ -170,7 +177,7 @@ export function sampleFinite<
       throw new TypeError('method is not valid');
   }
 
-  if (Layer.isAreaLayer(layer)) {
+  if (Layer.isLayer(layer, GeometricPrimitive.AREA)) {
     // To store selected features
     const features: AreaFeature[] = [];
 
@@ -210,7 +217,7 @@ export function sampleFinite<
     return newLayer;
   }
 
-  if (Layer.isLineLayer(layer)) {
+  if (Layer.isLayer(layer, GeometricPrimitive.LINE)) {
     // To store selected features
     const features: LineFeature[] = [];
 
@@ -250,7 +257,7 @@ export function sampleFinite<
     return newLayer;
   }
 
-  if (Layer.isPointLayer(layer)) {
+  if (Layer.isLayer(layer, GeometricPrimitive.POINT)) {
     // To store selected features
     const features: PointFeature[] = [];
 
@@ -339,7 +346,7 @@ export function sampleFiniteStratified<
    * Merge the returning features into a single array.
    */
 
-  if (Layer.isAreaLayer(layer)) {
+  if (Layer.isLayer(layer, GeometricPrimitive.AREA)) {
     let features: AreaFeature[] = [];
 
     propertyObj.values.forEach((_v, i) => {
@@ -380,7 +387,7 @@ export function sampleFiniteStratified<
     return newLayer;
   }
 
-  if (Layer.isLineLayer(layer)) {
+  if (Layer.isLayer(layer, GeometricPrimitive.LINE)) {
     let features: LineFeature[] = [];
 
     propertyObj.values.forEach((_v, i) => {
@@ -421,7 +428,7 @@ export function sampleFiniteStratified<
     return newLayer;
   }
 
-  if (Layer.isPointLayer(layer)) {
+  if (Layer.isLayer(layer, GeometricPrimitive.POINT)) {
     let features: PointFeature[] = [];
 
     propertyObj.values.forEach((_v, i) => {
