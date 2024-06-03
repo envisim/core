@@ -20,32 +20,44 @@ import {
   spreadMatrixFromLayer,
 } from './utils.js';
 
-interface ISampleOptionsBase {
+export interface SampleFiniteBaseOptions {
   methodName: string;
-  rand: Random;
   sampleSize: number;
   probabilitiesFrom?: string | null;
-}
-
-export interface ISampleOptionsFinite extends ISampleOptionsBase {
   spreadOn?: string[];
   balanceOn?: string[];
   spreadGeo?: boolean;
+  rand?: Random;
+}
+
+export interface SampleFiniteOptions<
+  T extends AreaCollection | LineCollection | PointCollection,
+> extends SampleFiniteBaseOptions {
+  layer: Layer<T>;
+}
+
+export interface SampleFiniteStratifiedOptions<
+  T extends AreaCollection | LineCollection | PointCollection,
+> {
+  layer: Layer<T>;
+  stratifyOn: string;
+  strataOptions: SampleFiniteBaseOptions | SampleFiniteBaseOptions[];
 }
 
 /**
  * Select a sample from a layer using sampling methods for a finite
  * population.
  *
- * @param layer
  * @param opts
  */
 export function sampleFinite<
   T extends AreaCollection | LineCollection | PointCollection,
->(layer: Layer<T>, opts: ISampleOptionsFinite): Layer<T> {
+>(opts: SampleFiniteOptions<T>): Layer<T> {
   let idx: number[];
   let mu: number[];
   let n: number;
+
+  const layer = opts.layer;
   const N = layer.collection.size;
   let probabilities: ColumnVector;
   // Select the correct method, and save indices of the FeatureCollection
@@ -304,17 +316,12 @@ export function sampleFinite<
  * Select a stratified sample from a layer using sampling methods for a finite
  * population.
  *
- * @param layer
- * @param stratifyOn
  * @param opts
  */
 export function sampleFiniteStratified<
   T extends AreaCollection | LineCollection | PointCollection,
->(
-  layer: Layer<T>,
-  stratifyOn: string,
-  opts: ISampleOptionsFinite | ISampleOptionsFinite[],
-): Layer<T> {
+>(opts: SampleFiniteStratifiedOptions<T>): Layer<T> {
+  const {layer, stratifyOn, strataOptions} = opts;
   if (!(stratifyOn in layer.propertyRecord))
     throw new Error(
       'stratification is not possible as property record does not contain the required property',
@@ -330,9 +337,9 @@ export function sampleFiniteStratified<
     );
 
   // Make an array of opts if it is not provided as an array
-  const fixedOpts = Array.isArray(opts)
-    ? opts
-    : new Array(propertyObj.values.length).fill(opts);
+  const fixedOpts = Array.isArray(strataOptions)
+    ? strataOptions
+    : new Array(propertyObj.values.length).fill(strataOptions);
 
   // Make sure it is of correct length
   if (fixedOpts.length !== propertyObj.values.length) {
@@ -360,10 +367,10 @@ export function sampleFiniteStratified<
         true,
       );
 
-      const sampledFeatures = sampleFinite(
-        stratumLayer,
-        fixedOpts[i] as ISampleOptionsFinite,
-      ).collection.features;
+      const sampledFeatures = sampleFinite({
+        ...fixedOpts[i],
+        layer: stratumLayer,
+      } as SampleFiniteOptions<AreaCollection>).collection.features;
 
       features = [...features, ...sampledFeatures];
     });
@@ -401,10 +408,10 @@ export function sampleFiniteStratified<
         true,
       );
 
-      const sampledFeatures = sampleFinite(
-        stratumLayer,
-        fixedOpts[i] as ISampleOptionsFinite,
-      ).collection.features;
+      const sampledFeatures = sampleFinite({
+        ...fixedOpts[i],
+        layer: stratumLayer,
+      } as SampleFiniteOptions<LineCollection>).collection.features;
 
       features = [...features, ...sampledFeatures];
     });
@@ -442,10 +449,10 @@ export function sampleFiniteStratified<
         true,
       );
 
-      const sampledFeatures = sampleFinite(
-        stratumLayer,
-        fixedOpts[i] as ISampleOptionsFinite,
-      ).collection.features;
+      const sampledFeatures = sampleFinite({
+        ...fixedOpts[i],
+        layer: stratumLayer,
+      } as SampleFiniteOptions<PointCollection>).collection.features;
 
       features = [...features, ...sampledFeatures];
     });
