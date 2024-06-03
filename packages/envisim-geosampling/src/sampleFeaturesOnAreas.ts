@@ -1,9 +1,11 @@
 import {
   AreaCollection,
   type GeoJSON as GJ,
+  GeometricPrimitive,
   Layer,
   LineCollection,
   PointCollection,
+  getFeaturePrimitive,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
@@ -16,65 +18,47 @@ import {
   sizeOfModelFeature,
 } from './modelFeature.js';
 import {samplePointsOnAreas} from './samplePointsOnAreas.js';
-import {typeOfFeature} from './typeOfFeature.js';
 
-export type TsampleTractsOnAreasOpts = {
+export interface SampleFeaturesOnAreasOptions<
+  T extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
+> {
+  layer: Layer<AreaCollection>;
+  method: 'independent' | 'systematic';
+  sampleSize: number;
+  modelFeature: T;
   rotation?: number;
   randomRotation?: boolean;
   ratio?: number;
   rand?: Random;
   pointsPerCircle?: number;
-};
-
-type Method = 'uniform' | 'systematic';
+}
 
 /**
  * Select a sample of features/tracts on areas.
  *
- * @param layer
- * @param method the method to use "uniform" or "systematic".
- * @param sampleSize expected sample size integer > 0.
- * @param modelFeature a GeoJSON model tract.
  * @param opts an options object.
- * @param opts.rotation the rotation angle in degrees.
- * @param opts.randomRotation boolean true/false for random rotation of individual tract (always true for line tract).
- * @param opts.ratio an optional ratio for systematic sampling.
- * @param opts.rand an optional instance of Random.
- * @param opts.pointsPerCircle optional number of points per circle.
- * @returns resulting Point/Line/AreaCollection.
  */
 
 // create overload signatures for different return types
 // PointCollection, LineCollection, AreaCollection
 function sampleFeaturesOnAreas(
-  layer: Layer<AreaCollection>,
-  method: Method,
-  sampleSize: number,
-  modelFeature: GJ.PointFeature,
-  opts?: TsampleTractsOnAreasOpts,
+  opts: SampleFeaturesOnAreasOptions<GJ.PointFeature>,
 ): Layer<PointCollection>;
 function sampleFeaturesOnAreas(
-  layer: Layer<AreaCollection>,
-  method: Method,
-  sampleSize: number,
-  modelFeature: GJ.LineFeature,
-  opts?: TsampleTractsOnAreasOpts,
+  opts: SampleFeaturesOnAreasOptions<GJ.LineFeature>,
 ): Layer<LineCollection>;
 function sampleFeaturesOnAreas(
-  layer: Layer<AreaCollection>,
-  method: Method,
-  sampleSize: number,
-  modelFeature: GJ.AreaFeature,
-  opts?: TsampleTractsOnAreasOpts,
+  opts: SampleFeaturesOnAreasOptions<GJ.AreaFeature>,
 ): Layer<AreaCollection>;
 function sampleFeaturesOnAreas(
-  layer: Layer<AreaCollection>,
-  method: Method,
-  sampleSize: number,
-  modelFeature: GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
-  opts: TsampleTractsOnAreasOpts = {},
+  opts: SampleFeaturesOnAreasOptions<
+    GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature
+  >,
 ): Layer<PointCollection | LineCollection | AreaCollection> {
-  const tractType = typeOfFeature(modelFeature);
+  const {layer, method, sampleSize, modelFeature} = opts;
+  Layer.assert(layer, GeometricPrimitive.AREA);
+
+  const tractType = getFeaturePrimitive(modelFeature);
 
   // Set default options.
   const rotation = opts.rotation ?? 0;
@@ -83,7 +67,7 @@ function sampleFeaturesOnAreas(
   const pointsPerCircle = opts.pointsPerCircle ?? 16;
 
   // Force randomRotation for type line!
-  if (tractType === 'line') {
+  if (tractType === GeometricPrimitive.LINE) {
     randomRotation = true;
   }
 
@@ -92,10 +76,13 @@ function sampleFeaturesOnAreas(
   const sizeOfTract = sizeOfModelFeature(modelFeature);
 
   // Select first a sample of points and use radius as buffer.
-  const pointsLayer = samplePointsOnAreas(layer, method, sampleSize, {
-    ratio: opts.ratio ?? 1,
+  const pointsLayer = samplePointsOnAreas({
+    layer,
+    method,
+    sampleSize,
     buffer: radius,
-    rand: rand,
+    rand,
+    ratio: opts.ratio,
   });
 
   if (radius === 0) {
@@ -105,7 +92,7 @@ function sampleFeaturesOnAreas(
 
   // Transform the point features by placing a model feature on each point.
   switch (tractType) {
-    case 'point': {
+    case GeometricPrimitive.POINT: {
       const pointFeatures: GJ.PointFeature[] = [];
       pointsLayer.collection.features.forEach((feature) => {
         const dw = feature.properties?.['_designWeight'] || 1;
@@ -147,7 +134,7 @@ function sampleFeaturesOnAreas(
       );
     }
 
-    case 'line': {
+    case GeometricPrimitive.LINE: {
       const lineFeatures: GJ.LineFeature[] = [];
       pointsLayer.collection.features.forEach((feature) => {
         const dw = feature.properties?.['_designWeight'] || 1;
@@ -194,7 +181,7 @@ function sampleFeaturesOnAreas(
       );
     }
 
-    case 'area': {
+    case GeometricPrimitive.AREA: {
       const areaFeatures: GJ.AreaFeature[] = [];
       pointsLayer.collection.features.forEach((feature) => {
         const dw = feature.properties?.['_designWeight'] || 1;
