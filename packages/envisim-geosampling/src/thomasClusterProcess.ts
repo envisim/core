@@ -65,7 +65,8 @@ interface ThomasClusterProcessOptions {
  * Generates points from a Thomas cluster point process
  * on areas of input area layer.
  *
- * @param opts an options object.
+ * @param layer
+ * @param opts 
 
  */
 export function thomasClusterProcess(

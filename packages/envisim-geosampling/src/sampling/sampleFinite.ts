@@ -335,6 +335,7 @@ export function sampleFinite<
  * Select a stratified sample from a layer using sampling methods for a finite
  * population.
  *
+ * @param layer
  * @param opts
  */
 export function sampleFiniteStratified<

@@ -42,7 +42,7 @@ export interface SampleSystematicLinesOnAreasOptions {
  * Selects a sample of lines systematically over all areas.
  *
  * @param layer
- * @param opts an options object.
+ * @param opts
  */
 export function sampleSystematicLinesOnAreas(
   layer: Layer<AreaCollection>,

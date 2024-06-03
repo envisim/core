@@ -46,7 +46,7 @@ export interface SampleBeltsOnAreasOptions {
  * Selects a systematic sample of belts on areas.
  *
  * @param layer
- * @param opts an options object.
+ * @param opts
  */
 export const sampleSystematicBeltsOnAreas = (
   layer: Layer<AreaCollection>,

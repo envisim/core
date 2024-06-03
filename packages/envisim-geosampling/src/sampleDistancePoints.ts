@@ -37,8 +37,8 @@ export interface SampleDistancePointsOptions
  * and collect point objects from a base layer using a detection function
  * to (randomly) determine inclusion.
  *
- * @param layer an area layer
- * @param opts an options object.
+ * @param layer 
+ * @param opts
 
  */
 export function sampleDistancePoints(

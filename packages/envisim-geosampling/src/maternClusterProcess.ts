@@ -61,8 +61,8 @@ interface MaternClusterProcessOptions {
  * Generates points from a Matérn cluster point process
  * on an area layer.
  *
- * @param layer an area layer.
- * @param opts an optional options object.
+ * @param layer
+ * @param opts
  */
 export function maternClusterProcess(
   layer: Layer<AreaCollection>,

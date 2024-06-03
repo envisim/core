@@ -131,8 +131,8 @@ function samplePointsOnGeometryCollection(
 /**
  * Selects points according to method and sampleSize on a line layer.
  *
- * @param layer a line layer.
- * @param opts an options object.
+ * @param layer
+ * @param opts
  */
 export function samplePointsOnLines(
   layer: Layer<LineCollection>,

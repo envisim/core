@@ -36,7 +36,8 @@ export interface SampleSystematicDistanceLinesOptions
  * Selects a line sample on an area frame and collect point objects from a base
  * layer using a detection function to (randomly) determine inclusion.
  *
- * @param opts an options object.
+ * @param layer
+ * @param opts 
 
  */
 export function sampleSystematicDistanceLines(
