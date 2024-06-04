@@ -1,7 +1,6 @@
 import {
   AreaCollection,
   AreaFeature,
-  type GeoJSON as GJ,
   Geodesic,
   type IPropertyRecord,
   Layer,
@@ -114,40 +113,11 @@ function transferPropertiesInPlace(
 }
 
 /**
- * Internal function to fix the property record and update
- * values of categorical properties.
+ * Internal function to fix the property record.
  * @param record
- * @param features
  */
-function updateRecordAndPropsInPlace(
-  record: IPropertyRecord,
-  features: GJ.Feature[],
-): void {
-  Object.keys(record).forEach((key) => {
-    const rec = record[key];
-    if (rec.type === 'categorical') {
-      const values: string[] = [];
-      features.forEach((feature) => {
-        const props = feature.properties;
-        if (props) {
-          const oldIndex = props[rec.id];
-          if (!values.includes(rec.values[oldIndex])) {
-            // value does not exist
-            // push new value
-            values.push(rec.values[oldIndex]);
-            // set new index
-            props[rec.id] = values.length - 1;
-          } else {
-            // value already exists
-            // set new index
-            props[rec.id] = values.indexOf(rec.values[oldIndex]);
-          }
-        }
-      });
-      rec.values = values;
-    }
-  });
-  // categorical values are updated, now add design props to the record
+function updateRecordInPlace(record: IPropertyRecord): void {
+  //Add design props to the record
   record['_designWeight'] = {
     id: '_designWeight',
     name: '_designWeight',
@@ -222,7 +192,7 @@ export function collectIntersects(
         }
       });
     });
-    updateRecordAndPropsInPlace(record, features);
+    updateRecordInPlace(record);
     return new Layer(new PointCollection({features}, true), record, true);
   }
 
@@ -242,7 +212,7 @@ export function collectIntersects(
         }
       });
     });
-    updateRecordAndPropsInPlace(record, features);
+    updateRecordInPlace(record);
     return new Layer(new PointCollection({features}, true), record, true);
   }
 
@@ -262,7 +232,7 @@ export function collectIntersects(
         }
       });
     });
-    updateRecordAndPropsInPlace(record, features);
+    updateRecordInPlace(record);
     return new Layer(new LineCollection({features}, true), record, true);
   }
 
@@ -285,7 +255,7 @@ export function collectIntersects(
         }
       });
     });
-    updateRecordAndPropsInPlace(record, features);
+    updateRecordInPlace(record);
     return new Layer(new PointCollection({features}, true), record, true);
   }
 
@@ -305,7 +275,7 @@ export function collectIntersects(
         }
       });
     });
-    updateRecordAndPropsInPlace(record, features);
+    updateRecordInPlace(record);
     return new Layer(new LineCollection({features}, true), record, true);
   }
 
@@ -325,7 +295,7 @@ export function collectIntersects(
         }
       });
     });
-    updateRecordAndPropsInPlace(record, features);
+    updateRecordInPlace(record);
     return new Layer(new AreaCollection({features}, true), record, true);
   }
 
