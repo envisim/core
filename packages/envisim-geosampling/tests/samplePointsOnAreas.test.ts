@@ -24,7 +24,11 @@ describe('samplePointsOnAreas', () => {
   };
   const collection = AreaCollection.create([AreaFeature.create(polygon, {})]);
   const frame = new Layer(collection, {});
-  const sample = samplePointsOnAreas(frame, 'uniform', 10, {buffer: 10});
+  const sample = samplePointsOnAreas(frame, {
+    method: 'independent',
+    sampleSize: 10,
+    buffer: 10,
+  });
   //console.log(JSON.stringify(sample, null, 2));
 
   test('samplePointsOnAreas', () => {

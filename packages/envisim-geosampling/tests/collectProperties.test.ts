@@ -55,7 +55,7 @@ describe('samplePointsOnAreas', () => {
   };
   const baseLayer = new Layer(base, propRec, true);
 
-  const newLayer = collectProperties(frameLayer, baseLayer, propRec);
+  const newLayer = collectProperties(frameLayer, baseLayer, ['size', 'class']);
 
   //console.log(JSON.stringify(newLayer, null, 2));
 

@@ -26,11 +26,19 @@ describe('sampleFeaturesOnAreas', () => {
   const collection = AreaCollection.create([AreaFeature.create(polygon, {})]);
   const frame = new Layer(collection, {});
   const tract = squareAreaFeature(10);
-  const sample = sampleFeaturesOnAreas(frame, 'uniform', 10, tract);
+  const sample = sampleFeaturesOnAreas(frame, {
+    method: 'independent',
+    sampleSize: 10,
+    modelFeature: tract,
+  });
   //console.log(JSON.stringify(sample, null, 2));
 
   const tract2 = pointFeature();
-  const sample2 = sampleFeaturesOnAreas(frame, 'uniform', 10, tract2);
+  const sample2 = sampleFeaturesOnAreas(frame, {
+    method: 'independent',
+    sampleSize: 10,
+    modelFeature: tract2,
+  });
   //console.log(JSON.stringify(sample2, null, 2));
 
   test('sampleFeaturesOnAreas', () => {
