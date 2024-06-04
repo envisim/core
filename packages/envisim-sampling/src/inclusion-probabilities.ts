@@ -66,5 +66,5 @@ export function inclusionProbabilities({
     if (e > 1.0 - eps) prob.ed(i, 1.0);
   });
 
-  return prob;
+  return prob.toArray();
 }
