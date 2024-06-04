@@ -1,5 +1,4 @@
-import {v4 as uuidv4} from 'uuid';
-
+//import {v4 as uuidv4} from 'uuid';
 import {
   AreaCollection,
   AreaFeature,
@@ -15,6 +14,7 @@ import {
   intersectLineLineFeatures,
   intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
+import {copy} from '@envisim/utils';
 
 import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
 
@@ -22,8 +22,7 @@ import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
 // one feature to another.
 type AggregateOpts = {
   intersectSize: number;
-  propertyRecord: IPropertyRecord;
-  idMap: Record<string, string>;
+  properties: IPropertyRecord;
 };
 
 /**
@@ -96,19 +95,18 @@ function aggregateInPlace(
 
   // Go through all the properties and aggregate them.
   // All new properties are of type numerical.
-  Object.keys(opts.propertyRecord).forEach((key) => {
-    const property = opts.propertyRecord[key];
+  Object.keys(opts.properties).forEach((key) => {
+    const property = opts.properties[key];
 
     if (to.properties && from.properties) {
       if (property.type === 'numerical') {
-        const newId = opts.idMap[property.id];
+        const newId = property.id;
         to.properties[newId] +=
           from.properties[property.id] * opts.intersectSize * factor;
       }
       if (property.type === 'categorical') {
-        const getNewId =
+        const newId =
           property.id + '-' + property.values[from.properties[property.id]];
-        const newId = opts.idMap[getNewId];
         to.properties[newId] += opts.intersectSize * factor;
       }
     }
@@ -116,33 +114,33 @@ function aggregateInPlace(
 }
 
 /**
- * Collect properties to a frame layer from a base layer, given a
- * record of properties to be collected. Categorical properties are collected as
+ * Collect properties to a frame layer from a base layer, given an
+ * array of properties to be collected. Categorical properties are collected as
  * multiple numerical properties, one for each category.
  * @param frameLayer
  * @param baseLayer
- * @param propertyRecord
+ * @param properties
  * @returns a new layer
  */
 export function collectProperties(
   frameLayer: Layer<PointCollection>,
   baseLayer: Layer<AreaCollection>,
-  propertyRecord: IPropertyRecord,
+  properties: string[],
 ): Layer<PointCollection>;
 export function collectProperties(
   frameLayer: Layer<LineCollection>,
   baseLayer: Layer<LineCollection | AreaCollection>,
-  propertyRecord: IPropertyRecord,
+  properties: string[],
 ): Layer<LineCollection>;
 export function collectProperties(
   frameLayer: Layer<AreaCollection>,
   baseLayer: Layer<PointCollection | LineCollection | AreaCollection>,
-  propertyRecord: IPropertyRecord,
+  properties: string[],
 ): Layer<AreaCollection>;
 export function collectProperties(
   frameLayer: Layer<PointCollection | LineCollection | AreaCollection>,
   baseLayer: Layer<PointCollection | LineCollection | AreaCollection>,
-  propertyRecord: IPropertyRecord,
+  properties: string[],
 ): Layer<PointCollection | LineCollection | AreaCollection> {
   // Make a full copy of the frame layer
   const newLayer = new Layer(
@@ -154,37 +152,33 @@ export function collectProperties(
   const base = baseLayer.collection;
 
   // Check that the properties to collect are present in the baseLayer record
-  Object.keys(propertyRecord).forEach((key) => {
+  // and not in the frameLayer record.
+  properties.forEach((key) => {
     if (!Object.hasOwn(baseLayer.propertyRecord, key)) {
       throw new Error(
         'Property to collect does not exist in the baseLayer property record.',
       );
     }
+    if (Object.hasOwn(frameLayer.propertyRecord, key)) {
+      throw new Error(
+        'Property to collect exist in the frameLayer property record.',
+      );
+    }
   });
 
-  // Create an id map from input properties to output properties
-  // and a record of new (numerical) properties. If the property to
-  // be collected is categorical, the new id is found by "id-value".
-  // The new name is name-value, e.g. landuse-forest. A new property
-  // is created for each value.
-
-  const idMap: Record<string, string> = {};
+  // Create a record of new properties
   const newProperties: IPropertyRecord = {};
-  Object.keys(propertyRecord).forEach((id: string) => {
-    const property = propertyRecord[id];
+  properties.forEach((id) => {
+    const property = baseLayer.propertyRecord[id];
     if (property.type === 'numerical') {
-      idMap[property.id] = uuidv4();
-      const newId = idMap[property.id];
-      newProperties[newId] = {
-        id: newId,
+      newProperties[property.id] = {
+        id: property.id,
         type: 'numerical',
         name: property.name,
       };
     } else if (property.type === 'categorical') {
-      property.values.forEach((value: string) => {
-        const getNewID = property.id + '-' + value;
-        idMap[getNewID] = uuidv4();
-        const newId = idMap[getNewID];
+      property.values.forEach((value) => {
+        const newId = property.id + '-' + value;
         newProperties[newId] = {
           id: newId,
           type: 'numerical',
@@ -196,9 +190,9 @@ export function collectProperties(
 
   // Add new properties to new collection
   // and property record.
-  Object.keys(newProperties).forEach((id: string) => {
-    frame.initProperty(id);
-    newLayer.propertyRecord[id] = newProperties[id];
+  Object.keys(newProperties).forEach((key) => {
+    frame.initProperty(key);
+    newLayer.propertyRecord[key] = newProperties[key];
   });
 
   // Do the collect for the different cases.
@@ -214,8 +208,7 @@ export function collectProperties(
           const intersectSize = intersect.count();
           aggregateInPlace(frameFeature, baseFeature, {
             intersectSize,
-            propertyRecord,
-            idMap,
+            properties: newProperties,
           });
         }
       });
@@ -232,8 +225,7 @@ export function collectProperties(
           const intersectSize = intersect.count();
           aggregateInPlace(frameFeature, baseFeature, {
             intersectSize,
-            propertyRecord,
-            idMap,
+            properties: newProperties,
           });
         }
       });
@@ -250,8 +242,7 @@ export function collectProperties(
           const intersectSize = intersect.length();
           aggregateInPlace(frameFeature, baseFeature, {
             intersectSize,
-            propertyRecord,
-            idMap,
+            properties: newProperties,
           });
         }
       });
@@ -271,8 +262,7 @@ export function collectProperties(
           const intersectSize = intersect.count();
           aggregateInPlace(frameFeature, baseFeature, {
             intersectSize,
-            propertyRecord,
-            idMap,
+            properties: newProperties,
           });
         }
       });
@@ -289,8 +279,7 @@ export function collectProperties(
           const intersectSize = intersect.length();
           aggregateInPlace(frameFeature, baseFeature, {
             intersectSize,
-            propertyRecord,
-            idMap,
+            properties: newProperties,
           });
         }
       });
@@ -307,8 +296,7 @@ export function collectProperties(
           const intersectSize = intersect.area();
           aggregateInPlace(frameFeature, baseFeature, {
             intersectSize,
-            propertyRecord,
-            idMap,
+            properties: newProperties,
           });
         }
       });
@@ -316,4 +304,51 @@ export function collectProperties(
     return newLayer;
   }
   throw new Error('Collect operation failed.');
+}
+
+export function propertyRecordAfterCollect(
+  to: IPropertyRecord,
+  from: IPropertyRecord,
+  properties: string[],
+): IPropertyRecord {
+  // Check that the properties to collect are present in the from record
+  // and not in the to record.
+
+  properties.forEach((key) => {
+    if (!Object.hasOwn(from, key)) {
+      throw new Error(
+        'Property to collect does not exist in the from property record.',
+      );
+    }
+    if (Object.hasOwn(to, key)) {
+      throw new Error(
+        'Property to collect already exist in the to property record.',
+      );
+    }
+  });
+  // Collected numerical properties keep their original id,
+  // but categorical properties recieve their new id as id-value.
+  const newProperties: IPropertyRecord = copy(to);
+
+  properties.forEach((key) => {
+    const rec = from[key];
+    if (rec.type === 'numerical') {
+      const newId = rec.id;
+      newProperties[newId] = {
+        id: newId,
+        type: 'numerical',
+        name: rec.name,
+      };
+    } else if (rec.type === 'categorical') {
+      rec.values.forEach((value: string) => {
+        const newId = rec.id + '-' + value;
+        newProperties[newId] = {
+          id: newId,
+          type: 'numerical',
+          name: rec.name + '-' + value,
+        };
+      });
+    }
+  });
+  return newProperties;
 }
