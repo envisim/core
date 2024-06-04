@@ -49,9 +49,8 @@ export interface SampleRelascopePointsOptions
  */
 export function sampleRelascopePoints(
   layer: Layer<AreaCollection>,
-  opts: SampleRelascopePointsOptions,
+  {baseLayer, factor, sizeProperty, ...opts}: SampleRelascopePointsOptions,
 ): Layer<PointCollection> {
-  const {baseLayer, factor, sizeProperty} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
 
   // Square root of relascope factor

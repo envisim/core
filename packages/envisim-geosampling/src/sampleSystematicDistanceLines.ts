@@ -42,20 +42,30 @@ export interface SampleSystematicDistanceLinesOptions
  */
 export function sampleSystematicDistanceLines(
   layer: Layer<AreaCollection>,
-  opts: SampleSystematicDistanceLinesOptions,
+  {
+    baseLayer,
+    detectionFunction,
+    cutoff,
+    distBetween,
+    rotation = 0,
+    rand = new Random(),
+    pointsPerCircle = 16,
+  }: SampleSystematicDistanceLinesOptions,
 ): Layer<PointCollection> {
-  const {baseLayer, detectionFunction, cutoff, distBetween} = opts;
   // Compute effective half width
   const effHalfWidth = effectiveHalfWidth(detectionFunction, cutoff);
-  // Get random generator
-  const rand = opts.rand ?? new Random();
-  opts.rand = rand;
+
   // Compute design weight for this selection
   const dw = distBetween / (effHalfWidth * 2);
 
   // Select sample of lines
-  const lineFeatures = sampleSystematicLinesOnAreas(layer, opts).collection
-    .features;
+  const lineFeatures = sampleSystematicLinesOnAreas(layer, {
+    distBetween,
+    rotation,
+    rand,
+    pointsPerCircle,
+  }).collection.features;
+
   // To store sampled features
   const sampledFeatures: PointFeature[] = [];
   const baseFeatures = baseLayer.collection.features;

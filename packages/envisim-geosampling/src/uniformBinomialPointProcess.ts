@@ -30,12 +30,14 @@ interface UniformBinomialPointProcessOptions {
  */
 export function uniformBinomialPointProcess(
   layer: Layer<AreaCollection>,
-  opts: UniformBinomialPointProcessOptions,
+  {sampleSize, rand = new Random()}: UniformBinomialPointProcessOptions,
 ): Layer<PointCollection> {
   Layer.assert(layer, GeometricPrimitive.AREA);
+
   const pointsLayer = samplePointsOnAreas(layer, {
-    ...opts,
     method: 'independent',
+    sampleSize,
+    rand,
   });
   // Remove _designWeight property
   pointsLayer.collection.forEach((feature) => {

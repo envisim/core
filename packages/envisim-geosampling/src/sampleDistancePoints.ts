@@ -43,21 +43,24 @@ export interface SampleDistancePointsOptions
  */
 export function sampleDistancePoints(
   layer: Layer<AreaCollection>,
-  opts: SampleDistancePointsOptions,
+  {
+    baseLayer,
+    detectionFunction,
+    cutoff,
+    rand = new Random(),
+    ...opts
+  }: SampleDistancePointsOptions,
 ): Layer<PointCollection> {
-  // Check input first
-  const {baseLayer, detectionFunction, cutoff} = opts;
-
-  const rand = opts.rand ?? new Random();
   // Compute effective radius
   const effRadius = effectiveRadius(detectionFunction, cutoff);
 
   // Select sample of points (optional buffer via opts)
-  const buffer = opts.buffer ?? cutoff;
+  const buffer = cutoff;
   //opts.samplePointsOnAreasOptions.buffer = buffer;
   const pointSample = samplePointsOnAreas(layer, {
     ...opts,
     buffer,
+    rand,
   });
   // To store sampled features
   const sampledFeatures: PointFeature[] = [];

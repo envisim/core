@@ -71,11 +71,15 @@ interface ThomasClusterProcessOptions {
  */
 export function thomasClusterProcess(
   layer: Layer<AreaCollection>,
-  opts: ThomasClusterProcessOptions,
+  {
+    intensityOfParents,
+    meanOfCluster,
+    sigmaOfCluster,
+    rand = new Random(),
+  }: ThomasClusterProcessOptions,
 ): Layer<PointCollection> {
-  const {intensityOfParents, meanOfCluster, sigmaOfCluster} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
-  const rand = opts.rand ?? new Random();
+
   const box = bbox4(layer.collection.getBBox());
   // Extend box by 4 * sigmaOfCluster to avoid edge effects.
   // Same as spatstat default in R.

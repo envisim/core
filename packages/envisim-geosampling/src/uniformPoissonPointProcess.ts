@@ -33,16 +33,15 @@ interface UniformPoissonProcessOptions {
  */
 export function uniformPoissonPointProcess(
   layer: Layer<AreaCollection>,
-  opts: UniformPoissonProcessOptions,
+  {intensity, rand = new Random()}: UniformPoissonProcessOptions,
 ): Layer<PointCollection> {
-  const {intensity} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
-  const rand = opts.rand ?? new Random();
+
   const A = layer.collection.area();
   const mu = intensity * A;
   const sampleSize = Poisson.random(1, {rate: mu}, {rand: rand})[0];
   if (sampleSize === 0) {
     return new Layer(new PointCollection({features: []}, true), {}, true);
   }
-  return uniformBinomialPointProcess(layer, {...opts, sampleSize});
+  return uniformBinomialPointProcess(layer, {sampleSize, rand});
 }

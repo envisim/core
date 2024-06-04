@@ -66,12 +66,15 @@ interface MaternClusterProcessOptions {
  */
 export function maternClusterProcess(
   layer: Layer<AreaCollection>,
-  opts: MaternClusterProcessOptions,
+  {
+    intensityOfParents,
+    meanOfCluster,
+    radiusOfCluster,
+    rand = new Random(),
+  }: MaternClusterProcessOptions,
 ): Layer<PointCollection> {
-  const {intensityOfParents, meanOfCluster, radiusOfCluster} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
 
-  const rand = opts.rand ?? new Random();
   const box = bbox4(layer.collection.getBBox());
   // Expand box by radius of cluster, as parent points should
   // be allowed outside of area. This is to avoid edge effects.

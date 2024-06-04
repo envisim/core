@@ -136,9 +136,8 @@ function samplePointsOnGeometryCollection(
  */
 export function samplePointsOnLines(
   layer: Layer<LineCollection>,
-  opts: SamplePointsOnLinesOptions,
+  {method, sampleSize, rand = new Random()}: SamplePointsOnLinesOptions,
 ): Layer<PointCollection> {
-  const {method, sampleSize} = opts;
   Layer.assert(layer, GeometricPrimitive.LINE);
 
   if (method !== 'systematic' && method !== 'independent') {
@@ -152,10 +151,8 @@ export function samplePointsOnLines(
     sampleSize !== Math.round(sampleSize) ||
     sampleSize <= 0
   ) {
-    throw new Error('Input sampleSize must be a positive integer.');
+    throw new Error('Input sampleSize must be a non-negative integer.');
   }
-
-  const rand = opts.rand ?? new Random();
 
   const L = layer.collection.length(); // total length of input geoJSON
   if (L === 0) {

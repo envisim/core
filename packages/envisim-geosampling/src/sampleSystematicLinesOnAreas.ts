@@ -46,18 +46,19 @@ export interface SampleSystematicLinesOnAreasOptions {
  */
 export function sampleSystematicLinesOnAreas(
   layer: Layer<AreaCollection>,
-  opts: SampleSystematicLinesOnAreasOptions,
+  {
+    distBetween,
+    rotation = 0,
+    rand = new Random(),
+    pointsPerCircle = 16,
+  }: SampleSystematicLinesOnAreasOptions,
 ): Layer<LineCollection> {
-  const {distBetween} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
 
   if (typeof distBetween !== 'number' || distBetween <= 0) {
     throw new Error('Input distBetween must be a positive number.');
   }
 
-  const pointsPerCircle = opts.pointsPerCircle ?? 16;
-  const rotation = opts.rotation ?? 0;
-  const rand = opts.rand ?? new Random();
   const numPointsPerLine = 20;
 
   const box = bbox4(layer.collection.getBBox());

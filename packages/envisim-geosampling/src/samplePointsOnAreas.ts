@@ -12,7 +12,7 @@ import {
   PointCollection,
   PointFeature,
   bbox4,
-  buffer,
+  buffer as bufferAreaCollection,
   longitudeCenter,
   longitudeDistance,
   normalizeLongitude,
@@ -99,9 +99,14 @@ export interface SamplePointsOnAreasOptions {
  */
 export function samplePointsOnAreas(
   layer: Layer<AreaCollection>,
-  opts: SamplePointsOnAreasOptions,
+  {
+    method,
+    sampleSize,
+    buffer = 0,
+    ratio = 1,
+    rand = new Random(),
+  }: SamplePointsOnAreasOptions,
 ): Layer<PointCollection> {
-  const {method, sampleSize} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
 
   if (method !== 'systematic' && method !== 'independent') {
@@ -115,10 +120,6 @@ export function samplePointsOnAreas(
   ) {
     throw new Error('Input sampleSize must be a positive integer.');
   }
-  // Set options.
-  const radius = opts.buffer || 0;
-  const ratio = opts.ratio ?? 1;
-  const rand = opts.rand ?? new Random();
 
   // copy the collection
   const gj = new AreaCollection(layer.collection, false);
@@ -142,9 +143,9 @@ export function samplePointsOnAreas(
   // Buffer the Collection if needed.
 
   let buffered: AreaCollection | null;
-  if (radius > 0) {
-    buffered = buffer(gj, {
-      radius: radius,
+  if (buffer > 0) {
+    buffered = bufferAreaCollection(gj, {
+      radius: buffer,
       steps: 10,
     });
     if (buffered == null || buffered.features.length === 0) {
@@ -267,7 +268,7 @@ export function samplePointsOnAreas(
       throw new Error('Unknown method.');
   }
   const propertyRecord: IPropertyRecord = {};
-  if (radius === 0) {
+  if (buffer === 0) {
     // Transfer design weights here.
     pointFeatures.forEach((pf: PointFeature, i) => {
       let dw = 1;

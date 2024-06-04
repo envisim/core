@@ -50,9 +50,14 @@ export interface SampleBeltsOnAreasOptions {
  */
 export const sampleSystematicBeltsOnAreas = (
   layer: Layer<AreaCollection>,
-  opts: SampleBeltsOnAreasOptions,
+  {
+    distBetween,
+    halfWidth,
+    rotation = 0,
+    rand = new Random(),
+    pointsPerCircle = 16,
+  }: SampleBeltsOnAreasOptions,
 ): Layer<AreaCollection> => {
-  const {distBetween, halfWidth} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
 
   if (typeof distBetween !== 'number' || distBetween <= 0) {
@@ -63,9 +68,6 @@ export const sampleSystematicBeltsOnAreas = (
     throw new Error('Input halfWidth must be a number > 0.');
   }
 
-  const pointsPerCircle = opts.pointsPerCircle ?? 16;
-  const rotation = opts.rotation ?? 0;
-  const rand = opts.rand ?? new Random();
   const numPointsPerLine = 20;
   const box = bbox4(layer.collection.getBBox());
   const randomStart = rand.float() * distBetween;
