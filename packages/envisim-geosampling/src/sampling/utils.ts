@@ -88,13 +88,26 @@ export function spreadMatrixFromLayer(
     const N = layer.collection.size;
     const lon = new Array(N);
     const lat = new Array(N);
+    const alt = new Array(N).fill(0.0);
+    let hasAlt = false;
+
     layer.collection.forEach((f, i) => {
-      const bbox = bbox4(f.getBBox());
-      lat[i] = (bbox[1] + bbox[3]) / 2;
-      lon[i] = longitudeCenter(bbox[0], bbox[2]);
+      const bbox = f.getBBox();
+      const box4 = bbox4(bbox);
+      lat[i] = (box4[1] + box4[3]) / 2;
+      lon[i] = longitudeCenter(box4[0], box4[2]);
+      if (bbox.length === 6) {
+        hasAlt = true;
+        alt[i] = (bbox[5] + bbox[2]) / 2;
+      }
     });
+
     newprops.push(new ColumnVector(lon, true).standardize(false, true));
     newprops.push(new ColumnVector(lat, true).standardize(false, true));
+
+    if (hasAlt) {
+      newprops.push(new ColumnVector(alt, true).standardize(false, true));
+    }
   }
   properties.forEach((prop) => {
     // Collect numerical properties and standardize
