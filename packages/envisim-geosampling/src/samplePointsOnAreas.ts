@@ -267,7 +267,7 @@ export function samplePointsOnAreas(
     default:
       throw new Error('Unknown method.');
   }
-  const propertyRecord: IPropertyRecord = {};
+
   if (buffer === 0) {
     // Transfer design weights here.
     pointFeatures.forEach((pf: PointFeature, i) => {
@@ -280,12 +280,14 @@ export function samplePointsOnAreas(
         }
       }
     });
-    propertyRecord['_designWeight'] = {
+  }
+  const propertyRecord: IPropertyRecord = {
+    _designWeight: {
       id: '_designWeight',
       name: '_designWeight',
       type: 'numerical',
-    };
-  }
+    },
+  };
   // parentIndex refer to buffered features, so
   // may not be used to transfer design weights
   // from parents unless buffer is 0.
