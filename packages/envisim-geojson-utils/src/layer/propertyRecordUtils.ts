@@ -37,13 +37,13 @@ export function propertyRecordIdsFromNames(
   propertyRecord: PropertyRecord,
   names: string[],
 ): string[] {
-  const ids: string[] = new Array(names.length);
+  const ids: string[] = [];
 
-  names.forEach((name, index) => {
+  names.forEach((name) => {
     let found = false;
     Object.keys(propertyRecord).forEach((key) => {
       if (propertyRecord[key].name === name) {
-        ids[index] = key;
+        ids.push(key);
         found = true;
       }
     });
