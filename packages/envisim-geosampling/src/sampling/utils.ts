@@ -1,7 +1,9 @@
 import {
   AreaCollection,
+  AreaFeature,
   Layer,
   LineCollection,
+  LineFeature,
   PointCollection,
 } from '@envisim/geojson-utils';
 import {bbox4, longitudeCenter} from '@envisim/geojson-utils';
@@ -175,25 +177,43 @@ export function balancingMatrixFromLayer(
 
 function probsFromLayer(
   layer: Layer<AreaCollection | LineCollection | PointCollection>,
-  {sampleSize, probabilitiesFrom}: SampleFiniteOptions,
+  {sampleSize, probabilitiesFrom, probabilitiesFromSize}: SampleFiniteOptions,
 ): ColumnVector {
   const N = layer.collection.size;
+  let prop: ColumnVector;
 
-  if (typeof probabilitiesFrom !== 'string') {
-    if (sampleSize <= 0) throw new RangeError('sampleSize is <= 0');
-    return new ColumnVector(new Array(N).fill(1), true);
+  if (probabilitiesFromSize) {
+    // Probabilities from the size of the features
+
+    const sizes: number[] = layer.collection.features.map((feature) => {
+      if (AreaFeature.isFeature(feature)) {
+        return feature.area();
+      } else if (LineFeature.isFeature(feature)) {
+        return feature.length();
+      }
+      return feature.count();
+    });
+
+    prop = new ColumnVector(sizes);
+  } else {
+    // Probabilities from numerical property
+
+    if (typeof probabilitiesFrom !== 'string') {
+      if (sampleSize <= 0) throw new RangeError('sampleSize is <= 0');
+      return new ColumnVector(new Array(N).fill(1), true);
+    }
+
+    if (!Object.hasOwn(layer.propertyRecord, probabilitiesFrom))
+      throw new RangeError(
+        'validProps does not contain a property with the required name',
+      );
+    if (layer.propertyRecord[probabilitiesFrom].type === 'categorical')
+      throw new RangeError(
+        'the property to create probabilities from is categorical',
+      );
+
+    prop = extractNumericalProperty(layer, probabilitiesFrom);
   }
-
-  if (!Object.hasOwn(layer.propertyRecord, probabilitiesFrom))
-    throw new RangeError(
-      'validProps does not contain a property with the required name',
-    );
-  if (layer.propertyRecord[probabilitiesFrom].type === 'categorical')
-    throw new RangeError(
-      'the property to create probabilities from is categorical',
-    );
-
-  const prop = extractNumericalProperty(layer, probabilitiesFrom);
 
   // OR set to 0.0?
   if (!prop.every((e) => e >= 0.0))

@@ -34,6 +34,11 @@ export interface SampleFiniteOptions {
    */
   probabilitiesFrom?: string | null;
   /**
+   * Compute probabilities from size.
+   * @defaultValue `false`
+   */
+  probabilitiesFromSize?: boolean;
+  /**
    * An array of id's of properties to use to spread the sample.
    * This apply to lpm1, lpm2, scps, localCube.
    */
