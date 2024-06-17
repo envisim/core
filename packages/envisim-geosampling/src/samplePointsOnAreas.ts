@@ -5,12 +5,12 @@ import {
   type GeoJSON as GJ,
   Geodesic,
   GeometricPrimitive,
-  type IPropertyRecord,
   Layer,
   MultiCircle,
   Point,
   PointCollection,
   PointFeature,
+  type PropertyRecord,
   bbox4,
   buffer as bufferAreaCollection,
   longitudeCenter,
@@ -281,7 +281,7 @@ export function samplePointsOnAreas(
       }
     });
   }
-  const propertyRecord: IPropertyRecord = {
+  const propertyRecord: PropertyRecord = {
     _designWeight: {
       id: '_designWeight',
       name: '_designWeight',

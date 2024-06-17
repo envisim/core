@@ -3,15 +3,19 @@ export * from './geojson/index.js';
 
 // Layer
 export {Layer} from './layer/ClassLayer.js';
+export {
+  mergePropertyRecords,
+  propertyRecordIdsFromNames,
+} from './layer/propertyRecordUtils.js';
 
 // Types
 export type * as GeoJSON from './types/geojson.js';
 export * as typeGuards from './types/type-guards.js';
 export {
-  type ICategoricalProperty,
-  type INumericalProperty,
-  type IProperty,
-  type IPropertyRecord,
+  type CategoricalProperty,
+  type NumericalProperty,
+  type Property,
+  type PropertyRecord,
   PropertySpecialKeys,
 } from './types/property.js';
 

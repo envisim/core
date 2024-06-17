@@ -2,12 +2,12 @@ import {
   AreaCollection,
   AreaFeature,
   Geodesic,
-  type IPropertyRecord,
   Layer,
   LineCollection,
   LineFeature,
   PointCollection,
   PointFeature,
+  type PropertyRecord,
   intersectAreaAreaFeatures,
   intersectLineAreaFeatures,
   intersectLineLineFeatures,
@@ -116,7 +116,7 @@ function transferPropertiesInPlace(
  * Internal function to fix the property record.
  * @param record
  */
-function updateRecordInPlace(record: IPropertyRecord): void {
+function updateRecordInPlace(record: PropertyRecord): void {
   //Add design props to the record
   record['_designWeight'] = {
     id: '_designWeight',

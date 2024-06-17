@@ -10,9 +10,9 @@ import {
 import {
   AreaCollection,
   AreaFeature,
-  IPropertyRecord,
   LineCollection,
   PointCollection,
+  PropertyRecord,
 } from '../index.js';
 import {PropertySpecialKeys} from '../types/property.js';
 import {isCircle, isMultiCircle} from '../types/type-guards.js';
@@ -21,7 +21,7 @@ export class Layer<
   T extends AreaCollection | LineCollection | PointCollection,
 > {
   collection: T;
-  propertyRecord: IPropertyRecord;
+  propertyRecord: PropertyRecord;
 
   static isLayer(
     obj: unknown,
@@ -192,7 +192,7 @@ export class Layer<
    */
   constructor(
     collection: T,
-    propertyRecord: IPropertyRecord,
+    propertyRecord: PropertyRecord,
     shallow: boolean = true,
   ) {
     // TODO?: Check that all features have the properties
@@ -292,20 +292,20 @@ function flatMapGeometryCollections(
 function prepareFeatures(
   features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
   primitive: GeometricPrimitive.POINT,
-): [GJ.PointFeature[], IPropertyRecord];
+): [GJ.PointFeature[], PropertyRecord];
 function prepareFeatures(
   features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
   primitive: GeometricPrimitive.LINE,
-): [GJ.LineFeature[], IPropertyRecord];
+): [GJ.LineFeature[], PropertyRecord];
 function prepareFeatures(
   features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
   primitive: GeometricPrimitive.AREA,
-): [GJ.AreaFeature[], IPropertyRecord];
+): [GJ.AreaFeature[], PropertyRecord];
 function prepareFeatures(
   features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
   primitive: GeometricPrimitive,
-): [GJ.Feature[], IPropertyRecord] {
-  const propertyRecord: IPropertyRecord = {};
+): [GJ.Feature[], PropertyRecord] {
+  const propertyRecord: PropertyRecord = {};
   let propertyRecordIsSet = false;
 
   const newFeatures = features.flatMap(({geometry, properties}) => {

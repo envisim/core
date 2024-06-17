@@ -1,4 +1,4 @@
-interface IPropertyBase {
+interface PropertyBase {
   /** The UUID of the Features property using this category. */
   id: string;
   type: string;
@@ -6,19 +6,21 @@ interface IPropertyBase {
   name?: string;
 }
 
-export interface INumericalProperty extends IPropertyBase {
+export interface NumericalProperty extends PropertyBase {
   type: 'numerical';
+  /** Holds id and index of collected categorical variable */
+  parent?: [string, number];
 }
 
-export interface ICategoricalProperty extends IPropertyBase {
+export interface CategoricalProperty extends PropertyBase {
   type: 'categorical';
   /** An ordered array of values defined on this category */
   values: string[];
 }
 
-export type IProperty = INumericalProperty | ICategoricalProperty;
+export type Property = NumericalProperty | CategoricalProperty;
 
-export type IPropertyRecord = Record<string, IProperty>;
+export type PropertyRecord = Record<string, Property>;
 
 export const PropertySpecialKeys = [
   '_designWeight',

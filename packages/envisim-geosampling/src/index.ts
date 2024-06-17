@@ -51,7 +51,7 @@ export {
 } from './modelFeature.js';
 
 // Collection from layers
-export {collectProperties} from './collectProperties.js';
+export {collectProperties, collectPropertyRecord} from './collectProperties.js';
 export {collectIntersects} from './collectIntersects.js';
 
 // Point processes
