@@ -4,13 +4,16 @@ import {
   AreaCollection,
   AreaFeature,
   GeoJSON,
-  IPropertyRecord,
   Layer,
   PointCollection,
   PointFeature,
+  PropertyRecord,
 } from '@envisim/geojson-utils';
 
-import {collectProperties} from '../src/collectProperties.js';
+import {
+  collectProperties,
+  collectPropertyRecord,
+} from '../src/collectProperties.js';
 
 describe('samplePointsOnAreas', () => {
   const polygon: GeoJSON.Polygon = {
@@ -32,7 +35,7 @@ describe('samplePointsOnAreas', () => {
   const frame = AreaCollection.create([
     AreaFeature.create(polygon, {_designWeight: 1}),
   ]);
-  const framePropertyRecord: IPropertyRecord = {
+  const framePropertyRecord: PropertyRecord = {
     _designWeight: {
       id: '_designWeight',
       name: '_designWeight',
@@ -44,7 +47,7 @@ describe('samplePointsOnAreas', () => {
   const base = PointCollection.create([
     PointFeature.create(point, {size: 25, class: 0}),
   ]);
-  const propRec: IPropertyRecord = {
+  const propRec: PropertyRecord = {
     size: {id: 'size', name: 'size', type: 'numerical'},
     class: {
       id: 'class',
@@ -55,7 +58,8 @@ describe('samplePointsOnAreas', () => {
   };
   const baseLayer = new Layer(base, propRec, true);
 
-  const newLayer = collectProperties(frameLayer, baseLayer, ['size', 'class']);
+  const propRecToCollect = collectPropertyRecord(propRec, ['size', 'class']);
+  const newLayer = collectProperties(frameLayer, baseLayer, propRecToCollect);
 
   //console.log(JSON.stringify(newLayer, null, 2));
 

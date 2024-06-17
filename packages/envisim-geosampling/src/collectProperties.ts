@@ -1,20 +1,20 @@
-//import {v4 as uuidv4} from 'uuid';
+import {v4 as uuidv4} from 'uuid';
+
 import {
   AreaCollection,
   AreaFeature,
   Geodesic,
-  type IPropertyRecord,
   Layer,
   LineCollection,
   LineFeature,
   PointCollection,
   PointFeature,
+  type PropertyRecord,
   intersectAreaAreaFeatures,
   intersectLineAreaFeatures,
   intersectLineLineFeatures,
   intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
-import {copy} from '@envisim/utils';
 
 import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
 
@@ -22,7 +22,7 @@ import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
 // one feature to another.
 type AggregateOpts = {
   intersectSize: number;
-  properties: IPropertyRecord;
+  properties: PropertyRecord;
 };
 
 /**
@@ -98,16 +98,20 @@ function aggregateInPlace(
   Object.keys(opts.properties).forEach((key) => {
     const property = opts.properties[key];
 
-    if (to.properties && from.properties) {
-      if (property.type === 'numerical') {
-        const newId = property.id;
-        to.properties[newId] +=
-          from.properties[property.id] * opts.intersectSize * factor;
-      }
-      if (property.type === 'categorical') {
-        const newId =
-          property.id + '-' + property.values[from.properties[property.id]];
-        to.properties[newId] += opts.intersectSize * factor;
+    // Type must be numerical
+    if (property.type === 'numerical') {
+      if (Array.isArray(property.parent)) {
+        // Collect from categorical variable
+        const [id, value] = property.parent;
+
+        // Only collect if value is equal to value
+        if (from.properties[id] === value) {
+          to.properties[key] += opts.intersectSize * factor;
+        }
+      } else {
+        // Collect from numerical (same key)
+        to.properties[key] +=
+          from.properties[key] * opts.intersectSize * factor;
       }
     }
   });
@@ -119,28 +123,28 @@ function aggregateInPlace(
  * multiple numerical properties, one for each category.
  * @param frameLayer
  * @param baseLayer
- * @param properties
+ * @param propertyRecord
  * @returns a new layer
  */
 export function collectProperties(
   frameLayer: Layer<PointCollection>,
   baseLayer: Layer<AreaCollection>,
-  properties: string[],
+  properties: string[] | PropertyRecord,
 ): Layer<PointCollection>;
 export function collectProperties(
   frameLayer: Layer<LineCollection>,
   baseLayer: Layer<LineCollection | AreaCollection>,
-  properties: string[],
+  properties: string[] | PropertyRecord,
 ): Layer<LineCollection>;
 export function collectProperties(
   frameLayer: Layer<AreaCollection>,
   baseLayer: Layer<PointCollection | LineCollection | AreaCollection>,
-  properties: string[],
+  properties: string[] | PropertyRecord,
 ): Layer<AreaCollection>;
 export function collectProperties(
   frameLayer: Layer<PointCollection | LineCollection | AreaCollection>,
   baseLayer: Layer<PointCollection | LineCollection | AreaCollection>,
-  properties: string[],
+  properties: string[] | PropertyRecord,
 ): Layer<PointCollection | LineCollection | AreaCollection> {
   // Make a full copy of the frame layer
   const newLayer = new Layer(
@@ -151,48 +155,44 @@ export function collectProperties(
   const frame = newLayer.collection;
   const base = baseLayer.collection;
 
+  // The property record of new properties to collect
+  const rec =
+    Array.isArray(properties) === true
+      ? collectPropertyRecord(baseLayer.propertyRecord, properties)
+      : properties;
+
   // Check that the properties to collect are present in the baseLayer record
   // and not in the frameLayer record.
-  properties.forEach((key) => {
-    if (!Object.hasOwn(baseLayer.propertyRecord, key)) {
+  Object.keys(rec).forEach((key) => {
+    const property = rec[key];
+    if (property.type === 'numerical') {
+      const id = property.parent ? property.parent[0] : property.id;
+      if (!Object.hasOwn(baseLayer.propertyRecord, id)) {
+        throw new Error(
+          'Property to collect does not exist in the baseLayer property record.',
+        );
+      }
+    } else {
+      // Categorical properties should not exist in this record
       throw new Error(
-        'Property to collect does not exist in the baseLayer property record.',
+        'Property record to collect cannot contain categorical properties.',
       );
     }
     if (Object.hasOwn(frameLayer.propertyRecord, key)) {
       throw new Error(
-        'Property to collect exist in the frameLayer property record.',
+        'Property to collect already exist in the frameLayer property record.',
       );
-    }
-  });
-
-  // Create a record of new properties
-  const newProperties: IPropertyRecord = {};
-  properties.forEach((id) => {
-    const property = baseLayer.propertyRecord[id];
-    if (property.type === 'numerical') {
-      newProperties[property.id] = {
-        id: property.id,
-        type: 'numerical',
-        name: property.name,
-      };
-    } else if (property.type === 'categorical') {
-      property.values.forEach((value) => {
-        const newId = property.id + '-' + value;
-        newProperties[newId] = {
-          id: newId,
-          type: 'numerical',
-          name: property.name + '-' + value,
-        };
-      });
     }
   });
 
   // Add new properties to new collection
   // and property record.
-  Object.keys(newProperties).forEach((key) => {
-    frame.initProperty(key);
-    newLayer.propertyRecord[key] = newProperties[key];
+  Object.keys(rec).forEach((key) => {
+    // Initialize each with value 0
+    frame.initProperty(key, 0);
+
+    // Add to the record
+    newLayer.propertyRecord[key] = rec[key];
   });
 
   // Do the collect for the different cases.
@@ -208,7 +208,7 @@ export function collectProperties(
           const intersectSize = intersect.count();
           aggregateInPlace(frameFeature, baseFeature, {
             intersectSize,
-            properties: newProperties,
+            properties: rec,
           });
         }
       });
@@ -225,7 +225,7 @@ export function collectProperties(
           const intersectSize = intersect.count();
           aggregateInPlace(frameFeature, baseFeature, {
             intersectSize,
-            properties: newProperties,
+            properties: rec,
           });
         }
       });
@@ -242,7 +242,7 @@ export function collectProperties(
           const intersectSize = intersect.length();
           aggregateInPlace(frameFeature, baseFeature, {
             intersectSize,
-            properties: newProperties,
+            properties: rec,
           });
         }
       });
@@ -262,7 +262,7 @@ export function collectProperties(
           const intersectSize = intersect.count();
           aggregateInPlace(frameFeature, baseFeature, {
             intersectSize,
-            properties: newProperties,
+            properties: rec,
           });
         }
       });
@@ -279,7 +279,7 @@ export function collectProperties(
           const intersectSize = intersect.length();
           aggregateInPlace(frameFeature, baseFeature, {
             intersectSize,
-            properties: newProperties,
+            properties: rec,
           });
         }
       });
@@ -296,7 +296,7 @@ export function collectProperties(
           const intersectSize = intersect.area();
           aggregateInPlace(frameFeature, baseFeature, {
             intersectSize,
-            properties: newProperties,
+            properties: rec,
           });
         }
       });
@@ -306,49 +306,62 @@ export function collectProperties(
   throw new Error('Collect operation failed.');
 }
 
-export function propertyRecordAfterCollect(
-  to: IPropertyRecord,
-  from: IPropertyRecord,
+/**
+ * Derives the resulting property record of collected properties.
+ * This property record needs to be merged with the existing
+ * property record for a complete record of properties available
+ * after a collect operation. Merge is done automatically when
+ * using collectProperties.
+ *
+ * @param propertyRecord the property record to collect from.
+ * @param properties the ids of the properties to collect.
+ * @returns the property record collected properties.
+ */
+export function collectPropertyRecord(
+  propertyRecord: PropertyRecord,
   properties: string[],
-): IPropertyRecord {
-  // Check that the properties to collect are present in the from record
-  // and not in the to record.
-
-  properties.forEach((key) => {
-    if (!Object.hasOwn(from, key)) {
-      throw new Error(
-        'Property to collect does not exist in the from property record.',
-      );
-    }
-    if (Object.hasOwn(to, key)) {
-      throw new Error(
-        'Property to collect already exist in the to property record.',
-      );
-    }
-  });
+): PropertyRecord {
   // Collected numerical properties keep their original id,
-  // but categorical properties recieve their new id as id-value.
-  const newProperties: IPropertyRecord = copy(to);
+  // but categorical properties recieve new id for each category.
+  const newRecord: PropertyRecord = {};
 
   properties.forEach((key) => {
-    const rec = from[key];
+    // Check that the properties to collect are present in the record
+    if (!Object.hasOwn(propertyRecord, key)) {
+      throw new Error(
+        'Property to collect does not exist in the property record.',
+      );
+    }
+
+    // Get record of the property
+    const rec = propertyRecord[key];
+
     if (rec.type === 'numerical') {
+      // Keep old id
       const newId = rec.id;
-      newProperties[newId] = {
+
+      newRecord[newId] = {
         id: newId,
         type: 'numerical',
         name: rec.name,
       };
     } else if (rec.type === 'categorical') {
-      rec.values.forEach((value: string) => {
-        const newId = rec.id + '-' + value;
-        newProperties[newId] = {
+      // Create new record for each category
+
+      rec.values.forEach((value: string, i: number) => {
+        // Generate new id
+        const newId = uuidv4();
+
+        // Store also parent id, index
+        newRecord[newId] = {
           id: newId,
           type: 'numerical',
           name: rec.name + '-' + value,
+          parent: [rec.id, i],
         };
       });
     }
   });
-  return newProperties;
+
+  return newRecord;
 }
