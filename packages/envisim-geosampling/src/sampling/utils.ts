@@ -148,6 +148,11 @@ export function balancingMatrixFromLayer(
     throw new Error('all properties not present on property record');
 
   const newprops: ColumnVector[] = [];
+
+  // Always balance on a constant
+  const N = layer.collection.size;
+  newprops.push(new ColumnVector(new Array(N).fill(1), true));
+
   properties.forEach((prop) => {
     // Collect numerical properties, no standardization here
     if (rec[prop].type === 'numerical') {
@@ -166,9 +171,6 @@ export function balancingMatrixFromLayer(
       }
     }
   });
-  // Always balance on a constant
-  const N = layer.collection.size;
-  newprops.push(new ColumnVector(new Array(N).fill(1), true));
 
   return Matrix.cbind(...newprops);
 }
