@@ -1,9 +1,7 @@
 import {
   AreaCollection,
-  AreaFeature,
   Layer,
   LineCollection,
-  LineFeature,
   PointCollection,
 } from '@envisim/geojson-utils';
 import {bbox4, longitudeCenter} from '@envisim/geojson-utils';
@@ -184,15 +182,15 @@ function probsFromLayer(
 
   if (probabilitiesFromSize) {
     // Probabilities from the size of the features
+    let sizes: number[];
 
-    const sizes: number[] = layer.collection.features.map((feature) => {
-      if (AreaFeature.isFeature(feature)) {
-        return feature.area();
-      } else if (LineFeature.isFeature(feature)) {
-        return feature.length();
-      }
-      return feature.count();
-    });
+    if (AreaCollection.isCollection(layer.collection)) {
+      sizes = layer.collection.features.map((feature) => feature.area());
+    } else if (LineCollection.isCollection(layer.collection)) {
+      sizes = layer.collection.features.map((feature) => feature.length());
+    } else {
+      sizes = layer.collection.features.map((feature) => feature.count());
+    }
 
     prop = new ColumnVector(sizes);
   } else {
