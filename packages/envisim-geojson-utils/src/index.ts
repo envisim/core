@@ -17,6 +17,7 @@ export {
   type Property,
   type PropertyRecord,
   PropertySpecialKeys,
+  createDesignWeightProperty,
 } from './types/property.js';
 
 // GeometricPrimitive

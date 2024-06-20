@@ -28,3 +28,11 @@ export const PropertySpecialKeys = [
   '_randomRotation',
   '_distance',
 ];
+
+export function createDesignWeightProperty(): NumericalProperty {
+  return {
+    id: '_designWeight',
+    name: 'design weight',
+    type: 'numerical',
+  };
+}
