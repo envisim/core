@@ -24,7 +24,23 @@ export interface SampleFiniteOptions {
   /**
    * The name of the sampling method to call from sampling
    */
-  methodName: string;
+  methodName:
+    | 'srswr'
+    | 'srswor'
+    | 'systematic'
+    | 'randomSystematic'
+    | 'poissonSampling'
+    | 'rpm'
+    | 'spm'
+    | 'sampford'
+    | 'pareto'
+    | 'brewer'
+    | 'ppswr'
+    | 'lpm1'
+    | 'lpm2'
+    | 'scps'
+    | 'cube'
+    | 'localCube';
   /**
    * The sample size to use. Should be non-negative integer.
    */
