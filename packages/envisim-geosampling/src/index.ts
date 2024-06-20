@@ -18,8 +18,10 @@ export {
 } from './sampleDistanceUtils.js';
 
 // Sampling methods callable from engine
-export {sampleFinite, sampleFiniteStratified} from './sampling/sampleFinite.js';
 export {
+  sampleFinite,
+  sampleFiniteStratified,
+  sampleFiniteOptionsCheck,
   sampleAreaToArea,
   sampleAreaToAreaStratified,
   sampleAreaToLine,
@@ -28,7 +30,7 @@ export {
   sampleAreaToPointStratified,
   sampleLineToPoint,
   sampleLineToPointStratified,
-} from './sampling/sampleContinuous.js';
+} from './sampling/index.js';
 
 // Model features/tracts
 export {

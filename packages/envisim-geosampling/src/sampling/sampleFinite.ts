@@ -20,27 +20,36 @@ import {
   spreadMatrixFromLayer,
 } from './utils.js';
 
+const SAMPLE_FINITE_SIMPLE_METHODS = [
+  'srswr',
+  'srswor',
+  'systematic',
+  'randomSystematic',
+  'poissonSampling',
+  'rpm',
+  'spm',
+  'sampford',
+  'pareto',
+  'brewer',
+  'ppswr',
+] as const;
+const SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS = [
+  'lpm1',
+  'lpm2',
+  'scps',
+] as const;
+const SAMPLE_FINITE_BALANCED_METHODS = ['cube'] as const;
+const SAMPLE_FINITE_DOUBLY_BALANCED_METHODS = ['localCube'] as const;
+
 export interface SampleFiniteOptions {
   /**
    * The name of the sampling method to call from sampling
    */
   methodName:
-    | 'srswr'
-    | 'srswor'
-    | 'systematic'
-    | 'randomSystematic'
-    | 'poissonSampling'
-    | 'rpm'
-    | 'spm'
-    | 'sampford'
-    | 'pareto'
-    | 'brewer'
-    | 'ppswr'
-    | 'lpm1'
-    | 'lpm2'
-    | 'scps'
-    | 'cube'
-    | 'localCube';
+    | (typeof SAMPLE_FINITE_SIMPLE_METHODS)[number]
+    | (typeof SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS)[number]
+    | (typeof SAMPLE_FINITE_BALANCED_METHODS)[number]
+    | (typeof SAMPLE_FINITE_DOUBLY_BALANCED_METHODS)[number];
   /**
    * The sample size to use. Should be non-negative integer.
    */
@@ -85,6 +94,61 @@ export interface SampleFiniteStratifiedOptions {
   strataOptions: SampleFiniteOptions | SampleFiniteOptions[];
 }
 
+export function sampleFiniteOptionsCheck<
+  T extends AreaCollection | LineCollection | PointCollection,
+>(layer: Layer<T>, options: SampleFiniteOptions): number {
+  if (options.sampleSize < 0) {
+    return 10;
+  }
+  if (
+    options.probabilitiesFrom &&
+    !Object.hasOwn(layer.propertyRecord, options.probabilitiesFrom)
+  ) {
+    return 20;
+  }
+  if (
+    (
+      SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS as ReadonlyArray<string>
+    ).includes(options.methodName) ||
+    (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(
+      options.methodName,
+    )
+  ) {
+    if (!options.spreadOn) {
+      return 30;
+    }
+    if (
+      !options.spreadOn.every((prop) =>
+        Object.hasOwn(layer.propertyRecord, prop),
+      )
+    ) {
+      return 31;
+    }
+  }
+
+  if (
+    (SAMPLE_FINITE_BALANCED_METHODS as ReadonlyArray<string>).includes(
+      options.methodName,
+    ) ||
+    (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(
+      options.methodName,
+    )
+  ) {
+    if (!options.balanceOn) {
+      return 40;
+    }
+    if (
+      !options.balanceOn.every((prop) =>
+        Object.hasOwn(layer.propertyRecord, prop),
+      )
+    ) {
+      return 41;
+    }
+  }
+
+  return 0;
+}
+
 /**
  * Select a sample from a layer using sampling methods for a finite
  * population.
@@ -95,6 +159,11 @@ export interface SampleFiniteStratifiedOptions {
 export function sampleFinite<
   T extends AreaCollection | LineCollection | PointCollection,
 >(layer: Layer<T>, opts: SampleFiniteOptions): Layer<T> {
+  const optionsError = sampleFiniteOptionsCheck(layer, opts);
+  if (optionsError !== 0) {
+    throw new RangeError(`sampleFinite error: ${optionsError}`);
+  }
+
   let idx: number[];
   let mu: number[];
   let n: number;
