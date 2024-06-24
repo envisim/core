@@ -57,7 +57,7 @@ export interface SampleFiniteOptions {
   /**
    * The id of the numerical property to use to compute probabilities.
    */
-  probabilitiesFrom?: string | null;
+  probabilitiesFrom?: string;
   /**
    * Compute probabilities from size.
    * @defaultValue `false`
@@ -76,7 +76,6 @@ export interface SampleFiniteOptions {
   /**
    * Optional spread using geographical coordinates.
    * This apply to lpm1, lpm2, scps, localCube.
-   * @defaultValue `true`
    */
   spreadGeo?: boolean;
   /**
@@ -115,14 +114,18 @@ export function sampleFiniteOptionsCheck<
     )
   ) {
     if (!options.spreadOn) {
-      return 30;
+      if (!options.spreadGeo) {
+        return 30;
+      }
     }
-    if (
-      !options.spreadOn.every((prop) =>
-        Object.hasOwn(layer.propertyRecord, prop),
-      )
-    ) {
-      return 31;
+    if (options.spreadOn) {
+      if (
+        !options.spreadOn.every((prop) =>
+          Object.hasOwn(layer.propertyRecord, prop),
+        )
+      ) {
+        return 31;
+      }
     }
   }
 

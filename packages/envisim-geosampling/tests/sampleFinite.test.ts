@@ -28,6 +28,7 @@ describe('sampleFinite', () => {
   const sample = sampleFinite(layer, {
     methodName: 'lpm2',
     sampleSize: 10,
+    spreadGeo: true,
   });
 
   //console.log(JSON.stringify(sample, null, 2));
