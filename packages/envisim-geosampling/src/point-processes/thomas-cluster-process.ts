@@ -16,7 +16,7 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {uniformPositionsInBBox} from './samplePointsOnAreas.js';
+import {uniformPositionsInBBox} from '../sample-continuous/index.js';
 
 // For conversion from radians to degrees.
 const toDeg = 180 / Math.PI;
@@ -66,7 +66,7 @@ interface ThomasClusterProcessOptions {
  * on areas of input area layer.
  *
  * @param layer
- * @param opts 
+ * @param opts
 
  */
 export function thomasClusterProcess(

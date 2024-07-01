@@ -12,7 +12,7 @@ import {copy} from '@envisim/utils';
 import {
   type SamplePointsOnAreasOptions,
   samplePointsOnAreas,
-} from './samplePointsOnAreas.js';
+} from './points-on-areas.js';
 
 export interface SampleRelascopePointsOptions
   extends SamplePointsOnAreasOptions {

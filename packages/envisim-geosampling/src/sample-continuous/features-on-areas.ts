@@ -9,15 +9,17 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
-import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
-import {intersectPointSampleAreaFrame} from './intersectPointSampleAreaFrame.js';
 import {
   placeModelFeature,
   radiusOfModelFeature,
   sizeOfModelFeature,
-} from './modelFeature.js';
-import {samplePointsOnAreas} from './samplePointsOnAreas.js';
+} from '../model-feature.js';
+import {
+  intersectAreaSampleAreaFrame,
+  intersectLineSampleAreaFrame,
+  intersectPointSampleAreaFrame,
+} from '../utils/index.js';
+import {samplePointsOnAreas} from './points-on-areas.js';
 
 export interface SampleFeaturesOnAreasOptions<
   T extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,

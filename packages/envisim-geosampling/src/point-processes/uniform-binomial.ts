@@ -6,7 +6,7 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {samplePointsOnAreas} from './samplePointsOnAreas.js';
+import {samplePointsOnAreas} from '../sample-continuous/index.js';
 
 interface UniformBinomialPointProcessOptions {
   /**

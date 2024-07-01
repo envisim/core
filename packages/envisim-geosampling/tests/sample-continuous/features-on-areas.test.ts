@@ -7,8 +7,8 @@ import {
   Layer,
 } from '@envisim/geojson-utils';
 
-import {pointFeature, squareAreaFeature} from '../src/modelFeature.js';
-import {sampleFeaturesOnAreas} from '../src/sampleFeaturesOnAreas.js';
+import {pointFeature, squareAreaFeature} from '../../src/model-feature.js';
+import {sampleFeaturesOnAreas} from '../../src/sample-continuous/features-on-areas.js';
 
 describe('sampleFeaturesOnAreas', () => {
   const polygon: GeoJSON.Polygon = {

@@ -9,11 +9,11 @@ import {
 import {Random} from '@envisim/random';
 import {copy} from '@envisim/utils';
 
-import {DetectionFunction, effectiveRadius} from './sampleDistanceUtils.js';
+import {DetectionFunction, effectiveRadius} from './distance-utils.js';
 import {
   type SamplePointsOnAreasOptions,
   samplePointsOnAreas,
-} from './samplePointsOnAreas.js';
+} from './points-on-areas.js';
 
 export interface SampleDistancePointsOptions
   extends SamplePointsOnAreasOptions {
@@ -37,7 +37,7 @@ export interface SampleDistancePointsOptions
  * and collect point objects from a base layer using a detection function
  * to (randomly) determine inclusion.
  *
- * @param layer 
+ * @param layer
  * @param opts
 
  */

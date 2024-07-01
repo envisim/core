@@ -7,7 +7,7 @@ import {
   LineFeature,
 } from '@envisim/geojson-utils';
 
-import {samplePointsOnLines} from '../src/samplePointsOnLines.js';
+import {samplePointsOnLines} from '../../src/sample-continuous/points-on-lines.js';
 
 describe('samplePointsOnLines', () => {
   const ls: GeoJSON.LineString = {

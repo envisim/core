@@ -7,7 +7,7 @@ import {
   Layer,
 } from '@envisim/geojson-utils';
 
-import {samplePointsOnAreas} from '../src/samplePointsOnAreas.js';
+import {samplePointsOnAreas} from '../../src/sample-continuous/points-on-areas.js';
 
 describe('samplePointsOnAreas', () => {
   const polygon: GeoJSON.Polygon = {

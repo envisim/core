@@ -16,7 +16,7 @@ import {
   intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
 
-import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
+import {projectedLengthOfFeature} from '../utils/index.js';
 
 // A type for an object to hold all the data we need to aggregate from
 // one feature to another.

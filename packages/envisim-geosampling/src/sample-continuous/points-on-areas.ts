@@ -21,48 +21,8 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-const toRad = Math.PI / 180;
-const toDeg = 180 / Math.PI;
-
-/**
- * Generates uniform random positions in bounding box
- * @param box - A GeoJSON bounding box.
- * @param n - Positive integer sample size.
- * @param opts - Options.
- * @param opts.rand - Optional instance of Random.
- * @returns - Array of GeoJSON positions.
- */
-export function uniformPositionsInBBox(
-  box: GJ.BBox,
-  n: number,
-  opts: {rand: Random},
-): GJ.Position[] {
-  const bbox = bbox4(box);
-  const y1 = (Math.cos((90 - bbox[1]) * toRad) + 1) / 2;
-  const y2 = (Math.cos((90 - bbox[3]) * toRad) + 1) / 2;
-  const lonDist = longitudeDistance(bbox[0], bbox[2]);
-  const positions: GJ.Position[] = [];
-  const rand = opts.rand ?? new Random();
-  if (n < 0) {
-    throw new Error('n must be non-negative.');
-  }
-
-  for (let i = 0; i < n; i++) {
-    // Generate the point
-    const yRand = y1 + (y2 - y1) * rand.float();
-    const lat = 90 - Math.acos(2 * yRand - 1) * toDeg;
-    const lon = normalizeLongitude(bbox[0] + lonDist * rand.float());
-    positions.push([lon, lat]);
-  }
-
-  if (box.length === 6) {
-    for (let i = 0; i < n; i++) {
-      const alt = box[2] + (box[5] - box[2]) * rand.float();
-      positions[i].push(alt);
-    }
-  }
-  return positions;
-}
+const TO_RAD = Math.PI / 180.0;
+const TO_DEG = 180.0 / Math.PI;
 
 export interface SamplePointsOnAreasOptions {
   /**
@@ -175,14 +135,14 @@ export function samplePointsOnAreas(
       // points that fall inside a polygon.
       // See e.g. https://mathworld.wolfram.com/SpherePointPicking.html
       // for generating uniform points on a sphere.
-      const y1 = (Math.cos((90 - box[1]) * toRad) + 1) / 2;
-      const y2 = (Math.cos((90 - box[3]) * toRad) + 1) / 2;
+      const y1 = (Math.cos((90 - box[1]) * TO_RAD) + 1) / 2;
+      const y2 = (Math.cos((90 - box[3]) * TO_RAD) + 1) / 2;
       const lonDist = longitudeDistance(box[0], box[2]);
 
       while (hits < sampleSize && iterations < 1e7) {
         // Generate the point
         const yRand = y1 + (y2 - y1) * rand.float();
-        const lat = 90 - Math.acos(2 * yRand - 1) * toDeg;
+        const lat = 90 - Math.acos(2 * yRand - 1) * TO_DEG;
         const lon = normalizeLongitude(box[0] + lonDist * rand.float());
         pointLonLat = [lon, lat];
 

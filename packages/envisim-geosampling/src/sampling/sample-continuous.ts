@@ -10,21 +10,15 @@ import {
 } from '@envisim/geojson-utils';
 
 import {
-  type SampleFeaturesOnAreasOptions,
-  sampleFeaturesOnAreas,
-} from '../sampleFeaturesOnAreas.js';
-import {
-  SamplePointsOnLinesOptions,
-  samplePointsOnLines,
-} from '../samplePointsOnLines.js';
-import {
   type SampleBeltsOnAreasOptions,
-  sampleSystematicBeltsOnAreas,
-} from '../sampleSystematicBeltsOnAreas.js';
-import {
+  type SampleFeaturesOnAreasOptions,
+  SamplePointsOnLinesOptions,
   type SampleSystematicLinesOnAreasOptions,
+  sampleFeaturesOnAreas,
+  samplePointsOnLines,
+  sampleSystematicBeltsOnAreas,
   sampleSystematicLinesOnAreas,
-} from '../sampleSystematicLinesOnAreas.js';
+} from '../sample-continuous/index.js';
 
 interface SampleAreaToAreaFeatureOptions
   extends SampleFeaturesOnAreasOptions<GJ.AreaFeature> {

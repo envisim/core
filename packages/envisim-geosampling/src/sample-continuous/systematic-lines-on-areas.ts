@@ -15,7 +15,7 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {intersectLineSampleAreaFrame} from './intersectLineSampleAreaFrame.js';
+import {intersectLineSampleAreaFrame} from '../utils/index.js';
 
 export interface SampleSystematicLinesOnAreasOptions {
   /**

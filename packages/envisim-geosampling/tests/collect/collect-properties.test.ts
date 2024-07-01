@@ -13,7 +13,7 @@ import {
 import {
   collectProperties,
   collectPropertyRecord,
-} from '../src/collectProperties.js';
+} from '../../src/collect/collect-properties.js';
 
 describe('samplePointsOnAreas', () => {
   const polygon: GeoJSON.Polygon = {

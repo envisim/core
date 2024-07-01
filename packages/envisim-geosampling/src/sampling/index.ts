@@ -3,7 +3,7 @@ export {
   sampleFinite,
   sampleFiniteStratified,
   sampleFiniteOptionsCheck,
-} from './sampleFinite.js';
+} from './sample-finite.js';
 export {
   sampleAreaToArea,
   sampleAreaToAreaStratified,
@@ -13,4 +13,4 @@ export {
   sampleAreaToPointStratified,
   sampleLineToPoint,
   sampleLineToPointStratified,
-} from './sampleContinuous.js';
+} from './sample-continuous.js';

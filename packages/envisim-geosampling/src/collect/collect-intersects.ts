@@ -15,7 +15,7 @@ import {
 } from '@envisim/geojson-utils';
 import {copy} from '@envisim/utils';
 
-import {projectedLengthOfFeature} from './projectedLengthOfFeature.js';
+import {projectedLengthOfFeature} from '../utils/index.js';
 
 /**
  * Internal function to transfer properties in place to the intersect from the

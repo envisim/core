@@ -7,7 +7,7 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {uniformBinomialPointProcess} from './uniformBinomialPointProcess.js';
+import {uniformBinomialPointProcess} from './uniform-binomial.js';
 
 interface UniformPoissonProcessOptions {
   /**
@@ -28,7 +28,7 @@ interface UniformPoissonProcessOptions {
  * on a spherical model of the earth.
  *
  * @param layer
- * @param opts 
+ * @param opts
 
  */
 export function uniformPoissonPointProcess(

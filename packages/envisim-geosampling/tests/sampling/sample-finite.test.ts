@@ -8,7 +8,7 @@ import {
   PointFeature,
 } from '@envisim/geojson-utils';
 
-import {sampleFinite} from '../src/index.js';
+import {sampleFinite} from '../../src/sampling/sample-finite.ts';
 
 describe('sampleFinite', () => {
   // Create a layer with N random points

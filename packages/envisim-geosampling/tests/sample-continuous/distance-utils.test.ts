@@ -5,7 +5,7 @@ import {
   halfNormalDetectionFunction,
   integrate,
   uniformDetectionFunction,
-} from '../src/sampleDistanceUtils.js';
+} from '../../src/sample-continuous/distance-utils.js';
 
 describe('sampleDistanceUtils', () => {
   const f1 = (x: number) => x;

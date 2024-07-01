@@ -1,21 +1,18 @@
-// Sampling methods
-export {samplePointsOnLines} from './samplePointsOnLines.js';
-export {samplePointsOnAreas} from './samplePointsOnAreas.js';
-export {sampleSystematicLinesOnAreas} from './sampleSystematicLinesOnAreas.js';
-export {sampleSystematicBeltsOnAreas} from './sampleSystematicBeltsOnAreas.js';
-export {sampleFeaturesOnAreas} from './sampleFeaturesOnAreas.js';
-export {sampleRelascopePoints} from './sampleRelascopePoints.js';
-export {sampleDistancePoints} from './sampleDistancePoints.js';
-export {sampleSystematicDistanceLines} from './sampleSystematicDistanceLines.js';
-
-// Distance sampling utils.
 export {
+  samplePointsOnLines,
+  samplePointsOnAreas,
+  sampleSystematicLinesOnAreas,
+  sampleSystematicBeltsOnAreas,
+  sampleFeaturesOnAreas,
+  sampleRelascopePoints,
+  sampleDistancePoints,
+  sampleSystematicDistanceLines,
   integrate,
   effectiveRadius,
   effectiveHalfWidth,
   uniformDetectionFunction,
   halfNormalDetectionFunction,
-} from './sampleDistanceUtils.js';
+} from './sample-continuous/index.js';
 
 // Sampling methods callable from engine
 export {
@@ -50,14 +47,19 @@ export {
   squareAreaFeature,
   pointFeature,
   squarePointFeature,
-} from './modelFeature.js';
+} from './model-feature.js';
 
 // Collection from layers
-export {collectProperties, collectPropertyRecord} from './collectProperties.js';
-export {collectIntersects} from './collectIntersects.js';
+export {
+  collectProperties,
+  collectPropertyRecord,
+  collectIntersects,
+} from './collect/index.js';
 
 // Point processes
-export {uniformBinomialPointProcess} from './uniformBinomialPointProcess.js';
-export {uniformPoissonPointProcess} from './uniformPoissonPointProcess.js';
-export {maternClusterProcess} from './maternClusterProcess.js';
-export {thomasClusterProcess} from './thomasClusterProcess.js';
+export {
+  maternClusterProcess,
+  thomasClusterProcess,
+  uniformBinomialPointProcess,
+  uniformPoissonPointProcess,
+} from './point-processes/index.js';

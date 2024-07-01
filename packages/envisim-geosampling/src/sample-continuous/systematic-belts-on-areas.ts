@@ -15,7 +15,7 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {intersectAreaSampleAreaFrame} from './intersectAreaSampleAreaFrame.js';
+import {intersectAreaSampleAreaFrame} from '../utils/index.js';
 
 export interface SampleBeltsOnAreasOptions {
   /**

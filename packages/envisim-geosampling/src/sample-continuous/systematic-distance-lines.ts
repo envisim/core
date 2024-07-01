@@ -8,11 +8,11 @@ import {
 import {Random} from '@envisim/random';
 import {copy} from '@envisim/utils';
 
-import {DetectionFunction, effectiveHalfWidth} from './sampleDistanceUtils.js';
+import {DetectionFunction, effectiveHalfWidth} from './distance-utils.js';
 import {
   type SampleSystematicLinesOnAreasOptions,
   sampleSystematicLinesOnAreas,
-} from './sampleSystematicLinesOnAreas.js';
+} from './systematic-lines-on-areas.js';
 
 export interface SampleSystematicDistanceLinesOptions
   extends SampleSystematicLinesOnAreasOptions {
@@ -37,7 +37,7 @@ export interface SampleSystematicDistanceLinesOptions
  * layer using a detection function to (randomly) determine inclusion.
  *
  * @param layer
- * @param opts 
+ * @param opts
 
  */
 export function sampleSystematicDistanceLines(
