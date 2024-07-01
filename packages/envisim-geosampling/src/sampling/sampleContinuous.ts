@@ -42,15 +42,14 @@ export function sampleAreaToArea(
   layer: Layer<AreaCollection>,
   opts: SampleAreaToAreaOptions,
 ): Layer<AreaCollection> {
-  if (opts.methodName === 'systematic-belt') {
-    return sampleSystematicBeltsOnAreas(layer, opts);
+  switch (opts.methodName) {
+    case 'systematic-belt':
+      return sampleSystematicBeltsOnAreas(layer, opts);
+    case 'area-feature':
+      return sampleFeaturesOnAreas(layer, opts);
+    default:
+      throw new Error('methodName does not match available methods');
   }
-  if (opts.methodName == 'area-feature') {
-    return sampleFeaturesOnAreas(layer, opts);
-  }
-  throw new Error(
-    'methodName does not match available methods systematic-belt or area-feature',
-  );
 }
 
 interface SampleAreaToLineFeatureOptions
@@ -70,15 +69,14 @@ export function sampleAreaToLine(
   layer: Layer<AreaCollection>,
   opts: SampleAreaToLineOptions,
 ): Layer<LineCollection> {
-  if (opts.methodName === 'systematic-line') {
-    return sampleSystematicLinesOnAreas(layer, opts);
+  switch (opts.methodName) {
+    case 'systematic-line':
+      return sampleSystematicLinesOnAreas(layer, opts);
+    case 'line-feature':
+      return sampleFeaturesOnAreas(layer, opts);
+    default:
+      throw new Error('methodName does not match available methods');
   }
-  if (opts.methodName == 'line-feature') {
-    return sampleFeaturesOnAreas(layer, opts);
-  }
-  throw new Error(
-    'methodName does not match available methods systematic-line or line-feature',
-  );
 }
 
 export interface SampleAreaToPointOptions
