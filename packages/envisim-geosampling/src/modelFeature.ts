@@ -85,16 +85,13 @@ function setCoordinatesForGeometry(
   }
 }
 
-type PlaceOpts = {
+interface PlaceOpts<GP extends GeometricPrimitive = GeometricPrimitive> {
   rotation: number;
   randomRotation: boolean;
-  rand: Random;
+  rand?: Random;
   radius?: number;
-  type?:
-    | GeometricPrimitive.POINT
-    | GeometricPrimitive.LINE
-    | GeometricPrimitive.AREA;
-};
+  type?: GP;
+}
 
 /**
  * Positions a modelFeature at position and optionally rotates the coordinates around position.
@@ -112,47 +109,46 @@ type PlaceOpts = {
 function placeModelFeature(
   modelFeature: GJ.PointFeature,
   position: GJ.Position,
-  opts: PlaceOpts,
+  opts: PlaceOpts<GeometricPrimitive.POINT>,
 ): GJ.PointFeature;
 function placeModelFeature(
   modelFeature: GJ.LineFeature,
   position: GJ.Position,
-  opts: PlaceOpts,
+  opts: PlaceOpts<GeometricPrimitive.LINE>,
 ): GJ.LineFeature;
 function placeModelFeature(
   modelFeature: GJ.AreaFeature,
   position: GJ.Position,
-  opts: PlaceOpts,
+  opts: PlaceOpts<GeometricPrimitive.AREA>,
 ): GJ.AreaFeature;
 function placeModelFeature(
   modelFeature: GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
   position: GJ.Position,
-  opts: PlaceOpts = {rotation: 0, randomRotation: false, rand: new Random()},
+  {
+    rotation: optsRotation = 0,
+    randomRotation = false,
+    rand = new Random(),
+    type: primitive = getFeaturePrimitive(modelFeature),
+    radius = radiusOfGeometry(modelFeature.geometry),
+  }: PlaceOpts,
 ) {
-  let rotation = opts.rotation ?? 0;
-  const rand = opts.rand ?? new Random();
-  const randomRotation = opts.randomRotation ?? false;
-  if (randomRotation) {
-    rotation = Math.floor(rand.float() * 360);
-  }
+  const rotation = randomRotation
+    ? Math.floor(rand.float() * 360)
+    : optsRotation;
   const feature = copy(modelFeature);
-  if (feature.type !== 'Feature') {
-    throw new Error('modelFeature is not of type Feature.');
-  }
-  const radius = opts.radius ?? radiusOfGeometry(feature.geometry);
-  const type = opts.type ?? getFeaturePrimitive(feature);
   setCoordinatesForGeometry(feature.geometry, position, rotation);
 
   // check if antimeridian cut may be needed here
 
   if (Geodesic.distance(position, [180, position[1]]) < radius) {
     // May need cut if area or line as the distance to the antimeridian is less than the radius
-    if (type === GeometricPrimitive.AREA) {
+    if (primitive === GeometricPrimitive.AREA) {
       feature.geometry = cutAreaGeometry(feature.geometry as GJ.AreaGeometry);
-    } else if (type === GeometricPrimitive.LINE) {
+    } else if (primitive === GeometricPrimitive.LINE) {
       feature.geometry = cutLineGeometry(feature.geometry as GJ.LineGeometry);
     }
   }
+
   return feature;
 }
 export {placeModelFeature};
