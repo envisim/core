@@ -30,3 +30,13 @@ Functions should have the following styles of arguments:
 | Hybrid             | Single, distinct argument + config object           |
 | Object argument    | All other cases                                                    |
 
+## String properties
+String properties should be written in `kebab-case`.
+Exception to this rule for GeoJSON type string properties, or other cases where
+existing standards rule otherwise.
+
+Example:
+```
+{ methodName: 'sample-finite' }
+```
+

@@ -28,10 +28,10 @@ import {
 
 interface SampleAreaToAreaFeatureOptions
   extends SampleFeaturesOnAreasOptions<GJ.AreaFeature> {
-  methodName: 'areaFeature';
+  methodName: 'area-feature';
 }
 interface SampleAreaToBeltOptions extends SampleBeltsOnAreasOptions {
-  methodName: 'systematicBelt';
+  methodName: 'systematic-belt';
 }
 
 export type SampleAreaToAreaOptions =
@@ -42,24 +42,24 @@ export function sampleAreaToArea(
   layer: Layer<AreaCollection>,
   opts: SampleAreaToAreaOptions,
 ): Layer<AreaCollection> {
-  if (opts.methodName === 'systematicBelt') {
+  if (opts.methodName === 'systematic-belt') {
     return sampleSystematicBeltsOnAreas(layer, opts);
   }
-  if (opts.methodName == 'areaFeature') {
+  if (opts.methodName == 'area-feature') {
     return sampleFeaturesOnAreas(layer, opts);
   }
   throw new Error(
-    'methodName does not match available methods systematicBelt or areaFeature',
+    'methodName does not match available methods systematic-belt or area-feature',
   );
 }
 
 interface SampleAreaToLineFeatureOptions
   extends SampleFeaturesOnAreasOptions<GJ.LineFeature> {
-  methodName: 'lineFeature';
+  methodName: 'line-feature';
 }
 interface SampleAreaToSystematicLineOptions
   extends SampleSystematicLinesOnAreasOptions {
-  methodName: 'systematicLine';
+  methodName: 'systematic-line';
 }
 
 export type SampleAreaToLineOptions =
@@ -70,14 +70,14 @@ export function sampleAreaToLine(
   layer: Layer<AreaCollection>,
   opts: SampleAreaToLineOptions,
 ): Layer<LineCollection> {
-  if (opts.methodName === 'systematicLine') {
+  if (opts.methodName === 'systematic-line') {
     return sampleSystematicLinesOnAreas(layer, opts);
   }
-  if (opts.methodName == 'lineFeature') {
+  if (opts.methodName == 'line-feature') {
     return sampleFeaturesOnAreas(layer, opts);
   }
   throw new Error(
-    'methodName does not match available methods systematicLine or lineFeature',
+    'methodName does not match available methods systematic-line or line-feature',
   );
 }
 
