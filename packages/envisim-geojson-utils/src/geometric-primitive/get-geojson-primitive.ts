@@ -1,7 +1,24 @@
 import * as GJ from '../types/geojson.js';
 import {GeometricPrimitive} from './EnumGeometricPrimitive.js';
 
-export function getGeometryPrimitive(
+function getGeometryPrimitive(
+  obj: GJ.PointGeometry,
+  allowGC?: boolean,
+): GeometricPrimitive.POINT;
+function getGeometryPrimitive(
+  obj: GJ.LineGeometry,
+  allowGC?: boolean,
+): GeometricPrimitive.LINE;
+function getGeometryPrimitive(
+  obj: GJ.AreaGeometry,
+  allowGC?: boolean,
+): GeometricPrimitive.AREA;
+function getGeometryPrimitive(
+  obj: GJ.BaseGeometry,
+  allowGC?: boolean,
+  exhaustive?: boolean,
+): GeometricPrimitive;
+function getGeometryPrimitive(
   obj: GJ.BaseGeometry,
   allowGC: boolean = true,
   exhaustive: boolean = false,
@@ -44,41 +61,51 @@ export function getGeometryPrimitive(
 
   return GeometricPrimitive.NONE;
 }
+export {getGeometryPrimitive};
 
-export function isGeometryPrimitive(
+function isGeometryPrimitive(
   obj: GJ.BaseGeometry,
   primitive: GeometricPrimitive.POINT,
   exhaustive?: boolean,
 ): obj is GJ.PointGeometry;
-export function isGeometryPrimitive(
+function isGeometryPrimitive(
   obj: GJ.BaseGeometry,
   primitive: GeometricPrimitive.LINE,
   exhaustive?: boolean,
 ): obj is GJ.LineGeometry;
-export function isGeometryPrimitive(
+function isGeometryPrimitive(
   obj: GJ.BaseGeometry,
   primitive: GeometricPrimitive.AREA,
   exhaustive?: boolean,
 ): obj is GJ.AreaGeometry;
-export function isGeometryPrimitive(
+function isGeometryPrimitive(
   obj: GJ.BaseGeometry,
   primitive: GeometricPrimitive,
   exhaustive?: boolean,
 ): obj is never;
-export function isGeometryPrimitive(
+function isGeometryPrimitive(
   obj: GJ.BaseGeometry,
   primitive: GeometricPrimitive,
   exhaustive: boolean = false,
 ): obj is GJ.BaseGeometry {
   return getGeometryPrimitive(obj, true, exhaustive) === primitive;
 }
+export {isGeometryPrimitive};
 
-export function getFeaturePrimitive(
+function getFeaturePrimitive(obj: GJ.PointFeature): GeometricPrimitive.POINT;
+function getFeaturePrimitive(obj: GJ.LineFeature): GeometricPrimitive.LINE;
+function getFeaturePrimitive(obj: GJ.AreaFeature): GeometricPrimitive.AREA;
+function getFeaturePrimitive(
+  obj: GJ.BaseFeature,
+  exhaustive?: boolean,
+): GeometricPrimitive;
+function getFeaturePrimitive(
   obj: GJ.BaseFeature,
   exhaustive: boolean = false,
 ): GeometricPrimitive {
   return getGeometryPrimitive(obj.geometry, true, exhaustive);
 }
+export {getFeaturePrimitive};
 
 export function getCollectionPrimitive(
   obj: GJ.BaseFeatureCollection,
