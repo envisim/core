@@ -5,9 +5,9 @@ import {
   Layer,
   LineCollection,
   PointCollection,
+  createDesignWeightProperty,
   getFeaturePrimitive,
 } from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
 
 import {
   placeModelFeature,
@@ -19,50 +19,8 @@ import {
   intersectLineSampleAreaFrame,
   intersectPointSampleAreaFrame,
 } from '../utils/index.js';
+import {SAMPLE_FEATURE_OPTIONS, type SampleFeatureOptions} from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
-
-export interface SampleFeaturesOnAreasOptions<
-  T extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
-> {
-  /**
-   * The method to use for selection of points.
-   */
-  method: 'independent' | 'systematic';
-  /**
-   * The (average) number of points to select.
-   */
-  sampleSize: number;
-  /**
-   * A model feature of points or lines or areas to be placed on
-   * the selctedd points.
-   */
-  modelFeature: T;
-  /**
-   * Optional rotation angle in degrees to rotate the model feature.
-   * @defaultValue `0.0`
-   */
-  rotation?: number;
-  /**
-   * If true, then the model feature will be randomly rotated. Forced random rotation
-   * is used for line features.
-   */
-  randomRotation?: boolean;
-  /**
-   * Optional ratio between distance in west-east direction to south-north direction.
-   * @defaultValue `1.0`
-   */
-  ratio?: number;
-  /**
-   * An instance of {@link random.Random}
-   * @defaultValue `new Random()`
-   */
-  rand?: Random;
-  /**
-   * The number of points used when converting circles to polygons.
-   * @defaultValue `16`
-   */
-  pointsPerCircle?: number;
-}
 
 /**
  * Select a sample of features/tracts on areas.
@@ -72,32 +30,32 @@ export interface SampleFeaturesOnAreasOptions<
  */
 function sampleFeaturesOnAreas(
   layer: Layer<AreaCollection>,
-  opts: SampleFeaturesOnAreasOptions<GJ.PointFeature>,
+  opts: SampleFeatureOptions<GJ.PointFeature>,
 ): Layer<PointCollection>;
 function sampleFeaturesOnAreas(
   layer: Layer<AreaCollection>,
-  opts: SampleFeaturesOnAreasOptions<GJ.LineFeature>,
+  opts: SampleFeatureOptions<GJ.LineFeature>,
 ): Layer<LineCollection>;
 function sampleFeaturesOnAreas(
   layer: Layer<AreaCollection>,
-  opts: SampleFeaturesOnAreasOptions<GJ.AreaFeature>,
+  opts: SampleFeatureOptions<GJ.AreaFeature>,
 ): Layer<AreaCollection>;
 function sampleFeaturesOnAreas(
   layer: Layer<AreaCollection>,
-  opts: SampleFeaturesOnAreasOptions<
-    GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature
-  >,
+  {
+    rand = SAMPLE_FEATURE_OPTIONS.rand,
+    pointsPerCircle = SAMPLE_FEATURE_OPTIONS.pointsPerCircle,
+    pointSelection,
+    sampleSize,
+    modelFeature,
+    rotation = SAMPLE_FEATURE_OPTIONS.rotation,
+    randomRotation = SAMPLE_FEATURE_OPTIONS.randomRotation,
+    ratio = SAMPLE_FEATURE_OPTIONS.ratio,
+  }: SampleFeatureOptions<GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>,
 ): Layer<PointCollection | LineCollection | AreaCollection> {
-  const {method, sampleSize, modelFeature} = opts;
   Layer.assert(layer, GeometricPrimitive.AREA);
 
   const tractType = getFeaturePrimitive(modelFeature);
-
-  // Set default options.
-  const rotation = opts.rotation ?? 0;
-  let randomRotation = opts.randomRotation ?? false;
-  const rand = opts.rand ?? new Random();
-  const pointsPerCircle = opts.pointsPerCircle ?? 16;
 
   // Force randomRotation for type line!
   if (tractType === GeometricPrimitive.LINE) {
@@ -110,11 +68,11 @@ function sampleFeaturesOnAreas(
 
   // Select first a sample of points and use radius as buffer.
   const pointsLayer = samplePointsOnAreas(layer, {
-    method,
+    pointSelection,
     sampleSize,
     buffer: radius,
     rand,
-    ratio: opts.ratio,
+    ratio,
   });
 
   if (radius === 0) {
@@ -155,13 +113,7 @@ function sampleFeaturesOnAreas(
       );
       return new Layer(
         collection,
-        {
-          _designWeight: {
-            id: '_designWeight',
-            name: '_designWeight',
-            type: 'numerical',
-          },
-        },
+        {_designWeight: createDesignWeightProperty()},
         true,
       );
     }
@@ -202,13 +154,7 @@ function sampleFeaturesOnAreas(
       );
       return new Layer(
         collection,
-        {
-          _designWeight: {
-            id: '_designWeight',
-            name: '_designWeight',
-            type: 'numerical',
-          },
-        },
+        {_designWeight: createDesignWeightProperty()},
         true,
       );
     }
@@ -248,13 +194,7 @@ function sampleFeaturesOnAreas(
       );
       return new Layer(
         collection,
-        {
-          _designWeight: {
-            id: '_designWeight',
-            name: '_designWeight',
-            type: 'numerical',
-          },
-        },
+        {_designWeight: createDesignWeightProperty()},
         true,
       );
     }
@@ -263,5 +203,4 @@ function sampleFeaturesOnAreas(
       throw new Error('Model feature type is unknown.');
   }
 }
-
 export {sampleFeaturesOnAreas};

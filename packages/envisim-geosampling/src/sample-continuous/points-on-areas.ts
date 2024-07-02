@@ -13,42 +13,18 @@ import {
   type PropertyRecord,
   bbox4,
   buffer as bufferAreaCollection,
+  createDesignWeightProperty,
   longitudeCenter,
   longitudeDistance,
   normalizeLongitude,
   pointInAreaFeature,
   unionOfPolygons,
 } from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
+
+import {SAMPLE_POINT_OPTIONS, type SamplePointOptions} from './options.js';
 
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;
-
-export interface SamplePointsOnAreasOptions {
-  /**
-   * The method to use to select points.
-   */
-  method: 'independent' | 'systematic';
-  /**
-   * The (average) number of points to select.
-   */
-  sampleSize: number;
-  /**
-   * Optional buffer in meters.
-   * @defaultValue `0.0`
-   */
-  buffer?: number;
-  /**
-   * Optional ratio between distance in west-east direction to south-north direction.
-   *  * @defaultValue `1.0`
-   */
-  ratio?: number;
-  /**
-   * An instance of {@link random.Random}
-   * @defaultValue `new Random()`
-   */
-  rand?: Random;
-}
 
 /**
  * Selects points on areas (if features have bbox, it is used in pointInPolygon
@@ -60,24 +36,16 @@ export interface SamplePointsOnAreasOptions {
 export function samplePointsOnAreas(
   layer: Layer<AreaCollection>,
   {
-    method,
+    rand = SAMPLE_POINT_OPTIONS.rand,
+    pointSelection: method,
     sampleSize,
-    buffer = 0,
-    ratio = 1,
-    rand = new Random(),
-  }: SamplePointsOnAreasOptions,
+    buffer = SAMPLE_POINT_OPTIONS.buffer,
+    ratio = SAMPLE_POINT_OPTIONS.ratio,
+  }: SamplePointOptions,
 ): Layer<PointCollection> {
   Layer.assert(layer, GeometricPrimitive.AREA);
 
-  if (method !== 'systematic' && method !== 'independent') {
-    throw new Error("Input method must be either'uniform' or 'systematic'");
-  }
-
-  if (
-    typeof sampleSize !== 'number' ||
-    sampleSize !== Math.round(sampleSize) ||
-    sampleSize <= 0
-  ) {
+  if (sampleSize !== Math.round(sampleSize) || sampleSize <= 0) {
     throw new Error('Input sampleSize must be a positive integer.');
   }
 
@@ -103,7 +71,7 @@ export function samplePointsOnAreas(
   // Buffer the Collection if needed.
 
   let buffered: AreaCollection | null;
-  if (buffer > 0) {
+  if (buffer > 0.0) {
     buffered = bufferAreaCollection(gj, {
       radius: buffer,
       steps: 10,
@@ -124,6 +92,7 @@ export function samplePointsOnAreas(
   const pointFeatures = [];
   const parentIndex: number[] = [];
   let pointLonLat: GJ.Position;
+
   switch (method) {
     case 'independent': {
       // Store number of iterations and number of hits.
@@ -135,14 +104,14 @@ export function samplePointsOnAreas(
       // points that fall inside a polygon.
       // See e.g. https://mathworld.wolfram.com/SpherePointPicking.html
       // for generating uniform points on a sphere.
-      const y1 = (Math.cos((90 - box[1]) * TO_RAD) + 1) / 2;
-      const y2 = (Math.cos((90 - box[3]) * TO_RAD) + 1) / 2;
+      const y1 = (Math.cos((90.0 - box[1]) * TO_RAD) + 1.0) / 2.0;
+      const y2 = (Math.cos((90.0 - box[3]) * TO_RAD) + 1.0) / 2.0;
       const lonDist = longitudeDistance(box[0], box[2]);
 
       while (hits < sampleSize && iterations < 1e7) {
         // Generate the point
         const yRand = y1 + (y2 - y1) * rand.float();
-        const lat = 90 - Math.acos(2 * yRand - 1) * TO_DEG;
+        const lat = 90 - Math.acos(2.0 * yRand - 1.0) * TO_DEG;
         const lon = normalizeLongitude(box[0] + lonDist * rand.float());
         pointLonLat = [lon, lat];
 
@@ -201,7 +170,7 @@ export function samplePointsOnAreas(
         // Compute the points
         for (let i = 0; i <= nx; i++) {
           const lonCoord = normalizeLongitude(
-            centerLon + (xoff + dx * (i - nx / 2)) * lonPerMeter,
+            centerLon + (xoff + dx * (i - nx / 2.0)) * lonPerMeter,
           );
           pointLonLat = [lonCoord, latCoord];
 
@@ -228,7 +197,7 @@ export function samplePointsOnAreas(
       throw new Error('Unknown method.');
   }
 
-  if (buffer === 0) {
+  if (buffer === 0.0) {
     // Transfer design weights here.
     pointFeatures.forEach((pf: PointFeature, i) => {
       let dw = 1;
@@ -241,13 +210,11 @@ export function samplePointsOnAreas(
       }
     });
   }
+
   const propertyRecord: PropertyRecord = {
-    _designWeight: {
-      id: '_designWeight',
-      name: '_designWeight',
-      type: 'numerical',
-    },
+    _designWeight: createDesignWeightProperty(),
   };
+
   // parentIndex refer to buffered features, so
   // may not be used to transfer design weights
   // from parents unless buffer is 0.

@@ -7,40 +7,19 @@ import {
   Layer,
   Polygon,
   bbox4,
+  createDesignWeightProperty,
   cutAreaGeometry,
   longitudeCenter,
   longitudeDistance,
   normalizeLongitude,
   rotateCoord,
 } from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
 
 import {intersectAreaSampleAreaFrame} from '../utils/index.js';
-
-export interface SampleBeltsOnAreasOptions {
-  /**
-   * The distance in meters between the center of the parallel belts.
-   */
-  distBetween: number;
-  /**
-   * The half-width of the belt.
-   */
-  halfWidth: number;
-  /**
-   * Optional fixed rotation angle in degrees.
-   */
-  rotation?: number;
-  /**
-   * An instance of {@link random.Random}
-   * @defaultValue `new Random()`
-   */
-  rand?: Random;
-  /**
-   * The number of points used when converting circles to polygons.
-   * @defaultValue `16`
-   */
-  pointsPerCircle?: number;
-}
+import {
+  SAMPLE_BELT_ON_AREA_OPTIONS,
+  type SampleBeltOnAreaOptions,
+} from './options.js';
 
 /**
  * Selects a systematic sample of belts on areas.
@@ -51,20 +30,20 @@ export interface SampleBeltsOnAreasOptions {
 export const sampleSystematicBeltsOnAreas = (
   layer: Layer<AreaCollection>,
   {
+    rand = SAMPLE_BELT_ON_AREA_OPTIONS.rand,
+    pointsPerCircle = SAMPLE_BELT_ON_AREA_OPTIONS.pointsPerCircle,
     distBetween,
+    rotation = SAMPLE_BELT_ON_AREA_OPTIONS.rotation,
     halfWidth,
-    rotation = 0,
-    rand = new Random(),
-    pointsPerCircle = 16,
-  }: SampleBeltsOnAreasOptions,
+  }: SampleBeltOnAreaOptions,
 ): Layer<AreaCollection> => {
   Layer.assert(layer, GeometricPrimitive.AREA);
 
-  if (typeof distBetween !== 'number' || distBetween <= 0) {
+  if (distBetween <= 0.0) {
     throw new Error('Input distBetween must be a positive number.');
   }
 
-  if (typeof halfWidth !== 'number' || halfWidth <= 0) {
+  if (halfWidth <= 0.0) {
     throw new Error('Input halfWidth must be a number > 0.');
   }
 
@@ -77,7 +56,7 @@ export const sampleSystematicBeltsOnAreas = (
 
   const refCoord: GJ.Position = [
     longitudeCenter(box[0], box[2]),
-    box[1] + (box[3] - box[1]) / 2,
+    box[1] + (box[3] - box[1]) / 2.0,
   ];
 
   const maxRadius = Math.max(
@@ -85,13 +64,13 @@ export const sampleSystematicBeltsOnAreas = (
     Geodesic.distance([box[2], box[3]], refCoord),
   );
 
-  let smallestAtLat = 0;
+  let smallestAtLat = 0.0;
 
-  if (box[3] > 0 && box[1] < 0) {
+  if (box[3] > 0.0 && box[1] < 0.0) {
     smallestAtLat = Math.max(box[3], -box[1]);
-  } else if (box[3] < 0) {
+  } else if (box[3] < 0.0) {
     smallestAtLat = box[1];
-  } else if (box[1] > 0) {
+  } else if (box[1] > 0.0) {
     smallestAtLat = box[3];
   }
 
@@ -105,9 +84,13 @@ export const sampleSystematicBeltsOnAreas = (
     maxRadius,
     90,
   )[0];
-  const minLat = Geodesic.destination(refCoord, maxRadius + halfWidth, 180)[1];
+  const minLat = Geodesic.destination(
+    refCoord,
+    maxRadius + halfWidth,
+    180.0,
+  )[1];
   const lonDist = longitudeDistance(minLon, maxLon);
-  const numLines = Math.ceil((2 * maxRadius) / distBetween);
+  const numLines = Math.ceil((2.0 * maxRadius) / distBetween);
 
   const rings: GJ.Position[][] = [];
   for (let i = 0; i < numLines; i++) {
@@ -146,7 +129,7 @@ export const sampleSystematicBeltsOnAreas = (
   const features = rings.map((coords) => {
     return AreaFeature.create(
       cutAreaGeometry(new Polygon({coordinates: [coords]}, true)),
-      {_designWeight: distBetween / (halfWidth * 2)},
+      {_designWeight: distBetween / (halfWidth * 2.0)},
       true,
     );
   });
@@ -157,13 +140,7 @@ export const sampleSystematicBeltsOnAreas = (
       layer.collection,
       pointsPerCircle,
     ),
-    {
-      _designWeight: {
-        id: '_designWeight',
-        name: '_designWeight',
-        type: 'numerical',
-      },
-    },
+    {_designWeight: createDesignWeightProperty()},
     true,
   );
 };

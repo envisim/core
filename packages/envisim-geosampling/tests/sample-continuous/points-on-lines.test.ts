@@ -23,7 +23,7 @@ describe('samplePointsOnLines', () => {
   const collection = LineCollection.create([LineFeature.create(ls, {})]);
   const frame = new Layer(collection, {});
   const sample = samplePointsOnLines(frame, {
-    method: 'independent',
+    pointSelection: 'independent',
     sampleSize: 10,
   });
   //console.log(JSON.stringify(sample, null, 2));

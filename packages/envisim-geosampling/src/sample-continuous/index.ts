@@ -1,36 +1,12 @@
 // Sampling methods
-export {
-  sampleDistancePoints,
-  type SampleDistancePointsOptions,
-} from './distance-points.js';
-export {
-  sampleFeaturesOnAreas,
-  type SampleFeaturesOnAreasOptions,
-} from './features-on-areas.js';
-export {
-  samplePointsOnAreas,
-  type SamplePointsOnAreasOptions,
-} from './points-on-areas.js';
-export {
-  samplePointsOnLines,
-  type SamplePointsOnLinesOptions,
-} from './points-on-lines.js';
-export {
-  sampleRelascopePoints,
-  type SampleRelascopePointsOptions,
-} from './relascope-points.js';
-export {
-  sampleSystematicBeltsOnAreas,
-  type SampleBeltsOnAreasOptions,
-} from './systematic-belts-on-areas.js';
-export {
-  sampleSystematicDistanceLines,
-  type SampleSystematicDistanceLinesOptions,
-} from './systematic-distance-lines.js';
-export {
-  sampleSystematicLinesOnAreas,
-  type SampleSystematicLinesOnAreasOptions,
-} from './systematic-lines-on-areas.js';
+export {sampleDistancePoints} from './distance-points.js';
+export {sampleFeaturesOnAreas} from './features-on-areas.js';
+export {samplePointsOnAreas} from './points-on-areas.js';
+export {samplePointsOnLines} from './points-on-lines.js';
+export {sampleRelascopePoints} from './relascope-points.js';
+export {sampleSystematicBeltsOnAreas} from './systematic-belts-on-areas.js';
+export {sampleSystematicDistanceLines} from './systematic-distance-lines.js';
+export {sampleSystematicLinesOnAreas} from './systematic-lines-on-areas.js';
 
 // Distance sampling utils.
 export {
@@ -43,3 +19,17 @@ export {
 
 // Points in bbox
 export {uniformPositionsInBBox} from './points-in-bbox.js';
+
+// Options
+export {
+  type SampleBaseOptions,
+  SAMPLE_BASE_OPTIONS,
+  type SamplePointOptions,
+  SAMPLE_POINT_OPTIONS,
+  type SampleFeatureOptions,
+  SAMPLE_FEATURE_OPTIONS,
+  type SampleSystematicLineOnAreaOptions,
+  SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS,
+  type SampleBeltOnAreaOptions,
+  SAMPLE_BELT_ON_AREA_OPTIONS,
+} from './options.js';

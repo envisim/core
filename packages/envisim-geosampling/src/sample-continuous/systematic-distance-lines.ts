@@ -3,19 +3,22 @@ import {
   Layer,
   PointCollection,
   PointFeature,
+  createDesignWeightProperty,
+  createDistanceProperty,
+  createParentProperty,
   intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
 import {copy} from '@envisim/utils';
 
 import {DetectionFunction, effectiveHalfWidth} from './distance-utils.js';
 import {
-  type SampleSystematicLinesOnAreasOptions,
-  sampleSystematicLinesOnAreas,
-} from './systematic-lines-on-areas.js';
+  SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS,
+  type SampleSystematicLineOnAreaOptions,
+} from './options.js';
+import {sampleSystematicLinesOnAreas} from './systematic-lines-on-areas.js';
 
 export interface SampleSystematicDistanceLinesOptions
-  extends SampleSystematicLinesOnAreasOptions {
+  extends SampleSystematicLineOnAreaOptions {
   /**
    * The point layer to collect objects from.
    */
@@ -43,20 +46,20 @@ export interface SampleSystematicDistanceLinesOptions
 export function sampleSystematicDistanceLines(
   layer: Layer<AreaCollection>,
   {
+    rand = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.rand,
+    pointsPerCircle = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.pointsPerCircle,
+    distBetween,
+    rotation = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.rotation,
     baseLayer,
     detectionFunction,
     cutoff,
-    distBetween,
-    rotation = 0,
-    rand = new Random(),
-    pointsPerCircle = 16,
   }: SampleSystematicDistanceLinesOptions,
 ): Layer<PointCollection> {
   // Compute effective half width
   const effHalfWidth = effectiveHalfWidth(detectionFunction, cutoff);
 
   // Compute design weight for this selection
-  const dw = distBetween / (effHalfWidth * 2);
+  const dw = distBetween / (effHalfWidth * 2.0);
 
   // Select sample of lines
   const lineFeatures = sampleSystematicLinesOnAreas(layer, {
@@ -121,17 +124,9 @@ export function sampleSystematicDistanceLines(
   });
   // Fix property record (same as base layer, but add design variables)
   const newRecord = copy(baseLayer.propertyRecord);
-  newRecord['_designWeight'] = {
-    id: '_designWeight',
-    name: '_designWeight',
-    type: 'numerical',
-  };
-  newRecord['_parent'] = {id: '_parent', name: '_parent', type: 'numerical'};
-  newRecord['_distance'] = {
-    id: '_distance',
-    name: '_distance',
-    type: 'numerical',
-  };
+  newRecord['_designWeight'] = createDesignWeightProperty();
+  newRecord['_parent'] = createParentProperty();
+  newRecord['_distance'] = createDistanceProperty();
 
   return new Layer(
     new PointCollection({features: sampledFeatures}, true),

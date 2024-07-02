@@ -35,7 +35,7 @@ export function uniformBinomialPointProcess(
   Layer.assert(layer, GeometricPrimitive.AREA);
 
   const pointsLayer = samplePointsOnAreas(layer, {
-    method: 'independent',
+    pointSelection: 'independent',
     sampleSize,
     rand,
   });

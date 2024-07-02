@@ -7,36 +7,19 @@ import {
   LineCollection,
   LineFeature,
   bbox4,
+  createDesignWeightProperty,
   cutLineGeometry,
   longitudeCenter,
   longitudeDistance,
   normalizeLongitude,
   rotateCoord,
 } from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
 
 import {intersectLineSampleAreaFrame} from '../utils/index.js';
-
-export interface SampleSystematicLinesOnAreasOptions {
-  /**
-   * The distance in meters between the parallel lines.
-   */
-  distBetween: number;
-  /**
-   * Optional fixed rotation angle in degrees.
-   */
-  rotation?: number;
-  /**
-   * An instance of {@link random.Random}
-   * @defaultValue `new Random()`
-   */
-  rand?: Random;
-  /**
-   * The number of points used when converting circles to polygons.
-   * @defaultValue `16`
-   */
-  pointsPerCircle?: number;
-}
+import {
+  SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS,
+  type SampleSystematicLineOnAreaOptions,
+} from './options.js';
 
 /**
  * Selects a sample of lines systematically over all areas.
@@ -47,15 +30,15 @@ export interface SampleSystematicLinesOnAreasOptions {
 export function sampleSystematicLinesOnAreas(
   layer: Layer<AreaCollection>,
   {
+    rand = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.rand,
+    pointsPerCircle = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.pointsPerCircle,
     distBetween,
-    rotation = 0,
-    rand = new Random(),
-    pointsPerCircle = 16,
-  }: SampleSystematicLinesOnAreasOptions,
+    rotation = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.rotation,
+  }: SampleSystematicLineOnAreaOptions,
 ): Layer<LineCollection> {
   Layer.assert(layer, GeometricPrimitive.AREA);
 
-  if (typeof distBetween !== 'number' || distBetween <= 0) {
+  if (distBetween <= 0.0) {
     throw new Error('Input distBetween must be a positive number.');
   }
 
@@ -69,7 +52,7 @@ export function sampleSystematicLinesOnAreas(
 
   const refCoord: GJ.Position = [
     longitudeCenter(box[0], box[2]),
-    box[1] + (box[3] - box[1]) / 2,
+    box[1] + (box[3] - box[1]) / 2.0,
   ];
 
   const maxRadius = Math.max(
@@ -79,28 +62,28 @@ export function sampleSystematicLinesOnAreas(
 
   let smallestAtLat = 0;
 
-  if (box[3] > 0 && box[1] < 0) {
+  if (box[3] > 0.0 && box[1] < 0.0) {
     smallestAtLat = Math.max(box[3], -box[1]);
-  } else if (box[3] < 0) {
+  } else if (box[3] < 0.0) {
     smallestAtLat = box[1];
-  } else if (box[1] > 0) {
+  } else if (box[1] > 0.0) {
     smallestAtLat = box[3];
   }
 
   const minLon = Geodesic.destination(
     [refCoord[0], smallestAtLat],
     maxRadius,
-    270,
+    270.0,
   )[0];
   const maxLon = Geodesic.destination(
     [refCoord[0], smallestAtLat],
     maxRadius,
-    90,
+    90.0,
   )[0];
-  const minLat = Geodesic.destination(refCoord, maxRadius, 180)[1];
+  const minLat = Geodesic.destination(refCoord, maxRadius, 180.0)[1];
   const lonDist = longitudeDistance(minLon, maxLon);
 
-  const numLines = Math.ceil((2 * maxRadius) / distBetween);
+  const numLines = Math.ceil((2.0 * maxRadius) / distBetween);
 
   const lineFeatures: LineFeature[] = [];
   for (let i = 0; i < numLines; i++) {
@@ -134,13 +117,7 @@ export function sampleSystematicLinesOnAreas(
   );
   return new Layer(
     collection,
-    {
-      _designWeight: {
-        id: '_designWeight',
-        name: '_designWeight',
-        type: 'numerical',
-      },
-    },
+    {_designWeight: createDesignWeightProperty()},
     true,
   );
 }

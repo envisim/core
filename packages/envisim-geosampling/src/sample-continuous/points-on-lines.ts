@@ -9,33 +9,21 @@ import {
   Point,
   PointCollection,
   PointFeature,
+  createDesignWeightProperty,
 } from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
 
-export interface SamplePointsOnLinesOptions {
-  /**
-   * The method to use to select points.
-   */
-  method: 'independent' | 'systematic';
-  /**
-   * The number of points to select.
-   */
-  sampleSize: number;
-  /**
-   * An instance of {@link random.Random}
-   * @defaultValue `new Random()`
-   */
-  rand?: Random;
-}
+import {SAMPLE_POINT_OPTIONS, type SamplePointOptions} from './options.js';
 
-// Type for keeping track of distance travelled (dt) and index of sample point
-// to be placed next (currentIndex).
+/**
+ * Type for keeping track of distance travelled (dt) and index of sample point
+ * to be placed next (currentIndex).
+ */
 type Track = {
   dt: number;
   currentIndex: number;
 };
 
-// Internal.
+/** @internal */
 function samplePointsOnGeometry(
   geoJSON: LineObject,
   track: Track,
@@ -44,6 +32,7 @@ function samplePointsOnGeometry(
   const points: GJ.Position[] = [];
   let segmentLength = 0;
   let fraction = 0;
+
   switch (geoJSON.type) {
     case 'LineString': {
       const lineStringCoords = geoJSON.coordinates;
@@ -112,7 +101,7 @@ function samplePointsOnGeometry(
   return points;
 }
 
-// Internal.
+/** @internal */
 function samplePointsOnGeometryCollection(
   geoJSON: LineGeometryCollection,
   track: Track,
@@ -125,6 +114,7 @@ function samplePointsOnGeometryCollection(
     result = samplePointsOnGeometry(geoJSON.geometries[i], track, distances);
     points = points.concat(result);
   }
+
   return points;
 }
 
@@ -136,21 +126,15 @@ function samplePointsOnGeometryCollection(
  */
 export function samplePointsOnLines(
   layer: Layer<LineCollection>,
-  {method, sampleSize, rand = new Random()}: SamplePointsOnLinesOptions,
+  {
+    rand = SAMPLE_POINT_OPTIONS.rand,
+    pointSelection: method,
+    sampleSize,
+  }: SamplePointOptions,
 ): Layer<PointCollection> {
   Layer.assert(layer, GeometricPrimitive.LINE);
 
-  if (method !== 'systematic' && method !== 'independent') {
-    throw new Error(
-      "Input method must be either 'independent' or 'systematic'.",
-    );
-  }
-
-  if (
-    typeof sampleSize !== 'number' ||
-    sampleSize !== Math.round(sampleSize) ||
-    sampleSize <= 0
-  ) {
+  if (sampleSize !== Math.round(sampleSize) || sampleSize <= 0) {
     throw new Error('Input sampleSize must be a non-negative integer.');
   }
 
@@ -213,13 +197,7 @@ export function samplePointsOnLines(
 
   return new Layer(
     new PointCollection({features}, true),
-    {
-      _designWeight: {
-        id: '_designWeight',
-        name: '_designWeight',
-        type: 'numerical',
-      },
-    },
+    {_designWeight: createDesignWeightProperty()},
     true,
   );
 }

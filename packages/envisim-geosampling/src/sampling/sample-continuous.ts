@@ -10,100 +10,82 @@ import {
 } from '@envisim/geojson-utils';
 
 import {
-  type SampleBeltsOnAreasOptions,
-  type SampleFeaturesOnAreasOptions,
-  SamplePointsOnLinesOptions,
-  type SampleSystematicLinesOnAreasOptions,
+  type SampleBeltOnAreaOptions,
+  type SampleFeatureOptions,
+  type SamplePointOptions,
+  type SampleSystematicLineOnAreaOptions,
   sampleFeaturesOnAreas,
   samplePointsOnLines,
   sampleSystematicBeltsOnAreas,
   sampleSystematicLinesOnAreas,
 } from '../sample-continuous/index.js';
 
-interface SampleAreaToAreaFeatureOptions
-  extends SampleFeaturesOnAreasOptions<GJ.AreaFeature> {
-  methodName: 'area-feature';
-}
-interface SampleAreaToBeltOptions extends SampleBeltsOnAreasOptions {
-  methodName: 'systematic-belt';
+interface SampleStratified<O> {
+  stratifyOn: string;
+  strataOptions: O | O[];
 }
 
-export type SampleAreaToAreaOptions =
-  | SampleAreaToAreaFeatureOptions
-  | SampleAreaToBeltOptions;
+interface SampleOptions<M extends string, O> {
+  method: M;
+  options: O;
+}
+
+type SampleAreaToAreaOptions =
+  | SampleOptions<'area-feature', SampleFeatureOptions<GJ.AreaFeature>>
+  | SampleOptions<'systematic-belt', SampleBeltOnAreaOptions>;
 
 export function sampleAreaToArea(
   layer: Layer<AreaCollection>,
-  opts: SampleAreaToAreaOptions,
+  {method, options}: SampleAreaToAreaOptions,
 ): Layer<AreaCollection> {
-  switch (opts.methodName) {
-    case 'systematic-belt':
-      return sampleSystematicBeltsOnAreas(layer, opts);
+  switch (method) {
     case 'area-feature':
-      return sampleFeaturesOnAreas(layer, opts);
+      return sampleFeaturesOnAreas(layer, options);
+    case 'systematic-belt':
+      return sampleSystematicBeltsOnAreas(layer, options);
     default:
-      throw new Error('methodName does not match available methods');
+      throw new Error('method does not match available methods');
   }
 }
 
-interface SampleAreaToLineFeatureOptions
-  extends SampleFeaturesOnAreasOptions<GJ.LineFeature> {
-  methodName: 'line-feature';
-}
-interface SampleAreaToSystematicLineOptions
-  extends SampleSystematicLinesOnAreasOptions {
-  methodName: 'systematic-line';
-}
-
-export type SampleAreaToLineOptions =
-  | SampleAreaToLineFeatureOptions
-  | SampleAreaToSystematicLineOptions;
+type SampleAreaToLineOptions =
+  | SampleOptions<'line-feature', SampleFeatureOptions<GJ.LineFeature>>
+  | SampleOptions<'systematic-line', SampleSystematicLineOnAreaOptions>;
 
 export function sampleAreaToLine(
   layer: Layer<AreaCollection>,
-  opts: SampleAreaToLineOptions,
+  {method, options}: SampleAreaToLineOptions,
 ): Layer<LineCollection> {
-  switch (opts.methodName) {
-    case 'systematic-line':
-      return sampleSystematicLinesOnAreas(layer, opts);
+  switch (method) {
     case 'line-feature':
-      return sampleFeaturesOnAreas(layer, opts);
+      return sampleFeaturesOnAreas(layer, options);
+    case 'systematic-line':
+      return sampleSystematicLinesOnAreas(layer, options);
     default:
       throw new Error('methodName does not match available methods');
   }
 }
 
-export interface SampleAreaToPointOptions
-  extends SampleFeaturesOnAreasOptions<GJ.PointFeature> {}
-
 export function sampleAreaToPoint(
   layer: Layer<AreaCollection>,
-  opts: SampleAreaToPointOptions,
+  opts: SampleFeatureOptions<GJ.PointFeature>,
 ): Layer<PointCollection> {
   return sampleFeaturesOnAreas(layer, opts);
 }
 
-export interface SampleLineToPointOptions extends SamplePointsOnLinesOptions {}
-
 export function sampleLineToPoint(
   layer: Layer<LineCollection>,
-  opts: SampleLineToPointOptions,
+  opts: SamplePointOptions,
 ): Layer<PointCollection> {
   return samplePointsOnLines(layer, opts);
-}
-
-export interface SampleLineToPointStratified {
-  stratifyOn: string;
-  strataOptions: SampleLineToPointOptions | SampleLineToPointOptions[];
 }
 
 // Stratification for each method.
 
 export function sampleLineToPointStratified(
   layer: Layer<LineCollection>,
-  opts: SampleLineToPointStratified,
+  {stratifyOn, strataOptions}: SampleStratified<SamplePointOptions>,
 ): Layer<PointCollection> {
-  const stratifyOn = opts.stratifyOn;
   if (!(stratifyOn in layer.propertyRecord))
     throw new Error(
       'stratification is not possible as property record does not contain the required property',
@@ -119,9 +101,11 @@ export function sampleLineToPointStratified(
     );
 
   // Make an array of opts if it is not provided as an array.
-  const fixedOpts = Array.isArray(opts)
-    ? opts
-    : new Array(propertyObj.values.length).fill(opts);
+  const fixedOpts = Array.isArray(strataOptions)
+    ? strataOptions
+    : Array.from<SamplePointOptions>({length: propertyObj.values.length}).fill(
+        strataOptions,
+      );
 
   // Make sure it is of correct length.
   if (fixedOpts.length !== propertyObj.values.length) {
@@ -148,10 +132,7 @@ export function sampleLineToPointStratified(
       true,
     );
 
-    sampleLayer = sampleLineToPoint(
-      stratumLayer,
-      fixedOpts[i] as SampleLineToPointOptions,
-    );
+    sampleLayer = sampleLineToPoint(stratumLayer, fixedOpts[i]);
 
     features = [...features, ...sampleLayer.collection.features];
   });
@@ -163,16 +144,13 @@ export function sampleLineToPointStratified(
   );
 }
 
-export interface SampleAreaToPointStratified {
-  stratifyOn: string;
-  strataOptions: SampleAreaToPointOptions | SampleAreaToPointOptions[];
-}
-
 export function sampleAreaToPointStratified(
   layer: Layer<AreaCollection>,
-  opts: SampleAreaToPointStratified,
+  {
+    stratifyOn,
+    strataOptions,
+  }: SampleStratified<SampleFeatureOptions<GJ.PointFeature>>,
 ): Layer<PointCollection> {
-  const stratifyOn = opts.stratifyOn;
   if (!(stratifyOn in layer.propertyRecord))
     throw new Error(
       'stratification is not possible as property record does not contain the required property',
@@ -188,9 +166,11 @@ export function sampleAreaToPointStratified(
     );
 
   // Make an array of opts if it is not provided as an array.
-  const fixedOpts = Array.isArray(opts)
-    ? opts
-    : new Array(propertyObj.values.length).fill(opts);
+  const fixedOpts = Array.isArray(strataOptions)
+    ? strataOptions
+    : Array.from<SampleFeatureOptions<GJ.PointFeature>>({
+        length: propertyObj.values.length,
+      }).fill(strataOptions);
 
   // Make sure it is of correct length.
   if (fixedOpts.length !== propertyObj.values.length) {
@@ -217,10 +197,7 @@ export function sampleAreaToPointStratified(
       true,
     );
 
-    sampleLayer = sampleAreaToPoint(
-      stratumLayer,
-      fixedOpts[i] as SampleAreaToPointOptions,
-    );
+    sampleLayer = sampleAreaToPoint(stratumLayer, fixedOpts[i]);
 
     features = [...features, ...sampleLayer.collection.features];
   });
@@ -233,16 +210,10 @@ export function sampleAreaToPointStratified(
   );
 }
 
-export interface SampleAreaToAreaStratifiedOptions {
-  stratifyOn: string;
-  strataOptions: SampleAreaToAreaOptions | SampleAreaToAreaOptions[];
-}
-
 export function sampleAreaToAreaStratified(
   layer: Layer<AreaCollection>,
-  opts: SampleAreaToAreaStratifiedOptions,
+  {stratifyOn, strataOptions}: SampleStratified<SampleAreaToAreaOptions>,
 ): Layer<AreaCollection> {
-  const stratifyOn = opts.stratifyOn;
   if (!(stratifyOn in layer.propertyRecord))
     throw new Error(
       'stratification is not possible as property record does not contain the required property',
@@ -258,9 +229,11 @@ export function sampleAreaToAreaStratified(
     );
 
   // Make an array of opts if it is not provided as an array.
-  const fixedOpts = Array.isArray(opts)
-    ? opts
-    : new Array(propertyObj.values.length).fill(opts);
+  const fixedOpts = Array.isArray(strataOptions)
+    ? strataOptions
+    : Array.from<SampleAreaToAreaOptions>({
+        length: propertyObj.values.length,
+      }).fill(strataOptions);
 
   // Make sure it is of correct length.
   if (fixedOpts.length !== propertyObj.values.length) {
@@ -287,10 +260,7 @@ export function sampleAreaToAreaStratified(
       true,
     );
 
-    sampleLayer = sampleAreaToArea(
-      stratumLayer,
-      fixedOpts[i] as SampleAreaToAreaOptions,
-    );
+    sampleLayer = sampleAreaToArea(stratumLayer, fixedOpts[i]);
 
     features = [...features, ...sampleLayer.collection.features];
   });
@@ -310,9 +280,8 @@ export interface SampleAreaToLineStratified {
 
 export function sampleAreaToLineStratified(
   layer: Layer<AreaCollection>,
-  opts: SampleAreaToLineStratified,
+  {stratifyOn, strataOptions}: SampleStratified<SampleAreaToLineOptions>,
 ): Layer<LineCollection> {
-  const stratifyOn = opts.stratifyOn;
   if (!(stratifyOn in layer.propertyRecord))
     throw new Error(
       'stratification is not possible as property record does not contain the required property',
@@ -328,9 +297,11 @@ export function sampleAreaToLineStratified(
     );
 
   // Make an array of opts if it is not provided as an array.
-  const fixedOpts = Array.isArray(opts)
-    ? opts
-    : new Array(propertyObj.values.length).fill(opts);
+  const fixedOpts = Array.isArray(strataOptions)
+    ? strataOptions
+    : Array.from<SampleAreaToLineOptions>({
+        length: propertyObj.values.length,
+      }).fill(strataOptions);
 
   // Make sure it is of correct length.
   if (fixedOpts.length !== propertyObj.values.length) {
@@ -357,10 +328,7 @@ export function sampleAreaToLineStratified(
       true,
     );
 
-    sampleLayer = sampleAreaToLine(
-      stratumLayer,
-      fixedOpts[i] as SampleAreaToLineOptions,
-    );
+    sampleLayer = sampleAreaToLine(stratumLayer, fixedOpts[i]);
 
     features = [...features, ...sampleLayer.collection.features];
   });

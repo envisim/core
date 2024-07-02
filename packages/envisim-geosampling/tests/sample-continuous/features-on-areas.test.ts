@@ -27,7 +27,7 @@ describe('sampleFeaturesOnAreas', () => {
   const frame = new Layer(collection, {});
   const tract = squareAreaFeature(10);
   const sample = sampleFeaturesOnAreas(frame, {
-    method: 'independent',
+    pointSelection: 'independent',
     sampleSize: 10,
     modelFeature: tract,
   });
@@ -35,7 +35,7 @@ describe('sampleFeaturesOnAreas', () => {
 
   const tract2 = pointFeature();
   const sample2 = sampleFeaturesOnAreas(frame, {
-    method: 'independent',
+    pointSelection: 'independent',
     sampleSize: 10,
     modelFeature: tract2,
   });

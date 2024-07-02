@@ -25,7 +25,7 @@ describe('samplePointsOnAreas', () => {
   const collection = AreaCollection.create([AreaFeature.create(polygon, {})]);
   const frame = new Layer(collection, {});
   const sample = samplePointsOnAreas(frame, {
-    method: 'independent',
+    pointSelection: 'independent',
     sampleSize: 10,
     buffer: 10,
   });

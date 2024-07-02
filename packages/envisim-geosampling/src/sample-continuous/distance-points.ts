@@ -4,19 +4,18 @@ import {
   Layer,
   PointCollection,
   PointFeature,
+  createDesignWeightProperty,
+  createDistanceProperty,
+  createParentProperty,
   intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
 import {copy} from '@envisim/utils';
 
 import {DetectionFunction, effectiveRadius} from './distance-utils.js';
-import {
-  type SamplePointsOnAreasOptions,
-  samplePointsOnAreas,
-} from './points-on-areas.js';
+import {SAMPLE_POINT_OPTIONS, type SamplePointOptions} from './options.js';
+import {samplePointsOnAreas} from './points-on-areas.js';
 
-export interface SampleDistancePointsOptions
-  extends SamplePointsOnAreasOptions {
+interface SampleDistancePointsOptions extends SamplePointOptions {
   /**
    * The point layer to collect objects from.
    */
@@ -44,10 +43,10 @@ export interface SampleDistancePointsOptions
 export function sampleDistancePoints(
   layer: Layer<AreaCollection>,
   {
+    rand = SAMPLE_POINT_OPTIONS.rand,
     baseLayer,
     detectionFunction,
     cutoff,
-    rand = new Random(),
     ...opts
   }: SampleDistancePointsOptions,
 ): Layer<PointCollection> {
@@ -124,17 +123,9 @@ export function sampleDistancePoints(
   });
   // Fix property record (same as base layer, but add design variables)
   const newRecord = copy(baseLayer.propertyRecord);
-  newRecord['_designWeight'] = {
-    id: '_designWeight',
-    name: '_designWeight',
-    type: 'numerical',
-  };
-  newRecord['_parent'] = {id: '_parent', name: '_parent', type: 'numerical'};
-  newRecord['_distance'] = {
-    id: '_distance',
-    name: '_distance',
-    type: 'numerical',
-  };
+  newRecord['_designWeight'] = createDesignWeightProperty();
+  newRecord['_distance'] = createDistanceProperty();
+  newRecord['_parent'] = createParentProperty();
 
   return new Layer(
     new PointCollection({features: sampledFeatures}, true),

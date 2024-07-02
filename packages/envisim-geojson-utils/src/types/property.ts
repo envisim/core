@@ -24,15 +24,31 @@ export type PropertyRecord = Record<string, Property>;
 
 export const PropertySpecialKeys = [
   '_designWeight',
+  '_distance',
   '_parent',
   '_randomRotation',
-  '_distance',
 ];
 
 export function createDesignWeightProperty(): NumericalProperty {
   return {
     id: '_designWeight',
     name: 'design weight',
+    type: 'numerical',
+  };
+}
+
+export function createDistanceProperty(): NumericalProperty {
+  return {
+    id: '_distance',
+    name: 'distance',
+    type: 'numerical',
+  };
+}
+
+export function createParentProperty(): NumericalProperty {
+  return {
+    id: '_parent',
+    name: 'parent',
     type: 'numerical',
   };
 }

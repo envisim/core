@@ -5,17 +5,16 @@ import {
   Layer,
   PointCollection,
   PointFeature,
+  createDesignWeightProperty,
+  createParentProperty,
   intersectPointAreaFeatures,
 } from '@envisim/geojson-utils';
 import {copy} from '@envisim/utils';
 
-import {
-  type SamplePointsOnAreasOptions,
-  samplePointsOnAreas,
-} from './points-on-areas.js';
+import {SAMPLE_POINT_OPTIONS, type SamplePointOptions} from './options.js';
+import {samplePointsOnAreas} from './points-on-areas.js';
 
-export interface SampleRelascopePointsOptions
-  extends SamplePointsOnAreasOptions {
+interface SampleRelascopePointsOptions extends SamplePointOptions {
   /**
    * The point layer to collect objects from.
    */
@@ -49,17 +48,20 @@ export interface SampleRelascopePointsOptions
  */
 export function sampleRelascopePoints(
   layer: Layer<AreaCollection>,
-  {baseLayer, factor, sizeProperty, ...opts}: SampleRelascopePointsOptions,
+  {
+    buffer = SAMPLE_POINT_OPTIONS.buffer,
+    baseLayer,
+    factor,
+    sizeProperty,
+    ...opts
+  }: SampleRelascopePointsOptions,
 ): Layer<PointCollection> {
   Layer.assert(layer, GeometricPrimitive.AREA);
 
   // Square root of relascope factor
   const sqrtRf = Math.sqrt(factor);
-  // Set buffer
-  const buffer = opts.buffer || 0;
-  opts.buffer = buffer;
   // Select sample of points (optional buffer via opts)
-  const pointSample = samplePointsOnAreas(layer, opts);
+  const pointSample = samplePointsOnAreas(layer, {buffer, ...opts});
   // To store sampled features
   const sampledFeatures: PointFeature[] = [];
   const baseFeatures = baseLayer.collection.features;
@@ -130,12 +132,8 @@ export function sampleRelascopePoints(
 
   // Fix property record (same as base layer, but add design variables)
   const newRecord = copy(baseLayer.propertyRecord);
-  newRecord['_designWeight'] = {
-    id: '_designWeight',
-    name: '_designWeight',
-    type: 'numerical',
-  };
-  newRecord['_parent'] = {id: '_parent', name: '_parent', type: 'numerical'};
+  newRecord['_designWeight'] = createDesignWeightProperty();
+  newRecord['_parent'] = createParentProperty();
 
   return new Layer(
     new PointCollection({features: sampledFeatures}, true),
