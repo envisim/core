@@ -9,14 +9,16 @@ Naming is based on (Google Style Guide)[https://google.github.io/styleguide/tsgu
 | `#ident`         | private identifiers are never used.                                |
 
 ### File names
-Files should be named by the following convention:
+Files and folders should be named in `kebab-case`.
 
-| Style            | Category                        | Example             |
-|------------------|---------------------------------|---------------------|
-| `kebab-case`     | files containing functions      | `some-functions.ts` |
-| `UpperCamelCase` | class / interface / type / enum | `ClassLayer.ts`     |
+Files may begin with a keyword specifier `class`, `interface`, `type`, `enum`.
 
-Folders should be named by `kebab-case`.
+Example:
+```
+calculate-height.ts
+calculate/height.ts
+class-height-calculator.ts
+```
 
 ## Imports
 Imports should be made through `index.ts`, if imported outside a module.
