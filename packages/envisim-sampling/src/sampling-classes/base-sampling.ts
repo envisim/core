@@ -1,7 +1,7 @@
 import {Matrix} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
 
-import {baseOptions} from '../base-options/index.js';
+import {BASE_OPTIONS} from '../base-options/index.js';
 import {IndexList, KdStore, KdTree} from '../util-classes/index.js';
 import {probability01, probability1} from '../utils.js';
 
@@ -10,7 +10,7 @@ export abstract class BaseSampling {
   setDraw: boolean = true;
 
   N: number;
-  eps: number = baseOptions.eps;
+  eps: number = BASE_OPTIONS.eps;
   rand: Random;
 
   idx!: IndexList;

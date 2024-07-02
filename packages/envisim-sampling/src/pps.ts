@@ -1,9 +1,9 @@
 import {ColumnVector, vectorToArray} from '@envisim/matrix';
 
 import {
+  BASE_OPTIONS,
   type FixedSizedOptions,
   type PipsOptions,
-  baseOptions,
 } from './base-options/index.js';
 import {assertSizeRange} from './utils.js';
 
@@ -16,7 +16,7 @@ import {assertSizeRange} from './utils.js';
  */
 export function discrete({
   probabilities,
-  rand = baseOptions.rand,
+  rand = BASE_OPTIONS.rand,
 }: PipsOptions): number {
   const p = vectorToArray(probabilities, true);
   const N = p.length;
@@ -41,7 +41,7 @@ export function discrete({
 export function discreteArr({
   n,
   probabilities,
-  rand = baseOptions.rand,
+  rand = BASE_OPTIONS.rand,
 }: FixedSizedOptions & PipsOptions): number[] {
   const p = vectorToArray(probabilities, true);
   const N = p.length;
@@ -74,7 +74,7 @@ export function discreteArr({
 export function ppswr({
   n,
   probabilities,
-  rand = baseOptions.rand,
+  rand = BASE_OPTIONS.rand,
 }: FixedSizedOptions & PipsOptions): number[] {
   const p = new ColumnVector(probabilities, false);
   const psum = p.sum();

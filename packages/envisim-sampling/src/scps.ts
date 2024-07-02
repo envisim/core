@@ -1,6 +1,6 @@
 import {type ColumnVector, vectorToArrayOfLength} from '@envisim/matrix';
 
-import {type AuxiliaryOptions, baseOptions} from './base-options/index.js';
+import {type AuxiliaryOptions, BASE_OPTIONS} from './base-options/index.js';
 import {
   CorrelatedPoisson,
   CorrelatedPoissonMethod,
@@ -15,9 +15,9 @@ import {
 export function scps({
   probabilities,
   auxiliaries,
-  rand = baseOptions.rand,
-  eps = baseOptions.eps,
-  treeBucketSize = baseOptions.treeBucketSize,
+  rand = BASE_OPTIONS.rand,
+  eps = BASE_OPTIONS.eps,
+  treeBucketSize = BASE_OPTIONS.treeBucketSize,
 }: AuxiliaryOptions): number[] {
   const N = auxiliaries.nrow;
   const p = vectorToArrayOfLength(probabilities, N, true, 'probabilities');
@@ -53,9 +53,9 @@ export function scpsCoordinated({
   probabilities,
   auxiliaries,
   random,
-  rand = baseOptions.rand,
-  eps = baseOptions.eps,
-  treeBucketSize = baseOptions.treeBucketSize,
+  rand = BASE_OPTIONS.rand,
+  eps = BASE_OPTIONS.eps,
+  treeBucketSize = BASE_OPTIONS.treeBucketSize,
 }: ScpsCoordinatedOptions): number[] {
   const N = auxiliaries.nrow;
   const p = vectorToArrayOfLength(probabilities, N, true, 'probabilities');
@@ -85,9 +85,9 @@ export function scpsCoordinated({
 export function lcps({
   probabilities,
   auxiliaries,
-  rand = baseOptions.rand,
-  eps = baseOptions.eps,
-  treeBucketSize = baseOptions.treeBucketSize,
+  rand = BASE_OPTIONS.rand,
+  eps = BASE_OPTIONS.eps,
+  treeBucketSize = BASE_OPTIONS.treeBucketSize,
 }: AuxiliaryOptions): number[] {
   const N = auxiliaries.nrow;
   const p = vectorToArrayOfLength(probabilities, N, true, 'probabilities');

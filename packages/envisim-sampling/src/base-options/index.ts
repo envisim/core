@@ -19,7 +19,7 @@ export interface BaseOptions {
   treeBucketSize?: number;
 }
 
-export const baseOptions: Readonly<Required<BaseOptions>> = {
+export const BASE_OPTIONS: Readonly<Required<BaseOptions>> = {
   eps: 1e-9,
   rand: new Random(),
   treeBucketSize: 40,

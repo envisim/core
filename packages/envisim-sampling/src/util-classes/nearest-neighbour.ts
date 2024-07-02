@@ -1,7 +1,7 @@
 import {type Matrix, type RowVector} from '@envisim/matrix';
 
-import {KdStore} from './ClassKdStore.js';
-import {KdTree} from './ClassKdTree.js';
+import {KdStore} from './kd-store.js';
+import {KdTree} from './kd-tree.js';
 
 export class NearestNeighbour {
   /**@ignore */

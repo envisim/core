@@ -2,9 +2,9 @@ import {Matrix} from '@envisim/matrix';
 import {Random} from '@envisim/random';
 import {reducedRowEchelonForm, swap} from '@envisim/utils';
 
-import {baseOptions} from '../base-options/index.js';
+import {BASE_OPTIONS} from '../base-options/index.js';
 import {KdStore, KdTree} from '../util-classes/index.js';
-import {BaseSampling} from './ClassBaseSampling.js';
+import {BaseSampling} from './base-sampling.js';
 
 export enum CubeMethod {
   CUBE,
@@ -31,8 +31,8 @@ export class Cube extends BaseSampling {
     xxbalance: Matrix,
     N: number,
     xxspread: Matrix | undefined,
-    treeBucketSize: number = baseOptions.treeBucketSize,
-    eps: number = baseOptions.eps,
+    treeBucketSize: number = BASE_OPTIONS.treeBucketSize,
+    eps: number = BASE_OPTIONS.eps,
     rand: Random = new Random(),
   ) {
     super(undefined, N, treeBucketSize, eps, rand, false);

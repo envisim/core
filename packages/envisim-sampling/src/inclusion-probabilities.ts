@@ -1,6 +1,6 @@
 import {ColumnVector, type MatrixIteratorReturn} from '@envisim/matrix';
 
-import {type FixedSizedOptions, baseOptions} from './base-options/index.js';
+import {BASE_OPTIONS, type FixedSizedOptions} from './base-options/index.js';
 
 interface InclusionProbabilitiesOptions extends FixedSizedOptions {
   /**
@@ -19,7 +19,7 @@ interface InclusionProbabilitiesOptions extends FixedSizedOptions {
 export function inclusionProbabilities({
   auxiliary,
   n,
-  eps = baseOptions.eps,
+  eps = BASE_OPTIONS.eps,
 }: InclusionProbabilitiesOptions): number[] {
   if (!auxiliary.every((e) => e >= 0.0)) {
     throw new RangeError('Every element in arr must be positive');

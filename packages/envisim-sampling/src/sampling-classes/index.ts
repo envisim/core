@@ -1,6 +1,6 @@
 export {
   CorrelatedPoisson,
   CorrelatedPoissonMethod,
-} from './ClassCorrelatedPoisson.js';
-export {Cube, CubeMethod} from './ClassCube.js';
-export {Pivotal, PivotalMethod} from './ClassPivotal.js';
+} from './correlated-poisson.js';
+export {Cube, CubeMethod} from './cube.js';
+export {Pivotal, PivotalMethod} from './pivotal.js';

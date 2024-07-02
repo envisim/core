@@ -1,7 +1,7 @@
 import {sequence, vectorToArray} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
 
-import {type PipsOptions, baseOptions} from './base-options/index.js';
+import {BASE_OPTIONS, type PipsOptions} from './base-options/index.js';
 
 /**
  * Selects A systematic (pips) sample.
@@ -41,7 +41,7 @@ const _systematic = (
  */
 export function systematic({
   probabilities,
-  rand = baseOptions.rand,
+  rand = BASE_OPTIONS.rand,
 }: PipsOptions): number[] {
   const p = vectorToArray(probabilities, true);
   return _systematic(p, (i) => i, rand);
@@ -55,7 +55,7 @@ export function systematic({
  */
 export function randomSystematic({
   probabilities,
-  rand = baseOptions.rand,
+  rand = BASE_OPTIONS.rand,
 }: PipsOptions): number[] {
   const p = vectorToArray(probabilities, true);
   const N = p.length;

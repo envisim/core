@@ -1,7 +1,7 @@
 import {
+  BASE_OPTIONS,
   type FixedSizedOptions,
   type PipsOptions,
-  baseOptions,
 } from './base-options/index.js';
 
 /**
@@ -12,7 +12,7 @@ import {
  */
 export function poissonSampling({
   probabilities,
-  rand = baseOptions.rand,
+  rand = BASE_OPTIONS.rand,
 }: PipsOptions): number[] {
   const N = probabilities.length;
   const s: number[] = [];
@@ -37,7 +37,7 @@ export function poissonSampling({
 export function conditionalPoissonSampling({
   n,
   probabilities,
-  rand = baseOptions.rand,
+  rand = BASE_OPTIONS.rand,
 }: FixedSizedOptions & PipsOptions): number[] {
   // depends on poisson
   // sum(p) should be n or close to n

@@ -3,8 +3,8 @@ import {vectorToArray, vectorToArrayOfLength} from '@envisim/matrix';
 import {
   type AuxiliaryFixedSizedOptions,
   type AuxiliaryOptions,
+  BASE_OPTIONS,
   type PipsOptions,
-  baseOptions,
 } from './base-options/index.js';
 import {Pivotal, PivotalMethod} from './sampling-classes/index.js';
 
@@ -16,9 +16,9 @@ import {Pivotal, PivotalMethod} from './sampling-classes/index.js';
  */
 export function lpm1({
   auxiliaries,
-  rand = baseOptions.rand,
-  eps = baseOptions.eps,
-  treeBucketSize = baseOptions.treeBucketSize,
+  rand = BASE_OPTIONS.rand,
+  eps = BASE_OPTIONS.eps,
+  treeBucketSize = BASE_OPTIONS.treeBucketSize,
   ...options
 }: AuxiliaryOptions | AuxiliaryFixedSizedOptions): number[] {
   const N = auxiliaries.nrow;
@@ -49,9 +49,9 @@ export function lpm1({
  */
 export function lpm2({
   auxiliaries,
-  rand = baseOptions.rand,
-  eps = baseOptions.eps,
-  treeBucketSize = baseOptions.treeBucketSize,
+  rand = BASE_OPTIONS.rand,
+  eps = BASE_OPTIONS.eps,
+  treeBucketSize = BASE_OPTIONS.treeBucketSize,
   ...options
 }: AuxiliaryOptions | AuxiliaryFixedSizedOptions): number[] {
   const N = auxiliaries.nrow;
@@ -85,9 +85,9 @@ export function lpm2({
  */
 export function lpm1s({
   auxiliaries,
-  rand = baseOptions.rand,
-  eps = baseOptions.eps,
-  treeBucketSize = baseOptions.treeBucketSize,
+  rand = BASE_OPTIONS.rand,
+  eps = BASE_OPTIONS.eps,
+  treeBucketSize = BASE_OPTIONS.treeBucketSize,
   ...options
 }: AuxiliaryOptions | AuxiliaryFixedSizedOptions): number[] {
   const N = auxiliaries.nrow;
@@ -118,8 +118,8 @@ export function lpm1s({
  */
 export function rpm({
   probabilities,
-  rand = baseOptions.rand,
-  eps = baseOptions.eps,
+  rand = BASE_OPTIONS.rand,
+  eps = BASE_OPTIONS.eps,
 }: PipsOptions): number[] {
   const p = vectorToArray(probabilities, true);
   const N = p.length;
@@ -138,8 +138,8 @@ export function rpm({
  */
 export function spm({
   probabilities,
-  rand = baseOptions.rand,
-  eps = baseOptions.eps,
+  rand = BASE_OPTIONS.rand,
+  eps = BASE_OPTIONS.eps,
 }: PipsOptions): number[] {
   const p = vectorToArray(probabilities, true);
   const N = p.length;

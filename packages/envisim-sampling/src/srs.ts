@@ -1,4 +1,4 @@
-import {type FixedSizedOptions, baseOptions} from './base-options/index.js';
+import {BASE_OPTIONS, type FixedSizedOptions} from './base-options/index.js';
 import {assertSizeRange} from './utils.js';
 
 interface SrsOptions extends FixedSizedOptions {
@@ -14,7 +14,7 @@ interface SrsOptions extends FixedSizedOptions {
  * @param options
  * @returns sample indices.
  */
-export function srswor({n, N, rand = baseOptions.rand}: SrsOptions): number[] {
+export function srswor({n, N, rand = BASE_OPTIONS.rand}: SrsOptions): number[] {
   assertSizeRange(N, 1, Number.MAX_SAFE_INTEGER, 'N');
   assertSizeRange(n, 0, N, 'n');
 
@@ -39,7 +39,7 @@ export function srswor({n, N, rand = baseOptions.rand}: SrsOptions): number[] {
  * @param options
  * @returns sample indices.
  */
-export function srswr({n, N, rand = baseOptions.rand}: SrsOptions): number[] {
+export function srswr({n, N, rand = BASE_OPTIONS.rand}: SrsOptions): number[] {
   assertSizeRange(N, 1, Number.MAX_SAFE_INTEGER, 'N');
   assertSizeRange(n, 0, N, 'n');
 

@@ -2,10 +2,10 @@ import {type Matrix} from '@envisim/matrix';
 import {Random} from '@envisim/random';
 import {swap} from '@envisim/utils';
 
-import {baseOptions} from '../base-options/index.js';
+import {BASE_OPTIONS} from '../base-options/index.js';
 import {IndexList, KdStore, KdTree} from '../util-classes/index.js';
 import {arrayBack} from '../utils.js';
-import {BaseSampling} from './ClassBaseSampling.js';
+import {BaseSampling} from './base-sampling.js';
 
 export enum PivotalMethod {
   LPM1,
@@ -31,8 +31,8 @@ export class Pivotal extends BaseSampling {
     probabilities: number | number[],
     xx: Matrix | undefined,
     N: number,
-    treeBucketSize: number = baseOptions.treeBucketSize,
-    eps: number = baseOptions.eps,
+    treeBucketSize: number = BASE_OPTIONS.treeBucketSize,
+    eps: number = BASE_OPTIONS.eps,
     rand: Random = new Random(),
   ) {
     super(xx, N, treeBucketSize, eps, rand);

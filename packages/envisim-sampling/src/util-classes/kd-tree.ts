@@ -1,8 +1,8 @@
 import {type Matrix, type RowVector} from '@envisim/matrix';
 import {swap} from '@envisim/utils';
 
-import {KdNode} from './ClassKdNode.js';
-import {KdStore} from './ClassKdStore.js';
+import {KdNode} from './kd-node.js';
+import {KdStore} from './kd-store.js';
 
 export class KdTree {
   protected dt: Matrix;

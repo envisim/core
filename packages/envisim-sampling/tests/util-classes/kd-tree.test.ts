@@ -1,7 +1,7 @@
 import {describe, expect, test} from 'vitest';
 
-import {KdStore, KdTree} from '../src/util-classes/index.js';
-import {createIndexedTable, data} from './_data.testf';
+import {KdStore, KdTree} from '../../src/util-classes/index.js';
+import {createIndexedTable, data} from '../_data.testf';
 
 describe('KDTree', () => {
   let store = new KdStore(10, 1);

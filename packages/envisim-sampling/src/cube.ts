@@ -2,8 +2,8 @@ import {type Matrix, vectorToArrayOfLength} from '@envisim/matrix';
 
 import {
   type AuxiliaryOptions,
+  BASE_OPTIONS,
   type PipsOptions,
-  baseOptions,
 } from './base-options/index.js';
 import {Cube, CubeMethod} from './sampling-classes/index.js';
 
@@ -23,8 +23,8 @@ interface CubeOptions extends PipsOptions {
 export function cube({
   probabilities,
   balancing,
-  rand = baseOptions.rand,
-  eps = baseOptions.eps,
+  rand = BASE_OPTIONS.rand,
+  eps = BASE_OPTIONS.eps,
 }: CubeOptions): number[] {
   const N = balancing.nrow;
   const p = vectorToArrayOfLength(probabilities, N, true, 'probabilities');
@@ -56,9 +56,9 @@ export function localCube({
   probabilities,
   balancing,
   auxiliaries,
-  rand = baseOptions.rand,
-  eps = baseOptions.eps,
-  treeBucketSize = baseOptions.treeBucketSize,
+  rand = BASE_OPTIONS.rand,
+  eps = BASE_OPTIONS.eps,
+  treeBucketSize = BASE_OPTIONS.treeBucketSize,
 }: LocalCubeOptions): number[] {
   const N = balancing.nrow;
   const p = vectorToArrayOfLength(probabilities, N, true, 'probabilities');

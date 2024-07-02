@@ -1,8 +1,8 @@
 import {type Matrix} from '@envisim/matrix';
 import {Random} from '@envisim/random';
 
-import {baseOptions} from '../base-options/index.js';
-import {BaseSampling} from './ClassBaseSampling.js';
+import {BASE_OPTIONS} from '../base-options/index.js';
+import {BaseSampling} from './base-sampling.js';
 
 export enum CorrelatedPoissonMethod {
   LCPS,
@@ -26,8 +26,8 @@ export class CorrelatedPoisson extends BaseSampling {
     probabilities: number[],
     xx: Matrix,
     N: number,
-    treeBucketSize: number = baseOptions.treeBucketSize,
-    eps: number = baseOptions.eps,
+    treeBucketSize: number = BASE_OPTIONS.treeBucketSize,
+    eps: number = BASE_OPTIONS.eps,
     rand: Random = new Random(),
   ) {
     super(xx, N, treeBucketSize, eps, rand);
