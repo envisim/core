@@ -264,6 +264,53 @@ export class Layer<
 
     return {type: 'FeatureCollection', features: features};
   }
+
+  /**
+   * Appends the features from another layer
+   * @param layer
+   * @param shallow
+   * @throws RangeError if property record does not contain the same IDs
+   */
+  appendFromLayer(layer: Layer<T>, shallow: boolean = true): void {
+    const thisKeys = Object.keys(this.propertyRecord);
+    const layerKeys = Object.keys(layer.propertyRecord);
+
+    if (
+      thisKeys.length !== layerKeys.length ||
+      !thisKeys.every((id) => layerKeys.includes(id))
+    ) {
+      throw new RangeError('propertyRecords does not match');
+    }
+
+    const newFeatures = shallow
+      ? layer.collection.features
+      : copy(layer.collection.features);
+
+    if (this.collection instanceof PointCollection) {
+      if (layer.collection instanceof PointCollection) {
+        this.collection.features.push(
+          ...(newFeatures as PointCollection['features']),
+        );
+        return;
+      }
+    } else if (this.collection instanceof LineCollection) {
+      if (layer.collection instanceof LineCollection) {
+        this.collection.features.push(
+          ...(newFeatures as LineCollection['features']),
+        );
+        return;
+      }
+    } else if (this.collection instanceof AreaCollection) {
+      if (layer.collection instanceof AreaCollection) {
+        this.collection.features.push(
+          ...(newFeatures as AreaCollection['features']),
+        );
+        return;
+      }
+    }
+
+    throw new Error('layer does not match the GeometricPrimitive');
+  }
 }
 
 function flatMapGeometryCollections(
