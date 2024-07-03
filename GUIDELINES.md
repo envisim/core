@@ -1,5 +1,5 @@
 ## Naming conventions
-Naming is based on (Google Style Guide)[https://google.github.io/styleguide/tsguide.html#naming], but can be summarized to:
+Naming is based on [Google Style Guide](https://google.github.io/styleguide/tsguide.html#naming), but can be summarized to:
 
 | Style            | Category                                                           |
 |------------------|--------------------------------------------------------------------|
