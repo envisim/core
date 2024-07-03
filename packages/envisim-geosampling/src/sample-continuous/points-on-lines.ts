@@ -1,6 +1,5 @@
 import {
   type GeoJSON as GJ,
-  GeometricPrimitive,
   Layer,
   LineCollection,
   LineGeometryCollection,
@@ -12,7 +11,11 @@ import {
   createDesignWeightProperty,
 } from '@envisim/geojson-utils';
 
-import {SAMPLE_POINT_OPTIONS, type SamplePointOptions} from './options.js';
+import {
+  SAMPLE_POINT_OPTIONS,
+  type SamplePointOptions,
+  samplePointOptionsCheck,
+} from './options.js';
 
 /**
  * Type for keeping track of distance travelled (dt) and index of sample point
@@ -128,14 +131,16 @@ export function samplePointsOnLines(
   layer: Layer<LineCollection>,
   {
     rand = SAMPLE_POINT_OPTIONS.rand,
-    pointSelection: method,
+    pointSelection,
     sampleSize,
   }: SamplePointOptions,
 ): Layer<PointCollection> {
-  Layer.assert(layer, GeometricPrimitive.LINE);
-
-  if (sampleSize !== Math.round(sampleSize) || sampleSize <= 0) {
-    throw new Error('Input sampleSize must be a non-negative integer.');
+  const optionsError = samplePointOptionsCheck(layer, {
+    pointSelection,
+    sampleSize,
+  });
+  if (optionsError !== 0) {
+    throw new RangeError(`samplePointsOnLines error: ${optionsError}`);
   }
 
   const L = layer.collection.length(); // total length of input geoJSON
@@ -145,7 +150,7 @@ export function samplePointsOnLines(
 
   let distances: number[] = []; // Holds sample points as distances from 0 to L.
 
-  switch (method) {
+  switch (pointSelection) {
     case 'independent':
       distances = new Array(sampleSize)
         .fill(0)

@@ -2,7 +2,6 @@ import {
   AreaCollection,
   type GeoJSON as GJ,
   Geodesic,
-  GeometricPrimitive,
   Layer,
   LineCollection,
   LineFeature,
@@ -19,6 +18,7 @@ import {intersectLineSampleAreaFrame} from '../utils/index.js';
 import {
   SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS,
   type SampleSystematicLineOnAreaOptions,
+  sampleSystematicLineOnAreaOptionsCheck,
 } from './options.js';
 
 /**
@@ -36,10 +36,13 @@ export function sampleSystematicLinesOnAreas(
     rotation = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.rotation,
   }: SampleSystematicLineOnAreaOptions,
 ): Layer<LineCollection> {
-  Layer.assert(layer, GeometricPrimitive.AREA);
-
-  if (distBetween <= 0.0) {
-    throw new Error('Input distBetween must be a positive number.');
+  const optionsError = sampleSystematicLineOnAreaOptionsCheck(layer, {
+    pointsPerCircle,
+    distBetween,
+    rotation,
+  });
+  if (optionsError !== 0) {
+    throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
   }
 
   const numPointsPerLine = 20;

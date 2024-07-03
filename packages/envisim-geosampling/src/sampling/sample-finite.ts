@@ -95,34 +95,42 @@ export interface SampleFiniteStratifiedOptions {
 
 export function sampleFiniteOptionsCheck<
   T extends AreaCollection | LineCollection | PointCollection,
->(layer: Layer<T>, options: SampleFiniteOptions): number {
-  if (options.sampleSize < 0) {
+>(
+  layer: Layer<T>,
+  {
+    methodName,
+    sampleSize,
+    probabilitiesFrom,
+    // probabilitiesFromSize,
+    spreadOn,
+    balanceOn,
+    spreadGeo,
+  }: SampleFiniteOptions,
+): number {
+  if (sampleSize < 0) {
     return 10;
   }
   if (
-    options.probabilitiesFrom &&
-    !Object.hasOwn(layer.propertyRecord, options.probabilitiesFrom)
+    probabilitiesFrom &&
+    !Object.hasOwn(layer.propertyRecord, probabilitiesFrom)
   ) {
     return 20;
   }
   if (
     (
       SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS as ReadonlyArray<string>
-    ).includes(options.methodName) ||
+    ).includes(methodName) ||
     (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(
-      options.methodName,
+      methodName,
     )
   ) {
-    if (!options.spreadOn) {
-      if (!options.spreadGeo) {
+    if (!spreadOn) {
+      if (!spreadGeo) {
         return 30;
       }
-    }
-    if (options.spreadOn) {
+    } else {
       if (
-        !options.spreadOn.every((prop) =>
-          Object.hasOwn(layer.propertyRecord, prop),
-        )
+        !spreadOn.every((prop) => Object.hasOwn(layer.propertyRecord, prop))
       ) {
         return 31;
       }
@@ -131,20 +139,16 @@ export function sampleFiniteOptionsCheck<
 
   if (
     (SAMPLE_FINITE_BALANCED_METHODS as ReadonlyArray<string>).includes(
-      options.methodName,
+      methodName,
     ) ||
     (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(
-      options.methodName,
+      methodName,
     )
   ) {
-    if (!options.balanceOn) {
+    if (!balanceOn) {
       return 40;
     }
-    if (
-      !options.balanceOn.every((prop) =>
-        Object.hasOwn(layer.propertyRecord, prop),
-      )
-    ) {
+    if (!balanceOn.every((prop) => Object.hasOwn(layer.propertyRecord, prop))) {
       return 41;
     }
   }

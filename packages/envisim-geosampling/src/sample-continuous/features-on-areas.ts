@@ -19,7 +19,11 @@ import {
   intersectLineSampleAreaFrame,
   intersectPointSampleAreaFrame,
 } from '../utils/index.js';
-import {SAMPLE_FEATURE_OPTIONS, type SampleFeatureOptions} from './options.js';
+import {
+  SAMPLE_FEATURE_OPTIONS,
+  type SampleFeatureOptions,
+  sampleFeatureOptionsCheck,
+} from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
 
 /**
@@ -53,7 +57,19 @@ function sampleFeaturesOnAreas(
     ratio = SAMPLE_FEATURE_OPTIONS.ratio,
   }: SampleFeatureOptions<GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>,
 ): Layer<PointCollection | LineCollection | AreaCollection> {
-  Layer.assert(layer, GeometricPrimitive.AREA);
+  const optionsError = sampleFeatureOptionsCheck(layer, {
+    rand,
+    pointsPerCircle,
+    pointSelection,
+    sampleSize,
+    modelFeature,
+    rotation,
+    randomRotation,
+    ratio,
+  });
+  if (optionsError !== 0) {
+    throw new RangeError(`sampleFeaturesOnAreas error: ${optionsError}`);
+  }
 
   const tractType = getFeaturePrimitive(modelFeature);
 

@@ -12,6 +12,11 @@ export {
   effectiveHalfWidth,
   uniformDetectionFunction,
   halfNormalDetectionFunction,
+  sampleBaseOptionsCheck,
+  samplePointOptionsCheck,
+  sampleFeatureOptionsCheck,
+  sampleSystematicLineOnAreaOptionsCheck,
+  sampleBeltOnAreaOptionsCheck,
 } from './sample-continuous/index.js';
 
 // Sampling methods callable from engine

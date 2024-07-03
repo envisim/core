@@ -4,7 +4,6 @@ import {
   Circle,
   type GeoJSON as GJ,
   Geodesic,
-  GeometricPrimitive,
   Layer,
   MultiCircle,
   Point,
@@ -21,7 +20,11 @@ import {
   unionOfPolygons,
 } from '@envisim/geojson-utils';
 
-import {SAMPLE_POINT_OPTIONS, type SamplePointOptions} from './options.js';
+import {
+  SAMPLE_POINT_OPTIONS,
+  type SamplePointOptions,
+  samplePointOptionsCheck,
+} from './options.js';
 
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;
@@ -37,16 +40,20 @@ export function samplePointsOnAreas(
   layer: Layer<AreaCollection>,
   {
     rand = SAMPLE_POINT_OPTIONS.rand,
-    pointSelection: method,
+    pointSelection,
     sampleSize,
     buffer = SAMPLE_POINT_OPTIONS.buffer,
     ratio = SAMPLE_POINT_OPTIONS.ratio,
   }: SamplePointOptions,
 ): Layer<PointCollection> {
-  Layer.assert(layer, GeometricPrimitive.AREA);
-
-  if (sampleSize !== Math.round(sampleSize) || sampleSize <= 0) {
-    throw new Error('Input sampleSize must be a positive integer.');
+  const optionsError = samplePointOptionsCheck(layer, {
+    pointSelection,
+    sampleSize,
+    buffer,
+    ratio,
+  });
+  if (optionsError !== 0) {
+    throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
   }
 
   // copy the collection
@@ -93,7 +100,7 @@ export function samplePointsOnAreas(
   const parentIndex: number[] = [];
   let pointLonLat: GJ.Position;
 
-  switch (method) {
+  switch (pointSelection) {
     case 'independent': {
       // Store number of iterations and number of hits.
       let iterations = 0;

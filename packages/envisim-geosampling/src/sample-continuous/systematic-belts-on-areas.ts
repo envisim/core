@@ -3,7 +3,6 @@ import {
   AreaFeature,
   type GeoJSON as GJ,
   Geodesic,
-  GeometricPrimitive,
   Layer,
   Polygon,
   bbox4,
@@ -19,6 +18,7 @@ import {intersectAreaSampleAreaFrame} from '../utils/index.js';
 import {
   SAMPLE_BELT_ON_AREA_OPTIONS,
   type SampleBeltOnAreaOptions,
+  sampleBeltOnAreaOptionsCheck,
 } from './options.js';
 
 /**
@@ -37,14 +37,14 @@ export const sampleSystematicBeltsOnAreas = (
     halfWidth,
   }: SampleBeltOnAreaOptions,
 ): Layer<AreaCollection> => {
-  Layer.assert(layer, GeometricPrimitive.AREA);
-
-  if (distBetween <= 0.0) {
-    throw new Error('Input distBetween must be a positive number.');
-  }
-
-  if (halfWidth <= 0.0) {
-    throw new Error('Input halfWidth must be a number > 0.');
+  const optionsError = sampleBeltOnAreaOptionsCheck(layer, {
+    pointsPerCircle,
+    distBetween,
+    rotation,
+    halfWidth,
+  });
+  if (optionsError !== 0) {
+    throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
   }
 
   const numPointsPerLine = 20;

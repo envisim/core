@@ -24,12 +24,17 @@ export {uniformPositionsInBBox} from './points-in-bbox.js';
 export {
   type SampleBaseOptions,
   SAMPLE_BASE_OPTIONS,
+  sampleBaseOptionsCheck,
   type SamplePointOptions,
   SAMPLE_POINT_OPTIONS,
+  samplePointOptionsCheck,
   type SampleFeatureOptions,
   SAMPLE_FEATURE_OPTIONS,
+  sampleFeatureOptionsCheck,
   type SampleSystematicLineOnAreaOptions,
   SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS,
+  sampleSystematicLineOnAreaOptionsCheck,
   type SampleBeltOnAreaOptions,
   SAMPLE_BELT_ON_AREA_OPTIONS,
+  sampleBeltOnAreaOptionsCheck,
 } from './options.js';
