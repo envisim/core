@@ -3,10 +3,7 @@ export * from './geojson/index.js';
 
 // Layer
 export {Layer} from './layer/ClassLayer.js';
-export {
-  mergePropertyRecords,
-  propertyRecordIdsFromNames,
-} from './layer/propertyRecordUtils.js';
+export {mergePropertyRecords} from './layer/propertyRecordUtils.js';
 
 // Types
 export type * as GeoJSON from './types/geojson.js';

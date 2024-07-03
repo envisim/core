@@ -25,32 +25,3 @@ export function mergePropertyRecords(
   });
   return newRecord;
 }
-
-/**
- * Retrieves the matching ids in the property record of the supplied property names.
- *
- * @param propertyRecord
- * @param names
- * @returns an ordered array of matching ids.
- */
-export function propertyRecordIdsFromNames(
-  propertyRecord: PropertyRecord,
-  names: string[],
-): string[] {
-  const ids: string[] = [];
-
-  names.forEach((name) => {
-    let found = false;
-    Object.keys(propertyRecord).forEach((key) => {
-      if (propertyRecord[key].name === name) {
-        ids.push(key);
-        found = true;
-      }
-    });
-    if (!found) {
-      throw new Error(`id matching ${name} not found.`);
-    }
-  });
-
-  return ids;
-}
