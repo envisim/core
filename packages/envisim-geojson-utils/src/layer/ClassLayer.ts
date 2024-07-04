@@ -287,29 +287,21 @@ export class Layer<
       : copy(layer.collection.features);
 
     if (this.collection instanceof PointCollection) {
-      if (layer.collection instanceof PointCollection) {
-        this.collection.features.push(
-          ...(newFeatures as PointCollection['features']),
-        );
-        return;
+      if (!(layer.collection instanceof PointCollection)) {
+        throw new RangeError('Incorrect input Layer');
       }
     } else if (this.collection instanceof LineCollection) {
-      if (layer.collection instanceof LineCollection) {
-        this.collection.features.push(
-          ...(newFeatures as LineCollection['features']),
-        );
-        return;
+      if (!(layer.collection instanceof LineCollection)) {
+        throw new RangeError('Incorrect input Layer');
       }
     } else if (this.collection instanceof AreaCollection) {
-      if (layer.collection instanceof AreaCollection) {
-        this.collection.features.push(
-          ...(newFeatures as AreaCollection['features']),
-        );
-        return;
+      if (!(layer.collection instanceof AreaCollection)) {
+        throw new RangeError('Incorrect input Layer');
       }
     }
 
-    throw new Error('layer does not match the GeometricPrimitive');
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-argument */
+    this.collection.features.push(...(newFeatures as any));
   }
 }
 

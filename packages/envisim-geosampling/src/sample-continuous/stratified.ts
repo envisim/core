@@ -1,0 +1,120 @@
+import {
+  AreaCollection,
+  type CategoricalProperty,
+  type GeoJSON as GJ,
+  GeometricPrimitive,
+  Layer,
+  LineCollection,
+  PointCollection,
+} from '@envisim/geojson-utils';
+
+import {
+  SampleBaseOptions,
+  SampleBeltOnAreaOptions,
+  SampleFeatureOptions,
+  SamplePointOptions,
+  SampleSystematicLineOnAreaOptions,
+} from './options.js';
+
+type SampleContinuousOptions =
+  | SampleBaseOptions
+  | SamplePointOptions
+  | SampleFeatureOptions<GJ.PointFeature>
+  | SampleFeatureOptions<GJ.LineFeature>
+  | SampleFeatureOptions<GJ.AreaFeature>
+  | SampleSystematicLineOnAreaOptions
+  | SampleBeltOnAreaOptions;
+
+interface SampleStratifiedOptions<O extends SampleContinuousOptions> {
+  stratify: string;
+  options: O | O[];
+}
+
+export function sampleStratifiedOptionsCheck(
+  layer: Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
+  {stratify, options}: SampleStratifiedOptions<SampleContinuousOptions>,
+): number {
+  if (!Object.hasOwn(layer.propertyRecord, stratify)) {
+    return 110;
+  }
+
+  const property = layer.propertyRecord[stratify];
+
+  if (property.type !== 'categorical') {
+    return 120;
+  }
+
+  if (property.values.length === 0) {
+    return 130;
+  }
+
+  if (Array.isArray(options) && options.length !== property.values.length) {
+    return 140;
+  }
+
+  return 0;
+}
+
+export function sampleStratified<
+  IN extends Layer<LineCollection> | Layer<AreaCollection>,
+  OUT extends
+    | Layer<PointCollection>
+    | Layer<LineCollection>
+    | Layer<AreaCollection>,
+  OPTS extends SampleContinuousOptions,
+>(
+  fn: (arg0: IN, arg1: OPTS) => OUT,
+  layer: IN,
+  {stratify, options}: SampleStratifiedOptions<OPTS>,
+): OUT {
+  const optionsError = sampleStratifiedOptionsCheck(layer, {stratify, options});
+  if (optionsError !== 0) {
+    throw new RangeError(`sampleStratified error: ${optionsError}`);
+  }
+
+  const property = layer.propertyRecord[stratify] as CategoricalProperty;
+  const optionsArray = Array.isArray(options)
+    ? options
+    : Array.from<OPTS>({
+        length: property.values.length,
+      }).fill(options);
+
+  let stratumSampleLayers: OUT[];
+  if (Layer.isLayer(layer, GeometricPrimitive.LINE)) {
+    stratumSampleLayers = property.values.map((_, i) => {
+      const features = layer.collection.features.filter(
+        (f) => f.properties[stratify] === i,
+      );
+
+      return fn(
+        new Layer(
+          new LineCollection({features}, true),
+          layer.propertyRecord,
+        ) as IN,
+        optionsArray[i],
+      );
+    });
+  } else if (Layer.isLayer(layer, GeometricPrimitive.AREA)) {
+    stratumSampleLayers = property.values.map((_, i) => {
+      const features = layer.collection.features.filter(
+        (f) => f.properties[stratify] === i,
+      );
+
+      return fn(
+        new Layer(
+          new AreaCollection({features}, true),
+          layer.propertyRecord,
+        ) as IN,
+        optionsArray[i],
+      );
+    });
+  } else {
+    throw Error('Incorrect input Layer');
+  }
+
+  return stratumSampleLayers.reduce((prev, curr) => {
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-argument */
+    prev.appendFromLayer(curr as any);
+    return prev;
+  }) as OUT;
+}
