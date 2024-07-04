@@ -8,7 +8,7 @@ import {
   PointFeature,
 } from '@envisim/geojson-utils';
 
-import {sampleFinite} from '../../src/sampling/sample-finite.ts';
+import {sampleFinite} from '../../src/sample-finite/sample-finite.ts';
 
 describe('sampleFinite', () => {
   // Create a layer with N random points
@@ -30,8 +30,6 @@ describe('sampleFinite', () => {
     sampleSize: 10,
     spreadGeo: true,
   });
-
-  //console.log(JSON.stringify(sample, null, 2));
 
   test('sampleFinite', () => {
     expect(sample.collection.size).toBe(10);

@@ -20,19 +20,13 @@ export {
 } from './sample-continuous/index.js';
 
 // Sampling methods callable from engine
+export {sampleFinite, sampleFiniteOptionsCheck} from './sample-finite/index.js';
+
+// Stratified
 export {
-  sampleFinite,
-  sampleFiniteStratified,
-  sampleFiniteOptionsCheck,
-  sampleAreaToArea,
-  sampleAreaToAreaStratified,
-  sampleAreaToLine,
-  sampleAreaToLineStratified,
-  sampleAreaToPoint,
-  sampleAreaToPointStratified,
-  sampleLineToPoint,
-  sampleLineToPointStratified,
-} from './sampling/index.js';
+  sampleStratified,
+  sampleStratifiedOptionsCheck,
+} from './sample-stratified.js';
 
 // Model features/tracts
 export {

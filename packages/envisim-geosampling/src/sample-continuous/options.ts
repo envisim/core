@@ -36,8 +36,11 @@ export const SAMPLE_BASE_OPTIONS: Readonly<Required<SampleBaseOptions>> = {
  * @returns `0` if check passes
  */
 export function sampleBaseOptionsCheck<
-  T extends AreaCollection | LineCollection | PointCollection,
->(_: Layer<T>, {pointsPerCircle}: SampleBaseOptions): number {
+  T extends
+    | Layer<PointCollection>
+    | Layer<LineCollection>
+    | Layer<AreaCollection>,
+>(_: T, {pointsPerCircle}: SampleBaseOptions): number {
   if (
     pointsPerCircle &&
     (!Number.isInteger(pointsPerCircle) || pointsPerCircle <= 0)
@@ -90,9 +93,12 @@ export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
  * @returns `0` if check passes
  */
 export function samplePointOptionsCheck<
-  T extends AreaCollection | LineCollection | PointCollection,
+  T extends
+    | Layer<PointCollection>
+    | Layer<LineCollection>
+    | Layer<AreaCollection>,
 >(
-  layer: Layer<T>,
+  layer: T,
   {
     // pointSelection,
     sampleSize,
@@ -166,10 +172,13 @@ export const SAMPLE_FEATURE_OPTIONS: Readonly<
  * @returns `0` if check passes
  */
 export function sampleFeatureOptionsCheck<
-  T extends AreaCollection | LineCollection | PointCollection,
+  T extends
+    | Layer<PointCollection>
+    | Layer<LineCollection>
+    | Layer<AreaCollection>,
   F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
 >(
-  layer: Layer<T>,
+  layer: T,
   {
     // modelFeature,
     // rotation,
@@ -221,9 +230,12 @@ export const SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS: Readonly<
  * @returns `0` if check passes
  */
 export function sampleSystematicLineOnAreaOptionsCheck<
-  T extends AreaCollection | LineCollection | PointCollection,
+  T extends
+    | Layer<PointCollection>
+    | Layer<LineCollection>
+    | Layer<AreaCollection>,
 >(
-  layer: Layer<T>,
+  layer: T,
   {
     distBetween,
     // rotation,
@@ -269,8 +281,11 @@ export const SAMPLE_BELT_ON_AREA_OPTIONS: Readonly<
  * @returns `0` if check passes
  */
 export function sampleBeltOnAreaOptionsCheck<
-  T extends AreaCollection | LineCollection | PointCollection,
->(layer: Layer<T>, {halfWidth, ...options}: SampleBeltOnAreaOptions): number {
+  T extends
+    | Layer<PointCollection>
+    | Layer<LineCollection>
+    | Layer<AreaCollection>,
+>(layer: T, {halfWidth, ...options}: SampleBeltOnAreaOptions): number {
   const systematicLineOnAreaCheck = sampleBaseOptionsCheck(layer, options);
   if (systematicLineOnAreaCheck !== 0) {
     return systematicLineOnAreaCheck;

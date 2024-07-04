@@ -8,6 +8,7 @@ import {
   LineFeature,
   PointCollection,
   PointFeature,
+  createDesignWeightProperty,
 } from '@envisim/geojson-utils';
 import {ColumnVector} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
@@ -85,14 +86,6 @@ export interface SampleFiniteOptions {
   rand?: Random;
 }
 
-export interface SampleFiniteStratifiedOptions {
-  /**
-   * The id of the categorical property to stratify on.
-   */
-  stratifyOn: string;
-  strataOptions: SampleFiniteOptions | SampleFiniteOptions[];
-}
-
 /**
  * Returns the following errors:
  * - 10: sampleSize is not a non-negative integer
@@ -106,9 +99,12 @@ export interface SampleFiniteStratifiedOptions {
  * @returns `0` if check passes
  */
 export function sampleFiniteOptionsCheck<
-  T extends AreaCollection | LineCollection | PointCollection,
+  T extends
+    | Layer<PointCollection>
+    | Layer<LineCollection>
+    | Layer<AreaCollection>,
 >(
-  layer: Layer<T>,
+  layer: T,
   {
     methodName,
     sampleSize,
@@ -186,8 +182,11 @@ export function sampleFiniteOptionsCheck<
  * @param opts
  */
 export function sampleFinite<
-  T extends AreaCollection | LineCollection | PointCollection,
->(layer: Layer<T>, opts: SampleFiniteOptions): Layer<T> {
+  T extends
+    | Layer<PointCollection>
+    | Layer<LineCollection>
+    | Layer<AreaCollection>,
+>(layer: T, opts: SampleFiniteOptions): T {
   const optionsError = sampleFiniteOptionsCheck(layer, opts);
   if (optionsError !== 0) {
     throw new RangeError(`sampleFinite error: ${optionsError}`);
@@ -353,15 +352,11 @@ export function sampleFinite<
       new AreaCollection({features}, true),
       copy(layer.propertyRecord),
       true,
-    ) as Layer<T>;
+    ) as T;
 
     // Add _designWeight to propertyRecord if it does not exist
     if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
-      newLayer.propertyRecord['_designWeight'] = {
-        type: 'numerical',
-        id: '_designWeight',
-        name: '_designWeight',
-      };
+      newLayer.propertyRecord['_designWeight'] = createDesignWeightProperty();
     }
 
     return newLayer;
@@ -393,15 +388,11 @@ export function sampleFinite<
       new LineCollection({features}, true),
       copy(layer.propertyRecord),
       true,
-    ) as Layer<T>;
+    ) as T;
 
     // Add _designWeight to propertyRecord if it does not exist
     if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
-      newLayer.propertyRecord['_designWeight'] = {
-        type: 'numerical',
-        id: '_designWeight',
-        name: '_designWeight',
-      };
+      newLayer.propertyRecord['_designWeight'] = createDesignWeightProperty();
     }
 
     return newLayer;
@@ -433,187 +424,15 @@ export function sampleFinite<
       new PointCollection({features}, true),
       copy(layer.propertyRecord),
       true,
-    ) as Layer<T>;
+    ) as T;
 
     // Add _designWeight to propertyRecord if it does not exist
     if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
-      newLayer.propertyRecord['_designWeight'] = {
-        type: 'numerical',
-        id: '_designWeight',
-        name: '_designWeight',
-      };
+      newLayer.propertyRecord['_designWeight'] = createDesignWeightProperty();
     }
 
     return newLayer;
   }
 
   throw new TypeError('expected layer');
-}
-
-/**
- * Select a stratified sample from a layer using sampling methods for a finite
- * population.
- *
- * @param layer
- * @param opts
- */
-export function sampleFiniteStratified<
-  T extends AreaCollection | LineCollection | PointCollection,
->(layer: Layer<T>, opts: SampleFiniteStratifiedOptions): Layer<T> {
-  const {stratifyOn, strataOptions} = opts;
-  if (!(stratifyOn in layer.propertyRecord))
-    throw new Error(
-      'stratification is not possible as property record does not contain the required property',
-    );
-
-  // The current property object
-  const propertyObj = layer.propertyRecord[stratifyOn];
-
-  // We only allow stratification on categorical variables
-  if (propertyObj.type !== 'categorical')
-    throw new Error(
-      'stratification is only possible to perform on categorical properties',
-    );
-
-  // Make an array of opts if it is not provided as an array
-  const fixedOpts = Array.isArray(strataOptions)
-    ? strataOptions
-    : new Array(propertyObj.values.length).fill(strataOptions);
-
-  // Make sure it is of correct length
-  if (fixedOpts.length !== propertyObj.values.length) {
-    throw new Error(
-      'length of provided opts array does not match number of strata',
-    );
-  }
-
-  /*
-   * For each value of the property, run sampleFinite.
-   * Merge the returning features into a single array.
-   */
-
-  if (Layer.isLayer(layer, GeometricPrimitive.AREA)) {
-    let features: AreaFeature[] = [];
-
-    propertyObj.values.forEach((_v, i) => {
-      const stratumFeatures = layer.collection.features.filter(
-        (f) => f.properties[stratifyOn] === i,
-      );
-
-      const stratumLayer = new Layer(
-        new AreaCollection({features: stratumFeatures}, true),
-        layer.propertyRecord,
-        true,
-      );
-
-      const sampledFeatures = sampleFinite(
-        stratumLayer,
-        fixedOpts[i] as SampleFiniteOptions,
-      ).collection.features;
-
-      features = [...features, ...sampledFeatures];
-    });
-
-    // Make the new layer
-    const newLayer = new Layer(
-      new AreaCollection({features}, true),
-      copy(layer.propertyRecord),
-      true,
-    ) as Layer<T>;
-
-    // Add _designWeight to propertyRecord if it does not exist
-    if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
-      newLayer.propertyRecord['_designWeight'] = {
-        type: 'numerical',
-        id: '_designWeight',
-        name: '_designWeight',
-      };
-    }
-
-    return newLayer;
-  }
-
-  if (Layer.isLayer(layer, GeometricPrimitive.LINE)) {
-    let features: LineFeature[] = [];
-
-    propertyObj.values.forEach((_v, i) => {
-      const stratumFeatures = layer.collection.features.filter(
-        (f) => f.properties[stratifyOn] === i,
-      );
-
-      const stratumLayer = new Layer(
-        new LineCollection({features: stratumFeatures}, true),
-        layer.propertyRecord,
-        true,
-      );
-
-      const sampledFeatures = sampleFinite(
-        stratumLayer,
-        fixedOpts[i] as SampleFiniteOptions,
-      ).collection.features;
-
-      features = [...features, ...sampledFeatures];
-    });
-
-    // Make the new layer
-    const newLayer = new Layer(
-      new LineCollection({features}, true),
-      copy(layer.propertyRecord),
-      true,
-    ) as Layer<T>;
-
-    // Add _designWeight to propertyRecord if it does not exist
-    if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
-      newLayer.propertyRecord['_designWeight'] = {
-        type: 'numerical',
-        id: '_designWeight',
-        name: '_designWeight',
-      };
-    }
-
-    return newLayer;
-  }
-
-  if (Layer.isLayer(layer, GeometricPrimitive.POINT)) {
-    let features: PointFeature[] = [];
-
-    propertyObj.values.forEach((_v, i) => {
-      const stratumFeatures = layer.collection.features.filter(
-        (f) => f.properties[stratifyOn] === i,
-      );
-
-      const stratumLayer = new Layer(
-        new PointCollection({features: stratumFeatures}, true),
-        layer.propertyRecord,
-        true,
-      );
-
-      const sampledFeatures = sampleFinite(
-        stratumLayer,
-        fixedOpts[i] as SampleFiniteOptions,
-      ).collection.features;
-
-      features = [...features, ...sampledFeatures];
-    });
-
-    // Make the new layer
-    const newLayer = new Layer(
-      new PointCollection({features}, true),
-      copy(layer.propertyRecord),
-      true,
-    ) as Layer<T>;
-
-    // Add _designWeight to propertyRecord if it does not exist
-    if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
-      newLayer.propertyRecord['_designWeight'] = {
-        type: 'numerical',
-        id: '_designWeight',
-        name: '_designWeight',
-      };
-    }
-
-    return newLayer;
-  }
-
-  throw new TypeError('expected a layer');
 }
