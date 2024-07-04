@@ -9,15 +9,17 @@ import {
 import {Random} from '@envisim/random';
 
 // BASE
+/**
+ * @see {@link SAMPLE_BASE_OPTIONS | default values}
+ * @see {@link sampleBaseOptionsCheck | error codes}
+ */
 export interface SampleBaseOptions {
   /**
    * An instance of {@link random.Random}
-   * @defaultValue `new Random()`
    */
   rand?: Random;
   /**
    * The integer number of points used when converting circles to polygons.
-   * @defaultValue `16`
    */
   pointsPerCircle?: number;
 }
@@ -27,6 +29,12 @@ export const SAMPLE_BASE_OPTIONS: Readonly<Required<SampleBaseOptions>> = {
   pointsPerCircle: 16,
 };
 
+/**
+ * Returns the following errors:
+ * - 110: pointsPerCircle is not a positive integer
+ *
+ * @returns `0` if check passes
+ */
 export function sampleBaseOptionsCheck<
   T extends AreaCollection | LineCollection | PointCollection,
 >(_: Layer<T>, {pointsPerCircle}: SampleBaseOptions): number {
@@ -41,6 +49,10 @@ export function sampleBaseOptionsCheck<
 }
 
 // POINT extends BASE
+/**
+ * @see {@link SAMPLE_POINT_OPTIONS | default values}
+ * @see {@link samplePointOptionsCheck | error codes}
+ */
 export interface SamplePointOptions extends SampleBaseOptions {
   /**
    * The method to use for selection of points.
@@ -53,12 +65,10 @@ export interface SamplePointOptions extends SampleBaseOptions {
   /**
    * Optional ratio between distance in west-east direction to south-north
    * direction.
-   * @defaultValue `1.0`
    */
   ratio?: number;
   /**
    * Optional buffer in meters.
-   * @defaultValue `0.0`
    */
   buffer?: number;
 }
@@ -71,6 +81,14 @@ export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
   buffer: 0.0,
 };
 
+/**
+ * Returns the following errors:
+ * - <200: any error from {@link sampleBaseOptionsCheck}
+ * - 210: sampleSize is not a non-negative integer
+ * - 220: ratio is not positive
+ *
+ * @returns `0` if check passes
+ */
 export function samplePointOptionsCheck<
   T extends AreaCollection | LineCollection | PointCollection,
 >(
@@ -88,7 +106,7 @@ export function samplePointOptionsCheck<
     return baseCheck;
   }
 
-  if (!Number.isInteger(sampleSize) || sampleSize <= 0) {
+  if (!Number.isInteger(sampleSize) || sampleSize < 0) {
     return 210;
   }
 
@@ -100,6 +118,10 @@ export function samplePointOptionsCheck<
 }
 
 // FEATURE extends POINT
+/**
+ * @see {@link SAMPLE_FEATURE_OPTIONS | default values}
+ * @see {@link sampleFeatureOptionsCheck | error codes}
+ */
 export interface SampleFeatureOptions<
   F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
 > extends SamplePointOptions {
@@ -136,6 +158,13 @@ export const SAMPLE_FEATURE_OPTIONS: Readonly<
   randomRotation: false,
 };
 
+/**
+ * Returns the following errors:
+ * - <300: any error from {@link samplePointOptionsCheck}
+ * - 310: layer is not {@link Layer<AreaCollection>}
+ *
+ * @returns `0` if check passes
+ */
 export function sampleFeatureOptionsCheck<
   T extends AreaCollection | LineCollection | PointCollection,
   F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
@@ -161,6 +190,10 @@ export function sampleFeatureOptionsCheck<
 }
 
 // SYSTEMATIC LINE ON AREA extends BASE
+/**
+ * @see {@link SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS | default values}
+ * @see {@link sampleSystematicLineOnAreaOptionsCheck | error codes}
+ */
 export interface SampleSystematicLineOnAreaOptions extends SampleBaseOptions {
   /**
    * The distance in meters between the parallel lines.
@@ -180,6 +213,13 @@ export const SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS: Readonly<
   rotation: 0.0,
 };
 
+/**
+ * Returns the following errors:
+ * - <400: any error from {@link sampleBaseOptionsCheck}
+ * - 410: distBetween is not positive
+ *
+ * @returns `0` if check passes
+ */
 export function sampleSystematicLineOnAreaOptionsCheck<
   T extends AreaCollection | LineCollection | PointCollection,
 >(
@@ -203,6 +243,10 @@ export function sampleSystematicLineOnAreaOptionsCheck<
 }
 
 // BELT ON AREA extends SYSTEMATIC LINE ON AREA
+/**
+ * @see {@link SAMPLE_BELT_ON_AREA_OPTIONS | default values}
+ * @see {@link sampleBeltOnAreaOptionsCheck | error codes}
+ */
 export interface SampleBeltOnAreaOptions
   extends SampleSystematicLineOnAreaOptions {
   /**
@@ -217,6 +261,13 @@ export const SAMPLE_BELT_ON_AREA_OPTIONS: Readonly<
   ...SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS,
 };
 
+/**
+ * Returns the following errors:
+ * - <500: any error from {@link sampleBaseOptionsCheck}
+ * - 510: halfWidth is not positive
+ *
+ * @returns `0` if check passes
+ */
 export function sampleBeltOnAreaOptionsCheck<
   T extends AreaCollection | LineCollection | PointCollection,
 >(layer: Layer<T>, {halfWidth, ...options}: SampleBeltOnAreaOptions): number {

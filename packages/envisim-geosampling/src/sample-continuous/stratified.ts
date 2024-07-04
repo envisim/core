@@ -30,25 +30,39 @@ interface SampleStratifiedOptions<O extends SampleContinuousOptions> {
   options: O | O[];
 }
 
+/**
+ * Returns the followi
+ * - 110: stratify does not exist on propertyRecord
+ * - 120: stratify property is not categorical
+ * - 130: stratify property has no values
+ * - 140: options is an array, but its length does not match the length of
+ *        stratify property values
+ *
+ * @returns `0` if check passes
+ */
 export function sampleStratifiedOptionsCheck(
   layer: Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
   {stratify, options}: SampleStratifiedOptions<SampleContinuousOptions>,
 ): number {
   if (!Object.hasOwn(layer.propertyRecord, stratify)) {
+    // stratify must exist on propertyRecord
     return 110;
   }
 
   const property = layer.propertyRecord[stratify];
 
   if (property.type !== 'categorical') {
+    // stratify prop must be categorical -- no stratification on numerical
     return 120;
   }
 
   if (property.values.length === 0) {
+    // stratify prop must have values
     return 130;
   }
 
   if (Array.isArray(options) && options.length !== property.values.length) {
+    // if options is an array, the length must match the number of prop values
     return 140;
   }
 
@@ -72,6 +86,7 @@ export function sampleStratified<
     throw new RangeError(`sampleStratified error: ${optionsError}`);
   }
 
+  // Already checked that it exists
   const property = layer.propertyRecord[stratify] as CategoricalProperty;
   const optionsArray = Array.isArray(options)
     ? options

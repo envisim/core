@@ -93,6 +93,18 @@ export interface SampleFiniteStratifiedOptions {
   strataOptions: SampleFiniteOptions | SampleFiniteOptions[];
 }
 
+/**
+ * Returns the following errors:
+ * - 10: sampleSize is not a non-negative integer
+ * - 20: probabilitesFrom is set, but does not exist on propertyRecord
+ * - 30: method is spatially balanced, but does not use spreadOn or spreadGeo
+ * - 31: method is spatially balanced, but spreadOn does not exist on
+ *       propertyRecord
+ * - 40: method is balanced, but does not use balanceOn
+ * - 41: method is balanced, but balanceOn does not exist on propertyRecord
+ *
+ * @returns `0` if check passes
+ */
 export function sampleFiniteOptionsCheck<
   T extends AreaCollection | LineCollection | PointCollection,
 >(
@@ -107,15 +119,20 @@ export function sampleFiniteOptionsCheck<
     spreadGeo,
   }: SampleFiniteOptions,
 ): number {
-  if (sampleSize < 0) {
+  if (!Number.isInteger(sampleSize) || sampleSize < 0) {
+    // sampleSize must be a non negative integer
     return 10;
   }
+
   if (
     probabilitiesFrom &&
     !Object.hasOwn(layer.propertyRecord, probabilitiesFrom)
   ) {
+    // probabilitiesFrom must exist on propertyRecord
     return 20;
   }
+
+  // Checks for spatially balanced methods
   if (
     (
       SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS as ReadonlyArray<string>
@@ -126,17 +143,20 @@ export function sampleFiniteOptionsCheck<
   ) {
     if (!spreadOn) {
       if (!spreadGeo) {
+        // Must use either spreadOn or spreadGeo
         return 30;
       }
     } else {
       if (
         !spreadOn.every((prop) => Object.hasOwn(layer.propertyRecord, prop))
       ) {
+        // spredOn entries must exist on propertyRecord
         return 31;
       }
     }
   }
 
+  // Checks for balanced methods
   if (
     (SAMPLE_FINITE_BALANCED_METHODS as ReadonlyArray<string>).includes(
       methodName,
@@ -146,9 +166,11 @@ export function sampleFiniteOptionsCheck<
     )
   ) {
     if (!balanceOn) {
+      // Must use balanceOn
       return 40;
     }
     if (!balanceOn.every((prop) => Object.hasOwn(layer.propertyRecord, prop))) {
+      // balanceOn entries must exist on propertyRecord
       return 41;
     }
   }
