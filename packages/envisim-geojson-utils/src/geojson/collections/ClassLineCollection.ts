@@ -66,7 +66,7 @@ export class LineCollection
   addFeature(
     feature: OptionalParam<GJ.LineFeature, 'type'>,
     shallow: boolean = true,
-  ): void {
+  ): number {
     if (LineFeature.isFeature(feature)) {
       this.features.push(
         shallow === false ? new LineFeature(feature, false) : feature,
@@ -74,6 +74,8 @@ export class LineCollection
     } else {
       this.features.push(new LineFeature(feature, shallow));
     }
+
+    return this.features.length;
   }
 
   /* LINE SPECIFIC */

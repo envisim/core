@@ -1,13 +1,10 @@
 import * as sampling from '@envisim/sampling';
 import {
   AreaCollection,
-  AreaFeature,
   GeometricPrimitive,
   Layer,
   LineCollection,
-  LineFeature,
   PointCollection,
-  PointFeature,
   createDesignWeightProperty,
 } from '@envisim/geojson-utils';
 import {ColumnVector} from '@envisim/matrix';
@@ -197,23 +194,18 @@ export function sampleFinite<
   let n: number;
   const N = layer.collection.size;
   let probabilities: ColumnVector;
+
   // Select the correct method, and save indices of the FeatureCollection
   switch (opts.methodName) {
     // Standard
     case 'srswr':
-      n = opts.sampleSize;
-      // Compute expected number of inclusions / inclusion probabilities
-      mu = new Array(N).fill(n / N) as number[];
-
-      // Get selected indexes
-      idx = sampling[opts.methodName]({n, N, rand: opts.rand});
-
-      break;
     case 'srswor':
-      n = Math.min(opts.sampleSize, N);
-
+      n =
+        opts.methodName === 'srswr'
+          ? opts.sampleSize
+          : Math.min(opts.sampleSize, N);
       // Compute expected number of inclusions / inclusion probabilities
-      mu = new Array(N).fill(n / N) as number[];
+      mu = Array.from<number>({length: N}).fill(n / N);
 
       // Get selected indexes
       idx = sampling[opts.methodName]({n, N, rand: opts.rand});
@@ -262,25 +254,15 @@ export function sampleFinite<
       mu = inclprobsFromLayer(layer, opts).toArray();
 
       // Get selected indexes
-      if (
-        !Array.isArray(opts.spreadOn) ||
-        (opts.spreadOn.length === 0 && !opts.spreadGeo)
-      ) {
-        idx = sampling['rpm']({
-          probabilities: mu,
-          rand: opts.rand,
-        });
-      } else {
-        idx = sampling[opts.methodName]({
-          probabilities: mu,
-          auxiliaries: spreadMatrixFromLayer(
-            layer,
-            opts.spreadOn ?? [],
-            opts.spreadGeo,
-          ),
-          rand: opts.rand,
-        });
-      }
+      idx = sampling[opts.methodName]({
+        probabilities: mu,
+        auxiliaries: spreadMatrixFromLayer(
+          layer,
+          opts.spreadOn ?? [],
+          opts.spreadGeo,
+        ),
+        rand: opts.rand,
+      });
       break;
 
     // Balancing
@@ -289,18 +271,11 @@ export function sampleFinite<
       mu = inclprobsFromLayer(layer, opts).toArray();
 
       // Get selected indexes
-      if (!Array.isArray(opts.balanceOn) || opts.balanceOn.length === 0) {
-        idx = sampling['rpm']({
-          probabilities: mu,
-          rand: opts.rand,
-        });
-      } else {
-        idx = sampling[opts.methodName]({
-          probabilities: mu,
-          balancing: balancingMatrixFromLayer(layer, opts.balanceOn ?? []),
-          rand: opts.rand,
-        });
-      }
+      idx = sampling[opts.methodName]({
+        probabilities: mu,
+        balancing: balancingMatrixFromLayer(layer, opts.balanceOn ?? []),
+        rand: opts.rand,
+      });
       break;
 
     // Balancing + spreading
@@ -326,113 +301,51 @@ export function sampleFinite<
       throw new TypeError('method is not valid');
   }
 
-  if (Layer.isLayer(layer, GeometricPrimitive.AREA)) {
-    // To store selected features
-    const features: AreaFeature[] = [];
-
-    // For each selected feature
-    idx.forEach((i) => {
-      // Copy selected feature
-      const frameFeature = layer.collection.features[i];
-      const feature = new AreaFeature(frameFeature, false);
-
-      // Fix _designWeight for selected feature
-      if (Object.hasOwn(feature.properties, '_designWeight')) {
-        feature.properties['_designWeight'] *= 1 / mu[i];
-      } else {
-        feature.properties['_designWeight'] = 1 / mu[i];
-      }
-
-      // Push new feature
-      features.push(feature);
-    });
-
-    // Make the new layer
-    const newLayer = new Layer(
-      new AreaCollection({features}, true),
-      copy(layer.propertyRecord),
-      true,
-    ) as T;
-
-    // Add _designWeight to propertyRecord if it does not exist
-    if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
-      newLayer.propertyRecord['_designWeight'] = createDesignWeightProperty();
-    }
-
-    return newLayer;
+  const propertyRecord = copy(layer.propertyRecord);
+  // Add _designWeight to propertyRecord if it does not exist
+  if (!Object.hasOwn(propertyRecord, '_designWeight')) {
+    propertyRecord['_designWeight'] = createDesignWeightProperty();
   }
 
-  if (Layer.isLayer(layer, GeometricPrimitive.LINE)) {
-    // To store selected features
-    const features: LineFeature[] = [];
-
-    // For each selected feature
-    idx.forEach((i) => {
-      // Copy selected feature
-      const frameFeature = layer.collection.features[i];
-      const feature = new LineFeature(frameFeature, false);
-
-      // Fix _designWeight for selected feature
-      if (Object.hasOwn(feature.properties, '_designWeight')) {
-        feature.properties['_designWeight'] *= 1 / mu[i];
-      } else {
-        feature.properties['_designWeight'] = 1 / mu[i];
-      }
-
-      // Push new feature
-      features.push(feature);
-    });
-
-    // Make the new layer
-    const newLayer = new Layer(
-      new LineCollection({features}, true),
-      copy(layer.propertyRecord),
-      true,
-    ) as T;
-
-    // Add _designWeight to propertyRecord if it does not exist
-    if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
-      newLayer.propertyRecord['_designWeight'] = createDesignWeightProperty();
-    }
-
-    return newLayer;
-  }
-
+  let newLayer: T;
   if (Layer.isLayer(layer, GeometricPrimitive.POINT)) {
-    // To store selected features
-    const features: PointFeature[] = [];
-
-    // For each selected feature
-    idx.forEach((i) => {
-      // Copy selected feature
-      const frameFeature = layer.collection.features[i];
-      const feature = new PointFeature(frameFeature, false);
-
-      // Fix _designWeight for selected feature
-      if (Object.hasOwn(feature.properties, '_designWeight')) {
-        feature.properties['_designWeight'] *= 1 / mu[i];
-      } else {
-        feature.properties['_designWeight'] = 1 / mu[i];
-      }
-
-      // Push new feature
-      features.push(feature);
-    });
-
-    // Make the new layer
-    const newLayer = new Layer(
-      new PointCollection({features}, true),
-      copy(layer.propertyRecord),
+    newLayer = new Layer(
+      new PointCollection({features: []}, true),
+      propertyRecord,
       true,
     ) as T;
-
-    // Add _designWeight to propertyRecord if it does not exist
-    if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
-      newLayer.propertyRecord['_designWeight'] = createDesignWeightProperty();
-    }
-
-    return newLayer;
+  } else if (Layer.isLayer(layer, GeometricPrimitive.LINE)) {
+    newLayer = new Layer(
+      new LineCollection({features: []}, true),
+      propertyRecord,
+      true,
+    ) as T;
+  } else if (Layer.isLayer(layer, GeometricPrimitive.AREA)) {
+    newLayer = new Layer(
+      new AreaCollection({features: []}, true),
+      propertyRecord,
+      true,
+    ) as T;
+  } else {
+    throw new TypeError('layer not valid');
   }
 
-  throw new TypeError('expected layer');
+  idx.forEach((i) => {
+    const len = newLayer.collection.addFeature(
+      // TS cannot ensure that layer and newLayer matches, but as we just
+      // created them to match, we can skip this check here
+      /* eslint-disable-next-line @typescript-eslint/no-unsafe-argument */
+      layer.collection.features[i] as any,
+      false,
+    );
+
+    // Update design weight
+    newLayer.collection.features[len - 1].editProperty(
+      '_designWeight',
+      (value) => value / mu[i],
+      1.0,
+    );
+  });
+
+  return newLayer;
 }

@@ -62,7 +62,7 @@ export abstract class AbstractCollection<
   abstract geomEach(callback: GeomEachCallback<T>): void;
 
   /* === ADD/REMOVE FEATURES === */
-  abstract addFeature(feature: F, shallow: boolean): void;
+  abstract addFeature(feature: F, shallow: boolean): number;
 
   removeFeature(index: number): void {
     this.features.splice(index, 1);

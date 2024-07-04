@@ -66,7 +66,7 @@ export class PointCollection
   addFeature(
     feature: OptionalParam<GJ.PointFeature, 'type'>,
     shallow: boolean = true,
-  ): void {
+  ): number {
     if (PointFeature.isFeature(feature)) {
       this.features.push(
         shallow === false ? new PointFeature(feature, false) : feature,
@@ -74,6 +74,8 @@ export class PointCollection
     } else {
       this.features.push(new PointFeature(feature, shallow));
     }
+
+    return this.features.length;
   }
 
   /* POINT SPECIFIC */

@@ -77,7 +77,7 @@ export class AreaCollection
   addFeature(
     feature: OptionalParam<GJ.AreaFeature, 'type'>,
     shallow: boolean = true,
-  ): void {
+  ): number {
     if (AreaFeature.isFeature(feature)) {
       this.features.push(
         shallow === false ? new AreaFeature(feature, false) : feature,
@@ -85,6 +85,8 @@ export class AreaCollection
     } else {
       this.features.push(new AreaFeature(feature, shallow));
     }
+
+    return this.features.length;
   }
 
   /* AREA SPECIFIC */
