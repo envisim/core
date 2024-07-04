@@ -300,6 +300,7 @@ export class Layer<
       }
     }
 
+    // If layers are of mixed types, the above errors would have been thrown
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-argument */
     this.collection.features.push(...(newFeatures as any));
   }
