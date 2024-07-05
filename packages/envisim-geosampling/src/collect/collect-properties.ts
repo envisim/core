@@ -72,7 +72,7 @@ function aggregateInPlace(
     if (to.properties?.['_randomRotation'] === 1) {
       // Here the line that collects can be any curve,
       // as long as it has been randomly rotated.
-      factor = Math.PI / (2 * from.length());
+      factor = Math.PI / (2.0 * from.length());
     } else {
       // Here the line that collects should be straight,
       // which is why we can use the first segment of the line
@@ -89,7 +89,7 @@ function aggregateInPlace(
           to.geometry.coordinates[0][1],
         );
       }
-      factor = 1 / projectedLengthOfFeature(from, azimuth);
+      factor = 1.0 / projectedLengthOfFeature(from, azimuth);
     }
   }
 
@@ -189,7 +189,7 @@ export function collectProperties(
   // and property record.
   Object.keys(rec).forEach((key) => {
     // Initialize each with value 0
-    frame.initProperty(key, 0);
+    frame.initProperty(key, 0.0);
 
     // Add to the record
     newLayer.propertyRecord[key] = rec[key];

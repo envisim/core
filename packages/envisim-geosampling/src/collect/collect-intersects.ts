@@ -8,6 +8,8 @@ import {
   PointCollection,
   PointFeature,
   type PropertyRecord,
+  createDesignWeightProperty,
+  createParentProperty,
   intersectAreaAreaFeatures,
   intersectLineAreaFeatures,
   intersectLineLineFeatures,
@@ -77,7 +79,7 @@ function transferPropertiesInPlace(
     if (frameFeature.properties?.['_randomRotation'] === 1) {
       // Here the line that collects can be any curve,
       // as long as it has been randomly rotated.
-      factor = Math.PI / (2 * baseFeature.length());
+      factor = Math.PI / (2.0 * baseFeature.length());
     } else {
       // Here the line that collects should be straight,
       // which is why we can use the first segment of the line
@@ -94,7 +96,7 @@ function transferPropertiesInPlace(
           frameFeature.geometry.coordinates[0][1],
         );
       }
-      factor = 1 / projectedLengthOfFeature(baseFeature, azimuth);
+      factor = 1.0 / projectedLengthOfFeature(baseFeature, azimuth);
     }
   }
 
@@ -118,16 +120,8 @@ function transferPropertiesInPlace(
  */
 function updateRecordInPlace(record: PropertyRecord): void {
   //Add design props to the record
-  record['_designWeight'] = {
-    id: '_designWeight',
-    name: '_designWeight',
-    type: 'numerical',
-  };
-  record['_parent'] = {
-    id: '_parent',
-    name: '_parent',
-    type: 'numerical',
-  };
+  record['_designWeight'] = createDesignWeightProperty();
+  record['_parent'] = createParentProperty();
 }
 
 /**

@@ -10,29 +10,20 @@ import {
 } from '@envisim/geojson-utils';
 import {copy} from '@envisim/utils';
 
-import {DetectionFunction, effectiveHalfWidth} from './distance-utils.js';
+import {SampleDistancePointsOptions} from './distance-points.js';
+import {effectiveHalfWidth} from './distance-utils.js';
 import {
   SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS,
   type SampleSystematicLineOnAreaOptions,
+  sampleSystematicLineOnAreaOptionsCheck,
 } from './options.js';
 import {sampleSystematicLinesOnAreas} from './systematic-lines-on-areas.js';
 
-export interface SampleSystematicDistanceLinesOptions
-  extends SampleSystematicLineOnAreaOptions {
-  /**
-   * The point layer to collect objects from.
-   */
-  baseLayer: Layer<PointCollection>;
-  /**
-   * The detection function giving the detection probability as a
-   * function of distance.
-   */
-  detectionFunction: DetectionFunction;
-  /**
-   * The cutoff distance in meters.
-   */
-  cutoff: number;
-}
+/**
+ * @interface
+ */
+type SampleSystematicDistanceLinesOptions = SampleSystematicLineOnAreaOptions &
+  SampleDistancePointsOptions;
 
 /**
  * Distance sampling with line transects.
@@ -55,6 +46,21 @@ export function sampleSystematicDistanceLines(
     cutoff,
   }: SampleSystematicDistanceLinesOptions,
 ): Layer<PointCollection> {
+  const optionsError = sampleSystematicLineOnAreaOptionsCheck(layer, {
+    rand,
+    pointsPerCircle,
+    distBetween,
+    rotation,
+    // baseLayer,
+    // detectionFunction,
+    // cutoff,
+  });
+  if (optionsError !== 0) {
+    throw new RangeError(
+      `sampleSystematicDistanceLines error: ${optionsError}`,
+    );
+  }
+
   // Compute effective half width
   const effHalfWidth = effectiveHalfWidth(detectionFunction, cutoff);
 

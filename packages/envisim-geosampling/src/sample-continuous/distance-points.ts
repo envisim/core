@@ -15,7 +15,7 @@ import {DetectionFunction, effectiveRadius} from './distance-utils.js';
 import {SAMPLE_POINT_OPTIONS, type SamplePointOptions} from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
 
-interface SampleDistancePointsOptions extends SamplePointOptions {
+export interface SampleDistancePointsOptions extends SamplePointOptions {
   /**
    * The point layer to collect objects from.
    */
