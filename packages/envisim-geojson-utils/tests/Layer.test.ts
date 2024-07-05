@@ -5,6 +5,7 @@ import {
   GeoJSON as GJ,
   GeometricPrimitive,
   Layer,
+  LineCollection,
 } from '../src/index.js';
 
 describe('Layer', () => {
@@ -51,5 +52,29 @@ describe('Layer', () => {
   test('Layer', () => {
     expect(AreaCollection.isCollection(layer.collection)).toBe(true);
     expect(Layer.isLayer(layer, GeometricPrimitive.AREA)).toBe(true);
+  });
+
+  test('appendFromLayer', () => {
+    const layer_area = new Layer(layer.collection, layer.propertyRecord);
+    const layer_line = new Layer(
+      LineCollection.create([
+        feature2 as GJ.LineFeature,
+        feature2 as GJ.LineFeature,
+      ]),
+      layer.propertyRecord,
+    );
+
+    expect(() => layer_area.appendFromLayer(layer)).not.toThrowError();
+
+    expect(() =>
+      layer_area.appendFromLayer(
+        layer_line as unknown as Layer<AreaCollection>,
+      ),
+    ).toThrowError();
+  });
+
+  test('appendFromLayerWithDifferentProps', () => {
+    const layer_area = Layer.createLayer(collection, GeometricPrimitive.AREA);
+    expect(() => layer_area.appendFromLayer(layer)).toThrowError();
   });
 });

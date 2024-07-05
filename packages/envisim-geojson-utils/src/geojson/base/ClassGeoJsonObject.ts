@@ -1,5 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
-import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
+import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 
 export abstract class GeoJsonObject<T extends string>
   implements GJ.GeoJsonObject<T>

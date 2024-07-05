@@ -1,7 +1,7 @@
 import {describe, expect, test} from 'vitest';
 
 import {lpm2, rpm, spm} from '../src/index';
-import {Pivotal, PivotalMethod} from '../src/sampling-classes/Pivotal';
+import {Pivotal, PivotalMethod} from '../src/sampling-classes/index';
 import {RandomMock} from './_Random.testf';
 import {data} from './_data.testf';
 import './_equalArrays.testf';
@@ -145,9 +145,9 @@ describe('Pivotal', () => {
     expect(lpmInt.idx.exists(2)).toBe(false);
     expect(lpmInt.idx.exists(1)).toBe(false);
 
-    expect(lpm2(2, data, {rand: rand01, treeBucketSize: 2})).arrayToEqual([
-      1, 3,
-    ]);
+    expect(
+      lpm2({n: 2, auxiliaries: data, rand: rand01, treeBucketSize: 2}),
+    ).arrayToEqual([1, 3]);
   });
 
   test('lpm2Double', () => {
@@ -166,14 +166,14 @@ describe('Pivotal', () => {
   });
 
   test('rpm', () => {
-    expect(rpm(new Array<number>(4).fill(0.5), {rand: rand01})).arrayToEqual([
-      1, 3,
-    ]);
+    expect(
+      rpm({probabilities: new Array<number>(4).fill(0.5), rand: rand01}),
+    ).arrayToEqual([1, 3]);
   });
 
   test('spm', () => {
-    expect(spm(new Array<number>(4).fill(0.5), {rand: rand01})).arrayToEqual([
-      1, 3,
-    ]);
+    expect(
+      spm({probabilities: new Array<number>(4).fill(0.5), rand: rand01}),
+    ).arrayToEqual([1, 3]);
   });
 });

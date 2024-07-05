@@ -1,7 +1,10 @@
 import {describe, expect, test} from 'vitest';
 
 import {lcps, scps} from '../src/index';
-import {Cps, CpsMethod} from '../src/sampling-classes/Cps';
+import {
+  CorrelatedPoisson,
+  CorrelatedPoissonMethod,
+} from '../src/sampling-classes/index';
 import {RandomMock} from './_Random.testf';
 import {data} from './_data.testf';
 import './_equalArrays.testf';
@@ -12,7 +15,15 @@ describe('Cps', () => {
   const probs = new Array<number>(10).fill(0.2);
 
   test('scps-cps', () => {
-    const cps = new Cps(CpsMethod.SCPS, probs, data, 10, 2, 1e-9, rand01);
+    const cps = new CorrelatedPoisson(
+      CorrelatedPoissonMethod.SCPS,
+      probs,
+      data,
+      10,
+      2,
+      1e-9,
+      rand01,
+    );
 
     expect(cps.probabilities[0]).toBe(0.2);
 
@@ -46,15 +57,22 @@ describe('Cps', () => {
   });
 
   test('scps', () => {
-    expect(scps(probs, data, {rand: rand01, treeBucketSize: 2})).arrayToEqual([
-      0, 9,
-    ]);
+    expect(
+      scps({
+        probabilities: probs,
+        auxiliaries: data,
+        rand: rand01,
+        treeBucketSize: 2,
+      }),
+    ).arrayToEqual([0, 9]);
     // 01: 98234567
     // 94: 782365
     // 72: 5863
     // 53: 68
     expect(
-      scps(new Array<number>(10).fill(0.5), data, {
+      scps({
+        probabilities: new Array<number>(10).fill(0.5),
+        auxiliaries: data,
         rand: rand01,
         treeBucketSize: 2,
       }),
@@ -62,7 +80,15 @@ describe('Cps', () => {
   });
 
   test('lcps-cps', () => {
-    const cps = new Cps(CpsMethod.LCPS, probs, data, 10, 2, 1e-9, rand01);
+    const cps = new CorrelatedPoisson(
+      CorrelatedPoissonMethod.LCPS,
+      probs,
+      data,
+      10,
+      2,
+      1e-9,
+      rand01,
+    );
 
     expect(cps.probabilities[0]).toBe(0.2);
 
@@ -96,13 +122,25 @@ describe('Cps', () => {
   });
 
   test('lcps', () => {
-    expect(lcps(probs, data, {rand: rand01, treeBucketSize: 2})).arrayToEqual([
-      4, 8,
-    ]);
+    expect(
+      lcps({
+        probabilities: probs,
+        auxiliaries: data,
+        rand: rand01,
+        treeBucketSize: 2,
+      }),
+    ).arrayToEqual([4, 8]);
   });
 
   test('scpscoord-cps', () => {
-    const cps = new Cps(CpsMethod.SCPSCOORD, probs, data, 10, 2, 1e-9);
+    const cps = new CorrelatedPoisson(
+      CorrelatedPoissonMethod.SCPSCOORD,
+      probs,
+      data,
+      10,
+      2,
+      1e-9,
+    );
     cps.setRandomArr(new Array<number>(10).fill(0.0));
 
     cps.draw();

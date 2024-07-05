@@ -1,23 +1,26 @@
-import {IOptions, PartialPick, optionsDefaultRand} from './types.js';
+import {BASE_OPTIONS, type FixedSizedOptions} from './base-options/index.js';
+import {assertSizeRange} from './utils.js';
+
+interface SrsOptions extends FixedSizedOptions {
+  /**
+   * Population size
+   */
+  N: number;
+}
 
 /**
  * Selects a simple random sampling without replacement.
  *
- * @param n - sample size.
- * @param N - population size.
  * @param options
  * @returns sample indices.
  */
-export const srswor = (
-  n: number,
-  N: number,
-  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
-): number[] => {
-  if (n === undefined || N === undefined)
-    throw new TypeError('n and N must be number');
+export function srswor({n, N, rand = BASE_OPTIONS.rand}: SrsOptions): number[] {
+  assertSizeRange(N, 1, Number.MAX_SAFE_INTEGER, 'N');
+  assertSizeRange(n, 0, N, 'n');
 
   const nn = Math.min(n, N);
-  const s = new Array<number>(nn);
+  const s: number[] = [];
+  s.length = nn;
   let ns = 0;
 
   for (let i = 0; i < N; i++) {
@@ -28,25 +31,20 @@ export const srswor = (
   }
 
   return s;
-};
+}
 
 /**
  * Selects a simple random sampling with replacement.
  *
- * @param n - sample size.
- * @param N - population size.
  * @param options
  * @returns sample indices.
  */
-export const srswr = (
-  n: number,
-  N: number,
-  {rand = optionsDefaultRand}: PartialPick<IOptions, 'rand'> = {},
-): number[] => {
-  if (n === undefined || N === undefined)
-    throw new TypeError('n and N must be number');
+export function srswr({n, N, rand = BASE_OPTIONS.rand}: SrsOptions): number[] {
+  assertSizeRange(N, 1, Number.MAX_SAFE_INTEGER, 'N');
+  assertSizeRange(n, 0, N, 'n');
 
-  const s = new Array<number>(n);
+  const s: number[] = [];
+  s.length = n;
 
   for (let i = 0; i < n; i++) {
     s[i] = Math.floor(rand.float() * N);
@@ -55,4 +53,4 @@ export const srswr = (
   s.sort((a, b) => a - b);
 
   return s;
-};
+}

@@ -1,7 +1,9 @@
+import {type OptionalParam} from '@envisim/utils';
+
 import type * as GJ from '../../types/geojson.js';
-import {GeometricPrimitive} from '../../geometric-primitive/GeometricPrimitive.js';
+import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
-import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {type GeomEachCallback} from '../base/index.js';
 import {AreaFeature} from '../features/index.js';
 import {AreaObject} from '../objects/index.js';
 import {AbstractCollection} from './AbstractCollection.js';
@@ -75,7 +77,7 @@ export class AreaCollection
   addFeature(
     feature: OptionalParam<GJ.AreaFeature, 'type'>,
     shallow: boolean = true,
-  ): void {
+  ): number {
     if (AreaFeature.isFeature(feature)) {
       this.features.push(
         shallow === false ? new AreaFeature(feature, false) : feature,
@@ -83,6 +85,8 @@ export class AreaCollection
     } else {
       this.features.push(new AreaFeature(feature, shallow));
     }
+
+    return this.features.length;
   }
 
   /* AREA SPECIFIC */

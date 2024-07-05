@@ -1,3 +1,5 @@
+import {type OptionalParam} from '@envisim/utils';
+
 import type * as GJ from '../../types/geojson.js';
 import {areaOfPolygonLonLat} from '../../utils/area.js';
 import {bboxFromPositions, unionOfBBoxes} from '../../utils/bbox.js';
@@ -8,7 +10,7 @@ import {
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {pointInSinglePolygonPosition} from '../../utils/pointInPolygonPosition.js';
-import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {type GeomEachCallback} from '../base/index.js';
 import {AbstractAreaObject} from './AbstractAreaObject.js';
 
 export class MultiPolygon

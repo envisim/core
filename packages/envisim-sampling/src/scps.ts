@@ -1,75 +1,75 @@
-import {Matrix, TArrayLike, arrayLikeToArray} from '@envisim/matrix';
+import {type ColumnVector, vectorToArrayOfLength} from '@envisim/matrix';
 
-import {Cps, CpsMethod} from './sampling-classes/Cps.js';
+import {type AuxiliaryOptions, BASE_OPTIONS} from './base-options/index.js';
 import {
-  IOptions,
-  optionsDefaultEps,
-  optionsDefaultRand,
-  optionsDefaultTreeBucketSize,
-} from './types.js';
+  CorrelatedPoisson,
+  CorrelatedPoissonMethod,
+} from './sampling-classes/index.js';
 
 /**
  * Selects a Spatially Correlated Poisson Sample (SCPS)
  *
- * @param prob - inclusion probabilities of size N.
- * @param xm - matrix of auxilliary variables of size N*p.
  * @param options
  * @returns sample indices.
  */
-export function scps(
-  prob: TArrayLike,
-  xm: Matrix,
-  {
-    rand = optionsDefaultRand,
-    eps = optionsDefaultEps,
-    treeBucketSize = optionsDefaultTreeBucketSize,
-  }: IOptions = {},
-): number[] {
-  Matrix.assert(xm);
+export function scps({
+  probabilities,
+  auxiliaries,
+  rand = BASE_OPTIONS.rand,
+  eps = BASE_OPTIONS.eps,
+  treeBucketSize = BASE_OPTIONS.treeBucketSize,
+}: AuxiliaryOptions): number[] {
+  const N = auxiliaries.nrow;
+  const p = vectorToArrayOfLength(probabilities, N, true, 'probabilities');
 
-  const N = xm.nrow;
-  const p = arrayLikeToArray(prob, true);
-
-  if (p.length !== N)
-    throw new RangeError('Rows in xm must match length of prob');
-
-  const cps = new Cps(CpsMethod.SCPS, p, xm, N, treeBucketSize, eps, rand);
+  const cps = new CorrelatedPoisson(
+    CorrelatedPoissonMethod.SCPS,
+    p,
+    auxiliaries,
+    N,
+    treeBucketSize,
+    eps,
+    rand,
+  );
   cps.run();
 
   return cps.sample;
 }
 
+interface ScpsCoordinatedOptions extends AuxiliaryOptions {
+  /**
+   * Array of random values of size N
+   */
+  random: ColumnVector | number[];
+}
+
 /**
  * Selects a coordinated Spatially Correlated Poisson Sample (SCPSCOORD)
  *
- * @param prob - inclusion probabilities of size N.
- * @param xm - matrix of auxilliary variables of size N*p.
- * @param random - random values of size N.
  * @param options
  * @returns sample indices.
  */
-export function scpsCoord(
-  prob: TArrayLike,
-  xm: Matrix,
-  random: TArrayLike,
-  {
-    rand = optionsDefaultRand,
-    eps = optionsDefaultEps,
-    treeBucketSize = optionsDefaultTreeBucketSize,
-  }: IOptions = {},
-): number[] {
-  Matrix.assert(xm);
+export function scpsCoordinated({
+  probabilities,
+  auxiliaries,
+  random,
+  rand = BASE_OPTIONS.rand,
+  eps = BASE_OPTIONS.eps,
+  treeBucketSize = BASE_OPTIONS.treeBucketSize,
+}: ScpsCoordinatedOptions): number[] {
+  const N = auxiliaries.nrow;
+  const p = vectorToArrayOfLength(probabilities, N, true, 'probabilities');
+  const randvals = vectorToArrayOfLength(random, N, true, 'random');
 
-  const N = xm.nrow;
-  const p = arrayLikeToArray(prob, true);
-  const randvals = arrayLikeToArray(random, true);
-
-  if (p.length !== N)
-    throw new RangeError('Rows in xm must match length of prob');
-  if (randvals.length !== N)
-    throw new RangeError('Rows in xm must match length of random');
-
-  const cps = new Cps(CpsMethod.LCPS, p, xm, N, treeBucketSize, eps, rand);
+  const cps = new CorrelatedPoisson(
+    CorrelatedPoissonMethod.LCPS,
+    p,
+    auxiliaries,
+    N,
+    treeBucketSize,
+    eps,
+    rand,
+  );
   cps.setRandomArr(randvals);
   cps.run();
 
@@ -79,29 +79,28 @@ export function scpsCoord(
 /**
  * Selects a Locally Correlated Poisson Sample (LCPS)
  *
- * @param prob - inclusion probabilities of size N.
- * @param xm - matrix of auxilliary variables of size N*p.
  * @param options
  * @returns sample indices.
  */
-export function lcps(
-  prob: TArrayLike,
-  xm: Matrix,
-  {
-    rand = optionsDefaultRand,
-    eps = optionsDefaultEps,
-    treeBucketSize = optionsDefaultTreeBucketSize,
-  }: IOptions = {},
-): number[] {
-  Matrix.assert(xm);
+export function lcps({
+  probabilities,
+  auxiliaries,
+  rand = BASE_OPTIONS.rand,
+  eps = BASE_OPTIONS.eps,
+  treeBucketSize = BASE_OPTIONS.treeBucketSize,
+}: AuxiliaryOptions): number[] {
+  const N = auxiliaries.nrow;
+  const p = vectorToArrayOfLength(probabilities, N, true, 'probabilities');
 
-  const N = xm.nrow;
-  const p = arrayLikeToArray(prob, true);
-
-  if (p.length !== N)
-    throw new RangeError('Rows in xm must match length of prob');
-
-  const cps = new Cps(CpsMethod.LCPS, p, xm, N, treeBucketSize, eps, rand);
+  const cps = new CorrelatedPoisson(
+    CorrelatedPoissonMethod.LCPS,
+    p,
+    auxiliaries,
+    N,
+    treeBucketSize,
+    eps,
+    rand,
+  );
   cps.run();
 
   return cps.sample;

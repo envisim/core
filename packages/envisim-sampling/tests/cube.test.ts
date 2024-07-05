@@ -2,7 +2,7 @@ import {describe, expect, test} from 'vitest';
 
 import {Matrix} from '@envisim/matrix';
 
-import {cube, lcube} from '../src/index';
+import {cube, localCube} from '../src/index';
 import {RandomMock} from './_Random.testf';
 import {data} from './_data.testf';
 import './_equalArrays.testf';
@@ -22,10 +22,14 @@ describe('Cube', () => {
   const balData = Matrix.cbind(new Matrix(probs, {nrow: 10, ncol: 1}), data);
 
   test('length', () => {
-    for (let r = 0; r < 100; r++) expect(cube(probs, balData).length).toBe(2);
+    for (let r = 0; r < 100; r++)
+      expect(cube({probabilities: probs, balancing: balData}).length).toBe(2);
 
     for (let r = 0; r < 100; r++)
-      expect(lcube(probs, balData, data).length).toBe(2);
+      expect(
+        localCube({probabilities: probs, balancing: balData, auxiliaries: data})
+          .length,
+      ).toBe(2);
   });
 
   test('probs', () => {
@@ -39,7 +43,7 @@ describe('Cube', () => {
     const R = 10000;
 
     for (let r = 0; r < R; r++) {
-      addToRes(res, cube(probs2, balData2));
+      addToRes(res, cube({probabilities: probs2, balancing: balData2}));
     }
 
     divideByN(res, R);
@@ -47,7 +51,14 @@ describe('Cube', () => {
     expect(res).arrayToAlmostEqual(probs2, 1e-1);
 
     for (let r = 0; r < R; r++) {
-      addToRes(lres, lcube(probs2, balData2, data));
+      addToRes(
+        lres,
+        localCube({
+          probabilities: probs2,
+          balancing: balData2,
+          auxiliaries: data,
+        }),
+      );
     }
 
     divideByN(lres, R);

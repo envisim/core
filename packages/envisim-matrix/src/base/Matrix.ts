@@ -17,15 +17,16 @@ export class Matrix extends BaseMatrix {
   }
 
   /**
-   * @param msg message to pass, defaults to `"Expected Matrix"`
-   * @returns `true` if `obj` is Matrix
+   * @param msg message to pass
    * @throws TypeError if `obj` is not Matrix
    * @group Static methods
    * @group Property methods
    */
-  static override assert(obj: unknown, msg?: string): obj is Matrix {
-    if (obj instanceof Matrix) return true;
-    throw new TypeError(msg ?? 'Expected Matrix');
+  static override assert(
+    obj: unknown,
+    msg: string = 'Expected Matrix',
+  ): asserts obj is Matrix {
+    if (!(obj instanceof Matrix)) throw new TypeError(msg);
   }
 
   /**

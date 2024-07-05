@@ -11,6 +11,12 @@ export type {MatrixDims, MatrixByRow} from './base/matrixDims.js';
 
 export * from './base/types.js';
 
-export {arrayLikeToArray, isVector} from './TArrayLike.js';
-export type {TArrayLike} from './TArrayLike.js';
+export {
+  arrayLikeToArray,
+  isVector,
+  vectorToArray,
+  assertLength,
+  vectorToArrayOfLength,
+  type TArrayLike,
+} from './TArrayLike.js';
 export {regressionCoefficients} from './regressionCoefficients.js';

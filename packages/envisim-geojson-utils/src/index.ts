@@ -2,25 +2,30 @@
 export * from './geojson/index.js';
 
 // Layer
-export {Layer} from './layer/ClassLayer.js';
+export {
+  Layer,
+  mergePropertyRecords,
+  type CategoricalProperty,
+  type NumericalProperty,
+  type Property,
+  type PropertyRecord,
+  PropertySpecialKeys,
+  createDesignWeightProperty,
+  createDistanceProperty,
+  createParentProperty,
+} from './layer/index.js';
 
 // Types
 export type * as GeoJSON from './types/geojson.js';
 export * as typeGuards from './types/type-guards.js';
-export {
-  type ICategoricalProperty,
-  type INumericalProperty,
-  type IProperty,
-  type IPropertyRecord,
-  PropertySpecialKeys,
-} from './types/property.js';
 
 // GeometricPrimitive
 export {
   GeometricPrimitive,
-  GetGeometryPrimitive,
-  GetFeaturePrimitive,
-  GetCollectionPrimitive,
+  getGeometryPrimitive,
+  isGeometryPrimitive,
+  getFeaturePrimitive,
+  getCollectionPrimitive,
 } from './geometric-primitive/index.js';
 
 // Utils

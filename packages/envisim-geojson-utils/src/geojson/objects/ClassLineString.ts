@@ -1,9 +1,11 @@
+import {type OptionalParam} from '@envisim/utils';
+
 import type * as GJ from '../../types/geojson.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidOfLineString} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
-import type {GeomEachCallback, OptionalParam} from '../base/index.js';
+import {type GeomEachCallback} from '../base/index.js';
 import {AbstractLineObject} from './AbstractLineObject.js';
 
 export class LineString

@@ -3,23 +3,25 @@ import {v4 as uuidv4} from 'uuid';
 import {copy} from '@envisim/utils';
 
 import * as GJ from '../types/geojson.js';
-import {GeometricPrimitive} from '../geometric-primitive/GeometricPrimitive.js';
-import {AssertGeometryPrimitive} from '../geometric-primitive/GetGeoJsonPrimitive.js';
+import {
+  GeometricPrimitive,
+  isGeometryPrimitive,
+} from '../geometric-primitive/index.js';
 import {
   AreaCollection,
   AreaFeature,
-  IPropertyRecord,
   LineCollection,
   PointCollection,
+  PropertyRecord,
 } from '../index.js';
-import {PropertySpecialKeys} from '../types/property.js';
 import {isCircle, isMultiCircle} from '../types/type-guards.js';
+import {PropertySpecialKeys} from './property.js';
 
 export class Layer<
   T extends AreaCollection | LineCollection | PointCollection,
 > {
   collection: T;
-  propertyRecord: IPropertyRecord;
+  propertyRecord: PropertyRecord;
 
   static isLayer(
     obj: unknown,
@@ -190,7 +192,7 @@ export class Layer<
    */
   constructor(
     collection: T,
-    propertyRecord: IPropertyRecord,
+    propertyRecord: PropertyRecord,
     shallow: boolean = true,
   ) {
     // TODO?: Check that all features have the properties
@@ -262,6 +264,46 @@ export class Layer<
 
     return {type: 'FeatureCollection', features: features};
   }
+
+  /**
+   * Appends the features from another layer
+   * @param layer
+   * @param shallow
+   * @throws RangeError if property record does not contain the same IDs
+   */
+  appendFromLayer(layer: Layer<T>, shallow: boolean = true): void {
+    const thisKeys = Object.keys(this.propertyRecord);
+    const layerKeys = Object.keys(layer.propertyRecord);
+
+    if (
+      thisKeys.length !== layerKeys.length ||
+      !thisKeys.every((id) => layerKeys.includes(id))
+    ) {
+      throw new RangeError('propertyRecords does not match');
+    }
+
+    const newFeatures = shallow
+      ? layer.collection.features
+      : copy(layer.collection.features);
+
+    if (this.collection instanceof PointCollection) {
+      if (!(layer.collection instanceof PointCollection)) {
+        throw new RangeError('Incorrect input Layer');
+      }
+    } else if (this.collection instanceof LineCollection) {
+      if (!(layer.collection instanceof LineCollection)) {
+        throw new RangeError('Incorrect input Layer');
+      }
+    } else if (this.collection instanceof AreaCollection) {
+      if (!(layer.collection instanceof AreaCollection)) {
+        throw new RangeError('Incorrect input Layer');
+      }
+    }
+
+    // If layers are of mixed types, the above errors would have been thrown
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-argument */
+    this.collection.features.push(...(newFeatures as any));
+  }
 }
 
 function flatMapGeometryCollections(
@@ -281,7 +323,7 @@ function flatMapGeometryCollections(
   primitive: GeometricPrimitive,
 ): GJ.SingleTypeObject | GJ.SingleTypeObject[] {
   if (geometry.type !== 'GeometryCollection') {
-    return AssertGeometryPrimitive(geometry, primitive, false) ? geometry : [];
+    return isGeometryPrimitive(geometry, primitive, false) ? geometry : [];
   }
 
   return geometry.geometries.flatMap(flatMapGeometryCollections);
@@ -290,20 +332,20 @@ function flatMapGeometryCollections(
 function prepareFeatures(
   features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
   primitive: GeometricPrimitive.POINT,
-): [GJ.PointFeature[], IPropertyRecord];
+): [GJ.PointFeature[], PropertyRecord];
 function prepareFeatures(
   features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
   primitive: GeometricPrimitive.LINE,
-): [GJ.LineFeature[], IPropertyRecord];
+): [GJ.LineFeature[], PropertyRecord];
 function prepareFeatures(
   features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
   primitive: GeometricPrimitive.AREA,
-): [GJ.AreaFeature[], IPropertyRecord];
+): [GJ.AreaFeature[], PropertyRecord];
 function prepareFeatures(
   features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
   primitive: GeometricPrimitive,
-): [GJ.Feature[], IPropertyRecord] {
-  const propertyRecord: IPropertyRecord = {};
+): [GJ.Feature[], PropertyRecord] {
+  const propertyRecord: PropertyRecord = {};
   let propertyRecordIsSet = false;
 
   const newFeatures = features.flatMap(({geometry, properties}) => {
@@ -329,7 +371,7 @@ function prepareFeatures(
         };
       }
     } else {
-      if (!AssertGeometryPrimitive(geometry, primitive)) {
+      if (!isGeometryPrimitive(geometry, primitive)) {
         return [];
       }
 
@@ -340,7 +382,9 @@ function prepareFeatures(
       // Since all features must have the same set of properties, we choose the first
       // accepted feature to create our property list from.
       Object.entries(properties ?? {}).forEach(([name, prop]) => {
-        const isSpecialKey = PropertySpecialKeys.includes(name);
+        const isSpecialKey = (
+          PropertySpecialKeys as ReadonlyArray<string>
+        ).includes(name);
         const id = isSpecialKey ? name : uuidv4();
         const valueType = typeof prop;
 

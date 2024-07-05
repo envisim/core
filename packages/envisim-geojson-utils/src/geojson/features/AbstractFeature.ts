@@ -50,8 +50,9 @@ export abstract class AbstractFeature<
   abstract geomEach(callback: GeomEachCallback<T>, featureIndex: number): void;
 
   initProperty(property: string, defaultValue: number = 0.0): void {
-    if (!Object.prototype.hasOwnProperty.call(this.properties, property))
+    if (!Object.hasOwn(this.properties, property)) {
       this.properties[property] = defaultValue;
+    }
   }
 
   removeProperty(property: string): void {
@@ -60,5 +61,16 @@ export abstract class AbstractFeature<
 
   setProperty(property: string, value: number): void {
     this.properties[property] = value;
+  }
+
+  editProperty(
+    property: string,
+    callback: (value: number) => number,
+    defaultValue: number = 0.0,
+  ): number {
+    this.initProperty(property, defaultValue);
+    const newValue = callback(this.properties[property]);
+    this.properties[property] = newValue;
+    return newValue;
   }
 }
