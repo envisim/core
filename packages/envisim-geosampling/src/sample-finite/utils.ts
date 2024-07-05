@@ -22,8 +22,9 @@ function extractNumericalProperty(
   if (!(rec.type === 'numerical')) {
     throw new Error('Expected numerical property');
   }
+
   const N = layer.collection.size;
-  const vec = new Array(N);
+  const vec = Array.from<number>({length: N});
   layer.collection.forEachProperty(property, (v, i) => (vec[i] = v));
   return new ColumnVector(vec, true);
 }
@@ -42,11 +43,13 @@ function extractCategoricalProperty(
   if (!(rec.type === 'categorical')) {
     throw new Error('Expected categorical property');
   }
+
   const N = layer.collection.size;
   const props: ColumnVector[] = [];
   for (let i = 0; i < rec.values.length; i++) {
-    const cv = new Array(N);
+    const cv = Array.from<number>({length: N});
     let allZeros: boolean = true;
+
     layer.collection.forEachProperty(property, (x, j) => {
       if (i === x) {
         allZeros = false;
@@ -55,6 +58,7 @@ function extractCategoricalProperty(
         cv[j] = 0.0;
       }
     });
+
     if (!allZeros) {
       props.push(new ColumnVector(cv, true));
     }
@@ -86,19 +90,19 @@ export function spreadMatrixFromLayer(
   if (spreadGeo) {
     // For now use center of bbox for longitude and latitude
     const N = layer.collection.size;
-    const lon = new Array(N);
-    const lat = new Array(N);
-    const alt = new Array(N).fill(0.0);
+    const lon = Array.from<number>({length: N});
+    const lat = Array.from<number>({length: N});
+    const alt = Array.from<number>({length: N}).fill(0.0);
     let hasAlt = false;
 
     layer.collection.forEach((f, i) => {
       const bbox = f.getBBox();
       const box4 = bbox4(bbox);
-      lat[i] = (box4[1] + box4[3]) / 2;
+      lat[i] = (box4[1] + box4[3]) / 2.0;
       lon[i] = longitudeCenter(box4[0], box4[2]);
       if (bbox.length === 6) {
         hasAlt = true;
-        alt[i] = (bbox[5] + bbox[2]) / 2;
+        alt[i] = (bbox[5] + bbox[2]) / 2.0;
       }
     });
 
@@ -109,6 +113,7 @@ export function spreadMatrixFromLayer(
       newprops.push(new ColumnVector(alt, true).standardize(false, true));
     }
   }
+
   properties.forEach((prop) => {
     // Collect numerical properties and standardize
     // ignore constant variables.
@@ -127,6 +132,7 @@ export function spreadMatrixFromLayer(
       }
     }
   });
+
   return Matrix.cbind(...newprops);
 }
 
@@ -144,14 +150,17 @@ export function balancingMatrixFromLayer(
   properties: string[],
 ): Matrix {
   const rec = layer.propertyRecord;
-  if (!properties.every((prop) => Object.hasOwn(rec, prop)))
+  if (!properties.every((prop) => Object.hasOwn(rec, prop))) {
     throw new Error('all properties not present on property record');
+  }
 
   const newprops: ColumnVector[] = [];
 
   // Always balance on a constant
   const N = layer.collection.size;
-  newprops.push(new ColumnVector(new Array(N).fill(1), true));
+  newprops.push(
+    new ColumnVector(Array.from<number>({length: N}).fill(1.0), true),
+  );
 
   properties.forEach((prop) => {
     // Collect numerical properties, no standardization here
@@ -177,7 +186,7 @@ export function balancingMatrixFromLayer(
 
 function probsFromLayer(
   layer: Layer<AreaCollection | LineCollection | PointCollection>,
-  {sampleSize, probabilitiesFrom, probabilitiesFromSize}: SampleFiniteOptions,
+  {probabilitiesFrom, probabilitiesFromSize}: SampleFiniteOptions,
 ): ColumnVector {
   const N = layer.collection.size;
   let prop: ColumnVector;
@@ -199,18 +208,8 @@ function probsFromLayer(
     // Probabilities from numerical property
 
     if (typeof probabilitiesFrom !== 'string') {
-      if (sampleSize <= 0) throw new RangeError('sampleSize is <= 0');
-      return new ColumnVector(new Array(N).fill(1), true);
+      return new ColumnVector(Array.from<number>({length: N}).fill(1.0), true);
     }
-
-    if (!Object.hasOwn(layer.propertyRecord, probabilitiesFrom))
-      throw new RangeError(
-        'validProps does not contain a property with the required name',
-      );
-    if (layer.propertyRecord[probabilitiesFrom].type === 'categorical')
-      throw new RangeError(
-        'the property to create probabilities from is categorical',
-      );
 
     prop = extractNumericalProperty(layer, probabilitiesFrom);
   }
@@ -256,7 +255,7 @@ export function inclprobsFromLayer(
   let sum: number;
   let failed: boolean = true;
   // The return vector
-  const ips = new ColumnVector(new Array(N).fill(0.0), true);
+  const ips = new ColumnVector(Array.from<number>({length: N}).fill(0.0), true);
 
   /*
    * Continue this loop while there are still units to decide

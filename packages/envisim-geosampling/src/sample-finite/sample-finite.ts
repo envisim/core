@@ -87,6 +87,7 @@ export interface SampleFiniteOptions {
  * Returns the following errors:
  * - 10: sampleSize is not a non-negative integer
  * - 20: probabilitesFrom is set, but does not exist on propertyRecord
+ * - 21: probabilitesFrom is not numerical
  * - 30: method is spatially balanced, but does not use spreadOn or spreadGeo
  * - 31: method is spatially balanced, but spreadOn does not exist on
  *       propertyRecord
@@ -117,12 +118,16 @@ export function sampleFiniteOptionsCheck<
     return 10;
   }
 
-  if (
-    probabilitiesFrom &&
-    !Object.hasOwn(layer.propertyRecord, probabilitiesFrom)
-  ) {
-    // probabilitiesFrom must exist on propertyRecord
-    return 20;
+  if (probabilitiesFrom) {
+    if (!Object.hasOwn(layer.propertyRecord, probabilitiesFrom)) {
+      // probabilitiesFrom must exist on propertyRecord
+      return 20;
+    }
+
+    if (layer.propertyRecord[probabilitiesFrom].type !== 'numerical') {
+      // probabilitiesFrom must be a numerical property
+      return 21;
+    }
   }
 
   // Checks for spatially balanced methods
