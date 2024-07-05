@@ -14,8 +14,8 @@ import {
   PointCollection,
   PropertyRecord,
 } from '../index.js';
-import {PropertySpecialKeys} from '../types/property.js';
 import {isCircle, isMultiCircle} from '../types/type-guards.js';
+import {PropertySpecialKeys} from './property.js';
 
 export class Layer<
   T extends AreaCollection | LineCollection | PointCollection,
@@ -382,7 +382,9 @@ function prepareFeatures(
       // Since all features must have the same set of properties, we choose the first
       // accepted feature to create our property list from.
       Object.entries(properties ?? {}).forEach(([name, prop]) => {
-        const isSpecialKey = PropertySpecialKeys.includes(name);
+        const isSpecialKey = (
+          PropertySpecialKeys as ReadonlyArray<string>
+        ).includes(name);
         const id = isSpecialKey ? name : uuidv4();
         const valueType = typeof prop;
 

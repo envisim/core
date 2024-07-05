@@ -1,6 +1,30 @@
 import {copy} from '@envisim/utils';
 
-import {type PropertyRecord} from '../index.js';
+import type {NumericalProperty, PropertyRecord} from './property.js';
+
+export function createDesignWeightProperty(): NumericalProperty {
+  return {
+    id: '_designWeight',
+    name: 'design weight',
+    type: 'numerical',
+  };
+}
+
+export function createDistanceProperty(): NumericalProperty {
+  return {
+    id: '_distance',
+    name: 'distance',
+    type: 'numerical',
+  };
+}
+
+export function createParentProperty(): NumericalProperty {
+  return {
+    id: '_parent',
+    name: 'parent',
+    type: 'numerical',
+  };
+}
 
 /**
  * Merges property records into a single property record

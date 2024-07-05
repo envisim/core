@@ -2,13 +2,9 @@
 export * from './geojson/index.js';
 
 // Layer
-export {Layer} from './layer/ClassLayer.js';
-export {mergePropertyRecords} from './layer/propertyRecordUtils.js';
-
-// Types
-export type * as GeoJSON from './types/geojson.js';
-export * as typeGuards from './types/type-guards.js';
 export {
+  Layer,
+  mergePropertyRecords,
   type CategoricalProperty,
   type NumericalProperty,
   type Property,
@@ -17,7 +13,11 @@ export {
   createDesignWeightProperty,
   createDistanceProperty,
   createParentProperty,
-} from './types/property.js';
+} from './layer/index.js';
+
+// Types
+export type * as GeoJSON from './types/geojson.js';
+export * as typeGuards from './types/type-guards.js';
 
 // GeometricPrimitive
 export {
