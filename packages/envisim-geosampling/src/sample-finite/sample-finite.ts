@@ -5,6 +5,7 @@ import {
   Layer,
   LineCollection,
   PointCollection,
+  PropertyRecord,
   createDesignWeightProperty,
 } from '@envisim/geojson-utils';
 import {ColumnVector} from '@envisim/matrix';
@@ -96,13 +97,7 @@ export interface SampleFiniteOptions {
  *
  * @returns `0` if check passes
  */
-export function sampleFiniteOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
->(
-  layer: T,
+export function sampleFiniteOptionsCheck(
   {
     methodName,
     sampleSize,
@@ -112,6 +107,8 @@ export function sampleFiniteOptionsCheck<
     balanceOn,
     spreadGeo,
   }: SampleFiniteOptions,
+  // primitive: GeometricPrimitive,
+  properties: PropertyRecord,
 ): number {
   if (!Number.isInteger(sampleSize) || sampleSize < 0) {
     // sampleSize must be a non negative integer
@@ -119,12 +116,12 @@ export function sampleFiniteOptionsCheck<
   }
 
   if (probabilitiesFrom) {
-    if (!Object.hasOwn(layer.propertyRecord, probabilitiesFrom)) {
+    if (!Object.hasOwn(properties, probabilitiesFrom)) {
       // probabilitiesFrom must exist on propertyRecord
       return 20;
     }
 
-    if (layer.propertyRecord[probabilitiesFrom].type !== 'numerical') {
+    if (properties[probabilitiesFrom].type !== 'numerical') {
       // probabilitiesFrom must be a numerical property
       return 21;
     }
@@ -145,9 +142,7 @@ export function sampleFiniteOptionsCheck<
         return 30;
       }
     } else {
-      if (
-        !spreadOn.every((prop) => Object.hasOwn(layer.propertyRecord, prop))
-      ) {
+      if (!spreadOn.every((prop) => Object.hasOwn(properties, prop))) {
         // spredOn entries must exist on propertyRecord
         return 31;
       }
@@ -167,7 +162,7 @@ export function sampleFiniteOptionsCheck<
       // Must use balanceOn
       return 40;
     }
-    if (!balanceOn.every((prop) => Object.hasOwn(layer.propertyRecord, prop))) {
+    if (!balanceOn.every((prop) => Object.hasOwn(properties, prop))) {
       // balanceOn entries must exist on propertyRecord
       return 41;
     }
@@ -189,7 +184,7 @@ export function sampleFinite<
     | Layer<LineCollection>
     | Layer<AreaCollection>,
 >(layer: T, opts: SampleFiniteOptions): T {
-  const optionsError = sampleFiniteOptionsCheck(layer, opts);
+  const optionsError = sampleFiniteOptionsCheck(opts, layer.propertyRecord);
   if (optionsError !== 0) {
     throw new RangeError(`sampleFinite error: ${optionsError}`);
   }
