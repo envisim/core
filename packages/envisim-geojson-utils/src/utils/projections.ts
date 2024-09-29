@@ -10,7 +10,7 @@ const geodDirectOpts = geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE;
 const toDeg = 180 / Math.PI;
 const toRad = Math.PI / 180;
 
-type Projection = {
+export type Projection = {
   project: (coord: GJ.Position) => GJ.Position;
   unproject: (coord: GJ.Position) => GJ.Position;
 };

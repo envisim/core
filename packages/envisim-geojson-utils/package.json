@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@envisim/utils": "workspace:*",
-    "@turf/buffer": "^6.5.0",
     "geographiclib-geodesic": "^2.0.0",
+    "jsts": "^2.11.3",
     "polygon-clipping": "^0.15.7",
     "tslib": "^2.6.2",
     "uuid": "^9.0.1"
@@ -21,6 +21,7 @@
   "devDependencies": {
     "@envisim/eslint-config": "workspace:*",
     "@envisim/ts-config": "workspace:*",
+    "@types/jsts": "^0.17.24",
     "@types/uuid": "^9.0.8",
     "typescript": "^5.4.5",
     "vitest": "^1.6.0"
