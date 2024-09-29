@@ -41,7 +41,7 @@ describe('buffer', () => {
       steps: 10,
     }) as AreaCollection,
   );
-  console.log(JSON.stringify(b, null, 2));
+  //console.log(JSON.stringify(b, null, 2));
 
   test('buffer', () => {
     expect(b).not.toBeNull();
