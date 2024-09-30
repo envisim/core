@@ -6,6 +6,7 @@ import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {AbstractPointObject} from './AbstractPointObject.js';
+import {MultiCircle} from './ClassMultiCircle.js';
 
 export class MultiPoint
   extends AbstractPointObject<GJ.MultiPoint>
@@ -40,8 +41,9 @@ export class MultiPoint
     return this.coordinates.length;
   }
 
-  count(): number {
-    return this.coordinates.length;
+  buffer(distance: number): MultiCircle | null {
+    if (distance <= 0.0) return null;
+    return MultiCircle.create(this.coordinates, distance, false);
   }
 
   centroid(iterations: number = 2): GJ.Position {
@@ -53,11 +55,8 @@ export class MultiPoint
       .centroid;
   }
 
-  geomEach(
-    callback: GeomEachCallback<MultiPoint>,
-    featureIndex: number = -1,
-  ): void {
-    callback(this, featureIndex, -1);
+  count(): number {
+    return this.coordinates.length;
   }
 
   distanceToPosition(coords: GJ.Position): number {
@@ -65,6 +64,13 @@ export class MultiPoint
       (prev, curr) => Math.min(prev, Geodesic.distance(curr, coords)),
       Infinity,
     );
+  }
+
+  geomEach(
+    callback: GeomEachCallback<MultiPoint>,
+    featureIndex: number = -1,
+  ): void {
+    callback(this, featureIndex, -1);
   }
 
   setBBox(): GJ.BBox {

@@ -3,6 +3,8 @@ import {describe, expect, test} from 'vitest';
 import {
   AreaCollection,
   AreaFeature,
+  Circle,
+  LineString,
   buffer,
   unionOfPolygons,
 } from '../src/index.js';
@@ -35,16 +37,23 @@ describe('buffer', () => {
   });
 
   const collection = AreaCollection.create([polygon1, polygon2]);
-  const b = unionOfPolygons(
-    buffer(collection, {
-      radius: 10,
-      steps: 10,
-    }) as AreaCollection,
-  );
-  //console.log(JSON.stringify(b, null, 2));
+  const buf = collection.buffer(10, 10);
+  //console.log(JSON.stringify(buf, null, 2));
+
+  const c = Circle.create([0, 0], 10).buffer(10);
+  //console.log(JSON.stringify(c, null, 2));
+  const l = LineString.create([
+    [0, 0],
+    [0, 1],
+  ]).buffer(10);
+  let a = 0.0;
+  if (l) a = l.area();
+  console.log(JSON.stringify(l, null, 2));
 
   test('buffer', () => {
-    expect(b).not.toBeNull();
-    expect(b.features.length).toBe(1);
+    expect(buf).not.toBeNull();
+    if (buf) expect(buf.features.length).toBe(2);
+    expect(c?.radius).toBe(20);
+    expect(a > 0.0).toBe(true);
   });
 });

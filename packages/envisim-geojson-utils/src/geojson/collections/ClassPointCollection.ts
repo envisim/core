@@ -7,6 +7,7 @@ import {type GeomEachCallback} from '../base/index.js';
 import {PointFeature} from '../features/index.js';
 import {PointObject} from '../objects/index.js';
 import {AbstractCollection} from './AbstractCollection.js';
+import {AreaCollection} from './ClassAreaCollection.js';
 
 export class PointCollection
   extends AbstractCollection<PointObject, PointFeature>
@@ -84,5 +85,15 @@ export class PointCollection
       (prev, curr) => prev + curr.geometry.count(),
       0,
     );
+  }
+
+  buffer(distance: number): AreaCollection | null {
+    const features: GJ.AreaFeature[] = [];
+    this.forEach((feature: PointFeature) => {
+      const bf = feature.buffer(distance);
+      if (bf) features.push(bf);
+    });
+    if (features.length === 0) return null;
+    return AreaCollection.create(features, true);
   }
 }

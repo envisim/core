@@ -6,6 +6,7 @@ import {type GeomEachCallback} from '../base/index.js';
 import {LineGeometry, toLineGeometry} from '../gcs/index.js';
 import {type LineObject} from '../objects/index.js';
 import {AbstractFeature} from './AbstractFeature.js';
+import {AreaFeature} from './ClassAreaFeature.js';
 
 export class LineFeature
   extends AbstractFeature<LineObject, LineGeometry>
@@ -41,6 +42,14 @@ export class LineFeature
 
   geometricPrimitive(): GeometricPrimitive.LINE {
     return GeometricPrimitive.LINE;
+  }
+
+  buffer(distance: number, steps: number = 10): AreaFeature | null {
+    if (distance <= 0.0) return null;
+    const bg = this.geometry.buffer(distance, steps);
+    if (!bg) return null;
+    // TODO: Decide if we want to copy properties
+    return AreaFeature.create(bg, {}, true);
   }
 
   /* FEATURE SPECIFIC */

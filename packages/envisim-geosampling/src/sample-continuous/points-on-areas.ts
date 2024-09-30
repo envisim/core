@@ -80,7 +80,7 @@ export function samplePointsOnAreas(
   let buffered: AreaCollection | null;
   if (buffer > 0.0) {
     buffered = bufferAreaCollection(gj, {
-      radius: buffer,
+      distance: buffer,
       steps: 10,
     });
     if (buffered == null || buffered.features.length === 0) {

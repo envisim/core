@@ -8,13 +8,17 @@ import {
   AreaFeature,
   AreaObject,
   Circle,
+  LineObject,
+  LineString,
   MultiCircle,
+  MultiLineString,
+  MultiPolygon,
+  Polygon,
 } from './geojson/index.js';
 import {bbox4} from './utils/bbox.js';
 import {longitudeCenter} from './utils/position.js';
 import {
   type NestedPosition,
-  type Projection,
   azimuthalEquidistant,
   projectCoords,
 } from './utils/projections.js';
@@ -23,7 +27,7 @@ type BufferOpts = {
   /**
    * The radius/distance to buffer in meters
    */
-  radius?: number;
+  distance?: number;
   /**
    * The number of steps in the buffer.
    */
@@ -52,20 +56,12 @@ export function buffer(
   areaCollection: AreaCollection,
   opts: BufferOpts,
 ): AreaCollection | null {
-  const radius = opts.radius ?? 0;
-  const steps = opts.steps ?? 10;
   const features: AreaFeature[] = [];
-  const box = bbox4(areaCollection.getBBox());
-  const center: GJ.Position = [
-    longitudeCenter(box[0], box[2]),
-    (box[1] + box[3]) / 2,
-  ];
-  const projection = azimuthalEquidistant(center);
 
   areaCollection.geomEach((geom) => {
-    const bf = bufferGeometry(geom, radius, steps, projection);
-    if (bf) {
-      features.push(bf);
+    const bg = bufferGeometry(geom, opts);
+    if (bg) {
+      features.push(AreaFeature.create(bg, {}));
     }
   });
 
@@ -74,20 +70,34 @@ export function buffer(
 }
 
 /**
- * Internal function to buffer a geometry (AreaObject) using jsts
+ * Buffer a geometry (AreaObject|LineObject) using jsts
  * @param geom
- * @param radius
- * @param steps
- * @param projection
+ * @param opts
  */
-function bufferGeometry(
-  geom: AreaObject,
-  radius: number,
-  steps: number,
-  projection: Projection,
-): AreaFeature | null {
+export function bufferGeometry(
+  geom: AreaObject | LineObject,
+  opts: BufferOpts,
+): Polygon | MultiPolygon | null {
+  const radius = opts.distance ?? 0;
+  const steps = opts.steps ?? 10;
+
+  if (
+    radius <= 0.0 &&
+    (LineString.isObject(geom) || MultiLineString.isObject(geom))
+  ) {
+    return null;
+  }
+  //if (radius === 0) return copy(geom);
+
+  const box = bbox4(geom.getBBox());
+  const center: GJ.Position = [
+    longitudeCenter(box[0], box[2]),
+    (box[1] + box[3]) / 2,
+  ];
+  const projection = azimuthalEquidistant(center);
+
   // if geom is a Circle or MultiCircle, convert it to a Polygon
-  let newGeom: AreaObject;
+  let newGeom: AreaObject | LineObject;
   if (Circle.isObject(geom) || MultiCircle.isObject(geom)) {
     newGeom = geom.toPolygon();
   } else {
@@ -110,12 +120,23 @@ function bufferGeometry(
 
   // project back and return as AreaFeature
   if (!coordsIsNaN(buffered.coordinates)) {
-    return AreaFeature.create(
+    if (buffered.type === 'Polygon') {
+      return new Polygon(
+        {
+          type: buffered.type,
+          coordinates: projectCoords(
+            buffered.coordinates,
+            projection.unproject,
+          ),
+        },
+        true,
+      );
+    }
+    return new MultiPolygon(
       {
         type: buffered.type,
         coordinates: projectCoords(buffered.coordinates, projection.unproject),
       },
-      {},
       true,
     );
   }
