@@ -1,11 +1,12 @@
+// @ts-expect-error: TypeScript cannot find declaration for 'GeoJSONReader'
 import GeoJSONReader from 'jsts/org/locationtech/jts/io/GeoJSONReader.js';
+// @ts-expect-error: TypeScript cannot find declaration for 'GeoJSONWriter'
 import GeoJSONWriter from 'jsts/org/locationtech/jts/io/GeoJSONWriter.js';
+// @ts-expect-error: TypeScript cannot find declaration for 'BufferOp'
 import BufferOp from 'jsts/org/locationtech/jts/operation/buffer/BufferOp.js';
 
 import type * as GJ from './types/geojson.js';
 import {
-  AreaCollection,
-  AreaFeature,
   AreaObject,
   Circle,
   LineObject,
@@ -44,32 +45,6 @@ function coordsIsNaN(coords: NestedPosition): boolean {
 }
 
 /**
- * Buffers a GeoJSON FeatureCollection. Geometries are buffered individually.
- * May result in overlapping geometries. Use unionOfPolygons() on resulting
- * FeatureCollection to union overlapping polygons.
- *
- * @param areaCollection The AreaCollection to buffer.
- * @param opts
- * @returns A buffered AreaCollection, or `null` if buffering failed.
- */
-export function buffer(
-  areaCollection: AreaCollection,
-  opts: BufferOpts,
-): AreaCollection | null {
-  const features: AreaFeature[] = [];
-
-  areaCollection.geomEach((geom) => {
-    const bg = bufferGeometry(geom, opts);
-    if (bg) {
-      features.push(AreaFeature.create(bg, {}));
-    }
-  });
-
-  if (features.length === 0) return null;
-  return AreaCollection.create(features, true);
-}
-
-/**
  * Buffer a geometry (AreaObject|LineObject) using jsts
  * @param geom
  * @param opts
@@ -87,7 +62,6 @@ export function bufferGeometry(
   ) {
     return null;
   }
-  //if (radius === 0) return copy(geom);
 
   const box = bbox4(geom.getBBox());
   const center: GJ.Position = [
