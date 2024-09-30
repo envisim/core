@@ -1,13 +1,6 @@
 import {describe, expect, test} from 'vitest';
 
-import {
-  AreaCollection,
-  AreaFeature,
-  Circle,
-  LineString,
-  buffer,
-  unionOfPolygons,
-} from '../src/index.js';
+import {AreaCollection, AreaFeature, Circle, LineString} from '../src/index.js';
 
 describe('buffer', () => {
   const polygon1 = AreaFeature.create({
@@ -48,7 +41,7 @@ describe('buffer', () => {
   ]).buffer(10);
   let a = 0.0;
   if (l) a = l.area();
-  console.log(JSON.stringify(l, null, 2));
+  //console.log(JSON.stringify(l, null, 2));
 
   test('buffer', () => {
     expect(buf).not.toBeNull();
