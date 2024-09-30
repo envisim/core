@@ -3,10 +3,21 @@ import GeoJSONWriter from 'jsts/org/locationtech/jts/io/GeoJSONWriter.js';
 import BufferOp from 'jsts/org/locationtech/jts/operation/buffer/BufferOp.js';
 
 import type * as GJ from './types/geojson.js';
-import {AreaCollection, Circle, MultiCircle} from './geojson/index.js';
+import {
+  AreaCollection,
+  AreaFeature,
+  AreaObject,
+  Circle,
+  MultiCircle,
+} from './geojson/index.js';
 import {bbox4} from './utils/bbox.js';
 import {longitudeCenter} from './utils/position.js';
-import {type Projection, azimuthalEquidistant} from './utils/projections.js';
+import {
+  type NestedPosition,
+  type Projection,
+  azimuthalEquidistant,
+  projectCoords,
+} from './utils/projections.js';
 
 type BufferOpts = {
   /**
@@ -19,30 +30,11 @@ type BufferOpts = {
   steps?: number;
 };
 
-type ProjFn = (coord: GJ.Position) => GJ.Position;
-type NestedPosition = GJ.Position | NestedPosition[];
-
-/**
- * Internal function to project/unproject coords
- * @param coords
- * @param proj
- * @returns
- */
-function projectCoords(coords: NestedPosition, proj: ProjFn): NestedPosition {
-  if (Array.isArray(coords[0])) {
-    return (coords as NestedPosition[]).map((coord: NestedPosition) => {
-      return projectCoords(coord, proj);
-    });
-  }
-  return proj(coords as GJ.Position);
-}
-
 /**
  * Internal function to check if coords are NaN
  * @param coords
- * @returns
  */
-function coordsIsNaN(coords: NestedPosition) {
+function coordsIsNaN(coords: NestedPosition): boolean {
   if (Array.isArray(coords[0])) return coordsIsNaN(coords[0]);
   return isNaN(coords[0]);
 }
@@ -52,25 +44,25 @@ function coordsIsNaN(coords: NestedPosition) {
  * May result in overlapping geometries. Use unionOfPolygons() on resulting
  * FeatureCollection to union overlapping polygons.
  *
- * @param geoJSON The AreaCollection to buffer.
+ * @param areaCollection The AreaCollection to buffer.
  * @param opts
- * @returns An buffered AreaCollection, or `null` if buffering failed.
+ * @returns A buffered AreaCollection, or `null` if buffering failed.
  */
 export function buffer(
-  geoJSON: AreaCollection,
+  areaCollection: AreaCollection,
   opts: BufferOpts,
 ): AreaCollection | null {
   const radius = opts.radius ?? 0;
   const steps = opts.steps ?? 10;
-  const features: GJ.AreaFeature[] = [];
-  const box = bbox4(geoJSON.getBBox());
+  const features: AreaFeature[] = [];
+  const box = bbox4(areaCollection.getBBox());
   const center: GJ.Position = [
     longitudeCenter(box[0], box[2]),
     (box[1] + box[3]) / 2,
   ];
   const projection = azimuthalEquidistant(center);
 
-  geoJSON.geomEach((geom) => {
+  areaCollection.geomEach((geom) => {
     const bf = bufferGeometry(geom, radius, steps, projection);
     if (bf) {
       features.push(bf);
@@ -78,7 +70,7 @@ export function buffer(
   });
 
   if (features.length === 0) return null;
-  return new AreaCollection({type: 'FeatureCollection', features}, true);
+  return AreaCollection.create(features, true);
 }
 
 /**
@@ -89,40 +81,43 @@ export function buffer(
  * @param projection
  */
 function bufferGeometry(
-  geom: GJ.AreaObject,
+  geom: AreaObject,
   radius: number,
   steps: number,
   projection: Projection,
-): GJ.AreaFeature | null {
-  const reader = new GeoJSONReader();
-  const writer = new GeoJSONWriter();
-  let newGeom: GJ.AreaObject;
+): AreaFeature | null {
+  // if geom is a Circle or MultiCircle, convert it to a Polygon
+  let newGeom: AreaObject;
   if (Circle.isObject(geom) || MultiCircle.isObject(geom)) {
     newGeom = geom.toPolygon();
   } else {
     newGeom = geom;
   }
+  // project to azimuthal equidistant
   const projected = {
     type: newGeom.type,
     coordinates: projectCoords(newGeom.coordinates, projection.project),
   };
+  // buffer
+  const reader = new GeoJSONReader();
   const g = reader.read(projected);
+
   const bufOp = new BufferOp(g);
   bufOp.setQuadrantSegments(steps);
-  let buffered: any = bufOp.getResultGeometry(radius);
-  buffered = writer.write(buffered);
+
+  const writer = new GeoJSONWriter();
+  const buffered = writer.write(bufOp.getResultGeometry(radius)) as any;
+
+  // project back and return as AreaFeature
   if (!coordsIsNaN(buffered.coordinates)) {
-    return {
-      type: 'Feature',
-      geometry: {
+    return AreaFeature.create(
+      {
         type: buffered.type,
-        coordinates: projectCoords(
-          buffered.coordinates,
-          projection.unproject,
-        ) as any,
+        coordinates: projectCoords(buffered.coordinates, projection.unproject),
       },
-      properties: {},
-    };
+      {},
+      true,
+    );
   }
   return null;
 }
