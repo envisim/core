@@ -116,9 +116,6 @@ importers:
       '@envisim/ts-config':
         specifier: workspace:*
         version: link:../ts-config
-      '@types/jsts':
-        specifier: ^0.17.24
-        version: 0.17.24
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
@@ -633,12 +630,6 @@ packages:
 
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
-
-  '@types/jsts@0.17.24':
-    resolution: {integrity: sha512-zZAAiAh7SjXCo5lYCMquz/klQVS9LVdSkAVXPk2BP/2l7FHqmfAFTj9PEld9zUFzXC/bgr04yiEDbDKDSaX7Hg==}
-
-  '@types/openlayers@4.6.23':
-    resolution: {integrity: sha512-7jCPIa4D4LV03Rttae1AEqvkIN0+nc6Snz4IgA/IjsJD5O3ONxpscqIOdp1qAGuAsikR/ZC9vrPF9np8JRc6ig==}
 
   '@types/uuid@9.0.8':
     resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
@@ -1943,12 +1934,6 @@ snapshots:
   '@tsconfig/strictest@2.0.5': {}
 
   '@types/estree@1.0.5': {}
-
-  '@types/jsts@0.17.24':
-    dependencies:
-      '@types/openlayers': 4.6.23
-
-  '@types/openlayers@4.6.23': {}
 
   '@types/uuid@9.0.8': {}
 
