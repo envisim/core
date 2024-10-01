@@ -1,10 +1,7 @@
 import {
-  type AreaCollection,
   type GeoJSON as GJ,
   GeometricPrimitive,
   Layer,
-  type LineCollection,
-  type PointCollection,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
@@ -35,12 +32,9 @@ export const SAMPLE_BASE_OPTIONS: Readonly<Required<SampleBaseOptions>> = {
  *
  * @returns `0` if check passes
  */
-export function sampleBaseOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
->(_: T, {pointsPerCircle}: SampleBaseOptions): number {
+export function sampleBaseOptionsCheck({
+  pointsPerCircle,
+}: SampleBaseOptions): number {
   if (
     pointsPerCircle &&
     (!Number.isInteger(pointsPerCircle) || pointsPerCircle <= 0)
@@ -92,22 +86,14 @@ export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
  *
  * @returns `0` if check passes
  */
-export function samplePointOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
->(
-  layer: T,
-  {
-    // pointSelection,
-    sampleSize,
-    ratio,
-    // buffer,
-    ...options
-  }: SamplePointOptions,
-): number {
-  const baseCheck = sampleBaseOptionsCheck(layer, options);
+export function samplePointOptionsCheck({
+  // pointSelection,
+  sampleSize,
+  ratio,
+  // buffer,
+  ...options
+}: SamplePointOptions): number {
+  const baseCheck = sampleBaseOptionsCheck(options);
   if (baseCheck !== 0) {
     return baseCheck;
   }
@@ -172,27 +158,16 @@ export const SAMPLE_FEATURE_OPTIONS: Readonly<
  * @returns `0` if check passes
  */
 export function sampleFeatureOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
   F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
->(
-  layer: T,
-  {
-    // modelFeature,
-    // rotation,
-    // randomRotation,
-    ...options
-  }: SampleFeatureOptions<F>,
-): number {
-  const pointCheck = samplePointOptionsCheck(layer, options);
+>({
+  // modelFeature,
+  // rotation,
+  // randomRotation,
+  ...options
+}: SampleFeatureOptions<F>): number {
+  const pointCheck = samplePointOptionsCheck(options);
   if (pointCheck !== 0) {
     return pointCheck;
-  }
-
-  if (!Layer.isLayer(layer, GeometricPrimitive.AREA)) {
-    return 310;
   }
 
   return 0;
@@ -229,20 +204,12 @@ export const SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS: Readonly<
  *
  * @returns `0` if check passes
  */
-export function sampleSystematicLineOnAreaOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
->(
-  layer: T,
-  {
-    distBetween,
-    // rotation,
-    ...options
-  }: SampleSystematicLineOnAreaOptions,
-): number {
-  const baseCheck = sampleBaseOptionsCheck(layer, options);
+export function sampleSystematicLineOnAreaOptionsCheck({
+  distBetween,
+  // rotation,
+  ...options
+}: SampleSystematicLineOnAreaOptions): number {
+  const baseCheck = sampleBaseOptionsCheck(options);
   if (baseCheck !== 0) {
     return baseCheck;
   }
@@ -280,13 +247,11 @@ export const SAMPLE_BELT_ON_AREA_OPTIONS: Readonly<
  *
  * @returns `0` if check passes
  */
-export function sampleBeltOnAreaOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
->(layer: T, {halfWidth, ...options}: SampleBeltOnAreaOptions): number {
-  const systematicLineOnAreaCheck = sampleBaseOptionsCheck(layer, options);
+export function sampleBeltOnAreaOptionsCheck({
+  halfWidth,
+  ...options
+}: SampleBeltOnAreaOptions): number {
+  const systematicLineOnAreaCheck = sampleBaseOptionsCheck(options);
   if (systematicLineOnAreaCheck !== 0) {
     return systematicLineOnAreaCheck;
   }

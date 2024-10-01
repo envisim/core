@@ -57,7 +57,7 @@ function sampleFeaturesOnAreas(
     ratio = SAMPLE_FEATURE_OPTIONS.ratio,
   }: SampleFeatureOptions<GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>,
 ): Layer<PointCollection | LineCollection | AreaCollection> {
-  const optionsError = sampleFeatureOptionsCheck(layer, {
+  const optionsError = sampleFeatureOptionsCheck({
     rand,
     pointsPerCircle,
     pointSelection,
