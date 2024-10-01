@@ -30,8 +30,9 @@ describe('buffer', () => {
   });
 
   const collection = AreaCollection.create([polygon1, polygon2]);
-  const buf = collection.buffer(10, 10);
+  const buf = collection.buffer(-100, 10);
   //console.log(JSON.stringify(buf, null, 2));
+  //console.log(buf);
 
   const c = Circle.create([0, 0], 10).buffer(10);
   //console.log(JSON.stringify(c, null, 2));

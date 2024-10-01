@@ -56,6 +56,7 @@ export function bufferGeometry(
   const radius = opts.distance ?? 0;
   const steps = opts.steps ?? 10;
 
+  // Lines cannot be buffered with non-positive distance
   if (
     radius <= 0.0 &&
     (LineString.isObject(geom) || MultiLineString.isObject(geom))
@@ -63,6 +64,7 @@ export function bufferGeometry(
     return null;
   }
 
+  // Set up projection for this geometry
   const box = bbox4(geom.getBBox());
   const center: GJ.Position = [
     longitudeCenter(box[0], box[2]),
@@ -70,47 +72,46 @@ export function bufferGeometry(
   ];
   const projection = azimuthalEquidistant(center);
 
-  // if geom is a Circle or MultiCircle, convert it to a Polygon
-  let newGeom: AreaObject | LineObject;
+  // If geom is a Circle or MultiCircle, convert it to a Polygon first
+  // only used if the function is used stand alone (not as method on a class)
+  let newGeom: GJ.Polygon | GJ.MultiPolygon | GJ.LineObject;
   if (Circle.isObject(geom) || MultiCircle.isObject(geom)) {
     newGeom = geom.toPolygon();
   } else {
     newGeom = geom;
   }
-  // project to azimuthal equidistant
+  // Project the geometry to azimuthal equidistant
   const projected = {
     type: newGeom.type,
     coordinates: projectCoords(newGeom.coordinates, projection.project),
   };
-  // buffer
-  const reader = new GeoJSONReader();
+
+  // Use jsts to buffer
+  /* eslint-disable @typescript-eslint/no-unsafe-call */
+  const reader = new GeoJSONReader() as {read: (g: object) => object};
+  const writer = new GeoJSONWriter() as {write: (g: object) => object};
   const g = reader.read(projected);
-
-  const bufOp = new BufferOp(g);
+  const bufOp = new BufferOp(g) as {
+    setQuadrantSegments: (x: number) => void;
+    getResultGeometry: (radius: number) => object;
+  };
   bufOp.setQuadrantSegments(steps);
+  const jstsGeom = bufOp.getResultGeometry(radius);
+  const buffered = writer.write(jstsGeom) as GJ.Polygon | GJ.MultiPolygon;
+  /* eslint-enable @typescript-eslint/no-unsafe-call */
 
-  const writer = new GeoJSONWriter();
-  const buffered = writer.write(bufOp.getResultGeometry(radius)) as any;
-
-  // project back and return as AreaFeature
+  // Project back and return as Polygon | MultiPolygon
+  // buffer may return coordinates that are undefined in case of empty Polygon
+  // in that case return null
   if (!coordsIsNaN(buffered.coordinates)) {
     if (buffered.type === 'Polygon') {
-      return new Polygon(
-        {
-          type: buffered.type,
-          coordinates: projectCoords(
-            buffered.coordinates,
-            projection.unproject,
-          ),
-        },
+      return Polygon.create(
+        projectCoords(buffered.coordinates, projection.unproject),
         true,
       );
     }
-    return new MultiPolygon(
-      {
-        type: buffered.type,
-        coordinates: projectCoords(buffered.coordinates, projection.unproject),
-      },
+    return MultiPolygon.create(
+      projectCoords(buffered.coordinates, projection.unproject),
       true,
     );
   }
