@@ -54,22 +54,26 @@ export function intersectSegments(
 }
 
 export class Segment {
-  p1: GJ.Position;
-  p2: GJ.Position;
-  delta: GJ.Position;
+  p1: GJ.Position2;
+  p2: GJ.Position2;
+  delta: GJ.Position2;
 
   constructor(p1: GJ.Position, p2: GJ.Position) {
-    this.p1 = p1;
-    this.p2 = p2;
+    this.p1 = [p1[0], p1[1]];
+    this.p2 = [p2[0], p2[1]];
     this.delta = [p2[0] - p1[0], p2[1] - p1[1]];
   }
 
-  get a(): GJ.Position {
+  get a(): GJ.Position2 {
     return [this.p1[0], this.p1[1]];
   }
 
-  get b(): GJ.Position {
+  get b(): GJ.Position2 {
     return [this.p2[0], this.p2[1]];
+  }
+
+  is_vertical(): boolean {
+    return this.delta[0] === 0.0;
   }
 
   position(t: number): GJ.Position2 {
@@ -123,7 +127,7 @@ export class Segment {
     if (denom === 0.0) return null;
 
     const positiveDenom = denom > 0.0;
-    const p1diff = [segment.p1[0] - this.p1[0], segment.p2[1] - this.p2[1]];
+    const p1diff = [segment.p1[0] - this.p1[0], segment.p1[1] - this.p1[1]];
 
     const sNumer = this.delta[1] * p1diff[0] - this.delta[0] * p1diff[1];
     if (sNumer < 0.0 === positiveDenom || sNumer > denom === positiveDenom)
@@ -134,5 +138,92 @@ export class Segment {
       return null;
 
     return tNumer / denom;
+  }
+
+  // Cross product of deltas: this x segment
+  crossProduct(segment: Segment): number {
+    return this.delta[0] * segment.delta[1] - this.delta[1] * segment.delta[0];
+  }
+
+  // Returns the parametric intersects of two segments as [this param, seg
+  // param]
+  // the parametric intersect is a value t between 0 and 1
+  // need to handle full intersects (overlap)
+  parametricIntersect(segment: Segment): [number, number] | null {
+    if (this.p1[0] === segment.p2[0] && this.p1[1] === segment.p2[1]) {
+      // segment -> this
+      return [0.0, 1.0];
+    }
+    if (this.p2[0] === segment.p1[0] && this.p2[1] === segment.p1[1]) {
+      // this -> segment
+      return [1.0, 0.0];
+    }
+
+    // Cross product of deltas: this x segment
+    const denom = this.crossProduct(segment);
+
+    if (denom === 0.0) return null;
+
+    const positiveDenom = denom > 0.0;
+    const p1diff = [segment.p1[0] - this.p1[0], segment.p1[1] - this.p1[1]];
+
+    const sNumer = this.delta[1] * p1diff[0] - this.delta[0] * p1diff[1];
+    if (sNumer < 0.0 === positiveDenom || sNumer > denom === positiveDenom)
+      return null;
+
+    const tNumer = segment.delta[1] * p1diff[0] - segment.delta[0] * p1diff[1];
+    if (tNumer < 0.0 === positiveDenom || tNumer > denom === positiveDenom)
+      return null;
+
+    return [tNumer / denom, sNumer / denom];
+  }
+
+  // Moves segment to the right by radius
+  buffer(radius: number) {
+    const sign_x = Math.sign(this.delta[0]);
+    const sign_y = Math.sign(this.delta[1]);
+
+    if (sign_x === 0) {
+      // Segment is vertical
+      this.p1[0] += radius * sign_y;
+      this.p2[0] += radius * sign_y;
+      return;
+    }
+
+    if (sign_y === 0) {
+      // Segment is horizontal
+      this.p1[1] -= radius * sign_x;
+      this.p2[1] -= radius * sign_x;
+      return;
+    }
+
+    const norm = Math.sqrt(
+      this.delta[0] * this.delta[0] + this.delta[1] * this.delta[1],
+    );
+    const x_shift = (this.delta[1] / norm) * radius;
+    const y_shift = (-this.delta[0] / norm) * radius;
+
+    this.p1[0] += x_shift;
+    this.p1[1] += y_shift;
+    this.p2[0] += x_shift;
+    this.p2[1] += y_shift;
+  }
+
+  // Sweep line left
+  leftMost(): GJ.Position2 {
+    if (this.is_vertical()) {
+      return this.p1[1] < this.p2[1] ? this.p1 : this.p2;
+    }
+
+    return this.p1[0] < this.p2[0] ? this.p1 : this.p2;
+  }
+
+  // Sweep line right
+  rightMost(): GJ.Position2 {
+    if (this.is_vertical()) {
+      return this.p1[1] < this.p2[1] ? this.p2 : this.p1;
+    }
+
+    return this.p1[0] < this.p2[0] ? this.p2 : this.p1;
   }
 }

@@ -1,7 +1,10 @@
 import type * as GJ from '../types/geojson.js';
 
 /** @internal */
-function pointInRing(point: GJ.Position, polygon: GJ.Position[]): boolean {
+export function pointInRing(
+  point: GJ.Position,
+  polygon: GJ.Position[],
+): boolean {
   const p = point;
   const q = polygon;
   const n = q.length;
