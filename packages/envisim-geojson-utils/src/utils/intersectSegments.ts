@@ -104,12 +104,10 @@ export class Segment {
     const p1diff = [p1[0] - this.p1[0], p1[1] - this.p1[1]];
 
     const sNumer = this.delta[1] * p1diff[0] - this.delta[0] * p1diff[1];
-    if (sNumer < 0.0 === positiveDenom || sNumer > denom === positiveDenom)
-      return null;
+    if (sNumer < 0.0 === positiveDenom || sNumer > denom === positiveDenom) return null;
 
     const tNumer = delta[1] * p1diff[0] - delta[0] * p1diff[1];
-    if (tNumer < 0.0 === positiveDenom || tNumer > denom === positiveDenom)
-      return null;
+    if (tNumer < 0.0 === positiveDenom || tNumer > denom === positiveDenom) return null;
 
     return tNumer / denom;
   }
@@ -121,8 +119,7 @@ export class Segment {
   }
 
   parameterSegment(segment: Segment): number | null {
-    const denom =
-      this.delta[0] * segment.delta[1] - this.delta[1] * segment.delta[0];
+    const denom = this.delta[0] * segment.delta[1] - this.delta[1] * segment.delta[0];
 
     if (denom === 0.0) return null;
 
@@ -130,12 +127,10 @@ export class Segment {
     const p1diff = [segment.p1[0] - this.p1[0], segment.p1[1] - this.p1[1]];
 
     const sNumer = this.delta[1] * p1diff[0] - this.delta[0] * p1diff[1];
-    if (sNumer < 0.0 === positiveDenom || sNumer > denom === positiveDenom)
-      return null;
+    if (sNumer < 0.0 === positiveDenom || sNumer > denom === positiveDenom) return null;
 
     const tNumer = segment.delta[1] * p1diff[0] - segment.delta[0] * p1diff[1];
-    if (tNumer < 0.0 === positiveDenom || tNumer > denom === positiveDenom)
-      return null;
+    if (tNumer < 0.0 === positiveDenom || tNumer > denom === positiveDenom) return null;
 
     return tNumer / denom;
   }
@@ -168,18 +163,18 @@ export class Segment {
     const p1diff = [segment.p1[0] - this.p1[0], segment.p1[1] - this.p1[1]];
 
     const sNumer = this.delta[1] * p1diff[0] - this.delta[0] * p1diff[1];
-    if (sNumer < 0.0 === positiveDenom || sNumer > denom === positiveDenom)
-      return null;
+    if (sNumer < 0.0 === positiveDenom || sNumer > denom === positiveDenom) return null;
 
     const tNumer = segment.delta[1] * p1diff[0] - segment.delta[0] * p1diff[1];
-    if (tNumer < 0.0 === positiveDenom || tNumer > denom === positiveDenom)
-      return null;
+    if (tNumer < 0.0 === positiveDenom || tNumer > denom === positiveDenom) return null;
 
     return [tNumer / denom, sNumer / denom];
   }
 
   // Moves segment to the right by radius
   buffer(radius: number) {
+    if (radius === 0.0) return;
+
     const sign_x = Math.sign(this.delta[0]);
     const sign_y = Math.sign(this.delta[1]);
 
@@ -197,9 +192,7 @@ export class Segment {
       return;
     }
 
-    const norm = Math.sqrt(
-      this.delta[0] * this.delta[0] + this.delta[1] * this.delta[1],
-    );
+    const norm = Math.sqrt(this.delta[0] * this.delta[0] + this.delta[1] * this.delta[1]);
     const x_shift = (this.delta[1] / norm) * radius;
     const y_shift = (-this.delta[0] / norm) * radius;
 

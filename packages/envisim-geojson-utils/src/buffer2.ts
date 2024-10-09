@@ -10,7 +10,7 @@ class IntersectList {
   segs: number[][]; // Segment->intersect connection
 
   constructor(size: number) {
-    this.segs = Array.from<number[]>({length: size}).fill([]);
+    this.segs = Array.from({length: size}, () => []);
   }
   addIntersect(segments: [number, number], params: [number, number], position: GJ.Position2) {
     this.list.push({
@@ -34,7 +34,10 @@ class IntersectList {
       this.list[int].list.some((inner) => inner.seg === segments[1] && inner.param === params[1]),
     );
     if (intidx) {
-      this.appendIntersect(intidx, segments[0], params[0]);
+      // check so intersect doesnt already exist for seg[0]
+      if (!this.segs[segments[0]].includes(intidx)) {
+        this.appendIntersect(intidx, segments[0], params[0]);
+      }
       return true;
     }
 
@@ -97,15 +100,15 @@ class IntersectList {
 export function bufferPolygon(polygons: GJ.Position[][], radius: number): GJ.Position2[][][] {
   // Buffer and solve all input rings
   // ringList is ordered by minx/miny
-  // const segments = polygons.map(poly => new SegmentList(poly, radius));
-  const segments = new SegmentList(polygons[0], radius);
+  const segments = new SegmentList(polygons, radius);
   const ringList = ringsFromSegments(segments);
   return reduceRings(ringList);
 }
 
 class SegmentList {
   segments: Segment[] = [];
-  indices: number[];
+  // store the index after last of each ring
+  ringMarkers: number[] = [];
 
   static reassemble(ring: Segment[]): GJ.Position2[] {
     const arr = ring.map((seg) => seg.a);
@@ -117,31 +120,40 @@ class SegmentList {
     return this.segments.length;
   }
 
-  constructor(linearRing: GJ.Position[], buffer: number) {
-    if (linearRing.length < 4) {
-      throw new RangeError('too few positions');
-    }
+  constructor(polygons: GJ.Position[][], buffer: number) {
+    let startIdx = 0;
 
-    // Skip one since first and last point MUST be the same
-    let prev_seg: Segment | undefined = undefined;
-    for (let i = 1; i < linearRing.length; i++) {
-      const seg = new Segment(linearRing[i - 1], linearRing[i]);
-      seg.buffer(buffer);
-
-      // Add connections
-      if (prev_seg) {
-        this.segments.push(new Segment(prev_seg.b, seg.a));
+    for (const ring of polygons) {
+      if (ring.length < 4) {
+        throw new RangeError('too few positions');
       }
 
-      this.segments.push(seg);
-      prev_seg = seg;
+      // First and last point MUST be the same
+      let prevSeg = new Segment(ring[0], ring[1]);
+      prevSeg.buffer(buffer);
+      this.segments.push(prevSeg);
+
+      for (let i = 2; i < ring.length; i++) {
+        const seg = new Segment(ring[i - 1], ring[i]);
+        seg.buffer(buffer);
+
+        // Add buffer connection
+        if (buffer !== 0.0) {
+          this.segments.push(new Segment(prevSeg.b, seg.a));
+        }
+
+        this.segments.push(seg);
+        prevSeg = seg;
+      }
+
+      // Add final buffer connection
+      if (buffer !== 0.0) {
+        this.segments.push(new Segment(prevSeg.b, this.segments[startIdx].a));
+      }
+
+      startIdx = this.segments.length;
+      this.ringMarkers.push(startIdx);
     }
-
-    // Add final connection
-    this.segments.push(new Segment((prev_seg as Segment).b, this.segments[0].a));
-
-    this.indices = this.segments.map((_, i) => i);
-    this.sortSegmentIndices();
   }
 
   segment(idx: number): Segment {
@@ -163,11 +175,23 @@ class SegmentList {
   }
 
   prevSegment(idx: number): number {
-    return idx === 0 ? this.segments.length - 1 : idx - 1;
+    if (idx === 0) {
+      return this.ringMarkers[0] - 1;
+    }
+
+    let rmi = this.ringMarkers.indexOf(idx);
+    return rmi > -1 ? this.ringMarkers[rmi + 1] - 1 : idx - 1;
   }
 
   nextSegment(idx: number): number {
-    return idx === this.segments.length - 1 ? 0 : idx + 1;
+    const next = idx + 1;
+    if (next === this.ringMarkers[0]) {
+      return 0;
+    }
+
+    let rmi = this.ringMarkers.indexOf(next);
+
+    return rmi > -1 ? this.ringMarkers[rmi - 1] : next;
   }
 
   checkIfNeighbour(a: number, b: number): boolean {
@@ -179,29 +203,27 @@ class SegmentList {
     );
   }
 
-  // Sort indices left->right
-  sortSegmentIndices() {
-    this.indices.sort((seg_i, seg_j) => {
-      const seg_a = this.segments[seg_i].leftMost();
-      const seg_b = this.segments[seg_j].leftMost();
-      const x_diff = seg_a[0] - seg_b[0];
-      return x_diff !== 0.0 ? x_diff : seg_a[1] - seg_b[1];
-    });
-  }
-
   sweepLineSearch(): IntersectList {
     // array of intersection points
     // each intersection point is an array of segment idx and param
     const intersects: IntersectList = new IntersectList(this.segments.length);
     const search_queue: number[] = []; // queue of indices
 
+    // Sort segments by leftmost
+    const indices = this.segments.map((_, i) => i);
+    indices.sort((seg_i, seg_j) => {
+      const seg_a = this.segments[seg_i].leftMost();
+      const seg_b = this.segments[seg_j].leftMost();
+      const x_diff = seg_a[0] - seg_b[0];
+      return x_diff !== 0.0 ? x_diff : seg_a[1] - seg_b[1];
+    });
+
     // We only want to save intersection points which have at least one interesting intersection; we
     // disregard intersection points which only have intersections between neighbouring segments the
     // later strategy revolves around interesting intersections
 
     // We save all intersection points
-    for (let i = 0; i < this.indices.length; i++) {
-      const idx = this.indices[i];
+    for (const idx of indices) {
       const seg = this.segments[idx];
 
       for (let j = 0; j < search_queue.length; ) {
@@ -354,9 +376,12 @@ function reduceRings(ringList: GJ.Position2[][]): GJ.Position2[][][] {
 
   const returnPolys: GJ.Position2[][][] = [];
   // [parent, isPositive, removable, returnIdx]
-  const ringInfo = Array.from<[number, boolean, boolean, number]>({
-    length: ringList.length,
-  }).fill([-1, true, false, -1]);
+  const ringInfo: [number, boolean, boolean, number][] = Array.from(
+    {
+      length: ringList.length,
+    },
+    () => [-1, true, false, -1],
+  );
   const status: number[] = [];
 
   for (let idx = 0; idx < ringList.length; idx++) {
@@ -385,6 +410,12 @@ function reduceRings(ringList: GJ.Position2[][]): GJ.Position2[][][] {
 
     // Handle topmost ring
     if (closestRing[0] === -1) {
+      // A negative topmost ring should just be removed
+      if (ringInfo[idx][1] === false) {
+        ringInfo[idx][2] = true;
+        continue;
+      }
+
       returnPolys.push([ringList[idx]]);
       ringInfo[idx][3] = returnPolys.length - 1;
       status.push(idx);
