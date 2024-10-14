@@ -1,8 +1,4 @@
-import {
-  type GeoJSON as GJ,
-  GeometricPrimitive,
-  Layer,
-} from '@envisim/geojson-utils';
+import {type GeoJSON as GJ, Layer} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
 // BASE
@@ -28,21 +24,21 @@ export const SAMPLE_BASE_OPTIONS: Readonly<Required<SampleBaseOptions>> = {
 
 /**
  * Returns the following errors:
- * - 110: pointsPerCircle is not a positive integer
+ * - 'pointsPerCircle is not a positive integer.'
  *
  * @returns `0` if check passes
  */
 export function sampleBaseOptionsCheck({
   pointsPerCircle,
-}: SampleBaseOptions): number {
+}: SampleBaseOptions): string | null {
   if (
     pointsPerCircle &&
     (!Number.isInteger(pointsPerCircle) || pointsPerCircle <= 0)
   ) {
-    return 110;
+    return 'pointsPerCircle is not a positive integer.';
   }
 
-  return 0;
+  return null;
 }
 
 // POINT extends BASE
@@ -80,11 +76,11 @@ export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
 
 /**
  * Returns the following errors:
- * - <200: any error from {@link sampleBaseOptionsCheck}
- * - 210: sampleSize is not a non-negative integer
- * - 220: ratio is not positive
+ * - any error from {@link sampleBaseOptionsCheck}
+ * - 'sampleSize is not a non-negative integer.'
+ * - 'ratio is not positive.'
  *
- * @returns `0` if check passes
+ * @returns `null` if check passes
  */
 export function samplePointOptionsCheck({
   // pointSelection,
@@ -92,21 +88,21 @@ export function samplePointOptionsCheck({
   ratio,
   // buffer,
   ...options
-}: SamplePointOptions): number {
+}: SamplePointOptions): string | null {
   const baseCheck = sampleBaseOptionsCheck(options);
-  if (baseCheck !== 0) {
+  if (baseCheck !== null) {
     return baseCheck;
   }
 
   if (!Number.isInteger(sampleSize) || sampleSize < 0) {
-    return 210;
+    return 'sampleSize is not a non-negative integer.';
   }
 
   if (ratio && ratio <= 0.0) {
-    return 220;
+    return 'ratio is not positive.';
   }
 
-  return 0;
+  return null;
 }
 
 // FEATURE extends POINT
@@ -152,10 +148,10 @@ export const SAMPLE_FEATURE_OPTIONS: Readonly<
 
 /**
  * Returns the following errors:
- * - <300: any error from {@link samplePointOptionsCheck}
- * - 310: layer is not {@link Layer<AreaCollection>}
+ * - any error from {@link samplePointOptionsCheck}
+ * - layer is not {@link Layer<AreaCollection>}
  *
- * @returns `0` if check passes
+ * @returns `null` if check passes
  */
 export function sampleFeatureOptionsCheck<
   F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
@@ -164,13 +160,13 @@ export function sampleFeatureOptionsCheck<
   // rotation,
   // randomRotation,
   ...options
-}: SampleFeatureOptions<F>): number {
+}: SampleFeatureOptions<F>): string | null {
   const pointCheck = samplePointOptionsCheck(options);
-  if (pointCheck !== 0) {
+  if (pointCheck !== null) {
     return pointCheck;
   }
 
-  return 0;
+  return null;
 }
 
 // SYSTEMATIC LINE ON AREA extends BASE
@@ -199,8 +195,8 @@ export const SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS: Readonly<
 
 /**
  * Returns the following errors:
- * - <400: any error from {@link sampleBaseOptionsCheck}
- * - 410: distBetween is not positive
+ * - any error from {@link sampleBaseOptionsCheck}
+ * - 'distBetween is not positive.'
  *
  * @returns `0` if check passes
  */
@@ -208,17 +204,17 @@ export function sampleSystematicLineOnAreaOptionsCheck({
   distBetween,
   // rotation,
   ...options
-}: SampleSystematicLineOnAreaOptions): number {
+}: SampleSystematicLineOnAreaOptions): string | null {
   const baseCheck = sampleBaseOptionsCheck(options);
-  if (baseCheck !== 0) {
+  if (baseCheck !== null) {
     return baseCheck;
   }
 
   if (distBetween <= 0.0) {
-    return 410;
+    return 'distBetween is not positive.';
   }
 
-  return 0;
+  return null;
 }
 
 // BELT ON AREA extends SYSTEMATIC LINE ON AREA
@@ -242,23 +238,23 @@ export const SAMPLE_BELT_ON_AREA_OPTIONS: Readonly<
 
 /**
  * Returns the following errors:
- * - <500: any error from {@link sampleBaseOptionsCheck}
- * - 510: halfWidth is not positive
+ * - any error from {@link sampleBaseOptionsCheck}
+ * - 'halfWidth is not positive.'
  *
  * @returns `0` if check passes
  */
 export function sampleBeltOnAreaOptionsCheck({
   halfWidth,
   ...options
-}: SampleBeltOnAreaOptions): number {
+}: SampleBeltOnAreaOptions): string | null {
   const systematicLineOnAreaCheck = sampleBaseOptionsCheck(options);
-  if (systematicLineOnAreaCheck !== 0) {
+  if (systematicLineOnAreaCheck !== null) {
     return systematicLineOnAreaCheck;
   }
 
   if (halfWidth <= 0.0) {
-    return 510;
+    return 'halfWidth is not positive.';
   }
 
-  return 0;
+  return null;
 }

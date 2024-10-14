@@ -135,11 +135,11 @@ export function samplePointsOnLines(
     sampleSize,
   }: SamplePointOptions,
 ): Layer<PointCollection> {
-  const optionsError = samplePointOptionsCheck(layer, {
+  const optionsError = samplePointOptionsCheck({
     pointSelection,
     sampleSize,
   });
-  if (optionsError !== 0) {
+  if (optionsError !== null) {
     throw new RangeError(`samplePointsOnLines error: ${optionsError}`);
   }
 

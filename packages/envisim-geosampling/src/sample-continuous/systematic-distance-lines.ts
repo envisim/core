@@ -46,7 +46,7 @@ export function sampleSystematicDistanceLines(
     cutoff,
   }: SampleSystematicDistanceLinesOptions,
 ): Layer<PointCollection> {
-  const optionsError = sampleSystematicLineOnAreaOptionsCheck(layer, {
+  const optionsError = sampleSystematicLineOnAreaOptionsCheck({
     rand,
     pointsPerCircle,
     distBetween,
@@ -55,7 +55,7 @@ export function sampleSystematicDistanceLines(
     // detectionFunction,
     // cutoff,
   });
-  if (optionsError !== 0) {
+  if (optionsError !== null) {
     throw new RangeError(
       `sampleSystematicDistanceLines error: ${optionsError}`,
     );

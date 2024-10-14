@@ -37,13 +37,13 @@ export const sampleSystematicBeltsOnAreas = (
     halfWidth,
   }: SampleBeltOnAreaOptions,
 ): Layer<AreaCollection> => {
-  const optionsError = sampleBeltOnAreaOptionsCheck(layer, {
+  const optionsError = sampleBeltOnAreaOptionsCheck({
     pointsPerCircle,
     distBetween,
     rotation,
     halfWidth,
   });
-  if (optionsError !== 0) {
+  if (optionsError !== null) {
     throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
   }
 

@@ -45,13 +45,13 @@ export function samplePointsOnAreas(
     ratio = SAMPLE_POINT_OPTIONS.ratio,
   }: SamplePointOptions,
 ): Layer<PointCollection> {
-  const optionsError = samplePointOptionsCheck(layer, {
+  const optionsError = samplePointOptionsCheck({
     pointSelection,
     sampleSize,
     buffer,
     ratio,
   });
-  if (optionsError !== 0) {
+  if (optionsError !== null) {
     throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
   }
 

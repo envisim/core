@@ -67,7 +67,7 @@ function sampleFeaturesOnAreas(
     randomRotation,
     ratio,
   });
-  if (optionsError !== 0) {
+  if (optionsError !== null) {
     throw new RangeError(`sampleFeaturesOnAreas error: ${optionsError}`);
   }
 
