@@ -1,6 +1,7 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {bufferGeometry} from '../../buffer.js';
 import {areaOfPolygonLonLat} from '../../utils/area.js';
 import {bboxFromPositions, unionOfBBoxes} from '../../utils/bbox.js';
 import {
@@ -12,6 +13,7 @@ import {lengthOfLineString} from '../../utils/length.js';
 import {pointInSinglePolygonPosition} from '../../utils/pointInPolygonPosition.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {AbstractAreaObject} from './AbstractAreaObject.js';
+import {Polygon} from './ClassPolygon.js';
 
 export class MultiPolygon
   extends AbstractAreaObject<GJ.MultiPolygon>
@@ -51,6 +53,10 @@ export class MultiPolygon
       (prev, curr) => prev + areaOfPolygonLonLat(curr),
       0,
     );
+  }
+
+  buffer(distance: number, steps: number = 10): Polygon | MultiPolygon | null {
+    return bufferGeometry(this, {distance, steps});
   }
 
   perimeter(): number {

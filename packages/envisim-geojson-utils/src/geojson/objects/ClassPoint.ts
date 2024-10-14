@@ -4,6 +4,7 @@ import type * as GJ from '../../types/geojson.js';
 import {Geodesic} from '../../utils/Geodesic.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {AbstractPointObject} from './AbstractPointObject.js';
+import {Circle} from './ClassCircle.js';
 
 export class Point extends AbstractPointObject<GJ.Point> implements GJ.Point {
   static isObject(obj: unknown): obj is Point {
@@ -32,20 +33,25 @@ export class Point extends AbstractPointObject<GJ.Point> implements GJ.Point {
     return 1;
   }
 
-  count(): number {
-    return 1;
+  buffer(distance: number): Circle | null {
+    if (distance <= 0.0) return null;
+    return Circle.create(this.coordinates, distance, false);
   }
 
   centroid(): GJ.Position {
     return [...this.coordinates];
   }
 
-  geomEach(callback: GeomEachCallback<Point>, featureIndex: number = -1): void {
-    callback(this, featureIndex, -1);
+  count(): number {
+    return 1;
   }
 
   distanceToPosition(coords: GJ.Position): number {
     return Geodesic.distance(coords, this.coordinates);
+  }
+
+  geomEach(callback: GeomEachCallback<Point>, featureIndex: number = -1): void {
+    callback(this, featureIndex, -1);
   }
 
   setBBox(): GJ.BBox {

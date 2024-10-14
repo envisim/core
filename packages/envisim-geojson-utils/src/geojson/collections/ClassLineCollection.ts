@@ -7,6 +7,7 @@ import {type GeomEachCallback} from '../base/index.js';
 import {LineFeature} from '../features/index.js';
 import {LineObject} from '../objects/index.js';
 import {AbstractCollection} from './AbstractCollection.js';
+import {AreaCollection} from './ClassAreaCollection.js';
 
 export class LineCollection
   extends AbstractCollection<LineObject, LineFeature>
@@ -81,5 +82,15 @@ export class LineCollection
   /* LINE SPECIFIC */
   length(): number {
     return this.features.reduce((prev, curr) => prev + curr.length(), 0);
+  }
+
+  buffer(distance: number, steps: number = 10): AreaCollection | null {
+    const features: GJ.AreaFeature[] = [];
+    this.forEach((feature: LineFeature) => {
+      const bf = feature.buffer(distance, steps);
+      if (bf) features.push(bf);
+    });
+    if (features.length === 0) return null;
+    return AreaCollection.create(features, true);
   }
 }

@@ -66,6 +66,16 @@ export class AreaGeometryCollection
       .centroid;
   }
 
+  buffer(distance: number, steps: number = 10): AreaGeometryCollection | null {
+    const geoms: GJ.AreaObject[] = [];
+    this.geometries.forEach((geom: AreaObject) => {
+      const bg = geom.buffer(distance, steps);
+      if (bg) geoms.push(bg);
+    });
+    if (geoms.length === 0) return null;
+    return AreaGeometryCollection.create(geoms, true);
+  }
+
   /* AREA SPECIFIC */
   area(): number {
     return this.geometries.reduce((prev, curr) => prev + curr.area(), 0);

@@ -7,12 +7,33 @@ const geodInverseOpts = geodesic.Geodesic.DISTANCE | geodesic.Geodesic.AZIMUTH;
 const geodDirectOpts = geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE;
 
 // Constants
-const toDeg = 180 / Math.PI;
-const toRad = Math.PI / 180;
+const TO_DEG = 180 / Math.PI;
+const TO_RAD = Math.PI / 180;
 
-type Projection = {
-  project: (coord: GJ.Position) => GJ.Position;
-  unproject: (coord: GJ.Position) => GJ.Position;
+export type ProjectionFunction = (coord: GJ.Position) => GJ.Position;
+export type NestedPosition = GJ.Position | NestedPosition[];
+
+/**
+ * Helper function to project/unproject coords
+ * @param coords
+ * @param proj
+ * @returns
+ */
+export function projectCoords<T extends NestedPosition>(
+  coords: T,
+  proj: ProjectionFunction,
+): T {
+  if (Array.isArray(coords[0])) {
+    return (coords as NestedPosition[]).map((coord) => {
+      return projectCoords(coord, proj);
+    }) as T;
+  }
+  return proj(coords as GJ.Position) as T;
+}
+
+export type Projection = {
+  project: ProjectionFunction;
+  unproject: ProjectionFunction;
 };
 
 /**
@@ -33,15 +54,15 @@ export const azimuthalEquidistant = (refCoord: GJ.Position): Projection => {
       );
       if (typeof result.s12 === 'number' && typeof result.azi1 === 'number') {
         return [
-          result.s12 * Math.cos((90 - result.azi1) * toRad),
-          result.s12 * Math.sin((90 - result.azi1) * toRad),
+          result.s12 * Math.cos((90 - result.azi1) * TO_RAD),
+          result.s12 * Math.sin((90 - result.azi1) * TO_RAD),
         ];
       }
       throw new Error('Not able to project.');
     },
     unproject: (coord: GJ.Position): GJ.Position => {
       const dist = (coord[0] ** 2 + coord[1] ** 2) ** 0.5;
-      const angle = Math.atan2(coord[1], coord[0]) * toDeg;
+      const angle = Math.atan2(coord[1], coord[0]) * TO_DEG;
       const result = geod.Direct(
         refCoord[1],
         refCoord[0],

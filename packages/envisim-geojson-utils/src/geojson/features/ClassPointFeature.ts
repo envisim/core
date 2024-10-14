@@ -6,6 +6,7 @@ import {type GeomEachCallback} from '../base/index.js';
 import {PointGeometry, toPointGeometry} from '../gcs/index.js';
 import {type PointObject} from '../objects/index.js';
 import {AbstractFeature} from './AbstractFeature.js';
+import {AreaFeature} from './ClassAreaFeature.js';
 
 export class PointFeature
   extends AbstractFeature<PointObject, PointGeometry>
@@ -41,6 +42,14 @@ export class PointFeature
 
   geometricPrimitive(): GeometricPrimitive.POINT {
     return GeometricPrimitive.POINT;
+  }
+
+  buffer(distance: number): AreaFeature | null {
+    if (distance <= 0.0) return null;
+    const bg = this.geometry.buffer(distance);
+    if (!bg) return null;
+    // TODO: Decide if we want to copy properties
+    return AreaFeature.create(bg, {}, true);
   }
 
   /* FEATURE SPECIFIC */

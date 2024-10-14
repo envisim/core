@@ -5,6 +5,7 @@ import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {type PointObject} from '../objects/index.js';
 import {AbstractGeometryCollection} from './AbstractGeometryCollection.js';
+import {AreaGeometryCollection} from './ClassAreaGeometryCollection.js';
 import {toPointGeometry} from './toPointGeometry.js';
 
 export class PointGeometryCollection
@@ -42,6 +43,17 @@ export class PointGeometryCollection
 
   geometricPrimitive(): GeometricPrimitive.POINT {
     return GeometricPrimitive.POINT;
+  }
+
+  buffer(distance: number): AreaGeometryCollection | null {
+    if (distance <= 0.0) return null;
+    const geoms: GJ.AreaObject[] = [];
+    this.geometries.forEach((geom: PointObject) => {
+      const bg = geom.buffer(distance);
+      if (bg) geoms.push(bg);
+    });
+    if (geoms.length === 0) return null;
+    return AreaGeometryCollection.create(geoms, true);
   }
 
   centroid(iterations: number = 2): GJ.Position {

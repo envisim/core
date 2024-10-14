@@ -1,12 +1,15 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {bufferGeometry} from '../../buffer.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidOfLineString} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {AbstractLineObject} from './AbstractLineObject.js';
+import {MultiPolygon} from './ClassMultiPolygon.js';
+import {Polygon} from './ClassPolygon.js';
 
 export class LineString
   extends AbstractLineObject<GJ.LineString>
@@ -39,6 +42,11 @@ export class LineString
 
   get size(): number {
     return 1;
+  }
+
+  buffer(distance: number, steps: number = 10): Polygon | MultiPolygon | null {
+    if (distance <= 0.0) return null;
+    return bufferGeometry(this, {distance, steps});
   }
 
   length(): number {
