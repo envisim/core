@@ -94,6 +94,16 @@ export class AreaCollection
     return this.features.reduce((prev, curr) => prev + curr.area(), 0);
   }
 
+  buffer(distance: number, steps: number = 10): AreaCollection | null {
+    const features: GJ.AreaFeature[] = [];
+    this.forEach((feature: AreaFeature) => {
+      const bf = feature.buffer(distance, steps);
+      if (bf) features.push(bf);
+    });
+    if (features.length === 0) return null;
+    return AreaCollection.create(features, true);
+  }
+
   perimeter(): number {
     return this.features.reduce((prev, curr) => prev + curr.perimeter(), 0);
   }

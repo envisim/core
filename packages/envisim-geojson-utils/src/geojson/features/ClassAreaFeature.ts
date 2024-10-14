@@ -43,6 +43,13 @@ export class AreaFeature
     return GeometricPrimitive.AREA;
   }
 
+  buffer(distance: number, steps: number = 10): AreaFeature | null {
+    const bg = this.geometry.buffer(distance, steps);
+    if (!bg) return null;
+    // TODO: Decide if we want to copy properties
+    return AreaFeature.create(bg, {}, true);
+  }
+
   /* FEATURE SPECIFIC */
   geomEach(
     callback: GeomEachCallback<AreaObject>,

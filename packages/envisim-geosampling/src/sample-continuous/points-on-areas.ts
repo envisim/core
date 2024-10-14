@@ -11,7 +11,6 @@ import {
   PointFeature,
   type PropertyRecord,
   bbox4,
-  buffer as bufferAreaCollection,
   createDesignWeightProperty,
   longitudeCenter,
   longitudeDistance,
@@ -79,10 +78,7 @@ export function samplePointsOnAreas(
 
   let buffered: AreaCollection | null;
   if (buffer > 0.0) {
-    buffered = bufferAreaCollection(gj, {
-      radius: buffer,
-      steps: 10,
-    });
+    buffered = gj.buffer(buffer, 10);
     if (buffered == null || buffered.features.length === 0) {
       throw new Error('Buffering failed.');
     }

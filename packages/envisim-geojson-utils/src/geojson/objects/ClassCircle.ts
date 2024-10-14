@@ -88,12 +88,17 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     return Math.PI * this.radius ** 2;
   }
 
-  perimeter(): number {
-    return Math.PI * this.radius * 2;
+  buffer(distance: number): Circle | null {
+    if (this.radius + distance <= 0.0) return null;
+    return Circle.create(this.coordinates, this.radius + distance, false);
   }
 
   centroid(): GJ.Position {
     return [...this.coordinates];
+  }
+
+  distanceToPosition(coords: GJ.Position): number {
+    return Geodesic.distance(coords, this.coordinates) - this.radius;
   }
 
   geomEach(
@@ -103,8 +108,8 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     callback(this, featureIndex, -1);
   }
 
-  distanceToPosition(coords: GJ.Position): number {
-    return Geodesic.distance(coords, this.coordinates) - this.radius;
+  perimeter(): number {
+    return Math.PI * this.radius * 2;
   }
 
   setBBox(): GJ.BBox {

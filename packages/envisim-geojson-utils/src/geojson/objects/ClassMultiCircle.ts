@@ -103,8 +103,9 @@ export class MultiCircle
     return this.coordinates.length * Math.PI * this.radius ** 2;
   }
 
-  perimeter(): number {
-    return this.coordinates.length * Math.PI * this.radius * 2;
+  buffer(distance: number): MultiCircle | null {
+    if (this.radius + distance <= 0.0) return null;
+    return MultiCircle.create(this.coordinates, this.radius + distance, false);
   }
 
   centroid(iterations: number = 2): GJ.Position {
@@ -116,6 +117,14 @@ export class MultiCircle
       .centroid;
   }
 
+  distanceToPosition(coords: GJ.Position): number {
+    return (
+      this.coordinates.reduce((prev, curr) => {
+        return Math.min(prev, Geodesic.distance(coords, curr));
+      }, Infinity) - this.radius
+    );
+  }
+
   geomEach(
     callback: GeomEachCallback<MultiCircle>,
     featureIndex: number = -1,
@@ -123,12 +132,8 @@ export class MultiCircle
     callback(this, featureIndex, -1);
   }
 
-  distanceToPosition(coords: GJ.Position): number {
-    return (
-      this.coordinates.reduce((prev, curr) => {
-        return Math.min(prev, Geodesic.distance(coords, curr));
-      }, Infinity) - this.radius
-    );
+  perimeter(): number {
+    return this.coordinates.length * Math.PI * this.radius * 2;
   }
 
   setBBox(): GJ.BBox {
