@@ -12,6 +12,7 @@ import {ColumnVector} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
 import {copy} from '@envisim/utils';
 
+import {SamplingError} from '../SamplingError.js';
 import {
   balancingMatrixFromLayer,
   drawprobsFromLayer,
@@ -86,15 +87,15 @@ export interface SampleFiniteOptions {
 
 /**
  * Returns the following errors:
- * - sampleSize is not a non-negative integer.
- * - probabilitesFrom is set, but does not exist on propertyRecord.
- * - probabilitesFrom is not numerical.
- * - method is spatially balanced, but does not use spreadOn or spreadGeo.
- * - method is spatially balanced, but spreadOn does not exist on propertyRecord.
- * - method is balanced, but does not use balanceOn.
- * - method is balanced, but balanceOn does not exist on propertyRecord.
+ * - {@link SamplingError.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER}
+ * - {@link SamplingError.PROBABILITIES_FROM_DONT_EXIST}
+ * - {@link SamplingError.PROBABILITIES_FROM_NOT_NUMERICAL}
+ * - {@link SamplingError.SPATIALLY_BALANCED_MUST_USE_SPREAD}
+ * - {@link SamplingError.SPREAD_ON_DONT_EXIST}
+ * - {@link SamplingError.BALANCED_MUST_USE_BALANCE}
+ * - {@link SamplingError.BALANCED_ON_DONT_EXIST}
  *
- * @returns `0` if check passes
+ * @returns `null` if check passes
  */
 export function sampleFiniteOptionsCheck(
   {
@@ -111,18 +112,18 @@ export function sampleFiniteOptionsCheck(
 ): string | null {
   if (!Number.isInteger(sampleSize) || sampleSize < 0) {
     // sampleSize must be a non negative integer
-    return 'sampleSize is not a non-negative integer.';
+    return SamplingError.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER;
   }
 
   if (probabilitiesFrom) {
     if (!Object.hasOwn(properties, probabilitiesFrom)) {
       // probabilitiesFrom must exist on propertyRecord
-      return 'probabilitesFrom is set, but does not exist on propertyRecord.';
+      return SamplingError.PROBABILITIES_FROM_DONT_EXIST;
     }
 
     if (properties[probabilitiesFrom].type !== 'numerical') {
       // probabilitiesFrom must be a numerical property
-      return 'probabilitesFrom is not numerical.';
+      return SamplingError.PROBABILITIES_FROM_NOT_NUMERICAL;
     }
   }
 
@@ -138,12 +139,12 @@ export function sampleFiniteOptionsCheck(
     if (!spreadOn) {
       if (!spreadGeo) {
         // Must use either spreadOn or spreadGeo
-        return 'method is spatially balanced, but does not use spreadOn or spreadGeo.';
+        return SamplingError.SPATIALLY_BALANCED_MUST_USE_SPREAD;
       }
     } else {
       if (!spreadOn.every((prop) => Object.hasOwn(properties, prop))) {
         // spredOn entries must exist on propertyRecord
-        return 'method is spatially balanced, but spreadOn does not exist on propertyRecord.';
+        return SamplingError.SPREAD_ON_DONT_EXIST;
       }
     }
   }
@@ -159,11 +160,11 @@ export function sampleFiniteOptionsCheck(
   ) {
     if (!balanceOn) {
       // Must use balanceOn
-      return 'method is balanced, but does not use balanceOn.';
+      return SamplingError.BALANCED_MUST_USE_BALANCE;
     }
     if (!balanceOn.every((prop) => Object.hasOwn(properties, prop))) {
       // balanceOn entries must exist on propertyRecord
-      return 'method is balanced, but balanceOn does not exist on propertyRecord.';
+      return SamplingError.BALANCED_ON_DONT_EXIST;
     }
   }
 

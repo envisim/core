@@ -28,6 +28,10 @@ export {
   sampleStratifiedOptionsCheck,
 } from './sample-stratified.js';
 
+// Errors
+export {SamplingError} from './SamplingError.js';
+export {CollectError} from './CollectError.js';
+
 // Model features/tracts
 export {
   radiusOfModelFeature,

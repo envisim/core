@@ -9,6 +9,7 @@ import {
   createDesignWeightProperty,
 } from '@envisim/geojson-utils';
 
+import {SamplingError} from './SamplingError.js';
 import {
   SampleBaseOptions,
   SampleBeltOnAreaOptions,
@@ -36,11 +37,10 @@ interface SampleStratifiedOptions<
 
 /**
  * Returns the following errors
- * - stratify does not exist on propertyRecord.
- * - stratify property is not categorical.
- * - stratify property has no values.
- * - options is an array, but its length does not match the length of
- *   stratify property values.
+ * - {@link SamplingError.STRATIFY_DONT_EXIST}
+ * - {@link SamplingError.STRATIFY_NOT_CATEGORICAL}
+ * - {@link SamplingError.STRATIFY_NO_VALUES}
+ * - {@link SamplingError.STRATIFY_OPTIONS_LENGTH_MISMATCH}
  *
  * @returns `null` if check passes
  */
@@ -53,24 +53,24 @@ export function sampleStratifiedOptionsCheck(
 ): string | null {
   if (!Object.hasOwn(layer.propertyRecord, stratify)) {
     // stratify must exist on propertyRecord
-    return 'stratify does not exist on propertyRecord.';
+    return SamplingError.STRATIFY_DONT_EXIST;
   }
 
   const property = layer.propertyRecord[stratify];
 
   if (property.type !== 'categorical') {
     // stratify prop must be categorical -- no stratification on numerical
-    return 'stratify property is not categorical.';
+    return SamplingError.STRATIFY_NOT_CATEGORICAL;
   }
 
   if (property.values.length === 0) {
     // stratify prop must have values
-    return 'stratify property has no values.';
+    return SamplingError.STRATIFY_NO_VALUES;
   }
 
   if (Array.isArray(options) && options.length !== property.values.length) {
     // if options is an array, the length must match the number of prop values
-    return 'options is an array, but its length does not match the length of stratify property values.';
+    return SamplingError.STRATIFY_OPTIONS_LENGTH_MISMATCH;
   }
 
   return null;

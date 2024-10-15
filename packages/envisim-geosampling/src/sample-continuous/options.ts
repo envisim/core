@@ -1,6 +1,8 @@
 import {type GeoJSON as GJ, Layer} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
+import {SamplingError} from '../SamplingError.js';
+
 // BASE
 /**
  * @see {@link SAMPLE_BASE_OPTIONS | default values}
@@ -24,7 +26,7 @@ export const SAMPLE_BASE_OPTIONS: Readonly<Required<SampleBaseOptions>> = {
 
 /**
  * Returns the following errors:
- * - pointsPerCircle is not a positive integer.
+ * - {@link SamplingError.POINTS_PER_CIRCLE_NOT_POSITIVE_INTEGER}
  *
  * @returns `null` if check passes
  */
@@ -35,7 +37,7 @@ export function sampleBaseOptionsCheck({
     pointsPerCircle &&
     (!Number.isInteger(pointsPerCircle) || pointsPerCircle <= 0)
   ) {
-    return 'pointsPerCircle is not a positive integer.';
+    return SamplingError.POINTS_PER_CIRCLE_NOT_POSITIVE_INTEGER;
   }
 
   return null;
@@ -76,9 +78,9 @@ export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
 
 /**
  * Returns the following errors:
- * - any error from {@link sampleBaseOptionsCheck}.
- * - sampleSize is not a non-negative integer.
- * - ratio is not positive.
+ * - any error from {@link sampleBaseOptionsCheck}
+ * - {@link SamplingError.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER}
+ * - {@link SamplingError.RATIO_NOT_POSITIVE}
  *
  * @returns `null` if check passes
  */
@@ -95,11 +97,11 @@ export function samplePointOptionsCheck({
   }
 
   if (!Number.isInteger(sampleSize) || sampleSize < 0) {
-    return 'sampleSize is not a non-negative integer.';
+    return SamplingError.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER;
   }
 
   if (ratio && ratio <= 0.0) {
-    return 'ratio is not positive.';
+    return SamplingError.RATIO_NOT_POSITIVE;
   }
 
   return null;
@@ -149,7 +151,6 @@ export const SAMPLE_FEATURE_OPTIONS: Readonly<
 /**
  * Returns the following errors:
  * - any error from {@link samplePointOptionsCheck}.
- * - layer is not {@link Layer<AreaCollection>}.
  *
  * @returns `null` if check passes
  */
@@ -195,8 +196,8 @@ export const SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS: Readonly<
 
 /**
  * Returns the following errors:
- * - any error from {@link sampleBaseOptionsCheck}.
- * - distBetween is not positive.
+ * - any error from {@link sampleBaseOptionsCheck}
+ * - {@link SamplingError.DIST_BETWEEN_NOT_POSITIVE}
  *
  * @returns `null` if check passes
  */
@@ -211,7 +212,7 @@ export function sampleSystematicLineOnAreaOptionsCheck({
   }
 
   if (distBetween <= 0.0) {
-    return 'distBetween is not positive.';
+    return SamplingError.DIST_BETWEEN_NOT_POSITIVE;
   }
 
   return null;
@@ -238,8 +239,8 @@ export const SAMPLE_BELT_ON_AREA_OPTIONS: Readonly<
 
 /**
  * Returns the following errors:
- * - any error from {@link sampleBaseOptionsCheck}.
- * - halfWidth is not positive.
+ * - any error from {@link sampleBaseOptionsCheck}
+ * - {@link SamplingError.HALF_WIDTH_NOT_POSITIVE}
  *
  * @returns `null` if check passes
  */
@@ -253,7 +254,7 @@ export function sampleBeltOnAreaOptionsCheck({
   }
 
   if (halfWidth <= 0.0) {
-    return 'halfWidth is not positive.';
+    return SamplingError.HALF_WIDTH_NOT_POSITIVE;
   }
 
   return null;
