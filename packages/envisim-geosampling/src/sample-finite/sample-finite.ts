@@ -86,14 +86,13 @@ export interface SampleFiniteOptions {
 
 /**
  * Returns the following errors:
- * - 10: sampleSize is not a non-negative integer
- * - 20: probabilitesFrom is set, but does not exist on propertyRecord
- * - 21: probabilitesFrom is not numerical
- * - 30: method is spatially balanced, but does not use spreadOn or spreadGeo
- * - 31: method is spatially balanced, but spreadOn does not exist on
- *       propertyRecord
- * - 40: method is balanced, but does not use balanceOn
- * - 41: method is balanced, but balanceOn does not exist on propertyRecord
+ * - sampleSize is not a non-negative integer.
+ * - probabilitesFrom is set, but does not exist on propertyRecord.
+ * - probabilitesFrom is not numerical.
+ * - method is spatially balanced, but does not use spreadOn or spreadGeo.
+ * - method is spatially balanced, but spreadOn does not exist on propertyRecord.
+ * - method is balanced, but does not use balanceOn.
+ * - method is balanced, but balanceOn does not exist on propertyRecord.
  *
  * @returns `0` if check passes
  */
@@ -109,21 +108,21 @@ export function sampleFiniteOptionsCheck(
   }: SampleFiniteOptions,
   // primitive: GeometricPrimitive,
   properties: PropertyRecord,
-): number {
+): string | null {
   if (!Number.isInteger(sampleSize) || sampleSize < 0) {
     // sampleSize must be a non negative integer
-    return 10;
+    return 'sampleSize is not a non-negative integer.';
   }
 
   if (probabilitiesFrom) {
     if (!Object.hasOwn(properties, probabilitiesFrom)) {
       // probabilitiesFrom must exist on propertyRecord
-      return 20;
+      return 'probabilitesFrom is set, but does not exist on propertyRecord.';
     }
 
     if (properties[probabilitiesFrom].type !== 'numerical') {
       // probabilitiesFrom must be a numerical property
-      return 21;
+      return 'probabilitesFrom is not numerical.';
     }
   }
 
@@ -139,12 +138,12 @@ export function sampleFiniteOptionsCheck(
     if (!spreadOn) {
       if (!spreadGeo) {
         // Must use either spreadOn or spreadGeo
-        return 30;
+        return 'method is spatially balanced, but does not use spreadOn or spreadGeo.';
       }
     } else {
       if (!spreadOn.every((prop) => Object.hasOwn(properties, prop))) {
         // spredOn entries must exist on propertyRecord
-        return 31;
+        return 'method is spatially balanced, but spreadOn does not exist on propertyRecord.';
       }
     }
   }
@@ -160,15 +159,15 @@ export function sampleFiniteOptionsCheck(
   ) {
     if (!balanceOn) {
       // Must use balanceOn
-      return 40;
+      return 'method is balanced, but does not use balanceOn.';
     }
     if (!balanceOn.every((prop) => Object.hasOwn(properties, prop))) {
       // balanceOn entries must exist on propertyRecord
-      return 41;
+      return 'method is balanced, but balanceOn does not exist on propertyRecord.';
     }
   }
 
-  return 0;
+  return null;
 }
 
 /**
@@ -185,7 +184,7 @@ export function sampleFinite<
     | Layer<AreaCollection>,
 >(layer: T, opts: SampleFiniteOptions): T {
   const optionsError = sampleFiniteOptionsCheck(opts, layer.propertyRecord);
-  if (optionsError !== 0) {
+  if (optionsError !== null) {
     throw new RangeError(`sampleFinite error: ${optionsError}`);
   }
 

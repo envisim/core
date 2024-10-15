@@ -24,9 +24,9 @@ export const SAMPLE_BASE_OPTIONS: Readonly<Required<SampleBaseOptions>> = {
 
 /**
  * Returns the following errors:
- * - 'pointsPerCircle is not a positive integer.'
+ * - pointsPerCircle is not a positive integer.
  *
- * @returns `0` if check passes
+ * @returns `null` if check passes
  */
 export function sampleBaseOptionsCheck({
   pointsPerCircle,
@@ -76,9 +76,9 @@ export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
 
 /**
  * Returns the following errors:
- * - any error from {@link sampleBaseOptionsCheck}
- * - 'sampleSize is not a non-negative integer.'
- * - 'ratio is not positive.'
+ * - any error from {@link sampleBaseOptionsCheck}.
+ * - sampleSize is not a non-negative integer.
+ * - ratio is not positive.
  *
  * @returns `null` if check passes
  */
@@ -148,8 +148,8 @@ export const SAMPLE_FEATURE_OPTIONS: Readonly<
 
 /**
  * Returns the following errors:
- * - any error from {@link samplePointOptionsCheck}
- * - layer is not {@link Layer<AreaCollection>}
+ * - any error from {@link samplePointOptionsCheck}.
+ * - layer is not {@link Layer<AreaCollection>}.
  *
  * @returns `null` if check passes
  */
@@ -195,10 +195,10 @@ export const SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS: Readonly<
 
 /**
  * Returns the following errors:
- * - any error from {@link sampleBaseOptionsCheck}
- * - 'distBetween is not positive.'
+ * - any error from {@link sampleBaseOptionsCheck}.
+ * - distBetween is not positive.
  *
- * @returns `0` if check passes
+ * @returns `null` if check passes
  */
 export function sampleSystematicLineOnAreaOptionsCheck({
   distBetween,
@@ -238,10 +238,10 @@ export const SAMPLE_BELT_ON_AREA_OPTIONS: Readonly<
 
 /**
  * Returns the following errors:
- * - any error from {@link sampleBaseOptionsCheck}
- * - 'halfWidth is not positive.'
+ * - any error from {@link sampleBaseOptionsCheck}.
+ * - halfWidth is not positive.
  *
- * @returns `0` if check passes
+ * @returns `null` if check passes
  */
 export function sampleBeltOnAreaOptionsCheck({
   halfWidth,

@@ -36,13 +36,13 @@ interface SampleStratifiedOptions<
 
 /**
  * Returns the following errors
- * - 110: stratify does not exist on propertyRecord
- * - 120: stratify property is not categorical
- * - 130: stratify property has no values
- * - 140: options is an array, but its length does not match the length of
- *        stratify property values
+ * - stratify does not exist on propertyRecord.
+ * - stratify property is not categorical.
+ * - stratify property has no values.
+ * - options is an array, but its length does not match the length of
+ *   stratify property values.
  *
- * @returns `0` if check passes
+ * @returns `null` if check passes
  */
 export function sampleStratifiedOptionsCheck(
   layer: Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
@@ -50,30 +50,30 @@ export function sampleStratifiedOptionsCheck(
     stratify,
     options,
   }: SampleStratifiedOptions<SampleFiniteOptions | SampleContinuousOptions>,
-): number {
+): string | null {
   if (!Object.hasOwn(layer.propertyRecord, stratify)) {
     // stratify must exist on propertyRecord
-    return 110;
+    return 'stratify does not exist on propertyRecord.';
   }
 
   const property = layer.propertyRecord[stratify];
 
   if (property.type !== 'categorical') {
     // stratify prop must be categorical -- no stratification on numerical
-    return 120;
+    return 'stratify property is not categorical.';
   }
 
   if (property.values.length === 0) {
     // stratify prop must have values
-    return 130;
+    return 'stratify property has no values.';
   }
 
   if (Array.isArray(options) && options.length !== property.values.length) {
     // if options is an array, the length must match the number of prop values
-    return 140;
+    return 'options is an array, but its length does not match the length of stratify property values.';
   }
 
-  return 0;
+  return null;
 }
 
 export function sampleStratified<
@@ -95,7 +95,7 @@ export function sampleStratified<
     stratify,
     options,
   });
-  if (optionsError !== 0) {
+  if (optionsError !== null) {
     throw new RangeError(`sampleStratified error: ${optionsError}`);
   }
 
