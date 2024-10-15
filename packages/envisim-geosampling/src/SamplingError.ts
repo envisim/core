@@ -11,8 +11,8 @@ export const SamplingError = {
     'method is spatially balanced, but does not use spreadOn or spreadGeo.',
   SPREAD_ON_DONT_EXIST:
     'spatially balanced method requires spreadOn to exist on propertyRecord.',
-  BALANCED_MUST_USE_BALANCE: 'balanced method requires balanceOn.',
-  BALANCED_ON_DONT_EXIST:
+  BALANCE_MUST_USE_BALANCE: 'balanced method requires balanceOn.',
+  BALANCE_ON_DONT_EXIST:
     'balanced method requires balanceOn to exist on propertyRecord.',
 
   // sample stratified specific errors

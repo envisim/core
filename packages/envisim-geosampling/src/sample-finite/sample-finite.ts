@@ -92,8 +92,8 @@ export interface SampleFiniteOptions {
  * - {@link SamplingError.PROBABILITIES_FROM_NOT_NUMERICAL}
  * - {@link SamplingError.SPATIALLY_BALANCED_MUST_USE_SPREAD}
  * - {@link SamplingError.SPREAD_ON_DONT_EXIST}
- * - {@link SamplingError.BALANCED_MUST_USE_BALANCE}
- * - {@link SamplingError.BALANCED_ON_DONT_EXIST}
+ * - {@link SamplingError.BALANCE_MUST_USE_BALANCE}
+ * - {@link SamplingError.BALANCE_ON_DONT_EXIST}
  *
  * @returns `null` if check passes
  */
@@ -160,11 +160,11 @@ export function sampleFiniteOptionsCheck(
   ) {
     if (!balanceOn) {
       // Must use balanceOn
-      return SamplingError.BALANCED_MUST_USE_BALANCE;
+      return SamplingError.BALANCE_MUST_USE_BALANCE;
     }
     if (!balanceOn.every((prop) => Object.hasOwn(properties, prop))) {
       // balanceOn entries must exist on propertyRecord
-      return SamplingError.BALANCED_ON_DONT_EXIST;
+      return SamplingError.BALANCE_ON_DONT_EXIST;
     }
   }
 
