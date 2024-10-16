@@ -12,20 +12,21 @@ export {
   effectiveHalfWidth,
   uniformDetectionFunction,
   halfNormalDetectionFunction,
-  sampleBaseOptionsCheck,
-  samplePointOptionsCheck,
-  sampleFeatureOptionsCheck,
-  sampleSystematicLineOnAreaOptionsCheck,
-  sampleBeltOnAreaOptionsCheck,
 } from './sample-continuous/index.js';
 
 // Sampling methods callable from engine
-export {sampleFinite, sampleFiniteOptionsCheck} from './sample-finite/index.js';
+export {
+  sampleFinite,
+  sampleFiniteOptionsCheck,
+  type SampleFiniteOptions,
+} from './sample-finite/index.js';
 
 // Stratified
 export {
   sampleStratified,
   sampleStratifiedOptionsCheck,
+  type SampleStratifiedOptions,
+  type SampleContinuousOptions,
 } from './sample-stratified.js';
 
 // Errors
@@ -67,3 +68,25 @@ export {
   uniformBinomialPointProcess,
   uniformPoissonPointProcess,
 } from './point-processes/index.js';
+
+// Options
+export {
+  type SampleBaseOptions,
+  SAMPLE_BASE_OPTIONS,
+  sampleBaseOptionsCheck,
+  type SamplePointOptions,
+  SAMPLE_POINT_OPTIONS,
+  samplePointOptionsCheck,
+  type SampleFeatureOptions,
+  SAMPLE_FEATURE_OPTIONS,
+  sampleFeatureOptionsCheck,
+  type SampleSystematicLineOnAreaOptions,
+  SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS,
+  sampleSystematicLineOnAreaOptionsCheck,
+  type SampleBeltOnAreaOptions,
+  SAMPLE_BELT_ON_AREA_OPTIONS,
+  sampleBeltOnAreaOptionsCheck,
+  type SampleRelascopePointsOptions,
+  SAMPLE_RELASCOPE_POINTS_OPTIONS,
+  sampleRelascopePointsOptionsCheck,
+} from './sample-continuous/index.js';
