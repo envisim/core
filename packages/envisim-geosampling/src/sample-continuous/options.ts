@@ -3,6 +3,7 @@ import {Random} from '@envisim/random';
 
 import {SamplingError} from '../SamplingError.js';
 import {ErrorType} from '../utils/index.js';
+import {type SampleRelascopePointsOptions} from './relascope-points.js';
 
 // BASE
 /**
@@ -258,5 +259,34 @@ export function sampleBeltOnAreaOptionsCheck({
     return SamplingError.HALF_WIDTH_NOT_POSITIVE;
   }
 
+  return null;
+}
+
+export {type SampleRelascopePointsOptions};
+export const SAMPLE_RELASCOPE_POINTS_OPTIONS: Readonly<
+  Required<Omit<SampleRelascopePointsOptions, 'baseLayer' | 'sizeProperty'>>
+> = {
+  ...SAMPLE_POINT_OPTIONS,
+  factor: 1.0,
+};
+export function sampleRelascopePointsOptionsCheck({
+  factor,
+  baseLayer,
+  sizeProperty,
+  ...options
+}: SampleRelascopePointsOptions): ErrorType<typeof SamplingError> {
+  const pointCheck = samplePointOptionsCheck(options);
+  if (pointCheck !== null) {
+    return pointCheck;
+  }
+  if (factor && factor <= 0.0) {
+    return SamplingError.FACTOR_NOT_POSITIVE;
+  }
+  if (!Object.hasOwn(baseLayer.propertyRecord, sizeProperty)) {
+    return SamplingError.SIZE_PROPERTY_DONT_EXIST;
+  }
+  if (baseLayer.propertyRecord[sizeProperty].type !== 'numerical') {
+    return SamplingError.SIZE_PROPERTY_NOT_NUMERICAL;
+  }
   return null;
 }

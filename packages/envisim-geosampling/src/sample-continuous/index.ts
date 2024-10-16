@@ -37,4 +37,7 @@ export {
   type SampleBeltOnAreaOptions,
   SAMPLE_BELT_ON_AREA_OPTIONS,
   sampleBeltOnAreaOptionsCheck,
+  SAMPLE_RELASCOPE_POINTS_OPTIONS,
+  type SampleRelascopePointsOptions,
+  sampleRelascopePointsOptionsCheck,
 } from './options.js';

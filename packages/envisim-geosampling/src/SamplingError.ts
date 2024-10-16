@@ -23,4 +23,7 @@ export const SamplingError = {
   RATIO_NOT_POSITIVE: 'sample-error-ratio',
   DIST_BETWEEN_NOT_POSITIVE: 'sample-error-dist-between',
   HALF_WIDTH_NOT_POSITIVE: 'sample-error-half-width',
+  FACTOR_NOT_POSITIVE: 'sample-error-factor',
+  SIZE_PROPERTY_DONT_EXIST: 'sample-error-size-property-dont-exist',
+  SIZE_PROPERTY_NOT_NUMERICAL: 'sample-error-size-property-not-numerical',
 } as const;

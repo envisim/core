@@ -14,7 +14,7 @@ import {copy} from '@envisim/utils';
 import {SAMPLE_POINT_OPTIONS, type SamplePointOptions} from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
 
-interface SampleRelascopePointsOptions extends SamplePointOptions {
+export interface SampleRelascopePointsOptions extends SamplePointOptions {
   /**
    * The point layer to collect objects from.
    */
