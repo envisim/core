@@ -13,6 +13,7 @@ import type {Random} from '@envisim/random';
 import {copy} from '@envisim/utils';
 
 import {SamplingError} from '../SamplingError.js';
+import {ErrorType} from '../utils/index.js';
 import {
   balancingMatrixFromLayer,
   drawprobsFromLayer,
@@ -109,7 +110,7 @@ export function sampleFiniteOptionsCheck(
   }: SampleFiniteOptions,
   // primitive: GeometricPrimitive,
   properties: PropertyRecord,
-): string | null {
+): ErrorType<typeof SamplingError> {
   if (!Number.isInteger(sampleSize) || sampleSize < 0) {
     // sampleSize must be a non negative integer
     return SamplingError.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER;

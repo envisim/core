@@ -1,7 +1,8 @@
-import {type GeoJSON as GJ, Layer} from '@envisim/geojson-utils';
+import {type GeoJSON as GJ} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
 import {SamplingError} from '../SamplingError.js';
+import {ErrorType} from '../utils/index.js';
 
 // BASE
 /**
@@ -32,7 +33,7 @@ export const SAMPLE_BASE_OPTIONS: Readonly<Required<SampleBaseOptions>> = {
  */
 export function sampleBaseOptionsCheck({
   pointsPerCircle,
-}: SampleBaseOptions): string | null {
+}: SampleBaseOptions): ErrorType<typeof SamplingError> {
   if (
     pointsPerCircle &&
     (!Number.isInteger(pointsPerCircle) || pointsPerCircle <= 0)
@@ -90,7 +91,7 @@ export function samplePointOptionsCheck({
   ratio,
   // buffer,
   ...options
-}: SamplePointOptions): string | null {
+}: SamplePointOptions): ErrorType<typeof SamplingError> {
   const baseCheck = sampleBaseOptionsCheck(options);
   if (baseCheck !== null) {
     return baseCheck;
@@ -161,7 +162,7 @@ export function sampleFeatureOptionsCheck<
   // rotation,
   // randomRotation,
   ...options
-}: SampleFeatureOptions<F>): string | null {
+}: SampleFeatureOptions<F>): ErrorType<typeof SamplingError> {
   const pointCheck = samplePointOptionsCheck(options);
   if (pointCheck !== null) {
     return pointCheck;
@@ -205,7 +206,7 @@ export function sampleSystematicLineOnAreaOptionsCheck({
   distBetween,
   // rotation,
   ...options
-}: SampleSystematicLineOnAreaOptions): string | null {
+}: SampleSystematicLineOnAreaOptions): ErrorType<typeof SamplingError> {
   const baseCheck = sampleBaseOptionsCheck(options);
   if (baseCheck !== null) {
     return baseCheck;
@@ -247,7 +248,7 @@ export const SAMPLE_BELT_ON_AREA_OPTIONS: Readonly<
 export function sampleBeltOnAreaOptionsCheck({
   halfWidth,
   ...options
-}: SampleBeltOnAreaOptions): string | null {
+}: SampleBeltOnAreaOptions): ErrorType<typeof SamplingError> {
   const systematicLineOnAreaCheck = sampleBaseOptionsCheck(options);
   if (systematicLineOnAreaCheck !== null) {
     return systematicLineOnAreaCheck;

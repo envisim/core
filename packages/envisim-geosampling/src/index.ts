@@ -31,6 +31,7 @@ export {
 // Errors
 export {SamplingError} from './SamplingError.js';
 export {CollectError} from './CollectError.js';
+export {type ErrorType} from './utils/ErrorType.js';
 
 // Model features/tracts
 export {
