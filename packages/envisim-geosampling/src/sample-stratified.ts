@@ -15,20 +15,23 @@ import {
   SampleBeltOnAreaOptions,
   SampleFeatureOptions,
   SamplePointOptions,
+  SampleRelascopePointsOptions,
   SampleSystematicLineOnAreaOptions,
 } from './sample-continuous/index.js';
 import {SampleFiniteOptions} from './sample-finite/index.js';
+import {type ErrorType} from './utils/ErrorType.js';
 
-type SampleContinuousOptions =
+export type SampleContinuousOptions =
   | SampleBaseOptions
   | SamplePointOptions
   | SampleFeatureOptions<GJ.PointFeature>
   | SampleFeatureOptions<GJ.LineFeature>
   | SampleFeatureOptions<GJ.AreaFeature>
-  | SampleSystematicLineOnAreaOptions
-  | SampleBeltOnAreaOptions;
+  | SampleBeltOnAreaOptions
+  | SampleRelascopePointsOptions
+  | SampleSystematicLineOnAreaOptions;
 
-interface SampleStratifiedOptions<
+export interface SampleStratifiedOptions<
   O extends SampleFiniteOptions | SampleContinuousOptions,
 > {
   stratify: string;
@@ -50,7 +53,7 @@ export function sampleStratifiedOptionsCheck(
     stratify,
     options,
   }: SampleStratifiedOptions<SampleFiniteOptions | SampleContinuousOptions>,
-): string | null {
+): ErrorType<typeof SamplingError> {
   if (!Object.hasOwn(layer.propertyRecord, stratify)) {
     // stratify must exist on propertyRecord
     return SamplingError.STRATIFY_DONT_EXIST;
