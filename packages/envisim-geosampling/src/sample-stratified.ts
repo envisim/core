@@ -6,6 +6,7 @@ import {
   Layer,
   LineCollection,
   PointCollection,
+  type PropertyRecord,
   createDesignWeightProperty,
 } from '@envisim/geojson-utils';
 
@@ -48,18 +49,18 @@ export interface SampleStratifiedOptions<
  * @returns `null` if check passes
  */
 export function sampleStratifiedOptionsCheck(
-  layer: Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
   {
     stratify,
     options,
   }: SampleStratifiedOptions<SampleFiniteOptions | SampleContinuousOptions>,
+  propertyRecord: PropertyRecord,
 ): ErrorType<typeof SamplingError> {
-  if (!Object.hasOwn(layer.propertyRecord, stratify)) {
+  if (!Object.hasOwn(propertyRecord, stratify)) {
     // stratify must exist on propertyRecord
     return SamplingError.STRATIFY_DONT_EXIST;
   }
 
-  const property = layer.propertyRecord[stratify];
+  const property = propertyRecord[stratify];
 
   if (property.type !== 'categorical') {
     // stratify prop must be categorical -- no stratification on numerical
