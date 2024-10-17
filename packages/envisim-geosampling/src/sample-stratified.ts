@@ -95,10 +95,13 @@ export function sampleStratified<
   layer: IN,
   {stratify, options}: SampleStratifiedOptions<OPTS>,
 ): OUT {
-  const optionsError = sampleStratifiedOptionsCheck(layer, {
-    stratify,
-    options,
-  });
+  const optionsError = sampleStratifiedOptionsCheck(
+    {
+      stratify,
+      options,
+    },
+    layer.propertyRecord,
+  );
   if (optionsError !== null) {
     throw new RangeError(`sampleStratified error: ${optionsError}`);
   }
