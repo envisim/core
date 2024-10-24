@@ -1,6 +1,22 @@
 import * as GJ from './types/geojson.js';
 import {Segment} from './utils/intersectSegments.js';
 
+/*
+  1: Move intersects
+  2: simplify intersects (find neighbouring and rebrand params)
+  3: HANDLE ILLOGICAL INTERSECTS??
+  4: insert connections (rounded or whatnot)
+  5: track rings: whenever a return to a previous intersection is detected, detatch the part
+  6: if a detached ring is opposite direction from original, remove, otherwise add ring
+  7: when all this is done, seperately from each ring, combine them all as done before (now no
+  weirdness should remain)
+
+  For 1, we need to
+  - parametrize the segments
+  - move them in a direction
+  - store in/out params per segment
+ */
+
 type InnerIntersect = {seg: number; param: number; visited: boolean};
 type Intersect = {list: InnerIntersect[]; position: GJ.Position2};
 
