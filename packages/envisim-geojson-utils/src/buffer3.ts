@@ -37,7 +37,6 @@ function moveSegments(
     params.push([0.0, 1.0]);
 
     for (let c = 2; c < polygon.length; c++) {
-      // const seg = new Segment(prev.p2, polygon[c]);
       const seg = new Segment(polygon[c - 1], polygon[c]);
       seg.buffer(buffer);
       segments.push(seg);

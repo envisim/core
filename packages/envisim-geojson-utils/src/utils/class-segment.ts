@@ -78,7 +78,7 @@ export class Segment {
     const sNumer = this.delta[1] * p1diff[0] - this.delta[0] * p1diff[1];
     if (
       includeInvalid === false &&
-      (sNumer < 0.0 === positiveDenom || sNumer > denom === positiveDenom)
+      (sNumer <= 0.0 === positiveDenom || sNumer >= denom === positiveDenom)
     ) {
       return null;
     }
@@ -86,7 +86,7 @@ export class Segment {
     const tNumer = segment.delta[1] * p1diff[0] - segment.delta[0] * p1diff[1];
     if (
       includeInvalid === false &&
-      (tNumer < 0.0 === positiveDenom || tNumer > denom === positiveDenom)
+      (tNumer <= 0.0 === positiveDenom || tNumer >= denom === positiveDenom)
     ) {
       return null;
     }
@@ -248,12 +248,12 @@ export function intersects(a: Segment, b: Segment): [number, number][] {
     return ret;
   }
 
-  if (sNumer < 0.0 === positiveDenom || sNumer > denom === positiveDenom) {
+  if (sNumer <= 0.0 === positiveDenom || sNumer >= denom === positiveDenom) {
     return [];
   }
 
   const tNumer = b.delta[1] * p1diff[0] - b.delta[0] * p1diff[1];
-  if (tNumer < 0.0 === positiveDenom || tNumer > denom === positiveDenom) {
+  if (tNumer <= 0.0 === positiveDenom || tNumer >= denom === positiveDenom) {
     return [];
   }
 

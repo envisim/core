@@ -14,6 +14,8 @@ const segments = [
   /* 8*/ new Segment([10, 0], [20, 10]),
   /* 9*/ new Segment([5, 0], [5, 10]),
   /*10*/ new Segment([0, 5], [10, 5]),
+  /*11*/ new Segment([4, 6], [4, 5]),
+  /*12*/ new Segment([4, 6], [3, 7]),
 ];
 
 describe('Class Segment', () => {
@@ -44,6 +46,8 @@ describe('Class Segment', () => {
       false,
       true,
       false,
+      true,
+      false,
     ]);
   });
 
@@ -68,5 +72,6 @@ describe('Class Segment', () => {
     ]);
     expect(intersects(segments[1], segments[6])).toEqual([]);
     expect(intersects(segments[1], segments[8])).toEqual([]);
+    expect(intersects(segments[11], segments[12])).toEqual([[-0, 0]]);
   });
 });

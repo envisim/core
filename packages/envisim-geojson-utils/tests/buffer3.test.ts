@@ -74,12 +74,27 @@ const pos_e: GJ.Position[][] = [
   ],
 ];
 
+const pos_f: GJ.Position[][] = [
+  [
+    [0, 0],
+    [8, 0],
+    [8, 6],
+    [5, 6],
+    [5, 4],
+    [3, 4],
+    [3, 6],
+    [0, 6],
+    [0, 0],
+  ],
+];
+
 const ac = AreaCollection.create([
   AreaFeature.create({type: 'Polygon', coordinates: pos_a}),
   AreaFeature.create({type: 'Polygon', coordinates: pos_b}),
   AreaFeature.create({type: 'Polygon', coordinates: pos_c}),
   AreaFeature.create({type: 'Polygon', coordinates: pos_d}),
   AreaFeature.create({type: 'Polygon', coordinates: pos_e}),
+  AreaFeature.create({type: 'Polygon', coordinates: pos_f}),
 ]);
 
 describe('buffer', () => {
@@ -102,27 +117,29 @@ describe('buffer', () => {
   //   ],
   // ]);
 
-  test('buffering', () => {
-    console.log(buffering([pos_a], bOptions)[0]);
-    console.log(buffering([pos_b], bOptions)[0]);
-    console.log(buffering([pos_c], bOptions)[0]);
-    console.log(buffering([pos_d], bOptions)[0]);
-    console.log(buffering([pos_e], bOptions)[0]);
-  });
+  // test('buffering', () => {
+  // console.log(buffering([pos_a], bOptions)[0]);
+  // console.log(buffering([pos_b], bOptions)[0]);
+  // console.log(buffering([pos_c], bOptions)[0]);
+  // console.log(buffering([pos_d], bOptions)[0]);
+  // console.log(buffering([pos_e], bOptions)[0]);
+  // console.log(buffering([pos_f], bOptions)[0]);
+  // });
 
-  test('shrinking', () => {
-    console.log(shrinking([pos_a], sOptions));
-    console.log(shrinking([pos_b], sOptions)[0]);
-    console.log(shrinking([pos_c], sOptions)[0]);
-    console.log(shrinking([pos_d], sOptions)[0]);
-    const buf = shrinking([pos_e], sOptions);
-    console.log(buf[0], buf[1]);
-  });
+  // test('shrinking', () => {
+  //   console.log(shrinking([pos_a], sOptions));
+  //   console.log(shrinking([pos_b], sOptions)[0]);
+  //   console.log(shrinking([pos_c], sOptions)[0]);
+  //   console.log(shrinking([pos_d], sOptions)[0]);
+  // const buf = shrinking([pos_e], sOptions);
+  // console.log(buf[0], buf[1]);
+  // console.log(shrinking([pos_f], sOptions)[0]);
+  // });
 
-  test('buffer', () => {
-    buffer(ac, bOptions).geomEach((g) => console.log(g.coordinates));
-    buffer(ac, sOptions).geomEach((g) => console.log(g.coordinates));
-  });
+  // test('buffer', () => {
+  //   buffer(ac, bOptions).geomEach((g) => console.log(g.coordinates));
+  //   buffer(ac, sOptions).geomEach((g) => console.log(g.coordinates));
+  // });
 
   // test('timing', () => {
   //   const a0 = Date.now();

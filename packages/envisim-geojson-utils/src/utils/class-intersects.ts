@@ -216,7 +216,7 @@ export class IntersectList {
     // Now, we need to exclude backwards travelling, amongst collinear segments. We do this and try
     // to find the rightmostest segment to the left.
     for (let i = 0; i < intpoint.segments.length; i++) {
-      if (direction[i] === -1) {
+      if (direction[i] === null || direction[i] === -1) {
         continue;
       }
 
