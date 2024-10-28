@@ -259,3 +259,19 @@ export function intersects(a: Segment, b: Segment): [number, number][] {
 
   return [[tNumer / denom, sNumer / denom]];
 }
+
+export function ringToSegments(polygon: GJ.Position[]): Segment[] {
+  const segments: Segment[] = [];
+
+  for (let c = 1; c < polygon.length; c++) {
+    segments.push(new Segment(polygon[c - 1], polygon[c]));
+  }
+
+  return segments;
+}
+
+export function segmentsToPolygon(segments: Segment[]): GJ.Position2[] {
+  const poly: GJ.Position2[] = segments.map((seg) => seg.start());
+  poly.push(segments[0].start());
+  return poly;
+}

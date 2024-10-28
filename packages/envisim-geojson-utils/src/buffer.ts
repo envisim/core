@@ -8,8 +8,9 @@ import {
   MultiPolygon,
   Polygon,
 } from './index.js';
+import {unionOfSegments} from './unionOfPolygons.js';
 import {IntersectList} from './utils/class-intersects.js';
-import {Segment} from './utils/class-segment.js';
+import {Segment, segmentsToPolygon} from './utils/class-segment.js';
 
 interface BufferOptions {
   /**
@@ -24,8 +25,6 @@ interface BufferOptions {
 
 // Assume not duplicate points
 function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>): Segment[] {
-  // {radius: buffer, steps: bindings}: Required<BufferOptions>,
-
   const segments: Segment[] = [];
   const params: [number, number][] = [];
 
@@ -272,23 +271,7 @@ function buffering(
     // disjunkt.
   }
 
-  const il = new IntersectList(outerSegments, outerBreaks);
-  const [list, parents] = il.reduceRingList(il.unwindToSegmentRings(), true);
-
-  const parentIndices: number[] = Array.from<number>({length: list.length}).fill(-1);
-  const returningPolygons: GJ.Position2[][][] = [];
-
-  for (let i = 0; i < list.length; i++) {
-    if (parents[i] === -1) {
-      returningPolygons.push([segmentsToPolygon(list[i])]);
-      parentIndices[i] = returningPolygons.length - 1;
-    } else {
-      // Since kids always comes after their parent in the returning list, we don't need to loop twice
-      returningPolygons[parentIndices[parents[i]]].push(segmentsToPolygon(list[i]));
-    }
-  }
-
-  return returningPolygons;
+  return unionOfSegments(outerSegments, outerBreaks);
 }
 
 // Only NEGATIVE
@@ -361,16 +344,10 @@ function shrinking(
   return returningPolygons;
 }
 
-function segmentsToPolygon(segments: Segment[]): GJ.Position2[] {
-  const poly: GJ.Position2[] = segments.map((seg) => seg.start());
-  poly.push(segments[0].start());
-  return poly;
-}
-
 export function buffer(gj: AreaCollection, options: BufferOptions): AreaCollection {
   const opts: Required<BufferOptions> = {radius: options.radius ?? 0.0, steps: options.steps ?? 10};
+  const ppc = {pointsPerCircle: opts.steps * 4};
   const collection = AreaCollection.create([]);
-  // const feats: AreaFeature[] = [];
 
   for (const feature of gj.features) {
     const geoms: GJ.Position[][][] = [];
@@ -378,7 +355,7 @@ export function buffer(gj: AreaCollection, options: BufferOptions): AreaCollecti
     if (AreaGeometryCollection.isGeometryCollection(feature.geometry)) {
       feature.geometry.forEach((g) => {
         if (Circle.isObject(g) || MultiCircle.isObject(g)) {
-          const cp = g.toPolygon();
+          const cp = g.toPolygon(ppc);
           if (Polygon.isObject(cp)) {
             geoms.push(cp.coordinates);
           } else {
@@ -403,7 +380,7 @@ export function buffer(gj: AreaCollection, options: BufferOptions): AreaCollecti
           continue;
         }
       } else {
-        geoms.push(...feature.geometry.toPolygon().coordinates);
+        geoms.push(...feature.geometry.toPolygon(ppc).coordinates);
       }
     } else {
       if (feature.geometry.radius + opts.radius > 0.0) {
