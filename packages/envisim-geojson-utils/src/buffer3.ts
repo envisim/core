@@ -23,22 +23,21 @@ interface BufferOptions {
 }
 
 // Assume not duplicate points
-function moveSegments(
-  polygon: GJ.Position[],
-  {radius: buffer, steps: bindings}: Required<BufferOptions>,
-): Segment[] {
+function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>): Segment[] {
+  // {radius: buffer, steps: bindings}: Required<BufferOptions>,
+
   const segments: Segment[] = [];
   const params: [number, number][] = [];
 
   {
     let prev = new Segment(polygon[0], polygon[1]);
-    prev.buffer(buffer);
+    prev.buffer(options.radius);
     segments.push(prev);
     params.push([0.0, 1.0]);
 
     for (let c = 2; c < polygon.length; c++) {
       const seg = new Segment(polygon[c - 1], polygon[c]);
-      seg.buffer(buffer);
+      seg.buffer(options.radius);
       segments.push(seg);
 
       // add params
@@ -90,9 +89,9 @@ function moveSegments(
     // we just draw a line
     // A connection is only needed if the two previous segments does not touch.
     if (lastIndex !== i - 1) {
-      addSegmentConnection(bindedSegments, lastPoint, curr.position(t[0]), 1);
+      addStraightSegmentConnection(bindedSegments, lastPoint, curr.position(t[0]));
     } else if (params[i][0] < 0.0) {
-      addSegmentConnection(bindedSegments, lastPoint, curr.position(t[0]), bindings);
+      addSegmentConnection(bindedSegments, lastPoint, curr.position(t[0]), polygon[i], options);
     }
 
     lastPoint = curr.position(t[1]);
@@ -104,9 +103,9 @@ function moveSegments(
   }
 
   if (lastIndex !== segments.length - 1 || firstIndex !== 0) {
-    addSegmentConnection(bindedSegments, lastPoint, bindedSegments[0].p1, 1);
+    addStraightSegmentConnection(bindedSegments, lastPoint, bindedSegments[0].p1);
   } else if (params[0][0] < 0.0) {
-    addSegmentConnection(bindedSegments, lastPoint, bindedSegments[0].p1, bindings);
+    addSegmentConnection(bindedSegments, lastPoint, bindedSegments[0].p1, polygon[0], options);
   }
 
   return bindedSegments;
@@ -130,22 +129,52 @@ function parametricInterval(params: [number, number]): [number, number] | null {
   }
 }
 
+function addStraightSegmentConnection(
+  segmentList: Segment[],
+  start: GJ.Position,
+  end: GJ.Position,
+) {
+  segmentList.push(new Segment(start, end));
+}
+
 /**
  * modifies segmentList in-place
  */
 function addSegmentConnection(
   segmentList: Segment[],
-  start: GJ.Position2,
-  end: GJ.Position2,
-  bindings: number = 1,
+  start: GJ.Position,
+  end: GJ.Position,
+  from: GJ.Position,
+  {radius, steps}: Required<BufferOptions>,
 ) {
-  if (bindings <= 1) {
-    segmentList.push(new Segment(start, end));
-    return;
+  if (steps <= 1) {
+    return addStraightSegmentConnection(segmentList, start, end);
   }
 
-  // Handle making a circle...
-  segmentList.push(new Segment(start, end));
+  const r = Math.abs(radius);
+  const delta0 = [start[0] - from[0], start[1] - from[1]];
+  const delta1 = [end[0] - from[0], end[1] - from[1]];
+
+  let theta0 = Math.acos(delta0[0] / r);
+  if (delta0[1] < 0.0) theta0 = -theta0;
+  const sweep = Math.atan2(
+    delta1[1] * delta0[0] - delta1[0] * delta0[1],
+    delta1[0] * delta0[0] + delta1[1] * delta0[1],
+  );
+
+  const nPoints = Math.ceil((Math.abs(sweep) / Math.PI) * steps * 2.0);
+  const angleStep = sweep / nPoints;
+  let angle = theta0;
+  let lastPoint = start;
+
+  for (let i = 1; i < nPoints; i++) {
+    angle += angleStep;
+    const newPoint: GJ.Position2 = [r * Math.cos(angle) + from[0], r * Math.sin(angle) + from[1]];
+    segmentList.push(new Segment(lastPoint, newPoint));
+    lastPoint = newPoint;
+  }
+
+  segmentList.push(new Segment(lastPoint, end));
 }
 
 function bufferSegmentRing(

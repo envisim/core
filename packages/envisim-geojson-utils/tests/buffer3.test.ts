@@ -16,77 +16,79 @@ const pos_a: GJ.Position[][] = [
 
 const pos_b: GJ.Position[][] = [
   [
-    [0, 0],
-    [5, 0],
-    [5, 2.5],
-    [2.5, 2.5],
-    [2.5, 5],
-    [0, 5],
-    [0, 0],
+    [20, 0],
+    [25, 0],
+    [25, 2.5],
+    [22.5, 2.5],
+    [22.5, 5],
+    [20, 5],
+    [20, 0],
   ],
 ];
 
 const pos_c: GJ.Position[][] = [
   [
-    [0, 0],
-    [3, 0],
-    [3, 5],
-    [4, 5],
-    [4, 0],
-    [10, 0],
-    [10, 10],
-    [0, 10],
-    [0, 0],
+    [0, 20],
+    [3, 20],
+    [3, 25],
+    [4, 25],
+    [4, 20],
+    [10, 20],
+    [10, 30],
+    [0, 30],
+    [0, 20],
   ],
 ];
 
 const pos_d: GJ.Position[][] = [
   [
-    [0, 0],
-    [3, 0],
-    [3, 7],
-    [7, 7],
-    [7, 3],
-    [3.5, 3],
-    [3.5, 0],
-    [10, 0],
-    [10, 10],
-    [0, 10],
-    [0, 0],
+    [20, 20],
+    [23, 20],
+    [23, 27],
+    [27, 27],
+    [27, 23],
+    [23.5, 23],
+    [23.5, 20],
+    [30, 20],
+    [30, 30],
+    [20, 30],
+    [20, 20],
   ],
 ];
 
 const pos_e: GJ.Position[][] = [
   [
-    [0, 0],
-    [3, 0],
-    [3, 2],
-    [6, 2],
-    [6, 0],
-    [9, 0],
-    [9, 5],
-    [6, 5],
-    [6, 3],
-    [3, 3],
-    [3, 5],
-    [0, 5],
-    [0, 0],
+    [40, 0],
+    [43, 0],
+    [43, 2],
+    [46, 2],
+    [46, 0],
+    [49, 0],
+    [49, 5],
+    [46, 5],
+    [46, 3],
+    [43, 3],
+    [43, 5],
+    [40, 5],
+    [40, 0],
   ],
 ];
 
 const pos_f: GJ.Position[][] = [
   [
-    [0, 0],
-    [8, 0],
-    [8, 6],
-    [5, 6],
-    [5, 4],
-    [3, 4],
-    [3, 6],
-    [0, 6],
-    [0, 0],
+    [0, 40],
+    [8, 40],
+    [8, 46],
+    [5, 46],
+    [5, 44],
+    [3, 44],
+    [3, 46],
+    [0, 46],
+    [0, 40],
   ],
 ];
+
+const multiPos = [pos_a, pos_b, pos_c, pos_d, pos_e, pos_f];
 
 const ac = AreaCollection.create([
   AreaFeature.create({type: 'Polygon', coordinates: pos_a}),
@@ -98,8 +100,8 @@ const ac = AreaCollection.create([
 ]);
 
 describe('buffer', () => {
-  const bOptions = {radius: 1, steps: 1};
-  const sOptions = {radius: -1, steps: 1};
+  const bOptions = {radius: 1, steps: 5};
+  const sOptions = {radius: -1, steps: 5};
 
   // expect(buffering([pos_a], options)).toEqual([
   //   [
@@ -117,47 +119,65 @@ describe('buffer', () => {
   //   ],
   // ]);
 
-  // test('buffering', () => {
-  // console.log(buffering([pos_a], bOptions)[0]);
-  // console.log(buffering([pos_b], bOptions)[0]);
-  // console.log(buffering([pos_c], bOptions)[0]);
-  // console.log(buffering([pos_d], bOptions)[0]);
-  // console.log(buffering([pos_e], bOptions)[0]);
-  // console.log(buffering([pos_f], bOptions)[0]);
-  // });
+  test('buffering', () => {
+    // console.log(buffering([pos_a], bOptions)[0]);
+    // console.log(buffering([pos_b], bOptions)[0]);
+    // console.log(buffering([pos_c], bOptions)[0]);
+    // console.log(buffering([pos_d], bOptions)[0]);
+    // console.log(buffering([pos_e], bOptions)[0]);
+    // console.log(buffering([pos_f], bOptions)[0]);
+    const res = [
+      ...buffering([pos_a], bOptions),
+      ...buffering([pos_b], bOptions),
+      ...buffering([pos_c], bOptions),
+      ...buffering([pos_d], bOptions),
+      ...buffering([pos_e], bOptions),
+      ...buffering([pos_f], bOptions),
+    ];
+    console.log(JSON.stringify(res));
+  });
 
-  // test('shrinking', () => {
-  //   console.log(shrinking([pos_a], sOptions));
-  //   console.log(shrinking([pos_b], sOptions)[0]);
-  //   console.log(shrinking([pos_c], sOptions)[0]);
-  //   console.log(shrinking([pos_d], sOptions)[0]);
-  // const buf = shrinking([pos_e], sOptions);
-  // console.log(buf[0], buf[1]);
-  // console.log(shrinking([pos_f], sOptions)[0]);
-  // });
+  test('shrinking', () => {
+    // console.log(shrinking([pos_a], sOptions));
+    // console.log(shrinking([pos_b], sOptions)[0]);
+    // console.log(shrinking([pos_c], sOptions)[0]);
+    // console.log(shrinking([pos_d], sOptions)[0]);
+    // const buf = shrinking([pos_e], sOptions);
+    // console.log(buf[0], buf[1]);
+    // console.log(shrinking([pos_f], sOptions)[0]);
+    const res = [
+      ...shrinking([pos_a], sOptions),
+      ...shrinking([pos_b], sOptions),
+      ...shrinking([pos_c], sOptions),
+      ...shrinking([pos_d], sOptions),
+      ...shrinking([pos_e], sOptions),
+      ...shrinking([pos_f], sOptions),
+    ];
+    console.log(JSON.stringify(res));
+  });
 
   // test('buffer', () => {
   //   buffer(ac, bOptions).geomEach((g) => console.log(g.coordinates));
   //   buffer(ac, sOptions).geomEach((g) => console.log(g.coordinates));
   // });
 
-  // test('timing', () => {
-  //   const a0 = Date.now();
-  //   for (let i = 0; i < 10000; i++) buffer(ac, bOptions);
-  //   const a1 = Date.now() - a0;
+  test('timing', () => {
+    const a0 = Date.now();
+    for (let i = 0; i < 5000; i++) buffer(ac, bOptions);
+    const a1 = Date.now() - a0;
 
-  //   const b0 = Date.now();
-  //   for (let i = 0; i < 10000; i++) oldBuffer(ac, bOptions);
-  //   const b1 = Date.now() - b0;
+    const b0 = Date.now();
+    for (let i = 0; i < 5000; i++) oldBuffer(ac, bOptions);
+    const b1 = Date.now() - b0;
 
-  //   const c0 = Date.now();
-  //   for (let i = 0; i < 10000; i++) buffer(ac, sOptions);
-  //   const c1 = Date.now() - c0;
+    const c0 = Date.now();
+    for (let i = 0; i < 5000; i++) buffer(ac, sOptions);
+    const c1 = Date.now() - c0;
 
-  //   const d0 = Date.now();
-  //   for (let i = 0; i < 10000; i++) oldBuffer(ac, sOptions);
-  //   const d1 = Date.now() - d0;
+    const d0 = Date.now();
+    for (let i = 0; i < 5000; i++) oldBuffer(ac, sOptions);
+    const d1 = Date.now() - d0;
 
-  //   console.log(a1, b1, c1, d1);
-  // });
+    console.log(a1, b1, c1, d1);
+  });
 });

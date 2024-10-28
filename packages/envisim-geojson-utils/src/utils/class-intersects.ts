@@ -29,6 +29,12 @@ export class IntersectList {
     for (const idx of order) {
       const seg = segments[idx];
 
+      // Always add neighbours
+      const nextIdx = nextIndex(idx, breaks);
+      if (this.tryAppendIntersect([idx, nextIdx], [1.0, 0.0]) === false) {
+        this.addIntersect([idx, nextIdx], [1.0, 0.0], seg.position(1.0));
+      }
+
       // Check new seg for intersect with current queue
       for (let j = 0; j < queue.length; ) {
         const queueIdx = queue[j];
@@ -41,14 +47,14 @@ export class IntersectList {
           continue; // without incrementing j, as j points to different value
         }
 
+        if (nextIndex(idx, breaks) === queueIdx || prevIndex(idx, breaks) === queueIdx) {
+          j++;
+          continue;
+        }
+
         // if the segment after idx is the next seg, intersection must happen at [1.0, 0.0]. if it
         // is the previous, intersection must happen at [0.0, 1.0]
-        const ts: [number, number][] =
-          nextIndex(idx, breaks) === queueIdx
-            ? [[1.0, 0.0]]
-            : prevIndex(idx, breaks) === queueIdx
-              ? [[0.0, 1.0]]
-              : intersects(seg, queueSeg);
+        const ts: [number, number][] = intersects(seg, queueSeg);
 
         for (const t of ts) {
           if (this.tryAppendIntersect([idx, queueIdx], t) === false) {
