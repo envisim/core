@@ -1,9 +1,8 @@
-import polygonClipping from 'polygon-clipping';
-
 import {copy} from '@envisim/utils';
 
 import type * as GJ from '../types/geojson.js';
 import {bbox4, bboxFromPositions} from './bbox.js';
+import {intersectPolygons} from './intersect-polygons.js';
 import {normalizeLongitude} from './position.js';
 
 // Internal function to compare two positions
@@ -40,10 +39,7 @@ function cutLineStringCoords(ls: GJ.Position[]): GJ.Position[][] {
   const mls: GJ.Position[][] = [];
   let nls: GJ.Position[] = [];
   let prevCoord = [...coords[0]];
-  nls.push([
-    normalizeLongitude(coords[0][0]),
-    ...coords[0].slice(1),
-  ] as GJ.Position);
+  nls.push([normalizeLongitude(coords[0][0]), ...coords[0].slice(1)] as GJ.Position);
   for (let i = 1; i < coords.length; i++) {
     const currSide = coords[i][0] < 180;
     const currCoord = coords[i];
@@ -75,10 +71,7 @@ function cutLineStringCoords(ls: GJ.Position[]): GJ.Position[][] {
         addPosition(nls, [-180, ...latAlt] as GJ.Position);
       }
     }
-    const coord = [
-      normalizeLongitude(currCoord[0]),
-      ...currCoord.slice(1),
-    ] as GJ.Position;
+    const coord = [normalizeLongitude(currCoord[0]), ...currCoord.slice(1)] as GJ.Position;
     addPosition(nls, coord);
     prevCoord = [...currCoord];
     prevSide = currSide;
@@ -178,12 +171,12 @@ function cutPolygonCoords(pol: GJ.Position[][]): GJ.Position[][][] {
   // Intersect coords with leftArea to create the first polygon and rightArea
   // to create the second polygon.
   const mpc: GJ.Position[][][] = [];
-  const left = intersectPolygonPolygon(coords, leftArea);
-  if (left !== null) {
+  const left = intersectPolygons([coords, leftArea]);
+  if (left.length > 0) {
     left.forEach((p) => mpc.push(p));
   }
-  const right = intersectPolygonPolygon(coords, rightArea);
-  if (right !== null) {
+  const right = intersectPolygons([coords, rightArea]);
+  if (right.length > 0) {
     // need to fix coords here
     right.forEach((p) => {
       const pc: GJ.Position[][] = [];
@@ -230,29 +223,10 @@ export function cutAreaGeometry(g: GJ.AreaGeometry): GJ.AreaGeometry {
       return {type: 'MultiPolygon', coordinates: mpc};
     case 'GeometryCollection':
       for (let i = 0; i < geom.geometries.length; i++) {
-        geom.geometries[i] = cutAreaGeometry(
-          geom.geometries[i],
-        ) as GJ.AreaObject;
+        geom.geometries[i] = cutAreaGeometry(geom.geometries[i]) as GJ.AreaObject;
       }
       return geom;
     default:
       throw new Error('Invalid type');
   }
-}
-
-// Internal for polygon coordinates
-function intersectPolygonPolygon(
-  p1: GJ.Position[][],
-  p2: GJ.Position[][],
-): GJ.Position[][][] | null {
-  const geoms: polygonClipping.Geom[] = [
-    p1 as polygonClipping.Geom,
-    p2 as polygonClipping.Geom,
-  ];
-  const intersection = polygonClipping.intersection(
-    geoms[0],
-    ...geoms.slice(1),
-  );
-  if (intersection.length === 0) return null;
-  return intersection as GJ.Position[][][];
 }

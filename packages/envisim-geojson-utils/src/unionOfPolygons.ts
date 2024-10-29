@@ -1,5 +1,3 @@
-import polygonClipping from 'polygon-clipping';
-
 import * as GJ from './types/geojson.js';
 import {
   AreaCollection,

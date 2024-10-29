@@ -13,7 +13,6 @@
   "dependencies": {
     "@envisim/utils": "workspace:*",
     "geographiclib-geodesic": "^2.0.0",
-    "polygon-clipping": "^0.15.7",
     "tslib": "^2.6.2",
     "uuid": "^9.0.1"
   },
