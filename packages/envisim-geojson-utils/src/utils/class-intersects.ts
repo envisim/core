@@ -87,7 +87,7 @@ export class IntersectList {
   tryAppendIntersect(segments: [number, number], params: [number, number]): boolean {
     // It shouldnt be possible for a crossing to exist for seg[0], without already existing for
     // seg[1]
-    let intidx = this.segmentMap[segments[1]].find((int) =>
+    const intidx = this.segmentMap[segments[1]].find((int) =>
       this.list[int].segments.some(
         (inner) => inner.segment === segments[1] && inner.param === params[1],
       ),
@@ -467,7 +467,7 @@ function prevIndex(index: number, breaks: number[]): number {
     return breaks[0] - 1;
   }
 
-  let rmi = breaks.indexOf(index);
+  const rmi = breaks.indexOf(index);
   return rmi > -1 ? breaks[rmi + 1] - 1 : index - 1;
 }
 
@@ -477,7 +477,6 @@ function nextIndex(index: number, breaks: number[]): number {
     return 0;
   }
 
-  let rmi = breaks.indexOf(next);
-
+  const rmi = breaks.indexOf(next);
   return rmi > -1 ? breaks[rmi - 1] : next;
 }

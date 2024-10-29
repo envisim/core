@@ -83,7 +83,7 @@ function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>):
       continue;
     }
 
-    const curr = segments[i];
+    curr = segments[i];
     // If previous segment is adjacent to current, then we need to add a proper connetion, otherwise
     // we just draw a line
     // A connection is only needed if the two previous segments does not touch.
