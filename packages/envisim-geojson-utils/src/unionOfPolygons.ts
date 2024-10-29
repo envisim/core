@@ -96,9 +96,6 @@ export function unionOfPolygons(
   const unionOfGeoms = union(geoms);
 
   if (unionOfGeoms.length === 1) {
-  }
-
-  if (union.length === 1) {
     return AreaCollection.create(
       [AreaFeature.create(Polygon.create(unionOfGeoms[0], true), {}, true)],
       true,

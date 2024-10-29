@@ -1,16 +1,11 @@
 import {describe, expect, test} from 'vitest';
 
-import {
-  AreaFeature,
-  GeoJSON,
-  LineFeature,
-  LineString,
-  intersectLineAreaFeatures,
-} from '../src/index.js';
+import {AreaFeature, GeoJSON as GJ, LineFeature, LineString} from '../src/index.js';
+import {intersectLineAreaFeatures} from '../src/intersectLineAreaFeatures.js';
 import './_equalArrays.testf';
 
-describe('intersectLinePolygonFeatures', () => {
-  const polycoords: GeoJSON.Position[][] = [
+describe('intersectLineAreaFeatures', () => {
+  const polycoords: GJ.Position[][] = [
     [
       [-0.5, -0.5],
       [0.5, -0.5],
@@ -19,7 +14,7 @@ describe('intersectLinePolygonFeatures', () => {
       [-0.5, -0.5],
     ],
   ];
-  const polycoords2: GeoJSON.Position[][] = [
+  const polycoords2: GJ.Position[][] = [
     [
       [0.0, -1.0],
       [0.0, 1.0],
@@ -28,7 +23,7 @@ describe('intersectLinePolygonFeatures', () => {
       [0.0, -1.0],
     ],
   ];
-  const linecoords: GeoJSON.Position[] = [
+  const linecoords: GJ.Position[] = [
     [-2, 0],
     [-0.5, 0],
     [0, 0.1],
@@ -52,10 +47,7 @@ describe('intersectLinePolygonFeatures', () => {
       coordinates: polycoords,
     });
 
-    const intersection = intersectLineAreaFeatures(
-      line,
-      polygon,
-    ) as LineFeature;
+    const intersection = intersectLineAreaFeatures(line, polygon) as LineFeature;
     expect(intersection).not.toBeNull();
 
     expect(LineString.isObject(intersection.geometry)).toBe(true);
@@ -75,10 +67,7 @@ describe('intersectLinePolygonFeatures', () => {
       coordinates: [polycoords, polycoords],
     });
 
-    const intersection = intersectLineAreaFeatures(
-      line,
-      polygon,
-    ) as LineFeature;
+    const intersection = intersectLineAreaFeatures(line, polygon) as LineFeature;
     expect(intersection).not.toBeNull();
 
     expect(LineString.isObject(intersection.geometry)).toBe(true);
@@ -98,10 +87,7 @@ describe('intersectLinePolygonFeatures', () => {
       coordinates: [polycoords, polycoords, polycoords2],
     });
 
-    const intersection = intersectLineAreaFeatures(
-      line,
-      polygon,
-    ) as LineFeature;
+    const intersection = intersectLineAreaFeatures(line, polygon) as LineFeature;
     expect(intersection).not.toBeNull();
 
     expect(LineString.isObject(intersection.geometry)).toBe(true);

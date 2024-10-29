@@ -1,190 +1,98 @@
-import polygonClipping from 'polygon-clipping';
-
 import type * as GJ from './types/geojson.js';
-import {
-  AreaFeature,
-  AreaGeometryCollection,
-  AreaObject,
-  Circle,
-  MultiPolygon,
-  Polygon,
-} from './geojson/index.js';
-import {Geodesic} from './utils/Geodesic.js';
+import {AreaFeature, AreaGeometryCollection, MultiPolygon, Polygon} from './geojson/index.js';
 import {bboxInBBox} from './utils/bbox.js';
+import {IntersectList} from './utils/class-intersects.js';
+import {
+  type Segment,
+  ringToSegments,
+  segmentsToPolygon,
+  upwardIntersection,
+} from './utils/class-segment.js';
 
-/**
- * @internal
- */
-function intersectPolygonPolygon(
-  p1: Polygon | MultiPolygon,
-  p2: Polygon | MultiPolygon,
-): Polygon | MultiPolygon | null {
-  const geoms: polygonClipping.Geom[] = [
-    p1.coordinates as polygonClipping.Geom,
-    p2.coordinates as polygonClipping.Geom,
-  ];
-
-  const intersection = polygonClipping.intersection(
-    geoms[0],
-    ...geoms.slice(1),
-  );
-
-  if (intersection.length === 0) return null;
-
-  if (intersection.length === 1)
-    return Polygon.create(intersection[0] as GJ.Position[][], true);
-
-  return MultiPolygon.create(intersection as GJ.Position[][][], true);
-}
-
-/**
- * @internal
- */
-function intersectCircleCircle(
-  p1: Circle,
-  p2: Circle,
-  pointsPerCircle: number = 16,
-): MultiPolygon | Polygon | Circle | null {
-  const dist = Geodesic.distance(p1.coordinates, p2.coordinates);
-
-  if (dist < p1.radius + p2.radius) {
-    // Intersection
-
-    // Check if circle 1 is fully within circle 2
-    if (dist + p1.radius < p2.radius)
-      return Circle.create([...p1.coordinates], p1.radius, true);
-
-    // Check if circle 2 is fully within circle 1
-    if (dist + p2.radius < p1.radius)
-      return Circle.create([...p2.coordinates], p2.radius, true);
-
-    // Need to intersect polygons
-    const intersect = intersectPolygonPolygon(
-      p1.toPolygon({pointsPerCircle}),
-      p2.toPolygon({pointsPerCircle}),
-    );
-
-    // Return the intersect if it is, as expected, a Polygon or MultyPolygon
-    if (Polygon.isObject(intersect) || MultiPolygon.isObject(intersect))
-      return intersect;
+function intersect(polygons: GJ.Position[][][]): GJ.Position2[][][] {
+  if (polygons.length === 1) {
+    return [polygons[0].map((ring) => ring.map((p) => [p[0], p[1]]))];
   }
 
-  // No intersect
-  return null;
-}
+  const outerSegments: Segment[] = [];
+  const outerBreaks: number[] = [];
 
-/**
- * @internal
- */
-function intersectCirclePolygon(
-  p1: Circle,
-  p2: Polygon | MultiPolygon,
-  pointsPerCircle: number = 16,
-): MultiPolygon | Polygon | Circle | null {
-  const dist = p2.distanceToPosition(p1.coordinates);
-
-  if (dist <= -p1.radius) {
-    // Circle fully within polygon
-    return Circle.create([...p1.coordinates], p1.radius, true);
-  }
-
-  if (dist < p1.radius) {
-    // Intersection, convert to polygon
-    const intersect = intersectPolygonPolygon(
-      p1.toPolygon({pointsPerCircle}),
-      p2,
-    );
-    return intersect;
-  }
-
-  // No  intersect
-  return null;
-}
-
-/**
- * @internal
- */
-function intersectPolygonAF(
-  geoms: AreaObject[],
-  g1: Polygon | MultiPolygon,
-  feature: AreaFeature,
-  pointsPerCircle: number = 16,
-): void {
-  let isc;
-
-  feature.geomEach((g2: AreaObject) => {
-    if (!bboxInBBox(g1.getBBox(), g2.getBBox())) return;
-
-    switch (g2.type) {
-      case 'Polygon':
-      case 'MultiPolygon':
-        isc = intersectPolygonPolygon(g1, g2);
-        if (isc) geoms.push(isc);
-        return;
-
-      case 'Point':
-        isc = intersectCirclePolygon(g2, g1, pointsPerCircle);
-        if (isc) geoms.push(isc);
-        return;
-
-      case 'MultiPoint':
-        g2.coordinates.forEach((coords) => {
-          const circle = Circle.create(coords, g2.radius, true);
-          isc = intersectCirclePolygon(circle, g1, pointsPerCircle);
-          if (isc) geoms.push(isc);
-          return;
-        });
-        return;
+  for (const polygon of polygons) {
+    for (const ring of polygon) {
+      outerSegments.push(...ringToSegments(ring));
+      outerBreaks.push(outerSegments.length);
     }
+  }
+
+  const il = new IntersectList(outerSegments, outerBreaks);
+  const ringList = il.unwindToSegmentRings();
+
+  const segList: Segment[][] = Array.from(ringList, (ring) => il.ringToSegments(ring));
+  const extremes: [number, number][] = Array.from(ringList, (ring) => il.extremePointInRing(ring));
+  const parent: number[] = Array.from<number>({length: ringList.length}).fill(-1);
+  const positive: boolean[] = Array.from(ringList, (ring, i) =>
+    il.ringIsPositive(ring, extremes[i][0]),
+  );
+  const order: number[] = Array.from({length: ringList.length}, (_, i) => i);
+  order.sort((a, b) => {
+    const apos = il.list[extremes[a][0]].position;
+    const bpos = il.list[extremes[b][0]].position;
+    const d = apos[0] - bpos[0];
+    if (d === 0.0) return apos[1] - bpos[1];
+    return d;
   });
-}
 
-/**
- * @internal
- */
-function intersectCircleAF(
-  geoms: AreaObject[],
-  circles1: Circle[],
-  circles1BBox: GJ.BBox,
-  feature: AreaFeature,
-  pointsPerCircle: number = 16,
-): void {
-  let isc;
+  const queue: number[] = [];
 
-  feature.geomEach((g2: AreaObject) => {
-    if (!bboxInBBox(circles1BBox, g2.getBBox())) return;
+  const depth = Array.from<number>({length: ringList.length});
+  const retPolys: GJ.Position2[][][] = [];
+  const retIndices: number[] = Array.from<number>({length: ringList.length}).fill(-1);
 
-    switch (g2.type) {
-      case 'Polygon':
-      case 'MultiPolygon':
-        circles1.forEach((circle: Circle) => {
-          isc = intersectCirclePolygon(circle, g2, pointsPerCircle);
-          if (isc) geoms.push(isc);
-        });
-        return;
+  for (const idx of order) {
+    // const ring = ringList[idx];
+    const sweepPoint = il.list[extremes[idx][0]].position;
+    let distance = Number.MAX_VALUE;
 
-      case 'Point':
-        circles1.forEach((circle: Circle) => {
-          isc = intersectCircleCircle(circle, g2, pointsPerCircle);
-          if (isc) geoms.push(isc);
-        });
-        return;
+    for (let j = 0; j < queue.length; ) {
+      const queueIdx = queue[j];
+      // const queueRing = ringList[queueIdx];
+      // Remove from queue those rings that has passed
+      if (il.list[extremes[queueIdx][1]].position[0] < sweepPoint[0]) {
+        queue[j] = queue[queue.length - 1]; // Swap remove
+        queue.pop();
+        continue; // Without incrementing j
+      }
 
-      case 'MultiPoint': {
-        const circles2 = g2.coordinates.map((coords) =>
-          Circle.create(coords, g2.radius, true),
-        );
+      const p = upwardIntersection(segList[queueIdx], sweepPoint, positive[queueIdx]);
+      if (p && p < distance) {
+        parent[idx] = queueIdx;
+        distance = p;
+      }
 
-        circles1.forEach((circle1: Circle) => {
-          circles2.forEach((circle2: Circle) => {
-            isc = intersectCircleCircle(circle1, circle2, pointsPerCircle);
-            if (isc) geoms.push(isc);
-          });
-        });
-        return;
+      j++;
+    }
+
+    depth[idx] = parent[idx] > -1 ? depth[parent[idx]] : 0;
+
+    if (positive[idx]) {
+      depth[idx] += 1;
+
+      if (depth[idx] === 2) {
+        retPolys.push([segmentsToPolygon(segList[idx])]);
+        retIndices[idx] = retPolys.length - 1;
+      }
+    } else {
+      depth[idx] -= 1;
+
+      if (depth[idx] === 1) {
+        retPolys[retIndices[parent[idx]]].push(segmentsToPolygon(segList[idx]));
       }
     }
-  });
+
+    queue.push(idx);
+  }
+
+  return retPolys;
 }
 
 /**
@@ -200,41 +108,55 @@ export function intersectAreaAreaFeatures(
   feature2: AreaFeature,
   pointsPerCircle: number = 16,
 ): AreaFeature | null {
+  const fg1 = feature1.geometry;
+  const fg2 = feature2.geometry;
+
   // early return if bboxes doesn't overlap
-  if (!bboxInBBox(feature1.geometry.getBBox(), feature2.geometry.getBBox()))
+  if (!bboxInBBox(fg1.getBBox(), fg2.getBBox())) {
     return null;
+  }
 
-  // Need to work with geometries to keep
-  // Circles/MultiCircles if possible
-  const geoms: AreaObject[] = [];
+  if (
+    AreaGeometryCollection.isGeometryCollection(fg1) ||
+    AreaGeometryCollection.isGeometryCollection(fg2)
+  ) {
+    // We don't handle gcs
+    return null;
+  }
 
-  feature1.geomEach((g1: AreaObject) => {
-    if (g1.type === 'Polygon' || g1.type === 'MultiPolygon') {
-      intersectPolygonAF(geoms, g1, feature2, pointsPerCircle);
-      return;
+  const geoms: GJ.Position[][][] = [];
+
+  if (Polygon.isObject(fg1)) {
+    geoms.push(fg1.coordinates);
+  } else if (MultiPolygon.isObject(fg1)) {
+    geoms.push(...fg1.coordinates);
+  } else {
+    const cp = fg1.toPolygon({pointsPerCircle});
+    if (Polygon.isObject(cp)) {
+      geoms.push(cp.coordinates);
+    } else {
+      geoms.push(...cp.coordinates);
     }
+  }
 
-    const circles: Circle[] =
-      g1.type === 'Point'
-        ? [g1]
-        : g1.coordinates.map((coords: GJ.Position) =>
-            Circle.create(coords, g1.radius, true),
-          );
+  if (Polygon.isObject(fg2)) {
+    geoms.push(fg2.coordinates);
+  } else if (MultiPolygon.isObject(fg2)) {
+    geoms.push(...fg2.coordinates);
+  } else {
+    const cp = fg2.toPolygon({pointsPerCircle});
+    if (Polygon.isObject(cp)) {
+      geoms.push(cp.coordinates);
+    } else {
+      geoms.push(...cp.coordinates);
+    }
+  }
 
-    intersectCircleAF(geoms, circles, g1.getBBox(), feature2, pointsPerCircle);
-  });
+  const intersectOfGeoms = intersect(geoms);
 
-  if (geoms.length === 0) return null;
+  if (intersectOfGeoms.length === 1) {
+    return AreaFeature.create(Polygon.create(intersectOfGeoms[0], true), {}, true);
+  }
 
-  if (geoms.length === 1) return AreaFeature.create(geoms[0], {}, true);
-
-  // TODO?: Might be possible to check if all geometries are of the same type,
-  // e.g. all Circle and make MultiCircle instead of GeometryCollection
-  // or MultiPolygon instead of GeometryCollection of Polygons/MultiPolygons
-  // etc... For now keep as GeometryCollection.
-  return AreaFeature.create(
-    AreaGeometryCollection.create(geoms, true),
-    {},
-    true,
-  );
+  return AreaFeature.create(MultiPolygon.create(intersectOfGeoms, true), {}, true);
 }
