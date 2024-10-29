@@ -1,5 +1,5 @@
 import * as GJ from '../types/geojson.js';
-import {Segment, intersects} from './class-segment.js';
+import {Segment, intersects, upwardIntersection} from './class-segment.js';
 
 type IntersectSegment = {segment: number; param: number; visited: boolean};
 type IntersectPoint = {segments: IntersectSegment[]; position: GJ.Position2};
@@ -480,28 +480,4 @@ function nextIndex(index: number, breaks: number[]): number {
   let rmi = breaks.indexOf(next);
 
   return rmi > -1 ? breaks[rmi - 1] : next;
-}
-
-function upwardIntersection(
-  segments: Segment[],
-  point: GJ.Position,
-  isPositive: boolean,
-): number | null {
-  let minimumDistance = Number.MAX_VALUE;
-  let crossings = 0;
-
-  for (const seg of segments) {
-    const d = seg.upwardIntersectFromPoint(point, isPositive);
-    if (d === null || d < 0.0) {
-      continue;
-    }
-
-    crossings += 1;
-
-    if (d < minimumDistance) {
-      minimumDistance = d;
-    }
-  }
-
-  return crossings % 2 === 0 ? null : minimumDistance;
 }

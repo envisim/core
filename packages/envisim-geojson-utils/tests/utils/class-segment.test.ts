@@ -74,4 +74,21 @@ describe('Class Segment', () => {
     expect(intersects(segments[1], segments[8])).toEqual([]);
     expect(intersects(segments[11], segments[12])).toEqual([[-0, 0]]);
   });
+
+  // test('circle intersect', () => {
+  //   expect    (    segments.map(s => s.intersectsCircle([5.0, 5.0], 5.0))).toEqual([
+  //     [],
+  //     [],
+  //     [],
+  //     [],
+  //     [],
+  //     [],
+  //     [],
+  //     [],
+  //     [],
+  //     [],
+  //     [],
+  //     [],
+  //   ]);
+  // });
 });

@@ -1,13 +1,14 @@
 import type * as GJ from './types/geojson.js';
 import {
   LineFeature,
-  LineObject,
+  LineGeometryCollection,
+  LineString,
   MultiPoint,
   Point,
   PointFeature,
 } from './geojson/index.js';
 import {bboxInBBox} from './utils/bbox.js';
-import {intersectSegments} from './utils/intersectSegments.js';
+import {type Segment, ringToSegments} from './utils/class-segment.js';
 
 /**
  * Computes the intersect of two LineFeatures as
@@ -21,39 +22,34 @@ export function intersectLineLineFeatures(
   feature1: LineFeature,
   feature2: LineFeature,
 ): PointFeature | null {
-  const points: GJ.Position[] = [];
+  const points: GJ.Position2[] = [];
 
   // early return if bboxes doesn't overlap
-  if (!bboxInBBox(feature1.geometry.getBBox(), feature2.geometry.getBBox()))
+  if (!bboxInBBox(feature1.geometry.getBBox(), feature2.geometry.getBBox())) return null;
+
+  if (
+    LineGeometryCollection.isGeometryCollection(feature1.geometry) ||
+    LineGeometryCollection.isGeometryCollection(feature2.geometry)
+  ) {
+    // We don't handle gcs
     return null;
+  }
 
-  feature1.geomEach((g1: LineObject) => {
-    feature2.geomEach((g2: LineObject) => {
-      const coords1 =
-        g1.type === 'LineString' ? [g1.coordinates] : g1.coordinates;
-      const coords2 =
-        g2.type === 'LineString' ? [g2.coordinates] : g2.coordinates;
+  const f1: Segment[] = LineString.isObject(feature1.geometry)
+    ? ringToSegments(feature1.geometry.coordinates)
+    : feature1.geometry.coordinates.flatMap(ringToSegments);
+  const f2: Segment[] = LineString.isObject(feature2.geometry)
+    ? ringToSegments(feature2.geometry.coordinates)
+    : feature2.geometry.coordinates.flatMap(ringToSegments);
 
-      // Now we have coordinates for two MultiLineStrings.
-      // Go thru all segments to find possible intersection points.
-      coords1.forEach((line1) => {
-        coords2.forEach((line2) => {
-          for (let i = 0; i < line1.length - 1; i++) {
-            for (let j = 0; j < line2.length - 1; j++) {
-              const intersection = intersectSegments(
-                [line1[i], line1[i + 1]],
-                [line2[j], line2[j + 1]],
-              );
-
-              if (intersection) {
-                points.push(intersection);
-              }
-            }
-          }
-        });
-      });
-    });
-  });
+  for (const seg1 of f1) {
+    for (const seg2 of f2) {
+      const pt = seg1.intersect(seg2);
+      if (pt) {
+        points.push(pt);
+      }
+    }
+  }
 
   if (points.length === 0) {
     return null;

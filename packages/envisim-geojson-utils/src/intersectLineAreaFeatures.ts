@@ -9,7 +9,7 @@ import {
   Polygon,
 } from './geojson/index.js';
 import {bboxInBBox} from './utils/bbox.js';
-import {Segment} from './utils/intersectSegments.js';
+import {Segment} from './utils/class-segment.js';
 import {pointInSinglePolygonPosition} from './utils/pointInPolygonPosition.js';
 
 /**
@@ -27,10 +27,7 @@ export function intersectLineAreaFeatures(
   pointsPerCircle: number = 16,
 ): LineFeature | null {
   // early return if bboxes doesn't overlap
-  if (
-    !bboxInBBox(lineFeature.geometry.getBBox(), areaFeature.geometry.getBBox())
-  )
-    return null;
+  if (!bboxInBBox(lineFeature.geometry.getBBox(), areaFeature.geometry.getBBox())) return null;
 
   const geometry = lineFeature.geometry;
   let multiLineString: GJ.Position[][];
@@ -71,15 +68,12 @@ export function intersectLineAreaFeatures(
   });
 
   // Since lineStringInAreaFeature returns MultiLineString, we need to flatten
-  const coords = multiLineString.flatMap((ls) =>
-    lineStringInPolygons(ls, areas),
-  );
+  const coords = multiLineString.flatMap((ls) => lineStringInPolygons(ls, areas));
 
   if (coords.length === 0) return null;
 
   // We don't need to claim Multi if there is only one LineString left
-  if (coords.length === 1)
-    return LineFeature.create(LineString.create(coords[0], true), {}, true);
+  if (coords.length === 1) return LineFeature.create(LineString.create(coords[0], true), {}, true);
 
   return LineFeature.create(MultiLineString.create(coords, true), {}, true);
 }
@@ -100,18 +94,18 @@ function lineStringInPolygons(
     const vals = segmentIntersectsAreas(seg, areas);
 
     if (vals.length === 0) {
-      ls.push(seg.a);
+      ls.push(seg.start());
       continue;
     }
 
     if (vals[0] === 0.0) {
       if (ls.length > 0) {
-        ls.push(seg.a);
+        ls.push(seg.start());
         mls.push(ls);
         ls = [];
       }
     } else {
-      ls.push(seg.a, seg.position(vals[0]));
+      ls.push(seg.start(), seg.position(vals[0]));
       mls.push(ls);
       ls = [];
     }
@@ -143,10 +137,7 @@ function lineStringInPolygons(
  * @returns the parametric values, in pairs, which contains the excluded
  * segments from all polygons
  */
-function segmentIntersectsAreas(
-  segment: Segment,
-  areas: GJ.Position[][][],
-): number[] {
+function segmentIntersectsAreas(segment: Segment, areas: GJ.Position[][][]): number[] {
   const values: number[] = [0.0, 1.0];
 
   for (let i = 0; i < areas.length; i++) {
@@ -162,18 +153,14 @@ function segmentIntersectsAreas(
  * @returns the parametric values, in pairs, which contains the excluded
  * segments from one polygon
  */
-function segmentIntersectsArea(
-  segment: Segment,
-  values: number[],
-  area: GJ.Position[][],
-): void {
+function segmentIntersectsArea(segment: Segment, values: number[], area: GJ.Position[][]): void {
   const tarr: number[] = [];
   const vsmall = values[0];
 
   for (let i = 0; i < area.length; i++) {
     for (let j = 1; j < area[i].length; j++) {
-      const t = segment.parameter(area[i][j - 1], area[i][j]);
-      if (t && t > vsmall) tarr.push(t);
+      const t = segment.parametricIntersect(new Segment(area[i][j - 1], area[i][j]), false);
+      if (t && t[0] > vsmall) tarr.push(t[0]);
     }
   }
 
@@ -181,9 +168,7 @@ function segmentIntersectsArea(
 
   // Remove all if there is no t's
   if (tarr.length === 0) {
-    if (
-      pointInSinglePolygonPosition(segment.midPosition(values[0], 1.0), area)
-    ) {
+    if (pointInSinglePolygonPosition(segment.position((values[0] + 1.0) * 0.5), area)) {
       values.splice(0);
     }
 
@@ -192,9 +177,7 @@ function segmentIntersectsArea(
 
   let i = 0;
   // Make sure that i points to a t that marks the end of an ex-zone
-  if (
-    pointInSinglePolygonPosition(segment.midPosition(values[0], tarr[0]), area)
-  ) {
+  if (pointInSinglePolygonPosition(segment.position((values[0] + tarr[0]) * 0.5), area)) {
     if (tarr[0] === values[1]) {
       values.splice(0, 2);
     } else {

@@ -53,10 +53,8 @@ export class Segment {
     return this.delta[0] * segment.delta[1] - this.delta[1] * segment.delta[0];
   }
 
-  // Returns the parametric intersects of two segments as [this param, seg
-  // param]
-  // the parametric intersect is a value t between 0 and 1
-  // need to handle full intersects (overlap)
+  // Returns the parametric intersects of two segments as [this param, seg param] the parametric
+  // intersect is a value t between 0 and 1 need to handle full intersects (overlap)
   parametricIntersect(segment: Segment, includeInvalid: boolean = true): [number, number] | null {
     if (this.p1[0] === segment.p2[0] && this.p1[1] === segment.p2[1]) {
       // segment -> this
@@ -92,6 +90,51 @@ export class Segment {
     }
 
     return [tNumer / denom, sNumer / denom];
+  }
+
+  intersectsCircle(circle: GJ.Position, radius: number, includeTouch: boolean = false): number[] {
+    if (
+      circle[0] - radius > Math.max(this.p1[0], this.p2[0]) ||
+      circle[0] + radius < Math.min(this.p1[0], this.p2[0]) ||
+      circle[1] - radius > Math.max(this.p1[1], this.p2[1]) ||
+      circle[1] + radius < Math.min(this.p1[1], this.p2[1])
+    ) {
+      return [];
+    }
+
+    const radiusSquared = radius * radius;
+    // a
+    const segmentLengthSquared = this.delta[0] * this.delta[0] + this.delta[1] * this.delta[1];
+    // f
+    const diff = [this.p1[0] - circle[0], this.p1[1] - circle[1]];
+    // b/2
+    const k = diff[0] * this.delta[0] + diff[1] * this.delta[1];
+    // c
+    const c = diff[0] * diff[0] + diff[1] * diff[1] - radiusSquared;
+    //
+    const disc = k * k - segmentLengthSquared * c;
+
+    if (disc < 0.0) {
+      return [];
+    }
+
+    if (disc === 0.0) {
+      if (includeTouch) {
+        const t = -k / segmentLengthSquared;
+        return 0.0 <= t && t <= 1.0 ? [t] : [];
+      } else {
+        return [];
+      }
+    }
+
+    const sqrtDisc = Math.sqrt(disc);
+    const t0 = (-k - sqrtDisc) / segmentLengthSquared;
+    const t1 = (-k + sqrtDisc) / segmentLengthSquared;
+
+    const res = [];
+    if (0.0 <= t0 && t0 <= 1.0) res.push(t0);
+    if (0.0 <= t1 && t1 <= 1.0) res.push(t1);
+    return res;
   }
 
   upwardIntersectFromPoint(point: GJ.Position, isPositive: boolean = true): number | null {
@@ -180,6 +223,8 @@ export class Segment {
     return this.p1[0] < this.p2[0] ? this.p2 : this.p1;
   }
 }
+
+export const NULL_SEGMENT = new Segment([0, 0], [0, 0]);
 
 // Only valids, but handles overlaps
 export function intersects(a: Segment, b: Segment): [number, number][] {
@@ -274,4 +319,28 @@ export function segmentsToPolygon(segments: Segment[]): GJ.Position2[] {
   const poly: GJ.Position2[] = segments.map((seg) => seg.start());
   poly.push(segments[0].start());
   return poly;
+}
+
+export function upwardIntersection(
+  segments: Segment[],
+  point: GJ.Position,
+  isPositive: boolean,
+): number | null {
+  let minimumDistance = Number.MAX_VALUE;
+  let crossings = 0;
+
+  for (const seg of segments) {
+    const d = seg.upwardIntersectFromPoint(point, isPositive);
+    if (d === null || d < 0.0) {
+      continue;
+    }
+
+    crossings += 1;
+
+    if (d < minimumDistance) {
+      minimumDistance = d;
+    }
+  }
+
+  return crossings % 2 === 0 ? null : minimumDistance;
 }

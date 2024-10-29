@@ -30,18 +30,11 @@ export {
 
 // Utils
 export {areaOfPolygonLonLat} from './utils/area.js';
-export {
-  bbox4,
-  bboxFromPositions,
-  bboxInBBox,
-  pointInBBox,
-  unionOfBBoxes,
-} from './utils/bbox.js';
+export {bbox4, bboxFromPositions, bboxInBBox, pointInBBox, unionOfBBoxes} from './utils/bbox.js';
 export {Geodesic} from './utils/Geodesic.js';
 export {Rhumb} from './utils/Rhumb.js';
 export {PlateCarree} from './utils/PlateCarree.js';
 export {distancePositionToSegment} from './utils/distancePositionToSegment.js';
-export {intersectSegments, Segment} from './utils/intersectSegments.js';
 export {lengthOfLineString} from './utils/length.js';
 export {pointInSinglePolygonPosition} from './utils/pointInPolygonPosition.js';
 export {
