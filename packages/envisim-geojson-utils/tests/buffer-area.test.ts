@@ -86,23 +86,38 @@ const polygons = [
   ]),
 ] satisfies Polygon[];
 
-describe('buffer-area', () => {
-  const bOptions = {distance: 80000, steps: 1};
-  const sOptions = {distance: -80000, steps: 5};
+const bOptions = {distance: 80000, steps: 5};
+const sOptions = {distance: -80000, steps: 5};
 
-  test('circle', () => {
-    expect(bufferArea(circles[0], {distance: 5, steps: 1})).toEqual(
-      Circle.create(circles[0].coordinates, 15),
-    );
-    expect(bufferArea(circles[0], {distance: -5, steps: 1})).toEqual(
-      Circle.create(circles[0].coordinates, 5),
-    );
-  });
-
-  test('poly', () => {
-    console.log(bufferArea(polygons[0], bOptions).coordinates);
-    throw new Error('h');
-  });
-
-  test.todo('check lengths');
+test('circle', () => {
+  expect(bufferArea(circles[0], {distance: 5, steps: 1})).toEqual(
+    Circle.create(circles[0].coordinates, 15),
+  );
+  expect(bufferArea(circles[0], {distance: -5, steps: 1})).toEqual(
+    Circle.create(circles[0].coordinates, 5),
+  );
 });
+
+// test('poly', () => {
+//   // console.log(JSON.stringify(polygons.map((p) => p.coordinates)));
+//   console.log(
+//     JSON.stringify(
+//       polygons.flatMap((p) => {
+//         const b = bufferArea(p, sOptions);
+
+//         if (b === null) return [];
+
+//         if (Polygon.isObject(b)) {
+//           return [b.coordinates];
+//         }
+
+//         return b.coordinates;
+//       }),
+//     ),
+//   );
+
+//   // console.log(bufferArea(polygons[0], bOptions).coordinates);
+//   throw new Error('h');
+// });
+
+test.todo('check lengths');

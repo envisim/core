@@ -13,10 +13,7 @@ import {
  * @param geometry
  * @returns `true` if the position is inside the area.
  */
-export function pointInAreaGeometry(
-  point: GJ.Position,
-  geometry: AreaGeometry,
-): boolean {
+export function pointInAreaGeometry(point: GJ.Position, geometry: AreaGeometry): boolean {
   // If it is not in the bounding box, we can give up
   if (!pointInBBox(point, geometry.getBBox())) return false;
 
@@ -32,9 +29,7 @@ export function pointInAreaGeometry(
       return pointInMultiPolygonPosition(point, geometry.coordinates);
 
     case 'GeometryCollection':
-      return geometry.geometries.some((geom: AreaObject) =>
-        pointInAreaGeometry(point, geom),
-      );
+      return geometry.geometries.some((geom: AreaObject) => pointInAreaGeometry(point, geom));
 
     default:
       return false;
@@ -48,9 +43,6 @@ export function pointInAreaGeometry(
  * @param feature
  * @returns `true` if the position is inside the area.
  */
-export function pointInAreaFeature(
-  point: GJ.Position,
-  feature: AreaFeature,
-): boolean {
+export function pointInAreaFeature(point: GJ.Position, feature: AreaFeature): boolean {
   return pointInAreaGeometry(point, feature.geometry);
 }

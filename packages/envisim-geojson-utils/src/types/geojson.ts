@@ -28,13 +28,11 @@ export interface MultiPoint extends BaseObject<'MultiPoint', Position[]> {}
 export type PointObject = Point | MultiPoint;
 
 export interface LineString extends BaseObject<'LineString', Position[]> {}
-export interface MultiLineString
-  extends BaseObject<'MultiLineString', Position[][]> {}
+export interface MultiLineString extends BaseObject<'MultiLineString', Position[][]> {}
 export type LineObject = LineString | MultiLineString;
 
 export interface Polygon extends BaseObject<'Polygon', Position[][]> {}
-export interface MultiPolygon
-  extends BaseObject<'MultiPolygon', Position[][][]> {}
+export interface MultiPolygon extends BaseObject<'MultiPolygon', Position[][][]> {}
 export interface Circle extends BaseObject<'Point', Position> {
   radius: number;
 }
@@ -50,8 +48,7 @@ export interface BaseGeometryCollection<G extends BaseGeometry = BaseGeometry>
   extends GeoJsonObject<'GeometryCollection'> {
   geometries: G[];
 }
-export type GeometryCollection<O extends SingleTypeObject> =
-  BaseGeometryCollection<O>;
+export type GeometryCollection<O extends SingleTypeObject> = BaseGeometryCollection<O>;
 export type PointGeometryCollection = GeometryCollection<PointObject>;
 export type LineGeometryCollection = GeometryCollection<LineObject>;
 export type AreaGeometryCollection = GeometryCollection<AreaObject>;
@@ -64,10 +61,8 @@ export type AreaGeometry = AreaObject | AreaGeometryCollection;
 export type Geometry = PointGeometry | LineGeometry | AreaGeometry;
 
 // FEATURES
-export interface BaseFeature<
-  G extends BaseGeometry | null = BaseGeometry,
-  P = any,
-> extends GeoJsonObject<'Feature'> {
+export interface BaseFeature<G extends BaseGeometry | null = BaseGeometry, P = any>
+  extends GeoJsonObject<'Feature'> {
   geometry: G;
   properties: FeatureProperties<P> | null;
 }
@@ -81,8 +76,7 @@ export interface BaseFeatureCollection<F extends BaseFeature = BaseFeature>
   extends GeoJsonObject<'FeatureCollection'> {
   features: F[];
 }
-export type FeatureCollection<F extends Feature = Feature> =
-  BaseFeatureCollection<F>;
+export type FeatureCollection<F extends Feature = Feature> = BaseFeatureCollection<F>;
 export type PointFeatureCollection = FeatureCollection<PointFeature>;
 export type LineFeatureCollection = FeatureCollection<LineFeature>;
 export type AreaFeatureCollection = FeatureCollection<AreaFeature>;

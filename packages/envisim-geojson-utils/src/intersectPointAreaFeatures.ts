@@ -1,12 +1,6 @@
 import type * as GJ from './types/geojson.js';
-import {
-  AreaFeature,
-  MultiPoint,
-  Point,
-  PointFeature,
-  PointObject,
-} from './geojson/index.js';
-import {pointInAreaFeature} from './pointInPolygon.js';
+import {AreaFeature, MultiPoint, Point, PointFeature, PointObject} from './geojson/index.js';
+import {pointInAreaFeature} from './point-in-polygon.js';
 import {bboxInBBox} from './utils/bbox.js';
 
 /**
@@ -21,10 +15,7 @@ export function intersectPointAreaFeatures(
   areaFeature: AreaFeature,
 ): PointFeature | null {
   // Early return if bboxes of geometries doesn't overlap
-  if (
-    !bboxInBBox(pointFeature.geometry.getBBox(), areaFeature.geometry.getBBox())
-  )
-    return null;
+  if (!bboxInBBox(pointFeature.geometry.getBBox(), areaFeature.geometry.getBBox())) return null;
 
   // Check each position
   const coordinates: GJ.Position[] = [];

@@ -1,4 +1,5 @@
 import {bufferArea} from './buffer-area.js';
+import {bufferLine} from './buffer-line.js';
 import {AreaObject, LineObject, MultiPolygon, Polygon} from './geojson/index.js';
 import {GeometricPrimitive} from './geometric-primitive/EnumGeometricPrimitive.js';
 
@@ -32,5 +33,5 @@ export function bufferGeometry(
     return bufferArea(gj as AreaObject, opts);
   }
 
-  // return bufferLine(gj as LineObject, opts);
+  return bufferLine(gj as LineObject, opts);
 }

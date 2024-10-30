@@ -52,5 +52,5 @@ export {intersectLineLineFeatures} from './intersectLineLineFeatures.js';
 export {intersectLineAreaFeatures} from './intersectLineAreaFeatures.js';
 export {intersectAreaAreaFeatures} from './intersectAreaAreaFeatures.js';
 export {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
-export {pointInAreaFeature, pointInAreaGeometry} from './pointInPolygon.js';
-export {unionOfPolygons} from './unionOfPolygons.js';
+export {pointInAreaFeature, pointInAreaGeometry} from './point-in-polygon.js';
+export {unionOfPolygons} from './union-of-polygons.js';

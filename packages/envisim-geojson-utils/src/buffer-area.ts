@@ -1,20 +1,21 @@
 import * as GJ from './types/geojson.js';
 import type {BufferOptions} from './buffer.js';
 import {AreaObject, Circle, MultiCircle, MultiPolygon, Polygon} from './geojson/index.js';
-import {unionOfSegments} from './unionOfPolygons.js';
+import {unionOfSegments} from './union-of-polygons.js';
+import {Geodesic} from './utils/Geodesic.js';
 import {IntersectList} from './utils/class-intersects.js';
 import {Segment, segmentsToPolygon} from './utils/class-segment.js';
 
 // Assume not duplicate points
 function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>): Segment[] {
   const segments: Segment[] = [];
-  const params: [number, number][] = [];
+  const params: [number | null, number | null][] = [];
 
   {
     let prev = new Segment(polygon[0], polygon[1]);
     prev.buffer(options.distance);
     segments.push(prev);
-    params.push([0.0, 1.0]);
+    params.push([null, null]);
 
     for (let c = 2; c < polygon.length; c++) {
       const seg = new Segment(polygon[c - 1], polygon[c]);
@@ -25,9 +26,9 @@ function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>):
       const t = seg.parametricIntersect(prev);
       if (t) {
         params[c - 2][1] = t[1];
-        params.push([t[0], 1.0]);
+        params.push([t[0], null]);
       } else {
-        params.push([0.0, 1.0]);
+        params.push([null, null]);
       }
 
       prev = seg;
@@ -43,7 +44,7 @@ function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>):
 
   const bindedSegments: Segment[] = [];
 
-  const firstIndex = params.findIndex((t) => t[0] <= t[1]);
+  const firstIndex = params.findIndex((t) => t[0] === null || t[1] === null || t[0] <= t[1]);
 
   if (firstIndex === -1) {
     return []; // No valid segment
@@ -59,7 +60,8 @@ function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>):
   }
 
   for (let i = lastIndex + 1; i < segments.length; i++) {
-    const t = parametricInterval(params[i]);
+    const par = params[i];
+    const t = parametricInterval(par);
     // Paradoxical segment, starts after it ends
     if (t === null) {
       continue;
@@ -71,7 +73,7 @@ function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>):
     // A connection is only needed if the two previous segments does not touch.
     if (lastIndex !== i - 1) {
       addStraightSegmentConnection(bindedSegments, lastPoint, curr.position(t[0]));
-    } else if (params[i][0] < 0.0) {
+    } else if (par[0] === null || par[0] < 0.0) {
       addSegmentConnection(bindedSegments, lastPoint, curr.position(t[0]), polygon[i], options);
     }
 
@@ -83,31 +85,38 @@ function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>):
     lastIndex = i;
   }
 
+  const par0 = params[0];
+
   if (lastIndex !== segments.length - 1 || firstIndex !== 0) {
     addStraightSegmentConnection(bindedSegments, lastPoint, bindedSegments[0].p1);
-  } else if (params[0][0] < 0.0) {
+  } else if (par0[0] === null || par0[0] < 0.0) {
     addSegmentConnection(bindedSegments, lastPoint, bindedSegments[0].p1, polygon[0], options);
   }
 
   return bindedSegments;
 }
 
-function parametricInterval(params: [number, number]): [number, number] | null {
-  if (params[1] < params[0]) {
+function parametricInterval(params: [number | null, number | null]): [number, number] | null {
+  let ret: [number, number] = [params[0] ?? 0.0, params[1] ?? 1.0];
+
+  if (ret[1] < ret[0]) {
     return null;
   }
-  if (params[0] === 0.0 && params[1] === 1.0) {
-    return params;
+
+  if ((ret[0] === 0.0 && ret[1] === 1.0) || ret[0] === ret[1]) {
+    return ret;
   }
-  if (1.0 <= params[0]) {
-    return [1.0, 1.0];
-  } else if (params[1] <= 0.0) {
-    return [0.0, 0.0];
-  } else if (params[0] === params[1]) {
-    return [params[0], params[0]];
+
+  if (1.0 <= ret[0]) {
+    ret[0] = 1.0;
+  } else if (ret[1] <= 0.0) {
+    ret[1] = 0.0;
   } else {
-    return [Math.max(0.0, params[0]), Math.min(1.0, params[1])];
+    ret[0] = Math.max(0.0, ret[0]);
+    ret[1] = Math.min(1.0, ret[1]);
   }
+
+  return ret;
 }
 
 function addStraightSegmentConnection(
@@ -125,37 +134,38 @@ function addSegmentConnection(
   segmentList: Segment[],
   start: GJ.Position,
   end: GJ.Position,
-  from: GJ.Position,
+  origin: GJ.Position,
   {distance, steps}: Required<BufferOptions>,
 ) {
   if (steps <= 1) {
     return addStraightSegmentConnection(segmentList, start, end);
   }
 
-  const r = Math.abs(distance);
-  const delta0 = [start[0] - from[0], start[1] - from[1]];
-  const delta1 = [end[0] - from[0], end[1] - from[1]];
+  let startAngle = Geodesic.forwardAzimuth(origin, start);
+  if (startAngle < 0.0) startAngle += 360.0;
+  let endAngle = Geodesic.forwardAzimuth(origin, end);
+  if (endAngle < 0.0) endAngle += 360.0;
 
-  let theta0 = Math.acos(delta0[0] / r);
-  if (delta0[1] < 0.0) theta0 = -theta0;
-  const sweep = Math.atan2(
-    delta1[1] * delta0[0] - delta1[0] * delta0[1],
-    delta1[0] * delta0[0] + delta1[1] * delta0[1],
-  );
-
-  const nPoints = Math.ceil((Math.abs(sweep) / Math.PI) * steps * 2.0);
-  const angleStep = sweep / nPoints;
-  let angle = theta0;
-  let lastPoint = start;
-
-  for (let i = 1; i < nPoints; i++) {
-    angle += angleStep;
-    const newPoint: GJ.Position2 = [r * Math.cos(angle) + from[0], r * Math.sin(angle) + from[1]];
-    segmentList.push(new Segment(lastPoint, newPoint));
-    lastPoint = newPoint;
+  let theta = endAngle - startAngle;
+  if (Math.abs(theta) > 180.0) {
+    theta -= Math.sign(theta) * 360.0;
   }
 
-  segmentList.push(new Segment(lastPoint, end));
+  const numPoints = Math.ceil(Math.abs(theta) / 90.0) * steps;
+  const delta = theta / numPoints;
+  const dist = Math.abs(distance);
+
+  let angle = startAngle + delta;
+  let prev = start;
+
+  for (let i = 1; i < numPoints; i++) {
+    const point = Geodesic.destination(origin, dist, angle);
+    segmentList.push(new Segment(prev, point));
+    prev = point;
+    angle += delta;
+  }
+
+  segmentList.push(new Segment(prev, end));
 }
 
 function bufferSegmentRing(
@@ -181,7 +191,7 @@ function bufferSegmentRing(
 // negative ring is also removed. However, if the removal of the inner positive ring is done
 // prematurely, we risk keeping a negative ring that should not have been included.
 // Positive ONLY
-function buffering(
+export function buffering(
   polygons: GJ.Position[][][],
   options: Required<BufferOptions>,
 ): GJ.Position2[][][] {

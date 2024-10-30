@@ -31,7 +31,7 @@ export function unionOfSegments(segments: Segment[], breaks: number[]): GJ.Posit
   return returningPolygons;
 }
 
-function union(polygons: GJ.Position[][][]): GJ.Position2[][][] {
+function unionOfRings(polygons: GJ.Position[][][]): GJ.Position2[][][] {
   if (polygons.length === 1) {
     return [polygons[0].map((ring) => ring.map((p) => [p[0], p[1]]))];
   }
@@ -91,7 +91,7 @@ export function unionOfPolygons(
     }
   }
 
-  const unionOfGeoms = union(geoms);
+  const unionOfGeoms = unionOfRings(geoms);
 
   if (unionOfGeoms.length === 1) {
     return AreaCollection.create(
