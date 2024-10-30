@@ -1,4 +1,5 @@
 import type * as GJ from '../types/geojson.js';
+import {Geodesic} from './Geodesic.js';
 
 export class Segment {
   static checkParameter(param: number): boolean {
@@ -178,31 +179,19 @@ export class Segment {
   buffer(radius: number) {
     if (radius === 0.0) return;
 
-    const sign_x = Math.sign(this.delta[0]);
-    const sign_y = Math.sign(this.delta[1]);
+    const angleStart = Geodesic.forwardAzimuth(this.p1, this.p2);
+    const angleEnd = Geodesic.forwardAzimuth(this.p2, this.p1);
 
-    if (sign_x === 0) {
-      // Segment is vertical
-      this.p1[0] += radius * sign_y;
-      this.p2[0] += radius * sign_y;
-      return;
-    }
+    const add = radius > 0.0 ? 90.0 : -90.0;
+    const dist = Math.abs(radius);
 
-    if (sign_y === 0) {
-      // Segment is horizontal
-      this.p1[1] -= radius * sign_x;
-      this.p2[1] -= radius * sign_x;
-      return;
-    }
+    const start = Geodesic.destination(this.p1, dist, angleStart + add);
+    const end = Geodesic.destination(this.p2, dist, angleEnd - add);
 
-    const norm = Math.sqrt(this.delta[0] * this.delta[0] + this.delta[1] * this.delta[1]);
-    const x_shift = (this.delta[1] / norm) * radius;
-    const y_shift = (-this.delta[0] / norm) * radius;
-
-    this.p1[0] += x_shift;
-    this.p1[1] += y_shift;
-    this.p2[0] += x_shift;
-    this.p2[1] += y_shift;
+    this.p1[0] = start[0];
+    this.p1[1] = start[1];
+    this.p2[0] = end[0];
+    this.p2[1] = end[1];
   }
 
   // Sweep line left
