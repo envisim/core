@@ -23,17 +23,11 @@ export class AreaCollection
     if (!(obj instanceof AreaCollection)) throw new TypeError(msg);
   }
 
-  static create(
-    features: GJ.AreaFeature[],
-    shallow: boolean = true,
-  ): AreaCollection {
+  static create(features: GJ.AreaFeature[], shallow: boolean = true): AreaCollection {
     return new AreaCollection({features}, shallow);
   }
 
-  constructor(
-    obj: OptionalParam<GJ.AreaFeatureCollection, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.AreaFeatureCollection, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'FeatureCollection'}, shallow);
 
     this.features = obj.features.map((f: GJ.AreaFeature) => {
@@ -63,8 +57,7 @@ export class AreaCollection
         weight: feature.area(),
       };
     });
-    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
-      .centroid;
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations).centroid;
   }
 
   /* COLLECTION SPECIFIC */
@@ -74,14 +67,9 @@ export class AreaCollection
     });
   }
 
-  addFeature(
-    feature: OptionalParam<GJ.AreaFeature, 'type'>,
-    shallow: boolean = true,
-  ): number {
+  addFeature(feature: OptionalParam<GJ.AreaFeature, 'type'>, shallow: boolean = true): number {
     if (AreaFeature.isFeature(feature)) {
-      this.features.push(
-        shallow === false ? new AreaFeature(feature, false) : feature,
-      );
+      this.features.push(shallow === false ? new AreaFeature(feature, false) : feature);
     } else {
       this.features.push(new AreaFeature(feature, shallow));
     }
@@ -92,6 +80,16 @@ export class AreaCollection
   /* AREA SPECIFIC */
   area(): number {
     return this.features.reduce((prev, curr) => prev + curr.area(), 0);
+  }
+
+  buffer(distance: number, steps: number = 10): AreaCollection | null {
+    const features: GJ.AreaFeature[] = [];
+    this.forEach((feature: AreaFeature) => {
+      const bf = feature.buffer(distance, steps);
+      if (bf) features.push(bf);
+    });
+    if (features.length === 0) return null;
+    return AreaCollection.create(features, true);
   }
 
   perimeter(): number {

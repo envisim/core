@@ -6,7 +6,7 @@ export interface BufferOptions {
   /**
    * The radius/distance to buffer in meters
    */
-  radius?: number;
+  distance?: number;
   /**
    * The number of steps in the buffer.
    */
@@ -23,7 +23,7 @@ export function bufferGeometry(
   options: BufferOptions,
 ): AreaObject | null {
   const opts: Required<BufferOptions> = {
-    radius: 0.0,
+    distance: 0.0,
     steps: 10,
     ...options,
   };

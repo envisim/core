@@ -38,23 +38,16 @@ const b = 6356752.314245;
 const f = 1 / 298.257223563;
 const n = (a - b) / (a + b);
 const e = Math.sqrt((a ** 2 - b ** 2) / a ** 2);
+
 // See (5), The area of rhumb polygons.
-const R =
-  (a / (1 + n)) *
-  (1 + (1 / 4) * n ** 2 + (1 / 64) * n ** 4 + (1 / 256) * n ** 6);
+const R = (a / (1 + n)) * (1 + (1 / 4) * n ** 2 + (1 / 64) * n ** 4 + (1 / 256) * n ** 6);
+
 // See (10), The area of rhumb polygons.
 const c2 = a ** 2 / 2 + ((b ** 2 / 2) * Math.atanh(e)) / e;
 
 // See (25), The area of rhumb polygons.
 const Q: number[][] = [
-  [
-    -1 / 3,
-    22 / 45,
-    -398 / 945,
-    596 / 2025,
-    -102614 / 467775,
-    138734126 / 638512875,
-  ],
+  [-1 / 3, 22 / 45, -398 / 945, 596 / 2025, -102614 / 467775, 138734126 / 638512875],
   [0, 1 / 5, -118 / 315, 1543 / 4725, -24562 / 155925, 17749373 / 425675250],
   [0, 0, -17 / 315, 152 / 945, -38068 / 155925, 1882432 / 8513505],
   [0, 0, 0, 5 / 252, -752 / 10395, 268864 / 2027025],
@@ -73,11 +66,7 @@ const P = [
     Q[0][3] * N[3] +
     Q[0][4] * N[4] +
     Q[0][5] * N[5],
-  Q[1][1] * N[1] +
-    Q[1][2] * N[2] +
-    Q[1][3] * N[3] +
-    Q[1][4] * N[4] +
-    Q[1][5] * N[5],
+  Q[1][1] * N[1] + Q[1][2] * N[2] + Q[1][3] * N[3] + Q[1][4] * N[4] + Q[1][5] * N[5],
   Q[2][2] * N[2] + Q[2][3] * N[3] + Q[2][4] * N[4] + Q[2][5] * N[5],
   Q[3][3] * N[3] + Q[3][4] * N[4] + Q[3][5] * N[5],
   Q[4][4] * N[4] + Q[4][5] * N[5],
@@ -99,8 +88,8 @@ function p_beta(beta: number): number {
 }
 
 // Conversion between degrees and radians
-const toRad = Math.PI / 180;
-const toDeg = 180 / Math.PI;
+const TO_RAD = Math.PI / 180.0;
+const TO_DEG = 180.0 / Math.PI;
 
 // Gudermannian inverse function
 function gdInverse(x: number): number {
@@ -173,12 +162,7 @@ function auxiliary(from: number, C: number[][]): number {
       C[0][4] * N[4] +
       C[0][5] * N[5]) *
       S[0] +
-    (C[1][1] * N[1] +
-      C[1][2] * N[2] +
-      C[1][3] * N[3] +
-      C[1][4] * N[4] +
-      C[1][5] * N[5]) *
-      S[1] +
+    (C[1][1] * N[1] + C[1][2] * N[2] + C[1][3] * N[3] + C[1][4] * N[4] + C[1][5] * N[5]) * S[1] +
     (C[2][2] * N[2] + C[2][3] * N[3] + C[2][4] * N[4] + C[2][5] * N[5]) * S[2] +
     (C[3][3] * N[3] + C[3][4] * N[4] + C[3][5] * N[5]) * S[3] +
     (C[4][4] * N[4] + C[4][5] * N[5]) * S[4] +
@@ -206,25 +190,25 @@ function inverseRhumbLine(
   p2: GJ.Position,
   output: number = rhumbOutmask.both,
 ): {azi12?: number; s12?: number} {
-  const phi1 = p1[1] * toRad;
-  const phi2 = p2[1] * toRad;
+  const phi1 = p1[1] * TO_RAD;
+  const phi2 = p2[1] * TO_RAD;
   const psi1 = psiFromPhi(phi1);
   const psi2 = psiFromPhi(phi2);
   const psi12 = psi2 - psi1;
-  let lambda12 = (p2[0] - p1[0]) * toRad;
+  let lambda12 = (p2[0] - p1[0]) * TO_RAD;
   if (Math.abs(lambda12) > Math.PI) {
     lambda12 = lambda12 > 0 ? lambda12 - 2 * Math.PI : lambda12 + 2 * Math.PI;
   }
   const res: {azi12?: number; s12?: number} = {};
   // Compute forward azimuth
   if (output & rhumbAzi12) {
-    res.azi12 = Math.atan(lambda12 / psi12) * toDeg;
+    res.azi12 = Math.atan(lambda12 / psi12) * TO_DEG;
   }
   // Compute distance s12
   if (output & rhumbS12) {
     const transitionPointDegrees = 0.001;
     let s12 = Math.sqrt(lambda12 ** 2 + psi12 ** 2);
-    if (Math.abs(phi1 - phi2) * toDeg < transitionPointDegrees) {
+    if (Math.abs(phi1 - phi2) * TO_DEG < transitionPointDegrees) {
       const beta = betaFromPhi((phi1 + phi2) / 2);
       s12 *= a * Math.cos(beta);
     } else {
@@ -266,14 +250,10 @@ export class Rhumb {
    * @param azimuth azimuth (angle) clockwise from north in degrees.
    * @returns the coordinates [lon,lat] of the destination point.
    */
-  static destination(
-    origin: GJ.Position,
-    dist: number,
-    azimuth: number,
-  ): GJ.Position {
+  static destination(origin: GJ.Position, dist: number, azimuth: number): GJ.Position {
     const s12 = dist;
-    const phi1 = origin[1] * toRad;
-    const alpha12 = azimuth * toRad;
+    const phi1 = origin[1] * TO_RAD;
+    const alpha12 = azimuth * TO_RAD;
     const mu12 = (s12 / R) * Math.cos(alpha12);
     const mu1 = auxiliary(phi1, C_mu_phi);
     let mu2 = mu12 + mu1;
@@ -295,7 +275,7 @@ export class Rhumb {
     const psi12 = psi2 - psi1;
     const transitionPointDegrees = 0.001;
     let lambda12 = s12 * Math.sin(alpha12);
-    if (Math.abs(phi2 - phi1) * toDeg < transitionPointDegrees) {
+    if (Math.abs(phi2 - phi1) * TO_DEG < transitionPointDegrees) {
       // Special case if phi2 is approximately equal to phi1.
       // In that case lambda12 = s12 * Math.sin(alpha12) / (a * Math.cos(beta)).
       // where beta is evaluated at the midpoint of phi1 and phi2.
@@ -304,11 +284,11 @@ export class Rhumb {
     } else {
       lambda12 *= psi12 / (mu12 * R);
     }
-    const lambda1 = origin[0] * toRad;
+    const lambda1 = origin[0] * TO_RAD;
     const lambda2 = lambda1 + lambda12;
-    let lon2 = lambda2 * toDeg;
+    let lon2 = lambda2 * TO_DEG;
     lon2 = ((lon2 + 540) % 360) - 180;
-    let lat2 = phi2 * toDeg;
+    let lat2 = phi2 * TO_DEG;
     if (Math.abs(lat2) > 90) {
       lat2 = lat2 > 0 ? 180 - lat2 : -180 - lat2;
     }
@@ -338,11 +318,7 @@ export class Rhumb {
    * @param fraction the fraction of distance between the points.
    * @returns the coordinates [lon,lat] of the intermediate point.
    */
-  static intermediate(
-    p1: GJ.Position,
-    p2: GJ.Position,
-    fraction: number,
-  ): GJ.Position {
+  static intermediate(p1: GJ.Position, p2: GJ.Position, fraction: number): GJ.Position {
     const res = inverseRhumbLine(p1, p2, rhumbOutmask.both);
     // Here both s12 and azi12 are needed.
     const azi12 = res.azi12 || 0;
@@ -357,8 +333,8 @@ export class Rhumb {
    */
   static areaOfRing(ring: GJ.Position[]): number {
     const o = ring.map((coord) => {
-      const lambda = coord[0] * toRad;
-      const phi = coord[1] * toRad;
+      const lambda = coord[0] * TO_RAD;
+      const phi = coord[1] * TO_RAD;
       const chi = auxiliary(phi, C_chi_phi);
       const psi = psiFromPhi(phi);
       const beta = betaFromPhi(phi);
@@ -368,16 +344,23 @@ export class Rhumb {
     const nr = ring.length;
     let S = 0; // Aggregate the area under the rhumb segments.
     const transitionPointDegrees = 0.001;
+
+    // Count the number of segments that crosses antimeridian
+    let crosses = 0;
+
     for (let i = 1; i < nr; i++) {
+      // Check if the segment crosses antimeridian
+      if (Math.abs(ring[i][0] - ring[i - 1][0]) > 180) {
+        crosses++;
+      }
       const o1 = o[i - 1];
       const o2 = o[i];
       let lambda12 = o2.lambda - o1.lambda;
       if (Math.abs(lambda12) > Math.PI) {
-        lambda12 =
-          lambda12 > 0 ? lambda12 - 2 * Math.PI : lambda12 + 2 * Math.PI;
+        lambda12 = lambda12 > 0 ? lambda12 - 2 * Math.PI : lambda12 + 2 * Math.PI;
       }
       let S12 = c2 * lambda12;
-      if (Math.abs(o2.phi - o1.phi) * toDeg < transitionPointDegrees) {
+      if (Math.abs(o2.phi - o1.phi) * TO_DEG < transitionPointDegrees) {
         const xi = auxiliary((o2.phi + o1.phi) / 2, C_xi_phi);
         S12 *= Math.sin(xi);
       } else {
@@ -387,48 +370,17 @@ export class Rhumb {
       }
       S += S12;
     }
-    // Needs a correction if the ring encloses a pole.
     // Matches closely the result at https://geographiclib.sourceforge.io/cgi-bin/Planimeter
-    // for rhumb polygons not enclosing a pole. Extreme cases has NOT been tested.
+    // for rhumb polygons. Extreme cases has NOT been tested.
     // If the ring encloses a pole, then the term 2 * Math.PI * c2 should be added to the result.
     // See Karney 2013 for details.
-    // GeoJSON polygons should not enclose a pole. This correction is skipped for now.
-    return Math.abs(S);
+    // Odd number of segments that crosses antimeridian implies a pole.
+    return crosses % 2 === 0 ? Math.abs(S) : 2 * Math.PI * c2 - Math.abs(S);
   }
   // end Rhumb class
 }
 
-/* From Charles Karney (personal communication)
-The result for the area under a plate carree edge is
-
-   S12 = (lambda2 - lambda1)* (F(phi2) - F(phi1)) / (phi2 - phi1)
-
-where
-
-   F'(phi) = sin(xi), xi = authalic latitude
-   F(phi) = -cos(phi) *
-            ([1, cos(2*phi), cos(4*phi), ... ] . M . [1, n, n^2, ...]^T)
-
-Accurate to order n^6, M is the 7 x 7 matrix
-
-1,-4/9,-274/675,-2468/19845,48142/1488375,3814124/108056025,-35827479502/9587270818125;
-0,-4/9,-112/675,4012/19845,306496/1488375,1613548/21611205,-5765564176/9587270818125;
-0,0,6/25,8/49,-43132/496125,-4668968/36018675,-197327562308/3195756939375;
-0,0,0,-8/49,-544/3969,330052/7203735,2313624304/25566055515;
-0,0,0,0,10/81,3400/29403,-399980/14907321;
-0,0,0,0,0,-12/121,-2032/20449;
-0,0,0,0,0,0,14/169;
-
-If you use this result, please verify it carefully (e.g., by breaking up
-the plate carree lines into short geodesic segments and using Planimeter
-to compute the area).  Use f = 1/50 for checking to make sure the
-ellipsoidal corrections are right.
-*/
-
-/*
-My implementation of Charles Karneys suggestion. Simple test fine for WGS84, but
-I have not tested with f = 1/50.
-*/
+// See:https://geographiclib.sourceforge.io/C++/doc/rhumb.html#platecarreearea
 
 const M = [
   [
@@ -449,15 +401,7 @@ const M = [
     1613548 / 21611205,
     -5765564176 / 9587270818125,
   ],
-  [
-    0,
-    0,
-    6 / 25,
-    8 / 49,
-    -43132 / 496125,
-    -4668968 / 36018675,
-    -197327562308 / 3195756939375,
-  ],
+  [0, 0, 6 / 25, 8 / 49, -43132 / 496125, -4668968 / 36018675, -197327562308 / 3195756939375],
   [0, 0, 0, -8 / 49, -544 / 3969, 330052 / 7203735, 2313624304 / 25566055515],
   [0, 0, 0, 0, 10 / 81, 3400 / 29403, -399980 / 14907321],
   [0, 0, 0, 0, 0, -12 / 121, -2032 / 20449],
@@ -485,14 +429,9 @@ function F(phi: number): number {
         M[1][5] * N7[5] +
         M[1][6] * N7[6]) *
         C[1] +
-      (M[2][2] * N7[2] +
-        M[2][3] * N7[3] +
-        M[2][4] * N7[4] +
-        M[2][5] * N7[5] +
-        M[2][6] * N7[6]) *
+      (M[2][2] * N7[2] + M[2][3] * N7[3] + M[2][4] * N7[4] + M[2][5] * N7[5] + M[2][6] * N7[6]) *
         C[2] +
-      (M[3][3] * N7[3] + M[3][4] * N7[4] + M[3][5] * N7[5] + M[3][6] * N7[6]) *
-        C[3] +
+      (M[3][3] * N7[3] + M[3][4] * N7[4] + M[3][5] * N7[5] + M[3][6] * N7[6]) * C[3] +
       (M[4][4] * N7[4] + M[4][5] * N7[5] + M[4][6] * N7[6]) * C[4] +
       (M[5][5] * N7[5] + M[5][6] * N7[6]) * C[5] +
       M[6][6] * N7[6] * C[6])
@@ -508,15 +447,23 @@ function F(phi: number): number {
  */
 export function plateCarreeAreaOfRing(ring: GJ.Position[]): number {
   const o = ring.map((coord) => {
-    const lambda = coord[0] * toRad;
-    const phi = coord[1] * toRad;
+    const lambda = coord[0] * TO_RAD;
+    const phi = coord[1] * TO_RAD;
     const Fphi = F(phi);
     return {lambda, phi, Fphi};
   });
   const nr = ring.length;
   let S = 0; // Aggregate the area under the GeoJSON segments.
   const transitionPointDegrees = 0.001;
+
+  // Count the number of segments that crosses antimeridian
+  let crosses = 0;
+
   for (let i = 1; i < nr; i++) {
+    // Check if the segment crosses antimeridian
+    if (Math.abs(ring[i][0] - ring[i - 1][0]) > 180) {
+      crosses++;
+    }
     const o1 = o[i - 1];
     const o2 = o[i];
     let lambda12 = o2.lambda - o1.lambda;
@@ -524,7 +471,7 @@ export function plateCarreeAreaOfRing(ring: GJ.Position[]): number {
       lambda12 = lambda12 > 0 ? lambda12 - 2 * Math.PI : lambda12 + 2 * Math.PI;
     }
     let S12 = c2 * lambda12;
-    if (Math.abs(o2.phi - o1.phi) * toDeg < transitionPointDegrees) {
+    if (Math.abs(o2.phi - o1.phi) * TO_DEG < transitionPointDegrees) {
       const xi = auxiliary((o2.phi + o1.phi) / 2, C_xi_phi);
       S12 *= Math.sin(xi);
     } else {
@@ -533,6 +480,6 @@ export function plateCarreeAreaOfRing(ring: GJ.Position[]): number {
     S += S12;
   }
   // Needs a correction if the ring encloses a pole.
-  // GeoJSON polygons should not enclose a pole. This correction is skipped for now.
-  return Math.abs(S);
+  // Odd number of segments that crosses antimeridian implies a pole.
+  return crosses % 2 === 0 ? Math.abs(S) : 2 * Math.PI * c2 - Math.abs(S);
 }

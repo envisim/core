@@ -176,14 +176,14 @@ export class Segment {
   }
 
   // Moves segment to the right by radius
-  buffer(radius: number) {
-    if (radius === 0.0) return;
+  buffer(distance: number) {
+    if (distance === 0.0) return;
 
     const angleStart = Geodesic.forwardAzimuth(this.p1, this.p2);
     const angleEnd = Geodesic.forwardAzimuth(this.p2, this.p1);
 
-    const add = radius > 0.0 ? 90.0 : -90.0;
-    const dist = Math.abs(radius);
+    const add = distance > 0.0 ? 90.0 : -90.0;
+    const dist = Math.abs(distance);
 
     const start = Geodesic.destination(this.p1, dist, angleStart + add);
     const end = Geodesic.destination(this.p2, dist, angleEnd - add);

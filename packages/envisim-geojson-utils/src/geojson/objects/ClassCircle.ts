@@ -14,10 +14,7 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     return obj instanceof Circle;
   }
 
-  static assert(
-    obj: unknown,
-    msg: string = 'Expected Circle',
-  ): asserts obj is Circle {
+  static assert(obj: unknown, msg: string = 'Expected Circle'): asserts obj is Circle {
     if (!(obj instanceof Circle)) throw new TypeError(msg);
   }
 
@@ -54,8 +51,7 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     // Use the radius that gives equal area to the polygon for best approx.
     const v = Math.PI / pointsPerCircle;
     const radius = Math.sqrt(
-      (Math.PI * this.radius ** 2) /
-        (pointsPerCircle * Math.sin(v) * Math.cos(v)),
+      (Math.PI * this.radius ** 2) / (pointsPerCircle * Math.sin(v) * Math.cos(v)),
     );
 
     for (let i = 0; i < pointsPerCircle; i++) {
@@ -68,9 +64,7 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     // Create initial Polygon
     const polygon = new Polygon({coordinates: [coordinates]}, true);
     // Check if it is closer than new radius to antimeridian
-    if (
-      Geodesic.distance([180, this.coordinates[1]], this.coordinates) < radius
-    ) {
+    if (Geodesic.distance([180, this.coordinates[1]], this.coordinates) < radius) {
       // Run cut to see if it was needed
       const poly = cutAreaGeometry(polygon);
       if (poly.type === 'MultiPolygon') {
@@ -88,29 +82,29 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     return Math.PI * this.radius ** 2;
   }
 
-  perimeter(): number {
-    return Math.PI * this.radius * 2;
+  buffer(distance: number): Circle | null {
+    if (this.radius + distance <= 0.0) return null;
+    return Circle.create(this.coordinates, this.radius + distance, false);
   }
 
   centroid(): GJ.Position {
     return [...this.coordinates];
   }
 
-  geomEach(
-    callback: GeomEachCallback<Circle>,
-    featureIndex: number = -1,
-  ): void {
-    callback(this, featureIndex, -1);
-  }
-
   distanceToPosition(coords: GJ.Position): number {
     return Geodesic.distance(coords, this.coordinates) - this.radius;
   }
 
+  geomEach(callback: GeomEachCallback<Circle>, featureIndex: number = -1): void {
+    callback(this, featureIndex, -1);
+  }
+
+  perimeter(): number {
+    return Math.PI * this.radius * 2;
+  }
+
   setBBox(): GJ.BBox {
-    this.bbox = bboxFromPositions(
-      getPositionsForCircle(this.coordinates, this.radius),
-    );
+    this.bbox = bboxFromPositions(getPositionsForCircle(this.coordinates, this.radius));
     return this.bbox;
   }
 }

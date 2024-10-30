@@ -7,6 +7,7 @@ import {type GeomEachCallback} from '../base/index.js';
 import {LineFeature} from '../features/index.js';
 import {LineObject} from '../objects/index.js';
 import {AbstractCollection} from './AbstractCollection.js';
+import {AreaCollection} from './ClassAreaCollection.js';
 
 export class LineCollection
   extends AbstractCollection<LineObject, LineFeature>
@@ -23,17 +24,11 @@ export class LineCollection
     if (!(obj instanceof LineCollection)) throw new TypeError(msg);
   }
 
-  static create(
-    features: GJ.LineFeature[],
-    shallow: boolean = true,
-  ): LineCollection {
+  static create(features: GJ.LineFeature[], shallow: boolean = true): LineCollection {
     return new LineCollection({features}, shallow);
   }
 
-  constructor(
-    obj: OptionalParam<GJ.LineFeatureCollection, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.LineFeatureCollection, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'FeatureCollection'}, shallow);
 
     this.features = obj.features.map((f: GJ.LineFeature) => {
@@ -52,8 +47,7 @@ export class LineCollection
         weight: feature.length(),
       };
     });
-    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
-      .centroid;
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations).centroid;
   }
 
   /* COLLECTION SPECIFIC */
@@ -63,14 +57,9 @@ export class LineCollection
     });
   }
 
-  addFeature(
-    feature: OptionalParam<GJ.LineFeature, 'type'>,
-    shallow: boolean = true,
-  ): number {
+  addFeature(feature: OptionalParam<GJ.LineFeature, 'type'>, shallow: boolean = true): number {
     if (LineFeature.isFeature(feature)) {
-      this.features.push(
-        shallow === false ? new LineFeature(feature, false) : feature,
-      );
+      this.features.push(shallow === false ? new LineFeature(feature, false) : feature);
     } else {
       this.features.push(new LineFeature(feature, shallow));
     }
@@ -81,5 +70,15 @@ export class LineCollection
   /* LINE SPECIFIC */
   length(): number {
     return this.features.reduce((prev, curr) => prev + curr.length(), 0);
+  }
+
+  buffer(distance: number, steps: number = 10): AreaCollection | null {
+    const features: GJ.AreaFeature[] = [];
+    this.forEach((feature: LineFeature) => {
+      const bf = feature.buffer(distance, steps);
+      if (bf) features.push(bf);
+    });
+    if (features.length === 0) return null;
+    return AreaCollection.create(features, true);
   }
 }

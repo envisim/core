@@ -12,13 +12,13 @@ function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>):
 
   {
     let prev = new Segment(polygon[0], polygon[1]);
-    prev.buffer(options.radius);
+    prev.buffer(options.distance);
     segments.push(prev);
     params.push([0.0, 1.0]);
 
     for (let c = 2; c < polygon.length; c++) {
       const seg = new Segment(polygon[c - 1], polygon[c]);
-      seg.buffer(options.radius);
+      seg.buffer(options.distance);
       segments.push(seg);
 
       // add params
@@ -126,13 +126,13 @@ function addSegmentConnection(
   start: GJ.Position,
   end: GJ.Position,
   from: GJ.Position,
-  {radius, steps}: Required<BufferOptions>,
+  {distance, steps}: Required<BufferOptions>,
 ) {
   if (steps <= 1) {
     return addStraightSegmentConnection(segmentList, start, end);
   }
 
-  const r = Math.abs(radius);
+  const r = Math.abs(distance);
   const delta0 = [start[0] - from[0], start[1] - from[1]];
   const delta1 = [end[0] - from[0], end[1] - from[1]];
 
@@ -327,7 +327,7 @@ function shrinking(
 }
 
 export function bufferArea(area: AreaObject, options: Required<BufferOptions>): AreaObject | null {
-  if (options.radius === 0.0) {
+  if (options.distance === 0.0) {
     switch (area.type) {
       case 'Polygon':
         return Polygon.create(area.coordinates, false);
@@ -347,9 +347,9 @@ export function bufferArea(area: AreaObject, options: Required<BufferOptions>): 
   } else if (MultiPolygon.isObject(area)) {
     geoms.push(...area.coordinates);
   } else if (MultiCircle.isObject(area)) {
-    if (options.radius <= 0.0) {
-      if (area.radius + options.radius > 0.0) {
-        return MultiCircle.create(area.coordinates, area.radius + options.radius, false);
+    if (options.distance <= 0.0) {
+      if (area.radius + options.distance > 0.0) {
+        return MultiCircle.create(area.coordinates, area.radius + options.distance, false);
       } else {
         return null;
       }
@@ -357,14 +357,14 @@ export function bufferArea(area: AreaObject, options: Required<BufferOptions>): 
       geoms.push(...area.toPolygon({pointsPerCircle: options.steps * 4}).coordinates);
     }
   } else {
-    if (area.radius + options.radius > 0.0) {
-      return Circle.create(area.coordinates, area.radius + options.radius, false);
+    if (area.radius + options.distance > 0.0) {
+      return Circle.create(area.coordinates, area.radius + options.distance, false);
     } else {
       return null;
     }
   }
 
-  const newGeoms = options.radius < 0.0 ? shrinking(geoms, options) : buffering(geoms, options);
+  const newGeoms = options.distance < 0.0 ? shrinking(geoms, options) : buffering(geoms, options);
 
   if (newGeoms.length === 0) {
     return null;

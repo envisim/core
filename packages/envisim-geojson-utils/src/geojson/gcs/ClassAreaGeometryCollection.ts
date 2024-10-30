@@ -22,22 +22,14 @@ export class AreaGeometryCollection
     if (!(obj instanceof AreaGeometryCollection)) throw new TypeError(msg);
   }
 
-  static create(
-    geometries: GJ.AreaObject[],
-    shallow: boolean = true,
-  ): AreaGeometryCollection {
+  static create(geometries: GJ.AreaObject[], shallow: boolean = true): AreaGeometryCollection {
     return new AreaGeometryCollection({geometries}, shallow);
   }
 
-  constructor(
-    obj: OptionalParam<GJ.AreaGeometryCollection, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.AreaGeometryCollection, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'GeometryCollection'}, shallow);
 
-    this.geometries = obj.geometries.map((g: GJ.AreaObject) =>
-      toAreaGeometry(g, shallow, false),
-    );
+    this.geometries = obj.geometries.map((g: GJ.AreaObject) => toAreaGeometry(g, shallow, false));
   }
 
   geometricPrimitive(): GeometricPrimitive.AREA {
@@ -62,8 +54,17 @@ export class AreaGeometryCollection
         weight: geom.area(),
       };
     });
-    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
-      .centroid;
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations).centroid;
+  }
+
+  buffer(distance: number, steps: number = 10): AreaGeometryCollection | null {
+    const geoms: GJ.AreaObject[] = [];
+    this.geometries.forEach((geom: AreaObject) => {
+      const bg = geom.buffer(distance, steps);
+      if (bg) geoms.push(bg);
+    });
+    if (geoms.length === 0) return null;
+    return AreaGeometryCollection.create(geoms, true);
   }
 
   /* AREA SPECIFIC */

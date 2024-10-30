@@ -5,6 +5,7 @@ import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {type PointObject} from '../objects/index.js';
 import {AbstractGeometryCollection} from './AbstractGeometryCollection.js';
+import {AreaGeometryCollection} from './ClassAreaGeometryCollection.js';
 import {toPointGeometry} from './toPointGeometry.js';
 
 export class PointGeometryCollection
@@ -22,26 +23,29 @@ export class PointGeometryCollection
     if (!(obj instanceof PointGeometryCollection)) throw new TypeError(msg);
   }
 
-  static create(
-    geometries: GJ.PointObject[],
-    shallow: boolean = true,
-  ): PointGeometryCollection {
+  static create(geometries: GJ.PointObject[], shallow: boolean = true): PointGeometryCollection {
     return new PointGeometryCollection({geometries}, shallow);
   }
 
-  constructor(
-    obj: OptionalParam<GJ.PointGeometryCollection, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.PointGeometryCollection, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'GeometryCollection'}, shallow);
 
-    this.geometries = obj.geometries.map((g: GJ.PointObject) =>
-      toPointGeometry(g, shallow, false),
-    );
+    this.geometries = obj.geometries.map((g: GJ.PointObject) => toPointGeometry(g, shallow, false));
   }
 
   geometricPrimitive(): GeometricPrimitive.POINT {
     return GeometricPrimitive.POINT;
+  }
+
+  buffer(distance: number): AreaGeometryCollection | null {
+    if (distance <= 0.0) return null;
+    const geoms: GJ.AreaObject[] = [];
+    this.geometries.forEach((geom: PointObject) => {
+      const bg = geom.buffer(distance);
+      if (bg) geoms.push(bg);
+    });
+    if (geoms.length === 0) return null;
+    return AreaGeometryCollection.create(geoms, true);
   }
 
   centroid(iterations: number = 2): GJ.Position {
@@ -51,8 +55,7 @@ export class PointGeometryCollection
         weight: geom.count(),
       };
     });
-    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
-      .centroid;
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations).centroid;
   }
 
   /* POINT SPECIFIC */

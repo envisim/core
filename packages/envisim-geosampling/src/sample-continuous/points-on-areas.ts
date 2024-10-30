@@ -11,7 +11,6 @@ import {
   PointFeature,
   type PropertyRecord,
   bbox4,
-  buffer as bufferAreaCollection,
   createDesignWeightProperty,
   longitudeCenter,
   longitudeDistance,
@@ -20,11 +19,7 @@ import {
   unionOfPolygons,
 } from '@envisim/geojson-utils';
 
-import {
-  SAMPLE_POINT_OPTIONS,
-  type SamplePointOptions,
-  samplePointOptionsCheck,
-} from './options.js';
+import {SAMPLE_POINT_OPTIONS, type SamplePointOptions, samplePointOptionsCheck} from './options.js';
 
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;
@@ -79,10 +74,7 @@ export function samplePointsOnAreas(
 
   let buffered: AreaCollection | null;
   if (buffer > 0.0) {
-    buffered = bufferAreaCollection(gj, {
-      radius: buffer,
-      steps: 10,
-    });
+    buffered = gj.buffer(buffer, 10);
     if (buffered == null || buffered.features.length === 0) {
       throw new Error('Buffering failed.');
     }
@@ -126,10 +118,9 @@ export function samplePointsOnAreas(
         for (let i = 0; i < buffered.features.length; i++) {
           if (pointInAreaFeature(pointLonLat, buffered.features[i])) {
             // Point is in feature. Create and store new point feature.
-            const pointFeature = PointFeature.create(
-              Point.create(pointLonLat),
-              {_designWeight: designWeight},
-            );
+            const pointFeature = PointFeature.create(Point.create(pointLonLat), {
+              _designWeight: designWeight,
+            });
             pointFeatures.push(pointFeature);
             parentIndex.push(i);
             hits += 1;
@@ -162,10 +153,7 @@ export function samplePointsOnAreas(
         const latCoord = box[1] + (yoff + j * dy) * latPerMeter;
 
         // Find longitudes per meter at this latitude.
-        const dLonMeter = Geodesic.distance(
-          [box[0], latCoord],
-          [box[2], latCoord],
-        );
+        const dLonMeter = Geodesic.distance([box[0], latCoord], [box[2], latCoord]);
         const lonPerMeter = longitudeDistance(box[0], box[2]) / dLonMeter;
 
         // Find how many points to place in the box at this latitude.
@@ -185,10 +173,9 @@ export function samplePointsOnAreas(
           for (let k = 0; k < buffered.features.length; k++) {
             if (pointInAreaFeature(pointLonLat, buffered.features[k])) {
               // Point is in feature. Create and store new point feature.
-              const pointFeature = PointFeature.create(
-                Point.create(pointLonLat),
-                {_designWeight: designWeight},
-              );
+              const pointFeature = PointFeature.create(Point.create(pointLonLat), {
+                _designWeight: designWeight,
+              });
               pointFeatures.push(pointFeature);
               parentIndex.push(k);
               break;

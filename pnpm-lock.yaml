@@ -942,6 +942,9 @@ packages:
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
 
+  fastpriorityqueue@0.7.5:
+    resolution: {integrity: sha512-3Pa0n9gwy8yIbEsT3m2j/E9DXgWvvjfiZjjqcJ+AdNKTAlVMIuFYrYG5Y3RHEM8O6cwv9hOpOWY/NaMfywoQVA==}
+
   fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
 
@@ -1107,6 +1110,10 @@ packages:
 
   json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
+
+  jsts@2.11.3:
+    resolution: {integrity: sha512-LYLpvZw75PO5YtflZ9kvYzqILA97QfrTMGkj71mqfIc/GnH9+lc+ODWdepIu+PgoQuepZbt3u+58ZUAjr4TM4w==}
+    engines: {node: '>= 16'}
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -2295,6 +2302,8 @@ snapshots:
 
   fast-levenshtein@2.0.6: {}
 
+  fastpriorityqueue@0.7.5: {}
+
   fastq@1.17.1:
     dependencies:
       reusify: 1.0.4
@@ -2421,6 +2430,10 @@ snapshots:
   json-schema-traverse@0.4.1: {}
 
   json-stable-stringify-without-jsonify@1.0.1: {}
+
+  jsts@2.11.3:
+    dependencies:
+      fastpriorityqueue: 0.7.5
 
   keyv@4.5.4:
     dependencies:

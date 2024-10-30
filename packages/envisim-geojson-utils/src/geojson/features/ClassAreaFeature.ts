@@ -15,10 +15,7 @@ export class AreaFeature
     return obj instanceof AreaFeature;
   }
 
-  static assert(
-    obj: unknown,
-    msg: string = 'Expected AreaFeature',
-  ): asserts obj is AreaFeature {
+  static assert(obj: unknown, msg: string = 'Expected AreaFeature'): asserts obj is AreaFeature {
     if (!(obj instanceof AreaFeature)) throw new TypeError(msg);
   }
 
@@ -30,10 +27,7 @@ export class AreaFeature
     return new AreaFeature({geometry, properties}, shallow);
   }
 
-  constructor(
-    obj: OptionalParam<GJ.AreaFeature, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.AreaFeature, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'Feature'}, shallow);
 
     this.geometry = toAreaGeometry(obj.geometry, shallow);
@@ -43,11 +37,15 @@ export class AreaFeature
     return GeometricPrimitive.AREA;
   }
 
+  buffer(distance: number, steps: number = 10): AreaFeature | null {
+    const bg = this.geometry.buffer(distance, steps);
+    if (!bg) return null;
+    // TODO: Decide if we want to copy properties
+    return AreaFeature.create(bg, {}, true);
+  }
+
   /* FEATURE SPECIFIC */
-  geomEach(
-    callback: GeomEachCallback<AreaObject>,
-    featureIndex: number = -1,
-  ): void {
+  geomEach(callback: GeomEachCallback<AreaObject>, featureIndex: number = -1): void {
     this.geometry.geomEach(callback, featureIndex);
   }
 

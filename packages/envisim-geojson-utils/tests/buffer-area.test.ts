@@ -87,14 +87,14 @@ const polygons = [
 ] satisfies Polygon[];
 
 describe('buffer-area', () => {
-  const bOptions = {radius: 80000, steps: 1};
-  const sOptions = {radius: -80000, steps: 5};
+  const bOptions = {distance: 80000, steps: 1};
+  const sOptions = {distance: -80000, steps: 5};
 
   test('circle', () => {
-    expect(bufferArea(circles[0], {radius: 5, steps: 1})).toEqual(
+    expect(bufferArea(circles[0], {distance: 5, steps: 1})).toEqual(
       Circle.create(circles[0].coordinates, 15),
     );
-    expect(bufferArea(circles[0], {radius: 5, steps: 1})).toEqual(
+    expect(bufferArea(circles[0], {distance: -5, steps: 1})).toEqual(
       Circle.create(circles[0].coordinates, 5),
     );
   });

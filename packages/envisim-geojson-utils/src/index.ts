@@ -48,7 +48,6 @@ export {rotateCoord} from './utils/rotateCoord.js';
 export {cutLineGeometry, cutAreaGeometry} from './utils/antimeridian.js';
 
 // Dependent
-export {buffer} from './buffer.js';
 export {intersectLineLineFeatures} from './intersectLineLineFeatures.js';
 export {intersectLineAreaFeatures} from './intersectLineAreaFeatures.js';
 export {intersectAreaAreaFeatures} from './intersectAreaAreaFeatures.js';
