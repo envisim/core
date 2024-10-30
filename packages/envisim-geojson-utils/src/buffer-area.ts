@@ -147,8 +147,8 @@ function addSegmentConnection(
   if (endAngle < 0.0) endAngle += 360.0;
 
   let theta = endAngle - startAngle;
-  if (Math.abs(theta) > 180.0) {
-    theta -= Math.sign(theta) * 360.0;
+  if (theta > 0.0) {
+    theta -= 360.0;
   }
 
   const numPoints = Math.ceil(Math.abs(theta) / 90.0) * steps;
