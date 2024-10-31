@@ -63,16 +63,12 @@ export function intersectLineSampleAreaFrame(
   // if intersection, then compute new designWeight as product of the features design weights.
   frame.forEach((frameFeature) => {
     sample.forEach((sampleFeature) => {
-      const intersect = intersectLineAreaFeatures(
-        sampleFeature,
-        frameFeature,
-        pointsPerCircle,
-      );
+      const intersect = intersectLineAreaFeatures(sampleFeature, frameFeature, pointsPerCircle);
 
       if (intersect) {
         let dw = 1; // designWeight
         // Transfer the properties from sampleFeature to newFeature without copy.
-        intersect.properties = sampleFeature.properties || {};
+        intersect.properties = sampleFeature.properties ?? {};
         if (frameFeature.properties?.['_designWeight']) {
           dw *= frameFeature.properties['_designWeight'];
         }
@@ -106,11 +102,7 @@ export function intersectAreaSampleAreaFrame(
   // If intersection, then compute new designWeight as product of the features design weights.
   frame.forEach((frameFeature) => {
     sample.forEach((sampleFeature) => {
-      const intersect = intersectAreaAreaFeatures(
-        sampleFeature,
-        frameFeature,
-        pointsPerCircle,
-      );
+      const intersect = intersectAreaAreaFeatures(sampleFeature, frameFeature, pointsPerCircle);
 
       if (intersect) {
         let dw = 1;

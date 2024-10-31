@@ -15,14 +15,9 @@ import {copy} from '@envisim/utils';
 // coordinates in meters relative to (0,0).
 
 // Internal.
-function placePoint(
-  point: GJ.Position,
-  position: GJ.Position,
-  rotation: number,
-): GJ.Position {
+function placePoint(point: GJ.Position, position: GJ.Position, rotation: number): GJ.Position {
   const dist = Math.sqrt(point[0] * point[0] + point[1] * point[1]);
-  const angle =
-    90 - (Math.atan2(point[1], point[0]) * 180) / Math.PI + rotation;
+  const angle = 90 - (Math.atan2(point[1], point[0]) * 180) / Math.PI + rotation;
   return Geodesic.destination(position, dist, angle);
 }
 
@@ -34,31 +29,19 @@ function setCoordinatesForGeometry(
 ): void {
   switch (geometry.type) {
     case 'Point':
-      geometry.coordinates = placePoint(
-        geometry.coordinates,
-        position,
-        rotation,
-      );
+      geometry.coordinates = placePoint(geometry.coordinates, position, rotation);
       break;
     case 'MultiPoint':
     case 'LineString':
-      for (let i = 0; geometry.coordinates; i++) {
-        geometry.coordinates[i] = placePoint(
-          geometry.coordinates[i],
-          position,
-          rotation,
-        );
+      for (let i = 0; i < geometry.coordinates.length; i++) {
+        geometry.coordinates[i] = placePoint(geometry.coordinates[i], position, rotation);
       }
       break;
     case 'MultiLineString':
     case 'Polygon':
       for (let i = 0; i < geometry.coordinates.length; i++) {
         for (let j = 0; j < geometry.coordinates[i].length; j++) {
-          geometry.coordinates[i][j] = placePoint(
-            geometry.coordinates[i][j],
-            position,
-            rotation,
-          );
+          geometry.coordinates[i][j] = placePoint(geometry.coordinates[i][j], position, rotation);
         }
       }
       break;
@@ -132,9 +115,7 @@ function placeModelFeature(
     radius = radiusOfGeometry(modelFeature.geometry),
   }: PlaceOpts,
 ) {
-  const rotation = randomRotation
-    ? Math.floor(rand.float() * 360)
-    : optsRotation;
+  const rotation = randomRotation ? Math.floor(rand.float() * 360) : optsRotation;
   const feature = copy(modelFeature);
   setCoordinatesForGeometry(feature.geometry, position, rotation);
 
@@ -183,39 +164,27 @@ function radiusOfGeometry(geometry: GJ.Geometry) {
       break;
     case 'LineString':
       geometry.coordinates.forEach((coord) => {
-        maxRadius = Math.max(
-          maxRadius,
-          Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]),
-        );
+        maxRadius = Math.max(maxRadius, Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]));
       });
       break;
     case 'MultiLineString':
       geometry.coordinates.forEach((coords) => {
         coords.forEach((coord) => {
-          maxRadius = Math.max(
-            maxRadius,
-            Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]),
-          );
+          maxRadius = Math.max(maxRadius, Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]));
         });
       });
       break;
     case 'Polygon':
       // Outer ring is sufficient.
       geometry.coordinates[0].forEach((coord) => {
-        maxRadius = Math.max(
-          maxRadius,
-          Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]),
-        );
+        maxRadius = Math.max(maxRadius, Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]));
       });
       break;
     case 'MultiPolygon':
       geometry.coordinates.forEach((coords) => {
         // Outer ring for each polygon is sufficient.
         coords[0].forEach((coord) => {
-          maxRadius = Math.max(
-            maxRadius,
-            Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]),
-          );
+          maxRadius = Math.max(maxRadius, Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]));
         });
       });
       break;
@@ -247,8 +216,7 @@ function lengthOfLineString(coords: GJ.Position[]) {
   let L = 0;
   for (let i = 0; i < coords.length - 1; i++) {
     L += Math.sqrt(
-      Math.pow(coords[i][0] - coords[i + 1][0], 2) +
-        Math.pow(coords[i][1] - coords[i + 1][1], 2),
+      Math.pow(coords[i][0] - coords[i + 1][0], 2) + Math.pow(coords[i][1] - coords[i + 1][1], 2),
     );
   }
   return L;
@@ -287,34 +255,20 @@ function sizeOfGeometry(geometry: GJ.Geometry): number {
       }
     case 'MultiPoint':
       if (typeGuards.isMultiCircle(geometry)) {
-        return (
-          Math.PI *
-          geometry.radius *
-          geometry.radius *
-          geometry.coordinates.length
-        );
+        return Math.PI * geometry.radius * geometry.radius * geometry.coordinates.length;
       } else {
         return geometry.coordinates.length;
       }
     case 'LineString':
       return lengthOfLineString(geometry.coordinates);
     case 'MultiLineString':
-      return geometry.coordinates.reduce(
-        (size, coords) => size + lengthOfLineString(coords),
-        0.0,
-      );
+      return geometry.coordinates.reduce((size, coords) => size + lengthOfLineString(coords), 0.0);
     case 'Polygon':
       return areaOfSinglePolygon(geometry.coordinates);
     case 'MultiPolygon':
-      return geometry.coordinates.reduce(
-        (size, coords) => size + areaOfSinglePolygon(coords),
-        0.0,
-      );
+      return geometry.coordinates.reduce((size, coords) => size + areaOfSinglePolygon(coords), 0.0);
     case 'GeometryCollection':
-      return geometry.geometries.reduce(
-        (size, g) => size + sizeOfGeometry(g),
-        0.0,
-      );
+      return geometry.geometries.reduce((size, g) => size + sizeOfGeometry(g), 0.0);
     default:
       throw new Error('Not a geometry.');
   }
@@ -389,10 +343,7 @@ export function ellLineFeature(sideLength: number): GJ.LineFeature {
  * @param sideLength2 length of side south-north in meters.
  * @returns a model feature.
  */
-export function rectangularLineFeature(
-  sideLength1: number,
-  sideLength2: number,
-): GJ.LineFeature {
+export function rectangularLineFeature(sideLength1: number, sideLength2: number): GJ.LineFeature {
   const halfSide1 = (sideLength1 || 100) / 2;
   const halfSide2 = (sideLength2 || 100) / 2;
   return {
@@ -449,10 +400,7 @@ export function circleAreaFeature(radius: number): GJ.AreaFeature {
  * @param radius the radius in meters.
  * @returns a model feature.
  */
-export function squareCircleAreaFeature(
-  sideLength: number,
-  radius: number,
-): GJ.AreaFeature {
+export function squareCircleAreaFeature(sideLength: number, radius: number): GJ.AreaFeature {
   const r = radius || 10;
   const length = sideLength || 100;
   const halfSide = length / 2;
@@ -494,10 +442,7 @@ export function squareCircleAreaFeature(
  * @param sideLength2 length of side south-north in meters.
  * @returns a model feature.
  */
-export function rectangularAreaFeature(
-  sideLength1: number,
-  sideLength2: number,
-): GJ.AreaFeature {
+export function rectangularAreaFeature(sideLength1: number, sideLength2: number): GJ.AreaFeature {
   const halfSide1 = (sideLength1 || 100) / 2;
   const halfSide2 = (sideLength2 || 100) / 2;
   return {
@@ -576,10 +521,7 @@ export function squarePointFeature(sideLength: number): GJ.PointFeature {
  * @param radius the radius in meters.
  * @returns a model feature.
  */
-export function regularPolygonAreaFeature(
-  sides: number,
-  radius: number,
-): GJ.AreaFeature {
+export function regularPolygonAreaFeature(sides: number, radius: number): GJ.AreaFeature {
   const n = Math.max(Math.round(sides || 3), 3);
   const r = Math.max(radius, 0.05);
   const coordinates: GJ.Position[] = [];
@@ -607,10 +549,7 @@ export function regularPolygonAreaFeature(
  * @param radius the radius in meters.
  * @returns a model feature.
  */
-export function regularPolygonLineFeature(
-  sides: number,
-  radius: number,
-): GJ.LineFeature {
+export function regularPolygonLineFeature(sides: number, radius: number): GJ.LineFeature {
   const n = Math.max(Math.round(sides || 3), 3);
   const r = Math.max(radius, 0.05);
   const coordinates: GJ.Position[] = [];
@@ -638,10 +577,7 @@ export function regularPolygonLineFeature(
  * @param radius the radius in meters.
  * @returns a model feature.
  */
-export function regularPolygonPointFeature(
-  sides: number,
-  radius: number,
-): GJ.PointFeature {
+export function regularPolygonPointFeature(sides: number, radius: number): GJ.PointFeature {
   const n = Math.max(Math.round(sides || 3), 3);
   const r = Math.max(radius, 0.05);
   const coordinates: GJ.Position[] = [];

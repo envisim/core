@@ -31,11 +31,7 @@ const SAMPLE_FINITE_SIMPLE_METHODS = [
   'brewer',
   'ppswr',
 ] as const;
-const SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS = [
-  'lpm1',
-  'lpm2',
-  'scps',
-] as const;
+const SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS = ['lpm1', 'lpm2', 'scps'] as const;
 const SAMPLE_FINITE_BALANCED_METHODS = ['cube'] as const;
 const SAMPLE_FINITE_DOUBLY_BALANCED_METHODS = ['localCube'] as const;
 
@@ -97,10 +93,7 @@ export interface SampleFiniteOptions {
  * @returns `0` if check passes
  */
 export function sampleFiniteOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
+  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
 >(
   layer: T,
   {
@@ -118,7 +111,7 @@ export function sampleFiniteOptionsCheck<
     return 10;
   }
 
-  if (probabilitiesFrom) {
+  if (probabilitiesFrom !== undefined) {
     if (!Object.hasOwn(layer.propertyRecord, probabilitiesFrom)) {
       // probabilitiesFrom must exist on propertyRecord
       return 20;
@@ -132,22 +125,16 @@ export function sampleFiniteOptionsCheck<
 
   // Checks for spatially balanced methods
   if (
-    (
-      SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS as ReadonlyArray<string>
-    ).includes(methodName) ||
-    (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(
-      methodName,
-    )
+    (SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName) ||
+    (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName)
   ) {
-    if (!spreadOn) {
-      if (!spreadGeo) {
+    if (spreadOn === undefined) {
+      if (spreadGeo === undefined) {
         // Must use either spreadOn or spreadGeo
         return 30;
       }
     } else {
-      if (
-        !spreadOn.every((prop) => Object.hasOwn(layer.propertyRecord, prop))
-      ) {
+      if (!spreadOn.every((prop) => Object.hasOwn(layer.propertyRecord, prop))) {
         // spredOn entries must exist on propertyRecord
         return 31;
       }
@@ -156,12 +143,8 @@ export function sampleFiniteOptionsCheck<
 
   // Checks for balanced methods
   if (
-    (SAMPLE_FINITE_BALANCED_METHODS as ReadonlyArray<string>).includes(
-      methodName,
-    ) ||
-    (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(
-      methodName,
-    )
+    (SAMPLE_FINITE_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName) ||
+    (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName)
   ) {
     if (!balanceOn) {
       // Must use balanceOn
@@ -184,10 +167,7 @@ export function sampleFiniteOptionsCheck<
  * @param opts
  */
 export function sampleFinite<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
+  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
 >(layer: T, opts: SampleFiniteOptions): T {
   const optionsError = sampleFiniteOptionsCheck(layer, opts);
   if (optionsError !== 0) {
@@ -205,10 +185,7 @@ export function sampleFinite<
     // Standard
     case 'srswr':
     case 'srswor':
-      n =
-        opts.methodName === 'srswr'
-          ? opts.sampleSize
-          : Math.min(opts.sampleSize, N);
+      n = opts.methodName === 'srswr' ? opts.sampleSize : Math.min(opts.sampleSize, N);
       // Compute expected number of inclusions / inclusion probabilities
       mu = Array.from<number>({length: N}).fill(n / N);
 
@@ -261,11 +238,7 @@ export function sampleFinite<
       // Get selected indexes
       idx = sampling[opts.methodName]({
         probabilities: mu,
-        auxiliaries: spreadMatrixFromLayer(
-          layer,
-          opts.spreadOn ?? [],
-          opts.spreadGeo,
-        ),
+        auxiliaries: spreadMatrixFromLayer(layer, opts.spreadOn ?? [], opts.spreadGeo),
         rand: opts.rand,
       });
       break;
@@ -292,11 +265,7 @@ export function sampleFinite<
       idx = sampling[opts.methodName]({
         probabilities: mu,
         balancing: balancingMatrixFromLayer(layer, opts.balanceOn ?? []),
-        auxiliaries: spreadMatrixFromLayer(
-          layer,
-          opts.spreadOn ?? [],
-          opts.spreadGeo,
-        ),
+        auxiliaries: spreadMatrixFromLayer(layer, opts.spreadOn ?? [], opts.spreadGeo),
         rand: opts.rand,
       });
       break;
@@ -314,23 +283,11 @@ export function sampleFinite<
 
   let newLayer: T;
   if (Layer.isLayer(layer, GeometricPrimitive.POINT)) {
-    newLayer = new Layer(
-      new PointCollection({features: []}, true),
-      propertyRecord,
-      true,
-    ) as T;
+    newLayer = new Layer(new PointCollection({features: []}, true), propertyRecord, true) as T;
   } else if (Layer.isLayer(layer, GeometricPrimitive.LINE)) {
-    newLayer = new Layer(
-      new LineCollection({features: []}, true),
-      propertyRecord,
-      true,
-    ) as T;
+    newLayer = new Layer(new LineCollection({features: []}, true), propertyRecord, true) as T;
   } else if (Layer.isLayer(layer, GeometricPrimitive.AREA)) {
-    newLayer = new Layer(
-      new AreaCollection({features: []}, true),
-      propertyRecord,
-      true,
-    ) as T;
+    newLayer = new Layer(new AreaCollection({features: []}, true), propertyRecord, true) as T;
   } else {
     throw new TypeError('layer not valid');
   }

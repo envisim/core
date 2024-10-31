@@ -198,7 +198,7 @@ export function samplePointsOnAreas(
       const feature = gj.features[parentIndex[i]];
       if (feature.properties?.['_designWeight']) {
         dw = feature.properties['_designWeight'];
-        if (pf.properties) {
+        if (pf.properties !== undefined) {
           pf.properties['_designWeight'] *= dw;
         }
       }

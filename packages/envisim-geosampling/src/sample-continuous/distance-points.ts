@@ -70,55 +70,42 @@ export function sampleDistancePoints(
     if (pointFeature.geometry.type === 'Point') {
       const basePointCoords = pointFeature.geometry.coordinates;
 
-      pointSample.collection.features.forEach(
-        (samplePoint, samplePointIndex) => {
-          if (samplePoint.geometry.type === 'Point') {
-            const dist = Geodesic.distance(
-              basePointCoords,
-              samplePoint.geometry.coordinates,
-            );
-            if (dist < cutoff && rand.float() < detectionFunction(dist)) {
-              // Check if base point exists in this frame (frame could be part/stratum)
-              for (let i = 0; i < layer.collection.features.length; i++) {
-                const frameFeature = layer.collection.features[i];
-                const intersect = intersectPointAreaFeatures(
-                  pointFeature,
-                  frameFeature,
-                );
-                if (intersect) {
-                  // Follow the design weight
-                  let dw = 1 / (Math.PI * effRadius * effRadius);
-                  if (samplePoint.properties?.['_designWeight']) {
-                    dw *= samplePoint.properties['_designWeight'];
-                  }
-                  // If buffer = 0, then sample point has already collected
-                  // design weight from frame. If buffer > 0, then we need
-                  // to collect the weight here.
-                  if (
-                    frameFeature.properties?.['_designWeight'] &&
-                    buffer > 0
-                  ) {
-                    dw *= frameFeature.properties['_designWeight'];
-                  }
-                  const newFeature = new PointFeature(pointFeature, false);
-                  if (!newFeature.properties) {
-                    newFeature.properties = {};
-                  }
-                  newFeature.properties['_designWeight'] = dw;
-                  newFeature.properties['_parent'] = samplePointIndex;
-                  newFeature.properties['_distance'] = dist;
-                  sampledFeatures.push(newFeature);
-                  break;
+      pointSample.collection.features.forEach((samplePoint, samplePointIndex) => {
+        if (samplePoint.geometry.type === 'Point') {
+          const dist = Geodesic.distance(basePointCoords, samplePoint.geometry.coordinates);
+          if (dist < cutoff && rand.float() < detectionFunction(dist)) {
+            // Check if base point exists in this frame (frame could be part/stratum)
+            for (let i = 0; i < layer.collection.features.length; i++) {
+              const frameFeature = layer.collection.features[i];
+              const intersect = intersectPointAreaFeatures(pointFeature, frameFeature);
+              if (intersect) {
+                // Follow the design weight
+                let dw = 1 / (Math.PI * effRadius * effRadius);
+                if (samplePoint.properties?.['_designWeight']) {
+                  dw *= samplePoint.properties['_designWeight'];
                 }
+                // If buffer = 0, then sample point has already collected
+                // design weight from frame. If buffer > 0, then we need
+                // to collect the weight here.
+                if (frameFeature.properties?.['_designWeight'] && buffer > 0) {
+                  dw *= frameFeature.properties['_designWeight'];
+                }
+                const newFeature = new PointFeature(pointFeature, false);
+                if (newFeature.properties === undefined) {
+                  newFeature.properties = {};
+                }
+                newFeature.properties['_designWeight'] = dw;
+                newFeature.properties['_parent'] = samplePointIndex;
+                newFeature.properties['_distance'] = dist;
+                sampledFeatures.push(newFeature);
+                break;
               }
             }
           }
-        },
-      );
+        }
+      });
     } else {
-      throw new Error(
-        'Only Features with geometry of type Point is allowed in parameter base.',
-      );
+      throw new Error('Only Features with geometry of type Point is allowed in parameter base.');
     }
   });
   // Fix property record (same as base layer, but add design variables)
@@ -127,9 +114,5 @@ export function sampleDistancePoints(
   newRecord['_distance'] = createDistanceProperty();
   newRecord['_parent'] = createParentProperty();
 
-  return new Layer(
-    new PointCollection({features: sampledFeatures}, true),
-    newRecord,
-    true,
-  );
+  return new Layer(new PointCollection({features: sampledFeatures}, true), newRecord, true);
 }

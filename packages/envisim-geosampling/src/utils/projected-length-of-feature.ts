@@ -39,8 +39,8 @@ function distCoordsForLineString(
       coord[0],
       geodInverseOpts,
     );
-    const dist = result.s12 || 0;
-    const azi1 = result.azi1 || 0;
+    const dist = result.s12 ?? 0.0;
+    const azi1 = result.azi1 ?? 0.0;
     // Compute equidistant x-coord rotated counterclockwise by azimuth.
     const x = dist * Math.cos((90 - azi1 - azimuth) * toRad);
     // Store min and max x-value.
@@ -63,9 +63,7 @@ function distCoordsForMultiLineString(
   let distCoords: TdistCoord[] = [];
 
   multiLineString.forEach((lineString) => {
-    distCoords = distCoords.concat(
-      distCoordsForLineString(lineString, refPointLonLat, azimuth),
-    );
+    distCoords = distCoords.concat(distCoordsForLineString(lineString, refPointLonLat, azimuth));
   });
   return distCoords;
 }
@@ -99,10 +97,7 @@ function lengthFromDistCoords(distCoords: TdistCoord[]): number {
   return L;
 }
 
-function geometryToMultiLineString(
-  geom: GJ.BaseGeometry,
-  pointsPerCircle = 16,
-) {
+function geometryToMultiLineString(geom: GJ.BaseGeometry, pointsPerCircle = 16) {
   const mls: GJ.Position[][] = [];
 
   switch (geom.type) {
@@ -125,10 +120,9 @@ function geometryToMultiLineString(
 
     case 'MultiPoint':
       if (typeGuards.isMultiCircle(geom)) {
-        const coords = MultiCircle.create(
-          geom.coordinates,
-          geom.radius,
-        ).toPolygon({pointsPerCircle}).coordinates;
+        const coords = MultiCircle.create(geom.coordinates, geom.radius).toPolygon({
+          pointsPerCircle,
+        }).coordinates;
         coords.forEach((coord) => {
           mls.push(...coord);
         });
@@ -190,12 +184,7 @@ export function projectedLengthOfFeature(
   // 2. Compute reference coordinate as center of box
   const box = bbox4(feature.geometry.getBBox());
 
-  const refCoord: GJ.Position = [
-    longitudeCenter(box[0], box[2]),
-    box[1] + (box[3] - box[1]) / 2,
-  ];
+  const refCoord: GJ.Position = [longitudeCenter(box[0], box[2]), box[1] + (box[3] - box[1]) / 2];
 
-  return lengthFromDistCoords(
-    distCoordsForMultiLineString(coords, refCoord, azimuth),
-  );
+  return lengthFromDistCoords(distCoordsForMultiLineString(coords, refCoord, azimuth));
 }

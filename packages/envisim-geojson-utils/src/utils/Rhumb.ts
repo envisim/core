@@ -238,7 +238,7 @@ export class Rhumb {
    * @returns the distance in meters.
    */
   static distance(p1: GJ.Position, p2: GJ.Position): number {
-    return inverseRhumbLine(p1, p2, rhumbOutmask.s12).s12 || 0;
+    return inverseRhumbLine(p1, p2, rhumbOutmask.s12).s12 ?? 0.0;
   }
 
   /**
@@ -306,7 +306,7 @@ export class Rhumb {
    * @returns the forward azimuth in degrees.
    */
   static forwardAzimuth(p1: GJ.Position, p2: GJ.Position): number {
-    return inverseRhumbLine(p1, p2, rhumbOutmask.azi12).azi12 || 0;
+    return inverseRhumbLine(p1, p2, rhumbOutmask.azi12).azi12 ?? 0.0;
   }
 
   /**
@@ -321,8 +321,8 @@ export class Rhumb {
   static intermediate(p1: GJ.Position, p2: GJ.Position, fraction: number): GJ.Position {
     const res = inverseRhumbLine(p1, p2, rhumbOutmask.both);
     // Here both s12 and azi12 are needed.
-    const azi12 = res.azi12 || 0;
-    const s12 = res.s12 || 0;
+    const azi12 = res.azi12 ?? 0.0;
+    const s12 = res.s12 ?? 0.0;
     return Rhumb.destination(p1, s12 * fraction, azi12);
   }
 
