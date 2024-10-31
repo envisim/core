@@ -62,7 +62,8 @@ export function intersectPolygons(polygons: GJ.Position[][][]): GJ.Position2[][]
       }
 
       const p = upwardIntersection(segList[queueIdx], sweepPoint, positive[queueIdx]);
-      if (p && p < distance) {
+
+      if (p !== null && p < distance) {
         parent[idx] = queueIdx;
         distance = p;
       }

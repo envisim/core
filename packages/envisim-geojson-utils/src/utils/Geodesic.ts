@@ -7,6 +7,8 @@ const geodInverseDist = geodesic.Geodesic.DISTANCE;
 const geodInverseAzi = geodesic.Geodesic.AZIMUTH;
 const geodInverseBoth = geodesic.Geodesic.DISTANCE | geodesic.Geodesic.AZIMUTH;
 const geodDirectOpts = geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE;
+const geodDirectOptsUnrolled =
+  geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE | geodesic.Geodesic.LONG_UNROLL;
 
 interface GeodesicPolygon {
   AddPoint(a0: number, a1: number): void;
@@ -39,17 +41,31 @@ export class Geodesic {
    * @param azimuth azimuth (angle) clockwise from north in degrees.
    * @returns the coordinates [lon,lat] of the destination point.
    */
-  static destination(
-    point: GJ.Position,
-    dist: number,
-    azimuth: number,
-  ): GJ.Position {
+  static destination(point: GJ.Position, dist: number, azimuth: number): GJ.Position {
+    const result = geod.Direct(point[1], point[0], (azimuth + 360) % 360, dist, geodDirectOpts);
+    if (typeof result.lon2 === 'number' && typeof result.lat2 === 'number') {
+      return [result.lon2, result.lat2];
+    }
+    // should never be reached
+    throw new Error('Not able to compute destination point.');
+  }
+
+  /**
+   * Computes the destination point on a geodesic path given a point,
+   * a distance and an azimuth.
+   *
+   * @param point point coordinates [lon,lat].
+   * @param dist the distance in meters.
+   * @param azimuth azimuth (angle) clockwise from north in degrees.
+   * @returns the coordinates [lon,lat] of the destination point.
+   */
+  static destinationUnrolled(point: GJ.Position, dist: number, azimuth: number): GJ.Position {
     const result = geod.Direct(
       point[1],
       point[0],
       (azimuth + 360) % 360,
       dist,
-      geodDirectOpts,
+      geodDirectOptsUnrolled,
     );
     if (typeof result.lon2 === 'number' && typeof result.lat2 === 'number') {
       return [result.lon2, result.lat2];
@@ -85,27 +101,14 @@ export class Geodesic {
    * @param fraction the fraction of distance between the points.
    * @returns the coordinates [lon,lat] of the intermediate point.
    */
-  static intermediate(
-    p1: GJ.Position,
-    p2: GJ.Position,
-    fraction: number,
-  ): GJ.Position {
+  static intermediate(p1: GJ.Position, p2: GJ.Position, fraction: number): GJ.Position {
     const result1 = geod.Inverse(p1[1], p1[0], p2[1], p2[0], geodInverseBoth);
     const dist = result1.s12;
     const azimuth = result1.azi1;
     let result2;
     if (typeof dist === 'number' && typeof azimuth === 'number') {
-      result2 = geod.Direct(
-        p1[1],
-        p1[0],
-        azimuth,
-        dist * fraction,
-        geodDirectOpts,
-      );
-      if (
-        typeof result2.lon2 === 'number' &&
-        typeof result2.lat2 === 'number'
-      ) {
+      result2 = geod.Direct(p1[1], p1[0], azimuth, dist * fraction, geodDirectOpts);
+      if (typeof result2.lon2 === 'number' && typeof result2.lat2 === 'number') {
         return [result2.lon2, result2.lat2];
       }
     }

@@ -1,5 +1,6 @@
 import {expect, test} from 'vitest';
 
+import {bufferArea} from '../src/buffer-area.js';
 import {bufferLine} from '../src/buffer-line.js';
 import {LineString} from '../src/index.js';
 
@@ -42,6 +43,12 @@ test('river', () => {
   // console.log(bufferLine(lines[1], bOptions).coordinates);
   // console.log(bufferLine(lines[2], bOptions).coordinates);
   // console.log(bufferLine(lines[3], bOptions).coordinates);
+
+  // let buf = bufferLine(lines[2], bOptions);
+  // console.log(buf?.coordinates);
+  // buf = bufferArea(buf, sOptions);
+  // console.log(buf?.coordinates);
+  // throw new Error('a');
 
   expect(bufferLine(lines[1], sOptions)).toBeNull();
   expect(lines.map((l) => bufferLine(l, bOptions)?.coordinates.length)).toEqual([1, 1, 2, 1]);

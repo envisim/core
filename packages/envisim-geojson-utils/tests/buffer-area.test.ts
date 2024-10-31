@@ -1,7 +1,8 @@
-import {describe, expect, test} from 'vitest';
+import geodesic from 'geographiclib-geodesic';
+import {expect, test} from 'vitest';
 
 import {bufferArea} from '../src/buffer-area.js';
-import {AreaObject, Circle, GeoJSON as GJ, Polygon} from '../src/index.js';
+import {AreaObject, Circle, GeoJSON as GJ, MultiPolygon, Polygon} from '../src/index.js';
 
 const circles = [Circle.create([80, 70], 10)] satisfies Circle[];
 
@@ -86,6 +87,40 @@ const polygons = [
   ]),
 ] satisfies Polygon[];
 
+const antimeridian = Polygon.create([
+  [
+    [179.98, -16.87],
+    [179.98, -16.84],
+    [179.94, -16.88],
+    [179.96, -16.92],
+    [180.0, -16.92],
+    [180.0, -16.895],
+    [179.98, -16.895],
+    [179.98, -16.875],
+    [180.0, -16.875],
+    [180.0, -16.87],
+    [179.98, -16.87],
+  ],
+]);
+
+const multi = MultiPolygon.create([
+  antimeridian.coordinates,
+  [
+    [
+      [-179.97, -16.9],
+      [-179.95, -16.87],
+      [-179.98, -16.83],
+      [-180.0, -16.83],
+      [-180.0, -16.875],
+      [-179.99, -16.875],
+      [-179.99, -16.895],
+      [-180.0, -16.895],
+      [-180.0, -16.9],
+      [-179.97, -16.9],
+    ],
+  ],
+]);
+
 const bOptions = {distance: 80000, steps: 5};
 const sOptions = {distance: -80000, steps: 5};
 
@@ -96,6 +131,16 @@ test('circle', () => {
   expect(bufferArea(circles[0], {distance: -5, steps: 1})).toEqual(
     Circle.create(circles[0].coordinates, 5),
   );
+});
+
+test('antimeridian', () => {
+  let buf = bufferArea(antimeridian, {distance: 100, steps: 1});
+  expect(buf?.coordinates.length).toBe(3);
+});
+
+test('multipoly', () => {
+  let buf = bufferArea(multi, {distance: 100, steps: 1});
+  expect(buf?.coordinates.length).toBe(2);
 });
 
 // test('poly', () => {

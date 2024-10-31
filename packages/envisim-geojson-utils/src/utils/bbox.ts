@@ -39,10 +39,7 @@ function getBBoxValue(bbox: GJ.BBox, e: BBoxEnum): number {
  * @param radius - The radius in meters.
  * @returns - An array with four positions [top,right,bottom,left].
  */
-export function getPositionsForCircle(
-  point: GJ.Position,
-  radius: number,
-): GJ.Position[] {
+export function getPositionsForCircle(point: GJ.Position, radius: number): GJ.Position[] {
   const top = Geodesic.destination(point, radius, 0);
   const right = Geodesic.destination(point, radius, 90);
   const bottom = Geodesic.destination(point, radius, 180);
@@ -61,17 +58,11 @@ export function getPositionsForCircle(
 export function pointInBBox(point: GJ.Position, bbox: GJ.BBox): boolean {
   return (
     // Check lon
-    checkLongitudeInRange(
-      point[0],
-      bbox[0],
-      getBBoxValue(bbox, BBoxEnum.blon),
-    ) &&
+    checkLongitudeInRange(point[0], bbox[0], getBBoxValue(bbox, BBoxEnum.blon)) &&
     // Check lat
     checkInRange(point[1], bbox[1], getBBoxValue(bbox, BBoxEnum.blat)) &&
     // Check z, only if both have it, otherwise they are considered all-covering
-    (point.length === 2 ||
-      bbox.length === 4 ||
-      checkInRange(point[2], bbox[2], bbox[5]))
+    (point.length === 2 || bbox.length === 4 || checkInRange(point[2], bbox[2], bbox[5]))
   );
 }
 
@@ -129,6 +120,9 @@ export function bboxInBBox(b1: GJ.BBox, b2: GJ.BBox): boolean {
  * @returns the bounding box around the array of positions
  * @throws Error when positions.length === 0
  */
+export function bboxFromPositions(positions: GJ.Position2[]): GJ.BBox2;
+export function bboxFromPositions(positions: GJ.Position3[]): GJ.BBox3;
+export function bboxFromPositions(positions: GJ.Position[]): GJ.BBox;
 export function bboxFromPositions(positions: GJ.Position[]): GJ.BBox {
   if (positions.length === 0) throw new Error('positions must not be empty');
   if (positions.length === 1) {
@@ -205,16 +199,12 @@ export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox {
 
   const merged: [number, number][] = [];
   for (let i = 0; i < bboxes.length; ) {
-    const candidate: [number, number] = [
-      bboxes[i][0],
-      getBBoxValue(bboxes[i], BBoxEnum.blon),
-    ];
+    const candidate: [number, number] = [bboxes[i][0], getBBoxValue(bboxes[i], BBoxEnum.blon)];
 
     // Check if the current candidate holds any other candidate
     let j = i + 1;
     for (; j < bboxes.length; j++) {
-      if (!checkLongitudeInRange(bboxes[j][0], candidate[0], candidate[1]))
-        break;
+      if (!checkLongitudeInRange(bboxes[j][0], candidate[0], candidate[1])) break;
 
       // We shouldn't update candidate's endpoint if both j-points are in the range
       const blon = getBBoxValue(bboxes[j], BBoxEnum.blon);
@@ -272,4 +262,8 @@ export function bbox4(bbox: GJ.BBox): [number, number, number, number] {
 export function bboxCenter(bbox: GJ.BBox): GJ.Position {
   const box = bbox4(bbox);
   return [longitudeCenter(box[0], box[2]), (box[1] + box[3]) / 2];
+}
+
+export function bboxCrossesAntimeridian(bbox: GJ.BBox): boolean {
+  return bbox[0] > bbox[2];
 }

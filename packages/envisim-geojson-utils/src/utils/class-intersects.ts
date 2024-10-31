@@ -92,7 +92,7 @@ export class IntersectList {
         (inner) => inner.segment === segments[1] && inner.param === params[1],
       ),
     );
-    if (intidx) {
+    if (intidx !== undefined) {
       // check so intersect doesnt already exist for seg[0]
       if (!this.segmentMap[segments[0]].includes(intidx)) {
         this.appendIntersect(intidx, segments[0], params[0]);
@@ -354,7 +354,7 @@ export class IntersectList {
         }
 
         const p = upwardIntersection(segList[queueIdx], sweepPoint, positive[queueIdx]);
-        if (p && p < distance) {
+        if (p !== null && p < distance) {
           parent[idx] = queueIdx;
           distance = p;
         }

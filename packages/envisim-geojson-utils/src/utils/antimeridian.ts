@@ -1,7 +1,7 @@
 import {copy} from '@envisim/utils';
 
 import type * as GJ from '../types/geojson.js';
-import {bbox4, bboxFromPositions} from './bbox.js';
+import {bbox4, bboxCrossesAntimeridian, bboxFromPositions} from './bbox.js';
 import {intersectPolygons} from './intersect-polygons.js';
 import {normalizeLongitude} from './position.js';
 
@@ -22,8 +22,7 @@ function addPosition(arr: GJ.Position[], coord: GJ.Position) {
 // Internal function that cuts lines on the antimeridian
 function cutLineStringCoords(ls: GJ.Position[]): GJ.Position[][] {
   const box = bbox4(bboxFromPositions(ls));
-  if (box[0] < box[2]) {
-    // Does not cross the antimeridian
+  if (bboxCrossesAntimeridian(box) === false) {
     return [ls];
   }
   // Crosses the antimeridian
@@ -47,7 +46,7 @@ function cutLineStringCoords(ls: GJ.Position[]): GJ.Position[][] {
       // Find breakpoint, push and start new nls
       const t = (180 - prevCoord[0]) / (currCoord[0] - prevCoord[0]);
       const latAlt = [prevCoord[1] + t * (currCoord[1] - prevCoord[1])];
-      if (currCoord[2]) {
+      if (currCoord[2] !== undefined) {
         // push altitude
         latAlt.push(prevCoord[2] + t * (currCoord[2] - prevCoord[2]));
       }
@@ -130,32 +129,47 @@ export function cutLineGeometry(g: GJ.LineGeometry): GJ.LineGeometry {
 }
 
 // use these polygons to cut polygons
-const leftArea: GJ.Position[][] = [
-  [
-    [-180, -90],
-    [180, -90],
-    [180, 90],
-    [-180, 90],
-    [-180, -90],
+export const EARTH_BOUNDARIES: {
+  left: GJ.Position2[][];
+  normal: GJ.Position2[][];
+  right: GJ.Position2[][];
+} = {
+  left: [
+    [
+      [-540.0, -90.0],
+      [-180.0, -90.0],
+      [-180.0, 90.0],
+      [-540.0, 90.0],
+      [-540.0, -90.0],
+    ],
   ],
-];
-const rightArea: GJ.Position[][] = [
-  [
-    [180, -90],
-    [540, -90],
-    [540, 90],
-    [180, 90],
-    [180, -90],
+  normal: [
+    [
+      [-180.0, -90.0],
+      [180.0, -90.0],
+      [180.0, 90.0],
+      [-180.0, 90.0],
+      [-180.0, -90.0],
+    ],
   ],
-];
+  right: [
+    [
+      [180.0, -90.0],
+      [540.0, -90.0],
+      [540.0, 90.0],
+      [180.0, 90.0],
+      [180.0, -90.0],
+    ],
+  ],
+} as const;
 
 // Internal function to cut a polygon at the antimeridian
 function cutPolygonCoords(pol: GJ.Position[][]): GJ.Position[][][] {
   const box = bbox4(bboxFromPositions(pol[0])); // outer ring only
-  if (box[0] < box[2]) {
-    // Does not cross the antimeridian
+  if (bboxCrossesAntimeridian(box) === false) {
     return [pol];
   }
+
   // Crosses the antimeridian
   const coords: GJ.Position[][] = [];
   pol.forEach((ring) => {
@@ -171,11 +185,11 @@ function cutPolygonCoords(pol: GJ.Position[][]): GJ.Position[][][] {
   // Intersect coords with leftArea to create the first polygon and rightArea
   // to create the second polygon.
   const mpc: GJ.Position[][][] = [];
-  const left = intersectPolygons([coords, leftArea]);
+  const left = intersectPolygons([coords, EARTH_BOUNDARIES.normal]);
   if (left.length > 0) {
     left.forEach((p) => mpc.push(p));
   }
-  const right = intersectPolygons([coords, rightArea]);
+  const right = intersectPolygons([coords, EARTH_BOUNDARIES.right]);
   if (right.length > 0) {
     // need to fix coords here
     right.forEach((p) => {
@@ -229,4 +243,13 @@ export function cutAreaGeometry(g: GJ.AreaGeometry): GJ.AreaGeometry {
     default:
       throw new Error('Invalid type');
   }
+}
+
+/**
+ * Moves rings that starts on the west side of the meridian (-180 -- 0) to the positive counterpart (180--360)
+ */
+export function moveCoordsAroundEarth(coords: GJ.Position[]): GJ.Position[] {
+  const xSmall = coords.reduce((p, c) => Math.min(c[0], p), Number.MAX_VALUE);
+  if (xSmall >= 0.0) return coords;
+  return coords.map((c) => [c[0] + 360.0, c[1]]);
 }

@@ -31,7 +31,7 @@ export function unionOfSegments(segments: Segment[], breaks: number[]): GJ.Posit
   return returningPolygons;
 }
 
-function unionOfRings(polygons: GJ.Position[][][]): GJ.Position2[][][] {
+export function unionOfRings(polygons: GJ.Position[][][]): GJ.Position2[][][] {
   if (polygons.length === 1) {
     return [polygons[0].map((ring) => ring.map((p) => [p[0], p[1]]))];
   }

@@ -1,7 +1,9 @@
 import * as GJ from './types/geojson.js';
-import {buffering} from './buffer-area.js';
+import {bufferRings} from './buffer-area.js';
 import type {BufferOptions} from './buffer.js';
-import {AreaObject, LineObject, LineString, MultiPolygon, Polygon} from './geojson/index.js';
+import {AreaObject, LineObject, LineString} from './geojson/index.js';
+import {moveCoordsAroundEarth} from './utils/antimeridian.js';
+import {bboxCrossesAntimeridian} from './utils/bbox.js';
 
 function ringFromLine(line: GJ.Position[]): GJ.Position[][] {
   const ring: GJ.Position[] = [...line];
@@ -18,23 +20,13 @@ export function bufferLine(line: LineObject, options: Required<BufferOptions>): 
     return null;
   }
 
-  const geoms: GJ.Position[][][] = [];
-
   if (LineString.isObject(line)) {
-    geoms.push(ringFromLine(line.coordinates));
-  } else {
-    geoms.push(...line.coordinates.map((l) => ringFromLine(l)));
+    return bufferRings([ringFromLine(line.coordinates)], options);
   }
 
-  const newGeoms = buffering(geoms, options);
-
-  if (newGeoms.length === 0) {
-    return null;
+  if (bboxCrossesAntimeridian(line.getBBox())) {
+    return bufferRings(line.coordinates.map(moveCoordsAroundEarth).map(ringFromLine), options);
   }
 
-  if (newGeoms.length === 1) {
-    return Polygon.create(newGeoms[0], true);
-  }
-
-  return MultiPolygon.create(newGeoms, true);
+  return bufferRings(line.coordinates.map(ringFromLine), options);
 }
