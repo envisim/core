@@ -6,37 +6,24 @@ import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidOfLineString} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
-import {type GeomEachCallback} from '../base/index.js';
 import {AbstractLineObject} from './AbstractLineObject.js';
 import {MultiPolygon} from './ClassMultiPolygon.js';
 import {Polygon} from './ClassPolygon.js';
 
-export class LineString
-  extends AbstractLineObject<GJ.LineString>
-  implements GJ.LineString
-{
+export class LineString extends AbstractLineObject<GJ.LineString> implements GJ.LineString {
   static isObject(obj: unknown): obj is LineString {
     return obj instanceof LineString;
   }
 
-  static assert(
-    obj: unknown,
-    msg: string = 'Expected LineString',
-  ): asserts obj is LineString {
+  static assert(obj: unknown, msg: string = 'Expected LineString'): asserts obj is LineString {
     if (!(obj instanceof LineString)) throw new TypeError(msg);
   }
 
-  static create(
-    coordinates: GJ.LineString['coordinates'],
-    shallow: boolean = true,
-  ): LineString {
+  static create(coordinates: GJ.LineString['coordinates'], shallow: boolean = true): LineString {
     return new LineString({coordinates}, shallow);
   }
 
-  constructor(
-    obj: OptionalParam<GJ.LineString, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.LineString, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'LineString'}, shallow);
   }
 
@@ -54,15 +41,7 @@ export class LineString
   }
 
   centroid(iterations: number = 2): GJ.Position {
-    return centroidOfLineString(this.coordinates, this.getBBox(), iterations)
-      .centroid;
-  }
-
-  geomEach(
-    callback: GeomEachCallback<LineString>,
-    featureIndex: number = -1,
-  ): void {
-    callback(this, featureIndex, -1);
+    return centroidOfLineString(this.coordinates, this.getBBox(), iterations).centroid;
   }
 
   distanceToPosition(coords: GJ.Position): number {

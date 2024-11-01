@@ -1,11 +1,11 @@
 import {copy} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {GeoJsonObject, type GeomEachCallback} from '../base/index.js';
+import {GeoJsonObject} from '../base/index.js';
 
-export abstract class AbstractSingleTypeObject<
-  T extends GJ.SingleTypeObject,
-> extends GeoJsonObject<T['type']> {
+export abstract class AbstractSingleTypeObject<T extends GJ.SingleTypeObject> extends GeoJsonObject<
+  T['type']
+> {
   coordinates: T['coordinates'];
 
   constructor(obj: GJ.SingleTypeObject, shallow: boolean = true) {
@@ -19,7 +19,6 @@ export abstract class AbstractSingleTypeObject<
   }
 
   abstract override get size(): number;
-  abstract geomEach(callback: GeomEachCallback<T>, featureIndex: number): void;
   abstract override distanceToPosition(coords: GJ.Position): number;
   abstract centroid(iterations: number): GJ.Position;
 }

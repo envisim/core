@@ -4,43 +4,27 @@ import {copy} from '@envisim/utils';
 
 import * as GJ from '../types/geojson.js';
 import {
-  GeometricPrimitive,
-  isGeometryPrimitive,
-} from '../geometric-primitive/index.js';
-import {
   AreaCollection,
   AreaFeature,
+  Circle,
   LineCollection,
+  MultiCircle,
   PointCollection,
-  PropertyRecord,
-} from '../index.js';
-import {isCircle, isMultiCircle} from '../types/type-guards.js';
-import {PropertySpecialKeys} from './property.js';
+} from '../geojson/index.js';
+import {GeometricPrimitive, isGeometryPrimitive} from '../geometric-primitive/index.js';
+import {PropertyRecord, PropertySpecialKeys} from './property.js';
 
-export class Layer<
-  T extends AreaCollection | LineCollection | PointCollection,
-> {
+export class Layer<T extends AreaCollection | LineCollection | PointCollection> {
   collection: T;
   propertyRecord: PropertyRecord;
 
-  static isLayer(
+  static isLayer(obj: unknown, type: GeometricPrimitive.POINT): obj is Layer<PointCollection>;
+  static isLayer(obj: unknown, type: GeometricPrimitive.LINE): obj is Layer<LineCollection>;
+  static isLayer(obj: unknown, type: GeometricPrimitive.AREA): obj is Layer<AreaCollection>;
+  static isLayer<T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>>(
     obj: unknown,
-    type: GeometricPrimitive.POINT,
-  ): obj is Layer<PointCollection>;
-  static isLayer(
-    obj: unknown,
-    type: GeometricPrimitive.LINE,
-  ): obj is Layer<LineCollection>;
-  static isLayer(
-    obj: unknown,
-    type: GeometricPrimitive.AREA,
-  ): obj is Layer<AreaCollection>;
-  static isLayer<
-    T extends
-      | Layer<PointCollection>
-      | Layer<LineCollection>
-      | Layer<AreaCollection>,
-  >(obj: unknown, type: GeometricPrimitive): obj is T;
+    type: GeometricPrimitive,
+  ): obj is T;
   static isLayer(obj: unknown, type: GeometricPrimitive): boolean {
     if (!(obj instanceof Layer)) {
       return false;
@@ -73,12 +57,11 @@ export class Layer<
     type: GeometricPrimitive.AREA,
     msg?: string,
   ): asserts obj is Layer<AreaCollection>;
-  static assert<
-    T extends
-      | Layer<PointCollection>
-      | Layer<LineCollection>
-      | Layer<AreaCollection>,
-  >(obj: unknown, type: GeometricPrimitive, msg?: string): asserts obj is T;
+  static assert<T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>>(
+    obj: unknown,
+    type: GeometricPrimitive,
+    msg?: string,
+  ): asserts obj is T;
   static assert(obj: unknown, type: GeometricPrimitive, msg?: string): boolean {
     if (Layer.isLayer(obj, type)) {
       return true;
@@ -129,10 +112,7 @@ export class Layer<
           type: 'FeatureCollection',
           features: [],
         });
-        const [newFeatures, propertyRecord] = prepareFeatures(
-          collection.features,
-          type,
-        );
+        const [newFeatures, propertyRecord] = prepareFeatures(collection.features, type);
         newFeatures.forEach((feat) => {
           newCollection.addFeature(feat);
         });
@@ -145,10 +125,7 @@ export class Layer<
           type: 'FeatureCollection',
           features: [],
         });
-        const [newFeatures, propertyRecord] = prepareFeatures(
-          collection.features,
-          type,
-        );
+        const [newFeatures, propertyRecord] = prepareFeatures(collection.features, type);
         newFeatures.forEach((feat) => {
           newCollection.addFeature(feat);
         });
@@ -161,10 +138,7 @@ export class Layer<
           type: 'FeatureCollection',
           features: [],
         });
-        const [newFeatures, propertyRecord] = prepareFeatures(
-          collection.features,
-          type,
-        );
+        const [newFeatures, propertyRecord] = prepareFeatures(collection.features, type);
         newFeatures.forEach((feat) => {
           newCollection.addFeature(feat);
         });
@@ -190,11 +164,7 @@ export class Layer<
    * @param propertyRecord
    * @param shallow
    */
-  constructor(
-    collection: T,
-    propertyRecord: PropertyRecord,
-    shallow: boolean = true,
-  ) {
+  constructor(collection: T, propertyRecord: PropertyRecord, shallow: boolean = true) {
     // TODO?: Check that all features have the properties
     // in the property record?
 
@@ -218,8 +188,8 @@ export class Layer<
   toGeoJSON(
     convertCircles: boolean = true,
     pointsPerCircle: number = 16,
-  ): GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.Geometry, number | string>> {
-    const features: GJ.BaseFeature<GJ.Geometry, number | string>[] = [];
+  ): GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>> {
+    const features: GJ.BaseFeature<GJ.SingleTypeObject, number | string>[] = [];
 
     this.collection.forEach((feature) => {
       const oldProps = feature.properties;
@@ -236,30 +206,25 @@ export class Layer<
       });
 
       if (AreaFeature.isFeature(feature)) {
-        const newFeature = new AreaFeature(feature, false);
-        newFeature.geomEach((geom) => {
-          if (geom.type === 'Point') {
-            if (isCircle(geom) && convertCircles) {
-              geom = geom.toPolygon({pointsPerCircle});
-            }
-          } else if (geom.type === 'MultiPoint') {
-            if (isMultiCircle(geom) && convertCircles) {
-              geom = geom.toPolygon({pointsPerCircle});
-            }
-          }
-        });
-        features.push({
-          type: 'Feature',
-          geometry: newFeature.geometry,
-          properties: newProps,
-        });
-      } else {
-        features.push({
-          type: 'Feature',
-          geometry: copy(feature.geometry),
-          properties: newProps,
-        });
+        if (
+          convertCircles &&
+          (Circle.isObject(feature.geometry) || MultiCircle.isObject(feature.geometry))
+        ) {
+          features.push({
+            type: 'Feature',
+            geometry: feature.geometry.toPolygon({pointsPerCircle}),
+            properties: newProps,
+          });
+
+          return;
+        }
       }
+
+      features.push({
+        type: 'Feature',
+        geometry: copy(feature.geometry),
+        properties: newProps,
+      });
     });
 
     return {type: 'FeatureCollection', features: features};
@@ -275,16 +240,11 @@ export class Layer<
     const thisKeys = Object.keys(this.propertyRecord);
     const layerKeys = Object.keys(layer.propertyRecord);
 
-    if (
-      thisKeys.length !== layerKeys.length ||
-      !thisKeys.every((id) => layerKeys.includes(id))
-    ) {
+    if (thisKeys.length !== layerKeys.length || !thisKeys.every((id) => layerKeys.includes(id))) {
       throw new RangeError('propertyRecords does not match');
     }
 
-    const newFeatures = shallow
-      ? layer.collection.features
-      : copy(layer.collection.features);
+    const newFeatures = shallow ? layer.collection.features : copy(layer.collection.features);
 
     if (this.collection instanceof PointCollection) {
       if (!(layer.collection instanceof PointCollection)) {
@@ -355,9 +315,7 @@ function prepareFeatures(
     // Set newGeometry
     if (geometry.type === 'GeometryCollection') {
       // flatMapGeometryCollections will flatten out all nested GC's
-      const geometries = geometry.geometries.flatMap(
-        flatMapGeometryCollections,
-      );
+      const geometries = geometry.geometries.flatMap(flatMapGeometryCollections);
 
       if (geometries.length === 0) {
         return [];
@@ -382,18 +340,14 @@ function prepareFeatures(
       // Since all features must have the same set of properties, we choose the first
       // accepted feature to create our property list from.
       Object.entries(properties ?? {}).forEach(([name, prop]) => {
-        const isSpecialKey = (
-          PropertySpecialKeys as ReadonlyArray<string>
-        ).includes(name);
+        const isSpecialKey = (PropertySpecialKeys as ReadonlyArray<string>).includes(name);
         const id = isSpecialKey ? name : uuidv4();
         const valueType = typeof prop;
 
         if (valueType === 'number') {
           propertyRecord[id] = {type: 'numerical', name, id};
         } else if (isSpecialKey) {
-          throw new Error(
-            `Property ${prop} is a reserved property and must be a number`,
-          );
+          throw new Error(`Property ${prop} is a reserved property and must be a number`);
         } else if (valueType === 'string') {
           propertyRecord[id] = {type: 'categorical', name, id, values: []};
         }
@@ -417,9 +371,7 @@ function prepareFeatures(
       // Add numerical property
       if (prop.type === 'numerical') {
         if (typeof value !== 'number') {
-          throw new Error(
-            'All features must have the same types on the properties.',
-          );
+          throw new Error('All features must have the same types on the properties.');
         }
 
         newProperties[prop.id] = value;
@@ -430,9 +382,7 @@ function prepareFeatures(
       // We fill the value array, as new values are encountered.
       if (prop.type === 'categorical') {
         if (typeof value !== 'string') {
-          throw new Error(
-            'All features must have the same types on the properties.',
-          );
+          throw new Error('All features must have the same types on the properties.');
         }
 
         let valueIndex = prop.values.indexOf(value);

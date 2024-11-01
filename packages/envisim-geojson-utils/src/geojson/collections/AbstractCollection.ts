@@ -1,15 +1,11 @@
 import type * as GJ from '../../types/geojson.js';
 import {unionOfBBoxes} from '../../utils/bbox.js';
-import {
-  type ForEachCallback,
-  GeoJsonObject,
-  type GeomEachCallback,
-} from '../base/index.js';
+import {GeoJsonObject} from '../base/index.js';
 import {AreaFeature, LineFeature, PointFeature} from '../features/index.js';
-import {AreaObject, LineObject, PointObject} from '../objects/index.js';
+
+type ForEachCallback<T> = (obj: T, index: number) => void;
 
 export abstract class AbstractCollection<
-  T extends AreaObject | LineObject | PointObject,
   F extends AreaFeature | LineFeature | PointFeature,
 > extends GeoJsonObject<'FeatureCollection'> {
   features: F[] = [];
@@ -29,11 +25,11 @@ export abstract class AbstractCollection<
    * @returns the bounding box.
    */
   setBBox(force: boolean = false): GJ.BBox {
-    const bboxArray = new Array<GJ.BBox>(this.features.length);
+    const bboxArray = Array.from<GJ.BBox>({length: this.features.length});
 
     if (force === true) {
       this.forEach((feature: F, index: number) => {
-        bboxArray[index] = feature.geometry.setBBox(true);
+        bboxArray[index] = feature.geometry.setBBox();
       });
     } else {
       this.forEach((feature: F, index: number) => {
@@ -59,7 +55,9 @@ export abstract class AbstractCollection<
     this.features.forEach(callback);
   }
 
-  abstract geomEach(callback: GeomEachCallback<T>): void;
+  geomEach(callback: ForEachCallback<F['geometry']>): void {
+    this.features.forEach((f, i) => callback(f.geometry, i));
+  }
 
   /* === ADD/REMOVE FEATURES === */
   abstract addFeature(feature: F, shallow: boolean): number;
@@ -78,15 +76,11 @@ export abstract class AbstractCollection<
   }
 
   setProperty(property: string, index: number, value: number): void {
-    if (index < 0 || index >= this.size)
-      throw new Error('no feature with this index exists');
+    if (index < 0 || index >= this.size) throw new Error('no feature with this index exists');
     this.features[index].setProperty(property, value);
   }
 
-  forEachProperty(
-    property: string,
-    callback: (value: number, index: number) => void,
-  ): void {
+  forEachProperty(property: string, callback: (value: number, index: number) => void): void {
     this.forEach((feature, index) => {
       callback(feature.properties[property], index);
     });

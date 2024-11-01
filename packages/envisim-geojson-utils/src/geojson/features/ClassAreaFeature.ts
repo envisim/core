@@ -2,23 +2,15 @@ import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
 import {GeometricPrimitive} from '../../geometric-primitive/index.js';
-import {type GeomEachCallback} from '../base/index.js';
-import {AreaGeometry, toAreaGeometry} from '../gcs/index.js';
-import {type AreaObject} from '../objects/index.js';
+import {type AreaObject, toAreaObject} from '../objects/index.js';
 import {AbstractFeature} from './AbstractFeature.js';
 
-export class AreaFeature
-  extends AbstractFeature<AreaObject, AreaGeometry>
-  implements GJ.AreaFeature
-{
+export class AreaFeature extends AbstractFeature<AreaObject> implements GJ.AreaFeature {
   static isFeature(obj: unknown): obj is AreaFeature {
     return obj instanceof AreaFeature;
   }
 
-  static assert(
-    obj: unknown,
-    msg: string = 'Expected AreaFeature',
-  ): asserts obj is AreaFeature {
+  static assert(obj: unknown, msg: string = 'Expected AreaFeature'): asserts obj is AreaFeature {
     if (!(obj instanceof AreaFeature)) throw new TypeError(msg);
   }
 
@@ -30,13 +22,10 @@ export class AreaFeature
     return new AreaFeature({geometry, properties}, shallow);
   }
 
-  constructor(
-    obj: OptionalParam<GJ.AreaFeature, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.AreaFeature, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'Feature'}, shallow);
 
-    this.geometry = toAreaGeometry(obj.geometry, shallow);
+    this.geometry = toAreaObject(obj.geometry, shallow);
   }
 
   geometricPrimitive(): GeometricPrimitive.AREA {
@@ -48,14 +37,6 @@ export class AreaFeature
     if (!bg) return null;
     // TODO: Decide if we want to copy properties
     return AreaFeature.create(bg, {}, true);
-  }
-
-  /* FEATURE SPECIFIC */
-  geomEach(
-    callback: GeomEachCallback<AreaObject>,
-    featureIndex: number = -1,
-  ): void {
-    this.geometry.geomEach(callback, featureIndex);
   }
 
   /* AREA SPECIFIC */

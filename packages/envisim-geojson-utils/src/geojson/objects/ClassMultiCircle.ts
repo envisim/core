@@ -5,23 +5,16 @@ import {Geodesic} from '../../utils/Geodesic.js';
 import {cutAreaGeometry} from '../../utils/antimeridian.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
-import {type GeomEachCallback} from '../base/index.js';
 import {AbstractAreaObject} from './AbstractAreaObject.js';
 import {MultiPolygon} from './ClassMultiPolygon.js';
 import {Polygon} from './ClassPolygon.js';
 
-export class MultiCircle
-  extends AbstractAreaObject<GJ.MultiCircle>
-  implements GJ.MultiCircle
-{
+export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements GJ.MultiCircle {
   static isObject(obj: unknown): obj is MultiCircle {
     return obj instanceof MultiCircle;
   }
 
-  static assert(
-    obj: unknown,
-    msg: string = 'Expected MultiCircle',
-  ): asserts obj is MultiCircle {
+  static assert(obj: unknown, msg: string = 'Expected MultiCircle'): asserts obj is MultiCircle {
     if (!(obj instanceof MultiCircle)) throw new TypeError(msg);
   }
 
@@ -43,32 +36,25 @@ export class MultiCircle
    * @param obj
    * @param shallow if `true`, copys by reference when possible.
    */
-  constructor(
-    obj: OptionalParam<GJ.MultiCircle, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.MultiCircle, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'MultiPoint'}, shallow);
     this.radius = obj.radius;
   }
 
-  toPolygon({
-    pointsPerCircle = 16,
-  }: {pointsPerCircle?: number} = {}): MultiPolygon {
+  toPolygon({pointsPerCircle = 16}: {pointsPerCircle?: number} = {}): MultiPolygon {
     // Early return
-    if (this.coordinates.length === 0)
-      return new MultiPolygon({coordinates: []}, true);
+    if (this.coordinates.length === 0) return new MultiPolygon({coordinates: []}, true);
 
     const coordinates: GJ.Position[][][] = [];
 
     // Use the radius that gives equal area to the polygon for best approx.
     const v = Math.PI / pointsPerCircle;
     const radius = Math.sqrt(
-      (Math.PI * this.radius ** 2) /
-        (pointsPerCircle * Math.sin(v) * Math.cos(v)),
+      (Math.PI * this.radius ** 2) / (pointsPerCircle * Math.sin(v) * Math.cos(v)),
     );
 
     for (let i = 0; i < this.coordinates.length; i++) {
-      const coords = new Array<GJ.Position>(pointsPerCircle);
+      const coords = Array.from<GJ.Position>({length: pointsPerCircle});
       for (let j = 0; j < pointsPerCircle; j++) {
         const angle = 360.0 - (j / pointsPerCircle) * 360.0;
         coords[j] = Geodesic.destination(this.coordinates[i], radius, angle);
@@ -76,10 +62,7 @@ export class MultiCircle
       // Close the polygon by adding the first point as the last
       coords.push([...coords[0]]);
       // check if this polygon should be cut at antimeridian
-      if (
-        Geodesic.distance(this.coordinates[i], [180, this.coordinates[i][1]]) <
-        radius
-      ) {
+      if (Geodesic.distance(this.coordinates[i], [180, this.coordinates[i][1]]) < radius) {
         const pol = cutAreaGeometry(new Polygon({coordinates: [coords]}));
         if (pol.type === 'Polygon') {
           coordinates.push(pol.coordinates);
@@ -113,8 +96,7 @@ export class MultiCircle
       centroid: coord,
       weight: Math.PI * this.radius ** 2,
     }));
-    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
-      .centroid;
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations).centroid;
   }
 
   distanceToPosition(coords: GJ.Position): number {
@@ -125,13 +107,6 @@ export class MultiCircle
     );
   }
 
-  geomEach(
-    callback: GeomEachCallback<MultiCircle>,
-    featureIndex: number = -1,
-  ): void {
-    callback(this, featureIndex, -1);
-  }
-
   perimeter(): number {
     return this.coordinates.length * Math.PI * this.radius * 2;
   }
@@ -139,8 +114,7 @@ export class MultiCircle
   setBBox(): GJ.BBox {
     const bbox = bboxFromPositions(this.coordinates);
     const pos1: GJ.Position = [bbox[0], bbox[1]];
-    const pos2: GJ.Position =
-      bbox.length === 4 ? [bbox[2], bbox[3]] : [bbox[3], bbox[4]];
+    const pos2: GJ.Position = bbox.length === 4 ? [bbox[2], bbox[3]] : [bbox[3], bbox[4]];
     const west = Geodesic.destination(pos1, this.radius, 270.0)[0];
     const south = Geodesic.destination(pos1, this.radius, 180.0)[1];
     const east = Geodesic.destination(pos2, this.radius, 90.0)[0];

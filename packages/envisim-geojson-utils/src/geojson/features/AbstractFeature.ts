@@ -1,26 +1,20 @@
 import {copy} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {GeoJsonObject, type GeomEachCallback} from '../base/index.js';
-import type {AreaGeometry, LineGeometry, PointGeometry} from '../gcs/index.js';
+import {GeoJsonObject} from '../base/index.js';
 import type {AreaObject, LineObject, PointObject} from '../objects/index.js';
 
 export abstract class AbstractFeature<
   T extends AreaObject | LineObject | PointObject,
-  G extends AreaGeometry | LineGeometry | PointGeometry,
 > extends GeoJsonObject<'Feature'> {
-  geometry!: G;
+  geometry!: T;
   properties: GJ.FeatureProperties<number>;
 
   constructor(obj: GJ.Feature<GJ.Geometry>, shallow: boolean = true) {
     super(obj, shallow);
 
     this.properties =
-      obj.properties === null
-        ? {}
-        : shallow === true
-          ? obj.properties
-          : copy(obj.properties);
+      obj.properties === null ? {} : shallow === true ? obj.properties : copy(obj.properties);
   }
 
   /* GEOJSON COMMON */
@@ -30,7 +24,7 @@ export abstract class AbstractFeature<
 
   setBBox(force: boolean = false): GJ.BBox {
     if (force === true) {
-      this.bbox = this.geometry.setBBox(true);
+      this.bbox = this.geometry.setBBox();
     } else {
       this.bbox = this.geometry.getBBox();
     }
@@ -47,7 +41,6 @@ export abstract class AbstractFeature<
   }
 
   /* FEATURE SPECIFIC */
-  abstract geomEach(callback: GeomEachCallback<T>, featureIndex: number): void;
 
   initProperty(property: string, defaultValue: number = 0.0): void {
     if (!Object.hasOwn(this.properties, property)) {

@@ -2,24 +2,16 @@ import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
 import {GeometricPrimitive} from '../../geometric-primitive/index.js';
-import {type GeomEachCallback} from '../base/index.js';
-import {LineGeometry, toLineGeometry} from '../gcs/index.js';
-import {type LineObject} from '../objects/index.js';
+import {type LineObject, toLineObject} from '../objects/index.js';
 import {AbstractFeature} from './AbstractFeature.js';
 import {AreaFeature} from './ClassAreaFeature.js';
 
-export class LineFeature
-  extends AbstractFeature<LineObject, LineGeometry>
-  implements GJ.LineFeature
-{
+export class LineFeature extends AbstractFeature<LineObject> implements GJ.LineFeature {
   static isFeature(obj: unknown): obj is LineFeature {
     return obj instanceof LineFeature;
   }
 
-  static assert(
-    obj: unknown,
-    msg: string = 'Expected LineFeature',
-  ): asserts obj is LineFeature {
+  static assert(obj: unknown, msg: string = 'Expected LineFeature'): asserts obj is LineFeature {
     if (!(obj instanceof LineFeature)) throw new TypeError(msg);
   }
 
@@ -31,13 +23,10 @@ export class LineFeature
     return new LineFeature({geometry, properties}, shallow);
   }
 
-  constructor(
-    obj: OptionalParam<GJ.LineFeature, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.LineFeature, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'Feature'}, shallow);
 
-    this.geometry = toLineGeometry(obj.geometry, shallow);
+    this.geometry = toLineObject(obj.geometry, shallow);
   }
 
   geometricPrimitive(): GeometricPrimitive.LINE {
@@ -50,14 +39,6 @@ export class LineFeature
     if (!bg) return null;
     // TODO: Decide if we want to copy properties
     return AreaFeature.create(bg, {}, true);
-  }
-
-  /* FEATURE SPECIFIC */
-  geomEach(
-    callback: GeomEachCallback<LineObject>,
-    featureIndex: number = -1,
-  ): void {
-    this.geometry.geomEach(callback, featureIndex);
   }
 
   /* LINE SPECIFIC */

@@ -4,36 +4,23 @@ import type * as GJ from '../../types/geojson.js';
 import {Geodesic} from '../../utils/Geodesic.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
-import {type GeomEachCallback} from '../base/index.js';
 import {AbstractPointObject} from './AbstractPointObject.js';
 import {MultiCircle} from './ClassMultiCircle.js';
 
-export class MultiPoint
-  extends AbstractPointObject<GJ.MultiPoint>
-  implements GJ.MultiPoint
-{
+export class MultiPoint extends AbstractPointObject<GJ.MultiPoint> implements GJ.MultiPoint {
   static isObject(obj: unknown): obj is MultiPoint {
     return obj instanceof MultiPoint;
   }
 
-  static assert(
-    obj: unknown,
-    msg: string = 'Expected MultiPoint',
-  ): asserts obj is MultiPoint {
+  static assert(obj: unknown, msg: string = 'Expected MultiPoint'): asserts obj is MultiPoint {
     if (!(obj instanceof MultiPoint)) throw new TypeError(msg);
   }
 
-  static create(
-    coordinates: GJ.MultiPoint['coordinates'],
-    shallow: boolean = true,
-  ): MultiPoint {
+  static create(coordinates: GJ.MultiPoint['coordinates'], shallow: boolean = true): MultiPoint {
     return new MultiPoint({coordinates}, shallow);
   }
 
-  constructor(
-    obj: OptionalParam<GJ.MultiPoint, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.MultiPoint, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'MultiPoint'}, shallow);
   }
 
@@ -51,8 +38,7 @@ export class MultiPoint
       centroid: coord,
       weight: 1,
     }));
-    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
-      .centroid;
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations).centroid;
   }
 
   count(): number {
@@ -64,13 +50,6 @@ export class MultiPoint
       (prev, curr) => Math.min(prev, Geodesic.distance(curr, coords)),
       Infinity,
     );
-  }
-
-  geomEach(
-    callback: GeomEachCallback<MultiPoint>,
-    featureIndex: number = -1,
-  ): void {
-    callback(this, featureIndex, -1);
   }
 
   setBBox(): GJ.BBox {
