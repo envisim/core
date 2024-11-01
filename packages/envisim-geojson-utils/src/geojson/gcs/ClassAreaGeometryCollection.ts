@@ -1,7 +1,6 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {type BufferOptions} from '../../buffer/index.js';
 import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {type AreaObject} from '../objects/index.js';
@@ -58,7 +57,7 @@ export class AreaGeometryCollection
     return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations).centroid;
   }
 
-  buffer(_: BufferOptions): AreaGeometryCollection | null {
+  buffer(): AreaGeometryCollection | null {
     return null;
   }
 
