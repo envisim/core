@@ -203,6 +203,10 @@ function separatePolygonsOverAntimeridian(polygons: GJ.Position2[][][]): GJ.Posi
       [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY],
     );
 
+    if (range[0] >= -180.0 && range[1] <= 180.0) {
+      return polygons;
+    }
+
     if (range[0] < -180.0) {
       // Polygons can be drawn over -180, but cannot exist soley there, as any crossed polygon would
       // have been moved +360 before operations.
