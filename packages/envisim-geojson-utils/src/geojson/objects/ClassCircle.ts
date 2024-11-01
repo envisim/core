@@ -1,6 +1,7 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {type BufferOptions, defaultBufferOptions} from '../../buffer/index.js';
 import {Geodesic} from '../../utils/Geodesic.js';
 import {cutAreaGeometry} from '../../utils/antimeridian.js';
 import {bboxFromPositions, getPositionsForCircle} from '../../utils/bbox.js';
@@ -82,9 +83,12 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     return Math.PI * this.radius ** 2;
   }
 
-  buffer(distance: number): Circle | null {
-    if (this.radius + distance <= 0.0) return null;
-    return Circle.create(this.coordinates, this.radius + distance, false);
+  buffer(options: BufferOptions): Circle | null {
+    const opts = defaultBufferOptions(options);
+    const newRadius = this.radius + opts.distance;
+
+    if (newRadius <= 0.0) return null;
+    return Circle.create(this.coordinates, newRadius, false);
   }
 
   centroid(): GJ.Position {

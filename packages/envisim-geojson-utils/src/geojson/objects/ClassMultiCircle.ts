@@ -1,9 +1,10 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {type BufferOptions, bufferPolygons, defaultBufferOptions} from '../../buffer/index.js';
 import {Geodesic} from '../../utils/Geodesic.js';
-import {cutAreaGeometry} from '../../utils/antimeridian.js';
-import {bboxFromPositions} from '../../utils/bbox.js';
+import {cutAreaGeometry, moveCoordsAroundEarth} from '../../utils/antimeridian.js';
+import {bboxCrossesAntimeridian, bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {AbstractAreaObject} from './AbstractAreaObject.js';
@@ -87,9 +88,30 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
     return this.coordinates.length * Math.PI * this.radius ** 2;
   }
 
-  buffer(distance: number): MultiCircle | null {
-    if (this.radius + distance <= 0.0) return null;
-    return MultiCircle.create(this.coordinates, this.radius + distance, false);
+  buffer(options: BufferOptions): MultiCircle | Polygon | MultiPolygon | null {
+    const opts = defaultBufferOptions(options);
+    const newRadius = this.radius + opts.distance;
+
+    if (opts.distance <= 0.0) {
+      if (newRadius <= 0.0) return null;
+      return MultiCircle.create(this.coordinates, newRadius, false);
+    }
+
+    // Check if we can safely expand the circles
+    if (distanceBetweenCentresBelowThreshold(this.coordinates, newRadius) === false)
+      return MultiCircle.create(this.coordinates, newRadius, false);
+
+    // If not, we convert all to polygons
+    const rings = this.toPolygon({pointsPerCircle: opts.steps * 4}).coordinates;
+
+    if (bboxCrossesAntimeridian(this.getBBox())) {
+      return bufferPolygons(
+        rings.map((r) => r.map(moveCoordsAroundEarth)),
+        opts,
+      );
+    }
+
+    return bufferPolygons(rings, opts);
   }
 
   centroid(iterations: number = 2): GJ.Position {
@@ -133,4 +155,15 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
 
     return this.bbox;
   }
+}
+
+function distanceBetweenCentresBelowThreshold(points: GJ.Position[], threshold: number): boolean {
+  for (let i = 0; i < points.length; i++) {
+    for (let j = i + 1; j < points.length; j++) {
+      const d = Geodesic.distance(points[i], points[j]);
+      if (d < threshold) return true;
+    }
+  }
+
+  return false;
 }

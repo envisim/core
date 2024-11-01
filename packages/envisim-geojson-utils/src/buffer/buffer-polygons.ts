@@ -1,27 +1,29 @@
-import * as GJ from './types/geojson.js';
-import type {BufferOptions} from './buffer.js';
-import {AreaObject, Circle, MultiCircle, MultiPolygon, Polygon} from './geojson/index.js';
-import {unionOfSegments} from './union-of-polygons.js';
-import {Geodesic} from './utils/Geodesic.js';
-import {EARTH_BOUNDARIES, moveCoordsAroundEarth} from './utils/antimeridian.js';
-import {bboxCrossesAntimeridian} from './utils/bbox.js';
-import {IntersectList} from './utils/class-intersects.js';
-import {Segment, segmentsToPolygon} from './utils/class-segment.js';
-import {intersectPolygons} from './utils/intersect-polygons.js';
+import * as GJ from '../types/geojson.js';
+import {MultiPolygon, Polygon} from '../geojson/index.js';
+import {unionOfSegments} from '../union-of-polygons.js';
+import {Geodesic} from '../utils/Geodesic.js';
+import {EARTH_BOUNDARIES} from '../utils/antimeridian.js';
+import {IntersectList} from '../utils/class-intersects.js';
+import {Segment, segmentsToPolygon} from '../utils/class-segment.js';
+import {intersectPolygons} from '../utils/intersect-polygons.js';
+import type {BufferOptions} from './types.js';
 
 // Assume not duplicate points
-function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>): Segment[] {
+function bufferedSegmentsFromRing(
+  ring: GJ.Position[],
+  options: Required<BufferOptions>,
+): Segment[] {
   const segments: Segment[] = [];
   const params: [number | null, number | null][] = [];
 
   {
-    let prev = new Segment(polygon[0], polygon[1]);
+    let prev = new Segment(ring[0], ring[1]);
     prev.buffer(options.distance);
     segments.push(prev);
     params.push([null, null]);
 
-    for (let c = 2; c < polygon.length; c++) {
-      const seg = new Segment(polygon[c - 1], polygon[c]);
+    for (let c = 2; c < ring.length; c++) {
+      const seg = new Segment(ring[c - 1], ring[c]);
       seg.buffer(options.distance);
       segments.push(seg);
 
@@ -45,7 +47,7 @@ function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>):
     }
   }
 
-  const bindedSegments: Segment[] = [];
+  const connectedSegments: Segment[] = [];
 
   const firstIndex = params.findIndex((t) => t[0] === null || t[1] === null || t[0] <= t[1]);
 
@@ -54,17 +56,17 @@ function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>):
   }
 
   let lastIndex = firstIndex;
-  const t = parametricInterval(params[lastIndex]) as [number, number]; // Guaranteed by filter above
+  const t = normalizeParametricInterval(params[lastIndex]) as [number, number]; // Guaranteed by filter above
 
   let curr = segments[lastIndex];
   let lastPoint: GJ.Position2 = curr.position(t[1]);
   if (t[0] !== t[1]) {
-    bindedSegments.push(new Segment(curr.position(t[0]), lastPoint));
+    connectedSegments.push(new Segment(curr.position(t[0]), lastPoint));
   }
 
   for (let i = lastIndex + 1; i < segments.length; i++) {
     const par = params[i];
-    const t = parametricInterval(par);
+    const t = normalizeParametricInterval(par);
     // Paradoxical segment, starts after it ends
     if (t === null) {
       continue;
@@ -75,15 +77,15 @@ function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>):
     // we just draw a line
     // A connection is only needed if the two previous segments does not touch.
     if (lastIndex !== i - 1) {
-      addStraightSegmentConnection(bindedSegments, lastPoint, curr.position(t[0]));
+      addStraightSegmentConnection(connectedSegments, lastPoint, curr.position(t[0]));
     } else if (par[0] === null || par[0] < 0.0) {
-      addSegmentConnection(bindedSegments, lastPoint, curr.position(t[0]), polygon[i], options);
+      addSegmentConnection(connectedSegments, lastPoint, curr.position(t[0]), ring[i], options);
     }
 
     lastPoint = curr.position(t[1]);
     // Add segment if needed, i.e. if there is a segment to add
     if (t[0] !== t[1]) {
-      bindedSegments.push(new Segment(curr.position(t[0]), lastPoint));
+      connectedSegments.push(new Segment(curr.position(t[0]), lastPoint));
     }
     lastIndex = i;
   }
@@ -91,15 +93,17 @@ function moveSegments(polygon: GJ.Position[], options: Required<BufferOptions>):
   const par0 = params[0];
 
   if (lastIndex !== segments.length - 1 || firstIndex !== 0) {
-    addStraightSegmentConnection(bindedSegments, lastPoint, bindedSegments[0].p1);
+    addStraightSegmentConnection(connectedSegments, lastPoint, connectedSegments[0].p1);
   } else if (par0[0] === null || par0[0] < 0.0) {
-    addSegmentConnection(bindedSegments, lastPoint, bindedSegments[0].p1, polygon[0], options);
+    addSegmentConnection(connectedSegments, lastPoint, connectedSegments[0].p1, ring[0], options);
   }
 
-  return bindedSegments;
+  return connectedSegments;
 }
 
-function parametricInterval(params: [number | null, number | null]): [number, number] | null {
+function normalizeParametricInterval(
+  params: [number | null, number | null],
+): [number, number] | null {
   const ret: [number, number] = [params[0] ?? 0.0, params[1] ?? 1.0];
 
   if (ret[1] < ret[0]) {
@@ -177,13 +181,13 @@ function addSegmentConnection(
   segmentList.push(new Segment(prev, end));
 }
 
-function joinSegmentsToRings(
+function groupSegmentsByRings(
   segments: Segment[],
   parentIsPositive: boolean,
 ): [Segment[][], number[]] {
   const il = new IntersectList(segments);
-  const rings = il.unwindToSegmentRings();
-  return il.reduceRingList(rings, parentIsPositive);
+  const rings = il.traceIntersectionRings();
+  return il.intersectionRingsToOrderedSegmentRings(rings, parentIsPositive);
 }
 
 function separatePolygonsOverAntimeridian(polygons: GJ.Position2[][][]): GJ.Position2[][][] {
@@ -199,7 +203,6 @@ function separatePolygonsOverAntimeridian(polygons: GJ.Position2[][][]): GJ.Posi
       [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY],
     );
 
-    console.log(range);
     if (range[0] < -180.0) {
       // Polygons can be drawn over -180, but cannot exist soley there, as any crossed polygon would
       // have been moved +360 before operations.
@@ -227,7 +230,6 @@ function separatePolygonsOverAntimeridian(polygons: GJ.Position2[][][]): GJ.Posi
       }
 
       const n = intersectPolygons([polygons[i], EARTH_BOUNDARIES.normal]);
-      console.log(n);
 
       if (n.length > 0) {
         returningPolys.push(...n);
@@ -261,12 +263,12 @@ function expand(polygons: GJ.Position[][][], options: Required<BufferOptions>): 
   if (polygons.length === 1) {
     const polygon = polygons[0];
 
-    const segRing = moveSegments(polygon[0], options);
+    const segRing = bufferedSegmentsFromRing(polygon[0], options);
     if (segRing.length < 2) {
       return [];
     }
 
-    const [list, parents] = joinSegmentsToRings(segRing, true);
+    const [list, parents] = groupSegmentsByRings(segRing, true);
 
     const outer = parents.indexOf(-1);
     const returningPolygon: GJ.Position2[][] = [segmentsToPolygon(list[outer])];
@@ -277,12 +279,12 @@ function expand(polygons: GJ.Position[][][], options: Required<BufferOptions>): 
     }
 
     for (let i = 1; i < polygon.length; i++) {
-      const segRing = moveSegments(polygon[i], options);
+      const segRing = bufferedSegmentsFromRing(polygon[i], options);
       if (segRing.length < 2) {
         continue;
       }
 
-      const [list] = joinSegmentsToRings(segRing, false);
+      const [list] = groupSegmentsByRings(segRing, false);
 
       for (const segs of list) {
         returningPolygon.push(segmentsToPolygon(segs));
@@ -296,12 +298,12 @@ function expand(polygons: GJ.Position[][][], options: Required<BufferOptions>): 
   const outerBreaks: number[] = [];
 
   for (const polygon of polygons) {
-    const segRing = moveSegments(polygon[0], options);
+    const segRing = bufferedSegmentsFromRing(polygon[0], options);
     if (segRing.length < 2) {
       continue;
     }
 
-    const [list] = joinSegmentsToRings(segRing, true);
+    const [list] = groupSegmentsByRings(segRing, true);
 
     for (const segs of list) {
       outerSegments.push(...segs);
@@ -309,12 +311,12 @@ function expand(polygons: GJ.Position[][][], options: Required<BufferOptions>): 
     }
 
     for (let i = 1; i < polygon.length; i++) {
-      const segRing = moveSegments(polygon[i], options);
+      const segRing = bufferedSegmentsFromRing(polygon[i], options);
       if (segRing.length < 2) {
         continue;
       }
 
-      const [list] = joinSegmentsToRings(segRing, false);
+      const [list] = groupSegmentsByRings(segRing, false);
 
       for (const segs of list) {
         outerSegments.push(...segs);
@@ -338,13 +340,13 @@ function shrink(polygons: GJ.Position[][][], options: Required<BufferOptions>): 
   // merged in the end. Assuming that the starting polygon(s) were non-overlapping, the outers are
   // disjunct.
   for (const polygon of polygons) {
-    const segRing = moveSegments(polygon[0], options);
+    const segRing = bufferedSegmentsFromRing(polygon[0], options);
     if (segRing.length < 2) {
       continue;
     }
 
     const il = new IntersectList(segRing);
-    const [list] = il.reduceRingList(il.unwindToSegmentRings(), true);
+    const [list] = il.intersectionRingsToOrderedSegmentRings(il.traceIntersectionRings(), true);
 
     // The outer cannot become inner in any way, however multiple outers may be returned
     if (polygon.length === 1) {
@@ -363,13 +365,13 @@ function shrink(polygons: GJ.Position[][][], options: Required<BufferOptions>): 
     }
 
     for (let i = 1; i < polygon.length; i++) {
-      const segRing = moveSegments(polygon[i], options);
+      const segRing = bufferedSegmentsFromRing(polygon[i], options);
       if (segRing.length < 2) {
         continue;
       }
 
       const il = new IntersectList(segRing);
-      const [list] = il.reduceRingList(il.unwindToSegmentRings(), false);
+      const [list] = il.intersectionRingsToOrderedSegmentRings(il.traceIntersectionRings(), false);
 
       for (const segs of list) {
         segments.push(...segs);
@@ -379,7 +381,10 @@ function shrink(polygons: GJ.Position[][][], options: Required<BufferOptions>): 
 
     {
       const il = new IntersectList(segments, breaks);
-      const [list, parents] = il.reduceRingList(il.unwindToSegmentRings(), true);
+      const [list, parents] = il.intersectionRingsToOrderedSegmentRings(
+        il.traceIntersectionRings(),
+        true,
+      );
       const parentIndices: number[] = Array.from<number>({length: list.length}).fill(-1);
 
       for (let i = 0; i < list.length; i++) {
@@ -397,93 +402,22 @@ function shrink(polygons: GJ.Position[][][], options: Required<BufferOptions>): 
   return returningPolygons;
 }
 
-export function bufferRings(
-  rings: GJ.Position[][][],
+/**
+ * Buffering of multipolygons
+ */
+export function bufferPolygons(
+  polygons: GJ.Position[][][],
   options: Required<BufferOptions>,
 ): Polygon | MultiPolygon | null {
-  const transformedRings = options.distance < 0.0 ? shrink(rings, options) : expand(rings, options);
-  if (transformedRings.length === 0) {
+  const transformedPolygons =
+    options.distance < 0.0 ? shrink(polygons, options) : expand(polygons, options);
+  if (transformedPolygons.length === 0) {
     return null;
   }
 
-  if (transformedRings.length === 1) {
-    return Polygon.create(transformedRings[0], true);
+  if (transformedPolygons.length === 1) {
+    return Polygon.create(transformedPolygons[0], true);
   }
 
-  return MultiPolygon.create(transformedRings, true);
-}
-
-function distanceBetweenMultiPointsBelowThresh(points: GJ.Position[], thresh: number): boolean {
-  for (let i = 0; i < points.length; i++) {
-    for (let j = i + 1; j < points.length; j++) {
-      const d = Geodesic.distance(points[i], points[j]);
-      if (d < thresh) return true;
-    }
-  }
-
-  return false;
-}
-
-export function bufferArea(area: AreaObject, options: Required<BufferOptions>): AreaObject | null {
-  if (options.distance === 0.0) {
-    // We just need to copy polygons that aren't buffered, as we assume that multi-variants are
-    // non-overlapping
-    switch (area.type) {
-      case 'Polygon':
-        return Polygon.create(area.coordinates, false);
-      case 'MultiPolygon':
-        return MultiPolygon.create(area.coordinates, false);
-      case 'Point':
-        return Circle.create(area.coordinates, area.radius, false);
-      case 'MultiPoint':
-        return MultiCircle.create(area.coordinates, area.radius, false);
-    }
-  }
-
-  if (Polygon.isObject(area)) {
-    return bufferRings([area.coordinates], options);
-  }
-
-  if (Circle.isObject(area)) {
-    // Circles may buffer, as long as the new radius is still positive
-    const newRadius = area.radius + options.distance;
-    if (newRadius > 0.0) {
-      return Circle.create(area.coordinates, newRadius, false);
-    } else {
-      return null;
-    }
-  }
-
-  let rings: GJ.Position[][][];
-
-  if (MultiPolygon.isObject(area)) {
-    rings = area.coordinates;
-  } else {
-    // MultiCircles may shrink, as we assume them to be non-overlapping. They may not expand, as we
-    // cannot guarantee that the resulting polygons wont overlap. This may be changed in the future?
-    const newRadius = area.radius + options.distance;
-    if (options.distance <= 0.0) {
-      if (newRadius > 0.0) {
-        return MultiCircle.create(area.coordinates, newRadius, false);
-      } else {
-        return null;
-      }
-    } else {
-      // We convert multicircles to polygons if any circles are overlapping
-      if (distanceBetweenMultiPointsBelowThresh(area.coordinates, newRadius)) {
-        rings = area.toPolygon({pointsPerCircle: options.steps * 4}).coordinates;
-      } else {
-        return MultiCircle.create(area.coordinates, newRadius, false);
-      }
-    }
-  }
-
-  if (bboxCrossesAntimeridian(area.getBBox())) {
-    return bufferRings(
-      rings.map((r) => r.map(moveCoordsAroundEarth)),
-      options,
-    );
-  }
-
-  return bufferRings(rings, options);
+  return MultiPolygon.create(transformedPolygons, true);
 }

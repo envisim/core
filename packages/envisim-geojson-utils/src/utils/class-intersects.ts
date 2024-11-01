@@ -5,12 +5,27 @@ type IntersectSegment = {segment: number; param: number; visited: boolean};
 type IntersectPoint = {segments: IntersectSegment[]; position: GJ.Position2};
 type IntersectIndices = [null, null] | [number, number];
 
+/**
+ * A class for calulating and keeping track of the intersection points of segments.
+ */
 export class IntersectList {
+  /**
+   * The array of underlying segments
+   */
   segments: Segment[];
+  /**
+   * An array of intersection points
+   */
   list: IntersectPoint[] = [];
-  order: number[] = [];
-  segmentMap: number[][]; // segment->point index connection
+  // order: number[] = [];
+  /**
+   * A map from segment indices to the intersection points where the segment is present.
+   */
+  segmentMap: number[][];
 
+  /**
+   * Constructs the list by finding intersections through sweepline search
+   */
   constructor(segments: Segment[], breaks: number[] = [segments.length]) {
     this.segments = segments;
     this.segmentMap = Array.from({length: segments.length}, () => []);
@@ -69,6 +84,9 @@ export class IntersectList {
     }
   }
 
+  /**
+   * Adds a new intersection point
+   */
   addIntersect(segments: [number, number], params: [number, number], position: GJ.Position2) {
     this.list.push({
       segments: [],
@@ -78,12 +96,19 @@ export class IntersectList {
     this.appendIntersect(idx, segments[0], params[0]);
     this.appendIntersect(idx, segments[1], params[1]);
   }
+  /**
+   * Adds a segments intersection details to an intersection point
+   */
   appendIntersect(idx: number, segment: number, param: number) {
     this.list[idx].segments.push({segment, param, visited: param === 1.0});
     if (!this.segmentMap[segment].includes(idx)) {
       this.segmentMap[segment].push(idx);
     }
   }
+  /**
+   * Adds an intersection point, if none exists. Returns true if the intersection point already
+   * exists, false otherwise.
+   */
   tryAppendIntersect(segments: [number, number], params: [number, number]): boolean {
     // It shouldnt be possible for a crossing to exist for seg[0], without already existing for
     // seg[1]
@@ -102,7 +127,9 @@ export class IntersectList {
 
     return false;
   }
-
+  /**
+   * Gives the first unvisited segment going out from an intersection point.
+   */
   getUnvisitedIntersectAndSegment(): IntersectIndices {
     for (let i = 0; i < this.list.length; i++) {
       const intsegIdx = this.list[i].segments.findIndex((intseg) => intseg.visited === false);
@@ -113,7 +140,9 @@ export class IntersectList {
 
     return [null, null];
   }
-  // Finds the closest intersect along a segment with a larger param
+  /**
+   * Finds the closest intersect along a segment, further along the segment (larger param).
+   */
   getNextIntersectOfSegment(start: IntersectSegment): number | null {
     let param = Number.MAX_VALUE;
     let idx: number | null = null;
@@ -131,8 +160,10 @@ export class IntersectList {
 
     return idx;
   }
-  // Finds the rightmost segment in an intersection, relative to the travelled segment. The
-  // intersect is guaranteed to have an unvisited segment.
+  /**
+   * Finds the rightmost segment in an intersection, relative to the travelled segment. The
+   * intersect is guaranteed to have an unvisited segment.
+   */
   getRightmostSegment(start: IntersectSegment, intpointIdx: number): IntersectSegment {
     const intpoint = this.list[intpointIdx];
 
@@ -267,7 +298,11 @@ export class IntersectList {
     throw new Error('no rightmost segment was found in intersect');
   }
 
-  unwindToSegmentRings(): number[][] {
+  /**
+   * Returns an array of rings, defined gy their intersection indices, by travelling ccw around the
+   * segments.
+   */
+  traceIntersectionRings(): number[][] {
     let ring: number[]; // store intersectpoint indices
     const ringList: number[][] = [];
 
@@ -314,15 +349,25 @@ export class IntersectList {
     return ringList;
   }
 
-  // Remove bad rings from list, i.e. negative rings from a positive.
-  reduceRingList(ringList: number[][], parentIsPositive: boolean): [Segment[][], number[]] {
-    const segList: Segment[][] = Array.from(ringList, (ring) => this.ringToSegments(ring));
+  /**
+   * Orders the intersection rings (defined by intersection indices), by their parent-children
+   * relationships, and transforms the intersection rings to segment rings.
+   * Also filters away unnecessary rings, i.e. rings which are redundant (same direction as parent),
+   * and nonsensical rings (topmost rings in opposite direciton).
+   */
+  intersectionRingsToOrderedSegmentRings(
+    ringList: number[][],
+    parentIsPositive: boolean,
+  ): [Segment[][], number[]] {
+    const segList: Segment[][] = Array.from(ringList, (ring) =>
+      this.intersectionRingToSegmentRing(ring),
+    );
     const extremes: [number, number][] = Array.from(ringList, (ring) =>
-      this.extremePointInRing(ring),
+      this.extremePointOfIntersectionRing(ring),
     );
     const parent: number[] = Array.from<number>({length: ringList.length}).fill(-1);
     const positive: boolean[] = Array.from(ringList, (ring, i) =>
-      this.ringIsPositive(ring, extremes[i][0]),
+      this.intersectionRingIsPositive(ring, extremes[i][0]),
     );
     const returnListPosition: number[] = Array.from<number>({length: ringList.length}).fill(-1);
     const order: number[] = Array.from({length: ringList.length}, (_, i) => i);
@@ -400,8 +445,10 @@ export class IntersectList {
     return [filteredList, filteredParents];
   }
 
-  // Returns the list idx of the extreme points in a ring
-  extremePointInRing(ring: number[]): [number, number] {
+  /**
+   * Returns the list idx of the extreme points in a ring
+   */
+  extremePointOfIntersectionRing(ring: number[]): [number, number] {
     let min = ring[0];
     let minPos = this.list[min].position;
     let max = ring[0];
@@ -428,7 +475,10 @@ export class IntersectList {
    * See [wikipedia](https://en.wikipedia.org/wiki/Curve_orientation#Orientation_of_a_simple_polygon).
    * @returns `true` if orientation is counter-clockwise
    */
-  ringIsPositive(ring: number[], min = this.extremePointInRing(ring)[0]): boolean {
+  intersectionRingIsPositive(
+    ring: number[],
+    min = this.extremePointOfIntersectionRing(ring)[0],
+  ): boolean {
     const minPosition = this.list[min].position;
     const ringIndex = ring.indexOf(min);
 
@@ -443,7 +493,7 @@ export class IntersectList {
     return det > 0.0;
   }
 
-  ringToSegments(ring: number[]): Segment[] {
+  intersectionRingToSegmentRing(ring: number[]): Segment[] {
     const segments: Segment[] = [
       new Segment(this.list[ring[ring.length - 1]].position, this.list[ring[0]].position),
     ];
@@ -455,11 +505,12 @@ export class IntersectList {
     return segments;
   }
 
-  ringToPolygon(ring: number[]): GJ.Position2[] {
-    const poly: GJ.Position2[] = ring.map((idx) => this.list[idx].position);
-    poly.push(this.list[ring[0]].position);
-    return poly;
-  }
+  // REMOVABLE?????
+  // intersectionRingToRing(ring: number[]): GJ.Position2[] {
+  //   const poly: GJ.Position2[] = ring.map((idx) => this.list[idx].position);
+  //   poly.push(this.list[ring[0]].position);
+  //   return poly;
+  // }
 }
 
 function prevIndex(index: number, breaks: number[]): number {

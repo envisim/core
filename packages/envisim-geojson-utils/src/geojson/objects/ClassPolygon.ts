@@ -1,7 +1,7 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {bufferGeometry} from '../../buffer.js';
+import {type BufferOptions, bufferPolygons, defaultBufferOptions} from '../../buffer/index.js';
 import {areaOfPolygonLonLat} from '../../utils/area.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidOfPolygon} from '../../utils/centroid.js';
@@ -37,8 +37,11 @@ export class Polygon extends AbstractAreaObject<GJ.Polygon> implements GJ.Polygo
     return areaOfPolygonLonLat(this.coordinates);
   }
 
-  buffer(distance: number, steps: number = 10): Polygon | MultiPolygon | null {
-    return bufferGeometry(this, {distance, steps});
+  buffer(options: BufferOptions): Polygon | MultiPolygon | null {
+    const opts = defaultBufferOptions(options);
+
+    if (opts.distance === 0.0) return Polygon.create(this.coordinates, false);
+    return bufferPolygons([this.coordinates], opts);
   }
 
   perimeter(): number {

@@ -1,12 +1,15 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {type BufferOptions} from '../../buffer/index.js';
 import {Geodesic} from '../../utils/Geodesic.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {AbstractPointObject} from './AbstractPointObject.js';
 import {MultiCircle} from './ClassMultiCircle.js';
+import type {MultiPolygon} from './ClassMultiPolygon.js';
+import type {Polygon} from './ClassPolygon.js';
 
 export class MultiPoint extends AbstractPointObject<GJ.MultiPoint> implements GJ.MultiPoint {
   static isObject(obj: unknown): obj is MultiPoint {
@@ -29,9 +32,9 @@ export class MultiPoint extends AbstractPointObject<GJ.MultiPoint> implements GJ
     return this.coordinates.length;
   }
 
-  buffer(distance: number): MultiCircle | null {
-    if (distance <= 0.0) return null;
-    return MultiCircle.create(this.coordinates, distance, false);
+  buffer(options: BufferOptions): MultiCircle | Polygon | MultiPolygon | null {
+    const mc = MultiCircle.create(this.coordinates, 0.0, true);
+    return mc.buffer(options);
   }
 
   centroid(iterations: number = 2): GJ.Position {

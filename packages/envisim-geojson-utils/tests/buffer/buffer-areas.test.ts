@@ -1,10 +1,11 @@
-import geodesic from 'geographiclib-geodesic';
 import {expect, test} from 'vitest';
 
-import {bufferArea} from '../src/buffer-area.js';
-import {AreaObject, Circle, GeoJSON as GJ, MultiPolygon, Polygon} from '../src/index.js';
+import {Circle, GeoJSON as GJ, MultiPolygon, Polygon} from '../../src/index.js';
 
-const circles = [Circle.create([80, 70], 10)] satisfies Circle[];
+// const UM= [ 20.18, 63.80 ];
+const um = (p: number[]): GJ.Position => [p[0] / 100 + 20.18, p[1] / 200 + 63.8];
+
+const circles = [Circle.create(um([80, 70]), 10)] satisfies Circle[];
 
 const polygons = [
   Polygon.create([
@@ -14,7 +15,7 @@ const polygons = [
       [1, 1],
       [0, 1],
       [0, 0],
-    ],
+    ].map(um),
   ]),
   Polygon.create([
     [
@@ -25,7 +26,7 @@ const polygons = [
       [22.5, 5],
       [20, 5],
       [20, 0],
-    ],
+    ].map(um),
   ]),
   Polygon.create([
     [
@@ -38,7 +39,7 @@ const polygons = [
       [10, 30],
       [0, 30],
       [0, 20],
-    ],
+    ].map(um),
   ]),
   Polygon.create([
     [
@@ -53,7 +54,7 @@ const polygons = [
       [30, 30],
       [20, 30],
       [20, 20],
-    ],
+    ].map(um),
   ]),
   Polygon.create([
     [
@@ -70,7 +71,7 @@ const polygons = [
       [43, 5],
       [40, 5],
       [40, 0],
-    ],
+    ].map(um),
   ]),
   Polygon.create([
     [
@@ -83,7 +84,7 @@ const polygons = [
       [3, 46],
       [0, 46],
       [0, 40],
-    ],
+    ].map(um),
   ]),
 ] satisfies Polygon[];
 
@@ -121,48 +122,43 @@ const multi = MultiPolygon.create([
   ],
 ]);
 
-const bOptions = {distance: 80000, steps: 5};
-const sOptions = {distance: -80000, steps: 5};
+const bOptions = {distance: 300, steps: 5};
+const sOptions = {distance: -300, steps: 5};
 
 test('circle', () => {
-  expect(bufferArea(circles[0], {distance: 5, steps: 1})).toEqual(
+  expect(circles[0].buffer({distance: 5, steps: 1})).toEqual(
     Circle.create(circles[0].coordinates, 15),
   );
-  expect(bufferArea(circles[0], {distance: -5, steps: 1})).toEqual(
+  expect(circles[0].buffer({distance: -5, steps: 1})).toEqual(
     Circle.create(circles[0].coordinates, 5),
   );
 });
 
 test('antimeridian', () => {
-  let buf = bufferArea(antimeridian, {distance: 100, steps: 1});
+  let buf = antimeridian.buffer({distance: 100, steps: 1});
   expect(buf?.coordinates.length).toBe(3);
 });
 
 test('multipoly', () => {
-  let buf = bufferArea(multi, {distance: 100, steps: 1});
+  let buf = multi.buffer({distance: 100, steps: 1});
   expect(buf?.coordinates.length).toBe(2);
 });
 
-// test('poly', () => {
-//   // console.log(JSON.stringify(polygons.map((p) => p.coordinates)));
-//   console.log(
-//     JSON.stringify(
-//       polygons.flatMap((p) => {
-//         const b = bufferArea(p, sOptions);
-
-//         if (b === null) return [];
-
-//         if (Polygon.isObject(b)) {
-//           return [b.coordinates];
-//         }
-
-//         return b.coordinates;
-//       }),
-//     ),
-//   );
-
-//   // console.log(bufferArea(polygons[0], bOptions).coordinates);
-//   throw new Error('h');
-// });
-
-test.todo('check lengths');
+test('poly', () => {
+  expect(
+    polygons.map((p) => {
+      const b = p.buffer(bOptions);
+      if (b === null) return 0;
+      if (Polygon.isObject(b)) return 1;
+      return b.coordinates.length;
+    }),
+  ).toEqual([1, 1, 1, 1, 1, 1]);
+  expect(
+    polygons.map((p) => {
+      const b = p.buffer(sOptions);
+      if (b === null) return 0;
+      if (Polygon.isObject(b)) return 1;
+      return b.coordinates.length;
+    }),
+  ).toEqual([0, 1, 1, 1, 2, 1]);
+});

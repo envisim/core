@@ -1,6 +1,7 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {type BufferOptions} from '../../buffer/index.js';
 import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {type LineObject} from '../objects/index.js';
@@ -37,15 +38,8 @@ export class LineGeometryCollection
     return GeometricPrimitive.LINE;
   }
 
-  buffer(distance: number, steps: number = 10): AreaGeometryCollection | null {
-    if (distance <= 0.0) return null;
-    const geoms: GJ.AreaObject[] = [];
-    this.geometries.forEach((geom: LineObject) => {
-      const bg = geom.buffer(distance, steps);
-      if (bg) geoms.push(bg);
-    });
-    if (geoms.length === 0) return null;
-    return AreaGeometryCollection.create(geoms, true);
+  buffer(_: BufferOptions): AreaGeometryCollection | null {
+    return null;
   }
 
   centroid(iterations: number = 2): GJ.Position {

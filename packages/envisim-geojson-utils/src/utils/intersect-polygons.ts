@@ -23,13 +23,17 @@ export function intersectPolygons(polygons: GJ.Position[][][]): GJ.Position2[][]
   }
 
   const il = new IntersectList(outerSegments, outerBreaks);
-  const ringList = il.unwindToSegmentRings();
+  const ringList = il.traceIntersectionRings();
 
-  const segList: Segment[][] = Array.from(ringList, (ring) => il.ringToSegments(ring));
-  const extremes: [number, number][] = Array.from(ringList, (ring) => il.extremePointInRing(ring));
+  const segList: Segment[][] = Array.from(ringList, (ring) =>
+    il.intersectionRingToSegmentRing(ring),
+  );
+  const extremes: [number, number][] = Array.from(ringList, (ring) =>
+    il.extremePointOfIntersectionRing(ring),
+  );
   const parent: number[] = Array.from<number>({length: ringList.length}).fill(-1);
   const positive: boolean[] = Array.from(ringList, (ring, i) =>
-    il.ringIsPositive(ring, extremes[i][0]),
+    il.intersectionRingIsPositive(ring, extremes[i][0]),
   );
   const order: number[] = Array.from({length: ringList.length}, (_, i) => i);
   order.sort((a, b) => {

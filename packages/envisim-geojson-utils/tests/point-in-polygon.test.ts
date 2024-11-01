@@ -1,6 +1,6 @@
-import {describe, expect, test} from 'vitest';
+import {expect, test} from 'vitest';
 
-import {AreaFeature, GeoJSON as GJ} from '../src/index.js';
+import {GeoJSON as GJ, Polygon} from '../src/index.js';
 import {pointInAreaGeometry} from '../src/point-in-polygon.js';
 
 const polygon = Polygon.create([

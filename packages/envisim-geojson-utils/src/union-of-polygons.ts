@@ -13,7 +13,10 @@ import {type Segment, ringToSegments, segmentsToPolygon} from './utils/class-seg
 
 export function unionOfSegments(segments: Segment[], breaks: number[]): GJ.Position2[][][] {
   const il = new IntersectList(segments, breaks);
-  const [list, parents] = il.reduceRingList(il.unwindToSegmentRings(), true);
+  const [list, parents] = il.intersectionRingsToOrderedSegmentRings(
+    il.traceIntersectionRings(),
+    true,
+  );
 
   const parentIndices: number[] = Array.from<number>({length: list.length}).fill(-1);
   const returningPolygons: GJ.Position2[][][] = [];

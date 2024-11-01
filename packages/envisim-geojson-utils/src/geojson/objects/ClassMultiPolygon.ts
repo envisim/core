@@ -1,9 +1,10 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {bufferGeometry} from '../../buffer.js';
+import {type BufferOptions, bufferPolygons, defaultBufferOptions} from '../../buffer/index.js';
+import {moveCoordsAroundEarth} from '../../utils/antimeridian.js';
 import {areaOfPolygonLonLat} from '../../utils/area.js';
-import {bboxFromPositions, unionOfBBoxes} from '../../utils/bbox.js';
+import {bboxCrossesAntimeridian, bboxFromPositions, unionOfBBoxes} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids, centroidOfPolygon} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
@@ -40,8 +41,19 @@ export class MultiPolygon extends AbstractAreaObject<GJ.MultiPolygon> implements
     return this.coordinates.reduce((prev, curr) => prev + areaOfPolygonLonLat(curr), 0);
   }
 
-  buffer(distance: number, steps: number = 10): Polygon | MultiPolygon | null {
-    return bufferGeometry(this, {distance, steps});
+  buffer(options: BufferOptions): Polygon | MultiPolygon | null {
+    const opts = defaultBufferOptions(options);
+
+    if (opts.distance === 0.0) return MultiPolygon.create(this.coordinates, false);
+
+    if (bboxCrossesAntimeridian(this.getBBox())) {
+      return bufferPolygons(
+        this.coordinates.map((r) => r.map(moveCoordsAroundEarth)),
+        opts,
+      );
+    }
+
+    return bufferPolygons(this.coordinates, opts);
   }
 
   perimeter(): number {

@@ -1,6 +1,7 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {type BufferOptions} from '../../buffer/index.js';
 import {Geodesic} from '../../utils/Geodesic.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {AbstractPointObject} from './AbstractPointObject.js';
@@ -27,7 +28,8 @@ export class Point extends AbstractPointObject<GJ.Point> implements GJ.Point {
     return 1;
   }
 
-  buffer(distance: number): Circle | null {
+  buffer(options: BufferOptions): Circle | null {
+    const distance = options.distance ?? 0.0;
     if (distance <= 0.0) return null;
     return Circle.create(this.coordinates, distance, false);
   }

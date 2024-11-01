@@ -1,6 +1,7 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {type BufferOptions} from '../../buffer/index.js';
 import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {type GeomEachCallback} from '../base/index.js';
@@ -72,13 +73,15 @@ export class PointCollection
     return this.features.reduce((prev, curr) => prev + curr.geometry.count(), 0);
   }
 
-  buffer(distance: number): AreaCollection | null {
-    const features: GJ.AreaFeature[] = [];
-    this.forEach((feature: PointFeature) => {
-      const bf = feature.buffer(distance);
-      if (bf) features.push(bf);
+  buffer(options: BufferOptions): AreaCollection | null {
+    const ac = AreaCollection.create([]);
+
+    this.forEach((feature) => {
+      const bf = feature.buffer(options);
+      if (bf !== null) ac.addFeature(bf, true);
     });
-    if (features.length === 0) return null;
-    return AreaCollection.create(features, true);
+
+    if (ac.features.length === 0) return null;
+    return ac;
   }
 }

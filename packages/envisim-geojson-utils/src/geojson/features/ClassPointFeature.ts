@@ -1,6 +1,7 @@
-import {type OptionalParam} from '@envisim/utils';
+import {type OptionalParam, copy} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {type BufferOptions} from '../../buffer/index.js';
 import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {PointGeometry, toPointGeometry} from '../gcs/index.js';
@@ -38,12 +39,10 @@ export class PointFeature
     return GeometricPrimitive.POINT;
   }
 
-  buffer(distance: number): AreaFeature | null {
-    if (distance <= 0.0) return null;
-    const bg = this.geometry.buffer(distance);
-    if (!bg) return null;
-    // TODO: Decide if we want to copy properties
-    return AreaFeature.create(bg, {}, true);
+  buffer(options: BufferOptions): AreaFeature | null {
+    const bg = this.geometry.buffer(options);
+    if (bg === null) return null;
+    return AreaFeature.create(bg, copy(this.properties), true);
   }
 
   /* FEATURE SPECIFIC */
