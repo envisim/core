@@ -1,0 +1,46 @@
+import type * as GJ from '../../types/geojson.js';
+import {LineString} from './ClassLineString.js';
+import {MultiLineString} from './ClassMultiLineString.js';
+import type {LineObject} from './index.js';
+
+export function toLineObject(geometry: GJ.LineGeometry, shallow: boolean = true): LineObject {
+  switch (geometry.type) {
+    case 'LineString':
+      return shallow === true && LineString.isObject(geometry)
+        ? geometry
+        : new LineString(geometry, shallow);
+
+    case 'MultiLineString':
+      return shallow === true && MultiLineString.isObject(geometry)
+        ? geometry
+        : new MultiLineString(geometry, shallow);
+
+    case 'GeometryCollection':
+      return geometryCollection(geometry, shallow);
+
+    default:
+      throw new TypeError('type not supported');
+  }
+}
+
+function geometryCollection(geometry: GJ.LineGeometryCollection, shallow: boolean): LineObject {
+  if (geometry.geometries.length === 1) {
+    return toLineObject(geometry.geometries[0], shallow);
+  }
+
+  const coordinates: GJ.Position[][] = [];
+
+  for (const geom of geometry.geometries) {
+    if (geom.type === 'LineString') {
+      coordinates.push(geom.coordinates);
+    } else {
+      coordinates.push(...geom.coordinates);
+    }
+  }
+
+  if (coordinates.length === 1) {
+    return LineString.create(coordinates[0], shallow);
+  }
+
+  return MultiLineString.create(coordinates, shallow);
+}

@@ -21,6 +21,10 @@ export {
   MultiCircle,
 };
 
+export {toAreaObject} from './toAreaObject.js';
+export {toLineObject} from './toLineObject.js';
+export {toPointObject} from './toPointObject.js';
+
 export type AreaObject = Circle | MultiCircle | Polygon | MultiPolygon;
 export type LineObject = LineString | MultiLineString;
 export type PointObject = Point | MultiPoint;
