@@ -1,13 +1,7 @@
-import {describe, expect, test} from 'vitest';
+import {expect, test} from 'vitest';
 
-import {
-  AreaCollection,
-  AreaFeature,
-  GeoJSON as GJ,
-  MultiPolygon,
-  Polygon,
-  unionOfPolygons,
-} from '../src/index.js';
+import {AreaCollection, AreaFeature, GeoJSON as GJ, MultiPolygon, Polygon} from '../src/index.js';
+import {unionOfPolygons} from '../src/union-of-polygons.js';
 
 const pol1: GJ.Position[][] = [
   [
