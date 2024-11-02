@@ -4,8 +4,8 @@ import type * as GJ from '../../types/geojson.js';
 import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {LineFeature} from '../features/index.js';
-import {AbstractCollection} from './AbstractCollection.js';
-import {AreaCollection} from './ClassAreaCollection.js';
+import {AbstractCollection} from './abstract-collection.js';
+import {AreaCollection} from './class-area-collection.js';
 
 export class LineCollection
   extends AbstractCollection<LineFeature>
