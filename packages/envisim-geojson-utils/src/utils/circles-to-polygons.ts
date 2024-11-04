@@ -25,13 +25,14 @@ export function circlesToPolygons(
   const delta = 360.0 / pointsPerCircle;
 
   const polygons: GJ.Position2[][][] = Array.from({length: centres.length}, () => [
-    Array.from<GJ.Position2>({length: pointsPerCircle}),
+    Array.from<GJ.Position2>({length: pointsPerCircle + 1}),
   ]);
 
   let angle = 360.0;
 
   for (let i = 0; i < centres.length; i++) {
     polygons[i][0][0] = Geodesic.destinationUnrolled(centres[i], transformedRadius, angle);
+    polygons[i][0][pointsPerCircle] = [...polygons[i][0][0]];
   }
 
   for (let j = 1; j < pointsPerCircle; j++) {
