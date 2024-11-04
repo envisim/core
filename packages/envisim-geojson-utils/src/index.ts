@@ -48,9 +48,12 @@ export {rotateCoord} from './utils/rotateCoord.js';
 export {cutLineGeometry, cutAreaGeometry} from './utils/antimeridian.js';
 
 // Dependent
-export {intersectLineLineFeatures} from './intersect-line-line-features.js';
-export {intersectLineAreaFeatures} from './intersect-line-area-features.js';
-export {intersectAreaAreaFeatures} from './intersect-area-area-features.js';
-export {intersectPointAreaFeatures} from './intersect-point-area-features.js';
-export {pointInAreaFeature, pointInAreaGeometry} from './point-in-polygon.js';
-export {unionOfPolygons} from './union-of-polygons.js';
+export {
+  intersectAreaAreaGeometries,
+  intersectLineAreaGeometries,
+  intersectLineLineGeometries,
+  intersectPointAreaGeometries,
+} from './intersect/index.js';
+
+export {pointInAreaGeometry} from './point-in-polygon.js';
+export {unionOfCollection as unionOfPolygons} from './union-of-polygons.js';

@@ -41,7 +41,7 @@ export class Geodesic {
    * @param azimuth azimuth (angle) clockwise from north in degrees.
    * @returns the coordinates [lon,lat] of the destination point.
    */
-  static destination(point: GJ.Position, dist: number, azimuth: number): GJ.Position {
+  static destination(point: GJ.Position, dist: number, azimuth: number): GJ.Position2 {
     const result = geod.Direct(point[1], point[0], (azimuth + 360) % 360, dist, geodDirectOpts);
     if (typeof result.lon2 === 'number' && typeof result.lat2 === 'number') {
       return [result.lon2, result.lat2];
@@ -59,7 +59,7 @@ export class Geodesic {
    * @param azimuth azimuth (angle) clockwise from north in degrees.
    * @returns the coordinates [lon,lat] of the destination point.
    */
-  static destinationUnrolled(point: GJ.Position, dist: number, azimuth: number): GJ.Position {
+  static destinationUnrolled(point: GJ.Position, dist: number, azimuth: number): GJ.Position2 {
     const result = geod.Direct(
       point[1],
       point[0],

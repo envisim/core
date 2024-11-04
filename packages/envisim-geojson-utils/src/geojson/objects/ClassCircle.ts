@@ -3,8 +3,8 @@ import {type OptionalParam} from '@envisim/utils';
 import type * as GJ from '../../types/geojson.js';
 import {type BufferOptions, defaultBufferOptions} from '../../buffer/index.js';
 import {Geodesic} from '../../utils/Geodesic.js';
-import {cutAreaGeometry} from '../../utils/antimeridian.js';
 import {bboxFromPositions, getPositionsForCircle} from '../../utils/bbox.js';
+import {CirclesToPolygonsOptions, circlesToPolygons} from '../../utils/circles-to-polygons.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {AbstractAreaObject} from './AbstractAreaObject.js';
 import {MultiPolygon} from './ClassMultiPolygon.js';
@@ -42,37 +42,20 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     this.radius = obj.radius;
   }
 
-  toPolygon({
-    pointsPerCircle = 16,
-  }: {
-    pointsPerCircle?: number;
-  } = {}): Polygon | MultiPolygon {
-    const coordinates = new Array<GJ.Position>(pointsPerCircle);
+  getCoordinateArray(): GJ.Position[] {
+    return [this.coordinates];
+  }
 
-    // Use the radius that gives equal area to the polygon for best approx.
-    const v = Math.PI / pointsPerCircle;
-    const radius = Math.sqrt(
-      (Math.PI * this.radius ** 2) / (pointsPerCircle * Math.sin(v) * Math.cos(v)),
-    );
+  toPolygon(options: CirclesToPolygonsOptions = {}): Polygon | MultiPolygon | null {
+    const polygons = circlesToPolygons([this.coordinates], this.radius, options);
 
-    for (let i = 0; i < pointsPerCircle; i++) {
-      const angle = 360.0 - (i / pointsPerCircle) * 360.0;
-      coordinates[i] = Geodesic.destination(this.coordinates, radius, angle);
+    if (polygons.length === 0) {
+      return null;
+    } else if (polygons.length === 1) {
+      return Polygon.create(polygons[0], true);
     }
 
-    // Close the polygon by adding the first point as the last
-    coordinates.push([...coordinates[0]]);
-    // Create initial Polygon
-    const polygon = new Polygon({coordinates: [coordinates]}, true);
-    // Check if it is closer than new radius to antimeridian
-    if (Geodesic.distance([180, this.coordinates[1]], this.coordinates) < radius) {
-      // Run cut to see if it was needed
-      const poly = cutAreaGeometry(polygon);
-      if (poly.type === 'MultiPolygon') {
-        return new MultiPolygon(poly);
-      }
-    }
-    return polygon;
+    return MultiPolygon.create(polygons, true);
   }
 
   get size(): number {

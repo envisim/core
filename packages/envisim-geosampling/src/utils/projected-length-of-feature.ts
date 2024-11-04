@@ -6,7 +6,6 @@ import {
   type GeoJSON as GJ,
   LineFeature,
   MultiCircle,
-  Polygon,
   bbox4,
   longitudeCenter,
   typeGuards,
@@ -107,25 +106,18 @@ function geometryToMultiLineString(geom: GJ.BaseGeometry, pointsPerCircle = 16) 
           pointsPerCircle,
         });
 
-        if (Polygon.isObject(polygon)) {
-          mls.push(...polygon.coordinates);
-          break;
-        } else {
-          polygon.coordinates.forEach((coord) => {
-            mls.push(...coord);
-          });
-        }
+        if (polygon === null) return mls;
+        polygon.getCoordinateArray().forEach((c) => mls.push(...c));
       }
       break;
 
     case 'MultiPoint':
       if (typeGuards.isMultiCircle(geom)) {
-        const coords = MultiCircle.create(geom.coordinates, geom.radius).toPolygon({
+        const polygon = MultiCircle.create(geom.coordinates, geom.radius).toPolygon({
           pointsPerCircle,
-        }).coordinates;
-        coords.forEach((coord) => {
-          mls.push(...coord);
         });
+        if (polygon === null) return mls;
+        polygon.getCoordinateArray().forEach((c) => mls.push(...c));
       }
       break;
 

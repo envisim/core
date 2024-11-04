@@ -1,8 +1,8 @@
 import {copy} from '@envisim/utils';
 
 import type * as GJ from '../types/geojson.js';
+import {intersectPolygons} from '../intersect/index.js';
 import {bbox4, bboxCrossesAntimeridian, bboxFromPositions} from './bbox.js';
-import {intersectPolygons} from './intersect-polygons.js';
 import {normalizeLongitude} from './position.js';
 
 // Internal function to compare two positions
@@ -171,41 +171,29 @@ function cutPolygonCoords(pol: GJ.Position[][]): GJ.Position[][][] {
   }
 
   // Crosses the antimeridian
-  const coords: GJ.Position[][] = [];
-  pol.forEach((ring) => {
-    coords.push(
-      ring.map((c) => {
-        if (c[0] <= box[2]) {
-          return [c[0] + 360, ...c.slice(1)] as GJ.Position;
-        }
-        return [...c];
-      }),
-    );
-  });
+  const coords: GJ.Position2[][] = pol.map((ring) =>
+    ring.map((c) => [c[0] <= box[2] ? c[0] + 360.0 : c[0], c[1]]),
+  );
+
   // Intersect coords with leftArea to create the first polygon and rightArea
   // to create the second polygon.
-  const mpc: GJ.Position[][][] = [];
-  const left = intersectPolygons([coords, EARTH_BOUNDARIES.normal]);
+  const returningPolys: GJ.Position2[][][] = [];
+
+  const left = intersectPolygons([coords], [EARTH_BOUNDARIES.normal]);
+
   if (left.length > 0) {
-    left.forEach((p) => mpc.push(p));
+    returningPolys.push(...left);
   }
-  const right = intersectPolygons([coords, EARTH_BOUNDARIES.right]);
+
+  const right = intersectPolygons([coords], [EARTH_BOUNDARIES.right]).map((r) =>
+    r.map((p) => p.map<[number, number]>((c) => [c[0] - 360.0, c[1]])),
+  );
+
   if (right.length > 0) {
-    // need to fix coords here
-    right.forEach((p) => {
-      const pc: GJ.Position[][] = [];
-      p.forEach((ring) => {
-        const rc = ring;
-        pc.push(
-          rc.map((c) => {
-            return [c[0] - 360, ...c.slice(1)] as GJ.Position;
-          }),
-        );
-      });
-      mpc.push(pc);
-    });
+    returningPolys.push(...right);
   }
-  return mpc;
+
+  return returningPolys;
 }
 
 /**
@@ -252,4 +240,74 @@ export function moveCoordsAroundEarth(coords: GJ.Position[]): GJ.Position[] {
   const xSmall = coords.reduce((p, c) => Math.min(c[0], p), Number.MAX_VALUE);
   if (xSmall >= 0.0) return coords;
   return coords.map((c) => [c[0] + 360.0, c[1]]);
+}
+
+/**
+ * An unrolled polygon is a polygon which may exist outside the boundaries of normal earth
+ * (-180, 180), as if the earth(s) was unrolled on a sheet of paper.
+ *
+ * This function takes polygons with unrolled coordinates and, rolls them into (-180, 180). The
+ * function assumes that no polygon exists solely on the left earth (-540, -180), or the right
+ * earth, (180, 540), but that the following polygons may exist:
+ * - overlapping -180,
+ * - solely in normal earth (-180, 180),
+ * - overlapping 180.
+ */
+export function rerollPolygons(polygons: GJ.Position2[][][]): GJ.Position2[][][] {
+  const returningPolys: GJ.Position2[][][] = [];
+
+  for (let i = 0; i < polygons.length; i++) {
+    const range = polygons[i][0].reduce(
+      (p, c) => {
+        p[0] = Math.min(p[0], c[0]);
+        p[1] = Math.max(p[1], c[0]);
+        return p;
+      },
+      [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY],
+    );
+
+    if (range[0] >= -180.0 && range[1] <= 180.0) {
+      return polygons;
+    }
+
+    if (range[0] < -180.0) {
+      // Polygons can be drawn over -180, but cannot exist soley there, as any crossed polygon would
+      // have been moved +360 before operations.
+      // range[0] < -180 therefore implies range[1] > -180
+      const l = intersectPolygons([polygons[i]], [EARTH_BOUNDARIES.left]).map((r) =>
+        r.map((p) => p.map<[number, number]>((c) => [c[0] + 360.0, c[1]])),
+      );
+
+      if (l.length > 0) {
+        returningPolys.push(...l);
+      }
+
+      const n = intersectPolygons([polygons[i]], [EARTH_BOUNDARIES.normal]);
+
+      if (n.length > 0) {
+        returningPolys.push(...n);
+      }
+    } else if (range[0] < 180.0 && range[1] > 180.0) {
+      const r = intersectPolygons([polygons[i]], [EARTH_BOUNDARIES.right]).map((r) =>
+        r.map((p) => p.map<[number, number]>((c) => [c[0] - 360.0, c[1]])),
+      );
+
+      if (r.length > 0) {
+        returningPolys.push(...r);
+      }
+
+      const n = intersectPolygons([polygons[i]], [EARTH_BOUNDARIES.normal]);
+
+      if (n.length > 0) {
+        returningPolys.push(...n);
+      }
+    } else {
+      // Something can be alone on the rightmost earth ... no need to intersect
+
+      const r = polygons[i].map((p) => p.map<[number, number]>((c) => [c[0] - 360.0, c[1]]));
+      returningPolys.push(r);
+    }
+  }
+
+  return returningPolys;
 }

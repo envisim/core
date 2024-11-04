@@ -7,6 +7,7 @@ import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {AbstractPointObject} from './AbstractPointObject.js';
+import {Circle} from './ClassCircle.js';
 import {MultiCircle} from './ClassMultiCircle.js';
 import type {MultiPolygon} from './ClassMultiPolygon.js';
 import type {Polygon} from './ClassPolygon.js';
@@ -28,11 +29,15 @@ export class MultiPoint extends AbstractPointObject<GJ.MultiPoint> implements GJ
     super({...obj, type: 'MultiPoint'}, shallow);
   }
 
+  getCoordinateArray(): GJ.Position[] {
+    return this.coordinates;
+  }
+
   get size(): number {
     return this.coordinates.length;
   }
 
-  buffer(options: BufferOptions): MultiCircle | Polygon | MultiPolygon | null {
+  buffer(options: BufferOptions): Circle | MultiCircle | Polygon | MultiPolygon | null {
     const mc = MultiCircle.create(this.coordinates, 0.0, true);
     return mc.buffer(options);
   }

@@ -29,6 +29,10 @@ export class Polygon extends AbstractAreaObject<GJ.Polygon> implements GJ.Polygo
     super({...obj, type: 'Polygon'}, shallow);
   }
 
+  getCoordinateArray(): GJ.Position[][][] {
+    return [this.coordinates];
+  }
+
   get size(): number {
     return 1;
   }

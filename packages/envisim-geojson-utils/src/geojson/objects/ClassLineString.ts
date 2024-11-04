@@ -33,6 +33,10 @@ export class LineString extends AbstractLineObject<GJ.LineString> implements GJ.
     super({...obj, type: 'LineString'}, shallow);
   }
 
+  getCoordinateArray(): GJ.Position[][] {
+    return [this.coordinates];
+  }
+
   get size(): number {
     return 1;
   }

@@ -1,8 +1,9 @@
 import {expect, test} from 'vitest';
 
-import {AreaFeature, type GeoJSON as GJ, Polygon} from '../src/index.js';
-import {intersectAreaAreaFeatures} from '../src/intersect-area-area-features.js';
-import './_equalArrays.testf';
+import {AreaObject, type GeoJSON as GJ, Polygon} from '../../src/index.js';
+import {intersectAreaAreaGeometries} from '../../src/intersect/intersect-area-area.js';
+
+// import './_equalArrays.testf';
 
 const poly1: GJ.Position2[][] = [
   [
@@ -50,15 +51,14 @@ const intersectPoints: GJ.Position2[][] = [
   ],
 ];
 
-const af1 = AreaFeature.create({type: 'Polygon', coordinates: poly1});
-const af2 = AreaFeature.create({type: 'Polygon', coordinates: poly2});
+const ag1 = Polygon.create(poly1);
+const ag2 = Polygon.create(poly2);
 
-test('intersect', () => {
-  const int = intersectAreaAreaFeatures(af1, af2);
-  AreaFeature.assert(int);
-  const geom = int.geometry;
-  Polygon.assert(geom);
-  const coords = geom.coordinates;
+test('intersect area-area', () => {
+  const int = intersectAreaAreaGeometries(ag1, ag2) as AreaObject;
+  expect(int).not.toBeNull();
+  Polygon.assert(int);
+  const coords = int.coordinates;
   expect(coords.length).toBe(2);
   expect(coords[0]).toEqual(expect.arrayContaining(intersectPoints[0]));
   expect(coords[1]).toEqual(expect.arrayContaining(intersectPoints[1]));

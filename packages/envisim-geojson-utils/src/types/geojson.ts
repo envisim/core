@@ -23,16 +23,16 @@ export interface BaseObject<T extends string, C> extends GeoJsonObject<T> {
   coordinates: C;
 }
 
-export interface Point extends BaseObject<'Point', Position> {}
-export interface MultiPoint extends BaseObject<'MultiPoint', Position[]> {}
+export type Point = BaseObject<'Point', Position>;
+export type MultiPoint = BaseObject<'MultiPoint', Position[]>;
 export type PointObject = Point | MultiPoint;
 
-export interface LineString extends BaseObject<'LineString', Position[]> {}
-export interface MultiLineString extends BaseObject<'MultiLineString', Position[][]> {}
+export type LineString = BaseObject<'LineString', Position[]>;
+export type MultiLineString = BaseObject<'MultiLineString', Position[][]>;
 export type LineObject = LineString | MultiLineString;
 
-export interface Polygon extends BaseObject<'Polygon', Position[][]> {}
-export interface MultiPolygon extends BaseObject<'MultiPolygon', Position[][][]> {}
+export type Polygon = BaseObject<'Polygon', Position[][]>;
+export type MultiPolygon = BaseObject<'MultiPolygon', Position[][][]>;
 export interface Circle extends BaseObject<'Point', Position> {
   radius: number;
 }

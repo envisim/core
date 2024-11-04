@@ -1,8 +1,8 @@
 import {expect, test} from 'vitest';
 
-import {AreaFeature, GeoJSON as GJ, LineFeature, LineString} from '../src/index.js';
-import {intersectLineAreaFeatures} from '../src/intersect-line-area-features.js';
-import './_equalArrays.testf';
+import {GeoJSON as GJ, LineString, MultiPolygon, Polygon} from '../../src/index.js';
+import {intersectLineAreaGeometries} from '../../src/intersect/intersect-line-area.js';
+import '../_equalArrays.testf';
 
 const polycoords: GJ.Position[][] = [
   [
@@ -31,26 +31,14 @@ const linecoords: GJ.Position[] = [
   [0.5, 0],
   [2, 0],
 ];
-const line = LineFeature.create(
-  {
-    type: 'LineString',
-    coordinates: linecoords,
-  },
-  {},
-  true,
-);
+const line = LineString.create(linecoords);
 
 test('Simple polygon', () => {
-  const polygon = AreaFeature.create({
-    type: 'Polygon',
-    coordinates: polycoords,
-  });
+  const polygon = Polygon.create(polycoords);
 
-  const intersection = intersectLineAreaFeatures(line, polygon) as LineFeature;
-  expect(intersection).not.toBeNull();
-
-  expect(LineString.isObject(intersection.geometry)).toBe(true);
-  const coords = (intersection.geometry as LineString).coordinates;
+  const intersection = intersectLineAreaGeometries(line, polygon);
+  LineString.assert(intersection);
+  const coords = intersection.coordinates;
 
   expect(coords.length).toBe(5);
   expect(coords[0]).arrayToAlmostEqual(linecoords[1], 1e-9);
@@ -61,16 +49,11 @@ test('Simple polygon', () => {
 });
 
 test('Overlapping multipolygon', () => {
-  const polygon = AreaFeature.create({
-    type: 'MultiPolygon',
-    coordinates: [polycoords, polycoords],
-  });
+  const polygon = MultiPolygon.create([polycoords, polycoords]);
 
-  const intersection = intersectLineAreaFeatures(line, polygon) as LineFeature;
-  expect(intersection).not.toBeNull();
-
-  expect(LineString.isObject(intersection.geometry)).toBe(true);
-  const coords = (intersection.geometry as LineString).coordinates;
+  const intersection = intersectLineAreaGeometries(line, polygon);
+  LineString.assert(intersection);
+  const coords = intersection.coordinates;
 
   expect(coords.length).toBe(5);
   expect(coords[0]).arrayToAlmostEqual(linecoords[1], 1e-9);
@@ -81,16 +64,12 @@ test('Overlapping multipolygon', () => {
 });
 
 test('Three multipolygons', () => {
-  const polygon = AreaFeature.create({
-    type: 'MultiPolygon',
-    coordinates: [polycoords, polycoords, polycoords2],
-  });
+  const polygon = MultiPolygon.create([polycoords, polycoords, polycoords2]);
 
-  const intersection = intersectLineAreaFeatures(line, polygon) as LineFeature;
-  expect(intersection).not.toBeNull();
+  const intersection = intersectLineAreaGeometries(line, polygon);
 
-  expect(LineString.isObject(intersection.geometry)).toBe(true);
-  const coords = (intersection.geometry as LineString).coordinates;
+  LineString.assert(intersection);
+  const coords = intersection.coordinates;
 
   expect(coords.length).toBe(6);
   expect(coords[0]).arrayToAlmostEqual(linecoords[1], 1e-9);

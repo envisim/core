@@ -43,6 +43,10 @@ export class MultiLineString
     super({...obj, type: 'MultiLineString'}, shallow);
   }
 
+  getCoordinateArray(): GJ.Position[][] {
+    return this.coordinates;
+  }
+
   get size(): number {
     return this.coordinates.length;
   }

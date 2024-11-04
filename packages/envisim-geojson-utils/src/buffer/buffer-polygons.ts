@@ -2,10 +2,9 @@ import * as GJ from '../types/geojson.js';
 import {MultiPolygon, Polygon} from '../geojson/index.js';
 import {unionOfSegments} from '../union-of-polygons.js';
 import {Geodesic} from '../utils/Geodesic.js';
-import {EARTH_BOUNDARIES} from '../utils/antimeridian.js';
+import {rerollPolygons} from '../utils/antimeridian.js';
 import {IntersectList} from '../utils/class-intersects.js';
 import {Segment, segmentsToPolygon} from '../utils/class-segment.js';
-import {intersectPolygons} from '../utils/intersect-polygons.js';
 import type {BufferOptions} from './types.js';
 
 // Assume not duplicate points
@@ -190,65 +189,6 @@ function groupSegmentsByRings(
   return il.intersectionRingsToOrderedSegmentRings(rings, parentIsPositive);
 }
 
-function separatePolygonsOverAntimeridian(polygons: GJ.Position2[][][]): GJ.Position2[][][] {
-  const returningPolys: GJ.Position2[][][] = [];
-
-  for (let i = polygons.length; i-- > 0; ) {
-    const range = polygons[i][0].reduce(
-      (p, c) => {
-        p[0] = Math.min(p[0], c[0]);
-        p[1] = Math.max(p[1], c[0]);
-        return p;
-      },
-      [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY],
-    );
-
-    if (range[0] >= -180.0 && range[1] <= 180.0) {
-      return polygons;
-    }
-
-    if (range[0] < -180.0) {
-      // Polygons can be drawn over -180, but cannot exist soley there, as any crossed polygon would
-      // have been moved +360 before operations.
-      // range[0] < -180 therefore implies range[1] > -180
-      const l = intersectPolygons([polygons[i], EARTH_BOUNDARIES.left]).map((r) =>
-        r.map((p) => p.map<[number, number]>((c) => [c[0] + 360.0, c[1]])),
-      );
-
-      if (l.length > 0) {
-        returningPolys.push(...l);
-      }
-
-      const n = intersectPolygons([polygons[i], EARTH_BOUNDARIES.normal]);
-
-      if (n.length > 0) {
-        returningPolys.push(...n);
-      }
-    } else if (range[0] < 180.0 && range[1] > 180.0) {
-      const r = intersectPolygons([polygons[i], EARTH_BOUNDARIES.right]).map((r) =>
-        r.map((p) => p.map<[number, number]>((c) => [c[0] - 360.0, c[1]])),
-      );
-
-      if (r.length > 0) {
-        returningPolys.push(...r);
-      }
-
-      const n = intersectPolygons([polygons[i], EARTH_BOUNDARIES.normal]);
-
-      if (n.length > 0) {
-        returningPolys.push(...n);
-      }
-    } else {
-      // Something can be alone on the rightmost earth ... no need to intersect
-
-      const r = polygons[i].map((p) => p.map<[number, number]>((c) => [c[0] - 360.0, c[1]]));
-      returningPolys.push(r);
-    }
-  }
-
-  return returningPolys;
-}
-
 // If the buffer is negative, we need to start to "merge" each separate polygon group
 // (i.e. outer+inner), in order to ensure that the group is a proper polygon, i.e. doesn't have
 // any hole outside of the boundary.
@@ -295,7 +235,7 @@ function expand(polygons: GJ.Position[][][], options: Required<BufferOptions>): 
       }
     }
 
-    return separatePolygonsOverAntimeridian([returningPolygon]);
+    return rerollPolygons([returningPolygon]);
   }
 
   const outerSegments: Segment[] = [];
@@ -333,7 +273,7 @@ function expand(polygons: GJ.Position[][][], options: Required<BufferOptions>): 
   }
 
   const unionRings = unionOfSegments(outerSegments, outerBreaks);
-  return separatePolygonsOverAntimeridian(unionRings);
+  return rerollPolygons(unionRings);
 }
 
 // Only NEGATIVE

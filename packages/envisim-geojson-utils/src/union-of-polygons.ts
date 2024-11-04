@@ -3,11 +3,10 @@ import {
   AreaCollection,
   AreaFeature,
   AreaGeometryCollection,
-  Circle,
-  MultiCircle,
   MultiPolygon,
   Polygon,
 } from './geojson/index.js';
+import {CirclesToPolygonsOptions} from './utils/circles-to-polygons.js';
 import {IntersectList} from './utils/class-intersects.js';
 import {type Segment, ringToSegments, segmentsToPolygon} from './utils/class-segment.js';
 
@@ -34,7 +33,7 @@ export function unionOfSegments(segments: Segment[], breaks: number[]): GJ.Posit
   return returningPolygons;
 }
 
-export function unionOfRings(polygons: GJ.Position[][][]): GJ.Position2[][][] {
+export function unionOfPolygons(polygons: GJ.Position[][][]): GJ.Position2[][][] {
   if (polygons.length === 1) {
     return [polygons[0].map((ring) => ring.map((p) => [p[0], p[1]]))];
   }
@@ -53,50 +52,36 @@ export function unionOfRings(polygons: GJ.Position[][][]): GJ.Position2[][][] {
 }
 
 /**
- * @param areaCollection The AreaCollection to compute the union from
+ * @param collection The AreaCollection to compute the union from
  * @param pointsPerCircle number of points per circle
  * @returns the union of the polygons in the areaCollection
  */
-export function unionOfPolygons(
+export function unionOfCollection(
   collection: AreaCollection,
-  pointsPerCircle: number = 16,
+  options: CirclesToPolygonsOptions = {},
 ): AreaCollection {
-  const ppc = {pointsPerCircle};
+  const ppc = {pointsPerCircle: options.pointsPerCircle ?? 16};
   const geoms: GJ.Position[][][] = [];
 
   for (const feature of collection.features) {
     if (AreaGeometryCollection.isGeometryCollection(feature.geometry)) {
-      feature.geometry.forEach((g) => {
-        if (Circle.isObject(g) || MultiCircle.isObject(g)) {
-          const cp = g.toPolygon(ppc);
-          if (Polygon.isObject(cp)) {
-            geoms.push(cp.coordinates);
-          } else {
-            geoms.push(...cp.coordinates);
-          }
-        } else if (Polygon.isObject(g)) {
-          geoms.push(g.coordinates);
-        } else {
-          geoms.push(...g.coordinates);
-        }
-      });
-    } else if (Polygon.isObject(feature.geometry)) {
-      geoms.push(feature.geometry.coordinates);
-    } else if (MultiPolygon.isObject(feature.geometry)) {
-      geoms.push(...feature.geometry.coordinates);
+      continue;
+    } else if (Polygon.isObject(feature.geometry) || MultiPolygon.isObject(feature.geometry)) {
+      geoms.push(...feature.geometry.getCoordinateArray());
     } else {
       const cp = feature.geometry.toPolygon(ppc);
-      if (Polygon.isObject(cp)) {
-        geoms.push(cp.coordinates);
-      } else {
-        geoms.push(...cp.coordinates);
-      }
+
+      if (cp === null) continue;
+
+      geoms.push(...cp.getCoordinateArray());
     }
   }
 
-  const unionOfGeoms = unionOfRings(geoms);
+  const unionOfGeoms = unionOfPolygons(geoms);
 
-  if (unionOfGeoms.length === 1) {
+  if (unionOfGeoms.length === 0) {
+    return AreaCollection.create([]);
+  } else if (unionOfGeoms.length === 1) {
     return AreaCollection.create(
       [AreaFeature.create(Polygon.create(unionOfGeoms[0], true), {}, true)],
       true,

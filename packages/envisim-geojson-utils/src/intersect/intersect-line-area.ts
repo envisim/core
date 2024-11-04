@@ -1,81 +1,59 @@
-import type * as GJ from './types/geojson.js';
+import type * as GJ from '../types/geojson.js';
 import {
-  AreaFeature,
-  Circle,
-  LineFeature,
+  AreaObject,
+  LineObject,
   LineString,
   MultiLineString,
   MultiPolygon,
   Polygon,
-} from './geojson/index.js';
-import {bboxInBBox} from './utils/bbox.js';
-import {Segment} from './utils/class-segment.js';
-import {pointInSinglePolygonPosition} from './utils/pointInPolygonPosition.js';
+} from '../geojson/index.js';
+import {bboxInBBox} from '../utils/bbox.js';
+import {CirclesToPolygonsOptions} from '../utils/circles-to-polygons.js';
+import {Segment} from '../utils/class-segment.js';
+import {pointInSinglePolygonPosition} from '../utils/pointInPolygonPosition.js';
 
 /**
- * Computes the intersection between a LineFeature
- * and an AreaFeature.
+ * Intersect between a line and an area.
  *
- * @param lineFeature
- * @param areaFeature
- * @param pointsPerCircle number of points to use in intersects with circles.
  * @returns the intersection or `null` if none exists.
  */
-export function intersectLineAreaFeatures(
-  lineFeature: LineFeature,
-  areaFeature: AreaFeature,
-  pointsPerCircle: number = 16,
-): LineFeature | null {
+export function intersectLineAreaGeometries(
+  line: LineObject,
+  area: AreaObject,
+  options: CirclesToPolygonsOptions = {},
+  // lineFeature: LineFeature,
+  // areaFeature: AreaFeature,
+  // pointsPerCircle: number = 16,
+): LineObject | null {
   // early return if bboxes doesn't overlap
-  if (!bboxInBBox(lineFeature.geometry.getBBox(), areaFeature.geometry.getBBox())) return null;
-
-  const geometry = lineFeature.geometry;
-  let multiLineString: GJ.Position[][];
-  const areas: GJ.Position[][][] = [];
-
-  // Construct the MultiLineString by fetching all LineStrings
-  if (LineString.isObject(geometry)) {
-    multiLineString = [geometry.coordinates];
-  } else if (MultiLineString.isObject(geometry)) {
-    multiLineString = geometry.coordinates;
-  } else {
-    // A LineGC should really be a MultiLineString
-    multiLineString = [];
-    geometry.geomEach((geom) => {
-      if (LineString.isObject(geom)) multiLineString.push(geom.coordinates);
-      else multiLineString.push(...geom.coordinates);
-    });
+  if (!bboxInBBox(line.getBBox(), area.getBBox())) {
+    return null;
   }
 
+  // Construct the MultiLineString by fetching all LineStrings
+  const multiLineString: GJ.Position[][] = line.getCoordinateArray();
+
   // Construct the MultiPolygon (areas) by fetching all polygons
-  areaFeature.geomEach((geom) => {
-    if (Polygon.isObject(geom)) {
-      areas.push(geom.coordinates);
-    } else if (MultiPolygon.isObject(geom)) {
-      areas.push(...geom.coordinates);
-    } else if (Circle.isObject(geom)) {
-      const circlePolygon = geom.toPolygon({pointsPerCircle});
-      if (circlePolygon.type === 'Polygon') {
-        areas.push(circlePolygon.coordinates);
-      } else if (circlePolygon.type === 'MultiPolygon') {
-        circlePolygon.coordinates.forEach((polCoords) => {
-          areas.push(polCoords);
-        });
-      }
-    } else {
-      areas.push(...geom.toPolygon({pointsPerCircle}).coordinates);
-    }
-  });
+  let areas: GJ.Position[][][];
+  if (Polygon.isObject(area) || MultiPolygon.isObject(area)) {
+    areas = area.getCoordinateArray();
+  } else {
+    const p = area.toPolygon(options);
+    if (p === null) return null;
+    areas = p.getCoordinateArray();
+  }
 
   // Since lineStringInAreaFeature returns MultiLineString, we need to flatten
   const coords = multiLineString.flatMap((ls) => lineStringInPolygons(ls, areas));
 
-  if (coords.length === 0) return null;
+  if (coords.length === 0) {
+    return null;
+  } else if (coords.length === 1) {
+    // We don't need to claim Multi if there is only one LineString left
+    return LineString.create(coords[0], true);
+  }
 
-  // We don't need to claim Multi if there is only one LineString left
-  if (coords.length === 1) return LineFeature.create(LineString.create(coords[0], true), {}, true);
-
-  return LineFeature.create(MultiLineString.create(coords, true), {}, true);
+  return MultiLineString.create(coords, true);
 }
 
 /**

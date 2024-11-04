@@ -1,8 +1,8 @@
 import {expect, test} from 'vitest';
 
-import {Polygon} from '../src/index.js';
-import {EARTH_BOUNDARIES} from '../src/utils/antimeridian.js';
-import {intersectPolygons} from '../src/utils/intersect-polygons';
+import {Polygon} from '../../src/index.js';
+import {intersectPolygons} from '../../src/intersect/intersect-polygons.js';
+import {EARTH_BOUNDARIES} from '../../src/utils/antimeridian.js';
 
 const antimeridian = Polygon.create([
   [
@@ -19,6 +19,6 @@ const antimeridian = Polygon.create([
 ]);
 
 test('antimeridian', () => {
-  const res = intersectPolygons([antimeridian.coordinates, EARTH_BOUNDARIES.right]);
+  const res = intersectPolygons([antimeridian.coordinates], [EARTH_BOUNDARIES.right]);
   expect(res.length).toBe(2);
 });

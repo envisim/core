@@ -1,5 +1,5 @@
 import type * as GJ from './types/geojson.js';
-import type {AreaFeature, AreaGeometry, AreaObject} from './geojson/index.js';
+import type {AreaObject} from './geojson/index.js';
 import {pointInBBox} from './utils/bbox.js';
 import {
   pointInMultiPolygonPosition,
@@ -7,42 +7,28 @@ import {
 } from './utils/pointInPolygonPosition.js';
 
 /**
- * Checks if a point is inside an AreaGeometry.
+ * Checks if a point is inside an area.
  *
- * @param point A GeoJSON Position [lon,lat].
- * @param geometry
  * @returns `true` if the position is inside the area.
  */
-export function pointInAreaGeometry(point: GJ.Position, geometry: AreaGeometry): boolean {
+export function pointInAreaGeometry(point: GJ.Position, area: AreaObject): boolean {
   // If it is not in the bounding box, we can give up
-  if (!pointInBBox(point, geometry.getBBox())) return false;
+  if (!pointInBBox(point, area.getBBox())) {
+    return false;
+  }
 
-  switch (geometry.type) {
+  switch (area.type) {
     case 'Point':
     case 'MultiPoint':
-      return geometry.distanceToPosition(point) <= 0;
+      return area.distanceToPosition(point) <= 0;
 
     case 'Polygon':
-      return pointInSinglePolygonPosition(point, geometry.coordinates);
+      return pointInSinglePolygonPosition(point, area.coordinates);
 
     case 'MultiPolygon':
-      return pointInMultiPolygonPosition(point, geometry.coordinates);
-
-    case 'GeometryCollection':
-      return geometry.geometries.some((geom: AreaObject) => pointInAreaGeometry(point, geom));
+      return pointInMultiPolygonPosition(point, area.coordinates);
 
     default:
       return false;
   }
-}
-
-/**
- * Checks if a point is inside an AreaFeature.
- *
- * @param point A GeoJSON Position [lon,lat].
- * @param feature
- * @returns `true` if the position is inside the area.
- */
-export function pointInAreaFeature(point: GJ.Position, feature: AreaFeature): boolean {
-  return pointInAreaGeometry(point, feature.geometry);
 }

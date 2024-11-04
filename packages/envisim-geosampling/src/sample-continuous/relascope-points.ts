@@ -7,7 +7,7 @@ import {
   PointFeature,
   createDesignWeightProperty,
   createParentProperty,
-  intersectPointAreaFeatures,
+  intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 import {copy} from '@envisim/utils';
 
@@ -86,8 +86,16 @@ export function sampleRelascopePoints(
             // Check if base point exists in this frame (frame could be part/stratum)
             for (let i = 0; i < frameFeatures.length; i++) {
               const frameFeature = frameFeatures[i];
-              const intersect = intersectPointAreaFeatures(pointFeature, frameFeature);
-              if (intersect) {
+              if (
+                pointFeature.geometry.type === 'GeometryCollection' ||
+                frameFeature.geometry.type === 'GeometryCollection'
+              )
+                continue;
+              const intersect = intersectPointAreaGeometries(
+                pointFeature.geometry,
+                frameFeature.geometry,
+              );
+              if (intersect !== null) {
                 // Follow the design weight
                 let dw = 1 / (Math.PI * radius * radius);
                 if (samplePoint.properties?.['_designWeight']) {

@@ -7,7 +7,7 @@ import {
   createDesignWeightProperty,
   createDistanceProperty,
   createParentProperty,
-  intersectPointAreaFeatures,
+  intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 import {copy} from '@envisim/utils';
 
@@ -77,8 +77,16 @@ export function sampleDistancePoints(
             // Check if base point exists in this frame (frame could be part/stratum)
             for (let i = 0; i < layer.collection.features.length; i++) {
               const frameFeature = layer.collection.features[i];
-              const intersect = intersectPointAreaFeatures(pointFeature, frameFeature);
-              if (intersect) {
+              if (
+                pointFeature.geometry.type === 'GeometryCollection' ||
+                frameFeature.geometry.type === 'GeometryCollection'
+              )
+                continue;
+              const intersect = intersectPointAreaGeometries(
+                pointFeature.geometry,
+                frameFeature.geometry,
+              );
+              if (intersect !== null) {
                 // Follow the design weight
                 let dw = 1 / (Math.PI * effRadius * effRadius);
                 if (samplePoint.properties?.['_designWeight']) {

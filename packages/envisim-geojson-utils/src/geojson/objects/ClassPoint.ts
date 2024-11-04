@@ -24,6 +24,10 @@ export class Point extends AbstractPointObject<GJ.Point> implements GJ.Point {
     super({...obj, type: 'Point'}, shallow);
   }
 
+  getCoordinateArray(): GJ.Position[] {
+    return [this.coordinates];
+  }
+
   get size(): number {
     return 1;
   }

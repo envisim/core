@@ -104,7 +104,7 @@ export class Segment {
     }
 
     // Is above segment
-    if (Math.max(this.p1[1], this.p2[1]) < point[1]) {
+    if (Math.max(this.p1[1], this.p2[1]) <= point[1]) {
       return null;
     }
 
@@ -126,7 +126,7 @@ export class Segment {
     const s = (this.delta[1] * xdiff) / this.delta[0] - ydiff;
 
     if (s === 0.0) {
-      this.delta[1] < 0.0 === isPositive ? 0.0 : null;
+      return this.delta[1] < 0.0 === isPositive ? 0.0 : null;
     }
 
     return s < 0.0 ? null : s;

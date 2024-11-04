@@ -15,7 +15,7 @@ import {
   longitudeCenter,
   longitudeDistance,
   normalizeLongitude,
-  pointInAreaFeature,
+  pointInAreaGeometry,
   unionOfPolygons,
 } from '@envisim/geojson-utils';
 
@@ -58,14 +58,12 @@ export function samplePointsOnAreas(
   gj.features.forEach((feature) => {
     let geom = feature.geometry;
     if (AreaGeometryCollection.isGeometryCollection(geom)) {
-      geom.geometries.forEach((geometry) => {
-        if (Circle.isObject(geometry) || MultiCircle.isObject(geometry)) {
-          geometry = geometry.toPolygon();
-        }
-      });
+      return;
     } else {
       if (Circle.isObject(geom) || MultiCircle.isObject(geom)) {
-        geom = geom.toPolygon();
+        const p = geom.toPolygon();
+        if (p === null) return;
+        geom = p;
       }
     }
   });
@@ -117,7 +115,9 @@ export function samplePointsOnAreas(
 
         // Check if point is in any feature.
         for (let i = 0; i < buffered.features.length; i++) {
-          if (pointInAreaFeature(pointLonLat, buffered.features[i])) {
+          const bfg = buffered.features[i].geometry;
+          if (bfg.type === 'GeometryCollection') continue;
+          if (pointInAreaGeometry(pointLonLat, bfg)) {
             // Point is in feature. Create and store new point feature.
             const pointFeature = PointFeature.create(Point.create(pointLonLat), {
               _designWeight: designWeight,
@@ -172,7 +172,9 @@ export function samplePointsOnAreas(
 
           // Check if point is in any feature and then store.
           for (let k = 0; k < buffered.features.length; k++) {
-            if (pointInAreaFeature(pointLonLat, buffered.features[k])) {
+            const bfg = buffered.features[k].geometry;
+            if (bfg.type === 'GeometryCollection') continue;
+            if (pointInAreaGeometry(pointLonLat, bfg)) {
               // Point is in feature. Create and store new point feature.
               const pointFeature = PointFeature.create(Point.create(pointLonLat), {
                 _designWeight: designWeight,

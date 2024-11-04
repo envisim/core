@@ -1,16 +1,29 @@
 import type * as GJ from '../types/geojson.js';
-import {IntersectList} from './class-intersects.js';
+import {IntersectList} from '../utils/class-intersects.js';
 import {
   type Segment,
   ringToSegments,
   segmentsToPolygon,
   upwardIntersection,
-} from './class-segment.js';
+} from '../utils/class-segment.js';
 
-export function intersectPolygons(polygons: GJ.Position[][][]): GJ.Position2[][][] {
-  if (polygons.length === 1) {
-    return [polygons[0].map((ring) => ring.map((p) => [p[0], p[1]]))];
+/**
+ * Assumes that `polygons` consists of two sets of non-overlapping polygon(s).
+ * @returns the intersect of these two sets.
+ */
+export function intersectPolygons(
+  polygons1: GJ.Position[][][],
+  polygons2: GJ.Position[][][],
+): GJ.Position2[][][] {
+  if (
+    polygons1.length === 0 ||
+    polygons2.length === 0 ||
+    polygons1.length + polygons2.length === 1
+  ) {
+    return [];
   }
+
+  const polygons = [...polygons1, ...polygons2];
 
   const outerSegments: Segment[] = [];
   const outerBreaks: number[] = [];

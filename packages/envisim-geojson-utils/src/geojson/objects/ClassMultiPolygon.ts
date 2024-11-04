@@ -33,6 +33,10 @@ export class MultiPolygon extends AbstractAreaObject<GJ.MultiPolygon> implements
     super({...obj, type: 'MultiPolygon'}, shallow);
   }
 
+  getCoordinateArray(): GJ.Position[][][] {
+    return this.coordinates;
+  }
+
   get size(): number {
     return this.coordinates.length;
   }

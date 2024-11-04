@@ -3,11 +3,13 @@ import {type OptionalParam} from '@envisim/utils';
 import type * as GJ from '../../types/geojson.js';
 import {type BufferOptions, bufferPolygons, defaultBufferOptions} from '../../buffer/index.js';
 import {Geodesic} from '../../utils/Geodesic.js';
-import {cutAreaGeometry, moveCoordsAroundEarth} from '../../utils/antimeridian.js';
+import {moveCoordsAroundEarth} from '../../utils/antimeridian.js';
 import {bboxCrossesAntimeridian, bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
+import {CirclesToPolygonsOptions, circlesToPolygons} from '../../utils/circles-to-polygons.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {AbstractAreaObject} from './AbstractAreaObject.js';
+import {Circle} from './ClassCircle.js';
 import {MultiPolygon} from './ClassMultiPolygon.js';
 import {Polygon} from './ClassPolygon.js';
 
@@ -35,6 +37,8 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
    * Thus, it does not follow the GeoJSON standard, but can be converted to
    * a {@link MultiPolygon} through the {@link MultiCircle.toPolygon}.
    *
+   * MultiCircles MUST be non-overlapping.
+   *
    * @param obj
    * @param shallow if `true`, copys by reference when possible.
    */
@@ -43,41 +47,25 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
     this.radius = obj.radius;
   }
 
-  toPolygon({pointsPerCircle = 16}: {pointsPerCircle?: number} = {}): MultiPolygon {
+  getCoordinateArray(): GJ.Position[] {
+    return this.coordinates;
+  }
+
+  toPolygon(options: CirclesToPolygonsOptions = {}): Polygon | MultiPolygon | null {
     // Early return
-    if (this.coordinates.length === 0) return new MultiPolygon({coordinates: []}, true);
-
-    const coordinates: GJ.Position[][][] = [];
-
-    // Use the radius that gives equal area to the polygon for best approx.
-    const v = Math.PI / pointsPerCircle;
-    const radius = Math.sqrt(
-      (Math.PI * this.radius ** 2) / (pointsPerCircle * Math.sin(v) * Math.cos(v)),
-    );
-
-    for (let i = 0; i < this.coordinates.length; i++) {
-      const coords = new Array<GJ.Position>(pointsPerCircle);
-      for (let j = 0; j < pointsPerCircle; j++) {
-        const angle = 360.0 - (j / pointsPerCircle) * 360.0;
-        coords[j] = Geodesic.destination(this.coordinates[i], radius, angle);
-      }
-      // Close the polygon by adding the first point as the last
-      coords.push([...coords[0]]);
-      // check if this polygon should be cut at antimeridian
-      if (Geodesic.distance(this.coordinates[i], [180, this.coordinates[i][1]]) < radius) {
-        const pol = cutAreaGeometry(new Polygon({coordinates: [coords]}));
-        if (pol.type === 'Polygon') {
-          coordinates.push(pol.coordinates);
-        } else if (pol.type === 'MultiPolygon') {
-          pol.coordinates.forEach((polygon) => {
-            coordinates.push(polygon);
-          });
-        }
-      } else {
-        coordinates.push([coords]);
-      }
+    if (this.coordinates.length === 0) {
+      return null;
     }
-    return new MultiPolygon({coordinates}, true);
+
+    const polygons = circlesToPolygons(this.coordinates, this.radius, options);
+
+    if (polygons.length === 0) {
+      return null;
+    } else if (polygons.length === 1) {
+      return Polygon.create(polygons[0], true);
+    }
+
+    return MultiPolygon.create(polygons, true);
   }
 
   get size(): number {
@@ -88,9 +76,16 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
     return this.coordinates.length * Math.PI * this.radius ** 2;
   }
 
-  buffer(options: BufferOptions): MultiCircle | Polygon | MultiPolygon | null {
+  buffer(options: BufferOptions): Circle | MultiCircle | Polygon | MultiPolygon | null {
     const opts = defaultBufferOptions(options);
     const newRadius = this.radius + opts.distance;
+
+    if (this.coordinates.length === 0) {
+      return null;
+    } else if (this.coordinates.length === 1) {
+      if (newRadius <= 0.0) return null;
+      return Circle.create(this.coordinates[0], newRadius, false);
+    }
 
     if (opts.distance <= 0.0) {
       if (newRadius <= 0.0) return null;
@@ -98,20 +93,24 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
     }
 
     // Check if we can safely expand the circles
-    if (distanceBetweenCentresBelowThreshold(this.coordinates, newRadius) === false)
+    if (distanceBetweenCentresBelowThreshold(this.coordinates, newRadius) === false) {
       return MultiCircle.create(this.coordinates, newRadius, false);
+    }
 
     // If not, we convert all to polygons
-    const rings = this.toPolygon({pointsPerCircle: opts.steps * 4}).coordinates;
+    // poly cannot be a Polygon, as this only happens if this.coordinates.length === 1, which we
+    // already have checked for.
+    const polys = this.toPolygon({pointsPerCircle: opts.steps * 4}) as MultiPolygon | null;
+    if (polys === null) return null;
 
     if (bboxCrossesAntimeridian(this.getBBox())) {
       return bufferPolygons(
-        rings.map((r) => r.map(moveCoordsAroundEarth)),
+        polys.coordinates.map((r) => r.map(moveCoordsAroundEarth)),
         opts,
       );
     }
 
-    return bufferPolygons(rings, opts);
+    return bufferPolygons(polys.coordinates, opts);
   }
 
   centroid(iterations: number = 2): GJ.Position {
@@ -123,11 +122,21 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
   }
 
   distanceToPosition(coords: GJ.Position): number {
-    return (
-      this.coordinates.reduce((prev, curr) => {
-        return Math.min(prev, Geodesic.distance(coords, curr));
-      }, Infinity) - this.radius
-    );
+    let distance = Infinity;
+
+    for (const c of this.coordinates) {
+      const d = Geodesic.distance(coords, c);
+      if (d < distance) {
+        if (d <= this.radius) {
+          // Guaranteed to be smallest, because non-overlapping promise
+          return d - this.radius;
+        }
+
+        distance = d;
+      }
+    }
+
+    return distance - this.radius;
   }
 
   geomEach(callback: GeomEachCallback<MultiCircle>, featureIndex: number = -1): void {

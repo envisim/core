@@ -5,9 +5,9 @@ import {
   LineFeature,
   PointCollection,
   PointFeature,
-  intersectAreaAreaFeatures,
-  intersectLineAreaFeatures,
-  intersectPointAreaFeatures,
+  intersectAreaAreaGeometries,
+  intersectLineAreaGeometries,
+  intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 
 /**
@@ -27,19 +27,24 @@ export function intersectPointSampleAreaFrame(
   // if intersection, then compute new designWeight as product of the features design weights.
   frame.forEach((frameFeature) => {
     sample.forEach((sampleFeature) => {
-      const intersect = intersectPointAreaFeatures(sampleFeature, frameFeature);
+      if (
+        sampleFeature.geometry.type === 'GeometryCollection' ||
+        frameFeature.geometry.type === 'GeometryCollection'
+      )
+        return;
 
-      if (intersect) {
-        let dw = 1;
-        if (frameFeature.properties?.['_designWeight']) {
-          dw *= frameFeature.properties['_designWeight'];
-        }
-        if (sampleFeature.properties?.['_designWeight']) {
-          dw *= sampleFeature.properties['_designWeight'];
-        }
-        intersect.properties['_designWeight'] = dw;
-        newFeatures.push(intersect);
+      const intersect = intersectPointAreaGeometries(sampleFeature.geometry, frameFeature.geometry);
+      if (intersect === null) return;
+
+      let dw = 1.0;
+      if (frameFeature.properties?.['_designWeight'] !== undefined) {
+        dw *= frameFeature.properties['_designWeight'];
       }
+      if (sampleFeature.properties?.['_designWeight'] !== undefined) {
+        dw *= sampleFeature.properties['_designWeight'];
+      }
+
+      newFeatures.push(PointFeature.create(intersect, {_designWeight: dw}, true));
     });
   });
   return new PointCollection({features: newFeatures}, true);
@@ -57,28 +62,35 @@ export function intersectLineSampleAreaFrame(
   frame: AreaCollection,
   pointsPerCircle: number = 16,
 ): LineCollection {
+  const pps = {pointsPerCircle};
   const newFeatures: LineFeature[] = [];
 
   // Intersect with all polygons and push results to newFeatures.
   // if intersection, then compute new designWeight as product of the features design weights.
   frame.forEach((frameFeature) => {
     sample.forEach((sampleFeature) => {
-      const intersect = intersectLineAreaFeatures(sampleFeature, frameFeature, pointsPerCircle);
+      if (
+        sampleFeature.geometry.type === 'GeometryCollection' ||
+        frameFeature.geometry.type === 'GeometryCollection'
+      )
+        return;
 
-      if (intersect) {
-        let dw = 1; // designWeight
-        // Transfer the properties from sampleFeature to newFeature without copy.
-        intersect.properties = sampleFeature.properties ?? {};
-        if (frameFeature.properties?.['_designWeight']) {
-          dw *= frameFeature.properties['_designWeight'];
-        }
-        if (sampleFeature.properties?.['_designWeight']) {
-          dw *= sampleFeature.properties['_designWeight'];
-        }
-        // Update the design weight.
-        intersect.properties['_designWeight'] = dw;
-        newFeatures.push(intersect);
+      const intersect = intersectLineAreaGeometries(
+        sampleFeature.geometry,
+        frameFeature.geometry,
+        pps,
+      );
+      if (intersect === null) return;
+
+      let dw = 1.0;
+      if (frameFeature.properties?.['_designWeight'] !== undefined) {
+        dw *= frameFeature.properties['_designWeight'];
       }
+      if (sampleFeature.properties?.['_designWeight'] !== undefined) {
+        dw *= sampleFeature.properties['_designWeight'];
+      }
+
+      newFeatures.push(LineFeature.create(intersect, {_designWeight: dw}, true));
     });
   });
   return new LineCollection({features: newFeatures}, true);
@@ -96,25 +108,35 @@ export function intersectAreaSampleAreaFrame(
   frame: AreaCollection,
   pointsPerCircle: number = 16,
 ): AreaCollection {
+  const pps = {pointsPerCircle};
   const newFeatures: AreaFeature[] = [];
 
   // Intersect with all area features and push results to newFeatures.
   // If intersection, then compute new designWeight as product of the features design weights.
   frame.forEach((frameFeature) => {
     sample.forEach((sampleFeature) => {
-      const intersect = intersectAreaAreaFeatures(sampleFeature, frameFeature, pointsPerCircle);
+      if (
+        sampleFeature.geometry.type === 'GeometryCollection' ||
+        frameFeature.geometry.type === 'GeometryCollection'
+      )
+        return;
 
-      if (intersect) {
-        let dw = 1;
-        if (frameFeature.properties?.['_designWeight']) {
-          dw *= frameFeature.properties['_designWeight'];
-        }
-        if (sampleFeature.properties?.['_designWeight']) {
-          dw *= sampleFeature.properties['_designWeight'];
-        }
-        intersect.properties['_designWeight'] = dw;
-        newFeatures.push(intersect);
+      const intersect = intersectAreaAreaGeometries(
+        sampleFeature.geometry,
+        frameFeature.geometry,
+        pps,
+      );
+      if (intersect === null) return;
+
+      let dw = 1.0;
+      if (frameFeature.properties?.['_designWeight'] !== undefined) {
+        dw *= frameFeature.properties['_designWeight'];
       }
+      if (sampleFeature.properties?.['_designWeight'] !== undefined) {
+        dw *= sampleFeature.properties['_designWeight'];
+      }
+
+      newFeatures.push(AreaFeature.create(intersect, {_designWeight: dw}, true));
     });
   });
   return new AreaCollection({features: newFeatures}, true);
