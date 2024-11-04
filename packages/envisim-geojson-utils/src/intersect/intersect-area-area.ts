@@ -136,7 +136,7 @@ function intersectCirclePolygonGeometries(
     const distance = polygon.distanceToPosition(c);
 
     if (distance <= -circle.radius) {
-      // Smaller circle completely within polygon
+      // Circle completely within polygon
       retainedCircles.push(c);
     } else if (distance < circle.radius) {
       // Polygon partially overlaps circle -- we need to convert circles to polygon and continue
