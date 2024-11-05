@@ -19,10 +19,7 @@ export type NestedPosition = GJ.Position | NestedPosition[];
  * @param proj
  * @returns
  */
-export function projectCoords<T extends NestedPosition>(
-  coords: T,
-  proj: ProjectionFunction,
-): T {
+export function projectCoords<T extends NestedPosition>(coords: T, proj: ProjectionFunction): T {
   if (Array.isArray(coords[0])) {
     return (coords as NestedPosition[]).map((coord) => {
       return projectCoords(coord, proj);
@@ -45,13 +42,7 @@ export type Projection = {
 export const azimuthalEquidistant = (refCoord: GJ.Position): Projection => {
   return {
     project: (coord: GJ.Position): GJ.Position => {
-      const result = geod.Inverse(
-        refCoord[1],
-        refCoord[0],
-        coord[1],
-        coord[0],
-        geodInverseOpts,
-      );
+      const result = geod.Inverse(refCoord[1], refCoord[0], coord[1], coord[0], geodInverseOpts);
       if (typeof result.s12 === 'number' && typeof result.azi1 === 'number') {
         return [
           result.s12 * Math.cos((90 - result.azi1) * TO_RAD),
@@ -63,13 +54,7 @@ export const azimuthalEquidistant = (refCoord: GJ.Position): Projection => {
     unproject: (coord: GJ.Position): GJ.Position => {
       const dist = (coord[0] ** 2 + coord[1] ** 2) ** 0.5;
       const angle = Math.atan2(coord[1], coord[0]) * TO_DEG;
-      const result = geod.Direct(
-        refCoord[1],
-        refCoord[0],
-        90 - angle,
-        dist,
-        geodDirectOpts,
-      );
+      const result = geod.Direct(refCoord[1], refCoord[0], 90 - angle, dist, geodDirectOpts);
       if (typeof result.lon2 === 'number' && typeof result.lat2 === 'number') {
         return [result.lon2, result.lat2];
       }

@@ -10,10 +10,10 @@ import {
   PointCollection,
   PointFeature,
   type PropertyRecord,
-  intersectAreaAreaFeatures,
-  intersectLineAreaFeatures,
-  intersectLineLineFeatures,
-  intersectPointAreaFeatures,
+  intersectAreaAreaGeometries,
+  intersectLineAreaGeometries,
+  intersectLineLineGeometries,
+  intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 
 import {projectedLengthOfFeature} from '../utils/index.js';
@@ -31,36 +31,12 @@ type AggregateOpts = {
  * @param from the feature to aggregate from.
  * @param opts object with additional information needed to aggregate properties.
  */
-function aggregateInPlace(
-  to: PointFeature,
-  from: AreaFeature,
-  opts: AggregateOpts,
-): void;
-function aggregateInPlace(
-  to: LineFeature,
-  from: LineFeature,
-  opts: AggregateOpts,
-): void;
-function aggregateInPlace(
-  to: LineFeature,
-  from: AreaFeature,
-  opts: AggregateOpts,
-): void;
-function aggregateInPlace(
-  to: AreaFeature,
-  from: PointFeature,
-  opts: AggregateOpts,
-): void;
-function aggregateInPlace(
-  to: AreaFeature,
-  from: LineFeature,
-  opts: AggregateOpts,
-): void;
-function aggregateInPlace(
-  to: AreaFeature,
-  from: AreaFeature,
-  opts: AggregateOpts,
-): void;
+function aggregateInPlace(to: PointFeature, from: AreaFeature, opts: AggregateOpts): void;
+function aggregateInPlace(to: LineFeature, from: LineFeature, opts: AggregateOpts): void;
+function aggregateInPlace(to: LineFeature, from: AreaFeature, opts: AggregateOpts): void;
+function aggregateInPlace(to: AreaFeature, from: PointFeature, opts: AggregateOpts): void;
+function aggregateInPlace(to: AreaFeature, from: LineFeature, opts: AggregateOpts): void;
+function aggregateInPlace(to: AreaFeature, from: AreaFeature, opts: AggregateOpts): void;
 function aggregateInPlace(
   to: PointFeature | LineFeature | AreaFeature,
   from: PointFeature | LineFeature | AreaFeature,
@@ -79,10 +55,7 @@ function aggregateInPlace(
       // to find the direction of the line.
       let azimuth = 0;
       if (to.geometry.type === 'LineString') {
-        azimuth = Geodesic.forwardAzimuth(
-          to.geometry.coordinates[0],
-          to.geometry.coordinates[1],
-        );
+        azimuth = Geodesic.forwardAzimuth(to.geometry.coordinates[0], to.geometry.coordinates[1]);
       } else if (to.geometry.type === 'MultiLineString') {
         azimuth = Geodesic.forwardAzimuth(
           to.geometry.coordinates[0][0],
@@ -110,8 +83,7 @@ function aggregateInPlace(
         }
       } else {
         // Collect from numerical (same key)
-        to.properties[key] +=
-          from.properties[key] * opts.intersectSize * factor;
+        to.properties[key] += from.properties[key] * opts.intersectSize * factor;
       }
     }
   });
@@ -147,11 +119,7 @@ export function collectProperties(
   properties: string[] | PropertyRecord,
 ): Layer<PointCollection | LineCollection | AreaCollection> {
   // Make a full copy of the frame layer
-  const newLayer = new Layer(
-    frameLayer.collection,
-    frameLayer.propertyRecord,
-    false,
-  );
+  const newLayer = new Layer(frameLayer.collection, frameLayer.propertyRecord, false);
   const frame = newLayer.collection;
   const base = baseLayer.collection;
 
@@ -168,20 +136,14 @@ export function collectProperties(
     if (property.type === 'numerical') {
       const id = property.parent ? property.parent[0] : property.id;
       if (!Object.hasOwn(baseLayer.propertyRecord, id)) {
-        throw new Error(
-          'Property to collect does not exist in the baseLayer property record.',
-        );
+        throw new Error('Property to collect does not exist in the baseLayer property record.');
       }
     } else {
       // Categorical properties should not exist in this record
-      throw new Error(
-        'Property record to collect cannot contain categorical properties.',
-      );
+      throw new Error('Property record to collect cannot contain categorical properties.');
     }
     if (Object.hasOwn(frameLayer.propertyRecord, key)) {
-      throw new Error(
-        'Property to collect already exist in the frameLayer property record.',
-      );
+      throw new Error('Property to collect already exist in the frameLayer property record.');
     }
   });
 
@@ -196,21 +158,21 @@ export function collectProperties(
   });
 
   // Do the collect for the different cases.
-  if (
-    PointCollection.isCollection(frame) &&
-    AreaCollection.isCollection(base)
-  ) {
+  if (PointCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
     // Points collect from areas.
     frame.features.forEach((frameFeature) => {
+      const ffg = frameFeature.geometry;
+      if (ffg.type === 'GeometryCollection') return;
       base.features.forEach((baseFeature) => {
-        const intersect = intersectPointAreaFeatures(frameFeature, baseFeature);
-        if (intersect) {
-          const intersectSize = intersect.count();
-          aggregateInPlace(frameFeature, baseFeature, {
-            intersectSize,
-            properties: rec,
-          });
-        }
+        if (baseFeature.geometry.type === 'GeometryCollection') return;
+        const intersect = intersectPointAreaGeometries(ffg, baseFeature.geometry);
+
+        if (intersect === null) return;
+        const intersectSize = intersect.count();
+        aggregateInPlace(frameFeature, baseFeature, {
+          intersectSize,
+          properties: rec,
+        });
       });
     });
     return newLayer;
@@ -219,15 +181,18 @@ export function collectProperties(
   if (LineCollection.isCollection(frame) && LineCollection.isCollection(base)) {
     // Lines collect from lines.
     frame.features.forEach((frameFeature) => {
+      const ffg = frameFeature.geometry;
+      if (ffg.type === 'GeometryCollection') return;
       base.features.forEach((baseFeature) => {
-        const intersect = intersectLineLineFeatures(frameFeature, baseFeature);
-        if (intersect) {
-          const intersectSize = intersect.count();
-          aggregateInPlace(frameFeature, baseFeature, {
-            intersectSize,
-            properties: rec,
-          });
-        }
+        if (baseFeature.geometry.type === 'GeometryCollection') return;
+        const intersect = intersectLineLineGeometries(ffg, baseFeature.geometry);
+
+        if (intersect === null) return;
+        const intersectSize = intersect.count();
+        aggregateInPlace(frameFeature, baseFeature, {
+          intersectSize,
+          properties: rec,
+        });
       });
     });
     return newLayer;
@@ -236,35 +201,38 @@ export function collectProperties(
   if (LineCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
     // Lines collect from areas.
     frame.features.forEach((frameFeature) => {
+      const ffg = frameFeature.geometry;
+      if (ffg.type === 'GeometryCollection') return;
       base.features.forEach((baseFeature) => {
-        const intersect = intersectLineAreaFeatures(frameFeature, baseFeature);
-        if (intersect) {
-          const intersectSize = intersect.length();
-          aggregateInPlace(frameFeature, baseFeature, {
-            intersectSize,
-            properties: rec,
-          });
-        }
+        if (baseFeature.geometry.type === 'GeometryCollection') return;
+        const intersect = intersectLineAreaGeometries(ffg, baseFeature.geometry);
+
+        if (intersect === null) return;
+        const intersectSize = intersect.length();
+        aggregateInPlace(frameFeature, baseFeature, {
+          intersectSize,
+          properties: rec,
+        });
       });
     });
     return newLayer;
   }
 
-  if (
-    AreaCollection.isCollection(frame) &&
-    PointCollection.isCollection(base)
-  ) {
+  if (AreaCollection.isCollection(frame) && PointCollection.isCollection(base)) {
     // Areas collect from points.
     frame.features.forEach((frameFeature) => {
+      const ffg = frameFeature.geometry;
+      if (ffg.type === 'GeometryCollection') return;
       base.features.forEach((baseFeature) => {
-        const intersect = intersectPointAreaFeatures(baseFeature, frameFeature);
-        if (intersect) {
-          const intersectSize = intersect.count();
-          aggregateInPlace(frameFeature, baseFeature, {
-            intersectSize,
-            properties: rec,
-          });
-        }
+        if (baseFeature.geometry.type === 'GeometryCollection') return;
+        const intersect = intersectPointAreaGeometries(baseFeature.geometry, ffg);
+
+        if (intersect === null) return;
+        const intersectSize = intersect.count();
+        aggregateInPlace(frameFeature, baseFeature, {
+          intersectSize,
+          properties: rec,
+        });
       });
     });
     return newLayer;
@@ -273,15 +241,18 @@ export function collectProperties(
   if (AreaCollection.isCollection(frame) && LineCollection.isCollection(base)) {
     // Areas collect from lines.
     frame.features.forEach((frameFeature) => {
+      const ffg = frameFeature.geometry;
+      if (ffg.type === 'GeometryCollection') return;
       base.features.forEach((baseFeature) => {
-        const intersect = intersectLineAreaFeatures(baseFeature, frameFeature);
-        if (intersect) {
-          const intersectSize = intersect.length();
-          aggregateInPlace(frameFeature, baseFeature, {
-            intersectSize,
-            properties: rec,
-          });
-        }
+        if (baseFeature.geometry.type === 'GeometryCollection') return;
+        const intersect = intersectLineAreaGeometries(baseFeature.geometry, ffg);
+
+        if (intersect === null) return;
+        const intersectSize = intersect.length();
+        aggregateInPlace(frameFeature, baseFeature, {
+          intersectSize,
+          properties: rec,
+        });
       });
     });
     return newLayer;
@@ -290,15 +261,18 @@ export function collectProperties(
   if (AreaCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
     // Areas collect from areas.
     frame.features.forEach((frameFeature) => {
+      const ffg = frameFeature.geometry;
+      if (ffg.type === 'GeometryCollection') return;
       base.features.forEach((baseFeature) => {
-        const intersect = intersectAreaAreaFeatures(frameFeature, baseFeature);
-        if (intersect) {
-          const intersectSize = intersect.area();
-          aggregateInPlace(frameFeature, baseFeature, {
-            intersectSize,
-            properties: rec,
-          });
-        }
+        if (baseFeature.geometry.type === 'GeometryCollection') return;
+        const intersect = intersectAreaAreaGeometries(ffg, baseFeature.geometry);
+
+        if (intersect === null) return;
+        const intersectSize = intersect.area();
+        aggregateInPlace(frameFeature, baseFeature, {
+          intersectSize,
+          properties: rec,
+        });
       });
     });
     return newLayer;
@@ -328,9 +302,7 @@ export function collectPropertyRecord(
   properties.forEach((key) => {
     // Check that the properties to collect are present in the record
     if (!Object.hasOwn(propertyRecord, key)) {
-      throw new Error(
-        'Property to collect does not exist in the property record.',
-      );
+      throw new Error('Property to collect does not exist in the property record.');
     }
 
     // Get record of the property

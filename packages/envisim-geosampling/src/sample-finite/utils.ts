@@ -1,9 +1,4 @@
-import {
-  AreaCollection,
-  Layer,
-  LineCollection,
-  PointCollection,
-} from '@envisim/geojson-utils';
+import {AreaCollection, Layer, LineCollection, PointCollection} from '@envisim/geojson-utils';
 import {bbox4, longitudeCenter} from '@envisim/geojson-utils';
 import {ColumnVector, Matrix} from '@envisim/matrix';
 
@@ -158,9 +153,7 @@ export function balancingMatrixFromLayer(
 
   // Always balance on a constant
   const N = layer.collection.size;
-  newprops.push(
-    new ColumnVector(Array.from<number>({length: N}).fill(1.0), true),
-  );
+  newprops.push(new ColumnVector(Array.from<number>({length: N}).fill(1.0), true));
 
   properties.forEach((prop) => {
     // Collect numerical properties, no standardization here
@@ -191,7 +184,7 @@ function probsFromLayer(
   const N = layer.collection.size;
   let prop: ColumnVector;
 
-  if (probabilitiesFromSize) {
+  if (probabilitiesFromSize !== undefined) {
     // Probabilities from the size of the features
     let sizes: number[];
 
@@ -215,8 +208,7 @@ function probsFromLayer(
   }
 
   // OR set to 0.0?
-  if (!prop.every((e) => e >= 0.0))
-    throw new Error('the selected property has negative values');
+  if (!prop.every((e) => e >= 0.0)) throw new Error('the selected property has negative values');
 
   return prop;
 }

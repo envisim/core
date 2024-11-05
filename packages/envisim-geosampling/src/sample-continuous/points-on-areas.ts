@@ -15,15 +15,11 @@ import {
   longitudeCenter,
   longitudeDistance,
   normalizeLongitude,
-  pointInAreaFeature,
+  pointInAreaGeometry,
   unionOfPolygons,
 } from '@envisim/geojson-utils';
 
-import {
-  SAMPLE_POINT_OPTIONS,
-  type SamplePointOptions,
-  samplePointOptionsCheck,
-} from './options.js';
+import {SAMPLE_POINT_OPTIONS, type SamplePointOptions, samplePointOptionsCheck} from './options.js';
 
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;
@@ -62,14 +58,12 @@ export function samplePointsOnAreas(
   gj.features.forEach((feature) => {
     let geom = feature.geometry;
     if (AreaGeometryCollection.isGeometryCollection(geom)) {
-      geom.geometries.forEach((geometry) => {
-        if (Circle.isObject(geometry) || MultiCircle.isObject(geometry)) {
-          geometry = geometry.toPolygon();
-        }
-      });
+      return;
     } else {
       if (Circle.isObject(geom) || MultiCircle.isObject(geom)) {
-        geom = geom.toPolygon();
+        const p = geom.toPolygon();
+        if (p === null) return;
+        geom = p;
       }
     }
   });
@@ -78,8 +72,9 @@ export function samplePointsOnAreas(
 
   let buffered: AreaCollection | null;
   if (buffer > 0.0) {
-    buffered = gj.buffer(buffer, 10);
-    if (buffered == null || buffered.features.length === 0) {
+    buffered = gj.buffer({distance: buffer, steps: 10});
+
+    if (buffered === null) {
       throw new Error('Buffering failed.');
     }
     buffered = unionOfPolygons(buffered);
@@ -120,12 +115,13 @@ export function samplePointsOnAreas(
 
         // Check if point is in any feature.
         for (let i = 0; i < buffered.features.length; i++) {
-          if (pointInAreaFeature(pointLonLat, buffered.features[i])) {
+          const bfg = buffered.features[i].geometry;
+          if (bfg.type === 'GeometryCollection') continue;
+          if (pointInAreaGeometry(pointLonLat, bfg)) {
             // Point is in feature. Create and store new point feature.
-            const pointFeature = PointFeature.create(
-              Point.create(pointLonLat),
-              {_designWeight: designWeight},
-            );
+            const pointFeature = PointFeature.create(Point.create(pointLonLat), {
+              _designWeight: designWeight,
+            });
             pointFeatures.push(pointFeature);
             parentIndex.push(i);
             hits += 1;
@@ -158,10 +154,7 @@ export function samplePointsOnAreas(
         const latCoord = box[1] + (yoff + j * dy) * latPerMeter;
 
         // Find longitudes per meter at this latitude.
-        const dLonMeter = Geodesic.distance(
-          [box[0], latCoord],
-          [box[2], latCoord],
-        );
+        const dLonMeter = Geodesic.distance([box[0], latCoord], [box[2], latCoord]);
         const lonPerMeter = longitudeDistance(box[0], box[2]) / dLonMeter;
 
         // Find how many points to place in the box at this latitude.
@@ -179,12 +172,13 @@ export function samplePointsOnAreas(
 
           // Check if point is in any feature and then store.
           for (let k = 0; k < buffered.features.length; k++) {
-            if (pointInAreaFeature(pointLonLat, buffered.features[k])) {
+            const bfg = buffered.features[k].geometry;
+            if (bfg.type === 'GeometryCollection') continue;
+            if (pointInAreaGeometry(pointLonLat, bfg)) {
               // Point is in feature. Create and store new point feature.
-              const pointFeature = PointFeature.create(
-                Point.create(pointLonLat),
-                {_designWeight: designWeight},
-              );
+              const pointFeature = PointFeature.create(Point.create(pointLonLat), {
+                _designWeight: designWeight,
+              });
               pointFeatures.push(pointFeature);
               parentIndex.push(k);
               break;
@@ -207,7 +201,7 @@ export function samplePointsOnAreas(
       const feature = gj.features[parentIndex[i]];
       if (feature.properties?.['_designWeight']) {
         dw = feature.properties['_designWeight'];
-        if (pf.properties) {
+        if (pf.properties !== undefined) {
           pf.properties['_designWeight'] *= dw;
         }
       }

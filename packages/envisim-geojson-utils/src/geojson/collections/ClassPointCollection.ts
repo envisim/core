@@ -1,6 +1,7 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {type BufferOptions} from '../../buffer/index.js';
 import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {type GeomEachCallback} from '../base/index.js';
@@ -24,17 +25,11 @@ export class PointCollection
     if (!(obj instanceof PointCollection)) throw new TypeError(msg);
   }
 
-  static create(
-    features: GJ.PointFeature[],
-    shallow: boolean = true,
-  ): PointCollection {
+  static create(features: GJ.PointFeature[], shallow: boolean = true): PointCollection {
     return new PointCollection({features}, shallow);
   }
 
-  constructor(
-    obj: OptionalParam<GJ.PointFeatureCollection, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.PointFeatureCollection, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'FeatureCollection'}, shallow);
 
     this.features = obj.features.map((f: GJ.PointFeature) => {
@@ -53,8 +48,7 @@ export class PointCollection
         weight: feature.count(),
       };
     });
-    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
-      .centroid;
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations).centroid;
   }
 
   /* COLLECTION SPECIFIC */
@@ -64,14 +58,9 @@ export class PointCollection
     });
   }
 
-  addFeature(
-    feature: OptionalParam<GJ.PointFeature, 'type'>,
-    shallow: boolean = true,
-  ): number {
+  addFeature(feature: OptionalParam<GJ.PointFeature, 'type'>, shallow: boolean = true): number {
     if (PointFeature.isFeature(feature)) {
-      this.features.push(
-        shallow === false ? new PointFeature(feature, false) : feature,
-      );
+      this.features.push(shallow === false ? new PointFeature(feature, false) : feature);
     } else {
       this.features.push(new PointFeature(feature, shallow));
     }
@@ -81,19 +70,18 @@ export class PointCollection
 
   /* POINT SPECIFIC */
   count(): number {
-    return this.features.reduce(
-      (prev, curr) => prev + curr.geometry.count(),
-      0,
-    );
+    return this.features.reduce((prev, curr) => prev + curr.geometry.count(), 0);
   }
 
-  buffer(distance: number): AreaCollection | null {
-    const features: GJ.AreaFeature[] = [];
-    this.forEach((feature: PointFeature) => {
-      const bf = feature.buffer(distance);
-      if (bf) features.push(bf);
+  buffer(options: BufferOptions): AreaCollection | null {
+    const ac = AreaCollection.create([]);
+
+    this.forEach((feature) => {
+      const bf = feature.buffer(options);
+      if (bf !== null) ac.addFeature(bf, true);
     });
-    if (features.length === 0) return null;
-    return AreaCollection.create(features, true);
+
+    if (ac.features.length === 0) return null;
+    return ac;
   }
 }

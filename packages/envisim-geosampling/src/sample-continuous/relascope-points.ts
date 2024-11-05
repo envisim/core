@@ -7,7 +7,7 @@ import {
   PointFeature,
   createDesignWeightProperty,
   createParentProperty,
-  intersectPointAreaFeatures,
+  intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 import {copy} from '@envisim/utils';
 
@@ -73,60 +73,55 @@ export function sampleRelascopePoints(
     if (pointFeature.geometry.type === 'Point') {
       const basePointCoords = pointFeature.geometry.coordinates;
       let sizePropertyValue = 0;
-      if (pointFeature.properties) {
+      if (pointFeature.properties !== undefined) {
         sizePropertyValue = pointFeature.properties[sizeProperty] || 0;
       }
       // Radius of inclusion zone
       const radius = (50 * sizePropertyValue) / sqrtRf;
 
-      pointSample.collection.features.forEach(
-        (samplePoint, samplePointIndex) => {
-          if (samplePoint.geometry.type === 'Point') {
-            const dist = Geodesic.distance(
-              basePointCoords,
-              samplePoint.geometry.coordinates,
-            );
-            if (dist < radius) {
-              // Check if base point exists in this frame (frame could be part/stratum)
-              for (let i = 0; i < frameFeatures.length; i++) {
-                const frameFeature = frameFeatures[i];
-                const intersect = intersectPointAreaFeatures(
-                  pointFeature,
-                  frameFeature,
-                );
-                if (intersect) {
-                  // Follow the design weight
-                  let dw = 1 / (Math.PI * radius * radius);
-                  if (samplePoint.properties?.['_designWeight']) {
-                    dw *= samplePoint.properties['_designWeight'];
-                  }
-                  // If buffer = 0, then sample point has already collected
-                  // design weight from frame. If buffer > 0, then we need to
-                  // collect the weight here.
-                  if (
-                    frameFeature.properties?.['_designWeight'] &&
-                    buffer > 0
-                  ) {
-                    dw *= frameFeature.properties['_designWeight'];
-                  }
-                  const newFeature = copy(pointFeature);
-                  if (!newFeature.properties) {
-                    newFeature.properties = {};
-                  }
-                  newFeature.properties['_designWeight'] = dw;
-                  newFeature.properties['_parent'] = samplePointIndex;
-                  sampledFeatures.push(newFeature);
-                  break;
+      pointSample.collection.features.forEach((samplePoint, samplePointIndex) => {
+        if (samplePoint.geometry.type === 'Point') {
+          const dist = Geodesic.distance(basePointCoords, samplePoint.geometry.coordinates);
+          if (dist < radius) {
+            // Check if base point exists in this frame (frame could be part/stratum)
+            for (let i = 0; i < frameFeatures.length; i++) {
+              const frameFeature = frameFeatures[i];
+              if (
+                pointFeature.geometry.type === 'GeometryCollection' ||
+                frameFeature.geometry.type === 'GeometryCollection'
+              )
+                continue;
+              const intersect = intersectPointAreaGeometries(
+                pointFeature.geometry,
+                frameFeature.geometry,
+              );
+              if (intersect !== null) {
+                // Follow the design weight
+                let dw = 1 / (Math.PI * radius * radius);
+                if (samplePoint.properties?.['_designWeight']) {
+                  dw *= samplePoint.properties['_designWeight'];
                 }
+                // If buffer = 0, then sample point has already collected
+                // design weight from frame. If buffer > 0, then we need to
+                // collect the weight here.
+                if (frameFeature.properties?.['_designWeight'] && buffer > 0) {
+                  dw *= frameFeature.properties['_designWeight'];
+                }
+                const newFeature = copy(pointFeature);
+                if (newFeature.properties === undefined) {
+                  newFeature.properties = {};
+                }
+                newFeature.properties['_designWeight'] = dw;
+                newFeature.properties['_parent'] = samplePointIndex;
+                sampledFeatures.push(newFeature);
+                break;
               }
             }
           }
-        },
-      );
+        }
+      });
     } else {
-      throw new Error(
-        'Only Features with geometry of type Point is allowed in parameter base.',
-      );
+      throw new Error('Only Features with geometry of type Point is allowed in parameter base.');
     }
   });
 
@@ -135,9 +130,5 @@ export function sampleRelascopePoints(
   newRecord['_designWeight'] = createDesignWeightProperty();
   newRecord['_parent'] = createParentProperty();
 
-  return new Layer(
-    new PointCollection({features: sampledFeatures}, true),
-    newRecord,
-    true,
-  );
+  return new Layer(new PointCollection({features: sampledFeatures}, true), newRecord, true);
 }

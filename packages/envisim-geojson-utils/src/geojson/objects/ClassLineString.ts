@@ -1,7 +1,12 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {bufferGeometry} from '../../buffer.js';
+import {
+  type BufferOptions,
+  bufferPolygons,
+  defaultBufferOptions,
+  lineToRing,
+} from '../../buffer/index.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidOfLineString} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
@@ -11,42 +16,36 @@ import {AbstractLineObject} from './AbstractLineObject.js';
 import {MultiPolygon} from './ClassMultiPolygon.js';
 import {Polygon} from './ClassPolygon.js';
 
-export class LineString
-  extends AbstractLineObject<GJ.LineString>
-  implements GJ.LineString
-{
+export class LineString extends AbstractLineObject<GJ.LineString> implements GJ.LineString {
   static isObject(obj: unknown): obj is LineString {
     return obj instanceof LineString;
   }
 
-  static assert(
-    obj: unknown,
-    msg: string = 'Expected LineString',
-  ): asserts obj is LineString {
+  static assert(obj: unknown, msg: string = 'Expected LineString'): asserts obj is LineString {
     if (!(obj instanceof LineString)) throw new TypeError(msg);
   }
 
-  static create(
-    coordinates: GJ.LineString['coordinates'],
-    shallow: boolean = true,
-  ): LineString {
+  static create(coordinates: GJ.LineString['coordinates'], shallow: boolean = true): LineString {
     return new LineString({coordinates}, shallow);
   }
 
-  constructor(
-    obj: OptionalParam<GJ.LineString, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.LineString, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'LineString'}, shallow);
+  }
+
+  getCoordinateArray(): GJ.Position[][] {
+    return [this.coordinates];
   }
 
   get size(): number {
     return 1;
   }
 
-  buffer(distance: number, steps: number = 10): Polygon | MultiPolygon | null {
-    if (distance <= 0.0) return null;
-    return bufferGeometry(this, {distance, steps});
+  buffer(options: BufferOptions): Polygon | MultiPolygon | null {
+    const opts = defaultBufferOptions(options);
+    if (opts.distance <= 0.0) return null;
+
+    return bufferPolygons([lineToRing(this.coordinates)], opts);
   }
 
   length(): number {
@@ -54,14 +53,10 @@ export class LineString
   }
 
   centroid(iterations: number = 2): GJ.Position {
-    return centroidOfLineString(this.coordinates, this.getBBox(), iterations)
-      .centroid;
+    return centroidOfLineString(this.coordinates, this.getBBox(), iterations).centroid;
   }
 
-  geomEach(
-    callback: GeomEachCallback<LineString>,
-    featureIndex: number = -1,
-  ): void {
+  geomEach(callback: GeomEachCallback<LineString>, featureIndex: number = -1): void {
     callback(this, featureIndex, -1);
   }
 

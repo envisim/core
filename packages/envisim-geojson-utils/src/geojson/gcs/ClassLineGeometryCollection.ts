@@ -23,37 +23,22 @@ export class LineGeometryCollection
     if (!(obj instanceof LineGeometryCollection)) throw new TypeError(msg);
   }
 
-  static create(
-    geometries: GJ.LineObject[],
-    shallow: boolean = true,
-  ): LineGeometryCollection {
+  static create(geometries: GJ.LineObject[], shallow: boolean = true): LineGeometryCollection {
     return new LineGeometryCollection({geometries}, shallow);
   }
 
-  constructor(
-    obj: OptionalParam<GJ.LineGeometryCollection, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.LineGeometryCollection, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'GeometryCollection'}, shallow);
 
-    this.geometries = obj.geometries.map((g: GJ.LineObject) =>
-      toLineGeometry(g, shallow, false),
-    );
+    this.geometries = obj.geometries.map((g: GJ.LineObject) => toLineGeometry(g, shallow, false));
   }
 
   geometricPrimitive(): GeometricPrimitive.LINE {
     return GeometricPrimitive.LINE;
   }
 
-  buffer(distance: number, steps: number = 10): AreaGeometryCollection | null {
-    if (distance <= 0.0) return null;
-    const geoms: GJ.AreaObject[] = [];
-    this.geometries.forEach((geom: LineObject) => {
-      const bg = geom.buffer(distance, steps);
-      if (bg) geoms.push(bg);
-    });
-    if (geoms.length === 0) return null;
-    return AreaGeometryCollection.create(geoms, true);
+  buffer(): AreaGeometryCollection | null {
+    return null;
   }
 
   centroid(iterations: number = 2): GJ.Position {
@@ -63,8 +48,7 @@ export class LineGeometryCollection
         weight: geom.length(),
       };
     });
-    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations)
-      .centroid;
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations).centroid;
   }
 
   /* LINE SPECIFIC */

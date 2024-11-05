@@ -1,6 +1,7 @@
-import {type OptionalParam} from '@envisim/utils';
+import {type OptionalParam, copy} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {type BufferOptions} from '../../buffer/index.js';
 import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {type GeomEachCallback} from '../base/index.js';
 import {LineGeometry, toLineGeometry} from '../gcs/index.js';
@@ -16,10 +17,7 @@ export class LineFeature
     return obj instanceof LineFeature;
   }
 
-  static assert(
-    obj: unknown,
-    msg: string = 'Expected LineFeature',
-  ): asserts obj is LineFeature {
+  static assert(obj: unknown, msg: string = 'Expected LineFeature'): asserts obj is LineFeature {
     if (!(obj instanceof LineFeature)) throw new TypeError(msg);
   }
 
@@ -31,10 +29,7 @@ export class LineFeature
     return new LineFeature({geometry, properties}, shallow);
   }
 
-  constructor(
-    obj: OptionalParam<GJ.LineFeature, 'type'>,
-    shallow: boolean = true,
-  ) {
+  constructor(obj: OptionalParam<GJ.LineFeature, 'type'>, shallow: boolean = true) {
     super({...obj, type: 'Feature'}, shallow);
 
     this.geometry = toLineGeometry(obj.geometry, shallow);
@@ -44,19 +39,14 @@ export class LineFeature
     return GeometricPrimitive.LINE;
   }
 
-  buffer(distance: number, steps: number = 10): AreaFeature | null {
-    if (distance <= 0.0) return null;
-    const bg = this.geometry.buffer(distance, steps);
-    if (!bg) return null;
-    // TODO: Decide if we want to copy properties
-    return AreaFeature.create(bg, {}, true);
+  buffer(options: BufferOptions): AreaFeature | null {
+    const bg = this.geometry.buffer(options);
+    if (bg === null) return null;
+    return AreaFeature.create(bg, copy(this.properties), true);
   }
 
   /* FEATURE SPECIFIC */
-  geomEach(
-    callback: GeomEachCallback<LineObject>,
-    featureIndex: number = -1,
-  ): void {
+  geomEach(callback: GeomEachCallback<LineObject>, featureIndex: number = -1): void {
     this.geometry.geomEach(callback, featureIndex);
   }
 

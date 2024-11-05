@@ -40,23 +40,14 @@ const n = (a - b) / (a + b);
 const e = Math.sqrt((a ** 2 - b ** 2) / a ** 2);
 
 // See (5), The area of rhumb polygons.
-const R =
-  (a / (1 + n)) *
-  (1 + (1 / 4) * n ** 2 + (1 / 64) * n ** 4 + (1 / 256) * n ** 6);
+const R = (a / (1 + n)) * (1 + (1 / 4) * n ** 2 + (1 / 64) * n ** 4 + (1 / 256) * n ** 6);
 
 // See (10), The area of rhumb polygons.
 const c2 = a ** 2 / 2 + ((b ** 2 / 2) * Math.atanh(e)) / e;
 
 // See (25), The area of rhumb polygons.
 const Q: number[][] = [
-  [
-    -1 / 3,
-    22 / 45,
-    -398 / 945,
-    596 / 2025,
-    -102614 / 467775,
-    138734126 / 638512875,
-  ],
+  [-1 / 3, 22 / 45, -398 / 945, 596 / 2025, -102614 / 467775, 138734126 / 638512875],
   [0, 1 / 5, -118 / 315, 1543 / 4725, -24562 / 155925, 17749373 / 425675250],
   [0, 0, -17 / 315, 152 / 945, -38068 / 155925, 1882432 / 8513505],
   [0, 0, 0, 5 / 252, -752 / 10395, 268864 / 2027025],
@@ -75,11 +66,7 @@ const P = [
     Q[0][3] * N[3] +
     Q[0][4] * N[4] +
     Q[0][5] * N[5],
-  Q[1][1] * N[1] +
-    Q[1][2] * N[2] +
-    Q[1][3] * N[3] +
-    Q[1][4] * N[4] +
-    Q[1][5] * N[5],
+  Q[1][1] * N[1] + Q[1][2] * N[2] + Q[1][3] * N[3] + Q[1][4] * N[4] + Q[1][5] * N[5],
   Q[2][2] * N[2] + Q[2][3] * N[3] + Q[2][4] * N[4] + Q[2][5] * N[5],
   Q[3][3] * N[3] + Q[3][4] * N[4] + Q[3][5] * N[5],
   Q[4][4] * N[4] + Q[4][5] * N[5],
@@ -175,12 +162,7 @@ function auxiliary(from: number, C: number[][]): number {
       C[0][4] * N[4] +
       C[0][5] * N[5]) *
       S[0] +
-    (C[1][1] * N[1] +
-      C[1][2] * N[2] +
-      C[1][3] * N[3] +
-      C[1][4] * N[4] +
-      C[1][5] * N[5]) *
-      S[1] +
+    (C[1][1] * N[1] + C[1][2] * N[2] + C[1][3] * N[3] + C[1][4] * N[4] + C[1][5] * N[5]) * S[1] +
     (C[2][2] * N[2] + C[2][3] * N[3] + C[2][4] * N[4] + C[2][5] * N[5]) * S[2] +
     (C[3][3] * N[3] + C[3][4] * N[4] + C[3][5] * N[5]) * S[3] +
     (C[4][4] * N[4] + C[4][5] * N[5]) * S[4] +
@@ -256,7 +238,7 @@ export class Rhumb {
    * @returns the distance in meters.
    */
   static distance(p1: GJ.Position, p2: GJ.Position): number {
-    return inverseRhumbLine(p1, p2, rhumbOutmask.s12).s12 || 0;
+    return inverseRhumbLine(p1, p2, rhumbOutmask.s12).s12 ?? 0.0;
   }
 
   /**
@@ -268,11 +250,7 @@ export class Rhumb {
    * @param azimuth azimuth (angle) clockwise from north in degrees.
    * @returns the coordinates [lon,lat] of the destination point.
    */
-  static destination(
-    origin: GJ.Position,
-    dist: number,
-    azimuth: number,
-  ): GJ.Position {
+  static destination(origin: GJ.Position, dist: number, azimuth: number): GJ.Position {
     const s12 = dist;
     const phi1 = origin[1] * TO_RAD;
     const alpha12 = azimuth * TO_RAD;
@@ -328,7 +306,7 @@ export class Rhumb {
    * @returns the forward azimuth in degrees.
    */
   static forwardAzimuth(p1: GJ.Position, p2: GJ.Position): number {
-    return inverseRhumbLine(p1, p2, rhumbOutmask.azi12).azi12 || 0;
+    return inverseRhumbLine(p1, p2, rhumbOutmask.azi12).azi12 ?? 0.0;
   }
 
   /**
@@ -340,15 +318,11 @@ export class Rhumb {
    * @param fraction the fraction of distance between the points.
    * @returns the coordinates [lon,lat] of the intermediate point.
    */
-  static intermediate(
-    p1: GJ.Position,
-    p2: GJ.Position,
-    fraction: number,
-  ): GJ.Position {
+  static intermediate(p1: GJ.Position, p2: GJ.Position, fraction: number): GJ.Position {
     const res = inverseRhumbLine(p1, p2, rhumbOutmask.both);
     // Here both s12 and azi12 are needed.
-    const azi12 = res.azi12 || 0;
-    const s12 = res.s12 || 0;
+    const azi12 = res.azi12 ?? 0.0;
+    const s12 = res.s12 ?? 0.0;
     return Rhumb.destination(p1, s12 * fraction, azi12);
   }
 
@@ -383,8 +357,7 @@ export class Rhumb {
       const o2 = o[i];
       let lambda12 = o2.lambda - o1.lambda;
       if (Math.abs(lambda12) > Math.PI) {
-        lambda12 =
-          lambda12 > 0 ? lambda12 - 2 * Math.PI : lambda12 + 2 * Math.PI;
+        lambda12 = lambda12 > 0 ? lambda12 - 2 * Math.PI : lambda12 + 2 * Math.PI;
       }
       let S12 = c2 * lambda12;
       if (Math.abs(o2.phi - o1.phi) * TO_DEG < transitionPointDegrees) {
@@ -428,15 +401,7 @@ const M = [
     1613548 / 21611205,
     -5765564176 / 9587270818125,
   ],
-  [
-    0,
-    0,
-    6 / 25,
-    8 / 49,
-    -43132 / 496125,
-    -4668968 / 36018675,
-    -197327562308 / 3195756939375,
-  ],
+  [0, 0, 6 / 25, 8 / 49, -43132 / 496125, -4668968 / 36018675, -197327562308 / 3195756939375],
   [0, 0, 0, -8 / 49, -544 / 3969, 330052 / 7203735, 2313624304 / 25566055515],
   [0, 0, 0, 0, 10 / 81, 3400 / 29403, -399980 / 14907321],
   [0, 0, 0, 0, 0, -12 / 121, -2032 / 20449],
@@ -464,14 +429,9 @@ function F(phi: number): number {
         M[1][5] * N7[5] +
         M[1][6] * N7[6]) *
         C[1] +
-      (M[2][2] * N7[2] +
-        M[2][3] * N7[3] +
-        M[2][4] * N7[4] +
-        M[2][5] * N7[5] +
-        M[2][6] * N7[6]) *
+      (M[2][2] * N7[2] + M[2][3] * N7[3] + M[2][4] * N7[4] + M[2][5] * N7[5] + M[2][6] * N7[6]) *
         C[2] +
-      (M[3][3] * N7[3] + M[3][4] * N7[4] + M[3][5] * N7[5] + M[3][6] * N7[6]) *
-        C[3] +
+      (M[3][3] * N7[3] + M[3][4] * N7[4] + M[3][5] * N7[5] + M[3][6] * N7[6]) * C[3] +
       (M[4][4] * N7[4] + M[4][5] * N7[5] + M[4][6] * N7[6]) * C[4] +
       (M[5][5] * N7[5] + M[5][6] * N7[6]) * C[5] +
       M[6][6] * N7[6] * C[6])

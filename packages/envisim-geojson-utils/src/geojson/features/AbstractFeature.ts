@@ -16,11 +16,7 @@ export abstract class AbstractFeature<
     super(obj, shallow);
 
     this.properties =
-      obj.properties === null
-        ? {}
-        : shallow === true
-          ? obj.properties
-          : copy(obj.properties);
+      obj.properties === null ? {} : shallow === true ? obj.properties : copy(obj.properties);
   }
 
   /* GEOJSON COMMON */
@@ -72,5 +68,13 @@ export abstract class AbstractFeature<
     const newValue = callback(this.properties[property]);
     this.properties[property] = newValue;
     return newValue;
+  }
+
+  replaceProperties(properties: GJ.FeatureProperties, shallow: boolean = true) {
+    if (shallow) {
+      this.properties = properties;
+    } else {
+      this.properties = copy(properties);
+    }
   }
 }
