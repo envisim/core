@@ -5,11 +5,11 @@ import {type BufferOptions} from '../../buffer/index.js';
 import {Geodesic} from '../../utils/Geodesic.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
-import {AbstractPointObject} from './AbstractPointObject.js';
-import {Circle} from './ClassCircle.js';
-import {MultiCircle} from './ClassMultiCircle.js';
-import type {MultiPolygon} from './ClassMultiPolygon.js';
-import type {Polygon} from './ClassPolygon.js';
+import {AbstractPointObject} from './abstract-point-object.js';
+import {Circle} from './class-circle.js';
+import {MultiCircle} from './class-multicircle.js';
+import {MultiPolygon} from './class-multipolygon.js';
+import {Polygon} from './class-polygon.js';
 
 export class MultiPoint extends AbstractPointObject<GJ.MultiPoint> implements GJ.MultiPoint {
   static isObject(obj: unknown): obj is MultiPoint {

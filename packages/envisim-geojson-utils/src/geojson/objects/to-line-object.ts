@@ -1,6 +1,6 @@
 import type * as GJ from '../../types/geojson.js';
-import {LineString} from './ClassLineString.js';
-import {MultiLineString} from './ClassMultiLineString.js';
+import {LineString} from './class-linestring.js';
+import {MultiLineString} from './class-multilinestring.js';
 import type {LineObject} from './index.js';
 
 export function toLineObject(geometry: GJ.LineGeometry, shallow: boolean = true): LineObject {

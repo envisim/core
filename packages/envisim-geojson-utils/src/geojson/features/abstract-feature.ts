@@ -1,7 +1,7 @@
 import {copy} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {GeoJsonObject} from '../base/index.js';
+import {GeoJsonObject} from '../class-geojson-object.js';
 import type {AreaObject, LineObject, PointObject} from '../objects/index.js';
 
 export abstract class AbstractFeature<

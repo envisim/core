@@ -7,10 +7,10 @@ import {moveCoordsAroundEarth} from '../../utils/antimeridian.js';
 import {bboxCrossesAntimeridian, bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {CirclesToPolygonsOptions, circlesToPolygons} from '../../utils/circles-to-polygons.js';
-import {AbstractAreaObject} from './AbstractAreaObject.js';
-import {Circle} from './ClassCircle.js';
-import {MultiPolygon} from './ClassMultiPolygon.js';
-import {Polygon} from './ClassPolygon.js';
+import {AbstractAreaObject} from './abstract-area-object.js';
+import {Circle} from './class-circle.js';
+import {MultiPolygon} from './class-multipolygon.js';
+import {Polygon} from './class-polygon.js';
 
 export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements GJ.MultiCircle {
   static isObject(obj: unknown): obj is MultiCircle {

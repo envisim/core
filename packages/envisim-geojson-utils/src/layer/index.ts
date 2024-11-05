@@ -1,5 +1,5 @@
 // Layer
-export {Layer} from './ClassLayer.js';
+export {Layer} from './class-layer.js';
 
 // Property & PropertyRecord
 export {
@@ -15,4 +15,4 @@ export {
   createDistanceProperty,
   createParentProperty,
   mergePropertyRecords,
-} from './propertyUtils.js';
+} from './property-utils.js';

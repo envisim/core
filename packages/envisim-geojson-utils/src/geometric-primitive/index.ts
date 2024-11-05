@@ -1,4 +1,4 @@
-export {GeometricPrimitive} from './EnumGeometricPrimitive.js';
+export {GeometricPrimitive} from './enum-geometric-primitive.js';
 
 export {
   getGeometryPrimitive,

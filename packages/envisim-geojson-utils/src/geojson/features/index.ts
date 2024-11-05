@@ -1,5 +1,3 @@
-import {AreaFeature} from './ClassAreaFeature.js';
-import {LineFeature} from './ClassLineFeature.js';
-import {PointFeature} from './ClassPointFeature.js';
-
-export {AreaFeature, LineFeature, PointFeature};
+export {AreaFeature} from './class-area-feature.js';
+export {LineFeature} from './class-line-feature.js';
+export {PointFeature} from './class-point-feature.js';

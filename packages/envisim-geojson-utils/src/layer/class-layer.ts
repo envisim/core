@@ -211,11 +211,14 @@ export class Layer<T extends AreaCollection | LineCollection | PointCollection> 
           convertCircles &&
           (Circle.isObject(feature.geometry) || MultiCircle.isObject(feature.geometry))
         ) {
-          features.push({
-            type: 'Feature',
-            geometry: feature.geometry.toPolygon({pointsPerCircle}),
-            properties: newProps,
-          });
+          const geometry = feature.geometry.toPolygon(options);
+          if (geometry !== null) {
+            features.push({
+              type: 'Feature',
+              geometry,
+              properties: newProps,
+            });
+          }
 
           return;
         }

@@ -95,19 +95,8 @@ importers:
         specifier: workspace:*
         version: link:../envisim-utils
       geographiclib-geodesic:
-<<<<<<< HEAD
         specifier: ^2.1.1
         version: 2.1.1
-      jsts:
-        specifier: ^2.11.3
-        version: 2.11.3
-      polygon-clipping:
-        specifier: ^0.15.7
-        version: 0.15.7
-=======
-        specifier: ^2.0.0
-        version: 2.0.0
->>>>>>> wpmg/main
       tslib:
         specifier: ^2.8.1
         version: 2.8.1
@@ -993,9 +982,6 @@ packages:
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
 
-  fastpriorityqueue@0.7.5:
-    resolution: {integrity: sha512-3Pa0n9gwy8yIbEsT3m2j/E9DXgWvvjfiZjjqcJ+AdNKTAlVMIuFYrYG5Y3RHEM8O6cwv9hOpOWY/NaMfywoQVA==}
-
   fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
 
@@ -1148,10 +1134,6 @@ packages:
   json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
 
-  jsts@2.11.3:
-    resolution: {integrity: sha512-LYLpvZw75PO5YtflZ9kvYzqILA97QfrTMGkj71mqfIc/GnH9+lc+ODWdepIu+PgoQuepZbt3u+58ZUAjr4TM4w==}
-    engines: {node: '>= 16'}
-
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
@@ -1298,19 +1280,8 @@ packages:
     engines: {node: '>=0.10'}
     hasBin: true
 
-<<<<<<< HEAD
-  polygon-clipping@0.15.7:
-    resolution: {integrity: sha512-nhfdr83ECBg6xtqOAJab1tbksbBAOMUltN60bU+llHVOL0e5Onm1WpAXXWXVB39L8AJFssoIhEVuy/S90MmotA==}
-
   postcss@8.4.47:
     resolution: {integrity: sha512-56rxCq7G/XfB4EkXq9Egn5GCqugWvDFjafDOThIdMBsI15iqPqR5r15TfSr1YPYeEI19YeaXMCbY6u88Y76GLQ==}
-=======
-  pkg-types@1.1.1:
-    resolution: {integrity: sha512-ko14TjmDuQJ14zsotODv7dBlwxKhUKQEhuhmbqo1uCi9BB0Z2alo/wAXg6q1dTR5TyuqYyWhjtfe/Tsh+X28jQ==}
-
-  postcss@8.4.38:
-    resolution: {integrity: sha512-Wglpdk03BSfXkHoQa3b/oulrotAkwrlLDRSOb9D0bN86FdRyE9lppSp33aHNPgBa0JKCoB+drFLZkQoRRYae5A==}
->>>>>>> wpmg/main
     engines: {node: ^10 || ^12 || >=14}
 
   prelude-ls@1.2.1:
@@ -1352,16 +1323,8 @@ packages:
   rfdc@1.4.1:
     resolution: {integrity: sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA==}
 
-<<<<<<< HEAD
-  robust-predicates@3.0.2:
-    resolution: {integrity: sha512-IXgzBWvWQwE6PrDI05OvmXUIruQTcoMDzRsOd5CDvHCVLcLHMTSYvOK5Cm46kWqlV3yAbuSpBZdJ5oP5OUoStg==}
-
   rollup@4.24.3:
     resolution: {integrity: sha512-HBW896xR5HGmoksbi3JBDtmVzWiPAYqp7wip50hjQ67JbDz61nyoMPdqu1DvVW9asYb2M65Z20ZHsyJCMqMyDg==}
-=======
-  rollup@4.18.0:
-    resolution: {integrity: sha512-QmJz14PX3rzbJCN1SG4Xe/bAAX2a6NpCP8ab2vfu2GiUr8AQcr2nCV/oEO3yneFarB67zk8ShlIyWb2LGTb3Sg==}
->>>>>>> wpmg/main
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
@@ -2349,8 +2312,6 @@ snapshots:
 
   fast-levenshtein@2.0.6: {}
 
-  fastpriorityqueue@0.7.5: {}
-
   fastq@1.17.1:
     dependencies:
       reusify: 1.0.4
@@ -2462,10 +2423,6 @@ snapshots:
   json-schema-traverse@0.4.1: {}
 
   json-stable-stringify-without-jsonify@1.0.1: {}
-
-  jsts@2.11.3:
-    dependencies:
-      fastpriorityqueue: 0.7.5
 
   keyv@4.5.4:
     dependencies:
@@ -2606,22 +2563,7 @@ snapshots:
 
   pidtree@0.6.0: {}
 
-<<<<<<< HEAD
-  polygon-clipping@0.15.7:
-    dependencies:
-      robust-predicates: 3.0.2
-      splaytree: 3.1.2
-
   postcss@8.4.47:
-=======
-  pkg-types@1.1.1:
-    dependencies:
-      confbox: 0.1.7
-      mlly: 1.7.0
-      pathe: 1.1.2
-
-  postcss@8.4.38:
->>>>>>> wpmg/main
     dependencies:
       nanoid: 3.3.7
       picocolors: 1.1.1
@@ -2653,13 +2595,7 @@ snapshots:
 
   rfdc@1.4.1: {}
 
-<<<<<<< HEAD
-  robust-predicates@3.0.2: {}
-
   rollup@4.24.3:
-=======
-  rollup@4.18.0:
->>>>>>> wpmg/main
     dependencies:
       '@types/estree': 1.0.6
     optionalDependencies:

@@ -11,9 +11,9 @@ import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidOfLineString} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
-import {AbstractLineObject} from './AbstractLineObject.js';
-import {MultiPolygon} from './ClassMultiPolygon.js';
-import {Polygon} from './ClassPolygon.js';
+import {AbstractLineObject} from './abstract-line-object.js';
+import {MultiPolygon} from './class-multipolygon.js';
+import {Polygon} from './class-polygon.js';
 
 export class LineString extends AbstractLineObject<GJ.LineString> implements GJ.LineString {
   static isObject(obj: unknown): obj is LineString {

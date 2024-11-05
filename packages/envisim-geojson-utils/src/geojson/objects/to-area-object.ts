@@ -1,14 +1,15 @@
 import type * as GJ from '../../types/geojson.js';
-import {Circle} from './ClassCircle.js';
-import {MultiCircle} from './ClassMultiCircle.js';
-import {MultiPolygon} from './ClassMultiPolygon.js';
-import {Polygon} from './ClassPolygon.js';
+import {CirclesToPolygonsOptions} from '../../utils/circles-to-polygons.js';
+import {Circle} from './class-circle.js';
+import {MultiCircle} from './class-multicircle.js';
+import {MultiPolygon} from './class-multipolygon.js';
+import {Polygon} from './class-polygon.js';
 import type {AreaObject} from './index.js';
 
 export function toAreaObject(
   geometry: GJ.AreaGeometry,
   shallow: boolean = true,
-  pointsPerCircle: number = 16,
+  options: CirclesToPolygonsOptions = {},
 ): AreaObject {
   switch (geometry.type) {
     case 'Point':
@@ -32,7 +33,7 @@ export function toAreaObject(
         : new MultiPolygon(geometry, shallow);
 
     case 'GeometryCollection':
-      return geometryCollection(geometry, shallow, pointsPerCircle);
+      return geometryCollection(geometry, shallow, options);
 
     default:
       throw new TypeError('type not supported');
@@ -42,10 +43,10 @@ export function toAreaObject(
 function geometryCollection(
   geometry: GJ.AreaGeometryCollection,
   shallow: boolean,
-  pointsPerCircle: number,
+  options: CirclesToPolygonsOptions = {},
 ): AreaObject {
   if (geometry.geometries.length === 1) {
-    return toAreaObject(geometry.geometries[0], shallow, pointsPerCircle);
+    return toAreaObject(geometry.geometries[0], shallow, options);
   }
 
   const coordinates: GJ.Position[][][] = [];
@@ -53,18 +54,18 @@ function geometryCollection(
   for (const geom of geometry.geometries) {
     switch (geom.type) {
       case 'Point': {
-        const circle = new Circle(geom, true).toPolygon({pointsPerCircle});
-        if (circle.type === 'Polygon') {
-          coordinates.push(circle.coordinates);
-        } else {
-          coordinates.push(...circle.coordinates);
+        const circle = new Circle(geom, true).toPolygon(options);
+        if (circle !== null) {
+          coordinates.push(...circle.getCoordinateArray());
         }
         break;
       }
 
       case 'MultiPoint': {
-        const circle = new MultiCircle(geom, true).toPolygon({pointsPerCircle});
-        coordinates.push(...circle.coordinates);
+        const circle = new MultiCircle(geom, true).toPolygon(options);
+        if (circle !== null) {
+          coordinates.push(...circle.getCoordinateArray());
+        }
         break;
       }
 

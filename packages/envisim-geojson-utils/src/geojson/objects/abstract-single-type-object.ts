@@ -1,7 +1,7 @@
 import {copy} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {GeoJsonObject} from '../base/index.js';
+import {GeoJsonObject} from '../class-geojson-object.js';
 
 export abstract class AbstractSingleTypeObject<T extends GJ.SingleTypeObject> extends GeoJsonObject<
   T['type']

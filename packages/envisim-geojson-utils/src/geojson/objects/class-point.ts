@@ -3,8 +3,8 @@ import {type OptionalParam} from '@envisim/utils';
 import type * as GJ from '../../types/geojson.js';
 import {type BufferOptions} from '../../buffer/index.js';
 import {Geodesic} from '../../utils/Geodesic.js';
-import {AbstractPointObject} from './AbstractPointObject.js';
-import {Circle} from './ClassCircle.js';
+import {AbstractPointObject} from './abstract-point-object.js';
+import {Circle} from './class-circle.js';
 
 export class Point extends AbstractPointObject<GJ.Point> implements GJ.Point {
   static isObject(obj: unknown): obj is Point {

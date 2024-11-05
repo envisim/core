@@ -8,8 +8,8 @@ import {centroidOfPolygon} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {pointInSinglePolygonPosition} from '../../utils/pointInPolygonPosition.js';
-import {AbstractAreaObject} from './AbstractAreaObject.js';
-import {MultiPolygon} from './ClassMultiPolygon.js';
+import {AbstractAreaObject} from './abstract-area-object.js';
+import {MultiPolygon} from './class-multipolygon.js';
 
 export class Polygon extends AbstractAreaObject<GJ.Polygon> implements GJ.Polygon {
   static isObject(obj: unknown): obj is Polygon {

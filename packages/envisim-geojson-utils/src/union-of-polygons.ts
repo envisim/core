@@ -1,11 +1,5 @@
 import * as GJ from './types/geojson.js';
-import {
-  AreaCollection,
-  AreaFeature,
-  AreaGeometryCollection,
-  MultiPolygon,
-  Polygon,
-} from './geojson/index.js';
+import {AreaCollection, AreaFeature, MultiPolygon, Polygon} from './geojson/index.js';
 import {CirclesToPolygonsOptions} from './utils/circles-to-polygons.js';
 import {IntersectList} from './utils/class-intersects.js';
 import {type Segment, ringToSegments, segmentsToPolygon} from './utils/class-segment.js';
@@ -64,9 +58,7 @@ export function unionOfCollection(
   const geoms: GJ.Position[][][] = [];
 
   for (const feature of collection.features) {
-    if (AreaGeometryCollection.isGeometryCollection(feature.geometry)) {
-      continue;
-    } else if (Polygon.isObject(feature.geometry) || MultiPolygon.isObject(feature.geometry)) {
+    if (Polygon.isObject(feature.geometry) || MultiPolygon.isObject(feature.geometry)) {
       geoms.push(...feature.geometry.getCoordinateArray());
     } else {
       const cp = feature.geometry.toPolygon(ppc);

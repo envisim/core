@@ -5,9 +5,9 @@ import {type BufferOptions, defaultBufferOptions} from '../../buffer/index.js';
 import {Geodesic} from '../../utils/Geodesic.js';
 import {bboxFromPositions, getPositionsForCircle} from '../../utils/bbox.js';
 import {CirclesToPolygonsOptions, circlesToPolygons} from '../../utils/circles-to-polygons.js';
-import {AbstractAreaObject} from './AbstractAreaObject.js';
-import {MultiPolygon} from './ClassMultiPolygon.js';
-import {Polygon} from './ClassPolygon.js';
+import {AbstractAreaObject} from './abstract-area-object.js';
+import {MultiPolygon} from './class-multipolygon.js';
+import {Polygon} from './class-polygon.js';
 
 export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
   static isObject(obj: unknown): obj is Circle {

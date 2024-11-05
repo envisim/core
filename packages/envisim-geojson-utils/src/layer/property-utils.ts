@@ -32,9 +32,7 @@ export function createParentProperty(): NumericalProperty {
  * @param propertyRecords
  * @returns the new property record
  */
-export function mergePropertyRecords(
-  propertyRecords: PropertyRecord[],
-): PropertyRecord {
+export function mergePropertyRecords(propertyRecords: PropertyRecord[]): PropertyRecord {
   const newRecord: PropertyRecord = {};
 
   propertyRecords.forEach((record) => {

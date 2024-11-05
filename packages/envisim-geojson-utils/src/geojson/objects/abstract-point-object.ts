@@ -1,6 +1,6 @@
 import type * as GJ from '../../types/geojson.js';
 import {GeometricPrimitive} from '../../geometric-primitive/index.js';
-import {AbstractSingleTypeObject} from './AbstractSingleTypeObject.js';
+import {AbstractSingleTypeObject} from './abstract-single-type-object.js';
 
 export abstract class AbstractPointObject<
   T extends GJ.PointObject,

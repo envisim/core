@@ -4,7 +4,7 @@ import type * as GJ from '../../types/geojson.js';
 import {type BufferOptions} from '../../buffer/index.js';
 import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {type AreaObject, toAreaObject} from '../objects/index.js';
-import {AbstractFeature} from './AbstractFeature.js';
+import {AbstractFeature} from './abstract-feature.js';
 
 export class AreaFeature extends AbstractFeature<AreaObject> implements GJ.AreaFeature {
   static isFeature(obj: unknown): obj is AreaFeature {

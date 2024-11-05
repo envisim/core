@@ -1,6 +1,6 @@
 import type * as GJ from '../../types/geojson.js';
-import {MultiPoint} from './ClassMultiPoint.js';
-import {Point} from './ClassPoint.js';
+import {MultiPoint} from './class-multipoint.js';
+import {Point} from './class-point.js';
 import type {PointObject} from './index.js';
 
 export function toPointObject(geometry: GJ.PointGeometry, shallow: boolean = true): PointObject {
