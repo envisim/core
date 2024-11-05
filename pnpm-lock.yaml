@@ -95,6 +95,7 @@ importers:
         specifier: workspace:*
         version: link:../envisim-utils
       geographiclib-geodesic:
+<<<<<<< HEAD
         specifier: ^2.1.1
         version: 2.1.1
       jsts:
@@ -103,6 +104,10 @@ importers:
       polygon-clipping:
         specifier: ^0.15.7
         version: 0.15.7
+=======
+        specifier: ^2.0.0
+        version: 2.0.0
+>>>>>>> wpmg/main
       tslib:
         specifier: ^2.8.1
         version: 2.8.1
@@ -1293,11 +1298,19 @@ packages:
     engines: {node: '>=0.10'}
     hasBin: true
 
+<<<<<<< HEAD
   polygon-clipping@0.15.7:
     resolution: {integrity: sha512-nhfdr83ECBg6xtqOAJab1tbksbBAOMUltN60bU+llHVOL0e5Onm1WpAXXWXVB39L8AJFssoIhEVuy/S90MmotA==}
 
   postcss@8.4.47:
     resolution: {integrity: sha512-56rxCq7G/XfB4EkXq9Egn5GCqugWvDFjafDOThIdMBsI15iqPqR5r15TfSr1YPYeEI19YeaXMCbY6u88Y76GLQ==}
+=======
+  pkg-types@1.1.1:
+    resolution: {integrity: sha512-ko14TjmDuQJ14zsotODv7dBlwxKhUKQEhuhmbqo1uCi9BB0Z2alo/wAXg6q1dTR5TyuqYyWhjtfe/Tsh+X28jQ==}
+
+  postcss@8.4.38:
+    resolution: {integrity: sha512-Wglpdk03BSfXkHoQa3b/oulrotAkwrlLDRSOb9D0bN86FdRyE9lppSp33aHNPgBa0JKCoB+drFLZkQoRRYae5A==}
+>>>>>>> wpmg/main
     engines: {node: ^10 || ^12 || >=14}
 
   prelude-ls@1.2.1:
@@ -1339,11 +1352,16 @@ packages:
   rfdc@1.4.1:
     resolution: {integrity: sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA==}
 
+<<<<<<< HEAD
   robust-predicates@3.0.2:
     resolution: {integrity: sha512-IXgzBWvWQwE6PrDI05OvmXUIruQTcoMDzRsOd5CDvHCVLcLHMTSYvOK5Cm46kWqlV3yAbuSpBZdJ5oP5OUoStg==}
 
   rollup@4.24.3:
     resolution: {integrity: sha512-HBW896xR5HGmoksbi3JBDtmVzWiPAYqp7wip50hjQ67JbDz61nyoMPdqu1DvVW9asYb2M65Z20ZHsyJCMqMyDg==}
+=======
+  rollup@4.18.0:
+    resolution: {integrity: sha512-QmJz14PX3rzbJCN1SG4Xe/bAAX2a6NpCP8ab2vfu2GiUr8AQcr2nCV/oEO3yneFarB67zk8ShlIyWb2LGTb3Sg==}
+>>>>>>> wpmg/main
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
@@ -1396,9 +1414,6 @@ packages:
   source-map@0.5.7:
     resolution: {integrity: sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ==}
     engines: {node: '>=0.10.0'}
-
-  splaytree@3.1.2:
-    resolution: {integrity: sha512-4OM2BJgC5UzrhVnnJA4BkHKGtjXNzzUfpQjCO8I05xYPsfS/VuQDwjCGGMi8rYQilHEV4j8NBqTFbls/PZEE7A==}
 
   stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
@@ -2591,12 +2606,22 @@ snapshots:
 
   pidtree@0.6.0: {}
 
+<<<<<<< HEAD
   polygon-clipping@0.15.7:
     dependencies:
       robust-predicates: 3.0.2
       splaytree: 3.1.2
 
   postcss@8.4.47:
+=======
+  pkg-types@1.1.1:
+    dependencies:
+      confbox: 0.1.7
+      mlly: 1.7.0
+      pathe: 1.1.2
+
+  postcss@8.4.38:
+>>>>>>> wpmg/main
     dependencies:
       nanoid: 3.3.7
       picocolors: 1.1.1
@@ -2628,9 +2653,13 @@ snapshots:
 
   rfdc@1.4.1: {}
 
+<<<<<<< HEAD
   robust-predicates@3.0.2: {}
 
   rollup@4.24.3:
+=======
+  rollup@4.18.0:
+>>>>>>> wpmg/main
     dependencies:
       '@types/estree': 1.0.6
     optionalDependencies:
@@ -2698,8 +2727,6 @@ snapshots:
   source-map-js@1.2.1: {}
 
   source-map@0.5.7: {}
-
-  splaytree@3.1.2: {}
 
   stackback@0.0.2: {}
 

@@ -36,13 +36,10 @@ export const SAMPLE_BASE_OPTIONS: Readonly<Required<SampleBaseOptions>> = {
  * @returns `0` if check passes
  */
 export function sampleBaseOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
+  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
 >(_: T, {pointsPerCircle}: SampleBaseOptions): number {
   if (
-    pointsPerCircle &&
+    pointsPerCircle !== undefined &&
     (!Number.isInteger(pointsPerCircle) || pointsPerCircle <= 0)
   ) {
     return 110;
@@ -93,10 +90,7 @@ export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
  * @returns `0` if check passes
  */
 export function samplePointOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
+  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
 >(
   layer: T,
   {
@@ -116,7 +110,7 @@ export function samplePointOptionsCheck<
     return 210;
   }
 
-  if (ratio && ratio <= 0.0) {
+  if (ratio !== undefined && ratio <= 0.0) {
     return 220;
   }
 
@@ -128,9 +122,8 @@ export function samplePointOptionsCheck<
  * @see {@link SAMPLE_FEATURE_OPTIONS | default values}
  * @see {@link sampleFeatureOptionsCheck | error codes}
  */
-export interface SampleFeatureOptions<
-  F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
-> extends SamplePointOptions {
+export interface SampleFeatureOptions<F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>
+  extends SamplePointOptions {
   /**
    * A model feature of points or lines or areas to be placed on the selcted
    * points.
@@ -151,10 +144,7 @@ export interface SampleFeatureOptions<
 
 export const SAMPLE_FEATURE_OPTIONS: Readonly<
   Required<
-    Omit<
-      SampleFeatureOptions<GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>,
-      'modelFeature'
-    >
+    Omit<SampleFeatureOptions<GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>, 'modelFeature'>
   >
 > = {
   ...SAMPLE_POINT_OPTIONS,
@@ -172,10 +162,7 @@ export const SAMPLE_FEATURE_OPTIONS: Readonly<
  * @returns `0` if check passes
  */
 export function sampleFeatureOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
+  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
   F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
 >(
   layer: T,
@@ -230,10 +217,7 @@ export const SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS: Readonly<
  * @returns `0` if check passes
  */
 export function sampleSystematicLineOnAreaOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
+  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
 >(
   layer: T,
   {
@@ -259,8 +243,7 @@ export function sampleSystematicLineOnAreaOptionsCheck<
  * @see {@link SAMPLE_BELT_ON_AREA_OPTIONS | default values}
  * @see {@link sampleBeltOnAreaOptionsCheck | error codes}
  */
-export interface SampleBeltOnAreaOptions
-  extends SampleSystematicLineOnAreaOptions {
+export interface SampleBeltOnAreaOptions extends SampleSystematicLineOnAreaOptions {
   /**
    * The half-width of the belt.
    */
@@ -281,10 +264,7 @@ export const SAMPLE_BELT_ON_AREA_OPTIONS: Readonly<
  * @returns `0` if check passes
  */
 export function sampleBeltOnAreaOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
+  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
 >(layer: T, {halfWidth, ...options}: SampleBeltOnAreaOptions): number {
   const systematicLineOnAreaCheck = sampleBaseOptionsCheck(layer, options);
   if (systematicLineOnAreaCheck !== 0) {

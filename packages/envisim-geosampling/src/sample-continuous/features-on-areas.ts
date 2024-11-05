@@ -9,11 +9,7 @@ import {
   getFeaturePrimitive,
 } from '@envisim/geojson-utils';
 
-import {
-  placeModelFeature,
-  radiusOfModelFeature,
-  sizeOfModelFeature,
-} from '../model-feature.js';
+import {placeModelFeature, radiusOfModelFeature, sizeOfModelFeature} from '../model-feature.js';
 import {
   intersectAreaSampleAreaFrame,
   intersectLineSampleAreaFrame,
@@ -127,11 +123,7 @@ function sampleFeaturesOnAreas(
         PointCollection.create(pointFeatures, true),
         layer.collection,
       );
-      return new Layer(
-        collection,
-        {_designWeight: createDesignWeightProperty()},
-        true,
-      );
+      return new Layer(collection, {_designWeight: createDesignWeightProperty()}, true);
     }
 
     case GeometricPrimitive.LINE: {
@@ -168,11 +160,7 @@ function sampleFeaturesOnAreas(
         layer.collection,
         pointsPerCircle,
       );
-      return new Layer(
-        collection,
-        {_designWeight: createDesignWeightProperty()},
-        true,
-      );
+      return new Layer(collection, {_designWeight: createDesignWeightProperty()}, true);
     }
 
     case GeometricPrimitive.AREA: {
@@ -208,11 +196,7 @@ function sampleFeaturesOnAreas(
         layer.collection,
         pointsPerCircle,
       );
-      return new Layer(
-        collection,
-        {_designWeight: createDesignWeightProperty()},
-        true,
-      );
+      return new Layer(collection, {_designWeight: createDesignWeightProperty()}, true);
     }
 
     default:

@@ -1,6 +1,7 @@
-import {type OptionalParam} from '@envisim/utils';
+import {type OptionalParam, copy} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {type BufferOptions} from '../../buffer/index.js';
 import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {type LineObject, toLineObject} from '../objects/index.js';
 import {AbstractFeature} from './AbstractFeature.js';
@@ -33,12 +34,10 @@ export class LineFeature extends AbstractFeature<LineObject> implements GJ.LineF
     return GeometricPrimitive.LINE;
   }
 
-  buffer(distance: number, steps: number = 10): AreaFeature | null {
-    if (distance <= 0.0) return null;
-    const bg = this.geometry.buffer(distance, steps);
-    if (!bg) return null;
-    // TODO: Decide if we want to copy properties
-    return AreaFeature.create(bg, {}, true);
+  buffer(options: BufferOptions): AreaFeature | null {
+    const bg = this.geometry.buffer(options);
+    if (bg === null) return null;
+    return AreaFeature.create(bg, copy(this.properties), true);
   }
 
   /* LINE SPECIFIC */

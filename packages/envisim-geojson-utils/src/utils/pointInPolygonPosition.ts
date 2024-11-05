@@ -1,7 +1,7 @@
 import type * as GJ from '../types/geojson.js';
 
 /** @internal */
-function pointInRing(point: GJ.Position, polygon: GJ.Position[]): boolean {
+export function pointInRing(point: GJ.Position, polygon: GJ.Position[]): boolean {
   const p = point;
   const q = polygon;
   const n = q.length;
@@ -10,8 +10,7 @@ function pointInRing(point: GJ.Position, polygon: GJ.Position[]): boolean {
   for (let i = 0, j = n - 1; i < n; j = i++) {
     if (
       q[i][1] > p[1] != q[j][1] > p[1] &&
-      p[0] <
-        ((q[j][0] - q[i][0]) * (p[1] - q[i][1])) / (q[j][1] - q[i][1]) + q[i][0]
+      p[0] < ((q[j][0] - q[i][0]) * (p[1] - q[i][1])) / (q[j][1] - q[i][1]) + q[i][0]
     ) {
       inside = !inside;
     }

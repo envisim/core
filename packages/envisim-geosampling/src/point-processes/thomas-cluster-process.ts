@@ -11,7 +11,7 @@ import {
   PointFeature,
   Polygon,
   bbox4,
-  pointInAreaFeature,
+  pointInAreaGeometry,
   pointInBBox,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
@@ -23,11 +23,7 @@ const toDeg = 180 / Math.PI;
 
 // Internal. Generates point with normally distributed offsets around center.
 // Sigma is standard deviation.
-function randomPositionInCluster(
-  center: GJ.Position,
-  sigma: number,
-  rand: Random,
-): GJ.Position {
+function randomPositionInCluster(center: GJ.Position, sigma: number, rand: Random): GJ.Position {
   // Generate two independent Normal(0,sigma).
   const xy = Normal.random(2, {mu: 0, sigma: sigma}, {rand});
   // Compute angle.
@@ -89,15 +85,9 @@ export function thomasClusterProcess(
   const westNorth = Geodesic.destination([box[0], box[3]], dist, 315);
   const eastNorth = Geodesic.destination([box[2], box[3]], dist, 45);
   // Expanded box as polygon coordinates counterclockwise.
-  const expandedBoxPolygonCoords = [
-    [westNorth, westSouth, eastSouth, eastNorth, westNorth],
-  ];
+  const expandedBoxPolygonCoords = [[westNorth, westSouth, eastSouth, eastNorth, westNorth]];
   // Expanded box as Feature
-  const expandedBoxPolygon = AreaFeature.create(
-    Polygon.create(expandedBoxPolygonCoords),
-    {},
-    true,
-  );
+  const expandedBoxPolygon = AreaFeature.create(Polygon.create(expandedBoxPolygonCoords), {}, true);
   // Generate parents in expanded box.
   const A = expandedBoxPolygon.area();
   // TODO?: The expanded box polygon may overlap antimeridian
@@ -136,12 +126,10 @@ export function thomasClusterProcess(
       // If child is in input collection, then push child.
       if (pointInBBox(coordinates, box)) {
         for (let j = 0; j < nrOfFeatures; j++) {
-          if (pointInAreaFeature(coordinates, layer.collection.features[j])) {
-            const child = PointFeature.create(
-              Point.create(coordinates),
-              {},
-              true,
-            );
+          const lcfg = layer.collection.features[j].geometry;
+          if (lcfg.type === 'GeometryCollection') continue;
+          if (pointInAreaGeometry(coordinates, lcfg)) {
+            const child = PointFeature.create(Point.create(coordinates), {}, true);
             features.push(child);
             break;
           }

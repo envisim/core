@@ -66,4 +66,12 @@ export abstract class AbstractFeature<
     this.properties[property] = newValue;
     return newValue;
   }
+
+  replaceProperties(properties: GJ.FeatureProperties, shallow: boolean = true) {
+    if (shallow) {
+      this.properties = properties;
+    } else {
+      this.properties = copy(properties);
+    }
+  }
 }

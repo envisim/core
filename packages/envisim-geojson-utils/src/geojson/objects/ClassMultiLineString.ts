@@ -1,8 +1,14 @@
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {bufferGeometry} from '../../buffer.js';
-import {bboxFromPositions, unionOfBBoxes} from '../../utils/bbox.js';
+import {
+  type BufferOptions,
+  bufferPolygons,
+  defaultBufferOptions,
+  lineToRing,
+} from '../../buffer/index.js';
+import {moveCoordsAroundEarth} from '../../utils/antimeridian.js';
+import {bboxCrossesAntimeridian, bboxFromPositions, unionOfBBoxes} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids, centroidOfLineString} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
@@ -36,13 +42,23 @@ export class MultiLineString
     super({...obj, type: 'MultiLineString'}, shallow);
   }
 
+  getCoordinateArray(): GJ.Position[][] {
+    return this.coordinates;
+  }
+
   get size(): number {
     return this.coordinates.length;
   }
 
-  buffer(distance: number, steps: number = 10): Polygon | MultiPolygon | null {
-    if (distance <= 0.0) return null;
-    return bufferGeometry(this, {distance, steps});
+  buffer(options: BufferOptions): Polygon | MultiPolygon | null {
+    const opts = defaultBufferOptions(options);
+    if (opts.distance <= 0.0) return null;
+
+    if (bboxCrossesAntimeridian(this.getBBox())) {
+      return bufferPolygons(this.coordinates.map(moveCoordsAroundEarth).map(lineToRing), opts);
+    }
+
+    return bufferPolygons(this.coordinates.map(lineToRing), opts);
   }
 
   length(): number {

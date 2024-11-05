@@ -12,6 +12,7 @@ import {
   PointCollection,
 } from '../geojson/index.js';
 import {GeometricPrimitive, isGeometryPrimitive} from '../geometric-primitive/index.js';
+import {CirclesToPolygonsOptions} from '../utils/circles-to-polygons.js';
 import {PropertyRecord, PropertySpecialKeys} from './property.js';
 
 export class Layer<T extends AreaCollection | LineCollection | PointCollection> {
@@ -187,7 +188,7 @@ export class Layer<T extends AreaCollection | LineCollection | PointCollection> 
 
   toGeoJSON(
     convertCircles: boolean = true,
-    pointsPerCircle: number = 16,
+    options: CirclesToPolygonsOptions = {},
   ): GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>> {
     const features: GJ.BaseFeature<GJ.SingleTypeObject, number | string>[] = [];
 

@@ -10,10 +10,10 @@ import {
   type PropertyRecord,
   createDesignWeightProperty,
   createParentProperty,
-  intersectAreaAreaFeatures,
-  intersectLineAreaFeatures,
-  intersectLineLineFeatures,
-  intersectPointAreaFeatures,
+  intersectAreaAreaGeometries,
+  intersectLineAreaGeometries,
+  intersectLineLineGeometries,
+  intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 import {copy} from '@envisim/utils';
 
@@ -72,10 +72,7 @@ function transferPropertiesInPlace(
 ): void {
   // If line collects from line an additional factor is needed
   let factor = 1;
-  if (
-    LineFeature.isFeature(frameFeature) &&
-    LineFeature.isFeature(baseFeature)
-  ) {
+  if (LineFeature.isFeature(frameFeature) && LineFeature.isFeature(baseFeature)) {
     if (frameFeature.properties?.['_randomRotation'] === 1) {
       // Here the line that collects can be any curve,
       // as long as it has been randomly rotated.
@@ -107,8 +104,7 @@ function transferPropertiesInPlace(
 
   // Transfer designWeight to newFeature from frameFeature
   if (frameFeature.properties?.['_designWeight']) {
-    intersect.properties['_designWeight'] =
-      frameFeature.properties['_designWeight'] * factor;
+    intersect.properties['_designWeight'] = frameFeature.properties['_designWeight'] * factor;
   }
   // Transfer index of parent frame unit as _parent
   intersect.properties['_parent'] = index;
@@ -167,22 +163,21 @@ export function collectIntersects(
   // record. Set initial record here.
   const record = copy(baseLayer.propertyRecord);
 
-  if (
-    PointCollection.isCollection(frame) &&
-    AreaCollection.isCollection(base)
-  ) {
+  if (PointCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
     const features: PointFeature[] = [];
     frame.features.forEach((frameFeature, index) => {
       base.features.forEach((baseFeature) => {
-        const intersect = intersectPointAreaFeatures(frameFeature, baseFeature);
-        if (intersect) {
-          transferPropertiesInPlace(
-            intersect,
-            frameFeature,
-            baseFeature,
-            index,
-          );
-          features.push(intersect);
+        if (
+          frameFeature.geometry.type === 'GeometryCollection' ||
+          baseFeature.geometry.type === 'GeometryCollection'
+        )
+          return;
+
+        const intersect = intersectPointAreaGeometries(frameFeature.geometry, baseFeature.geometry);
+        if (intersect !== null) {
+          const feature = PointFeature.create(intersect, {}, true);
+          transferPropertiesInPlace(feature, frameFeature, baseFeature, index);
+          features.push(feature);
         }
       });
     });
@@ -194,15 +189,17 @@ export function collectIntersects(
     const features: PointFeature[] = [];
     frame.features.forEach((frameFeature, index) => {
       base.features.forEach((baseFeature) => {
-        const intersect = intersectLineLineFeatures(frameFeature, baseFeature);
-        if (intersect) {
-          transferPropertiesInPlace(
-            intersect,
-            frameFeature,
-            baseFeature,
-            index,
-          );
-          features.push(intersect);
+        if (
+          frameFeature.geometry.type === 'GeometryCollection' ||
+          baseFeature.geometry.type === 'GeometryCollection'
+        )
+          return;
+
+        const intersect = intersectLineLineGeometries(frameFeature.geometry, baseFeature.geometry);
+        if (intersect !== null) {
+          const feature = PointFeature.create(intersect, {}, true);
+          transferPropertiesInPlace(feature, frameFeature, baseFeature, index);
+          features.push(feature);
         }
       });
     });
@@ -214,15 +211,17 @@ export function collectIntersects(
     const features: LineFeature[] = [];
     frame.features.forEach((frameFeature, index) => {
       base.features.forEach((baseFeature) => {
-        const intersect = intersectLineAreaFeatures(frameFeature, baseFeature);
-        if (intersect) {
-          transferPropertiesInPlace(
-            intersect,
-            frameFeature,
-            baseFeature,
-            index,
-          );
-          features.push(intersect);
+        if (
+          frameFeature.geometry.type === 'GeometryCollection' ||
+          baseFeature.geometry.type === 'GeometryCollection'
+        )
+          return;
+
+        const intersect = intersectLineAreaGeometries(frameFeature.geometry, baseFeature.geometry);
+        if (intersect !== null) {
+          const feature = LineFeature.create(intersect, {}, true);
+          transferPropertiesInPlace(feature, frameFeature, baseFeature, index);
+          features.push(feature);
         }
       });
     });
@@ -230,22 +229,21 @@ export function collectIntersects(
     return new Layer(new LineCollection({features}, true), record, true);
   }
 
-  if (
-    AreaCollection.isCollection(frame) &&
-    PointCollection.isCollection(base)
-  ) {
+  if (AreaCollection.isCollection(frame) && PointCollection.isCollection(base)) {
     const features: PointFeature[] = [];
     frame.features.forEach((frameFeature, index) => {
       base.features.forEach((baseFeature) => {
-        const intersect = intersectPointAreaFeatures(baseFeature, frameFeature);
-        if (intersect) {
-          transferPropertiesInPlace(
-            intersect,
-            frameFeature,
-            baseFeature,
-            index,
-          );
-          features.push(intersect);
+        if (
+          frameFeature.geometry.type === 'GeometryCollection' ||
+          baseFeature.geometry.type === 'GeometryCollection'
+        )
+          return;
+
+        const intersect = intersectPointAreaGeometries(baseFeature.geometry, frameFeature.geometry);
+        if (intersect !== null) {
+          const feature = PointFeature.create(intersect, {}, true);
+          transferPropertiesInPlace(feature, frameFeature, baseFeature, index);
+          features.push(feature);
         }
       });
     });
@@ -257,15 +255,17 @@ export function collectIntersects(
     const features: LineFeature[] = [];
     frame.features.forEach((frameFeature, index) => {
       base.features.forEach((baseFeature) => {
-        const intersect = intersectLineAreaFeatures(baseFeature, frameFeature);
-        if (intersect) {
-          transferPropertiesInPlace(
-            intersect,
-            frameFeature,
-            baseFeature,
-            index,
-          );
-          features.push(intersect);
+        if (
+          frameFeature.geometry.type === 'GeometryCollection' ||
+          baseFeature.geometry.type === 'GeometryCollection'
+        )
+          return;
+
+        const intersect = intersectLineAreaGeometries(baseFeature.geometry, frameFeature.geometry);
+        if (intersect !== null) {
+          const feature = LineFeature.create(intersect, {}, true);
+          transferPropertiesInPlace(feature, frameFeature, baseFeature, index);
+          features.push(feature);
         }
       });
     });
@@ -277,15 +277,17 @@ export function collectIntersects(
     const features: AreaFeature[] = [];
     frame.features.forEach((frameFeature, index) => {
       base.features.forEach((baseFeature) => {
-        const intersect = intersectAreaAreaFeatures(frameFeature, baseFeature);
-        if (intersect) {
-          transferPropertiesInPlace(
-            intersect,
-            frameFeature,
-            baseFeature,
-            index,
-          );
-          features.push(intersect);
+        if (
+          frameFeature.geometry.type === 'GeometryCollection' ||
+          baseFeature.geometry.type === 'GeometryCollection'
+        )
+          return;
+
+        const intersect = intersectAreaAreaGeometries(frameFeature.geometry, baseFeature.geometry);
+        if (intersect !== null) {
+          const feature = AreaFeature.create(intersect, {}, true);
+          transferPropertiesInPlace(feature, frameFeature, baseFeature, index);
+          features.push(feature);
         }
       });
     });
