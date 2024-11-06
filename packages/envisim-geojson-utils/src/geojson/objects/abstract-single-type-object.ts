@@ -1,7 +1,7 @@
 import {copy} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {GeoJsonObject} from '../class-geojson-object.js';
+import {GeoJsonObject} from '../abstract-geojson-object.js';
 
 export abstract class AbstractSingleTypeObject<T extends GJ.SingleTypeObject> extends GeoJsonObject<
   T['type']
@@ -18,7 +18,6 @@ export abstract class AbstractSingleTypeObject<T extends GJ.SingleTypeObject> ex
     }
   }
 
-  abstract override get size(): number;
-  abstract override distanceToPosition(coords: GJ.Position): number;
+  abstract distanceToPosition(coords: GJ.Position): number;
   abstract centroid(iterations: number): GJ.Position;
 }

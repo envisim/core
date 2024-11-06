@@ -1,6 +1,6 @@
 import type * as GJ from '../../types/geojson.js';
 import {unionOfBBoxes} from '../../utils/bbox.js';
-import {GeoJsonObject} from '../class-geojson-object.js';
+import {GeoJsonObject} from '../abstract-geojson-object.js';
 import {AreaFeature, LineFeature, PointFeature} from '../features/index.js';
 
 type ForEachCallback<T> = (obj: T, index: number) => void;

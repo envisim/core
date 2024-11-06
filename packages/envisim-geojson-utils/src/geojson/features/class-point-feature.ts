@@ -1,11 +1,8 @@
-import {type OptionalParam, copy} from '@envisim/utils';
+import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {type BufferOptions} from '../../buffer/index.js';
-import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {type PointObject, toPointObject} from '../objects/index.js';
 import {AbstractFeature} from './abstract-feature.js';
-import {AreaFeature} from './class-area-feature.js';
 
 export class PointFeature extends AbstractFeature<PointObject> implements GJ.PointFeature {
   static isFeature(obj: unknown): obj is PointFeature {
@@ -28,20 +25,5 @@ export class PointFeature extends AbstractFeature<PointObject> implements GJ.Poi
     super({...obj, type: 'Feature'}, shallow);
 
     this.geometry = toPointObject(obj.geometry, shallow);
-  }
-
-  geometricPrimitive(): GeometricPrimitive.POINT {
-    return GeometricPrimitive.POINT;
-  }
-
-  buffer(options: BufferOptions): AreaFeature | null {
-    const bg = this.geometry.buffer(options);
-    if (bg === null) return null;
-    return AreaFeature.create(bg, copy(this.properties), true);
-  }
-
-  /* POINT SPECIFIC */
-  count(): number {
-    return this.geometry.count();
   }
 }

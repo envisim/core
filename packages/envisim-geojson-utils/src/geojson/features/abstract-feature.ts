@@ -1,7 +1,8 @@
 import {copy} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {GeoJsonObject} from '../class-geojson-object.js';
+import {GeometricPrimitive} from '../../geometric-primitive/index.js';
+import {GeoJsonObject} from '../abstract-geojson-object.js';
 import type {AreaObject, LineObject, PointObject} from '../objects/index.js';
 
 export abstract class AbstractFeature<
@@ -18,26 +19,20 @@ export abstract class AbstractFeature<
   }
 
   /* GEOJSON COMMON */
+  geometricPrimitive(): GeometricPrimitive {
+    return this.geometry.geometricPrimitive();
+  }
+
   get size(): number {
     return this.geometry.size;
   }
 
-  setBBox(force: boolean = false): GJ.BBox {
-    if (force === true) {
-      this.bbox = this.geometry.setBBox();
-    } else {
-      this.bbox = this.geometry.getBBox();
-    }
-
-    return this.bbox;
+  setBBox(): GJ.BBox {
+    return this.geometry.setBBox();
   }
 
-  distanceToPosition(coords: GJ.Position): number {
-    return this.geometry.distanceToPosition(coords);
-  }
-
-  centroid(iterations: number = 2): GJ.Position {
-    return this.geometry.centroid(iterations);
+  override getBBox(): GJ.BBox {
+    return this.geometry.bbox ?? this.geometry.setBBox();
   }
 
   /* FEATURE SPECIFIC */

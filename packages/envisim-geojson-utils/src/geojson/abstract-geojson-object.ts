@@ -22,6 +22,4 @@ export abstract class GeoJsonObject<T extends string> implements GJ.GeoJsonObjec
   getBBox(): GJ.BBox {
     return this.bbox ?? this.setBBox(false);
   }
-
-  abstract distanceToPosition(coors: GJ.Position): number;
 }

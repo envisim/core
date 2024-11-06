@@ -1,8 +1,6 @@
-import {type OptionalParam, copy} from '@envisim/utils';
+import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {type BufferOptions} from '../../buffer/index.js';
-import {GeometricPrimitive} from '../../geometric-primitive/index.js';
 import {type AreaObject, toAreaObject} from '../objects/index.js';
 import {AbstractFeature} from './abstract-feature.js';
 
@@ -27,24 +25,5 @@ export class AreaFeature extends AbstractFeature<AreaObject> implements GJ.AreaF
     super({...obj, type: 'Feature'}, shallow);
 
     this.geometry = toAreaObject(obj.geometry, shallow);
-  }
-
-  geometricPrimitive(): GeometricPrimitive.AREA {
-    return GeometricPrimitive.AREA;
-  }
-
-  buffer(options: BufferOptions): AreaFeature | null {
-    const bg = this.geometry.buffer(options);
-    if (bg === null) return null;
-    return AreaFeature.create(bg, copy(this.properties), true);
-  }
-
-  /* AREA SPECIFIC */
-  area(): number {
-    return this.geometry.area();
-  }
-
-  perimeter(): number {
-    return this.geometry.perimeter();
   }
 }

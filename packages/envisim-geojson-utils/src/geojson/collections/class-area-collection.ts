@@ -73,14 +73,14 @@ export class AreaCollection
 
   /* AREA SPECIFIC */
   area(): number {
-    return this.features.reduce((prev, curr) => prev + curr.area(), 0);
+    return this.features.reduce((prev, curr) => prev + curr.geometry.area(), 0.0);
   }
 
   buffer(options: BufferOptions): AreaCollection | null {
     const ac = AreaCollection.create([]);
 
     this.forEach((feature) => {
-      const bf = feature.buffer(options);
+      const bf = feature.geometry.buffer(options);
       if (bf !== null) ac.addFeature(bf, true);
     });
 
@@ -89,6 +89,6 @@ export class AreaCollection
   }
 
   perimeter(): number {
-    return this.features.reduce((prev, curr) => prev + curr.perimeter(), 0);
+    return this.features.reduce((prev, curr) => prev + curr.geometry.perimeter(), 0.0);
   }
 }
