@@ -2,11 +2,11 @@ import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
 import {type BufferOptions, bufferPolygons, defaultBufferOptions} from '../../buffer/index.js';
-import {Geodesic} from '../../utils/Geodesic.js';
 import {moveCoordsAroundEarth} from '../../utils/antimeridian.js';
 import {bboxCrossesAntimeridian, bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {CirclesToPolygonsOptions, circlesToPolygons} from '../../utils/circles-to-polygons.js';
+import {Geodesic} from '../../utils/class-geodesic.js';
 import {AbstractAreaObject} from './abstract-area-object.js';
 import {Circle} from './class-circle.js';
 import {MultiPolygon} from './class-multipolygon.js';

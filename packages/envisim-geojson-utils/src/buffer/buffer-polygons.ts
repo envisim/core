@@ -1,8 +1,8 @@
 import * as GJ from '../types/geojson.js';
 import {MultiPolygon, Polygon} from '../geojson/index.js';
 import {unionOfSegments} from '../union-of-polygons.js';
-import {Geodesic} from '../utils/Geodesic.js';
 import {rerollPolygons} from '../utils/antimeridian.js';
+import {Geodesic} from '../utils/class-geodesic.js';
 import {IntersectList} from '../utils/class-intersects.js';
 import {Segment, segmentsToPolygon} from '../utils/class-segment.js';
 import type {BufferOptions} from './types.js';

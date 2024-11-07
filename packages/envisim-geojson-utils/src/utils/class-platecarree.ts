@@ -1,5 +1,5 @@
 import {type GeoJSON as GJ} from '../index.js';
-import {plateCarreeAreaOfRing} from './Rhumb.js';
+import {plateCarreeAreaOfRing} from './class-rhumb.js';
 
 // WGS84 ellipsoid parameters
 const a = 6378137.0;
@@ -69,11 +69,7 @@ export class PlateCarree {
    * @param fraction the fraction of the length
    * @returns the position on the segment
    */
-  static intermediate(
-    p1: GJ.Position,
-    p2: GJ.Position,
-    fraction: number,
-  ): GJ.Position {
+  static intermediate(p1: GJ.Position, p2: GJ.Position, fraction: number): GJ.Position {
     if (fraction < 0 || fraction > 1) {
       throw new Error('fraction must be between 0 and 1');
     }

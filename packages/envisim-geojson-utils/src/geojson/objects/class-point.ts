@@ -2,7 +2,7 @@ import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
 import {type BufferOptions} from '../../buffer/index.js';
-import {Geodesic} from '../../utils/Geodesic.js';
+import {Geodesic} from '../../utils/class-geodesic.js';
 import {AbstractPointObject} from './abstract-point-object.js';
 import {Circle} from './class-circle.js';
 

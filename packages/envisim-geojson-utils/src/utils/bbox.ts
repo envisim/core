@@ -1,5 +1,5 @@
 import type * as GJ from '../types/geojson.js';
-import {Geodesic} from './Geodesic.js';
+import {Geodesic} from './class-geodesic.js';
 import {
   checkInRange,
   checkLongitudeInRange,

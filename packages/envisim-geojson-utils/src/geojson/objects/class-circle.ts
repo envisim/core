@@ -2,9 +2,9 @@ import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
 import {type BufferOptions, defaultBufferOptions} from '../../buffer/index.js';
-import {Geodesic} from '../../utils/Geodesic.js';
 import {bboxFromPositions, getPositionsForCircle} from '../../utils/bbox.js';
 import {CirclesToPolygonsOptions, circlesToPolygons} from '../../utils/circles-to-polygons.js';
+import {Geodesic} from '../../utils/class-geodesic.js';
 import {AbstractAreaObject} from './abstract-area-object.js';
 import {MultiPolygon} from './class-multipolygon.js';
 import {Polygon} from './class-polygon.js';

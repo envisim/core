@@ -1,5 +1,5 @@
 import type * as GJ from '../types/geojson.js';
-import {PlateCarree} from './PlateCarree.js';
+import {PlateCarree} from './class-platecarree.js';
 
 /**
  * Computes the plate carrée area of a Polygon (not MultiPolygon)

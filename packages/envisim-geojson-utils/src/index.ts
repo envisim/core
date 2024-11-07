@@ -6,11 +6,12 @@ export type * as GeoJSON from './types/geojson.js';
 export * as typeGuards from './types/type-guards.js';
 
 // Utils
+export {Geodesic} from './utils/class-geodesic.js';
+export {Rhumb} from './utils/class-rhumb.js';
+export {PlateCarree} from './utils/class-platecarree.js';
+
 export {areaOfPolygonLonLat} from './utils/area.js';
 export {bbox4, bboxFromPositions, bboxInBBox, pointInBBox, unionOfBBoxes} from './utils/bbox.js';
-export {Geodesic} from './utils/Geodesic.js';
-export {Rhumb} from './utils/Rhumb.js';
-export {PlateCarree} from './utils/PlateCarree.js';
 export {distancePositionToSegment} from './utils/distancePositionToSegment.js';
 export {lengthOfLineString} from './utils/length.js';
 export {pointInSinglePolygonPosition} from './utils/pointInPolygonPosition.js';
