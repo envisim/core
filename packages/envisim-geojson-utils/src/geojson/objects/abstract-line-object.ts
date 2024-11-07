@@ -1,5 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
-import {GeometricPrimitive} from '../../geometric-primitive/index.js';
+import {GeometricPrimitive} from '../geometric-primitive/index.js';
 import {AbstractSingleTypeObject} from './abstract-single-type-object.js';
 
 export abstract class AbstractLineObject<
@@ -11,6 +11,9 @@ export abstract class AbstractLineObject<
 
   geometricPrimitive(): GeometricPrimitive.LINE {
     return GeometricPrimitive.LINE;
+  }
+  measure(): number {
+    return this.length();
   }
 
   abstract length(): number;

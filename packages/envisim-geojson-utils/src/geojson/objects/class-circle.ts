@@ -41,10 +41,34 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     this.radius = obj.radius;
   }
 
+  // SINGLE TYPE OBJECT
+  setBBox(): GJ.BBox {
+    this.bbox = bboxFromPositions(getPositionsForCircle(this.coordinates, this.radius));
+    return this.bbox;
+  }
+
   getCoordinateArray(): GJ.Position[] {
     return [this.coordinates];
   }
 
+  distanceToPosition(coords: GJ.Position): number {
+    return Geodesic.distance(coords, this.coordinates) - this.radius;
+  }
+
+  centroid(): GJ.Position {
+    return [...this.coordinates];
+  }
+
+  // AREA
+  area(): number {
+    return Math.PI * this.radius ** 2;
+  }
+
+  perimeter(): number {
+    return Math.PI * this.radius * 2;
+  }
+
+  // CIRCLE
   toPolygon(options: CirclesToPolygonsOptions = {}): Polygon | MultiPolygon | null {
     const polygons = circlesToPolygons([this.coordinates], this.radius, options);
 
@@ -57,36 +81,11 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     return MultiPolygon.create(polygons, true);
   }
 
-  get size(): number {
-    return 1;
-  }
-
-  area(): number {
-    return Math.PI * this.radius ** 2;
-  }
-
   buffer(options: BufferOptions): Circle | null {
     const opts = defaultBufferOptions(options);
     const newRadius = this.radius + opts.distance;
 
     if (newRadius <= 0.0) return null;
     return Circle.create(this.coordinates, newRadius, false);
-  }
-
-  centroid(): GJ.Position {
-    return [...this.coordinates];
-  }
-
-  distanceToPosition(coords: GJ.Position): number {
-    return Geodesic.distance(coords, this.coordinates) - this.radius;
-  }
-
-  perimeter(): number {
-    return Math.PI * this.radius * 2;
-  }
-
-  setBBox(): GJ.BBox {
-    this.bbox = bboxFromPositions(getPositionsForCircle(this.coordinates, this.radius));
-    return this.bbox;
   }
 }

@@ -32,44 +32,19 @@ export class MultiPolygon extends AbstractAreaObject<GJ.MultiPolygon> implements
     super({...obj, type: 'MultiPolygon'}, shallow);
   }
 
-  getCoordinateArray(): GJ.Position[][][] {
-    return this.coordinates;
+  // SINGLE TYPE OBJECT
+  setBBox(): GJ.BBox {
+    const bboxes = this.coordinates.map((pos) => bboxFromPositions(pos[0]));
+    this.bbox = unionOfBBoxes(bboxes);
+    return this.bbox;
   }
 
-  get size(): number {
+  override size(): number {
     return this.coordinates.length;
   }
 
-  area(): number {
-    return this.coordinates.reduce((prev, curr) => prev + areaOfPolygonLonLat(curr), 0);
-  }
-
-  buffer(options: BufferOptions): Polygon | MultiPolygon | null {
-    const opts = defaultBufferOptions(options);
-
-    if (opts.distance === 0.0) return MultiPolygon.create(this.coordinates, false);
-
-    if (bboxCrossesAntimeridian(this.getBBox())) {
-      return bufferPolygons(
-        this.coordinates.map((r) => r.map(moveCoordsAroundEarth)),
-        opts,
-      );
-    }
-
-    return bufferPolygons(this.coordinates, opts);
-  }
-
-  perimeter(): number {
-    return this.coordinates.reduce(
-      (prev, curr) => prev + curr.reduce((prev, curr) => prev + lengthOfLineString(curr), 0),
-      0,
-    );
-  }
-
-  centroid(iterations: number = 2): GJ.Position {
-    const bbox = this.getBBox();
-    const centroids = this.coordinates.map((coord) => centroidOfPolygon(coord, bbox, iterations));
-    return centroidFromMultipleCentroids(centroids, bbox, iterations).centroid;
+  getCoordinateArray(): GJ.Position[][][] {
+    return this.coordinates;
   }
 
   distanceToPosition(coords: GJ.Position): number {
@@ -95,9 +70,47 @@ export class MultiPolygon extends AbstractAreaObject<GJ.MultiPolygon> implements
     return d;
   }
 
-  setBBox(): GJ.BBox {
-    const bboxes = this.coordinates.map((pos) => bboxFromPositions(pos[0]));
-    this.bbox = unionOfBBoxes(bboxes);
-    return this.bbox;
+  centroid(iterations: number = 2): GJ.Position {
+    const bbox = this.getBBox();
+    const centroids = this.coordinates.map((coord) => centroidOfPolygon(coord, bbox, iterations));
+    return centroidFromMultipleCentroids(centroids, bbox, iterations).centroid;
+  }
+
+  // AREA
+  area(): number {
+    return this.coordinates.reduce((prev, curr) => prev + areaOfPolygonLonLat(curr), 0);
+  }
+
+  perimeter(): number {
+    return this.coordinates.reduce(
+      (prev, curr) => prev + curr.reduce((prev, curr) => prev + lengthOfLineString(curr), 0),
+      0,
+    );
+  }
+
+  // MULTIPOLYGON
+  toPolygon(): Polygon | MultiPolygon | null {
+    if (this.coordinates.length === 0) {
+      return null;
+    } else if (this.coordinates.length === 1) {
+      return Polygon.create(this.coordinates[0], true);
+    }
+
+    return this;
+  }
+
+  buffer(options: BufferOptions): Polygon | MultiPolygon | null {
+    const opts = defaultBufferOptions(options);
+
+    if (opts.distance === 0.0) return MultiPolygon.create(this.coordinates, false);
+
+    if (bboxCrossesAntimeridian(this.getBBox())) {
+      return bufferPolygons(
+        this.coordinates.map((r) => r.map(moveCoordsAroundEarth)),
+        opts,
+      );
+    }
+
+    return bufferPolygons(this.coordinates, opts);
   }
 }

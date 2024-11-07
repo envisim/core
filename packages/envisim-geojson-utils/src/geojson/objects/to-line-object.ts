@@ -3,7 +3,7 @@ import {LineString} from './class-linestring.js';
 import {MultiLineString} from './class-multilinestring.js';
 import type {LineObject} from './index.js';
 
-export function toLineObject(geometry: GJ.LineGeometry, shallow: boolean = true): LineObject {
+export function toLineObject(geometry: GJ.Geometry, shallow: boolean = true): LineObject {
   switch (geometry.type) {
     case 'LineString':
       return shallow === true && LineString.isObject(geometry)
@@ -23,7 +23,10 @@ export function toLineObject(geometry: GJ.LineGeometry, shallow: boolean = true)
   }
 }
 
-function geometryCollection(geometry: GJ.LineGeometryCollection, shallow: boolean): LineObject {
+function geometryCollection(
+  geometry: GJ.GeometryCollection<GJ.SingleTypeObject>,
+  shallow: boolean,
+): LineObject {
   if (geometry.geometries.length === 1) {
     return toLineObject(geometry.geometries[0], shallow);
   }
@@ -33,12 +36,14 @@ function geometryCollection(geometry: GJ.LineGeometryCollection, shallow: boolea
   for (const geom of geometry.geometries) {
     if (geom.type === 'LineString') {
       coordinates.push(geom.coordinates);
-    } else {
+    } else if (geom.type === 'MultiLineString') {
       coordinates.push(...geom.coordinates);
     }
   }
 
-  if (coordinates.length === 1) {
+  if (coordinates.length === 0) {
+    throw new TypeError('type not supported');
+  } else if (coordinates.length === 1) {
     return LineString.create(coordinates[0], shallow);
   }
 

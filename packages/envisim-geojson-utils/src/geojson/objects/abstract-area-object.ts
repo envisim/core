@@ -1,5 +1,5 @@
 import type * as GJ from '../../types/geojson.js';
-import {GeometricPrimitive} from '../../geometric-primitive/index.js';
+import {GeometricPrimitive} from '../geometric-primitive/index.js';
 import {AbstractSingleTypeObject} from './abstract-single-type-object.js';
 
 export abstract class AbstractAreaObject<
@@ -11,6 +11,9 @@ export abstract class AbstractAreaObject<
 
   geometricPrimitive(): GeometricPrimitive.AREA {
     return GeometricPrimitive.AREA;
+  }
+  measure(): number {
+    return this.area();
   }
 
   abstract area(): number;

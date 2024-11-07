@@ -23,34 +23,29 @@ export class Point extends AbstractPointObject<GJ.Point> implements GJ.Point {
     super({...obj, type: 'Point'}, shallow);
   }
 
+  // SINGLE TYPE OBJECT
+  setBBox(): GJ.BBox {
+    this.bbox = [...this.coordinates, ...this.coordinates] as GJ.BBox;
+    return this.bbox;
+  }
+
   getCoordinateArray(): GJ.Position[] {
     return [this.coordinates];
-  }
-
-  get size(): number {
-    return 1;
-  }
-
-  buffer(options: BufferOptions): Circle | null {
-    const distance = options.distance ?? 0.0;
-    if (distance <= 0.0) return null;
-    return Circle.create(this.coordinates, distance, false);
-  }
-
-  centroid(): GJ.Position {
-    return [...this.coordinates];
-  }
-
-  count(): number {
-    return 1;
   }
 
   distanceToPosition(coords: GJ.Position): number {
     return Geodesic.distance(coords, this.coordinates);
   }
 
-  setBBox(): GJ.BBox {
-    this.bbox = [...this.coordinates, ...this.coordinates] as GJ.BBox;
-    return this.bbox;
+  centroid(): GJ.Position {
+    return [...this.coordinates];
+  }
+
+  // POINTOBJECTS
+  // POINT
+  buffer(options: BufferOptions): Circle | null {
+    const distance = options.distance ?? 0.0;
+    if (distance <= 0.0) return null;
+    return Circle.create(this.coordinates, distance, false);
   }
 }

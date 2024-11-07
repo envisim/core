@@ -28,31 +28,14 @@ export class Polygon extends AbstractAreaObject<GJ.Polygon> implements GJ.Polygo
     super({...obj, type: 'Polygon'}, shallow);
   }
 
+  // SINGLE TYPE OBJECT
+  setBBox(): GJ.BBox {
+    this.bbox = bboxFromPositions(this.coordinates[0]);
+    return this.bbox;
+  }
+
   getCoordinateArray(): GJ.Position[][][] {
     return [this.coordinates];
-  }
-
-  get size(): number {
-    return 1;
-  }
-
-  area(): number {
-    return areaOfPolygonLonLat(this.coordinates);
-  }
-
-  buffer(options: BufferOptions): Polygon | MultiPolygon | null {
-    const opts = defaultBufferOptions(options);
-
-    if (opts.distance === 0.0) return Polygon.create(this.coordinates, false);
-    return bufferPolygons([this.coordinates], opts);
-  }
-
-  perimeter(): number {
-    return this.coordinates.reduce((prev, curr) => prev + lengthOfLineString(curr), 0);
-  }
-
-  centroid(iterations: number = 2): GJ.Position {
-    return centroidOfPolygon(this.coordinates, this.getBBox(), iterations).centroid;
   }
 
   distanceToPosition(coords: GJ.Position): number {
@@ -71,8 +54,28 @@ export class Polygon extends AbstractAreaObject<GJ.Polygon> implements GJ.Polygo
     return d;
   }
 
-  setBBox(): GJ.BBox {
-    this.bbox = bboxFromPositions(this.coordinates[0]);
-    return this.bbox;
+  centroid(iterations: number = 2): GJ.Position {
+    return centroidOfPolygon(this.coordinates, this.getBBox(), iterations).centroid;
+  }
+
+  // AREA
+  area(): number {
+    return areaOfPolygonLonLat(this.coordinates);
+  }
+
+  perimeter(): number {
+    return this.coordinates.reduce((prev, curr) => prev + lengthOfLineString(curr), 0);
+  }
+
+  // POLYGON
+  toPolygon(): Polygon {
+    return this;
+  }
+
+  buffer(options: BufferOptions): Polygon | MultiPolygon | null {
+    const opts = defaultBufferOptions(options);
+
+    if (opts.distance === 0.0) return Polygon.create(this.coordinates, false);
+    return bufferPolygons([this.coordinates], opts);
   }
 }

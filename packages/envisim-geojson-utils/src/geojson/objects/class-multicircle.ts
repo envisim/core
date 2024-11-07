@@ -46,10 +46,69 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
     this.radius = obj.radius;
   }
 
+  // SINGLE TYPE OBJECT
+  setBBox(): GJ.BBox {
+    const bbox = bboxFromPositions(this.coordinates);
+    const pos1: GJ.Position = [bbox[0], bbox[1]];
+    const pos2: GJ.Position = bbox.length === 4 ? [bbox[2], bbox[3]] : [bbox[3], bbox[4]];
+    const west = Geodesic.destination(pos1, this.radius, 270.0)[0];
+    const south = Geodesic.destination(pos1, this.radius, 180.0)[1];
+    const east = Geodesic.destination(pos2, this.radius, 90.0)[0];
+    const north = Geodesic.destination(pos2, this.radius, 0.0)[1];
+
+    if (bbox.length === 4) {
+      this.bbox = [west, south, east, north];
+    } else {
+      this.bbox = [west, south, bbox[2], east, north, bbox[5]];
+    }
+
+    return this.bbox;
+  }
+
+  override size(): number {
+    return this.coordinates.length;
+  }
+
   getCoordinateArray(): GJ.Position[] {
     return this.coordinates;
   }
 
+  distanceToPosition(coords: GJ.Position): number {
+    let distance = Infinity;
+
+    for (const c of this.coordinates) {
+      const d = Geodesic.distance(coords, c);
+      if (d < distance) {
+        if (d <= this.radius) {
+          // Guaranteed to be smallest, because non-overlapping promise
+          return d - this.radius;
+        }
+
+        distance = d;
+      }
+    }
+
+    return distance - this.radius;
+  }
+
+  centroid(iterations: number = 2): GJ.Position {
+    const centroids = this.coordinates.map((coord) => ({
+      centroid: coord,
+      weight: Math.PI * this.radius ** 2,
+    }));
+    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations).centroid;
+  }
+
+  // AREA
+  area(): number {
+    return this.coordinates.length * Math.PI * this.radius ** 2;
+  }
+
+  perimeter(): number {
+    return this.coordinates.length * Math.PI * this.radius * 2;
+  }
+
+  // MULTICIRCLE
   toPolygon(options: CirclesToPolygonsOptions = {}): Polygon | MultiPolygon | null {
     // Early return
     if (this.coordinates.length === 0) {
@@ -65,14 +124,6 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
     }
 
     return MultiPolygon.create(polygons, true);
-  }
-
-  get size(): number {
-    return this.coordinates.length;
-  }
-
-  area(): number {
-    return this.coordinates.length * Math.PI * this.radius ** 2;
   }
 
   buffer(options: BufferOptions): Circle | MultiCircle | Polygon | MultiPolygon | null {
@@ -110,54 +161,6 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
     }
 
     return bufferPolygons(polys.coordinates, opts);
-  }
-
-  centroid(iterations: number = 2): GJ.Position {
-    const centroids = this.coordinates.map((coord) => ({
-      centroid: coord,
-      weight: Math.PI * this.radius ** 2,
-    }));
-    return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations).centroid;
-  }
-
-  distanceToPosition(coords: GJ.Position): number {
-    let distance = Infinity;
-
-    for (const c of this.coordinates) {
-      const d = Geodesic.distance(coords, c);
-      if (d < distance) {
-        if (d <= this.radius) {
-          // Guaranteed to be smallest, because non-overlapping promise
-          return d - this.radius;
-        }
-
-        distance = d;
-      }
-    }
-
-    return distance - this.radius;
-  }
-
-  perimeter(): number {
-    return this.coordinates.length * Math.PI * this.radius * 2;
-  }
-
-  setBBox(): GJ.BBox {
-    const bbox = bboxFromPositions(this.coordinates);
-    const pos1: GJ.Position = [bbox[0], bbox[1]];
-    const pos2: GJ.Position = bbox.length === 4 ? [bbox[2], bbox[3]] : [bbox[3], bbox[4]];
-    const west = Geodesic.destination(pos1, this.radius, 270.0)[0];
-    const south = Geodesic.destination(pos1, this.radius, 180.0)[1];
-    const east = Geodesic.destination(pos2, this.radius, 90.0)[0];
-    const north = Geodesic.destination(pos2, this.radius, 0.0)[1];
-
-    if (bbox.length === 4) {
-      this.bbox = [west, south, east, north];
-    } else {
-      this.bbox = [west, south, bbox[2], east, north, bbox[5]];
-    }
-
-    return this.bbox;
   }
 }
 

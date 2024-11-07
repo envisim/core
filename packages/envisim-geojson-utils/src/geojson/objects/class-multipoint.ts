@@ -28,17 +28,25 @@ export class MultiPoint extends AbstractPointObject<GJ.MultiPoint> implements GJ
     super({...obj, type: 'MultiPoint'}, shallow);
   }
 
+  // SINGLE TYPE OBJECT
+  setBBox(): GJ.BBox {
+    this.bbox = bboxFromPositions(this.coordinates);
+    return this.bbox;
+  }
+
+  override size(): number {
+    return this.coordinates.length;
+  }
+
   getCoordinateArray(): GJ.Position[] {
     return this.coordinates;
   }
 
-  get size(): number {
-    return this.coordinates.length;
-  }
-
-  buffer(options: BufferOptions): Circle | MultiCircle | Polygon | MultiPolygon | null {
-    const mc = MultiCircle.create(this.coordinates, 0.0, true);
-    return mc.buffer(options);
+  distanceToPosition(coords: GJ.Position): number {
+    return this.coordinates.reduce(
+      (prev, curr) => Math.min(prev, Geodesic.distance(curr, coords)),
+      Infinity,
+    );
   }
 
   centroid(iterations: number = 2): GJ.Position {
@@ -49,19 +57,10 @@ export class MultiPoint extends AbstractPointObject<GJ.MultiPoint> implements GJ
     return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations).centroid;
   }
 
-  count(): number {
-    return this.coordinates.length;
-  }
-
-  distanceToPosition(coords: GJ.Position): number {
-    return this.coordinates.reduce(
-      (prev, curr) => Math.min(prev, Geodesic.distance(curr, coords)),
-      Infinity,
-    );
-  }
-
-  setBBox(): GJ.BBox {
-    this.bbox = bboxFromPositions(this.coordinates);
-    return this.bbox;
+  // POINTOBJECT
+  // MULTIPOINT
+  buffer(options: BufferOptions): Circle | MultiCircle | Polygon | MultiPolygon | null {
+    const mc = MultiCircle.create(this.coordinates, 0.0, true);
+    return mc.buffer(options);
   }
 }

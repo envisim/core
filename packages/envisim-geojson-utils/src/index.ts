@@ -1,32 +1,9 @@
 // GeoJSON
 export * from './geojson/index.js';
 
-// Layer
-export {
-  Layer,
-  mergePropertyRecords,
-  type CategoricalProperty,
-  type NumericalProperty,
-  type Property,
-  type PropertyRecord,
-  PropertySpecialKeys,
-  createDesignWeightProperty,
-  createDistanceProperty,
-  createParentProperty,
-} from './layer/index.js';
-
 // Types
 export type * as GeoJSON from './types/geojson.js';
 export * as typeGuards from './types/type-guards.js';
-
-// GeometricPrimitive
-export {
-  GeometricPrimitive,
-  getGeometryPrimitive,
-  isGeometryPrimitive,
-  getFeaturePrimitive,
-  getCollectionPrimitive,
-} from './geometric-primitive/index.js';
 
 // Utils
 export {areaOfPolygonLonLat} from './utils/area.js';
@@ -54,6 +31,6 @@ export {
   intersectLineLineGeometries,
   intersectPointAreaGeometries,
 } from './intersect/index.js';
-
+export {perimeter} from './perimeter.js';
 export {pointInAreaGeometry} from './point-in-polygon.js';
 export {unionOfCollection as unionOfPolygons} from './union-of-polygons.js';

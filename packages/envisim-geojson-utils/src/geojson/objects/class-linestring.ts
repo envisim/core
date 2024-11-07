@@ -32,27 +32,14 @@ export class LineString extends AbstractLineObject<GJ.LineString> implements GJ.
     super({...obj, type: 'LineString'}, shallow);
   }
 
+  // SINGLE TYPE OBJECT
+  setBBox(): GJ.BBox {
+    this.bbox = bboxFromPositions(this.coordinates);
+    return this.bbox;
+  }
+
   getCoordinateArray(): GJ.Position[][] {
     return [this.coordinates];
-  }
-
-  get size(): number {
-    return 1;
-  }
-
-  buffer(options: BufferOptions): Polygon | MultiPolygon | null {
-    const opts = defaultBufferOptions(options);
-    if (opts.distance <= 0.0) return null;
-
-    return bufferPolygons([lineToRing(this.coordinates)], opts);
-  }
-
-  length(): number {
-    return lengthOfLineString(this.coordinates);
-  }
-
-  centroid(iterations: number = 2): GJ.Position {
-    return centroidOfLineString(this.coordinates, this.getBBox(), iterations).centroid;
   }
 
   distanceToPosition(coords: GJ.Position): number {
@@ -65,8 +52,20 @@ export class LineString extends AbstractLineObject<GJ.LineString> implements GJ.
     return d;
   }
 
-  setBBox(): GJ.BBox {
-    this.bbox = bboxFromPositions(this.coordinates);
-    return this.bbox;
+  centroid(iterations: number = 2): GJ.Position {
+    return centroidOfLineString(this.coordinates, this.getBBox(), iterations).centroid;
+  }
+
+  // LINE
+  length(): number {
+    return lengthOfLineString(this.coordinates);
+  }
+
+  // LINESTRING
+  buffer(options: BufferOptions): Polygon | MultiPolygon | null {
+    const opts = defaultBufferOptions(options);
+    if (opts.distance <= 0.0) return null;
+
+    return bufferPolygons([lineToRing(this.coordinates)], opts);
   }
 }

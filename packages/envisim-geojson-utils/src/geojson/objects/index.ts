@@ -8,17 +8,17 @@ import {Point} from './class-point.js';
 import {Polygon} from './class-polygon.js';
 
 export {
-  // Points
-  Point,
-  MultiPoint,
-  // Lines
-  LineString,
-  MultiLineString,
   // Areas
   Polygon,
   MultiPolygon,
   Circle,
   MultiCircle,
+  // Lines
+  LineString,
+  MultiLineString,
+  // Points
+  Point,
+  MultiPoint,
 };
 
 export {toAreaObject} from './to-area-object.js';
