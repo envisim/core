@@ -1,1 +1,1 @@
-export {Feature, type AreaFeature, type LineFeature, type PointFeature} from './class-feature.js';
+export {Feature} from './class-feature.js';

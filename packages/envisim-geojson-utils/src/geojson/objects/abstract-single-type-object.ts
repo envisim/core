@@ -1,6 +1,7 @@
 import {copy} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
+import {pointInBBox} from '../../utils/bbox.js';
 import {GeometricPrimitive} from '../geometric-primitive/index.js';
 
 export abstract class AbstractSingleTypeObject<T extends GJ.SingleTypeObject> {
@@ -27,6 +28,9 @@ export abstract class AbstractSingleTypeObject<T extends GJ.SingleTypeObject> {
   abstract setBBox(): GJ.BBox;
   getBBox(): GJ.BBox {
     return this.bbox ?? this.setBBox();
+  }
+  pointInBBox(point: GJ.Position): boolean {
+    return pointInBBox(point, this.getBBox());
   }
 
   size(): number {

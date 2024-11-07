@@ -1,4 +1,8 @@
-export {GeometricPrimitive} from './enum-geometric-primitive.js';
+export {
+  GeometricPrimitive,
+  type PrimitiveOfObject,
+  type ObjectOfPrimitive,
+} from './enum-geometric-primitive.js';
 
 export {
   getGeometryPrimitive,

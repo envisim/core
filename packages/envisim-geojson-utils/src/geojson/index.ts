@@ -21,7 +21,7 @@ export {
 } from './objects/index.js';
 
 // Features
-export {Feature, type AreaFeature, type LineFeature, type PointFeature} from './features/index.js';
+export {Feature} from './features/index.js';
 
 // FeatureCollections
 export {FeatureCollection} from './collections/index.js';

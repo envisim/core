@@ -18,4 +18,5 @@ export abstract class AbstractAreaObject<
 
   abstract area(): number;
   abstract perimeter(): number;
+  abstract includesPoint(point: GJ.Position): boolean;
 }

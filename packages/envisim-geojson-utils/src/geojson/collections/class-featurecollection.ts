@@ -77,7 +77,6 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     return new FeatureCollection(
       features.map((f) => Feature.createArea(f.geometry, f.properties ?? {}, shallow, options)),
       GeometricPrimitive.AREA,
-      true,
     );
   }
   static createLine(
@@ -87,7 +86,6 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     return new FeatureCollection(
       features.map((f) => Feature.createLine(f.geometry, f.properties ?? {}, shallow)),
       GeometricPrimitive.LINE,
-      true,
     );
   }
   static createPoint(
@@ -97,7 +95,6 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     return new FeatureCollection(
       features.map((f) => Feature.createPoint(f.geometry, f.properties ?? {}, shallow)),
       GeometricPrimitive.POINT,
-      true,
     );
   }
 
@@ -105,34 +102,39 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     features: Feature<AreaObject>[] = [],
     shallow: boolean = true,
   ): FeatureCollection<AreaObject> {
-    return new FeatureCollection(features, GeometricPrimitive.AREA, shallow);
+    return new FeatureCollection(
+      shallow === true
+        ? features
+        : features.map((f) => Feature.newArea(f.geometry, f.properties, false)),
+      GeometricPrimitive.AREA,
+    );
   }
   static newLine(
     features: Feature<LineObject>[] = [],
     shallow: boolean = true,
   ): FeatureCollection<LineObject> {
-    return new FeatureCollection(features, GeometricPrimitive.LINE, shallow);
+    return new FeatureCollection(
+      shallow === true
+        ? features
+        : features.map((f) => Feature.newLine(f.geometry, f.properties, false)),
+      GeometricPrimitive.LINE,
+    );
   }
   static newPoint(
     features: Feature<PointObject>[] = [],
     shallow: boolean = true,
   ): FeatureCollection<PointObject> {
-    return new FeatureCollection(features, GeometricPrimitive.POINT, shallow);
+    return new FeatureCollection(
+      shallow === true
+        ? features
+        : features.map((f) => Feature.newPoint(f.geometry, f.properties, false)),
+      GeometricPrimitive.POINT,
+    );
   }
 
-  private constructor(
-    features: Feature<T>[],
-    primitive: GeometricPrimitive,
-    shallow: boolean = true,
-  ) {
+  private constructor(features: Feature<T>[], primitive: GeometricPrimitive) {
     this.primitive = primitive;
-
-    if (shallow === true) {
-      this.features = features;
-      return;
-    }
-
-    this.features = this.features.map((f) => new Feature(f.geometry, f.properties, false));
+    this.features = features;
   }
 
   geometricPrimitive(): GeometricPrimitive {
@@ -206,7 +208,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
 
     this.forEach((feature) => {
       const bf = feature.geometry.buffer(options);
-      if (bf !== null) ac.addFeature(new Feature(bf, {}, true), true);
+      if (bf !== null) ac.addFeature(Feature.newArea(bf), true);
     });
 
     if (ac.features.length === 0) return null;
@@ -222,14 +224,26 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
   }
 
   // FEATURE HANDLING
-  addFeature(feature: Feature<T>, shallow: boolean = true): number {
+  addFeature(this: FeatureCollection<T>, feature: Feature<T>, shallow: boolean = true): number {
     if (shallow === true) {
-      this.features.push(feature);
-    } else {
-      this.features.push(new Feature(feature.geometry, feature.properties, false));
+      return this.features.push(feature);
     }
 
-    return this.features.length;
+    if (Feature.isArea(feature)) {
+      return this.features.push(
+        Feature.newArea(feature.geometry, feature.properties, false) as Feature<T>,
+      );
+    } else if (Feature.isLine(feature)) {
+      return this.features.push(
+        Feature.newLine(feature.geometry, feature.properties, false) as Feature<T>,
+      );
+    } else if (Feature.isPoint(feature)) {
+      return this.features.push(
+        Feature.newPoint(feature.geometry, feature.properties, false) as Feature<T>,
+      );
+    } else {
+      throw new TypeError('unknown feature');
+    }
   }
 
   removeFeature(index: number): void {

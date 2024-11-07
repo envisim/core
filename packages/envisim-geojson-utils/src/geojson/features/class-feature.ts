@@ -90,14 +90,36 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
     return new Feature(toPointObject(geometry, true), properties, shallow);
   }
 
-  constructor(geometry: T, properties: GJ.FeatureProperties = {}, shallow: boolean = true) {
+  static newArea(
+    geometry: AreaObject,
+    properties: GJ.FeatureProperties = {},
+    shallow: boolean = true,
+  ): Feature<AreaObject> {
+    return new Feature(shallow === true ? geometry : toAreaObject(geometry), properties, shallow);
+  }
+  static newLine(
+    geometry: LineObject,
+    properties: GJ.FeatureProperties = {},
+    shallow: boolean = true,
+  ): Feature<LineObject> {
+    return new Feature(shallow === true ? geometry : toLineObject(geometry), properties, shallow);
+  }
+  static newPoint(
+    geometry: PointObject,
+    properties: GJ.FeatureProperties = {},
+    shallow: boolean = true,
+  ): Feature<PointObject> {
+    return new Feature(shallow === true ? geometry : toPointObject(geometry), properties, shallow);
+  }
+
+  private constructor(geometry: T, properties: GJ.FeatureProperties = {}, shallow: boolean = true) {
+    this.geometry = geometry;
+
     if (shallow === true) {
-      this.geometry = geometry;
       this.properties = properties;
       return;
     }
 
-    this.geometry = geometry.constructor(geometry, false);
     this.properties = copy(properties);
   }
 
@@ -138,7 +160,3 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
     }
   }
 }
-
-export type AreaFeature = Feature<AreaObject>;
-export type LineFeature = Feature<LineObject>;
-export type PointFeature = Feature<PointObject>;

@@ -1,5 +1,5 @@
 import * as GJ from './types/geojson.js';
-import {AreaCollection, AreaFeature, MultiPolygon, Polygon} from './geojson/index.js';
+import {AreaObject, Feature, FeatureCollection, MultiPolygon, Polygon} from './geojson/index.js';
 import {CirclesToPolygonsOptions} from './utils/circles-to-polygons.js';
 import {IntersectList} from './utils/class-intersects.js';
 import {type Segment, ringToSegments, segmentsToPolygon} from './utils/class-segment.js';
@@ -51,9 +51,9 @@ export function unionOfPolygons(polygons: GJ.Position[][][]): GJ.Position2[][][]
  * @returns the union of the polygons in the areaCollection
  */
 export function unionOfCollection(
-  collection: AreaCollection,
+  collection: FeatureCollection<AreaObject>,
   options: CirclesToPolygonsOptions = {},
-): AreaCollection {
+): FeatureCollection<AreaObject> {
   const ppc = {pointsPerCircle: options.pointsPerCircle ?? 16};
   const geoms: GJ.Position[][][] = [];
 
@@ -71,17 +71,13 @@ export function unionOfCollection(
 
   const unionOfGeoms = unionOfPolygons(geoms);
 
-  if (unionOfGeoms.length === 0) {
-    return AreaCollection.create([]);
-  } else if (unionOfGeoms.length === 1) {
-    return AreaCollection.create(
-      [AreaFeature.create(Polygon.create(unionOfGeoms[0], true), {}, true)],
-      true,
-    );
+  const fc = FeatureCollection.newArea();
+
+  if (unionOfGeoms.length === 1) {
+    fc.addFeature(Feature.newArea(Polygon.create(unionOfGeoms[0])));
+  } else if (unionOfGeoms.length > 1) {
+    fc.addFeature(Feature.newArea(MultiPolygon.create(unionOfGeoms)));
   }
 
-  return AreaCollection.create(
-    [AreaFeature.create(MultiPolygon.create(unionOfGeoms, true), {}, true)],
-    true,
-  );
+  return fc;
 }

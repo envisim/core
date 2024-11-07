@@ -108,6 +108,10 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
     return this.coordinates.length * Math.PI * this.radius * 2;
   }
 
+  includesPoint(point: GJ.Position): boolean {
+    return this.pointInBBox(point) && this.distanceToPosition(point) <= 0.0;
+  }
+
   // MULTICIRCLE
   toPolygon(options: CirclesToPolygonsOptions = {}): Polygon | MultiPolygon | null {
     // Early return

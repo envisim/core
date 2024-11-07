@@ -8,7 +8,10 @@ import {bboxCrossesAntimeridian, bboxFromPositions, unionOfBBoxes} from '../../u
 import {centroidFromMultipleCentroids, centroidOfPolygon} from '../../utils/centroid.js';
 import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
 import {lengthOfLineString} from '../../utils/length.js';
-import {pointInSinglePolygonPosition} from '../../utils/pointInPolygonPosition.js';
+import {
+  pointInMultiPolygonPosition,
+  pointInSinglePolygonPosition,
+} from '../../utils/pointInPolygonPosition.js';
 import {AbstractAreaObject} from './abstract-area-object.js';
 import {Polygon} from './class-polygon.js';
 
@@ -86,6 +89,10 @@ export class MultiPolygon extends AbstractAreaObject<GJ.MultiPolygon> implements
       (prev, curr) => prev + curr.reduce((prev, curr) => prev + lengthOfLineString(curr), 0),
       0,
     );
+  }
+
+  includesPoint(point: GJ.Position): boolean {
+    return this.pointInBBox(point) && pointInMultiPolygonPosition(point, this.coordinates);
   }
 
   // MULTIPOLYGON
