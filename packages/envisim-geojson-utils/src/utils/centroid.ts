@@ -1,6 +1,6 @@
 import type * as GJ from '../types/geojson.js';
 import {bboxCenter} from './bbox.js';
-import {PlateCarree} from './class-platecarree.js';
+import {PlateCarree} from './class-plate-carree.js';
 import {azimuthalEquidistant} from './projections.js';
 
 // The centroid is the geographic center that minimizes the mean squared

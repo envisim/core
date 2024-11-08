@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest';
 
-import {FeatureCollection} from '../../src/geojson/collections/class-featurecollection.js';
+import {FeatureCollection} from '../../src/geojson/collections/class-feature-collection.js';
 import {MultiPoint, Point} from '../../src/index.js';
 
 test('geomEach', () => {

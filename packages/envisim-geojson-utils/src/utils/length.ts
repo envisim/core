@@ -1,5 +1,5 @@
 import type * as GJ from '../types/geojson.js';
-import {PlateCarree} from './class-platecarree.js';
+import {PlateCarree} from './class-plate-carree.js';
 
 /**
  * Computes the approximate length of a LineString, where each segment is

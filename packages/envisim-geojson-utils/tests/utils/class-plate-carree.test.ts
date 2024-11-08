@@ -1,7 +1,7 @@
 import {expect, test} from 'vitest';
 
 import {GeoJSON as GJ} from '../../src/index.js';
-import {PlateCarree} from '../../src/utils/class-platecarree.js';
+import {PlateCarree} from '../../src/utils/class-plate-carree.js';
 
 const p1: GJ.Position = [0, 0];
 const p2: GJ.Position = [1, 1];

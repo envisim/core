@@ -8,7 +8,7 @@ export * as typeGuards from './types/type-guards.js';
 // Utils
 export {Geodesic} from './utils/class-geodesic.js';
 export {Rhumb} from './utils/class-rhumb.js';
-export {PlateCarree} from './utils/class-platecarree.js';
+export {PlateCarree} from './utils/class-plate-carree.js';
 
 export {areaOfPolygonLonLat} from './utils/area.js';
 export {bbox4, bboxFromPositions, bboxInBBox, pointInBBox, unionOfBBoxes} from './utils/bbox.js';

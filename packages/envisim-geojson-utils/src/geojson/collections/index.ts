@@ -1,1 +1,1 @@
-export {FeatureCollection} from './class-featurecollection.js';
+export {FeatureCollection} from './class-feature-collection.js';
