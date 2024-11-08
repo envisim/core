@@ -12,9 +12,9 @@ export {PlateCarree} from './utils/class-platecarree.js';
 
 export {areaOfPolygonLonLat} from './utils/area.js';
 export {bbox4, bboxFromPositions, bboxInBBox, pointInBBox, unionOfBBoxes} from './utils/bbox.js';
-export {distancePositionToSegment} from './utils/distancePositionToSegment.js';
+export {distancePositionToSegment} from './utils/distance-position-to-segment.js';
 export {lengthOfLineString} from './utils/length.js';
-export {pointInSinglePolygonPosition} from './utils/pointInPolygonPosition.js';
+export {pointInSinglePolygonPosition} from './utils/point-in-polygon.js';
 export {
   checkInRange,
   checkLongitudeInRange,
@@ -22,7 +22,7 @@ export {
   longitudeCenter,
   normalizeLongitude,
 } from './utils/position.js';
-export {rotateCoord} from './utils/rotateCoord.js';
+export {rotateCoord} from './utils/rotate-coord.js';
 export {cutLineGeometry, cutAreaGeometry} from './utils/antimeridian.js';
 
 // Dependent

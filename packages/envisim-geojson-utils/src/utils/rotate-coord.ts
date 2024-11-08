@@ -14,18 +14,8 @@ const geodDirectOpts = geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE;
  * @param angle The angle of the rotation in degrees.
  * @returns the new coordinate as [lon,lat].
  */
-export function rotateCoord(
-  coord: GJ.Position,
-  refCoord: GJ.Position,
-  angle: number,
-): GJ.Position {
-  const result = geod.Inverse(
-    refCoord[1],
-    refCoord[0],
-    coord[1],
-    coord[0],
-    geodInverseOpts,
-  );
+export function rotateCoord(coord: GJ.Position, refCoord: GJ.Position, angle: number): GJ.Position {
+  const result = geod.Inverse(refCoord[1], refCoord[0], coord[1], coord[0], geodInverseOpts);
   const dist = result.s12 as number;
   const azimuth = result.azi1 as number;
 

@@ -10,7 +10,7 @@ import {
 import {bboxInBBox} from '../utils/bbox.js';
 import {CirclesToPolygonsOptions} from '../utils/circles-to-polygons.js';
 import {Segment} from '../utils/class-segment.js';
-import {pointInSinglePolygonPosition} from '../utils/pointInPolygonPosition.js';
+import {pointInSinglePolygonPosition} from '../utils/point-in-polygon.js';
 
 /**
  * Intersect between a line and an area.

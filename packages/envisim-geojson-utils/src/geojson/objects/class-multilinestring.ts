@@ -10,7 +10,7 @@ import {
 import {moveCoordsAroundEarth} from '../../utils/antimeridian.js';
 import {bboxCrossesAntimeridian, bboxFromPositions, unionOfBBoxes} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids, centroidOfLineString} from '../../utils/centroid.js';
-import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
+import {distancePositionToSegment} from '../../utils/distance-position-to-segment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {AbstractLineObject} from './abstract-line-object.js';
 import {MultiPolygon} from './class-multipolygon.js';

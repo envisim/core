@@ -1,7 +1,6 @@
 import {expect, test} from 'vitest';
 
-import {GeoJSON as GJ, Polygon} from '../src/index.js';
-import {pointInAreaGeometry} from '../src/point-in-polygon.js';
+import {GeoJSON as GJ, Polygon} from '../../src/index.js';
 
 const polygon = Polygon.create([
   [
@@ -21,7 +20,7 @@ const points: GJ.Position2[] = [
   [1.000001, 1.000001],
 ];
 
-test('pointInAreaGeometry', () => {
-  const res = points.map((p) => pointInAreaGeometry(p, polygon));
+test('includesPoint', () => {
+  const res = points.map((p) => polygon.includesPoint(p));
   expect(res).toEqual([true, false, true, true, false]);
 });

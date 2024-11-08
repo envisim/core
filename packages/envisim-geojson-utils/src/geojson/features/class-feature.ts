@@ -51,19 +51,19 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
   static createAreaFromJson(
     feature: OptionalParam<GJ.AreaFeature, 'type'>,
     shallow: boolean = true,
-  ): Feature<AreaObject> {
+  ): Feature<AreaObject> | null {
     return Feature.createArea(feature.geometry, feature.properties ?? {}, shallow);
   }
   static createLineFromJson(
     feature: OptionalParam<GJ.LineFeature, 'type'>,
     shallow: boolean = true,
-  ): Feature<LineObject> {
+  ): Feature<LineObject> | null {
     return Feature.createLine(feature.geometry, feature.properties ?? {}, shallow);
   }
   static createPointFromJson(
     feature: OptionalParam<GJ.PointFeature, 'type'>,
     shallow: boolean = true,
-  ): Feature<PointObject> {
+  ): Feature<PointObject> | null {
     return Feature.createPoint(feature.geometry, feature.properties ?? {}, shallow);
   }
 
@@ -72,54 +72,38 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
     properties: GJ.FeatureProperties = {},
     shallow: boolean = true,
     options: CirclesToPolygonsOptions = {},
-  ): Feature<AreaObject> {
-    return new Feature(toAreaObject(geometry, true, options), properties, shallow);
+  ): Feature<AreaObject> | null {
+    const geom = toAreaObject(geometry, true, options);
+    if (geom === null) return null;
+    return new Feature(geom, properties, shallow);
   }
   static createLine(
     geometry: GJ.LineGeometry,
     properties: GJ.FeatureProperties = {},
     shallow: boolean = true,
-  ): Feature<LineObject> {
-    return new Feature(toLineObject(geometry, true), properties, shallow);
+  ): Feature<LineObject> | null {
+    const geom = toLineObject(geometry, true);
+    if (geom === null) return null;
+    return new Feature(geom, properties, shallow);
   }
   static createPoint(
     geometry: GJ.PointGeometry,
     properties: GJ.FeatureProperties = {},
     shallow: boolean = true,
-  ): Feature<PointObject> {
-    return new Feature(toPointObject(geometry, true), properties, shallow);
+  ): Feature<PointObject> | null {
+    const geom = toPointObject(geometry, true);
+    if (geom === null) return null;
+    return new Feature(geom, properties, shallow);
   }
 
-  static newArea(
-    geometry: AreaObject,
-    properties: GJ.FeatureProperties = {},
-    shallow: boolean = true,
-  ): Feature<AreaObject> {
-    return new Feature(shallow === true ? geometry : toAreaObject(geometry), properties, shallow);
-  }
-  static newLine(
-    geometry: LineObject,
-    properties: GJ.FeatureProperties = {},
-    shallow: boolean = true,
-  ): Feature<LineObject> {
-    return new Feature(shallow === true ? geometry : toLineObject(geometry), properties, shallow);
-  }
-  static newPoint(
-    geometry: PointObject,
-    properties: GJ.FeatureProperties = {},
-    shallow: boolean = true,
-  ): Feature<PointObject> {
-    return new Feature(shallow === true ? geometry : toPointObject(geometry), properties, shallow);
-  }
-
-  private constructor(geometry: T, properties: GJ.FeatureProperties = {}, shallow: boolean = true) {
-    this.geometry = geometry;
-
+  constructor(geometry: T, properties: GJ.FeatureProperties = {}, shallow: boolean = true) {
     if (shallow === true) {
+      this.geometry = geometry;
       this.properties = properties;
       return;
     }
 
+    this.geometry = (geometry.constructor as (obj: T, shallow: boolean) => T)(geometry, false);
     this.properties = copy(properties);
   }
 

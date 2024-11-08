@@ -76,7 +76,11 @@ export class Layer<T extends AreaObject | LineObject | PointObject> {
         geometry = toAreaObject(feature.geometry, shallow, options);
       }
 
-      const feat = Feature.createArea(geometry, {}, true, options);
+      if (geometry === null) {
+        continue;
+      }
+
+      const feat = new Feature(geometry, {}, true);
       setProperties(layer, feat, feature.properties ?? {});
       layer.collection.addFeature(feat);
     }
@@ -113,7 +117,11 @@ export class Layer<T extends AreaObject | LineObject | PointObject> {
         geometry = toLineObject(feature.geometry, shallow);
       }
 
-      const feat = Feature.createLine(geometry, {}, true);
+      if (geometry === null) {
+        continue;
+      }
+
+      const feat = new Feature(geometry, {}, true);
       setProperties(layer, feat, feature.properties ?? {});
       layer.collection.addFeature(feat);
     }
@@ -150,7 +158,11 @@ export class Layer<T extends AreaObject | LineObject | PointObject> {
         geometry = toPointObject(feature.geometry, shallow);
       }
 
-      const feat = Feature.createPoint(geometry, {}, true);
+      if (geometry === null) {
+        continue;
+      }
+
+      const feat = new Feature(geometry, {}, true);
       setProperties(layer, feat, feature.properties ?? {});
       layer.collection.addFeature(feat);
     }
@@ -212,6 +224,10 @@ export class Layer<T extends AreaObject | LineObject | PointObject> {
    * @throws RangeError if property record does not contain the same IDs
    */
   appendFromLayer(layer: Layer<T>, shallow: boolean = true): void {
+    if (this.geometricPrimitive() !== layer.geometricPrimitive()) {
+      throw new TypeError('layer types does not match');
+    }
+
     const thisKeys = Object.keys(this.propertyRecord);
     const layerKeys = Object.keys(layer.propertyRecord);
 

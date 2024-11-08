@@ -1,5 +1,5 @@
 import * as GJ from './types/geojson.js';
-import {AreaObject, Feature, FeatureCollection, MultiPolygon, Polygon} from './geojson/index.js';
+import {AreaObject, FeatureCollection, MultiPolygon, Polygon} from './geojson/index.js';
 import {CirclesToPolygonsOptions} from './utils/circles-to-polygons.js';
 import {IntersectList} from './utils/class-intersects.js';
 import {type Segment, ringToSegments, segmentsToPolygon} from './utils/class-segment.js';
@@ -74,9 +74,9 @@ export function unionOfCollection(
   const fc = FeatureCollection.newArea();
 
   if (unionOfGeoms.length === 1) {
-    fc.addFeature(Feature.newArea(Polygon.create(unionOfGeoms[0])));
+    fc.addGeometry(Polygon.create(unionOfGeoms[0]));
   } else if (unionOfGeoms.length > 1) {
-    fc.addFeature(Feature.newArea(MultiPolygon.create(unionOfGeoms)));
+    fc.addGeometry(MultiPolygon.create(unionOfGeoms));
   }
 
   return fc;

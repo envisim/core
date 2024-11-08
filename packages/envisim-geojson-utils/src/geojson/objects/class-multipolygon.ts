@@ -6,12 +6,12 @@ import {moveCoordsAroundEarth} from '../../utils/antimeridian.js';
 import {areaOfPolygonLonLat} from '../../utils/area.js';
 import {bboxCrossesAntimeridian, bboxFromPositions, unionOfBBoxes} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids, centroidOfPolygon} from '../../utils/centroid.js';
-import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
+import {distancePositionToSegment} from '../../utils/distance-position-to-segment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {
   pointInMultiPolygonPosition,
   pointInSinglePolygonPosition,
-} from '../../utils/pointInPolygonPosition.js';
+} from '../../utils/point-in-polygon.js';
 import {AbstractAreaObject} from './abstract-area-object.js';
 import {Polygon} from './class-polygon.js';
 

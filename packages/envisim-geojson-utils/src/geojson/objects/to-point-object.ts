@@ -4,7 +4,7 @@ import {MultiPoint} from './class-multipoint.js';
 import {Point} from './class-point.js';
 import type {PointObject} from './index.js';
 
-export function toPointObject(geometry: GJ.Geometry, shallow: boolean = true): PointObject {
+export function toPointObject(geometry: GJ.Geometry, shallow: boolean = true): PointObject | null {
   switch (geometry.type) {
     case 'Point':
       if (isCircle(geometry) === false) {
@@ -26,13 +26,13 @@ export function toPointObject(geometry: GJ.Geometry, shallow: boolean = true): P
       return geometryCollection(geometry, shallow);
   }
 
-  throw new TypeError('type not supported');
+  return null;
 }
 
 function geometryCollection(
   geometry: GJ.GeometryCollection<GJ.SingleTypeObject>,
   shallow: boolean,
-): PointObject {
+): PointObject | null {
   if (geometry.geometries.length === 1) {
     return toPointObject(geometry.geometries[0], shallow);
   }
@@ -48,7 +48,7 @@ function geometryCollection(
   }
 
   if (coordinates.length === 0) {
-    throw new TypeError('type not supported');
+    return null;
   } else if (coordinates.length === 1) {
     return Point.create(coordinates[0], shallow);
   }

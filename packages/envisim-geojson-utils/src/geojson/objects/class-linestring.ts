@@ -9,7 +9,7 @@ import {
 } from '../../buffer/index.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidOfLineString} from '../../utils/centroid.js';
-import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
+import {distancePositionToSegment} from '../../utils/distance-position-to-segment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {AbstractLineObject} from './abstract-line-object.js';
 import {MultiPolygon} from './class-multipolygon.js';

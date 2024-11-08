@@ -11,7 +11,7 @@ export function toAreaObject(
   geometry: GJ.Geometry,
   shallow: boolean = true,
   options: CirclesToPolygonsOptions = {},
-): AreaObject {
+): AreaObject | null {
   switch (geometry.type) {
     case 'Point':
       if (isCircle(geometry)) {
@@ -43,14 +43,14 @@ export function toAreaObject(
       return geometryCollection(geometry, shallow, options);
   }
 
-  throw new TypeError('type not supported');
+  return null;
 }
 
 function geometryCollection(
   geometry: GJ.GeometryCollection<GJ.SingleTypeObject>,
   shallow: boolean,
   options: CirclesToPolygonsOptions = {},
-): AreaObject {
+): AreaObject | null {
   if (geometry.geometries.length === 1) {
     return toAreaObject(geometry.geometries[0], shallow, options);
   }
@@ -88,7 +88,7 @@ function geometryCollection(
   }
 
   if (coordinates.length === 0) {
-    throw new TypeError('type not supported');
+    return null;
   } else if (coordinates.length === 1) {
     return Polygon.create(coordinates[0], shallow);
   }

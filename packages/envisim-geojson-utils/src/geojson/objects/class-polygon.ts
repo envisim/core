@@ -5,9 +5,9 @@ import {type BufferOptions, bufferPolygons, defaultBufferOptions} from '../../bu
 import {areaOfPolygonLonLat} from '../../utils/area.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidOfPolygon} from '../../utils/centroid.js';
-import {distancePositionToSegment} from '../../utils/distancePositionToSegment.js';
+import {distancePositionToSegment} from '../../utils/distance-position-to-segment.js';
 import {lengthOfLineString} from '../../utils/length.js';
-import {pointInSinglePolygonPosition} from '../../utils/pointInPolygonPosition.js';
+import {pointInSinglePolygonPosition} from '../../utils/point-in-polygon.js';
 import {AbstractAreaObject} from './abstract-area-object.js';
 import {MultiPolygon} from './class-multipolygon.js';
 
