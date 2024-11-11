@@ -1,17 +1,13 @@
 import {Normal, Poisson} from '@envisim/distributions';
 import {
-  AreaCollection,
-  AreaFeature,
+  type AreaObject,
+  FeatureCollection,
   type GeoJSON as GJ,
   Geodesic,
-  GeometricPrimitive,
-  Layer,
   Point,
-  PointCollection,
-  PointFeature,
+  type PointObject,
   Polygon,
   bbox4,
-  pointInAreaGeometry,
   pointInBBox,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
@@ -61,22 +57,20 @@ interface ThomasClusterProcessOptions {
  * Generates points from a Thomas cluster point process
  * on areas of input area layer.
  *
- * @param layer
+ * @param collection
  * @param opts
 
  */
 export function thomasClusterProcess(
-  layer: Layer<AreaCollection>,
+  collection: FeatureCollection<AreaObject>,
   {
     intensityOfParents,
     meanOfCluster,
     sigmaOfCluster,
     rand = new Random(),
   }: ThomasClusterProcessOptions,
-): Layer<PointCollection> {
-  Layer.assert(layer, GeometricPrimitive.AREA);
-
-  const box = bbox4(layer.collection.getBBox());
+): FeatureCollection<PointObject> {
+  const box = bbox4(collection.getBBox());
   // Extend box by 4 * sigmaOfCluster to avoid edge effects.
   // Same as spatstat default in R.
   const dist = Math.SQRT2 * 4 * sigmaOfCluster;
@@ -87,7 +81,7 @@ export function thomasClusterProcess(
   // Expanded box as polygon coordinates counterclockwise.
   const expandedBoxPolygonCoords = [[westNorth, westSouth, eastSouth, eastNorth, westNorth]];
   // Expanded box as Feature
-  const expandedBoxPolygon = AreaFeature.create(Polygon.create(expandedBoxPolygonCoords), {}, true);
+  const expandedBoxPolygon = Polygon.create(expandedBoxPolygonCoords);
   // Generate parents in expanded box.
   const A = expandedBoxPolygon.area();
   // TODO?: The expanded box polygon may overlap antimeridian
@@ -103,7 +97,7 @@ export function thomasClusterProcess(
   );
 
   // To store new features.
-  const features: PointFeature[] = [];
+  const newCollection = FeatureCollection.newPoint();
   // Generate number of points in each cluster.
   const nrOfPointsInCluster = Poisson.random(
     nrOfParents,
@@ -114,7 +108,7 @@ export function thomasClusterProcess(
   );
 
   // nr of features in collection
-  const nrOfFeatures = layer.collection.features.length;
+  const nrOfFeatures = collection.features.length;
 
   parentsInBox.forEach((coords, index: number) => {
     // Generate the child points and push if they are inside
@@ -126,16 +120,15 @@ export function thomasClusterProcess(
       // If child is in input collection, then push child.
       if (pointInBBox(coordinates, box)) {
         for (let j = 0; j < nrOfFeatures; j++) {
-          const lcfg = layer.collection.features[j].geometry;
-          if (lcfg.type === 'GeometryCollection') continue;
-          if (pointInAreaGeometry(coordinates, lcfg)) {
-            const child = PointFeature.create(Point.create(coordinates), {}, true);
-            features.push(child);
+          const geom = collection.features[j].geometry;
+          if (geom.includesPosition(coordinates)) {
+            newCollection.addGeometry(Point.create(coordinates));
             break;
           }
         }
       }
     }
   });
-  return new Layer(new PointCollection({features}, true), {}, true);
+
+  return newCollection;
 }

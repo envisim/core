@@ -1,6 +1,5 @@
 import type * as GJ from '../types/geojson.js';
 import {AreaObject, MultiPoint, Point, PointObject} from '../geojson/index.js';
-import {pointInAreaGeometry} from '../point-in-polygon.js';
 import {bboxInBBox} from '../utils/bbox.js';
 
 /**
@@ -20,7 +19,7 @@ export function intersectPointAreaGeometries(
   // Check each position
   const coordinates: GJ.Position[] = point
     .getCoordinateArray()
-    .filter((p) => pointInAreaGeometry(p, area));
+    .filter((p) => area.includesPosition(p));
 
   if (coordinates.length === 0) {
     return null;

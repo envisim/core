@@ -1,9 +1,4 @@
-import {
-  AreaCollection,
-  GeometricPrimitive,
-  Layer,
-  PointCollection,
-} from '@envisim/geojson-utils';
+import {type AreaObject, FeatureCollection, type PointObject} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
 import {samplePointsOnAreas} from '../sample-continuous/index.js';
@@ -25,24 +20,23 @@ interface UniformBinomialPointProcessOptions {
  * on areas of input area layer. The points are generated
  * uniformly on a spherical model of the earth.
  *
- * @param layer
+ * @param collection
  * @param opts
  */
 export function uniformBinomialPointProcess(
-  layer: Layer<AreaCollection>,
+  collection: FeatureCollection<AreaObject>,
   {sampleSize, rand = new Random()}: UniformBinomialPointProcessOptions,
-): Layer<PointCollection> {
-  Layer.assert(layer, GeometricPrimitive.AREA);
-
-  const pointsLayer = samplePointsOnAreas(layer, {
+): FeatureCollection<PointObject> {
+  const pointCollection = samplePointsOnAreas(collection, {
     pointSelection: 'independent',
     sampleSize,
     rand,
   });
+
   // Remove _designWeight property
-  pointsLayer.collection.forEach((feature) => {
+  pointCollection.forEach((feature) => {
     feature.properties = {};
   });
-  pointsLayer.propertyRecord = {};
-  return pointsLayer;
+  pointCollection.propertyRecord = {};
+  return pointCollection;
 }

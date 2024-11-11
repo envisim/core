@@ -1,10 +1,9 @@
 import {
-  type AreaCollection,
+  type AreaObject,
+  FeatureCollection,
   type GeoJSON as GJ,
-  GeometricPrimitive,
-  Layer,
-  type LineCollection,
-  type PointCollection,
+  type LineObject,
+  type PointObject,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
@@ -35,9 +34,10 @@ export const SAMPLE_BASE_OPTIONS: Readonly<Required<SampleBaseOptions>> = {
  *
  * @returns `0` if check passes
  */
-export function sampleBaseOptionsCheck<
-  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
->(_: T, {pointsPerCircle}: SampleBaseOptions): number {
+export function sampleBaseOptionsCheck<T extends AreaObject | LineObject | PointObject>(
+  _: FeatureCollection<T>,
+  {pointsPerCircle}: SampleBaseOptions,
+): number {
   if (
     pointsPerCircle !== undefined &&
     (!Number.isInteger(pointsPerCircle) || pointsPerCircle <= 0)
@@ -89,10 +89,8 @@ export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
  *
  * @returns `0` if check passes
  */
-export function samplePointOptionsCheck<
-  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
->(
-  layer: T,
+export function samplePointOptionsCheck<T extends AreaObject | LineObject | PointObject>(
+  collection: FeatureCollection<T>,
   {
     // pointSelection,
     sampleSize,
@@ -101,7 +99,7 @@ export function samplePointOptionsCheck<
     ...options
   }: SamplePointOptions,
 ): number {
-  const baseCheck = sampleBaseOptionsCheck(layer, options);
+  const baseCheck = sampleBaseOptionsCheck(collection, options);
   if (baseCheck !== 0) {
     return baseCheck;
   }
@@ -157,15 +155,15 @@ export const SAMPLE_FEATURE_OPTIONS: Readonly<
 /**
  * Returns the following errors:
  * - <300: any error from {@link samplePointOptionsCheck}
- * - 310: layer is not {@link Layer<AreaCollection>}
+ * - 310: layer is not {@link FeatureCollection<AreaCollection>}
  *
  * @returns `0` if check passes
  */
 export function sampleFeatureOptionsCheck<
-  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
+  T extends AreaObject | LineObject | PointObject,
   F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
 >(
-  layer: T,
+  collection: FeatureCollection<T>,
   {
     // modelFeature,
     // rotation,
@@ -173,12 +171,12 @@ export function sampleFeatureOptionsCheck<
     ...options
   }: SampleFeatureOptions<F>,
 ): number {
-  const pointCheck = samplePointOptionsCheck(layer, options);
+  const pointCheck = samplePointOptionsCheck(collection, options);
   if (pointCheck !== 0) {
     return pointCheck;
   }
 
-  if (!Layer.isLayer(layer, GeometricPrimitive.AREA)) {
+  if (!FeatureCollection.isArea(collection)) {
     return 310;
   }
 
@@ -217,16 +215,16 @@ export const SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS: Readonly<
  * @returns `0` if check passes
  */
 export function sampleSystematicLineOnAreaOptionsCheck<
-  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
+  T extends AreaObject | LineObject | PointObject,
 >(
-  layer: T,
+  collection: FeatureCollection<T>,
   {
     distBetween,
     // rotation,
     ...options
   }: SampleSystematicLineOnAreaOptions,
 ): number {
-  const baseCheck = sampleBaseOptionsCheck(layer, options);
+  const baseCheck = sampleBaseOptionsCheck(collection, options);
   if (baseCheck !== 0) {
     return baseCheck;
   }
@@ -263,10 +261,11 @@ export const SAMPLE_BELT_ON_AREA_OPTIONS: Readonly<
  *
  * @returns `0` if check passes
  */
-export function sampleBeltOnAreaOptionsCheck<
-  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
->(layer: T, {halfWidth, ...options}: SampleBeltOnAreaOptions): number {
-  const systematicLineOnAreaCheck = sampleBaseOptionsCheck(layer, options);
+export function sampleBeltOnAreaOptionsCheck<T extends AreaObject | LineObject | PointObject>(
+  collection: FeatureCollection<T>,
+  {halfWidth, ...options}: SampleBeltOnAreaOptions,
+): number {
+  const systematicLineOnAreaCheck = sampleBaseOptionsCheck(collection, options);
   if (systematicLineOnAreaCheck !== 0) {
     return systematicLineOnAreaCheck;
   }

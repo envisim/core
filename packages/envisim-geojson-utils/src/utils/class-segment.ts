@@ -1,5 +1,5 @@
 import type * as GJ from '../types/geojson.js';
-import {Geodesic} from './Geodesic.js';
+import {Geodesic} from './class-geodesic.js';
 
 export class Segment {
   static checkParameter(param: number): boolean {
@@ -167,6 +167,22 @@ export class Segment {
     }
 
     return this.p1[0] < this.p2[0] ? this.p2 : this.p1;
+  }
+
+  distanceToPosition(position: GJ.Position): number {
+    const p1diff = [position[0] - this.p1[0], position[1] - this.p1[1]];
+
+    const c1 = this.delta[0] * p1diff[0] + this.delta[1] * p1diff[1];
+    if (c1 <= 0.0) {
+      return Geodesic.distance(position, this.p1);
+    }
+
+    const c2 = this.delta[0] * this.delta[0] + this.delta[1] * this.delta[1];
+    if (c2 <= c1) {
+      return Geodesic.distance(position, this.p2);
+    }
+
+    return Geodesic.distance(position, this.position(c1 / c2));
   }
 }
 

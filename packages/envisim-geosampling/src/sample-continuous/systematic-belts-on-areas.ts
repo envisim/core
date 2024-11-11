@@ -1,10 +1,8 @@
 import {
-  AreaCollection,
-  AreaFeature,
+  type AreaObject,
+  FeatureCollection,
   type GeoJSON as GJ,
   Geodesic,
-  Layer,
-  Polygon,
   bbox4,
   createDesignWeightProperty,
   cutAreaGeometry,
@@ -12,6 +10,7 @@ import {
   longitudeDistance,
   normalizeLongitude,
   rotateCoord,
+  toAreaObject,
 } from '@envisim/geojson-utils';
 
 import {intersectAreaSampleAreaFrame} from '../utils/index.js';
@@ -24,11 +23,11 @@ import {
 /**
  * Selects a systematic sample of belts on areas.
  *
- * @param layer
+ * @param collection
  * @param opts
  */
 export const sampleSystematicBeltsOnAreas = (
-  layer: Layer<AreaCollection>,
+  collection: FeatureCollection<AreaObject>,
   {
     rand = SAMPLE_BELT_ON_AREA_OPTIONS.rand,
     pointsPerCircle = SAMPLE_BELT_ON_AREA_OPTIONS.pointsPerCircle,
@@ -36,8 +35,8 @@ export const sampleSystematicBeltsOnAreas = (
     rotation = SAMPLE_BELT_ON_AREA_OPTIONS.rotation,
     halfWidth,
   }: SampleBeltOnAreaOptions,
-): Layer<AreaCollection> => {
-  const optionsError = sampleBeltOnAreaOptionsCheck(layer, {
+): FeatureCollection<AreaObject> => {
+  const optionsError = sampleBeltOnAreaOptionsCheck(collection, {
     pointsPerCircle,
     distBetween,
     rotation,
@@ -48,16 +47,12 @@ export const sampleSystematicBeltsOnAreas = (
   }
 
   const numPointsPerLine = 20;
-  const box = bbox4(layer.collection.getBBox());
+  const box = bbox4(collection.getBBox());
   const randomStart = rand.float() * distBetween;
 
-  const latPerMeter =
-    (box[3] - box[1]) / Geodesic.distance([box[0], box[1]], [box[0], box[3]]);
+  const latPerMeter = (box[3] - box[1]) / Geodesic.distance([box[0], box[1]], [box[0], box[3]]);
 
-  const refCoord: GJ.Position = [
-    longitudeCenter(box[0], box[2]),
-    box[1] + (box[3] - box[1]) / 2.0,
-  ];
+  const refCoord: GJ.Position = [longitudeCenter(box[0], box[2]), box[1] + (box[3] - box[1]) / 2.0];
 
   const maxRadius = Math.max(
     Geodesic.distance([box[0], box[1]], refCoord),
@@ -74,21 +69,9 @@ export const sampleSystematicBeltsOnAreas = (
     smallestAtLat = box[3];
   }
 
-  const minLon = Geodesic.destination(
-    [refCoord[0], smallestAtLat],
-    maxRadius,
-    270,
-  )[0];
-  const maxLon = Geodesic.destination(
-    [refCoord[0], smallestAtLat],
-    maxRadius,
-    90,
-  )[0];
-  const minLat = Geodesic.destination(
-    refCoord,
-    maxRadius + halfWidth,
-    180.0,
-  )[1];
+  const minLon = Geodesic.destination([refCoord[0], smallestAtLat], maxRadius, 270.0)[0];
+  const maxLon = Geodesic.destination([refCoord[0], smallestAtLat], maxRadius, 90.0)[0];
+  const minLat = Geodesic.destination(refCoord, maxRadius + halfWidth, 180.0)[1];
   const lonDist = longitudeDistance(minLon, maxLon);
   const numLines = Math.ceil((2.0 * maxRadius) / distBetween);
 
@@ -126,21 +109,13 @@ export const sampleSystematicBeltsOnAreas = (
     thisRing.push([...thisRing[0]]);
     rings.push(thisRing);
   }
-  const features = rings.map((coords) => {
-    return AreaFeature.create(
-      cutAreaGeometry(new Polygon({coordinates: [coords]}, true)),
-      {_designWeight: distBetween / (halfWidth * 2.0)},
-      true,
-    );
-  });
 
-  return new Layer(
-    intersectAreaSampleAreaFrame(
-      AreaCollection.create(features, true),
-      layer.collection,
-      pointsPerCircle,
-    ),
-    {_designWeight: createDesignWeightProperty()},
-    true,
-  );
+  const sc = FeatureCollection.newArea([], {_designWeight: createDesignWeightProperty()});
+  for (const coords of rings) {
+    const geom = toAreaObject(cutAreaGeometry({type: 'Polygon', coordinates: [coords]}));
+    if (geom === null) continue;
+    sc.addGeometry(geom, {_designWeight: distBetween / (halfWidth * 2.0)}, true);
+  }
+
+  return intersectAreaSampleAreaFrame(sc, collection, {pointsPerCircle});
 };

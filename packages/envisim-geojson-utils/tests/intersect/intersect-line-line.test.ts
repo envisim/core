@@ -2,7 +2,6 @@ import {expect, test} from 'vitest';
 
 import {LineString, Point} from '../../src/index.js';
 import {intersectLineLineGeometries} from '../../src/intersect/intersect-line-line.js';
-import '../_equalArrays.testf';
 
 const line1 = LineString.create([
   [-2, 0],
@@ -18,5 +17,5 @@ test('intersect line-line', () => {
   Point.assert(intersection);
   const coords = intersection.coordinates;
 
-  expect(coords).arrayToAlmostEqual([0, 0], 1e-9);
+  expect(coords).toEqual([0, 0]);
 });

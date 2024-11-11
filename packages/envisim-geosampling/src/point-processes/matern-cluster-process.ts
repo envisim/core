@@ -1,17 +1,13 @@
 import {Poisson} from '@envisim/distributions';
 import {
-  AreaCollection,
-  AreaFeature,
+  type AreaObject,
+  FeatureCollection,
   type GeoJSON as GJ,
   Geodesic,
-  GeometricPrimitive,
-  Layer,
   Point,
-  PointCollection,
-  PointFeature,
+  type PointObject,
   Polygon,
   bbox4,
-  pointInAreaGeometry,
   pointInBBox,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
@@ -61,17 +57,15 @@ interface MaternClusterProcessOptions {
  * @param opts
  */
 export function maternClusterProcess(
-  layer: Layer<AreaCollection>,
+  fc: FeatureCollection<AreaObject>,
   {
     intensityOfParents,
     meanOfCluster,
     radiusOfCluster,
     rand = new Random(),
   }: MaternClusterProcessOptions,
-): Layer<PointCollection> {
-  Layer.assert(layer, GeometricPrimitive.AREA);
-
-  const box = bbox4(layer.collection.getBBox());
+): FeatureCollection<PointObject> {
+  const box = bbox4(fc.getBBox());
   // Expand box by radius of cluster, as parent points should
   // be allowed outside of area. This is to avoid edge effects.
   const dist = Math.SQRT2 * radiusOfCluster;
@@ -82,7 +76,7 @@ export function maternClusterProcess(
   // Expanded box as polygon coordinates counterclockwise.
   const expandedBoxPolygonCoords = [[westNorth, westSouth, eastSouth, eastNorth, westNorth]];
   // Expanded box as Feature.
-  const expandedBoxPolygon = AreaFeature.create(Polygon.create(expandedBoxPolygonCoords), {}, true);
+  const expandedBoxPolygon = Polygon.create(expandedBoxPolygonCoords);
   // Generate parents in expanded box.
 
   const A = expandedBoxPolygon.area();
@@ -98,7 +92,8 @@ export function maternClusterProcess(
   );
 
   // To store new features.
-  const features: PointFeature[] = [];
+  const newCollection = FeatureCollection.newPoint();
+  // const features: Feature<PointObject>[] = [];
   // Generate number of points in each cluster.
   const nrOfPointsInCluster = Poisson.random(
     nrOfParents,
@@ -109,7 +104,7 @@ export function maternClusterProcess(
   );
 
   // nr of features in collection
-  const nrOfFeatures = layer.collection.features.length;
+  const nrOfFeatures = fc.features.length;
 
   parentsInBox.forEach((coords, index: number) => {
     // Generate the child points and push if they are inside
@@ -121,15 +116,15 @@ export function maternClusterProcess(
       // If child is in input collection, then push child.
       if (pointInBBox(coordinates, box)) {
         for (let j = 0; j < nrOfFeatures; j++) {
-          const geom = layer.collection.features[j].geometry;
-          if (geom.type !== 'GeometryCollection' && pointInAreaGeometry(coordinates, geom)) {
-            const child = PointFeature.create(Point.create(coordinates), {}, true);
-            features.push(child);
+          const geom = fc.features[j].geometry;
+          if (geom.includesPosition(coordinates)) {
+            newCollection.addGeometry(Point.create(coordinates));
             break;
           }
         }
       }
     }
   });
-  return new Layer(new PointCollection({features}, true), {}, true);
+
+  return newCollection;
 }

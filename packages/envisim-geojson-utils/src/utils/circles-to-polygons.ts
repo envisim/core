@@ -1,6 +1,6 @@
 import type * as GJ from '../types/geojson.js';
-import {Geodesic} from './Geodesic.js';
 import {rerollPolygons} from './antimeridian.js';
+import {Geodesic} from './class-geodesic.js';
 
 export interface CirclesToPolygonsOptions {
   pointsPerCircle?: number;

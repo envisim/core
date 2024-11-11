@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest';
 
-import {AreaCollection, AreaFeature, GeoJSON as GJ, MultiPolygon, Polygon} from '../src/index.js';
+import {FeatureCollection, GeoJSON as GJ, MultiPolygon, Polygon} from '../src/index.js';
 import {unionOfCollection} from '../src/union-of-polygons.js';
 
 const pol1: GJ.Position[][] = [
@@ -23,8 +23,9 @@ const pol2: GJ.Position[][] = [
   ],
 ];
 
-const mp = MultiPolygon.create([pol1, pol2], true);
-const ac = AreaCollection.create([AreaFeature.create(mp, {}, true)], true);
+const ac = FeatureCollection.newArea();
+ac.addGeometry(MultiPolygon.create([pol1, pol2]));
+
 const uc = unionOfCollection(ac);
 
 test('unionOfPolygons', () => {

@@ -1,4 +1,4 @@
-import {describe, expect, test} from 'vitest';
+import {expect, test} from 'vitest';
 
 import {Segment, intersects} from '../../src/utils/class-segment.js';
 
@@ -18,77 +18,58 @@ const segments = [
   /*12*/ new Segment([4, 6], [3, 7]),
 ];
 
-describe('Class Segment', () => {
-  test('delta', () => {
-    expect(segments[0].delta).toEqual([-10, 10]);
-    expect(segments[1].delta).toEqual([10, 10]);
-    expect(segments[2].delta).toEqual([20, 10]);
-    expect(segments[3].delta).toEqual([4, 4]);
-    expect(segments[4].delta).toEqual([12, 12]);
-    expect(segments[5].delta).toEqual([12, 12]);
-    expect(segments[6].delta).toEqual([5, 5]);
-    expect(segments[7].delta).toEqual([-10, -10]);
-    expect(segments[8].delta).toEqual([10, 10]);
-    expect(segments[9].delta).toEqual([0, 10]);
-    expect(segments[10].delta).toEqual([10, 0]);
-  });
+test('delta', () => {
+  expect(segments[0].delta).toEqual([-10, 10]);
+  expect(segments[1].delta).toEqual([10, 10]);
+  expect(segments[2].delta).toEqual([20, 10]);
+  expect(segments[3].delta).toEqual([4, 4]);
+  expect(segments[4].delta).toEqual([12, 12]);
+  expect(segments[5].delta).toEqual([12, 12]);
+  expect(segments[6].delta).toEqual([5, 5]);
+  expect(segments[7].delta).toEqual([-10, -10]);
+  expect(segments[8].delta).toEqual([10, 10]);
+  expect(segments[9].delta).toEqual([0, 10]);
+  expect(segments[10].delta).toEqual([10, 0]);
+});
 
-  test('vertical', () => {
-    expect(segments.map((seg) => seg.isVertical())).toEqual([
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      true,
-      false,
-    ]);
-  });
+test('vertical', () => {
+  expect(segments.map((seg) => seg.isVertical())).toEqual([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    false,
+    true,
+    false,
+  ]);
+});
 
-  test('intersect', () => {
-    expect(intersects(segments[0], segments[1])).toEqual([[0.5, 0.5]]);
-    expect(intersects(segments[0], segments[2])).toEqual([[1 / 3, 1 / 3]]);
-    expect(intersects(segments[0], segments[3])).toEqual([[0.5, 0.5]]);
-    expect(intersects(segments[0], segments[7])).toEqual([]);
-    expect(intersects(segments[0], segments[9])).toEqual([[0.5, 0.5]]);
-    expect(intersects(segments[0], segments[10])).toEqual([[0.5, 0.5]]);
-    expect(intersects(segments[1], segments[3])).toEqual([
-      [0.3, 0],
-      [0.7, 1],
-    ]);
-    expect(intersects(segments[1], segments[4])).toEqual([
-      [0.3, 0],
-      [1, 7 / 12],
-    ]);
-    expect(intersects(segments[1], segments[5])).toEqual([
-      [0, 5 / 12],
-      [7 / 10, 1],
-    ]);
-    expect(intersects(segments[1], segments[6])).toEqual([]);
-    expect(intersects(segments[1], segments[8])).toEqual([]);
-    expect(intersects(segments[11], segments[12])).toEqual([[-0, 0]]);
-  });
-
-  // test('circle intersect', () => {
-  //   expect    (    segments.map(s => s.intersectsCircle([5.0, 5.0], 5.0))).toEqual([
-  //     [],
-  //     [],
-  //     [],
-  //     [],
-  //     [],
-  //     [],
-  //     [],
-  //     [],
-  //     [],
-  //     [],
-  //     [],
-  //     [],
-  //   ]);
-  // });
+test('intersect', () => {
+  expect(intersects(segments[0], segments[1])).toEqual([[0.5, 0.5]]);
+  expect(intersects(segments[0], segments[2])).toEqual([[1 / 3, 1 / 3]]);
+  expect(intersects(segments[0], segments[3])).toEqual([[0.5, 0.5]]);
+  expect(intersects(segments[0], segments[7])).toEqual([]);
+  expect(intersects(segments[0], segments[9])).toEqual([[0.5, 0.5]]);
+  expect(intersects(segments[0], segments[10])).toEqual([[0.5, 0.5]]);
+  expect(intersects(segments[1], segments[3])).toEqual([
+    [0.3, 0],
+    [0.7, 1],
+  ]);
+  expect(intersects(segments[1], segments[4])).toEqual([
+    [0.3, 0],
+    [1, 7 / 12],
+  ]);
+  expect(intersects(segments[1], segments[5])).toEqual([
+    [0, 5 / 12],
+    [7 / 10, 1],
+  ]);
+  expect(intersects(segments[1], segments[6])).toEqual([]);
+  expect(intersects(segments[1], segments[8])).toEqual([]);
+  expect(intersects(segments[11], segments[12])).toEqual([[-0, 0]]);
 });

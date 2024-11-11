@@ -17,14 +17,13 @@
     "@envisim/random": "workspace:*",
     "@envisim/sampling": "workspace:*",
     "@envisim/utils": "workspace:*",
-    "geographiclib-geodesic": "^2.0.0",
-    "uuid": "^9.0.1"
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@envisim/eslint-config": "workspace:*",
     "@envisim/ts-config": "workspace:*",
-    "@types/uuid": "^9.0.8",
-    "typescript": "^5.4.5",
-    "vitest": "^1.6.0"
+    "@types/uuid": "^10.0.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
   }
 }

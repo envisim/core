@@ -1,11 +1,5 @@
 import * as GJ from './types/geojson.js';
-import {
-  AreaCollection,
-  AreaFeature,
-  AreaGeometryCollection,
-  MultiPolygon,
-  Polygon,
-} from './geojson/index.js';
+import {AreaObject, FeatureCollection, MultiPolygon, Polygon} from './geojson/index.js';
 import {CirclesToPolygonsOptions} from './utils/circles-to-polygons.js';
 import {IntersectList} from './utils/class-intersects.js';
 import {type Segment, ringToSegments, segmentsToPolygon} from './utils/class-segment.js';
@@ -57,16 +51,14 @@ export function unionOfPolygons(polygons: GJ.Position[][][]): GJ.Position2[][][]
  * @returns the union of the polygons in the areaCollection
  */
 export function unionOfCollection(
-  collection: AreaCollection,
+  collection: FeatureCollection<AreaObject>,
   options: CirclesToPolygonsOptions = {},
-): AreaCollection {
+): FeatureCollection<AreaObject> {
   const ppc = {pointsPerCircle: options.pointsPerCircle ?? 16};
   const geoms: GJ.Position[][][] = [];
 
   for (const feature of collection.features) {
-    if (AreaGeometryCollection.isGeometryCollection(feature.geometry)) {
-      continue;
-    } else if (Polygon.isObject(feature.geometry) || MultiPolygon.isObject(feature.geometry)) {
+    if (Polygon.isObject(feature.geometry) || MultiPolygon.isObject(feature.geometry)) {
       geoms.push(...feature.geometry.getCoordinateArray());
     } else {
       const cp = feature.geometry.toPolygon(ppc);
@@ -79,17 +71,13 @@ export function unionOfCollection(
 
   const unionOfGeoms = unionOfPolygons(geoms);
 
-  if (unionOfGeoms.length === 0) {
-    return AreaCollection.create([]);
-  } else if (unionOfGeoms.length === 1) {
-    return AreaCollection.create(
-      [AreaFeature.create(Polygon.create(unionOfGeoms[0], true), {}, true)],
-      true,
-    );
+  const fc = FeatureCollection.newArea();
+
+  if (unionOfGeoms.length === 1) {
+    fc.addGeometry(Polygon.create(unionOfGeoms[0]));
+  } else if (unionOfGeoms.length > 1) {
+    fc.addGeometry(MultiPolygon.create(unionOfGeoms));
   }
 
-  return AreaCollection.create(
-    [AreaFeature.create(MultiPolygon.create(unionOfGeoms, true), {}, true)],
-    true,
-  );
+  return fc;
 }

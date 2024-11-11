@@ -2,7 +2,6 @@ import {expect, test} from 'vitest';
 
 import {GeoJSON as GJ, LineString, MultiPolygon, Polygon} from '../../src/index.js';
 import {intersectLineAreaGeometries} from '../../src/intersect/intersect-line-area.js';
-import '../_equalArrays.testf';
 
 const polycoords: GJ.Position[][] = [
   [
@@ -31,6 +30,8 @@ const linecoords: GJ.Position[] = [
   [0.5, 0],
   [2, 0],
 ];
+const cutLinecoords = linecoords.slice(1, -1);
+
 const line = LineString.create(linecoords);
 
 test('Simple polygon', () => {
@@ -41,11 +42,9 @@ test('Simple polygon', () => {
   const coords = intersection.coordinates;
 
   expect(coords.length).toBe(5);
-  expect(coords[0]).arrayToAlmostEqual(linecoords[1], 1e-9);
-  expect(coords[1]).arrayToAlmostEqual(linecoords[2], 1e-9);
-  expect(coords[2]).arrayToAlmostEqual(linecoords[3], 1e-9);
-  expect(coords[3]).arrayToAlmostEqual(linecoords[4], 1e-9);
-  expect(coords[4]).arrayToAlmostEqual(linecoords[5], 1e-9);
+  expect(coords).toEqual(
+    cutLinecoords.map((v) => [expect.closeTo(v[0], 9), expect.closeTo(v[1], 9)]),
+  );
 });
 
 test('Overlapping multipolygon', () => {
@@ -56,11 +55,9 @@ test('Overlapping multipolygon', () => {
   const coords = intersection.coordinates;
 
   expect(coords.length).toBe(5);
-  expect(coords[0]).arrayToAlmostEqual(linecoords[1], 1e-9);
-  expect(coords[1]).arrayToAlmostEqual(linecoords[2], 1e-9);
-  expect(coords[2]).arrayToAlmostEqual(linecoords[3], 1e-9);
-  expect(coords[3]).arrayToAlmostEqual(linecoords[4], 1e-9);
-  expect(coords[4]).arrayToAlmostEqual(linecoords[5], 1e-9);
+  expect(coords).toEqual(
+    cutLinecoords.map((v) => [expect.closeTo(v[0], 9), expect.closeTo(v[1], 9)]),
+  );
 });
 
 test('Three multipolygons', () => {
@@ -72,10 +69,7 @@ test('Three multipolygons', () => {
   const coords = intersection.coordinates;
 
   expect(coords.length).toBe(6);
-  expect(coords[0]).arrayToAlmostEqual(linecoords[1], 1e-9);
-  expect(coords[1]).arrayToAlmostEqual(linecoords[2], 1e-9);
-  expect(coords[2]).arrayToAlmostEqual(linecoords[3], 1e-9);
-  expect(coords[3]).arrayToAlmostEqual(linecoords[4], 1e-9);
-  expect(coords[4]).arrayToAlmostEqual(linecoords[5], 1e-9);
-  expect(coords[5]).arrayToAlmostEqual([1.0, 0.0], 1e-9);
+  expect(coords).toEqual(
+    [...cutLinecoords, [1.0, 0.0]].map((v) => [expect.closeTo(v[0], 9), expect.closeTo(v[1], 9)]),
+  );
 });
