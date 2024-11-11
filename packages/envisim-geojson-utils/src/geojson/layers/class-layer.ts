@@ -198,6 +198,10 @@ export class Layer<T extends AreaObject | LineObject | PointObject> {
     return new Layer(fc, properties, GeometricPrimitive.POINT, shallow);
   }
 
+  copy(shallow: boolean = true): Layer<T> {
+    return new Layer(this.collection, this.propertyRecord, this.primitive, shallow);
+  }
+
   private constructor(
     collection: FeatureCollection<T>,
     properties: PropertyRecord,

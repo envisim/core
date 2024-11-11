@@ -12,6 +12,7 @@ export {PlateCarree} from './utils/class-plate-carree.js';
 
 export {areaOfPolygonLonLat} from './utils/area.js';
 export {bbox4, bboxFromPositions, bboxInBBox, pointInBBox, unionOfBBoxes} from './utils/bbox.js';
+export {type CirclesToPolygonsOptions} from './utils/circles-to-polygons.js';
 export {distancePositionToSegment} from './utils/distance-position-to-segment.js';
 export {lengthOfLineString} from './utils/length.js';
 export {pointInSinglePolygonPosition} from './utils/point-in-polygon.js';

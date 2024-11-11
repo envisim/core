@@ -3,11 +3,22 @@ import {copy} from '@envisim/utils';
 import type * as GJ from '../../types/geojson.js';
 import {pointInBBox} from '../../utils/bbox.js';
 import {GeometricPrimitive} from '../geometric-primitive/index.js';
+import type {AreaObject, LineObject, PointObject} from './index.js';
 
 export abstract class AbstractSingleTypeObject<T extends GJ.SingleTypeObject> {
   readonly type: T['type'];
   coordinates: T['coordinates'];
   bbox?: GJ.BBox;
+
+  isArea(): this is AreaObject {
+    return this.geometricPrimitive() === GeometricPrimitive.AREA;
+  }
+  isLine(): this is LineObject {
+    return this.geometricPrimitive() === GeometricPrimitive.LINE;
+  }
+  isPoint(): this is PointObject {
+    return this.geometricPrimitive() === GeometricPrimitive.POINT;
+  }
 
   constructor(obj: GJ.SingleTypeObject, shallow: boolean = true) {
     this.type = obj.type;
