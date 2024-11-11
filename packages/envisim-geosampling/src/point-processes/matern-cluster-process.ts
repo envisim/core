@@ -117,7 +117,7 @@ export function maternClusterProcess(
       if (pointInBBox(coordinates, box)) {
         for (let j = 0; j < nrOfFeatures; j++) {
           const geom = fc.features[j].geometry;
-          if (geom.includesPoint(coordinates)) {
+          if (geom.includesPosition(coordinates)) {
             newCollection.addGeometry(Point.create(coordinates));
             break;
           }

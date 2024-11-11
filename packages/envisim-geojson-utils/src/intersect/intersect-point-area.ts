@@ -19,7 +19,7 @@ export function intersectPointAreaGeometries(
   // Check each position
   const coordinates: GJ.Position[] = point
     .getCoordinateArray()
-    .filter((p) => area.includesPoint(p));
+    .filter((p) => area.includesPosition(p));
 
   if (coordinates.length === 0) {
     return null;

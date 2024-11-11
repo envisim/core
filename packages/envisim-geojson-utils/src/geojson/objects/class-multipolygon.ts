@@ -95,8 +95,8 @@ export class MultiPolygon extends AbstractAreaObject<GJ.MultiPolygon> implements
     );
   }
 
-  includesPoint(point: GJ.Position): boolean {
-    return this.pointInBBox(point) && pointInMultiPolygonPosition(point, this.coordinates);
+  includesPosition(position: GJ.Position): boolean {
+    return this.pointInBBox(position) && pointInMultiPolygonPosition(position, this.coordinates);
   }
 
   // MULTIPOLYGON

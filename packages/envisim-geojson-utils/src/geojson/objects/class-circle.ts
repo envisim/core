@@ -72,8 +72,8 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     return Math.PI * this.radius * 2;
   }
 
-  includesPoint(point: GJ.Position): boolean {
-    return this.pointInBBox(point) && this.distanceToPosition(point) <= 0.0;
+  includesPosition(position: GJ.Position): boolean {
+    return this.pointInBBox(position) && this.distanceToPosition(position) <= 0.0;
   }
 
   // CIRCLE

@@ -71,8 +71,8 @@ export class Polygon extends AbstractAreaObject<GJ.Polygon> implements GJ.Polygo
     return this.coordinates.reduce((prev, curr) => prev + lengthOfLineString(curr), 0);
   }
 
-  includesPoint(point: GJ.Position): boolean {
-    return this.pointInBBox(point) && pointInSinglePolygonPosition(point, this.coordinates);
+  includesPosition(position: GJ.Position): boolean {
+    return this.pointInBBox(position) && pointInSinglePolygonPosition(position, this.coordinates);
   }
 
   // POLYGON

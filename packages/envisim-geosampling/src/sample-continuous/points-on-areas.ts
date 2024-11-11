@@ -107,7 +107,7 @@ export function samplePointsOnAreas(
 
         // Check if point is in any feature.
         for (let i = 0; i < buffered.features.length; i++) {
-          if (buffered.features[i].geometry.includesPoint(pointLonLat)) {
+          if (buffered.features[i].geometry.includesPosition(pointLonLat)) {
             // Point is in feature. Create and store new point feature.
             const pointFeature = new Feature(Point.create(pointLonLat), {
               _designWeight: designWeight,
@@ -162,7 +162,7 @@ export function samplePointsOnAreas(
 
           // Check if point is in any feature and then store.
           for (let k = 0; k < buffered.features.length; k++) {
-            if (buffered.features[i].geometry.includesPoint(pointLonLat)) {
+            if (buffered.features[i].geometry.includesPosition(pointLonLat)) {
               // Point is in feature. Create and store new point feature.
               const pointFeature = new Feature(Point.create(pointLonLat), {
                 _designWeight: designWeight,

@@ -20,7 +20,7 @@ const points: GJ.Position2[] = [
   [1.000001, 1.000001],
 ];
 
-test('includesPoint', () => {
-  const res = points.map((p) => polygon.includesPoint(p));
+test('includesPosition', () => {
+  const res = points.map((p) => polygon.includesPosition(p));
   expect(res).toEqual([true, false, true, true, false]);
 });
