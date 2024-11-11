@@ -23,6 +23,10 @@ export class Point extends AbstractPointObject<GJ.Point> implements GJ.Point {
     super({...obj, type: 'Point'}, shallow);
   }
 
+  copy(shallow: boolean = true): Point {
+    return new Point(this, shallow);
+  }
+
   // SINGLE TYPE OBJECT
   setBBox(): GJ.BBox {
     this.bbox = [...this.coordinates, ...this.coordinates] as GJ.BBox;

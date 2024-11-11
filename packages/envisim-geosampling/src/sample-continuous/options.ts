@@ -1,10 +1,9 @@
 import {
-  type AreaCollection,
+  type AreaObject,
+  FeatureCollection,
   type GeoJSON as GJ,
-  GeometricPrimitive,
-  Layer,
-  type LineCollection,
-  type PointCollection,
+  type LineObject,
+  type PointObject,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
@@ -36,7 +35,10 @@ export const SAMPLE_BASE_OPTIONS: Readonly<Required<SampleBaseOptions>> = {
  * @returns `0` if check passes
  */
 export function sampleBaseOptionsCheck<
-  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
+  T extends
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
 >(_: T, {pointsPerCircle}: SampleBaseOptions): number {
   if (
     pointsPerCircle !== undefined &&
@@ -90,7 +92,10 @@ export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
  * @returns `0` if check passes
  */
 export function samplePointOptionsCheck<
-  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
+  T extends
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
 >(
   layer: T,
   {
@@ -157,12 +162,15 @@ export const SAMPLE_FEATURE_OPTIONS: Readonly<
 /**
  * Returns the following errors:
  * - <300: any error from {@link samplePointOptionsCheck}
- * - 310: layer is not {@link Layer<AreaCollection>}
+ * - 310: layer is not {@link FeatureCollection<AreaCollection>}
  *
  * @returns `0` if check passes
  */
 export function sampleFeatureOptionsCheck<
-  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
+  T extends
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
   F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
 >(
   layer: T,
@@ -178,7 +186,7 @@ export function sampleFeatureOptionsCheck<
     return pointCheck;
   }
 
-  if (!Layer.isLayer(layer, GeometricPrimitive.AREA)) {
+  if (!FeatureCollection.isArea(layer)) {
     return 310;
   }
 
@@ -217,7 +225,10 @@ export const SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS: Readonly<
  * @returns `0` if check passes
  */
 export function sampleSystematicLineOnAreaOptionsCheck<
-  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
+  T extends
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
 >(
   layer: T,
   {
@@ -264,7 +275,10 @@ export const SAMPLE_BELT_ON_AREA_OPTIONS: Readonly<
  * @returns `0` if check passes
  */
 export function sampleBeltOnAreaOptionsCheck<
-  T extends Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
+  T extends
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
 >(layer: T, {halfWidth, ...options}: SampleBeltOnAreaOptions): number {
   const systematicLineOnAreaCheck = sampleBaseOptionsCheck(layer, options);
   if (systematicLineOnAreaCheck !== 0) {

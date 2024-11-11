@@ -1,39 +1,25 @@
 import {
-  AreaCollection,
-  AreaFeature,
-  LineCollection,
-  LineFeature,
-  PointCollection,
-  PointFeature,
+  type AreaObject,
+  type CirclesToPolygonsOptions,
+  FeatureCollection,
+  type LineObject,
+  type PointObject,
+  createDesignWeightProperty,
   intersectAreaAreaGeometries,
   intersectLineAreaGeometries,
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 
-/**
- * Intersects a sample of points with an area frame and transfers _designWeight
- * to sample of points (if frame features have design weights).
- *
- * @param sample
- * @param frame
- */
-export function intersectPointSampleAreaFrame(
-  sample: PointCollection,
-  frame: AreaCollection,
-): PointCollection {
-  const newFeatures: PointFeature[] = [];
-
-  // Intersect with all polygons and push results to newFeatures.
-  // if intersection, then compute new designWeight as product of the features design weights.
+function intersectAreaFrame<T extends AreaObject | LineObject | PointObject>(
+  collection: FeatureCollection<T>,
+  sample: FeatureCollection<T>,
+  frame: FeatureCollection<AreaObject>,
+  options: CirclesToPolygonsOptions,
+  intersectFunction: (s: T, f: AreaObject, o: CirclesToPolygonsOptions) => T | null,
+) {
   frame.forEach((frameFeature) => {
     sample.forEach((sampleFeature) => {
-      if (
-        sampleFeature.geometry.type === 'GeometryCollection' ||
-        frameFeature.geometry.type === 'GeometryCollection'
-      )
-        return;
-
-      const intersect = intersectPointAreaGeometries(sampleFeature.geometry, frameFeature.geometry);
+      const intersect = intersectFunction(sampleFeature.geometry, frameFeature.geometry, options);
       if (intersect === null) return;
 
       let dw = 1.0;
@@ -44,10 +30,25 @@ export function intersectPointSampleAreaFrame(
         dw *= sampleFeature.properties['_designWeight'];
       }
 
-      newFeatures.push(PointFeature.create(intersect, {_designWeight: dw}, true));
+      collection.addGeometry(intersect, {_designWeight: dw}, true);
     });
   });
-  return new PointCollection({features: newFeatures}, true);
+}
+
+/**
+ * Intersects a sample of points with an area frame and transfers _designWeight
+ * to sample of points (if frame features have design weights).
+ *
+ * @param sample
+ * @param frame
+ */
+export function intersectPointSampleAreaFrame(
+  sample: FeatureCollection<PointObject>,
+  frame: FeatureCollection<AreaObject>,
+): FeatureCollection<PointObject> {
+  const collection = FeatureCollection.newPoint();
+  intersectAreaFrame(collection, sample, frame, {}, intersectPointAreaGeometries);
+  return collection;
 }
 
 /**
@@ -58,42 +59,13 @@ export function intersectPointSampleAreaFrame(
  * @param frame
  */
 export function intersectLineSampleAreaFrame(
-  sample: LineCollection,
-  frame: AreaCollection,
-  pointsPerCircle: number = 16,
-): LineCollection {
-  const pps = {pointsPerCircle};
-  const newFeatures: LineFeature[] = [];
-
-  // Intersect with all polygons and push results to newFeatures.
-  // if intersection, then compute new designWeight as product of the features design weights.
-  frame.forEach((frameFeature) => {
-    sample.forEach((sampleFeature) => {
-      if (
-        sampleFeature.geometry.type === 'GeometryCollection' ||
-        frameFeature.geometry.type === 'GeometryCollection'
-      )
-        return;
-
-      const intersect = intersectLineAreaGeometries(
-        sampleFeature.geometry,
-        frameFeature.geometry,
-        pps,
-      );
-      if (intersect === null) return;
-
-      let dw = 1.0;
-      if (frameFeature.properties?.['_designWeight'] !== undefined) {
-        dw *= frameFeature.properties['_designWeight'];
-      }
-      if (sampleFeature.properties?.['_designWeight'] !== undefined) {
-        dw *= sampleFeature.properties['_designWeight'];
-      }
-
-      newFeatures.push(LineFeature.create(intersect, {_designWeight: dw}, true));
-    });
-  });
-  return new LineCollection({features: newFeatures}, true);
+  sample: FeatureCollection<LineObject>,
+  frame: FeatureCollection<AreaObject>,
+  options: CirclesToPolygonsOptions = {},
+): FeatureCollection<LineObject> {
+  const collection = FeatureCollection.newLine();
+  intersectAreaFrame(collection, sample, frame, options, intersectLineAreaGeometries);
+  return collection;
 }
 
 /**
@@ -104,40 +76,11 @@ export function intersectLineSampleAreaFrame(
  * @param frame
  */
 export function intersectAreaSampleAreaFrame(
-  sample: AreaCollection,
-  frame: AreaCollection,
-  pointsPerCircle: number = 16,
-): AreaCollection {
-  const pps = {pointsPerCircle};
-  const newFeatures: AreaFeature[] = [];
-
-  // Intersect with all area features and push results to newFeatures.
-  // If intersection, then compute new designWeight as product of the features design weights.
-  frame.forEach((frameFeature) => {
-    sample.forEach((sampleFeature) => {
-      if (
-        sampleFeature.geometry.type === 'GeometryCollection' ||
-        frameFeature.geometry.type === 'GeometryCollection'
-      )
-        return;
-
-      const intersect = intersectAreaAreaGeometries(
-        sampleFeature.geometry,
-        frameFeature.geometry,
-        pps,
-      );
-      if (intersect === null) return;
-
-      let dw = 1.0;
-      if (frameFeature.properties?.['_designWeight'] !== undefined) {
-        dw *= frameFeature.properties['_designWeight'];
-      }
-      if (sampleFeature.properties?.['_designWeight'] !== undefined) {
-        dw *= sampleFeature.properties['_designWeight'];
-      }
-
-      newFeatures.push(AreaFeature.create(intersect, {_designWeight: dw}, true));
-    });
-  });
-  return new AreaCollection({features: newFeatures}, true);
+  sample: FeatureCollection<AreaObject>,
+  frame: FeatureCollection<AreaObject>,
+  options: CirclesToPolygonsOptions = {},
+): FeatureCollection<AreaObject> {
+  const collection = FeatureCollection.newArea([], {_designWeight: createDesignWeightProperty()});
+  intersectAreaFrame(collection, sample, frame, options, intersectAreaAreaGeometries);
+  return collection;
 }

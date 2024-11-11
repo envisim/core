@@ -35,6 +35,10 @@ export class MultiPolygon extends AbstractAreaObject<GJ.MultiPolygon> implements
     super({...obj, type: 'MultiPolygon'}, shallow);
   }
 
+  copy(shallow: boolean = true): MultiPolygon {
+    return new MultiPolygon(this, shallow);
+  }
+
   // SINGLE TYPE OBJECT
   setBBox(): GJ.BBox {
     const bboxes = this.coordinates.map((pos) => bboxFromPositions(pos[0]));

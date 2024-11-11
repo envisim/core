@@ -33,6 +33,8 @@ export abstract class AbstractSingleTypeObject<T extends GJ.SingleTypeObject> {
     if (obj.bbox) this.bbox = [...obj.bbox];
   }
 
+  abstract copy(): AbstractSingleTypeObject<T>;
+
   abstract geometricPrimitive(): GeometricPrimitive;
   abstract measure(): number;
 

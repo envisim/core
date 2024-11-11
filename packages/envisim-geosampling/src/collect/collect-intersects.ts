@@ -1,12 +1,11 @@
 import {
-  AreaCollection,
-  AreaFeature,
+  type AreaObject,
+  Feature,
+  FeatureCollection,
+  type GeoJSON as GJ,
   Geodesic,
-  Layer,
-  LineCollection,
-  LineFeature,
-  PointCollection,
-  PointFeature,
+  type LineObject,
+  type PointObject,
   type PropertyRecord,
   createDesignWeightProperty,
   createParentProperty,
@@ -17,97 +16,69 @@ import {
 } from '@envisim/geojson-utils';
 import {copy} from '@envisim/utils';
 
-import {projectedLengthOfFeature} from '../utils/index.js';
+import {projectedLengthOfGeometry} from '../utils/index.js';
 
 /**
- * Internal function to transfer properties in place to the intersect from the
- * base feature and transfer _designWeight and _parent to the intersect from
- * the frame feature.
- * @param intersect
- * @param frameFeature
- * @param baseFeature
- * @param index
+ * Internal function to transfer properties to the intersect from the base feature and transfer
+ * _designWeight and _parent to the intersect from the frame feature.
  */
-function transferPropertiesInPlace(
-  intersect: PointFeature,
-  frameFeature: PointFeature,
-  baseFeature: AreaFeature,
-  index: number,
-): void;
-function transferPropertiesInPlace(
-  intersect: PointFeature,
-  frameFeature: LineFeature,
-  baseFeature: LineFeature,
-  index: number,
-): void;
-function transferPropertiesInPlace(
-  intersect: LineFeature,
-  frameFeature: LineFeature,
-  baseFeature: AreaFeature,
-  index: number,
-): void;
-function transferPropertiesInPlace(
-  intersect: PointFeature,
-  frameFeature: AreaFeature,
-  baseFeature: PointFeature,
-  index: number,
-): void;
-function transferPropertiesInPlace(
-  intersect: LineFeature,
-  frameFeature: AreaFeature,
-  baseFeature: LineFeature,
-  index: number,
-): void;
-function transferPropertiesInPlace(
-  intersect: AreaFeature,
-  frameFeature: AreaFeature,
-  baseFeature: AreaFeature,
-  index: number,
-): void;
-function transferPropertiesInPlace(
-  intersect: PointFeature | LineFeature | AreaFeature,
-  frameFeature: PointFeature | LineFeature | AreaFeature,
-  baseFeature: PointFeature | LineFeature | AreaFeature,
-  index: number,
-): void {
-  // If line collects from line an additional factor is needed
-  let factor = 1;
-  if (LineFeature.isFeature(frameFeature) && LineFeature.isFeature(baseFeature)) {
-    if (frameFeature.properties?.['_randomRotation'] === 1) {
-      // Here the line that collects can be any curve,
-      // as long as it has been randomly rotated.
-      factor = Math.PI / (2.0 * baseFeature.length());
-    } else {
-      // Here the line that collects should be straight,
-      // which is why we can use the first segment of the line
-      // to find the direction of the line.
-      let azimuth = 0;
-      if (frameFeature.geometry.type === 'LineString') {
-        azimuth = Geodesic.forwardAzimuth(
-          frameFeature.geometry.coordinates[0],
-          frameFeature.geometry.coordinates[1],
-        );
-      } else if (frameFeature.geometry.type === 'MultiLineString') {
-        azimuth = Geodesic.forwardAzimuth(
-          frameFeature.geometry.coordinates[0][0],
-          frameFeature.geometry.coordinates[0][1],
-        );
-      }
-      factor = 1.0 / projectedLengthOfFeature(baseFeature, azimuth);
-    }
-  }
+function createProperties(
+  frameFeature: Feature<AreaObject> | Feature<LineObject> | Feature<PointObject>,
+  baseFeature: Feature<AreaObject> | Feature<LineObject> | Feature<PointObject>,
+  parent: number,
+): GJ.FeatureProperties<number> {
+  const properties: GJ.FeatureProperties<number> = {};
 
-  // Transfer all properties from baseFeature to newFeature
   Object.keys(baseFeature.properties).forEach((key) => {
-    intersect.properties[key] = baseFeature.properties[key];
+    properties[key] = baseFeature.properties[key];
   });
 
   // Transfer designWeight to newFeature from frameFeature
   if (frameFeature.properties?.['_designWeight']) {
-    intersect.properties['_designWeight'] = frameFeature.properties['_designWeight'] * factor;
+    properties['_designWeight'] = frameFeature.properties['_designWeight'];
   }
   // Transfer index of parent frame unit as _parent
-  intersect.properties['_parent'] = index;
+  properties['_parent'] = parent;
+
+  return properties;
+}
+
+function createPropertiesForLine(
+  frameFeature: Feature<LineObject>,
+  baseFeature: Feature<LineObject>,
+  parent: number,
+): GJ.FeatureProperties<number> {
+  const properties = createProperties(frameFeature, baseFeature, parent);
+
+  if (properties?.['_designWeight'] === undefined) {
+    return properties;
+  }
+
+  if (frameFeature.properties?.['_randomRotation'] === 1) {
+    // Here the line that collects can be any curve,
+    // as long as it has been randomly rotated.
+    properties['_designWeight'] *= Math.PI / (2.0 * baseFeature.geometry.length());
+  } else {
+    // Here the line that collects should be straight,
+    // which is why we can use the first segment of the line
+    // to find the direction of the line.
+    let azimuth = 0.0;
+    if (frameFeature.geometry.type === 'LineString') {
+      azimuth = Geodesic.forwardAzimuth(
+        frameFeature.geometry.coordinates[0],
+        frameFeature.geometry.coordinates[1],
+      );
+    } else if (frameFeature.geometry.type === 'MultiLineString') {
+      azimuth = Geodesic.forwardAzimuth(
+        frameFeature.geometry.coordinates[0][0],
+        frameFeature.geometry.coordinates[0][1],
+      );
+    }
+
+    properties['_designWeight'] *= 1.0 / projectedLengthOfGeometry(baseFeature.geometry, azimuth);
+  }
+
+  return properties;
 }
 
 /**
@@ -122,178 +93,151 @@ function updateRecordInPlace(record: PropertyRecord): void {
 
 /**
  * Collect intersect of features as the new frame from base-collection.
- * @param frameLayer
+ * @param frame
  * @param baseLayer
  */
 export function collectIntersects(
-  frameLayer: Layer<PointCollection>,
-  baseLayer: Layer<AreaCollection>,
-): Layer<PointCollection>;
+  frame: FeatureCollection<PointObject>,
+  base: FeatureCollection<AreaObject>,
+): FeatureCollection<PointObject>;
 export function collectIntersects(
-  frameLayer: Layer<LineCollection>,
-  baseLayer: Layer<LineCollection>,
-): Layer<PointCollection>;
+  frame: FeatureCollection<LineObject>,
+  base: FeatureCollection<LineObject>,
+): FeatureCollection<PointObject>;
 export function collectIntersects(
-  frameLayer: Layer<LineCollection>,
-  baseLayer: Layer<AreaCollection>,
-): Layer<LineCollection>;
+  frame: FeatureCollection<LineObject>,
+  base: FeatureCollection<AreaObject>,
+): FeatureCollection<LineObject>;
 export function collectIntersects(
-  frameLayer: Layer<AreaCollection>,
-  baseLayer: Layer<PointCollection>,
-): Layer<PointCollection>;
+  frame: FeatureCollection<AreaObject>,
+  base: FeatureCollection<PointObject>,
+): FeatureCollection<PointObject>;
 export function collectIntersects(
-  frameLayer: Layer<AreaCollection>,
-  baseLayer: Layer<LineCollection>,
-): Layer<LineCollection>;
+  frame: FeatureCollection<AreaObject>,
+  base: FeatureCollection<LineObject>,
+): FeatureCollection<LineObject>;
 export function collectIntersects(
-  frameLayer: Layer<AreaCollection>,
-  baseLayer: Layer<AreaCollection>,
-): Layer<AreaCollection>;
+  frame: FeatureCollection<AreaObject>,
+  base: FeatureCollection<AreaObject>,
+): FeatureCollection<AreaObject>;
 export function collectIntersects(
-  frameLayer: Layer<PointCollection | LineCollection | AreaCollection>,
-  baseLayer: Layer<PointCollection | LineCollection | AreaCollection>,
-): Layer<PointCollection | LineCollection | AreaCollection> {
+  frame:
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
+  base:
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
+): FeatureCollection<AreaObject> | FeatureCollection<LineObject> | FeatureCollection<PointObject> {
   // The same base object may be included in multiple intersects
   // as collection is done for each frame feature.
-  const frame = frameLayer.collection;
-  const base = baseLayer.collection;
   // The resulting layer contains all props from base layer
   // but values need to be updated for categorical props and
   // two design properties must be added to the new property
   // record. Set initial record here.
-  const record = copy(baseLayer.propertyRecord);
+  const record = copy(base.propertyRecord);
+  updateRecordInPlace(record);
 
-  if (PointCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
-    const features: PointFeature[] = [];
-    frame.features.forEach((frameFeature, index) => {
-      base.features.forEach((baseFeature) => {
-        if (
-          frameFeature.geometry.type === 'GeometryCollection' ||
-          baseFeature.geometry.type === 'GeometryCollection'
-        )
-          return;
-
-        const intersect = intersectPointAreaGeometries(frameFeature.geometry, baseFeature.geometry);
-        if (intersect !== null) {
-          const feature = PointFeature.create(intersect, {}, true);
-          transferPropertiesInPlace(feature, frameFeature, baseFeature, index);
-          features.push(feature);
-        }
-      });
-    });
-    updateRecordInPlace(record);
-    return new Layer(new PointCollection({features}, true), record, true);
+  if (FeatureCollection.isPoint(frame) && FeatureCollection.isArea(base)) {
+    const layer = FeatureCollection.newPoint([], record);
+    intersectFeatures(
+      layer,
+      frame.features,
+      base.features,
+      intersectPointAreaGeometries,
+      createProperties,
+    );
+    return layer;
   }
 
-  if (LineCollection.isCollection(frame) && LineCollection.isCollection(base)) {
-    const features: PointFeature[] = [];
-    frame.features.forEach((frameFeature, index) => {
-      base.features.forEach((baseFeature) => {
-        if (
-          frameFeature.geometry.type === 'GeometryCollection' ||
-          baseFeature.geometry.type === 'GeometryCollection'
-        )
-          return;
+  if (FeatureCollection.isLine(frame)) {
+    if (FeatureCollection.isLine(base)) {
+      const layer = FeatureCollection.newPoint([], record);
+      intersectFeatures(
+        layer,
+        frame.features,
+        base.features,
+        intersectLineLineGeometries,
+        createPropertiesForLine,
+      );
+      return layer;
+    }
 
-        const intersect = intersectLineLineGeometries(frameFeature.geometry, baseFeature.geometry);
-        if (intersect !== null) {
-          const feature = PointFeature.create(intersect, {}, true);
-          transferPropertiesInPlace(feature, frameFeature, baseFeature, index);
-          features.push(feature);
-        }
-      });
-    });
-    updateRecordInPlace(record);
-    return new Layer(new PointCollection({features}, true), record, true);
+    if (FeatureCollection.isArea(base)) {
+      const layer = FeatureCollection.newLine([], record);
+      intersectFeatures(
+        layer,
+        frame.features,
+        base.features,
+        intersectLineAreaGeometries,
+        createProperties,
+      );
+      return layer;
+    }
   }
 
-  if (LineCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
-    const features: LineFeature[] = [];
-    frame.features.forEach((frameFeature, index) => {
-      base.features.forEach((baseFeature) => {
-        if (
-          frameFeature.geometry.type === 'GeometryCollection' ||
-          baseFeature.geometry.type === 'GeometryCollection'
-        )
-          return;
+  FeatureCollection.assertArea(frame);
 
-        const intersect = intersectLineAreaGeometries(frameFeature.geometry, baseFeature.geometry);
-        if (intersect !== null) {
-          const feature = LineFeature.create(intersect, {}, true);
-          transferPropertiesInPlace(feature, frameFeature, baseFeature, index);
-          features.push(feature);
-        }
-      });
-    });
-    updateRecordInPlace(record);
-    return new Layer(new LineCollection({features}, true), record, true);
+  if (FeatureCollection.isPoint(base)) {
+    const layer = FeatureCollection.newPoint([], record);
+    intersectFeatures(
+      layer,
+      frame.features,
+      base.features,
+      (f, b) => intersectPointAreaGeometries(b, f),
+      createProperties,
+    );
+    return layer;
   }
 
-  if (AreaCollection.isCollection(frame) && PointCollection.isCollection(base)) {
-    const features: PointFeature[] = [];
-    frame.features.forEach((frameFeature, index) => {
-      base.features.forEach((baseFeature) => {
-        if (
-          frameFeature.geometry.type === 'GeometryCollection' ||
-          baseFeature.geometry.type === 'GeometryCollection'
-        )
-          return;
-
-        const intersect = intersectPointAreaGeometries(baseFeature.geometry, frameFeature.geometry);
-        if (intersect !== null) {
-          const feature = PointFeature.create(intersect, {}, true);
-          transferPropertiesInPlace(feature, frameFeature, baseFeature, index);
-          features.push(feature);
-        }
-      });
-    });
-    updateRecordInPlace(record);
-    return new Layer(new PointCollection({features}, true), record, true);
+  if (FeatureCollection.isLine(base)) {
+    const layer = FeatureCollection.newLine([], record);
+    intersectFeatures(
+      layer,
+      frame.features,
+      base.features,
+      (f, b) => intersectLineAreaGeometries(b, f),
+      createProperties,
+    );
+    return layer;
   }
 
-  if (AreaCollection.isCollection(frame) && LineCollection.isCollection(base)) {
-    const features: LineFeature[] = [];
-    frame.features.forEach((frameFeature, index) => {
-      base.features.forEach((baseFeature) => {
-        if (
-          frameFeature.geometry.type === 'GeometryCollection' ||
-          baseFeature.geometry.type === 'GeometryCollection'
-        )
-          return;
+  FeatureCollection.assertArea(base);
 
-        const intersect = intersectLineAreaGeometries(baseFeature.geometry, frameFeature.geometry);
-        if (intersect !== null) {
-          const feature = LineFeature.create(intersect, {}, true);
-          transferPropertiesInPlace(feature, frameFeature, baseFeature, index);
-          features.push(feature);
-        }
-      });
+  const layer = FeatureCollection.newArea([], record);
+  intersectFeatures(
+    layer,
+    frame.features,
+    base.features,
+    intersectAreaAreaGeometries,
+    createProperties,
+  );
+  return layer;
+}
+
+function intersectFeatures<
+  C extends AreaObject | LineObject | PointObject,
+  F extends AreaObject | LineObject | PointObject,
+  B extends AreaObject | LineObject | PointObject,
+>(
+  collection: FeatureCollection<C>,
+  frame: Feature<F>[],
+  base: Feature<B>[],
+  intersectFunction: (a: F, b: B) => C | null,
+  propertiesFunction: (f: Feature<F>, b: Feature<B>, i: number) => GJ.FeatureProperties<number>,
+) {
+  frame.forEach((frameFeature, index) => {
+    base.forEach((baseFeature) => {
+      const intersect = intersectFunction(frameFeature.geometry, baseFeature.geometry);
+      if (intersect === null) return;
+      const feature = new Feature(
+        intersect,
+        propertiesFunction(frameFeature, baseFeature, index),
+        true,
+      );
+      // transferPropertiesInPlace(feature, frameFeature, baseFeature, index);
+      collection.addFeature(feature, true);
     });
-    updateRecordInPlace(record);
-    return new Layer(new LineCollection({features}, true), record, true);
-  }
-
-  if (AreaCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
-    const features: AreaFeature[] = [];
-    frame.features.forEach((frameFeature, index) => {
-      base.features.forEach((baseFeature) => {
-        if (
-          frameFeature.geometry.type === 'GeometryCollection' ||
-          baseFeature.geometry.type === 'GeometryCollection'
-        )
-          return;
-
-        const intersect = intersectAreaAreaGeometries(frameFeature.geometry, baseFeature.geometry);
-        if (intersect !== null) {
-          const feature = AreaFeature.create(intersect, {}, true);
-          transferPropertiesInPlace(feature, frameFeature, baseFeature, index);
-          features.push(feature);
-        }
-      });
-    });
-    updateRecordInPlace(record);
-    return new Layer(new AreaCollection({features}, true), record, true);
-  }
-
-  throw new Error('Unvalid collect operation.');
+  });
 }

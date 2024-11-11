@@ -42,6 +42,10 @@ export class MultiLineString
     super({...obj, type: 'MultiLineString'}, shallow);
   }
 
+  copy(shallow: boolean = true): MultiLineString {
+    return new MultiLineString(this, shallow);
+  }
+
   // SINGLE TYPE OBJECT
   setBBox(): GJ.BBox {
     const bbox = this.coordinates.map((ls) => bboxFromPositions(ls));

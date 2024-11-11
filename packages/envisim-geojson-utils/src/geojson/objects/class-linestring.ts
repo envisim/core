@@ -32,6 +32,10 @@ export class LineString extends AbstractLineObject<GJ.LineString> implements GJ.
     super({...obj, type: 'LineString'}, shallow);
   }
 
+  copy(shallow: boolean = true): LineString {
+    return new LineString(this, shallow);
+  }
+
   // SINGLE TYPE OBJECT
   setBBox(): GJ.BBox {
     this.bbox = bboxFromPositions(this.coordinates);

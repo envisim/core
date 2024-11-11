@@ -28,6 +28,10 @@ export class Polygon extends AbstractAreaObject<GJ.Polygon> implements GJ.Polygo
     super({...obj, type: 'Polygon'}, shallow);
   }
 
+  copy(shallow: boolean = true): Polygon {
+    return new Polygon(this, shallow);
+  }
+
   // SINGLE TYPE OBJECT
   setBBox(): GJ.BBox {
     this.bbox = bboxFromPositions(this.coordinates[0]);

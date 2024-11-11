@@ -103,7 +103,7 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
       return;
     }
 
-    this.geometry = (geometry.constructor as (obj: T, shallow: boolean) => T)(geometry, false);
+    this.geometry = geometry.copy(false) as T;
     this.properties = copy(properties);
   }
 

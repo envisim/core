@@ -41,6 +41,10 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     this.radius = obj.radius;
   }
 
+  copy(shallow: boolean = true): Circle {
+    return new Circle(this, shallow);
+  }
+
   // SINGLE TYPE OBJECT
   setBBox(): GJ.BBox {
     this.bbox = bboxFromPositions(getPositionsForCircle(this.coordinates, this.radius));

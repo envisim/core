@@ -1,18 +1,14 @@
-import geodesic from 'geographiclib-geodesic';
-
 import {
-  AreaFeature,
+  AreaObject,
   Circle,
+  CirclesToPolygonsOptions,
   type GeoJSON as GJ,
-  LineFeature,
+  Geodesic,
+  LineObject,
   MultiCircle,
   bbox4,
   longitudeCenter,
-  typeGuards,
 } from '@envisim/geojson-utils';
-
-const geod = geodesic.Geodesic.WGS84;
-const geodInverseOpts = geodesic.Geodesic.DISTANCE | geodesic.Geodesic.AZIMUTH;
 
 type TdistCoord = {
   dist: number;
@@ -31,15 +27,7 @@ function distCoordsForLineString(
   let maxDist = -Infinity;
 
   lineString.forEach((coord) => {
-    const result = geod.Inverse(
-      refPointLonLat[1],
-      refPointLonLat[0],
-      coord[1],
-      coord[0],
-      geodInverseOpts,
-    );
-    const dist = result.s12 ?? 0.0;
-    const azi1 = result.azi1 ?? 0.0;
+    const [azi1, dist] = Geodesic.forwardAzimuthDistance(refPointLonLat, coord);
     // Compute equidistant x-coord rotated counterclockwise by azimuth.
     const x = dist * Math.cos((90 - azi1 - azimuth) * toRad);
     // Store min and max x-value.
@@ -96,53 +84,22 @@ function lengthFromDistCoords(distCoords: TdistCoord[]): number {
   return L;
 }
 
-function geometryToMultiLineString(geom: GJ.BaseGeometry, pointsPerCircle = 16) {
-  const mls: GJ.Position[][] = [];
-
-  switch (geom.type) {
-    case 'Point':
-      if (typeGuards.isCircle(geom)) {
-        const polygon = Circle.create(geom.coordinates, geom.radius).toPolygon({
-          pointsPerCircle,
-        });
-
-        if (polygon === null) return mls;
-        polygon.getCoordinateArray().forEach((c) => mls.push(...c));
-      }
-      break;
-
-    case 'MultiPoint':
-      if (typeGuards.isMultiCircle(geom)) {
-        const polygon = MultiCircle.create(geom.coordinates, geom.radius).toPolygon({
-          pointsPerCircle,
-        });
-        if (polygon === null) return mls;
-        polygon.getCoordinateArray().forEach((c) => mls.push(...c));
-      }
-      break;
-
-    case 'LineString':
-      mls.push(geom.coordinates);
-      break;
-
-    case 'MultiLineString':
-    case 'Polygon':
-      geom.coordinates.forEach((coord) => {
-        mls.push(coord);
-      });
-      break;
-
-    case 'MultiPolygon':
-      geom.coordinates.forEach((polygon) => {
-        polygon.forEach((ring) => {
-          mls.push(ring);
-        });
-      });
-      break;
-
-    default:
-      throw new Error('Unknown geometry type.');
+function geometryToMultiLineString(
+  geom: AreaObject | LineObject,
+  options: CirclesToPolygonsOptions = {},
+): GJ.Position[][] {
+  if (geom.isLine()) {
+    return geom.getCoordinateArray();
   }
+
+  if (Circle.isObject(geom) || MultiCircle.isObject(geom)) {
+    const polygon = geom.toPolygon(options);
+    if (polygon === null) return [];
+    return geometryToMultiLineString(polygon);
+  }
+
+  const mls: GJ.Position[][] = [];
+  geom.getCoordinateArray().forEach((p) => p.forEach((r) => mls.push(r)));
   return mls;
 }
 
@@ -150,31 +107,19 @@ function geometryToMultiLineString(geom: GJ.BaseGeometry, pointsPerCircle = 16) 
  * Computes projected length of a feature. This is the
  * total length of the feature projected to a line
  * perpendicular to the sample line.
- * @param feature a GeoJSON Feature.
  * @param azimuth the azimuth of the sample line (angle clockwise from north).
  * @returns the projected length in meters.
  */
-export function projectedLengthOfFeature(
-  feature: LineFeature | AreaFeature,
+export function projectedLengthOfGeometry(
+  geometry: AreaObject | LineObject,
   azimuth: number,
-  pointsPerCircle = 16,
+  options: CirclesToPolygonsOptions = {},
 ): number {
   // 1. build one MultiLineString of the feature geometries
-  let coords: GJ.Position[][] = [];
-  const geom = feature.geometry;
-  if (geom.type === 'GeometryCollection') {
-    geom.geometries.forEach((geometry) => {
-      const mls = geometryToMultiLineString(geometry, pointsPerCircle);
-      if (mls.length > 0) {
-        coords.push(...mls);
-      }
-    });
-  } else {
-    coords = geometryToMultiLineString(geom, pointsPerCircle);
-  }
+  const coords = geometryToMultiLineString(geometry, options);
 
   // 2. Compute reference coordinate as center of box
-  const box = bbox4(feature.geometry.getBBox());
+  const box = bbox4(geometry.getBBox());
 
   const refCoord: GJ.Position = [longitudeCenter(box[0], box[2]), box[1] + (box[3] - box[1]) / 2];
 

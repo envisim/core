@@ -21,7 +21,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
   readonly primitive: GeometricPrimitive;
 
   // Layer
-  propertyRecord: PropertyRecord | undefined = undefined;
+  propertyRecord: PropertyRecord;
 
   static isArea(obj: unknown): obj is FeatureCollection<AreaObject> {
     return obj instanceof FeatureCollection && obj.geometricPrimitive() === GeometricPrimitive.AREA;
@@ -168,47 +168,47 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     return new FeatureCollection(feats, pr, GeometricPrimitive.POINT);
   }
 
-  static newArea(
-    features: Feature<AreaObject>[] = [],
+  static newArea<F extends AreaObject = AreaObject>(
+    features: Feature<F>[] = [],
     propertyRecord: PropertyRecord | undefined = undefined,
     shallow: boolean = true,
-  ): FeatureCollection<AreaObject> {
+  ): FeatureCollection<F> {
     if (shallow === true) {
       return new FeatureCollection(features, propertyRecord, GeometricPrimitive.AREA);
     }
 
     return new FeatureCollection(
-      features.map((f) => new Feature<AreaObject>(f.geometry, f.properties, false)),
+      features.map((f) => new Feature(f.geometry, f.properties, false)),
       propertyRecord === undefined ? undefined : copy(propertyRecord),
       GeometricPrimitive.AREA,
     );
   }
-  static newLine(
-    features: Feature<LineObject>[] = [],
+  static newLine<F extends LineObject = LineObject>(
+    features: Feature<F>[] = [],
     propertyRecord: PropertyRecord | undefined = undefined,
     shallow: boolean = true,
-  ): FeatureCollection<LineObject> {
+  ): FeatureCollection<F> {
     if (shallow === true) {
       return new FeatureCollection(features, propertyRecord, GeometricPrimitive.LINE);
     }
 
     return new FeatureCollection(
-      features.map((f) => new Feature<LineObject>(f.geometry, f.properties, false)),
+      features.map((f) => new Feature(f.geometry, f.properties, false)),
       propertyRecord === undefined ? undefined : copy(propertyRecord),
       GeometricPrimitive.LINE,
     );
   }
-  static newPoint(
-    features: Feature<PointObject>[] = [],
+  static newPoint<F extends PointObject = PointObject>(
+    features: Feature<F>[] = [],
     propertyRecord: PropertyRecord | undefined = undefined,
     shallow: boolean = true,
-  ): FeatureCollection<PointObject> {
+  ): FeatureCollection<F> {
     if (shallow === true) {
       return new FeatureCollection(features, propertyRecord, GeometricPrimitive.POINT);
     }
 
     return new FeatureCollection(
-      features.map((f) => new Feature<PointObject>(f.geometry, f.properties, false)),
+      features.map((f) => new Feature(f.geometry, f.properties, false)),
       propertyRecord === undefined ? undefined : copy(propertyRecord),
       GeometricPrimitive.POINT,
     );
@@ -221,7 +221,23 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
   ) {
     this.primitive = primitive;
     this.features = features;
-    this.propertyRecord = propertyRecord;
+    this.propertyRecord = propertyRecord ?? {};
+  }
+
+  copy(shallow: boolean = true): FeatureCollection<T> {
+    return new FeatureCollection(
+      this.features.map((f) => new Feature(f.geometry, f.properties, shallow)),
+      shallow === true ? this.propertyRecord : copy(this.propertyRecord),
+      this.primitive,
+    );
+  }
+
+  copyEmpty(shallow: boolean = true): FeatureCollection<T> {
+    return new FeatureCollection(
+      [],
+      shallow === true ? this.propertyRecord : copy(this.propertyRecord),
+      this.primitive,
+    );
   }
 
   geometricPrimitive(): GeometricPrimitive {
@@ -353,8 +369,8 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
       throw new TypeError('layer types does not match');
     }
 
-    const thisKeys = Object.keys(this.propertyRecord ?? {});
-    const fcKeys = Object.keys(fc.propertyRecord ?? {});
+    const thisKeys = Object.keys(this.propertyRecord);
+    const fcKeys = Object.keys(fc.propertyRecord);
 
     if (thisKeys.length !== fcKeys.length || !thisKeys.every((id) => fcKeys.includes(id))) {
       throw new RangeError('propertyRecords does not match');
@@ -368,7 +384,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     options: CirclesToPolygonsOptions = {},
   ): GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>> {
     const features: GJ.BaseFeature<GJ.SingleTypeObject, number | string>[] = [];
-    const pr = this.propertyRecord ?? {};
+    const pr = this.propertyRecord;
 
     if (FeatureCollection.isArea(this)) {
       this.forEach((feature) => {

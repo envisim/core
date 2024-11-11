@@ -46,6 +46,10 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
     this.radius = obj.radius;
   }
 
+  copy(shallow: boolean = true): MultiCircle {
+    return new MultiCircle(this, shallow);
+  }
+
   // SINGLE TYPE OBJECT
   setBBox(): GJ.BBox {
     const bbox = bboxFromPositions(this.coordinates);

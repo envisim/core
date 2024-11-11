@@ -28,6 +28,10 @@ export class MultiPoint extends AbstractPointObject<GJ.MultiPoint> implements GJ
     super({...obj, type: 'MultiPoint'}, shallow);
   }
 
+  copy(shallow: boolean = true): MultiPoint {
+    return new MultiPoint(this, shallow);
+  }
+
   // SINGLE TYPE OBJECT
   setBBox(): GJ.BBox {
     this.bbox = bboxFromPositions(this.coordinates);

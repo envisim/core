@@ -1,21 +1,17 @@
 import {
-  AreaCollection,
-  AreaGeometryCollection,
+  type AreaObject,
   Circle,
+  Feature,
+  FeatureCollection,
   type GeoJSON as GJ,
   Geodesic,
-  Layer,
   MultiCircle,
   Point,
-  PointCollection,
-  PointFeature,
-  type PropertyRecord,
   bbox4,
   createDesignWeightProperty,
   longitudeCenter,
   longitudeDistance,
   normalizeLongitude,
-  pointInAreaGeometry,
   unionOfPolygons,
 } from '@envisim/geojson-utils';
 
@@ -28,11 +24,11 @@ const TO_DEG = 180.0 / Math.PI;
  * Selects points on areas (if features have bbox, it is used in pointInPolygon
  * to reject point outside bbox if buffer is zero).
  *
- * @param layer
+ * @param collection
  * @param opts
  */
 export function samplePointsOnAreas(
-  layer: Layer<AreaCollection>,
+  collection: FeatureCollection<AreaObject>,
   {
     rand = SAMPLE_POINT_OPTIONS.rand,
     pointSelection,
@@ -40,8 +36,8 @@ export function samplePointsOnAreas(
     buffer = SAMPLE_POINT_OPTIONS.buffer,
     ratio = SAMPLE_POINT_OPTIONS.ratio,
   }: SamplePointOptions,
-): Layer<PointCollection> {
-  const optionsError = samplePointOptionsCheck(layer, {
+): FeatureCollection<Point> {
+  const optionsError = samplePointOptionsCheck(collection, {
     pointSelection,
     sampleSize,
     buffer,
@@ -52,25 +48,21 @@ export function samplePointsOnAreas(
   }
 
   // copy the collection
-  const gj = new AreaCollection(layer.collection, false);
+  const gj = FeatureCollection.newArea(collection.features, undefined, false);
 
   // Make polygons of possible circles
-  gj.features.forEach((feature) => {
+  gj.forEach((feature) => {
     let geom = feature.geometry;
-    if (AreaGeometryCollection.isGeometryCollection(geom)) {
-      return;
-    } else {
-      if (Circle.isObject(geom) || MultiCircle.isObject(geom)) {
-        const p = geom.toPolygon();
-        if (p === null) return;
-        geom = p;
-      }
+    if (Circle.isObject(geom) || MultiCircle.isObject(geom)) {
+      const p = geom.toPolygon();
+      if (p === null) return;
+      geom = p;
     }
   });
 
   // Buffer the Collection if needed.
 
-  let buffered: AreaCollection | null;
+  let buffered: FeatureCollection<AreaObject> | null;
   if (buffer > 0.0) {
     buffered = gj.buffer({distance: buffer, steps: 10});
 
@@ -84,10 +76,10 @@ export function samplePointsOnAreas(
   }
 
   // Pre-calculations for both metods 'uniform' and 'systematic'.
-  const A = buffered.area();
+  const A = buffered.measure();
   let designWeight = A / sampleSize;
   const box = bbox4(buffered.getBBox());
-  const pointFeatures = [];
+  const pointFeatures: Feature<Point>[] = [];
   const parentIndex: number[] = [];
   let pointLonLat: GJ.Position;
 
@@ -115,11 +107,9 @@ export function samplePointsOnAreas(
 
         // Check if point is in any feature.
         for (let i = 0; i < buffered.features.length; i++) {
-          const bfg = buffered.features[i].geometry;
-          if (bfg.type === 'GeometryCollection') continue;
-          if (pointInAreaGeometry(pointLonLat, bfg)) {
+          if (buffered.features[i].geometry.includesPoint(pointLonLat)) {
             // Point is in feature. Create and store new point feature.
-            const pointFeature = PointFeature.create(Point.create(pointLonLat), {
+            const pointFeature = new Feature(Point.create(pointLonLat), {
               _designWeight: designWeight,
             });
             pointFeatures.push(pointFeature);
@@ -172,11 +162,9 @@ export function samplePointsOnAreas(
 
           // Check if point is in any feature and then store.
           for (let k = 0; k < buffered.features.length; k++) {
-            const bfg = buffered.features[k].geometry;
-            if (bfg.type === 'GeometryCollection') continue;
-            if (pointInAreaGeometry(pointLonLat, bfg)) {
+            if (buffered.features[i].geometry.includesPoint(pointLonLat)) {
               // Point is in feature. Create and store new point feature.
-              const pointFeature = PointFeature.create(Point.create(pointLonLat), {
+              const pointFeature = new Feature(Point.create(pointLonLat), {
                 _designWeight: designWeight,
               });
               pointFeatures.push(pointFeature);
@@ -196,7 +184,7 @@ export function samplePointsOnAreas(
 
   if (buffer === 0.0) {
     // Transfer design weights here.
-    pointFeatures.forEach((pf: PointFeature, i) => {
+    pointFeatures.forEach((pf, i) => {
       let dw = 1;
       const feature = gj.features[parentIndex[i]];
       if (feature.properties?.['_designWeight']) {
@@ -208,13 +196,12 @@ export function samplePointsOnAreas(
     });
   }
 
-  const propertyRecord: PropertyRecord = {
-    _designWeight: createDesignWeightProperty(),
-  };
-
   // parentIndex refer to buffered features, so
   // may not be used to transfer design weights
   // from parents unless buffer is 0.
-  const collection = new PointCollection({features: pointFeatures}, true);
-  return new Layer(collection, propertyRecord, true);
+  return FeatureCollection.newPoint(
+    pointFeatures,
+    {_designWeight: createDesignWeightProperty()},
+    true,
+  );
 }
