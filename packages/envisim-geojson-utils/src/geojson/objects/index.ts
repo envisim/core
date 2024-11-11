@@ -21,9 +21,7 @@ export {
   MultiPoint,
 };
 
-export {toAreaObject} from './to-area-object.js';
-export {toLineObject} from './to-line-object.js';
-export {toPointObject} from './to-point-object.js';
+export {toAreaObject, toLineObject, toPointObject} from './to-object.js';
 
 export type AreaObject = Circle | MultiCircle | Polygon | MultiPolygon;
 export type LineObject = LineString | MultiLineString;

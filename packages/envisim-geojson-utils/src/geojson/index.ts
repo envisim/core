@@ -26,18 +26,8 @@ export {Feature} from './features/index.js';
 // FeatureCollections
 export {FeatureCollection} from './collections/index.js';
 
-// GeometricPrimitive
+// PropertyRecord
 export {
-  GeometricPrimitive,
-  getGeometryPrimitive,
-  isGeometryPrimitive,
-  getFeaturePrimitive,
-  getCollectionPrimitive,
-} from './geometric-primitive/index.js';
-
-// Layers
-export {
-  Layer,
   type CategoricalProperty,
   type NumericalProperty,
   type Property,
@@ -47,4 +37,13 @@ export {
   createDistanceProperty,
   createParentProperty,
   mergePropertyRecords,
-} from './layers/index.js';
+} from './property-record.js';
+
+// GeometricPrimitive
+export {
+  GeometricPrimitive,
+  getGeometryPrimitive,
+  isGeometryPrimitive,
+  getFeaturePrimitive,
+  getCollectionPrimitive,
+} from './geometric-primitive/index.js';

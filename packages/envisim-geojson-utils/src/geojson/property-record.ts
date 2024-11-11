@@ -2,7 +2,7 @@ import {v4 as uuidv4} from 'uuid';
 
 import {copy} from '@envisim/utils';
 
-import type * as GJ from '../../types/geojson.js';
+import type * as GJ from '../types/geojson.js';
 
 interface PropertyBase {
   /** The UUID of the Features property using this category. */

@@ -49,27 +49,27 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
   }
 
   static createAreaFromJson(
-    feature: OptionalParam<GJ.AreaFeature, 'type'>,
+    feature: OptionalParam<GJ.BaseFeature<GJ.BaseGeometry, number>, 'type'>,
     shallow: boolean = true,
   ): Feature<AreaObject> | null {
     return Feature.createArea(feature.geometry, feature.properties ?? {}, shallow);
   }
   static createLineFromJson(
-    feature: OptionalParam<GJ.LineFeature, 'type'>,
+    feature: OptionalParam<GJ.BaseFeature<GJ.BaseGeometry, number>, 'type'>,
     shallow: boolean = true,
   ): Feature<LineObject> | null {
     return Feature.createLine(feature.geometry, feature.properties ?? {}, shallow);
   }
   static createPointFromJson(
-    feature: OptionalParam<GJ.PointFeature, 'type'>,
+    feature: OptionalParam<GJ.BaseFeature<GJ.BaseGeometry, number>, 'type'>,
     shallow: boolean = true,
   ): Feature<PointObject> | null {
     return Feature.createPoint(feature.geometry, feature.properties ?? {}, shallow);
   }
 
   static createArea(
-    geometry: GJ.AreaGeometry,
-    properties: GJ.FeatureProperties = {},
+    geometry: GJ.BaseGeometry,
+    properties: GJ.FeatureProperties<number> = {},
     shallow: boolean = true,
     options: CirclesToPolygonsOptions = {},
   ): Feature<AreaObject> | null {
@@ -78,8 +78,8 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
     return new Feature(geom, properties, shallow);
   }
   static createLine(
-    geometry: GJ.LineGeometry,
-    properties: GJ.FeatureProperties = {},
+    geometry: GJ.BaseGeometry,
+    properties: GJ.FeatureProperties<number> = {},
     shallow: boolean = true,
   ): Feature<LineObject> | null {
     const geom = toLineObject(geometry, true);
@@ -87,7 +87,7 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
     return new Feature(geom, properties, shallow);
   }
   static createPoint(
-    geometry: GJ.PointGeometry,
+    geometry: GJ.BaseGeometry,
     properties: GJ.FeatureProperties = {},
     shallow: boolean = true,
   ): Feature<PointObject> | null {
@@ -96,7 +96,7 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
     return new Feature(geom, properties, shallow);
   }
 
-  constructor(geometry: T, properties: GJ.FeatureProperties = {}, shallow: boolean = true) {
+  constructor(geometry: T, properties: GJ.FeatureProperties<number> = {}, shallow: boolean = true) {
     if (shallow === true) {
       this.geometry = geometry;
       this.properties = properties;
