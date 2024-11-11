@@ -1,10 +1,9 @@
 import {
-  AreaCollection,
+  type AreaObject,
+  FeatureCollection,
   type GeoJSON as GJ,
   Geodesic,
-  Layer,
-  LineCollection,
-  LineFeature,
+  type LineObject,
   bbox4,
   createDesignWeightProperty,
   cutLineGeometry,
@@ -12,6 +11,7 @@ import {
   longitudeDistance,
   normalizeLongitude,
   rotateCoord,
+  toLineObject,
 } from '@envisim/geojson-utils';
 
 import {intersectLineSampleAreaFrame} from '../utils/index.js';
@@ -24,18 +24,18 @@ import {
 /**
  * Selects a sample of lines systematically over all areas.
  *
- * @param layer
+ * @param collection
  * @param opts
  */
 export function sampleSystematicLinesOnAreas(
-  layer: Layer<AreaCollection>,
+  collection: FeatureCollection<AreaObject>,
   {
     rand = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.rand,
     pointsPerCircle = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.pointsPerCircle,
     distBetween,
     rotation = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.rotation,
   }: SampleSystematicLineOnAreaOptions,
-): Layer<LineCollection> {
+): FeatureCollection<LineObject> {
   const optionsError = sampleSystematicLineOnAreaOptionsCheck({
     pointsPerCircle,
     distBetween,
@@ -47,16 +47,12 @@ export function sampleSystematicLinesOnAreas(
 
   const numPointsPerLine = 20;
 
-  const box = bbox4(layer.collection.getBBox());
+  const box = bbox4(collection.getBBox());
   const randomStart = rand.float() * distBetween;
 
-  const latPerMeter =
-    (box[3] - box[1]) / Geodesic.distance([box[0], box[1]], [box[0], box[3]]);
+  const latPerMeter = (box[3] - box[1]) / Geodesic.distance([box[0], box[1]], [box[0], box[3]]);
 
-  const refCoord: GJ.Position = [
-    longitudeCenter(box[0], box[2]),
-    box[1] + (box[3] - box[1]) / 2.0,
-  ];
+  const refCoord: GJ.Position = [longitudeCenter(box[0], box[2]), box[1] + (box[3] - box[1]) / 2.0];
 
   const maxRadius = Math.max(
     Geodesic.distance([box[0], box[1]], refCoord),
@@ -73,54 +69,37 @@ export function sampleSystematicLinesOnAreas(
     smallestAtLat = box[3];
   }
 
-  const minLon = Geodesic.destination(
-    [refCoord[0], smallestAtLat],
-    maxRadius,
-    270.0,
-  )[0];
-  const maxLon = Geodesic.destination(
-    [refCoord[0], smallestAtLat],
-    maxRadius,
-    90.0,
-  )[0];
+  const minLon = Geodesic.destination([refCoord[0], smallestAtLat], maxRadius, 270.0)[0];
+  const maxLon = Geodesic.destination([refCoord[0], smallestAtLat], maxRadius, 90.0)[0];
   const minLat = Geodesic.destination(refCoord, maxRadius, 180.0)[1];
   const lonDist = longitudeDistance(minLon, maxLon);
 
   const numLines = Math.ceil((2.0 * maxRadius) / distBetween);
 
-  const lineFeatures: LineFeature[] = [];
+  const sc = FeatureCollection.newLine([], {_designWeight: createDesignWeightProperty()});
+  // const lineFeatures: LineFeature[] = [];
   for (let i = 0; i < numLines; i++) {
     const latitude = minLat + (randomStart + i * distBetween) * latPerMeter;
     const thisLine = [];
     for (let j = 0; j < numPointsPerLine; j++) {
       thisLine.push(
         rotateCoord(
-          [
-            normalizeLongitude(minLon + (j / (numPointsPerLine - 1)) * lonDist),
-            latitude,
-          ],
+          [normalizeLongitude(minLon + (j / (numPointsPerLine - 1)) * lonDist), latitude],
           refCoord,
           rotation,
         ),
       );
     }
     // Cut at antimeridian if needed
-    const lineGeom = cutLineGeometry({
-      type: 'LineString',
-      coordinates: thisLine,
-    });
-    lineFeatures.push(
-      LineFeature.create(lineGeom, {_designWeight: distBetween}, true),
+    const lineGeom = toLineObject(
+      cutLineGeometry({
+        type: 'LineString',
+        coordinates: thisLine,
+      }),
     );
+    if (lineGeom === null) continue;
+    sc.addGeometry(lineGeom, {_designWeight: distBetween}, true);
   }
-  const collection = intersectLineSampleAreaFrame(
-    LineCollection.create(lineFeatures, true),
-    layer.collection,
-    pointsPerCircle,
-  );
-  return new Layer(
-    collection,
-    {_designWeight: createDesignWeightProperty()},
-    true,
-  );
+
+  return intersectLineSampleAreaFrame(sc, collection, {pointsPerCircle});
 }

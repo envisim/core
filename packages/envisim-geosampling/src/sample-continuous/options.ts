@@ -1,7 +1,7 @@
 import {type GeoJSON as GJ} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {SamplingError} from '../SamplingError.js';
+import {SamplingError} from '../sampling-error.js';
 import {ErrorType} from '../utils/index.js';
 import {type SampleRelascopePointsOptions} from './relascope-points.js';
 
@@ -36,7 +36,7 @@ export function sampleBaseOptionsCheck({
   pointsPerCircle,
 }: SampleBaseOptions): ErrorType<typeof SamplingError> {
   if (
-    pointsPerCircle &&
+    pointsPerCircle !== undefined &&
     (!Number.isInteger(pointsPerCircle) || pointsPerCircle <= 0)
   ) {
     return SamplingError.POINTS_PER_CIRCLE_NOT_POSITIVE_INTEGER;
@@ -102,7 +102,7 @@ export function samplePointOptionsCheck({
     return SamplingError.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER;
   }
 
-  if (ratio && ratio <= 0.0) {
+  if (ratio !== undefined && ratio <= 0.0) {
     return SamplingError.RATIO_NOT_POSITIVE;
   }
 
@@ -114,9 +114,8 @@ export function samplePointOptionsCheck({
  * @see {@link SAMPLE_FEATURE_OPTIONS | default values}
  * @see {@link sampleFeatureOptionsCheck | error codes}
  */
-export interface SampleFeatureOptions<
-  F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
-> extends SamplePointOptions {
+export interface SampleFeatureOptions<F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>
+  extends SamplePointOptions {
   /**
    * A model feature of points or lines or areas to be placed on the selcted
    * points.
@@ -137,10 +136,7 @@ export interface SampleFeatureOptions<
 
 export const SAMPLE_FEATURE_OPTIONS: Readonly<
   Required<
-    Omit<
-      SampleFeatureOptions<GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>,
-      'modelFeature'
-    >
+    Omit<SampleFeatureOptions<GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>, 'modelFeature'>
   >
 > = {
   ...SAMPLE_POINT_OPTIONS,
@@ -157,7 +153,7 @@ export const SAMPLE_FEATURE_OPTIONS: Readonly<
  * @returns `null` if check passes
  */
 export function sampleFeatureOptionsCheck<
-  F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
+  F extends GJ.AreaFeature | GJ.LineFeature | GJ.PointFeature,
 >({
   // modelFeature,
   // rotation,
@@ -225,8 +221,7 @@ export function sampleSystematicLineOnAreaOptionsCheck({
  * @see {@link SAMPLE_BELT_ON_AREA_OPTIONS | default values}
  * @see {@link sampleBeltOnAreaOptionsCheck | error codes}
  */
-export interface SampleBeltOnAreaOptions
-  extends SampleSystematicLineOnAreaOptions {
+export interface SampleBeltOnAreaOptions extends SampleSystematicLineOnAreaOptions {
   /**
    * The half-width of the belt.
    */
@@ -264,14 +259,14 @@ export function sampleBeltOnAreaOptionsCheck({
 
 export {type SampleRelascopePointsOptions};
 export const SAMPLE_RELASCOPE_POINTS_OPTIONS: Readonly<
-  Required<Omit<SampleRelascopePointsOptions, 'baseLayer' | 'sizeProperty'>>
+  Required<Omit<SampleRelascopePointsOptions, 'baseCollection' | 'sizeProperty'>>
 > = {
   ...SAMPLE_POINT_OPTIONS,
   factor: 1.0,
 };
 export function sampleRelascopePointsOptionsCheck({
   factor,
-  baseLayer,
+  baseCollection,
   sizeProperty,
   ...options
 }: SampleRelascopePointsOptions): ErrorType<typeof SamplingError> {
@@ -282,10 +277,10 @@ export function sampleRelascopePointsOptionsCheck({
   if (factor && factor <= 0.0) {
     return SamplingError.FACTOR_NOT_POSITIVE;
   }
-  if (!Object.hasOwn(baseLayer.propertyRecord, sizeProperty)) {
+  if (!Object.hasOwn(baseCollection.propertyRecord, sizeProperty)) {
     return SamplingError.SIZE_PROPERTY_DONT_EXIST;
   }
-  if (baseLayer.propertyRecord[sizeProperty].type !== 'numerical') {
+  if (baseCollection.propertyRecord[sizeProperty].type !== 'numerical') {
     return SamplingError.SIZE_PROPERTY_NOT_NUMERICAL;
   }
   return null;

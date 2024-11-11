@@ -1,8 +1,7 @@
+export {type ErrorType} from './error-type.js';
 export {
   intersectPointSampleAreaFrame,
   intersectLineSampleAreaFrame,
   intersectAreaSampleAreaFrame,
 } from './intersect-x-sample-area-frame.js';
-
-export {projectedLengthOfFeature} from './projected-length-of-feature.js';
-export {type ErrorType} from './ErrorType.js';
+export {projectedLengthOfGeometry} from './projected-length-of-geometry.js';

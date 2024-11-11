@@ -30,9 +30,9 @@ export {
 } from './sample-stratified.js';
 
 // Errors
-export {SamplingError} from './SamplingError.js';
-export {CollectError} from './CollectError.js';
-export {type ErrorType} from './utils/ErrorType.js';
+export {SamplingError} from './sampling-error.js';
+export {CollectError} from './collect-error.js';
+export {type ErrorType} from './utils/index.js';
 
 // Model features/tracts
 export {
@@ -55,11 +55,7 @@ export {
 } from './model-feature.js';
 
 // Collection from layers
-export {
-  collectProperties,
-  collectPropertyRecord,
-  collectIntersects,
-} from './collect/index.js';
+export {collectProperties, collectPropertyRecord, collectIntersects} from './collect/index.js';
 
 // Point processes
 export {

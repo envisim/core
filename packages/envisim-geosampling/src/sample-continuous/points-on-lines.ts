@@ -1,21 +1,14 @@
 import {
+  FeatureCollection,
   type GeoJSON as GJ,
-  Layer,
-  LineCollection,
-  LineGeometryCollection,
-  LineObject,
+  type LineObject,
+  LineString,
   PlateCarree,
   Point,
-  PointCollection,
-  PointFeature,
   createDesignWeightProperty,
 } from '@envisim/geojson-utils';
 
-import {
-  SAMPLE_POINT_OPTIONS,
-  type SamplePointOptions,
-  samplePointOptionsCheck,
-} from './options.js';
+import {SAMPLE_POINT_OPTIONS, type SamplePointOptions, samplePointOptionsCheck} from './options.js';
 
 /**
  * Type for keeping track of distance travelled (dt) and index of sample point
@@ -27,95 +20,47 @@ type Track = {
 };
 
 /** @internal */
-function samplePointsOnGeometry(
-  geoJSON: LineObject,
-  track: Track,
-  distances: number[],
-) {
+function samplePointsOnGeometry(geometry: LineObject, track: Track, distances: number[]) {
   const points: GJ.Position[] = [];
   let segmentLength = 0;
   let fraction = 0;
 
-  switch (geoJSON.type) {
-    case 'LineString': {
-      const lineStringCoords = geoJSON.coordinates;
+  if (LineString.isObject(geometry)) {
+    const lineStringCoords = geometry.coordinates;
 
-      for (let i = 0; i < lineStringCoords.length - 1; i++) {
-        segmentLength = PlateCarree.distance(
-          lineStringCoords[i],
-          lineStringCoords[i + 1],
-        );
+    for (let i = 0; i < lineStringCoords.length - 1; i++) {
+      segmentLength = PlateCarree.distance(lineStringCoords[i], lineStringCoords[i + 1]);
+
+      for (let l = track.currentIndex; l < distances.length; l++) {
+        if (distances[l] < track.dt + segmentLength) {
+          fraction = (distances[l] - track.dt) / segmentLength;
+          points.push(
+            PlateCarree.intermediate(lineStringCoords[i], lineStringCoords[i + 1], fraction),
+          );
+          track.currentIndex += 1;
+        }
+      }
+
+      track.dt += segmentLength;
+    }
+  } else {
+    const mlsCoords = geometry.coordinates;
+
+    for (let i = 0; i < mlsCoords.length; i++) {
+      for (let j = 0; j < mlsCoords[i].length - 1; j++) {
+        segmentLength = PlateCarree.distance(mlsCoords[i][j], mlsCoords[i][j + 1]);
 
         for (let l = track.currentIndex; l < distances.length; l++) {
           if (distances[l] < track.dt + segmentLength) {
             fraction = (distances[l] - track.dt) / segmentLength;
-            points.push(
-              PlateCarree.intermediate(
-                lineStringCoords[i],
-                lineStringCoords[i + 1],
-                fraction,
-              ),
-            );
+            points.push(PlateCarree.intermediate(mlsCoords[i][j], mlsCoords[i][j + 1], fraction));
             track.currentIndex += 1;
           }
         }
 
         track.dt += segmentLength;
       }
-
-      break;
     }
-
-    case 'MultiLineString': {
-      const mlsCoords = geoJSON.coordinates;
-
-      for (let i = 0; i < mlsCoords.length; i++) {
-        for (let j = 0; j < mlsCoords[i].length - 1; j++) {
-          segmentLength = PlateCarree.distance(
-            mlsCoords[i][j],
-            mlsCoords[i][j + 1],
-          );
-
-          for (let l = track.currentIndex; l < distances.length; l++) {
-            if (distances[l] < track.dt + segmentLength) {
-              fraction = (distances[l] - track.dt) / segmentLength;
-              points.push(
-                PlateCarree.intermediate(
-                  mlsCoords[i][j],
-                  mlsCoords[i][j + 1],
-                  fraction,
-                ),
-              );
-              track.currentIndex += 1;
-            }
-          }
-
-          track.dt += segmentLength;
-        }
-      }
-
-      break;
-    }
-
-    default:
-      throw new Error('Unknown GeoJSON LineObject.');
-  }
-
-  return points;
-}
-
-/** @internal */
-function samplePointsOnGeometryCollection(
-  geoJSON: LineGeometryCollection,
-  track: Track,
-  distances: number[],
-): GJ.Position[] {
-  let points: GJ.Position[] = [];
-  let result: GJ.Position[] = [];
-
-  for (let i = 0; i < geoJSON.geometries.length; i++) {
-    result = samplePointsOnGeometry(geoJSON.geometries[i], track, distances);
-    points = points.concat(result);
   }
 
   return points;
@@ -124,17 +69,13 @@ function samplePointsOnGeometryCollection(
 /**
  * Selects points according to method and sampleSize on a line layer.
  *
- * @param layer
+ * @param collection
  * @param opts
  */
 export function samplePointsOnLines(
-  layer: Layer<LineCollection>,
-  {
-    rand = SAMPLE_POINT_OPTIONS.rand,
-    pointSelection,
-    sampleSize,
-  }: SamplePointOptions,
-): Layer<PointCollection> {
+  collection: FeatureCollection<LineObject>,
+  {rand = SAMPLE_POINT_OPTIONS.rand, pointSelection, sampleSize}: SamplePointOptions,
+): FeatureCollection<Point> {
   const optionsError = samplePointOptionsCheck({
     pointSelection,
     sampleSize,
@@ -143,7 +84,7 @@ export function samplePointsOnLines(
     throw new RangeError(`samplePointsOnLines error: ${optionsError}`);
   }
 
-  const L = layer.collection.length(); // total length of input geoJSON
+  const L = collection.measure(); // total length of input geoJSON
   if (L === 0) {
     throw new Error('Input layer has zero length.');
   }
@@ -171,38 +112,36 @@ export function samplePointsOnLines(
   }
 
   const track = {dt: 0, currentIndex: 0};
-  let points: GJ.Position[] = [];
-  let parentIndex: number[] = [];
+  const points: GJ.Position[] = [];
+  const parentIndex: number[] = [];
   const designWeight = L / sampleSize;
 
-  layer.collection.features.forEach((feature, index) => {
+  collection.forEach((feature, index) => {
     const geom = feature.geometry;
-    let result;
-    if (geom.type === 'GeometryCollection') {
-      result = samplePointsOnGeometryCollection(geom, track, distances);
-    } else {
-      result = samplePointsOnGeometry(geom, track, distances);
-    }
+    const result = samplePointsOnGeometry(geom, track, distances);
 
-    points = points.concat(result);
-    parentIndex = parentIndex.concat(new Array(result.length).fill(index));
+    points.push(...result);
+    parentIndex.push(...Array.from<number>({length: result.length}).fill(index));
   });
 
-  const features: PointFeature[] = points.map((coords, index): PointFeature => {
-    // transfer design weights if the frame has been sampled before
-    let dw = designWeight;
-    const parentFeature = layer.collection.features[parentIndex[index]];
-
-    if (parentFeature.properties?.['_designWeight']) {
-      dw = dw * parentFeature.properties['_designWeight'];
-    }
-
-    return PointFeature.create(Point.create(coords), {_designWeight: dw});
-  });
-
-  return new Layer(
-    new PointCollection({features}, true),
+  const newCollection = FeatureCollection.newPoint<Point>(
+    [],
     {_designWeight: createDesignWeightProperty()},
     true,
   );
+
+  for (let i = 0; i < points.length; i++) {
+    const coords = points[i];
+
+    let dw = designWeight;
+    const parentFeature = collection.features[parentIndex[i]];
+
+    if (parentFeature.properties?.['_designWeight']) {
+      dw *= parentFeature.properties['_designWeight'];
+    }
+
+    newCollection.addGeometry(Point.create(coords), {_designWeight: dw});
+  }
+
+  return newCollection;
 }

@@ -1,10 +1,9 @@
 import * as sampling from '@envisim/sampling';
 import {
-  AreaCollection,
-  GeometricPrimitive,
-  Layer,
-  LineCollection,
-  PointCollection,
+  type AreaObject,
+  FeatureCollection,
+  type LineObject,
+  type PointObject,
   PropertyRecord,
   createDesignWeightProperty,
 } from '@envisim/geojson-utils';
@@ -12,7 +11,7 @@ import {ColumnVector} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
 import {copy} from '@envisim/utils';
 
-import {SamplingError} from '../SamplingError.js';
+import {SamplingError} from '../sampling-error.js';
 import {ErrorType} from '../utils/index.js';
 import {
   balancingMatrixFromLayer,
@@ -21,6 +20,7 @@ import {
   spreadMatrixFromLayer,
 } from './utils.js';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SAMPLE_FINITE_SIMPLE_METHODS = [
   'srswr',
   'srswor',
@@ -34,11 +34,7 @@ const SAMPLE_FINITE_SIMPLE_METHODS = [
   'brewer',
   'ppswr',
 ] as const;
-const SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS = [
-  'lpm1',
-  'lpm2',
-  'scps',
-] as const;
+const SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS = ['lpm1', 'lpm2', 'scps'] as const;
 const SAMPLE_FINITE_BALANCED_METHODS = ['cube'] as const;
 const SAMPLE_FINITE_DOUBLY_BALANCED_METHODS = ['localCube'] as const;
 
@@ -116,7 +112,7 @@ export function sampleFiniteOptionsCheck(
     return SamplingError.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER;
   }
 
-  if (probabilitiesFrom) {
+  if (probabilitiesFrom !== undefined) {
     if (!Object.hasOwn(properties, probabilitiesFrom)) {
       // probabilitiesFrom must exist on propertyRecord
       return SamplingError.PROBABILITIES_FROM_DONT_EXIST;
@@ -130,15 +126,11 @@ export function sampleFiniteOptionsCheck(
 
   // Checks for spatially balanced methods
   if (
-    (
-      SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS as ReadonlyArray<string>
-    ).includes(methodName) ||
-    (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(
-      methodName,
-    )
+    (SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName) ||
+    (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName)
   ) {
-    if (!spreadOn) {
-      if (!spreadGeo) {
+    if (spreadOn === undefined) {
+      if (spreadGeo === undefined) {
         // Must use either spreadOn or spreadGeo
         return SamplingError.SPATIALLY_BALANCED_MUST_USE_SPREAD;
       }
@@ -152,12 +144,8 @@ export function sampleFiniteOptionsCheck(
 
   // Checks for balanced methods
   if (
-    (SAMPLE_FINITE_BALANCED_METHODS as ReadonlyArray<string>).includes(
-      methodName,
-    ) ||
-    (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(
-      methodName,
-    )
+    (SAMPLE_FINITE_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName) ||
+    (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName)
   ) {
     if (!balanceOn) {
       // Must use balanceOn
@@ -176,16 +164,14 @@ export function sampleFiniteOptionsCheck(
  * Select a sample from a layer using sampling methods for a finite
  * population.
  *
- * @param layer
+ * @param collection
  * @param opts
  */
-export function sampleFinite<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
->(layer: T, opts: SampleFiniteOptions): T {
-  const optionsError = sampleFiniteOptionsCheck(opts, layer.propertyRecord);
+export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
+  collection: FeatureCollection<T>,
+  opts: SampleFiniteOptions,
+): FeatureCollection<T> {
+  const optionsError = sampleFiniteOptionsCheck(opts, collection.propertyRecord);
   if (optionsError !== null) {
     throw new RangeError(`sampleFinite error: ${optionsError}`);
   }
@@ -193,7 +179,7 @@ export function sampleFinite<
   let idx: number[];
   let mu: number[];
   let n: number;
-  const N = layer.collection.size;
+  const N = collection.size();
   let probabilities: ColumnVector;
 
   // Select the correct method, and save indices of the FeatureCollection
@@ -201,10 +187,7 @@ export function sampleFinite<
     // Standard
     case 'srswr':
     case 'srswor':
-      n =
-        opts.methodName === 'srswr'
-          ? opts.sampleSize
-          : Math.min(opts.sampleSize, N);
+      n = opts.methodName === 'srswr' ? opts.sampleSize : Math.min(opts.sampleSize, N);
       // Compute expected number of inclusions / inclusion probabilities
       mu = Array.from<number>({length: N}).fill(n / N);
 
@@ -222,7 +205,7 @@ export function sampleFinite<
     case 'pareto':
     case 'brewer':
       // Compute expected number of inclusions / inclusion probabilities
-      mu = inclprobsFromLayer(layer, opts).toArray();
+      mu = inclprobsFromLayer(collection, opts).toArray();
 
       // Get selected indexes
       idx = sampling[opts.methodName]({
@@ -236,7 +219,7 @@ export function sampleFinite<
       n = opts.sampleSize; // TODO: Check if methods do corrections to n
 
       // Compute expected number of inclusions / inclusion probabilities
-      probabilities = drawprobsFromLayer(layer, opts);
+      probabilities = drawprobsFromLayer(collection, opts);
       mu = probabilities.multiply(n, false).toArray();
 
       // Get selected indexes
@@ -252,16 +235,12 @@ export function sampleFinite<
     case 'lpm2':
     case 'scps':
       // Compute expected number of inclusions / inclusion probabilities
-      mu = inclprobsFromLayer(layer, opts).toArray();
+      mu = inclprobsFromLayer(collection, opts).toArray();
 
       // Get selected indexes
       idx = sampling[opts.methodName]({
         probabilities: mu,
-        auxiliaries: spreadMatrixFromLayer(
-          layer,
-          opts.spreadOn ?? [],
-          opts.spreadGeo,
-        ),
+        auxiliaries: spreadMatrixFromLayer(collection, opts.spreadOn ?? [], opts.spreadGeo),
         rand: opts.rand,
       });
       break;
@@ -269,12 +248,12 @@ export function sampleFinite<
     // Balancing
     case 'cube':
       // Compute expected number of inclusions / inclusion probabilities
-      mu = inclprobsFromLayer(layer, opts).toArray();
+      mu = inclprobsFromLayer(collection, opts).toArray();
 
       // Get selected indexes
       idx = sampling[opts.methodName]({
         probabilities: mu,
-        balancing: balancingMatrixFromLayer(layer, opts.balanceOn ?? []),
+        balancing: balancingMatrixFromLayer(collection, opts.balanceOn ?? []),
         rand: opts.rand,
       });
       break;
@@ -282,17 +261,13 @@ export function sampleFinite<
     // Balancing + spreading
     case 'localCube':
       // Compute expected number of inclusions / inclusion probabilities
-      mu = inclprobsFromLayer(layer, opts).toArray();
+      mu = inclprobsFromLayer(collection, opts).toArray();
 
       // Get selected indexes
       idx = sampling[opts.methodName]({
         probabilities: mu,
-        balancing: balancingMatrixFromLayer(layer, opts.balanceOn ?? []),
-        auxiliaries: spreadMatrixFromLayer(
-          layer,
-          opts.spreadOn ?? [],
-          opts.spreadGeo,
-        ),
+        balancing: balancingMatrixFromLayer(collection, opts.balanceOn ?? []),
+        auxiliaries: spreadMatrixFromLayer(collection, opts.spreadOn ?? [], opts.spreadGeo),
         rand: opts.rand,
       });
       break;
@@ -302,51 +277,24 @@ export function sampleFinite<
       throw new TypeError('method is not valid');
   }
 
-  const propertyRecord = copy(layer.propertyRecord);
+  const propertyRecord = copy(collection.propertyRecord);
   // Add _designWeight to propertyRecord if it does not exist
   if (!Object.hasOwn(propertyRecord, '_designWeight')) {
     propertyRecord['_designWeight'] = createDesignWeightProperty();
   }
 
-  let newLayer: T;
-  if (Layer.isLayer(layer, GeometricPrimitive.POINT)) {
-    newLayer = new Layer(
-      new PointCollection({features: []}, true),
-      propertyRecord,
-      true,
-    ) as T;
-  } else if (Layer.isLayer(layer, GeometricPrimitive.LINE)) {
-    newLayer = new Layer(
-      new LineCollection({features: []}, true),
-      propertyRecord,
-      true,
-    ) as T;
-  } else if (Layer.isLayer(layer, GeometricPrimitive.AREA)) {
-    newLayer = new Layer(
-      new AreaCollection({features: []}, true),
-      propertyRecord,
-      true,
-    ) as T;
-  } else {
-    throw new TypeError('layer not valid');
-  }
+  const newCollection = collection.copyEmpty(false);
 
   idx.forEach((i) => {
-    const len = newLayer.collection.addFeature(
-      // TS cannot ensure that layer and newLayer matches, but as we just
-      // created them to match, we can skip this check here
-      /* eslint-disable-next-line @typescript-eslint/no-unsafe-argument */
-      layer.collection.features[i] as any,
+    newCollection.addGeometry(
+      collection.features[i].geometry,
+      {
+        ...collection.features[i].properties,
+        _designWeight: (collection.features[i].properties['_designWeight'] ?? 1.0) / mu[i],
+      },
       false,
-    );
-
-    // Update design weight
-    newLayer.collection.features[len - 1].editProperty(
-      '_designWeight',
-      (value) => value / mu[i],
-      1.0,
     );
   });
 
-  return newLayer;
+  return newCollection;
 }

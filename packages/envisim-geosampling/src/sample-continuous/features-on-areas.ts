@@ -1,19 +1,14 @@
 import {
-  AreaCollection,
+  type AreaObject,
+  FeatureCollection,
   type GeoJSON as GJ,
   GeometricPrimitive,
-  Layer,
-  LineCollection,
-  PointCollection,
-  createDesignWeightProperty,
+  type LineObject,
+  type PointObject,
   getFeaturePrimitive,
 } from '@envisim/geojson-utils';
 
-import {
-  placeModelFeature,
-  radiusOfModelFeature,
-  sizeOfModelFeature,
-} from '../model-feature.js';
+import {placeModelFeature, radiusOfModelFeature, sizeOfModelFeature} from '../model-feature.js';
 import {
   intersectAreaSampleAreaFrame,
   intersectLineSampleAreaFrame,
@@ -33,19 +28,19 @@ import {samplePointsOnAreas} from './points-on-areas.js';
  * @param opts
  */
 function sampleFeaturesOnAreas(
-  layer: Layer<AreaCollection>,
+  collection: FeatureCollection<AreaObject>,
   opts: SampleFeatureOptions<GJ.PointFeature>,
-): Layer<PointCollection>;
+): FeatureCollection<PointObject>;
 function sampleFeaturesOnAreas(
-  layer: Layer<AreaCollection>,
+  collection: FeatureCollection<AreaObject>,
   opts: SampleFeatureOptions<GJ.LineFeature>,
-): Layer<LineCollection>;
+): FeatureCollection<LineObject>;
 function sampleFeaturesOnAreas(
-  layer: Layer<AreaCollection>,
+  collection: FeatureCollection<AreaObject>,
   opts: SampleFeatureOptions<GJ.AreaFeature>,
-): Layer<AreaCollection>;
+): FeatureCollection<AreaObject>;
 function sampleFeaturesOnAreas(
-  layer: Layer<AreaCollection>,
+  collection: FeatureCollection<AreaObject>,
   {
     rand = SAMPLE_FEATURE_OPTIONS.rand,
     pointsPerCircle = SAMPLE_FEATURE_OPTIONS.pointsPerCircle,
@@ -55,8 +50,8 @@ function sampleFeaturesOnAreas(
     rotation = SAMPLE_FEATURE_OPTIONS.rotation,
     randomRotation = SAMPLE_FEATURE_OPTIONS.randomRotation,
     ratio = SAMPLE_FEATURE_OPTIONS.ratio,
-  }: SampleFeatureOptions<GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>,
-): Layer<PointCollection | LineCollection | AreaCollection> {
+  }: SampleFeatureOptions<GJ.AreaFeature | GJ.LineFeature | GJ.PointFeature>,
+): FeatureCollection<AreaObject> | FeatureCollection<LineObject> | FeatureCollection<PointObject> {
   const optionsError = sampleFeatureOptionsCheck({
     rand,
     pointsPerCircle,
@@ -83,7 +78,7 @@ function sampleFeaturesOnAreas(
   const sizeOfTract = sizeOfModelFeature(modelFeature);
 
   // Select first a sample of points and use radius as buffer.
-  const pointsLayer = samplePointsOnAreas(layer, {
+  const pointCollection = samplePointsOnAreas(collection, {
     pointSelection,
     sampleSize,
     buffer: radius,
@@ -93,14 +88,14 @@ function sampleFeaturesOnAreas(
 
   if (radius === 0) {
     // Single point tract with 0 radius, _designWeight already transfered.
-    return pointsLayer;
+    return pointCollection;
   }
 
   // Transform the point features by placing a model feature on each point.
   switch (tractType) {
     case GeometricPrimitive.POINT: {
       const pointFeatures: GJ.PointFeature[] = [];
-      pointsLayer.collection.features.forEach((feature) => {
+      pointCollection.forEach((feature) => {
         const dw = feature.properties?.['_designWeight'] || 1;
 
         let newFeature: GJ.PointFeature;
@@ -123,20 +118,16 @@ function sampleFeaturesOnAreas(
           pointFeatures.push(newFeature);
         }
       });
-      const collection = intersectPointSampleAreaFrame(
-        PointCollection.create(pointFeatures, true),
-        layer.collection,
-      );
-      return new Layer(
+
+      return intersectPointSampleAreaFrame(
+        FeatureCollection.createPoint(pointFeatures, false, true),
         collection,
-        {_designWeight: createDesignWeightProperty()},
-        true,
       );
     }
 
     case GeometricPrimitive.LINE: {
       const lineFeatures: GJ.LineFeature[] = [];
-      pointsLayer.collection.features.forEach((feature) => {
+      pointCollection.forEach((feature) => {
         const dw = feature.properties?.['_designWeight'] || 1;
 
         let newFeature: GJ.LineFeature;
@@ -163,21 +154,14 @@ function sampleFeaturesOnAreas(
         }
       });
 
-      const collection = intersectLineSampleAreaFrame(
-        LineCollection.create(lineFeatures),
-        layer.collection,
+      return intersectLineSampleAreaFrame(FeatureCollection.createLine(lineFeatures), collection, {
         pointsPerCircle,
-      );
-      return new Layer(
-        collection,
-        {_designWeight: createDesignWeightProperty()},
-        true,
-      );
+      });
     }
 
     case GeometricPrimitive.AREA: {
       const areaFeatures: GJ.AreaFeature[] = [];
-      pointsLayer.collection.features.forEach((feature) => {
+      pointCollection.forEach((feature) => {
         const dw = feature.properties?.['_designWeight'] || 1;
 
         let newFeature: GJ.AreaFeature;
@@ -203,16 +187,9 @@ function sampleFeaturesOnAreas(
           areaFeatures.push(newFeature);
         }
       });
-      const collection = intersectAreaSampleAreaFrame(
-        AreaCollection.create(areaFeatures),
-        layer.collection,
+      return intersectAreaSampleAreaFrame(FeatureCollection.createArea(areaFeatures), collection, {
         pointsPerCircle,
-      );
-      return new Layer(
-        collection,
-        {_designWeight: createDesignWeightProperty()},
-        true,
-      );
+      });
     }
 
     default:
