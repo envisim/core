@@ -282,17 +282,6 @@ export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
 
   const newCollection = collection.copyEmpty(false);
 
-  // let newLayer: T;
-  // if (FeatureCollection.isLayer(collection, GeometricPrimitive.POINT)) {
-  //   newLayer = new FeatureCollection(new PointCollection({features: []}, true), propertyRecord, true) as T;
-  // } else if (FeatureCollection.isLayer(collection, GeometricPrimitive.LINE)) {
-  //   newLayer = new FeatureCollection(new LineCollection({features: []}, true), propertyRecord, true) as T;
-  // } else if (FeatureCollection.isLayer(collection, GeometricPrimitive.AREA)) {
-  //   newLayer = new FeatureCollection(new AreaCollection({features: []}, true), propertyRecord, true) as T;
-  // } else {
-  //   throw new TypeError('layer not valid');
-  // }
-
   idx.forEach((i) => {
     newCollection.addGeometry(
       collection.features[i].geometry,

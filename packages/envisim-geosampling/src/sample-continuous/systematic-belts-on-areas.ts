@@ -69,8 +69,8 @@ export const sampleSystematicBeltsOnAreas = (
     smallestAtLat = box[3];
   }
 
-  const minLon = Geodesic.destination([refCoord[0], smallestAtLat], maxRadius, 270)[0];
-  const maxLon = Geodesic.destination([refCoord[0], smallestAtLat], maxRadius, 90)[0];
+  const minLon = Geodesic.destination([refCoord[0], smallestAtLat], maxRadius, 270.0)[0];
+  const maxLon = Geodesic.destination([refCoord[0], smallestAtLat], maxRadius, 90.0)[0];
   const minLat = Geodesic.destination(refCoord, maxRadius + halfWidth, 180.0)[1];
   const lonDist = longitudeDistance(minLon, maxLon);
   const numLines = Math.ceil((2.0 * maxRadius) / distBetween);
