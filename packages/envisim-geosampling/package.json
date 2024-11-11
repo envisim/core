@@ -17,8 +17,7 @@
     "@envisim/random": "workspace:*",
     "@envisim/sampling": "workspace:*",
     "@envisim/utils": "workspace:*",
-    "geographiclib-geodesic": "^2.1.1",
-    "uuid": "^11.0.2"
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@envisim/eslint-config": "workspace:*",
