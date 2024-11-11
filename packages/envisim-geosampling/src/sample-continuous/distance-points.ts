@@ -56,7 +56,6 @@ export function sampleDistancePoints(
 
   // Select sample of points (optional buffer via opts)
   const buffer = cutoff;
-  //opts.samplePointsOnAreasOptions.buffer = buffer;
   const pointSample = samplePointsOnAreas(collection, {
     ...opts,
     buffer,
@@ -77,37 +76,35 @@ export function sampleDistancePoints(
     const basePointCoords = pointFeature.geometry.coordinates;
 
     pointSample.forEach((samplePoint, samplePointIndex) => {
-      if (Point.isObject(samplePoint.geometry)) {
-        const dist = Geodesic.distance(basePointCoords, samplePoint.geometry.coordinates);
-        if (dist < cutoff && rand.float() < detectionFunction(dist)) {
-          // Check if base point exists in this frame (frame could be part/stratum)
-          for (let i = 0; i < collection.features.length; i++) {
-            const frameFeature = collection.features[i];
-            const intersect = intersectPointAreaGeometries(
-              pointFeature.geometry,
-              frameFeature.geometry,
-            );
-            if (intersect !== null) {
-              // Follow the design weight
-              let dw = 1 / (Math.PI * effRadius * effRadius);
-              if (samplePoint.properties?.['_designWeight']) {
-                dw *= samplePoint.properties['_designWeight'];
-              }
-              // If buffer = 0, then sample point has already collected
-              // design weight from frame. If buffer > 0, then we need
-              // to collect the weight here.
-              if (frameFeature.properties?.['_designWeight'] && buffer > 0) {
-                dw *= frameFeature.properties['_designWeight'];
-              }
-              const newFeature = Feature.createPointFromJson(pointFeature, false);
-              if (newFeature === null) continue;
-
-              newFeature.properties['_designWeight'] = dw;
-              newFeature.properties['_parent'] = samplePointIndex;
-              newFeature.properties['_distance'] = dist;
-              newCollection.addFeature(newFeature, true);
-              break;
+      const dist = Geodesic.distance(basePointCoords, samplePoint.geometry.coordinates);
+      if (dist < cutoff && rand.float() < detectionFunction(dist)) {
+        // Check if base point exists in this frame (frame could be part/stratum)
+        for (let i = 0; i < collection.features.length; i++) {
+          const frameFeature = collection.features[i];
+          const intersect = intersectPointAreaGeometries(
+            pointFeature.geometry,
+            frameFeature.geometry,
+          );
+          if (intersect !== null) {
+            // Follow the design weight
+            let dw = 1 / (Math.PI * effRadius * effRadius);
+            if (samplePoint.properties?.['_designWeight']) {
+              dw *= samplePoint.properties['_designWeight'];
             }
+            // If buffer = 0, then sample point has already collected
+            // design weight from frame. If buffer > 0, then we need
+            // to collect the weight here.
+            if (frameFeature.properties?.['_designWeight'] && buffer > 0) {
+              dw *= frameFeature.properties['_designWeight'];
+            }
+            const newFeature = Feature.createPointFromJson(pointFeature, false);
+            if (newFeature === null) continue;
+
+            newFeature.properties['_designWeight'] = dw;
+            newFeature.properties['_parent'] = samplePointIndex;
+            newFeature.properties['_distance'] = dist;
+            newCollection.addFeature(newFeature, true);
+            break;
           }
         }
       }
