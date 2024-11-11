@@ -51,6 +51,6 @@ export abstract class AbstractSingleTypeObject<T extends GJ.SingleTypeObject> {
   }
 
   abstract getCoordinateArray(): GJ.Position[] | GJ.Position[][] | GJ.Position[][][];
-  abstract distanceToPosition(coords: GJ.Position): number;
+  abstract distanceToPosition(position: GJ.Position): number;
   abstract centroid(iterations: number): GJ.Position;
 }

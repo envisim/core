@@ -37,8 +37,8 @@ export class Point extends AbstractPointObject<GJ.Point> implements GJ.Point {
     return [this.coordinates];
   }
 
-  distanceToPosition(coords: GJ.Position): number {
-    return Geodesic.distance(coords, this.coordinates);
+  distanceToPosition(position: GJ.Position): number {
+    return Geodesic.distance(position, this.coordinates);
   }
 
   centroid(): GJ.Position {

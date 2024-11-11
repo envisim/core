@@ -10,7 +10,7 @@ import {
 import {moveCoordsAroundEarth} from '../../utils/antimeridian.js';
 import {bboxCrossesAntimeridian, bboxFromPositions, unionOfBBoxes} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids, centroidOfLineString} from '../../utils/centroid.js';
-import {distancePositionToSegment} from '../../utils/distance-position-to-segment.js';
+import {Segment} from '../../utils/class-segment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {AbstractLineObject} from './abstract-line-object.js';
 import {MultiPolygon} from './class-multipolygon.js';
@@ -62,13 +62,13 @@ export class MultiLineString
     return this.coordinates;
   }
 
-  distanceToPosition(coords: GJ.Position): number {
+  distanceToPosition(position: GJ.Position): number {
     let d = Infinity;
     const c = this.coordinates;
     for (let i = 0; i < c.length; i++) {
       const n = c[i].length - 1;
       for (let j = 0; j < n; j++) {
-        d = Math.min(d, distancePositionToSegment(coords, [c[i][j], c[i][j + 1]]));
+        d = Math.min(d, new Segment(c[i][j], c[i][j + 1]).distanceToPosition(position));
       }
     }
     return d;

@@ -46,9 +46,9 @@ export class MultiPoint extends AbstractPointObject<GJ.MultiPoint> implements GJ
     return this.coordinates;
   }
 
-  distanceToPosition(coords: GJ.Position): number {
+  distanceToPosition(position: GJ.Position): number {
     return this.coordinates.reduce(
-      (prev, curr) => Math.min(prev, Geodesic.distance(curr, coords)),
+      (prev, curr) => Math.min(prev, Geodesic.distance(curr, position)),
       Infinity,
     );
   }

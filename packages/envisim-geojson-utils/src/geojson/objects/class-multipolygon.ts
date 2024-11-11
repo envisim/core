@@ -6,7 +6,7 @@ import {moveCoordsAroundEarth} from '../../utils/antimeridian.js';
 import {areaOfPolygonLonLat} from '../../utils/area.js';
 import {bboxCrossesAntimeridian, bboxFromPositions, unionOfBBoxes} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids, centroidOfPolygon} from '../../utils/centroid.js';
-import {distancePositionToSegment} from '../../utils/distance-position-to-segment.js';
+import {Segment} from '../../utils/class-segment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {
   pointInMultiPolygonPosition,
@@ -54,7 +54,7 @@ export class MultiPolygon extends AbstractAreaObject<GJ.MultiPolygon> implements
     return this.coordinates;
   }
 
-  distanceToPosition(coords: GJ.Position): number {
+  distanceToPosition(position: GJ.Position): number {
     let d = Infinity;
     const c = this.coordinates;
     const nPoly = c.length;
@@ -64,10 +64,10 @@ export class MultiPolygon extends AbstractAreaObject<GJ.MultiPolygon> implements
       for (let j = 0; j < nRing; j++) {
         const nSeg = c[i][j].length - 1;
         for (let k = 0; k < nSeg; k++) {
-          d = Math.min(d, distancePositionToSegment(coords, [c[i][j][k], c[i][j][k + 1]]));
+          d = Math.min(d, new Segment(c[i][j][k], c[i][j][k + 1]).distanceToPosition(position));
         }
       }
-      if (pointInSinglePolygonPosition(coords, c[i])) {
+      if (pointInSinglePolygonPosition(position, c[i])) {
         inside = true;
       }
     }

@@ -5,7 +5,7 @@ import {type BufferOptions, bufferPolygons, defaultBufferOptions} from '../../bu
 import {areaOfPolygonLonLat} from '../../utils/area.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidOfPolygon} from '../../utils/centroid.js';
-import {distancePositionToSegment} from '../../utils/distance-position-to-segment.js';
+import {Segment} from '../../utils/class-segment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {pointInSinglePolygonPosition} from '../../utils/point-in-polygon.js';
 import {AbstractAreaObject} from './abstract-area-object.js';
@@ -42,17 +42,17 @@ export class Polygon extends AbstractAreaObject<GJ.Polygon> implements GJ.Polygo
     return [this.coordinates];
   }
 
-  distanceToPosition(coords: GJ.Position): number {
+  distanceToPosition(position: GJ.Position): number {
     let d = Infinity;
     const c = this.coordinates;
     const nRing = c.length;
     for (let i = 0; i < nRing; i++) {
       const nSeg = c[i].length - 1;
       for (let j = 0; j < nSeg; j++) {
-        d = Math.min(d, distancePositionToSegment(coords, [c[i][j], c[i][j + 1]]));
+        d = Math.min(d, new Segment(c[i][j], c[i][j + 1]).distanceToPosition(position));
       }
     }
-    if (pointInSinglePolygonPosition(coords, c)) {
+    if (pointInSinglePolygonPosition(position, c)) {
       return -d;
     }
     return d;

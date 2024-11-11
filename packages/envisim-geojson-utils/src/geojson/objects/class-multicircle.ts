@@ -77,11 +77,11 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
     return this.coordinates;
   }
 
-  distanceToPosition(coords: GJ.Position): number {
+  distanceToPosition(position: GJ.Position): number {
     let distance = Infinity;
 
     for (const c of this.coordinates) {
-      const d = Geodesic.distance(coords, c);
+      const d = Geodesic.distance(position, c);
       if (d < distance) {
         if (d <= this.radius) {
           // Guaranteed to be smallest, because non-overlapping promise

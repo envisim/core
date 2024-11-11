@@ -55,8 +55,8 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     return [this.coordinates];
   }
 
-  distanceToPosition(coords: GJ.Position): number {
-    return Geodesic.distance(coords, this.coordinates) - this.radius;
+  distanceToPosition(position: GJ.Position): number {
+    return Geodesic.distance(position, this.coordinates) - this.radius;
   }
 
   centroid(): GJ.Position {

@@ -9,7 +9,7 @@ import {
 } from '../../buffer/index.js';
 import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidOfLineString} from '../../utils/centroid.js';
-import {distancePositionToSegment} from '../../utils/distance-position-to-segment.js';
+import {Segment} from '../../utils/class-segment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {AbstractLineObject} from './abstract-line-object.js';
 import {MultiPolygon} from './class-multipolygon.js';
@@ -46,12 +46,12 @@ export class LineString extends AbstractLineObject<GJ.LineString> implements GJ.
     return [this.coordinates];
   }
 
-  distanceToPosition(coords: GJ.Position): number {
+  distanceToPosition(position: GJ.Position): number {
     let d = Infinity;
     const c = this.coordinates;
     const n = c.length - 1;
     for (let i = 0; i < n; i++) {
-      d = Math.min(d, distancePositionToSegment(coords, [c[i], c[i + 1]]));
+      d = Math.min(d, new Segment(c[i], c[i + 1]).distanceToPosition(position));
     }
     return d;
   }
