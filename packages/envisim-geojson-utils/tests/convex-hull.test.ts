@@ -12,16 +12,24 @@ const positions: GJ.Position[] = [
   [0, 0],
 ];
 
+const positions2: GJ.Position[] = [
+  [0, 0],
+  [0, 0],
+  [0, 0],
+];
+
 const pc = FeatureCollection.newPoint();
 pc.addGeometry(MultiPoint.create(positions));
-
 const hull = convexHull(pc);
-//console.log(JSON.stringify(hull, null, 2));
+
+const pc2 = FeatureCollection.newPoint();
+pc2.addGeometry(MultiPoint.create(positions2));
+const hull2 = convexHull(pc2);
 
 test('convexHull', () => {
-  expect(pc.features.length).toBe(1);
-  Polygon.assert(hull.features[0].geometry);
-  const coords = hull.features[0].geometry.coordinates[0];
+  expect(hull2).toBe(null);
+  Polygon.assert(hull);
+  const coords = hull.coordinates[0];
   expect(coords).toEqual(
     expect.arrayContaining([
       [0, 0],

@@ -1,7 +1,6 @@
 import {
   AreaObject,
   Circle,
-  Feature,
   FeatureCollection,
   type GeoJSON as GJ,
   LineObject,
@@ -30,13 +29,13 @@ export function convexHull(
     | FeatureCollection<LineObject>
     | FeatureCollection<PointObject>,
   options: CirclesToPolygonsOptions = {},
-): FeatureCollection<AreaObject> {
+): Polygon | MultiPolygon | null {
   // Grab only outer coords (no inner rings)
   let points: GJ.Position[] = outerCoords(collection, options);
 
   // Return empty collection if less than 3 points
   if (points.length < 3) {
-    return FeatureCollection.createArea([]);
+    return null;
   }
 
   // Check if coords need to be moved (i.e. the bbox crosses antimeridian)
@@ -65,20 +64,19 @@ export function convexHull(
   L.pop();
   U.pop();
 
-  // Join lower and upper hull and close the ring
+  // Join lower and upper hull
   const P = L.concat(U);
+
+  if (collinear(P)) {
+    return null;
+  }
+
+  // close the ring
   P.push([...L[0]]);
 
   // If coordinates were moved, then reroll
   const mpc = crosses ? rerollPolygons([[P]]) : [[P]];
-
-  // Now construct and return as feature collection
-  const feature =
-    mpc.length == 1
-      ? new Feature(Polygon.create(mpc[0], true), {}, true)
-      : new Feature(MultiPolygon.create(mpc, true), {}, true);
-
-  return FeatureCollection.createArea([feature], false, true);
+  return mpc.length == 1 ? Polygon.create(mpc[0], true) : MultiPolygon.create(mpc, true);
 }
 
 /**
@@ -149,4 +147,25 @@ function compare(a: GJ.Position, b: GJ.Position): number {
  */
 function cross(a: GJ.Position, b: GJ.Position, o: GJ.Position): number {
   return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+}
+
+/**
+ * Internal function to test for degenerate case (all points on a line or same point)
+ * @param points
+ * @returns
+ */
+function collinear(points: GJ.Position[]): boolean {
+  if (points.length < 3) return true;
+
+  const [x1, y1] = points[0];
+  const [x2, y2] = points[1];
+  const initialSlope = x2 !== x1 ? (y2 - y1) / (x2 - x1) : Infinity;
+
+  for (let i = 2; i < points.length; i++) {
+    const [x, y] = points[i];
+    const slope = x !== x1 ? (y - y1) / (x - x1) : Infinity;
+    if (slope !== initialSlope) return false;
+  }
+
+  return true;
 }
