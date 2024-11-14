@@ -116,7 +116,7 @@ export class IndexList {
     // Early return, no need to swap
     if (k == this.len) return;
 
-    swap(this.list, k, this.len);
+    this.list[k] = this.list[this.len];
     this.reverse[this.list[k]] = k;
   }
 }
