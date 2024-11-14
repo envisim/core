@@ -56,21 +56,24 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
 
   static createAreaFromJson(
     fc: OptionalParam<GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>, 'type'>,
+    createPropertyRecord: boolean = true,
     shallow: boolean = true,
   ): FeatureCollection<AreaObject> {
-    return FeatureCollection.createArea(fc.features, shallow);
+    return FeatureCollection.createArea(fc.features, createPropertyRecord, shallow);
   }
   static createLineFromJson(
     fc: OptionalParam<GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>, 'type'>,
+    createPropertyRecord: boolean = true,
     shallow: boolean = true,
   ): FeatureCollection<LineObject> {
-    return FeatureCollection.createLine(fc.features, shallow);
+    return FeatureCollection.createLine(fc.features, createPropertyRecord, shallow);
   }
   static createPointFromJson(
     fc: OptionalParam<GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>, 'type'>,
+    createPropertyRecord: boolean = true,
     shallow: boolean = true,
   ): FeatureCollection<PointObject> {
-    return FeatureCollection.createPoint(fc.features, shallow);
+    return FeatureCollection.createPoint(fc.features, createPropertyRecord, shallow);
   }
 
   static createArea(
