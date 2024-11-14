@@ -70,6 +70,78 @@ const collection = FeatureCollection.createArea([feature1, feature2], true, true
 
 test('FeatureCollection', () => {
   expect(FeatureCollection.isArea(collection)).toBe(true);
+
+  const fcArea = FeatureCollection.createAreaFromJson({features: [feature1, feature2]});
+  const fcLine = FeatureCollection.createLineFromJson({features: [feature1, feature2]});
+  const fcPoint = FeatureCollection.createPointFromJson({features: [feature1, feature2]});
+  expect(FeatureCollection.isArea(fcArea)).toBe(true);
+  expect(FeatureCollection.isLine(fcLine)).toBe(true);
+  expect(FeatureCollection.isPoint(fcPoint)).toBe(true);
+
+  expect(fcArea.size()).toBe(1);
+  expect(fcLine.size()).toBe(1);
+  expect(fcPoint.size()).toBe(0);
+
+  const fcGC = FeatureCollection.createPointFromJson({
+    features: [
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [0, 1],
+        },
+        properties: null,
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'GeometryCollection',
+          geometries: [
+            {
+              type: 'GeometryCollection',
+              geometries: [
+                {
+                  type: 'GeometryCollection',
+                  geometries: [
+                    {
+                      type: 'MultiPoint',
+                      coordinates: [
+                        [0, 1],
+                        [0, 2],
+                      ],
+                    },
+                    {
+                      type: 'LineString',
+                      coordinates: [
+                        [1, 0],
+                        [1, 1],
+                      ],
+                    },
+                  ],
+                },
+                {type: 'Point', coordinates: [0, 3]},
+              ],
+            },
+            {type: 'Point', coordinates: [0, 4]},
+          ],
+        },
+        properties: null,
+      },
+    ],
+  });
+
+  expect(FeatureCollection.isPoint(fcGC)).toBe(true);
+  expect(fcGC.size()).toBe(2);
+
+  expect(MultiPoint.isObject(fcGC.features[1].geometry)).toBe(true);
+  expect(fcGC.features[1].geometry.coordinates).toEqual(
+    expect.arrayContaining([
+      [0, 1],
+      [0, 2],
+      [0, 3],
+      [0, 4],
+    ]),
+  );
 });
 
 test('appendFromLayer', () => {
