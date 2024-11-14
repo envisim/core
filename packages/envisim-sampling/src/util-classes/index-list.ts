@@ -51,10 +51,6 @@ export class IndexList {
     this.len = this.capacity;
   }
 
-  reset(): void {
-    this.len = this.capacity;
-  }
-
   resize(len: number): void {
     if (len > this.capacity) throw new RangeError('Inadmissable value of len');
 
@@ -112,17 +108,15 @@ export class IndexList {
     const k = this.reverse[id];
 
     if (k >= this.len)
-      throw new RangeError(
-        `Inadmissible value of id: ${id}, k: ${k}, len: ${this.len}`,
-      );
+      throw new RangeError(`Inadmissible value of id: ${id}, k: ${k}, len: ${this.len}`);
 
     this.len -= 1;
+    this.reverse[id] = this.capacity;
 
     // Early return, no need to swap
     if (k == this.len) return;
 
     swap(this.list, k, this.len);
     this.reverse[this.list[k]] = k;
-    this.reverse[this.list[this.len]] = this.len;
   }
 }
