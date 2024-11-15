@@ -1,7 +1,16 @@
 import {expect, test} from 'vitest';
 
 import {FeatureCollection} from '../../src/geojson/collections/class-feature-collection.js';
-import {AreaObject, Feature, GeoJSON as GJ, MultiPoint, Point} from '../../src/index.js';
+import {
+  AreaObject,
+  Circle,
+  Feature,
+  GeoJSON as GJ,
+  MultiCircle,
+  MultiPoint,
+  Point,
+  Polygon,
+} from '../../src/index.js';
 
 test('geomEach', () => {
   const pointCollection = FeatureCollection.newPoint();
@@ -164,4 +173,33 @@ test('appendFromLayerWithDifferentProps', () => {
   const fcArea = FeatureCollection.newArea(collection.features, undefined, true);
   expect(() => collection.appendFeatureCollection(fcArea)).toThrowError();
   expect(() => fcArea.appendFeatureCollection(collection)).toThrowError();
+});
+
+test('toGeoJSON', () => {
+  const fc = FeatureCollection.newArea();
+  fc.addGeometry(Circle.create([20.27, 63.83], 10));
+  fc.addGeometry(
+    MultiCircle.create(
+      [
+        [20.27, 63.83],
+        [20.271, 63.83],
+      ],
+      100,
+    ),
+  );
+  fc.addGeometry(
+    Polygon.create([
+      [
+        [0, 1],
+        [0, 2],
+        [1, 3],
+        [0, 1],
+      ],
+    ]),
+  );
+  const woc = fc.toGeoJSON({convertCircles: true});
+  const wc = fc.toGeoJSON({convertCircles: false});
+
+  expect(woc.features.map((f) => f.geometry.type)).toEqual(['Polygon', 'MultiPolygon', 'Polygon']);
+  expect(wc.features.map((f) => f.geometry.type)).toEqual(['Point', 'MultiPoint', 'Polygon']);
 });
