@@ -1,4 +1,4 @@
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuid} from 'uuid';
 
 import {copy} from '@envisim/utils';
 
@@ -26,81 +26,260 @@ export interface CategoricalProperty extends PropertyBase {
 
 export type Property = NumericalProperty | CategoricalProperty;
 
-export type PropertyRecord = Record<string, Property>;
+// export type PropertyRecord = Record<string, Property>;
 
-export const PropertySpecialKeys = [
-  '_designWeight',
-  '_distance',
-  '_parent',
-  '_randomRotation',
-] as const;
+export class PropertyRecord {
+  record: Record<string, Property> = {};
 
-export function createDesignWeightProperty(): NumericalProperty {
-  return {
-    id: '_designWeight',
-    name: 'design weight',
-    type: 'numerical',
-  };
-}
+  static createFromFeature({properties = {}}: GJ.BaseFeature<GJ.BaseGeometry, unknown>) {
+    const pr = new PropertyRecord();
 
-export function createDistanceProperty(): NumericalProperty {
-  return {
-    id: '_distance',
-    name: 'distance',
-    type: 'numerical',
-  };
-}
+    for (const [id, prop] of Object.entries(properties ?? {})) {
+      if (PropertyRecord.idIsSpecial(id)) {
+        if (typeof prop !== 'number') {
+          throw new TypeError(`${id} is a reserved property and must be a number`);
+        }
 
-export function createParentProperty(): NumericalProperty {
-  return {
-    id: '_parent',
-    name: 'parent',
-    type: 'numerical',
-  };
-}
+        switch (id) {
+          case '_designWeight':
+            pr.addDesignWeight();
+            break;
+          case '_distance':
+            pr.addDistance();
+            break;
+          case '_parent':
+            pr.addParent();
+            break;
+          case '_randomRotation':
+            pr.addRandomRotation();
+            break;
+        }
 
-/**
- * To be used when converting into classes. Keeps ids as name
- */
-export function createPropertyRecordFromFeature({
-  properties = {},
-}: GJ.BaseFeature<GJ.BaseGeometry, any>): PropertyRecord {
-  const propertyRecord: PropertyRecord = {};
-
-  Object.entries(properties ?? {}).forEach(([id, prop]) => {
-    const isSpecialKey = (PropertySpecialKeys as ReadonlyArray<string>).includes(id);
-    const valueType = typeof prop;
-
-    if (valueType === 'number') {
-      propertyRecord[id] = {type: 'numerical', id, name: id};
-    } else if (isSpecialKey) {
-      throw new Error(`Property ${prop} is a reserved property and must be a number`);
-    } else if (valueType === 'string') {
-      propertyRecord[id] = {type: 'categorical', id, name: id, values: []};
-    }
-  });
-
-  return propertyRecord;
-}
-
-/**
- * Merges property records into a single property record
- *
- * @param propertyRecords
- * @returns the new property record
- */
-export function mergePropertyRecords(propertyRecords: PropertyRecord[]): PropertyRecord {
-  const newRecord: PropertyRecord = {};
-
-  propertyRecords.forEach((record) => {
-    Object.keys(record).forEach((key) => {
-      // Check for duplicates
-      if (Object.hasOwn(newRecord, key)) {
-        throw new Error('Records contain duplicate identifier.');
+        continue;
       }
-      // Add a copy to new record
-      newRecord[key] = copy(record[key]);
-    });
-  });
-  return newRecord;
+
+      switch (typeof prop) {
+        case 'number':
+          pr.addNumerical({id});
+          break;
+        case 'string':
+          pr.addCategorical({id});
+          break;
+      }
+    }
+
+    return pr;
+  }
+
+  static mergePropertyRecords(propertyRecords: PropertyRecord[]): PropertyRecord {
+    const pr = new PropertyRecord();
+
+    for (const record of propertyRecords) {
+      for (const id of Object.keys(record)) {
+        if (pr.hasId(id)) {
+          throw new Error(`Records contain duplicate identifier ${id}.`);
+        }
+
+        if (record.idIsNumerical(id)) {
+          pr.addNumerical(record.getId(id) as NumericalProperty);
+        } else {
+          pr.addCategorical(record.getId(id) as CategoricalProperty);
+        }
+      }
+    }
+
+    return pr;
+  }
+
+  static propertyIsNumerical(property: Property): property is NumericalProperty {
+    return property.type === 'numerical';
+  }
+
+  static propertyIsCategorical(property: Property): property is CategoricalProperty {
+    return property.type === 'categorical';
+  }
+
+  constructor(record: Record<string, Property> = {}, shallow: boolean = true) {
+    this.record = shallow === true ? record : copy(record);
+  }
+
+  hasId(id: string): boolean {
+    return Object.hasOwn(this.record, id);
+  }
+
+  getId(id: string): Property | null {
+    if (!this.hasId(id)) {
+      return null;
+    }
+
+    return this.record[id];
+  }
+
+  getIds(): string[] {
+    return Object.keys(this.record);
+  }
+
+  getRecord(): Property[] {
+    return Object.values(this.record);
+  }
+
+  idIsNumerical(id: string): boolean {
+    return PropertyRecord.propertyIsNumerical(this.record?.[id]);
+  }
+
+  addNumerical({id = uuid(), name = id, parent}: Partial<NumericalProperty>): string {
+    this.record[id] = {
+      type: 'numerical',
+      id,
+      name,
+      parent,
+    };
+
+    return id;
+  }
+
+  idIsCategorical(id: string): boolean {
+    return PropertyRecord.propertyIsCategorical(this.record?.[id]);
+  }
+
+  addCategorical({id = uuid(), name = id, values = []}: Partial<CategoricalProperty>): string {
+    this.record[id] = {
+      type: 'categorical',
+      id,
+      name,
+      values,
+    };
+
+    return id;
+  }
+
+  addValueToCategory(id: string, value: string): number {
+    if (PropertyRecord.propertyIsCategorical(this.record?.[id]) === false) {
+      throw new TypeError(`${id} is not categorical.`);
+    }
+
+    const index = this.record[id].values.indexOf(value);
+    if (index >= 0) {
+      return index;
+    }
+
+    return this.record[id].values.push(value) - 1;
+  }
+
+  categoryHasValue(id: string, value: string): boolean {
+    if (PropertyRecord.propertyIsCategorical(this.record?.[id]) === false) {
+      throw new TypeError(`${id} is not categorical.`);
+    }
+
+    return this.record?.[id].values.includes(value) === true;
+  }
+
+  // SPECIAL PROPERTIES
+  static readonly SPECIAL_KEYS = ['_designWeight', '_distance', '_parent', '_randomRotation'];
+
+  static idIsSpecial(id: string): boolean {
+    return PropertyRecord.SPECIAL_KEYS.includes(id);
+  }
+
+  addDesignWeight() {
+    this.record['_designWeight'] = {
+      id: '_designWeight',
+      name: 'design weight',
+      type: 'numerical',
+    };
+  }
+
+  addDistance() {
+    this.record['_distance'] = {
+      id: '_distance',
+      name: 'distance',
+      type: 'numerical',
+    };
+  }
+
+  addParent() {
+    this.record['_parent'] = {
+      id: '_parent',
+      name: 'parent',
+      type: 'numerical',
+    };
+  }
+
+  addRandomRotation() {
+    this.record['_randomRotation'] = {
+      id: '_randomRotation',
+      name: 'random rotation',
+      type: 'numerical',
+    };
+  }
 }
+
+// export function createDesignWeightProperty(): NumericalProperty {
+//   return {
+//     id: '_designWeight',
+//     name: 'design weight',
+//     type: 'numerical',
+//   };
+// }
+
+// export function createDistanceProperty(): NumericalProperty {
+//   return {
+//     id: '_distance',
+//     name: 'distance',
+//     type: 'numerical',
+//   };
+// }
+
+// export function createParentProperty(): NumericalProperty {
+//   return {
+//     id: '_parent',
+//     name: 'parent',
+//     type: 'numerical',
+//   };
+// }
+
+// /**
+//  * To be used when converting into classes. Keeps ids as name
+//  */
+// export function createPropertyRecordFromFeature({
+//   properties = {},
+// }: GJ.BaseFeature<GJ.BaseGeometry, any>): PropertyRecord {
+//   const propertyRecord: PropertyRecord = {};
+
+//   Object.entries(properties ?? {}).forEach(([id, prop]) => {
+//     const isSpecialKey = (PropertySpecialKeys as ReadonlyArray<string>).includes(id);
+//     const valueType = typeof prop;
+
+//     if (valueType === 'number') {
+//       propertyRecord[id] = {type: 'numerical', id, name: id};
+//     } else if (isSpecialKey) {
+//       throw new Error(`Property ${prop} is a reserved property and must be a number`);
+//     } else if (valueType === 'string') {
+//       propertyRecord[id] = {type: 'categorical', id, name: id, values: []};
+//     }
+//   });
+
+//   return propertyRecord;
+// }
+
+// /**
+//  * Merges property records into a single property record
+//  *
+//  * @param propertyRecords
+//  * @returns the new property record
+//  */
+// export function mergePropertyRecords(propertyRecords: PropertyRecord[]): PropertyRecord {
+//   const newRecord: PropertyRecord = {};
+
+//   propertyRecords.forEach((record) => {
+//     Object.keys(record).forEach((key) => {
+//       // Check for duplicates
+//       if (Object.hasOwn(newRecord, key)) {
+//         throw new Error('Records contain duplicate identifier.');
+//       }
+//       // Add a copy to new record
+//       newRecord[key] = copy(record[key]);
+//     });
+//   });
+//   return newRecord;
+// }
