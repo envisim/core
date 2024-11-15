@@ -59,22 +59,24 @@ export function createParentProperty(): NumericalProperty {
   };
 }
 
+/**
+ * To be used when converting into classes. Keeps ids as name
+ */
 export function createPropertyRecordFromFeature({
   properties = {},
 }: GJ.BaseFeature<GJ.BaseGeometry, any>): PropertyRecord {
   const propertyRecord: PropertyRecord = {};
 
-  Object.entries(properties ?? {}).forEach(([name, prop]) => {
-    const isSpecialKey = (PropertySpecialKeys as ReadonlyArray<string>).includes(name);
-    const id = isSpecialKey ? name : uuidv4();
+  Object.entries(properties ?? {}).forEach(([id, prop]) => {
+    const isSpecialKey = (PropertySpecialKeys as ReadonlyArray<string>).includes(id);
     const valueType = typeof prop;
 
     if (valueType === 'number') {
-      propertyRecord[id] = {type: 'numerical', name, id};
+      propertyRecord[id] = {type: 'numerical', id, name: id};
     } else if (isSpecialKey) {
       throw new Error(`Property ${prop} is a reserved property and must be a number`);
     } else if (valueType === 'string') {
-      propertyRecord[id] = {type: 'categorical', name, id, values: []};
+      propertyRecord[id] = {type: 'categorical', id, name: id, values: []};
     }
   });
 

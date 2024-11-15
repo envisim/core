@@ -13,11 +13,11 @@ import {
 } from '../objects/index.js';
 
 export class Feature<T extends AreaObject | LineObject | PointObject>
-  implements GJ.BaseFeature<GJ.SingleTypeObject, number>
+  implements GJ.BaseFeature<GJ.SingleTypeObject, number | string>
 {
   readonly type = 'Feature';
   geometry: T;
-  properties: GJ.FeatureProperties<number>;
+  properties: GJ.FeatureProperties<number | string>;
 
   static isArea(obj: unknown): obj is Feature<AreaObject> {
     return obj instanceof Feature && obj.geometricPrimitive() === GeometricPrimitive.AREA;
@@ -49,19 +49,19 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
   }
 
   static createAreaFromJson(
-    feature: OptionalParam<GJ.BaseFeature<GJ.BaseGeometry, number>, 'type'>,
+    feature: OptionalParam<GJ.BaseFeature<GJ.BaseGeometry, number | string>, 'type'>,
     shallow: boolean = true,
   ): Feature<AreaObject> | null {
     return Feature.createArea(feature.geometry, feature.properties ?? {}, shallow);
   }
   static createLineFromJson(
-    feature: OptionalParam<GJ.BaseFeature<GJ.BaseGeometry, number>, 'type'>,
+    feature: OptionalParam<GJ.BaseFeature<GJ.BaseGeometry, number | string>, 'type'>,
     shallow: boolean = true,
   ): Feature<LineObject> | null {
     return Feature.createLine(feature.geometry, feature.properties ?? {}, shallow);
   }
   static createPointFromJson(
-    feature: OptionalParam<GJ.BaseFeature<GJ.BaseGeometry, number>, 'type'>,
+    feature: OptionalParam<GJ.BaseFeature<GJ.BaseGeometry, number | string>, 'type'>,
     shallow: boolean = true,
   ): Feature<PointObject> | null {
     return Feature.createPoint(feature.geometry, feature.properties ?? {}, shallow);
@@ -69,7 +69,7 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
 
   static createArea(
     geometry: GJ.BaseGeometry,
-    properties: GJ.FeatureProperties<number> = {},
+    properties: GJ.FeatureProperties<number | string> = {},
     shallow: boolean = true,
     options: CirclesToPolygonsOptions = {},
   ): Feature<AreaObject> | null {
@@ -79,7 +79,7 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
   }
   static createLine(
     geometry: GJ.BaseGeometry,
-    properties: GJ.FeatureProperties<number> = {},
+    properties: GJ.FeatureProperties<number | string> = {},
     shallow: boolean = true,
   ): Feature<LineObject> | null {
     const geom = toLineObject(geometry, true);
@@ -88,7 +88,7 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
   }
   static createPoint(
     geometry: GJ.BaseGeometry,
-    properties: GJ.FeatureProperties = {},
+    properties: GJ.FeatureProperties<number | string> = {},
     shallow: boolean = true,
   ): Feature<PointObject> | null {
     const geom = toPointObject(geometry, true);
@@ -96,7 +96,11 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
     return new Feature(geom, properties, shallow);
   }
 
-  constructor(geometry: T, properties: GJ.FeatureProperties<number> = {}, shallow: boolean = true) {
+  constructor(
+    geometry: T,
+    properties: GJ.FeatureProperties<number | string> = {},
+    shallow: boolean = true,
+  ) {
     if (shallow === true) {
       this.geometry = geometry;
       this.properties = properties;
@@ -111,7 +115,7 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
     return this.geometry.geometricPrimitive();
   }
 
-  initProperty(property: string, defaultValue: number = 0.0): void {
+  initProperty(property: string, defaultValue: number | string): void {
     if (!Object.hasOwn(this.properties, property)) {
       this.properties[property] = defaultValue;
     }
@@ -121,22 +125,22 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
     delete this.properties[property];
   }
 
-  setProperty(property: string, value: number): void {
+  setProperty(property: string, value: number | string): void {
     this.properties[property] = value;
   }
 
   editProperty(
     property: string,
-    callback: (value: number) => number,
+    callback: <P extends number | string>(value: P) => P,
     defaultValue: number = 0.0,
-  ): number {
+  ): number | string {
     this.initProperty(property, defaultValue);
     const newValue = callback(this.properties[property]);
     this.properties[property] = newValue;
     return newValue;
   }
 
-  replaceProperties(properties: GJ.FeatureProperties<number>, shallow: boolean = true) {
+  replaceProperties(properties: GJ.FeatureProperties<number | string>, shallow: boolean = true) {
     if (shallow) {
       this.properties = properties;
     } else {
