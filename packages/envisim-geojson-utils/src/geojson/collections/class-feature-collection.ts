@@ -56,21 +56,24 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
 
   static createAreaFromJson(
     fc: OptionalParam<GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>, 'type'>,
+    createPropertyRecord: boolean = true,
     shallow: boolean = true,
   ): FeatureCollection<AreaObject> {
-    return FeatureCollection.createArea(fc.features, shallow);
+    return FeatureCollection.createArea(fc.features, createPropertyRecord, shallow);
   }
   static createLineFromJson(
     fc: OptionalParam<GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>, 'type'>,
+    createPropertyRecord: boolean = true,
     shallow: boolean = true,
   ): FeatureCollection<LineObject> {
-    return FeatureCollection.createLine(fc.features, shallow);
+    return FeatureCollection.createLine(fc.features, createPropertyRecord, shallow);
   }
   static createPointFromJson(
     fc: OptionalParam<GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>, 'type'>,
+    createPropertyRecord: boolean = true,
     shallow: boolean = true,
   ): FeatureCollection<PointObject> {
-    return FeatureCollection.createPoint(fc.features, shallow);
+    return FeatureCollection.createPoint(fc.features, createPropertyRecord, shallow);
   }
 
   static createArea(
@@ -379,47 +382,52 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     fc.forEach((feat) => this.addFeature(feat, shallow));
   }
 
-  toGeoJSON(
-    convertCircles: boolean = true,
-    options: CirclesToPolygonsOptions = {},
-  ): GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>> {
+  /**
+   * Transforms the categorical properties back to strings, and returns the json
+   * @param options if `options.convertCircles` is `true` (default), then circles will be converted
+   * to polygons.
+   */
+  toGeoJSON({
+    convertCircles = true,
+    ...options
+  }: CirclesToPolygonsOptions & {convertCircles?: boolean} = {}): GJ.BaseFeatureCollection<
+    GJ.BaseFeature<GJ.SingleTypeObject, number | string>
+  > {
     const features: GJ.BaseFeature<GJ.SingleTypeObject, number | string>[] = [];
     const pr = this.propertyRecord;
 
-    if (FeatureCollection.isArea(this)) {
-      this.forEach((feature) => {
-        const oldProps = feature.properties;
-        const newProps: GJ.FeatureProperties<number | string> = {};
+    this.forEach((feature) => {
+      const oldProps = feature.properties;
+      const newProps: GJ.FeatureProperties<number | string> = {};
 
-        Object.keys(pr).forEach((key) => {
-          const rec = pr[key];
-          const name = rec.name ?? rec.id;
-          if (rec.type === 'numerical') {
-            newProps[name] = oldProps[rec.id];
-          } else if (rec.type == 'categorical') {
-            newProps[name] = rec.values[oldProps[rec.id]];
-          }
-        });
-
-        let geometry: AreaObject | LineObject | PointObject | null;
-        if (
-          convertCircles === true &&
-          (Circle.isObject(feature.geometry) || MultiCircle.isObject(feature.geometry))
-        ) {
-          geometry = feature.geometry.toPolygon(options);
-        } else {
-          geometry = copy(feature.geometry);
-        }
-
-        if (geometry !== null) {
-          features.push({
-            type: 'Feature',
-            geometry,
-            properties: newProps,
-          });
+      Object.keys(pr).forEach((key) => {
+        const rec = pr[key];
+        const name = rec.name ?? rec.id;
+        if (rec.type === 'numerical') {
+          newProps[name] = oldProps[rec.id];
+        } else if (rec.type == 'categorical') {
+          newProps[name] = rec.values[oldProps[rec.id]];
         }
       });
-    }
+
+      let geometry: AreaObject | LineObject | PointObject | null;
+      if (
+        convertCircles === true &&
+        (Circle.isObject(feature.geometry) || MultiCircle.isObject(feature.geometry))
+      ) {
+        geometry = feature.geometry.toPolygon(options);
+      } else {
+        geometry = copy(feature.geometry);
+      }
+
+      if (geometry !== null) {
+        features.push({
+          type: 'Feature',
+          geometry,
+          properties: newProps,
+        });
+      }
+    });
 
     return {type: 'FeatureCollection', features};
   }

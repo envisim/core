@@ -117,6 +117,10 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
   }
 
   // MULTICIRCLE
+  /**
+   * Transforms the circles into (Multi)Polygon. If circles are overlapping, the MultiPolygon will
+   * overlap as well.
+   */
   toPolygon(options: CirclesToPolygonsOptions = {}): Polygon | MultiPolygon | null {
     // Early return
     if (this.coordinates.length === 0) {
