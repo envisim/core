@@ -57,6 +57,7 @@ export abstract class BaseSampling {
     this.idx.erase(id);
 
     // Needed like this as tree might be nullptr during landing
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (this.tree) this.tree.removeUnit(id);
   }
 
@@ -64,8 +65,7 @@ export abstract class BaseSampling {
     if (probability01(this.probabilities[id], this.eps)) {
       this.eraseUnit(id);
 
-      if (probability1(this.probabilities[id], this.eps))
-        this.addUnitToSample(id);
+      if (probability1(this.probabilities[id], this.eps)) this.addUnitToSample(id);
     }
   }
 

@@ -269,9 +269,12 @@ export function inclprobsFromLayer(
         if (ips.at(i) === 1.0) {
           return;
         }
-        if (e >= 1.0) {
+        if (e > 1.0) {
           n--;
-          failed = e > 1.0;
+          failed = true;
+          ips.ed(i, 1.0);
+        } else if (e === 1.0) {
+          n--;
           ips.ed(i, 1.0);
         } else {
           ips.ed(i, e);
