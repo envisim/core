@@ -4,7 +4,6 @@ import {
   FeatureCollection,
   type LineObject,
   type PointObject,
-  createDesignWeightProperty,
   intersectAreaAreaGeometries,
   intersectLineAreaGeometries,
   intersectPointAreaGeometries,
@@ -22,14 +21,9 @@ function intersectAreaFrame<T extends AreaObject | LineObject | PointObject>(
       const intersect = intersectFunction(sampleFeature.geometry, frameFeature.geometry, options);
       if (intersect === null) return;
 
-      let dw = 1.0;
-      if (frameFeature.properties?.['_designWeight'] !== undefined) {
-        dw *= frameFeature.properties['_designWeight'];
-      }
-      if (sampleFeature.properties?.['_designWeight'] !== undefined) {
-        dw *= sampleFeature.properties['_designWeight'];
-      }
-
+      const dw =
+        frameFeature.getSpecialPropertyDesignWeight() *
+        sampleFeature.getSpecialPropertyDesignWeight();
       collection.addGeometry(intersect, {_designWeight: dw}, true);
     });
   });
@@ -80,7 +74,8 @@ export function intersectAreaSampleAreaFrame(
   frame: FeatureCollection<AreaObject>,
   options: CirclesToPolygonsOptions = {},
 ): FeatureCollection<AreaObject> {
-  const collection = FeatureCollection.newArea([], {_designWeight: createDesignWeightProperty()});
+  const collection = FeatureCollection.newArea([]);
+  collection.propertyRecord.addDesignWeight();
   intersectAreaFrame(collection, sample, frame, options, intersectAreaAreaGeometries);
   return collection;
 }

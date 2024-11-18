@@ -4,11 +4,10 @@ import {
   FeatureCollection,
   type LineObject,
   type PointObject,
-  createDesignWeightProperty,
+  PropertyRecord,
 } from '@envisim/geojson-utils';
 import {ColumnVector} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
-import {copy} from '@envisim/utils';
 
 import {
   balancingMatrixFromLayer,
@@ -110,12 +109,13 @@ export function sampleFiniteOptionsCheck<T extends AreaObject | LineObject | Poi
   }
 
   if (probabilitiesFrom !== undefined) {
-    if (!Object.hasOwn(collection.propertyRecord, probabilitiesFrom)) {
+    const property = collection.propertyRecord.getId(probabilitiesFrom);
+    if (property === null) {
       // probabilitiesFrom must exist on propertyRecord
       return 20;
     }
 
-    if (collection.propertyRecord[probabilitiesFrom].type !== 'numerical') {
+    if (!PropertyRecord.propertyIsNumerical(property)) {
       // probabilitiesFrom must be a numerical property
       return 21;
     }
@@ -274,20 +274,16 @@ export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
       throw new TypeError('method is not valid');
   }
 
-  const propertyRecord = copy(collection.propertyRecord);
-  // Add _designWeight to propertyRecord if it does not exist
-  if (!Object.hasOwn(propertyRecord, '_designWeight')) {
-    propertyRecord['_designWeight'] = createDesignWeightProperty();
-  }
-
   const newCollection = collection.copyEmpty(false);
+  // Add _designWeight to propertyRecord if it does not exist
+  newCollection.propertyRecord.addDesignWeight();
 
   idx.forEach((i) => {
     newCollection.addGeometry(
       collection.features[i].geometry,
       {
         ...collection.features[i].properties,
-        _designWeight: (collection.features[i].properties['_designWeight'] ?? 1.0) / mu[i],
+        _designWeight: collection.features[i].getSpecialPropertyDesignWeight() / mu[i],
       },
       false,
     );

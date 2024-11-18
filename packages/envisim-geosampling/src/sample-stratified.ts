@@ -5,7 +5,7 @@ import {
   type GeoJSON as GJ,
   LineObject,
   PointObject,
-  createDesignWeightProperty,
+  PropertyRecord,
 } from '@envisim/geojson-utils';
 
 import {
@@ -48,14 +48,13 @@ export function sampleStratifiedOptionsCheck(
     | FeatureCollection<PointObject>,
   {stratify, options}: SampleStratifiedOptions<SampleFiniteOptions | SampleContinuousOptions>,
 ): number {
-  if (!Object.hasOwn(fc.propertyRecord, stratify)) {
+  const property = fc.propertyRecord.getId(stratify);
+  if (property === null) {
     // stratify must exist on propertyRecord
     return 110;
   }
 
-  const property = fc.propertyRecord[stratify];
-
-  if (property.type !== 'categorical') {
+  if (!PropertyRecord.propertyIsCategorical(property)) {
     // stratify prop must be categorical -- no stratification on numerical
     return 120;
   }
@@ -97,7 +96,7 @@ export function sampleStratified<
   }
 
   // Already checked that it exists
-  const property = fc.propertyRecord[stratify] as CategoricalProperty;
+  const property = fc.propertyRecord.getId(stratify) as CategoricalProperty;
   const optionsArray = Array.isArray(options)
     ? options
     : Array.from<OPTS>({
@@ -146,9 +145,7 @@ export function sampleStratified<
   }) as OUT;
 
   // Add _designWeight to propertyRecord if it does not exist
-  if (!Object.hasOwn(newCollection.propertyRecord, '_designWeight')) {
-    newCollection.propertyRecord['_designWeight'] = createDesignWeightProperty();
-  }
+  newCollection.propertyRecord.addDesignWeight();
 
   return newCollection;
 }

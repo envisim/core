@@ -26,10 +26,21 @@ export interface CategoricalProperty extends PropertyBase {
 
 export type Property = NumericalProperty | CategoricalProperty;
 
+interface SpecialPropertyList {
+  _designWeight?: NumericalProperty;
+  _distance?: NumericalProperty;
+  _parent?: NumericalProperty;
+  _randomRotation?: NumericalProperty;
+}
+
+interface PropertyList {
+  [id: string]: Property;
+}
+
 // export type PropertyRecord = Record<string, Property>;
 
 export class PropertyRecord {
-  record: Record<string, Property> = {};
+  record: SpecialPropertyList & PropertyList = {};
 
   static createFromFeature({properties = {}}: GJ.BaseFeature<GJ.BaseGeometry, unknown>) {
     const pr = new PropertyRecord();
@@ -91,24 +102,28 @@ export class PropertyRecord {
     return pr;
   }
 
-  static propertyIsNumerical(property: Property): property is NumericalProperty {
-    return property.type === 'numerical';
+  static propertyIsNumerical(property: Property | null): property is NumericalProperty {
+    return property?.type === 'numerical';
   }
 
-  static propertyIsCategorical(property: Property): property is CategoricalProperty {
-    return property.type === 'categorical';
+  static propertyIsCategorical(property: Property | null): property is CategoricalProperty {
+    return property?.type === 'categorical';
   }
 
   constructor(record: Record<string, Property> = {}, shallow: boolean = true) {
     this.record = shallow === true ? record : copy(record);
   }
 
-  hasId(id: string): boolean {
-    return Object.hasOwn(this.record, id);
+  copy(shallow: boolean = true): PropertyRecord {
+    return new PropertyRecord(this.record, shallow);
   }
 
-  getId(id: string): Property | null {
-    if (!this.hasId(id)) {
+  hasId(id?: string): boolean {
+    return id !== undefined && Object.hasOwn(this.record, id);
+  }
+
+  getId(id?: string): Property | null {
+    if (id === undefined || !Object.hasOwn(this.record, id)) {
       return null;
     }
 
@@ -174,6 +189,14 @@ export class PropertyRecord {
     return this.record?.[id].values.includes(value) === true;
   }
 
+  addProperty(property: Property): string {
+    if (PropertyRecord.propertyIsNumerical(property)) {
+      return this.addNumerical(property);
+    }
+
+    return this.addCategorical(property);
+  }
+
   // SPECIAL PROPERTIES
   static readonly SPECIAL_KEYS = ['_designWeight', '_distance', '_parent', '_randomRotation'];
 
@@ -182,6 +205,7 @@ export class PropertyRecord {
   }
 
   addDesignWeight() {
+    if (Object.hasOwn(this.record, '_designWeight')) return;
     this.record['_designWeight'] = {
       id: '_designWeight',
       name: 'design weight',
@@ -190,6 +214,7 @@ export class PropertyRecord {
   }
 
   addDistance() {
+    if (Object.hasOwn(this.record, '_distance')) return;
     this.record['_distance'] = {
       id: '_distance',
       name: 'distance',
@@ -198,6 +223,7 @@ export class PropertyRecord {
   }
 
   addParent() {
+    if (Object.hasOwn(this.record, '_parent')) return;
     this.record['_parent'] = {
       id: '_parent',
       name: 'parent',
@@ -206,6 +232,7 @@ export class PropertyRecord {
   }
 
   addRandomRotation() {
+    if (Object.hasOwn(this.record, '_randomRotation')) return;
     this.record['_randomRotation'] = {
       id: '_randomRotation',
       name: 'random rotation',

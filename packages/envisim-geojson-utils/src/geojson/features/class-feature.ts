@@ -147,4 +147,33 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
       this.properties = copy(properties);
     }
   }
+
+  // SPECIAL PROPERTIES
+  getSpecialPropertyDesignWeight(defaultValue: number = 1.0): number {
+    return (this.properties['_designWeight'] ?? defaultValue) as number;
+  }
+  getSpecialPropertyDistance(defaultValue: number = 0.0): number {
+    return (this.properties['_distance'] ?? defaultValue) as number;
+  }
+  getSpecialPropertyParent(defaultValue: number = -1): number {
+    return (this.properties['_parent'] ?? defaultValue) as number;
+  }
+  getSpecialPropertyRandomRotation(defaultValue: number = 0): number {
+    return (this.properties['_randomRotation'] ?? defaultValue) as number;
+  }
+  setSpecialPropertyDesignWeight(value: number = 1.0) {
+    (this.properties['_designWeight'] as number) = value;
+  }
+  setSpecialPropertyDistance(value: number = 0.0) {
+    (this.properties['_distance'] as number) = value;
+  }
+  setSpecialPropertyParent(value: number = -1) {
+    (this.properties['_parent'] as number) = value;
+  }
+  setSpecialPropertyRandomRotation(value: number = 0) {
+    (this.properties['_randomRotation'] as number) = value;
+  }
+  multSpecialPropertyDesignWeight(value: number = 1.0): number {
+    return ((this.properties['_designWeight'] as number) *= value);
+  }
 }

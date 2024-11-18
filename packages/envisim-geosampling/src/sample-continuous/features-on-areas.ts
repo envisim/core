@@ -96,7 +96,7 @@ function sampleFeaturesOnAreas(
     case GeometricPrimitive.POINT: {
       const pointFeatures: GJ.PointFeature[] = [];
       pointCollection.forEach((feature) => {
-        const dw = feature.properties?.['_designWeight'] || 1;
+        const dw = (feature.properties?.['_designWeight'] ?? 1.0) as number;
 
         let newFeature: GJ.PointFeature;
 
@@ -112,6 +112,7 @@ function sampleFeaturesOnAreas(
               radius: radius,
             },
           );
+
           if (newFeature.properties) {
             newFeature.properties['_designWeight'] = dw / sizeOfTract;
           }
@@ -128,7 +129,7 @@ function sampleFeaturesOnAreas(
     case GeometricPrimitive.LINE: {
       const lineFeatures: GJ.LineFeature[] = [];
       pointCollection.forEach((feature) => {
-        const dw = feature.properties?.['_designWeight'] || 1;
+        const dw = (feature.properties?.['_designWeight'] ?? 1.0) as number;
 
         let newFeature: GJ.LineFeature;
 
@@ -162,8 +163,6 @@ function sampleFeaturesOnAreas(
     case GeometricPrimitive.AREA: {
       const areaFeatures: GJ.AreaFeature[] = [];
       pointCollection.forEach((feature) => {
-        const dw = feature.properties?.['_designWeight'] || 1;
-
         let newFeature: GJ.AreaFeature;
 
         if (feature.geometry.type === 'Point') {
@@ -179,7 +178,9 @@ function sampleFeaturesOnAreas(
             },
           );
           if (newFeature.properties) {
-            newFeature.properties['_designWeight'] = dw / sizeOfTract;
+            newFeature.properties['_designWeight'] =
+              feature.getSpecialPropertyDesignWeight() / sizeOfTract;
+
             if (randomRotation) {
               newFeature.properties['_randomRotation'] = 1;
             }

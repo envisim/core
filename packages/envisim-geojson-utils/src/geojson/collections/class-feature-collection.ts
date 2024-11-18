@@ -1,4 +1,4 @@
-import {type OptionalParam, copy} from '@envisim/utils';
+import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
 import {type BufferOptions} from '../../buffer/index.js';
@@ -182,7 +182,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
 
     return new FeatureCollection(
       features.map((f) => new Feature(f.geometry, f.properties, false)),
-      propertyRecord === undefined ? undefined : copy(propertyRecord),
+      propertyRecord?.copy(shallow),
       GeometricPrimitive.AREA,
     );
   }
@@ -197,7 +197,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
 
     return new FeatureCollection(
       features.map((f) => new Feature(f.geometry, f.properties, false)),
-      propertyRecord === undefined ? undefined : copy(propertyRecord),
+      propertyRecord?.copy(shallow),
       GeometricPrimitive.LINE,
     );
   }
@@ -212,7 +212,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
 
     return new FeatureCollection(
       features.map((f) => new Feature(f.geometry, f.properties, false)),
-      propertyRecord === undefined ? undefined : copy(propertyRecord),
+      propertyRecord?.copy(shallow),
       GeometricPrimitive.POINT,
     );
   }
@@ -248,26 +248,18 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
         features.push(new Feature(g, f.properties, shallow) as Feature<T>);
       }
 
-      return new FeatureCollection(
-        features,
-        shallow === true ? this.propertyRecord : copy(this.propertyRecord),
-        this.primitive,
-      );
+      return new FeatureCollection(features, this.propertyRecord.copy(shallow), this.primitive);
     }
 
     return new FeatureCollection(
       this.features.map((f) => new Feature(f.geometry, f.properties, shallow)),
-      shallow === true ? this.propertyRecord : copy(this.propertyRecord),
+      this.propertyRecord.copy(shallow),
       this.primitive,
     );
   }
 
   copyEmpty(shallow: boolean = true): FeatureCollection<T> {
-    return new FeatureCollection(
-      [],
-      shallow === true ? this.propertyRecord : copy(this.propertyRecord),
-      this.primitive,
-    );
+    return new FeatureCollection([], this.propertyRecord.copy(shallow), this.primitive);
   }
 
   geometricPrimitive(): GeometricPrimitive {

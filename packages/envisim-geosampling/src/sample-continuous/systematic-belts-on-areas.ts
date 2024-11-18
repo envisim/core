@@ -4,7 +4,6 @@ import {
   type GeoJSON as GJ,
   Geodesic,
   bbox4,
-  createDesignWeightProperty,
   cutAreaGeometry,
   longitudeCenter,
   longitudeDistance,
@@ -110,7 +109,9 @@ export const sampleSystematicBeltsOnAreas = (
     rings.push(thisRing);
   }
 
-  const sc = FeatureCollection.newArea([], {_designWeight: createDesignWeightProperty()});
+  const sc = FeatureCollection.newArea([]);
+  sc.propertyRecord.addDesignWeight();
+
   for (const coords of rings) {
     const geom = toAreaObject(cutAreaGeometry({type: 'Polygon', coordinates: [coords]}));
     if (geom === null) continue;
