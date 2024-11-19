@@ -85,10 +85,10 @@ function aggregateInPlace(
  * Collect properties to a frame layer from a base layer, given an
  * array of properties to be collected. Categorical properties are collected as
  * multiple numerical properties, one for each category.
- * @param frameLayer
- * @param baseLayer
- * @param propertyRecord
- * @returns a new layer
+ * @param frame
+ * @param base
+ * @param properties
+ * @returns collection
  */
 export function collectProperties(
   frame: FeatureCollection<PointObject>,
@@ -97,7 +97,7 @@ export function collectProperties(
 ): FeatureCollection<PointObject>;
 export function collectProperties(
   frame: FeatureCollection<LineObject>,
-  base: FeatureCollection<LineObject> | FeatureCollection<AreaObject>,
+  base: FeatureCollection<AreaObject> | FeatureCollection<LineObject>,
   properties: string[] | PropertyRecord,
 ): FeatureCollection<LineObject>;
 export function collectProperties(

@@ -11,8 +11,10 @@
   ],
   "type": "module",
   "scripts": {
+    "build": "turbo build",
+    "lint": "turbo lint",
     "prepare": "husky",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "turbo test"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",

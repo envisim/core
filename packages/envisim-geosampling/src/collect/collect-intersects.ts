@@ -94,32 +94,26 @@ function updateRecordInPlace(record: PropertyRecord): void {
 /**
  * Collect intersect of features as the new frame from base-collection.
  * @param frame
- * @param baseLayer
+ * @param base
  */
 export function collectIntersects(
   frame: FeatureCollection<PointObject>,
   base: FeatureCollection<AreaObject>,
 ): FeatureCollection<PointObject>;
-export function collectIntersects(
+export function collectIntersects<
+  B extends FeatureCollection<AreaObject> | FeatureCollection<LineObject>,
+>(
   frame: FeatureCollection<LineObject>,
-  base: FeatureCollection<LineObject>,
-): FeatureCollection<PointObject>;
-export function collectIntersects(
-  frame: FeatureCollection<LineObject>,
-  base: FeatureCollection<AreaObject>,
-): FeatureCollection<LineObject>;
-export function collectIntersects(
-  frame: FeatureCollection<AreaObject>,
-  base: FeatureCollection<PointObject>,
-): FeatureCollection<PointObject>;
-export function collectIntersects(
-  frame: FeatureCollection<AreaObject>,
-  base: FeatureCollection<LineObject>,
-): FeatureCollection<LineObject>;
-export function collectIntersects(
-  frame: FeatureCollection<AreaObject>,
-  base: FeatureCollection<AreaObject>,
-): FeatureCollection<AreaObject>;
+  base: B,
+): B extends FeatureCollection<AreaObject>
+  ? FeatureCollection<LineObject>
+  : FeatureCollection<PointObject>;
+export function collectIntersects<
+  B extends
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
+>(frame: FeatureCollection<AreaObject>, base: B): B;
 export function collectIntersects(
   frame:
     | FeatureCollection<AreaObject>
