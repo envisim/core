@@ -37,6 +37,6 @@ export function uniformBinomialPointProcess(
   pointCollection.forEach((feature) => {
     feature.properties = {};
   });
-  pointCollection.propertyRecord = {};
+
   return pointCollection;
 }

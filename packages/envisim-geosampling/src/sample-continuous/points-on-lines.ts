@@ -5,7 +5,6 @@ import {
   LineString,
   PlateCarree,
   Point,
-  createDesignWeightProperty,
 } from '@envisim/geojson-utils';
 
 import {SAMPLE_POINT_OPTIONS, type SamplePointOptions, samplePointOptionsCheck} from './options.js';
@@ -124,22 +123,12 @@ export function samplePointsOnLines(
     parentIndex.push(...Array.from<number>({length: result.length}).fill(index));
   });
 
-  const newCollection = FeatureCollection.newPoint<Point>(
-    [],
-    {_designWeight: createDesignWeightProperty()},
-    true,
-  );
+  const newCollection = FeatureCollection.newPoint<Point>([]);
+  newCollection.propertyRecord.addDesignWeight();
 
   for (let i = 0; i < points.length; i++) {
     const coords = points[i];
-
-    let dw = designWeight;
-    const parentFeature = collection.features[parentIndex[i]];
-
-    if (parentFeature.properties?.['_designWeight']) {
-      dw *= parentFeature.properties['_designWeight'];
-    }
-
+    const dw = designWeight * collection.features[parentIndex[i]].getSpecialPropertyDesignWeight();
     newCollection.addGeometry(Point.create(coords), {_designWeight: dw});
   }
 

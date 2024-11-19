@@ -7,8 +7,8 @@ import {
   Geodesic,
   MultiCircle,
   Point,
+  PropertyRecord,
   bbox4,
-  createDesignWeightProperty,
   longitudeCenter,
   longitudeDistance,
   normalizeLongitude,
@@ -185,23 +185,15 @@ export function samplePointsOnAreas(
   if (buffer === 0.0) {
     // Transfer design weights here.
     pointFeatures.forEach((pf, i) => {
-      let dw = 1;
       const feature = gj.features[parentIndex[i]];
-      if (feature.properties?.['_designWeight']) {
-        dw = feature.properties['_designWeight'];
-        if (pf.properties !== undefined) {
-          pf.properties['_designWeight'] *= dw;
-        }
-      }
+      pf.multSpecialPropertyDesignWeight(feature.getSpecialPropertyDesignWeight());
     });
   }
 
   // parentIndex refer to buffered features, so
   // may not be used to transfer design weights
   // from parents unless buffer is 0.
-  return FeatureCollection.newPoint(
-    pointFeatures,
-    {_designWeight: createDesignWeightProperty()},
-    true,
-  );
+  const pr = new PropertyRecord();
+  pr.addDesignWeight();
+  return FeatureCollection.newPoint(pointFeatures, pr, true);
 }

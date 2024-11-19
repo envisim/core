@@ -2,9 +2,6 @@ import {
   type AreaObject,
   FeatureCollection,
   type Point,
-  createDesignWeightProperty,
-  createDistanceProperty,
-  createParentProperty,
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 
@@ -73,9 +70,9 @@ export function sampleSystematicDistanceLines(
 
   // To store sampled features
   const newCollection = FeatureCollection.newPoint<Point>([], baseCollection.propertyRecord, false);
-  newCollection.propertyRecord['_designWeight'] = createDesignWeightProperty();
-  newCollection.propertyRecord['_parent'] = createParentProperty();
-  newCollection.propertyRecord['_distance'] = createDistanceProperty();
+  newCollection.propertyRecord.addDesignWeight();
+  newCollection.propertyRecord.addParent();
+  newCollection.propertyRecord.addDistance();
 
   // Find selected points in base layer and check if
   // seleccted base point is in frame and transfer _designWeight
@@ -94,13 +91,8 @@ export function sampleSystematicDistanceLines(
           );
           if (intersect === null) continue;
 
-          // Follow the design weight
-          // This selection
-          let designWeight = dw;
-          // All previous selections
-          if (frameFeature.properties?.['_designWeight']) {
-            designWeight *= frameFeature.properties['_designWeight'];
-          }
+          // Follow the design weight: This selection * all previous selections
+          const designWeight = dw * frameFeature.getSpecialPropertyDesignWeight();
 
           newCollection.addGeometry(pointFeature.geometry, {
             ...(pointFeature.properties ?? {}),

@@ -31,12 +31,7 @@ export {
   type CategoricalProperty,
   type NumericalProperty,
   type Property,
-  type PropertyRecord,
-  PropertySpecialKeys,
-  createDesignWeightProperty,
-  createDistanceProperty,
-  createParentProperty,
-  mergePropertyRecords,
+  PropertyRecord,
 } from './property-record.js';
 
 // GeometricPrimitive

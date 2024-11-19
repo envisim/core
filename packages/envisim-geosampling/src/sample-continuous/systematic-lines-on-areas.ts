@@ -5,7 +5,6 @@ import {
   Geodesic,
   type LineObject,
   bbox4,
-  createDesignWeightProperty,
   cutLineGeometry,
   longitudeCenter,
   longitudeDistance,
@@ -76,8 +75,9 @@ export function sampleSystematicLinesOnAreas(
 
   const numLines = Math.ceil((2.0 * maxRadius) / distBetween);
 
-  const sc = FeatureCollection.newLine([], {_designWeight: createDesignWeightProperty()});
-  // const lineFeatures: LineFeature[] = [];
+  const sc = FeatureCollection.newLine([]);
+  sc.propertyRecord.addDesignWeight();
+
   for (let i = 0; i < numLines; i++) {
     const latitude = minLat + (randomStart + i * distBetween) * latPerMeter;
     const thisLine = [];

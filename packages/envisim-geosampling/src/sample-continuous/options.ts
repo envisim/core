@@ -1,4 +1,4 @@
-import {type GeoJSON as GJ} from '@envisim/geojson-utils';
+import {type GeoJSON as GJ, PropertyRecord} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
 import {SamplingError} from '../sampling-error.js';
@@ -273,15 +273,16 @@ export function sampleRelascopePointsOptionsCheck({
   const pointCheck = samplePointOptionsCheck(options);
   if (pointCheck !== null) {
     return pointCheck;
-  }
-  if (factor && factor <= 0.0) {
+  } else if (factor && factor <= 0.0) {
     return SamplingError.FACTOR_NOT_POSITIVE;
   }
-  if (!Object.hasOwn(baseCollection.propertyRecord, sizeProperty)) {
-    return SamplingError.SIZE_PROPERTY_DONT_EXIST;
-  }
-  if (baseCollection.propertyRecord[sizeProperty].type !== 'numerical') {
+
+  const prop = baseCollection.propertyRecord.getId(sizeProperty);
+  if (prop === null) {
+    return SamplingError.SIZE_PROPERTY_DO_NOT_EXIST;
+  } else if (!PropertyRecord.propertyIsNumerical(prop)) {
     return SamplingError.SIZE_PROPERTY_NOT_NUMERICAL;
   }
+
   return null;
 }

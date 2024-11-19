@@ -5,8 +5,7 @@ import {
   type GeoJSON as GJ,
   LineObject,
   PointObject,
-  type PropertyRecord,
-  createDesignWeightProperty,
+  PropertyRecord,
 } from '@envisim/geojson-utils';
 
 import {
@@ -38,7 +37,7 @@ export interface SampleStratifiedOptions<O extends SampleFiniteOptions | SampleC
 
 /**
  * Returns the following errors
- * - {@link SamplingError.STRATIFY_DONT_EXIST}
+ * - {@link SamplingError.STRATIFY_DO_NOT_EXIST}
  * - {@link SamplingError.STRATIFY_NOT_CATEGORICAL}
  * - {@link SamplingError.STRATIFY_NO_VALUES}
  * - {@link SamplingError.STRATIFY_OPTIONS_LENGTH_MISMATCH}
@@ -49,14 +48,13 @@ export function sampleStratifiedOptionsCheck(
   {stratify, options}: SampleStratifiedOptions<SampleFiniteOptions | SampleContinuousOptions>,
   propertyRecord: PropertyRecord,
 ): ErrorType<typeof SamplingError> {
-  if (!Object.hasOwn(propertyRecord, stratify)) {
+  const property = propertyRecord.getId(stratify);
+  if (property === null) {
     // stratify must exist on propertyRecord
-    return SamplingError.STRATIFY_DONT_EXIST;
+    return SamplingError.STRATIFY_DO_NOT_EXIST;
   }
 
-  const property = propertyRecord[stratify];
-
-  if (property.type !== 'categorical') {
+  if (!PropertyRecord.propertyIsCategorical(property)) {
     // stratify prop must be categorical -- no stratification on numerical
     return SamplingError.STRATIFY_NOT_CATEGORICAL;
   }
@@ -101,7 +99,7 @@ export function sampleStratified<
   }
 
   // Already checked that it exists
-  const property = collection.propertyRecord[stratify] as CategoricalProperty;
+  const property = collection.propertyRecord.getId(stratify) as CategoricalProperty;
   const optionsArray = Array.isArray(options)
     ? options
     : Array.from<OPTS>({
@@ -150,9 +148,7 @@ export function sampleStratified<
   }) as OUT;
 
   // Add _designWeight to propertyRecord if it does not exist
-  if (!Object.hasOwn(newCollection.propertyRecord, '_designWeight')) {
-    newCollection.propertyRecord['_designWeight'] = createDesignWeightProperty();
-  }
+  newCollection.propertyRecord.addDesignWeight();
 
   return newCollection;
 }

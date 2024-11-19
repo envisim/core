@@ -229,7 +229,7 @@ function flattenGeometryCollections(
     return isGeometryPrimitive(geometry, primitive, false) ? geometry : [];
   }
 
-  return geometry.geometries.flatMap(flattenGeometryCollections);
+  return geometry.geometries.flatMap((g) => flattenGeometryCollections(g, primitive));
 }
 
 function filteredGeometryCollection(

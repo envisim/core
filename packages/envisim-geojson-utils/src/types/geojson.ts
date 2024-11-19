@@ -16,7 +16,7 @@ export interface GeoJsonObject<T extends string> {
 }
 
 // Properties
-export type FeatureProperties<P = number> = {[name: string]: P};
+export type FeatureProperties<P = number | string> = {[id: string]: P};
 
 // OBJECTS
 export interface BaseObject<T extends string, C> extends GeoJsonObject<T> {
@@ -66,7 +66,7 @@ export interface BaseFeature<G extends BaseGeometry | null = BaseGeometry, P = a
   geometry: G;
   properties: FeatureProperties<P> | null;
 }
-export type Feature<G extends Geometry = Geometry> = BaseFeature<G, number>;
+export type Feature<G extends Geometry = Geometry> = BaseFeature<G, number | string>;
 export type PointFeature = Feature<PointGeometry>;
 export type LineFeature = Feature<LineGeometry>;
 export type AreaFeature = Feature<AreaGeometry>;

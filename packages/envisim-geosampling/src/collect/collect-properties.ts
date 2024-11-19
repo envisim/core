@@ -1,4 +1,4 @@
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuid} from 'uuid';
 
 import {
   type AreaObject,
@@ -7,7 +7,7 @@ import {
   Geodesic,
   type LineObject,
   type PointObject,
-  type PropertyRecord,
+  PropertyRecord,
   intersectAreaAreaGeometries,
   intersectLineAreaGeometries,
   intersectLineLineGeometries,
@@ -60,25 +60,25 @@ function aggregateInPlace(
 
   // Go through all the properties and aggregate them.
   // All new properties are of type numerical.
-  Object.keys(opts.properties).forEach((key) => {
-    const property = opts.properties[key];
-
+  for (const property of opts.properties.getRecord()) {
+    const id = property.id;
     // Type must be numerical
-    if (property.type === 'numerical') {
+    if (PropertyRecord.propertyIsNumerical(property)) {
       if (Array.isArray(property.parent)) {
         // Collect from categorical variable
         const [id, value] = property.parent;
 
         // Only collect if value is equal to value
         if (from.properties[id] === value) {
-          to.properties[key] += opts.intersectSize * factor;
+          (to.properties[id] as number) += opts.intersectSize * factor;
         }
       } else {
         // Collect from numerical (same key)
-        to.properties[key] += from.properties[key] * opts.intersectSize * factor;
+        (to.properties[id] as number) +=
+          (from.properties[id] as number) * opts.intersectSize * factor;
       }
     }
-  });
+  }
 }
 
 /**
@@ -131,31 +131,27 @@ export function collectProperties(
 
   // Check that the properties to collect are present in the baseLayer record
   // and not in the frameLayer record.
-  Object.keys(rec).forEach((key) => {
-    const property = rec[key];
-    if (property.type === 'numerical') {
-      const id = property.parent ? property.parent[0] : property.id;
-      if (!Object.hasOwn(base.propertyRecord, id)) {
-        throw new Error('Property to collect does not exist in the baseLayer property record.');
-      }
-    } else {
+  for (const property of rec.getRecord()) {
+    if (!PropertyRecord.propertyIsNumerical(property)) {
       // Categorical properties should not exist in this record
-      throw new Error('Property record to collect cannot contain categorical properties.');
+      throw new Error('Property record to collect must only contain numerical properties.');
     }
-    if (Object.hasOwn(frame.propertyRecord, key)) {
+
+    const id = property.parent ? property.parent[0] : property.id;
+    if (!base.propertyRecord.hasId(id)) {
+      throw new Error('Property to collect does not exist in the baseLayer property record.');
+    }
+
+    if (frame.propertyRecord.hasId(property.id)) {
       throw new Error('Property to collect already exist in the frameLayer property record.');
     }
-  });
 
-  // Add new properties to new collection
-  // and property record.
-  Object.keys(rec).forEach((key) => {
+    // Add new properties to new collection and property record.
     // Initialize each with value 0
-    frame.initProperty(key, 0.0);
-
+    frame.initProperty(property.id, 0.0);
     // Add to the record
-    newCollection.propertyRecord[key] = rec[key];
-  });
+    newCollection.propertyRecord.addNumerical(property);
+  }
 
   // Do the collect for the different cases.
   if (FeatureCollection.isPoint(frame) && FeatureCollection.isArea(base)) {
@@ -247,43 +243,30 @@ export function collectPropertyRecord(
 ): PropertyRecord {
   // Collected numerical properties keep their original id,
   // but categorical properties recieve new id for each category.
-  const newRecord: PropertyRecord = {};
+  const newRecord = new PropertyRecord();
 
-  properties.forEach((key) => {
-    // Check that the properties to collect are present in the record
-    if (!Object.hasOwn(propertyRecord, key)) {
-      throw new Error('Property to collect does not exist in the property record.');
+  for (const id of properties) {
+    const rec = propertyRecord.getId(id);
+    if (rec === null) {
+      throw new Error(`Property ${id} to collect does not exist in the property record.`);
     }
 
-    // Get record of the property
-    const rec = propertyRecord[key];
-
-    if (rec.type === 'numerical') {
-      // Keep old id
-      const newId = rec.id;
-
-      newRecord[newId] = {
-        id: newId,
-        type: 'numerical',
-        name: rec.name,
-      };
-    } else if (rec.type === 'categorical') {
+    if (PropertyRecord.propertyIsCategorical(rec)) {
       // Create new record for each category
-
       rec.values.forEach((value: string, i: number) => {
         // Generate new id
-        const newId = uuidv4();
 
         // Store also parent id, index
-        newRecord[newId] = {
-          id: newId,
-          type: 'numerical',
+        newRecord.addNumerical({
+          id: uuid(),
           name: rec.name + '-' + value,
           parent: [rec.id, i],
-        };
+        });
       });
+    } else {
+      newRecord.addNumerical({id: rec.id, name: rec.name});
     }
-  });
+  }
 
   return newRecord;
 }

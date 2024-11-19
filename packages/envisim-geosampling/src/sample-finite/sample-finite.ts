@@ -5,11 +5,9 @@ import {
   type LineObject,
   type PointObject,
   PropertyRecord,
-  createDesignWeightProperty,
 } from '@envisim/geojson-utils';
 import {ColumnVector} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
-import {copy} from '@envisim/utils';
 
 import {SamplingError} from '../sampling-error.js';
 import {ErrorType} from '../utils/index.js';
@@ -85,12 +83,12 @@ export interface SampleFiniteOptions {
 /**
  * Returns the following errors:
  * - {@link SamplingError.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER}
- * - {@link SamplingError.PROBABILITIES_FROM_DONT_EXIST}
+ * - {@link SamplingError.PROBABILITIES_FROM_DO_NOT_EXIST}
  * - {@link SamplingError.PROBABILITIES_FROM_NOT_NUMERICAL}
  * - {@link SamplingError.SPATIALLY_BALANCED_MUST_USE_SPREAD}
- * - {@link SamplingError.SPREAD_ON_DONT_EXIST}
+ * - {@link SamplingError.SPREAD_ON_DO_NOT_EXIST}
  * - {@link SamplingError.BALANCE_MUST_USE_BALANCE}
- * - {@link SamplingError.BALANCE_ON_DONT_EXIST}
+ * - {@link SamplingError.BALANCE_ON_DO_NOT_EXIST}
  *
  * @returns `null` if check passes
  */
@@ -113,12 +111,13 @@ export function sampleFiniteOptionsCheck(
   }
 
   if (probabilitiesFrom !== undefined) {
-    if (!Object.hasOwn(properties, probabilitiesFrom)) {
+    const property = properties.getId(probabilitiesFrom);
+    if (property === null) {
       // probabilitiesFrom must exist on propertyRecord
-      return SamplingError.PROBABILITIES_FROM_DONT_EXIST;
+      return SamplingError.PROBABILITIES_FROM_DO_NOT_EXIST;
     }
 
-    if (properties[probabilitiesFrom].type !== 'numerical') {
+    if (!PropertyRecord.propertyIsNumerical(property)) {
       // probabilitiesFrom must be a numerical property
       return SamplingError.PROBABILITIES_FROM_NOT_NUMERICAL;
     }
@@ -137,7 +136,7 @@ export function sampleFiniteOptionsCheck(
     } else {
       if (!spreadOn.every((prop) => Object.hasOwn(properties, prop))) {
         // spredOn entries must exist on propertyRecord
-        return SamplingError.SPREAD_ON_DONT_EXIST;
+        return SamplingError.SPREAD_ON_DO_NOT_EXIST;
       }
     }
   }
@@ -153,7 +152,7 @@ export function sampleFiniteOptionsCheck(
     }
     if (!balanceOn.every((prop) => Object.hasOwn(properties, prop))) {
       // balanceOn entries must exist on propertyRecord
-      return SamplingError.BALANCE_ON_DONT_EXIST;
+      return SamplingError.BALANCE_ON_DO_NOT_EXIST;
     }
   }
 
@@ -277,20 +276,16 @@ export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
       throw new TypeError('method is not valid');
   }
 
-  const propertyRecord = copy(collection.propertyRecord);
-  // Add _designWeight to propertyRecord if it does not exist
-  if (!Object.hasOwn(propertyRecord, '_designWeight')) {
-    propertyRecord['_designWeight'] = createDesignWeightProperty();
-  }
-
   const newCollection = collection.copyEmpty(false);
+  // Add _designWeight to propertyRecord if it does not exist
+  newCollection.propertyRecord.addDesignWeight();
 
   idx.forEach((i) => {
     newCollection.addGeometry(
       collection.features[i].geometry,
       {
         ...collection.features[i].properties,
-        _designWeight: (collection.features[i].properties['_designWeight'] ?? 1.0) / mu[i],
+        _designWeight: collection.features[i].getSpecialPropertyDesignWeight() / mu[i],
       },
       false,
     );

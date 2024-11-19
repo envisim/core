@@ -5,9 +5,6 @@ import {
   Geodesic,
   Point,
   type PointObject,
-  createDesignWeightProperty,
-  createDistanceProperty,
-  createParentProperty,
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 
@@ -53,6 +50,7 @@ export function sampleDistancePoints(
 ): FeatureCollection<PointObject> {
   // Compute effective radius
   const effRadius = effectiveRadius(detectionFunction, cutoff);
+  const baseDw = 1.0 / (Math.PI * effRadius * effRadius);
 
   // Select sample of points (optional buffer via opts)
   const buffer = cutoff;
@@ -65,9 +63,9 @@ export function sampleDistancePoints(
   // To store sampled features
   const newCollection = FeatureCollection.newPoint([], baseCollection.propertyRecord, false);
   // Fix property record (same as base layer, but add design variables)
-  newCollection.propertyRecord['_designWeight'] = createDesignWeightProperty();
-  newCollection.propertyRecord['_distance'] = createDistanceProperty();
-  newCollection.propertyRecord['_parent'] = createParentProperty();
+  newCollection.propertyRecord.addDesignWeight();
+  newCollection.propertyRecord.addDistance();
+  newCollection.propertyRecord.addParent();
 
   // Find selected points in base layer and check if seleccted base point
   // is in frame and transfer _designWeight
@@ -87,22 +85,19 @@ export function sampleDistancePoints(
           );
           if (intersect !== null) {
             // Follow the design weight
-            let dw = 1 / (Math.PI * effRadius * effRadius);
-            if (samplePoint.properties?.['_designWeight']) {
-              dw *= samplePoint.properties['_designWeight'];
-            }
+            let dw = baseDw * samplePoint.getSpecialPropertyDesignWeight();
             // If buffer = 0, then sample point has already collected
             // design weight from frame. If buffer > 0, then we need
             // to collect the weight here.
-            if (frameFeature.properties?.['_designWeight'] && buffer > 0) {
-              dw *= frameFeature.properties['_designWeight'];
+            if (buffer > 0) {
+              dw *= frameFeature.getSpecialPropertyDesignWeight();
             }
             const newFeature = Feature.createPointFromJson(pointFeature, false);
             if (newFeature === null) continue;
 
-            newFeature.properties['_designWeight'] = dw;
-            newFeature.properties['_parent'] = samplePointIndex;
-            newFeature.properties['_distance'] = dist;
+            newFeature.setSpecialPropertyDesignWeight(dw);
+            newFeature.setSpecialPropertyDistance(dist);
+            newFeature.setSpecialPropertyParent(samplePointIndex);
             newCollection.addFeature(newFeature, true);
             break;
           }
