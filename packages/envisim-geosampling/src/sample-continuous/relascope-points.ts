@@ -3,12 +3,11 @@ import {
   FeatureCollection,
   Geodesic,
   type Point,
-  createDesignWeightProperty,
-  createParentProperty,
+  PropertyRecord,
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 
-import {SAMPLE_POINT_OPTIONS, type SamplePointOptions} from './options.js';
+import {SAMPLE_POINT_OPTIONS, type SamplePointOptions, samplePointOptionsCheck} from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
 
 interface SampleRelascopePointsOptions extends SamplePointOptions {
@@ -25,6 +24,29 @@ interface SampleRelascopePointsOptions extends SamplePointOptions {
    * The relascope factor to be used.
    */
   factor: number;
+}
+
+export function sampleRelascopePointsOptionsCheck(
+  collection: FeatureCollection<AreaObject>,
+  {baseCollection, sizeProperty, factor, ...options}: SampleRelascopePointsOptions,
+  recursiveCheck: boolean = false,
+): number {
+  if (recursiveCheck === true) {
+    const pointCheck = samplePointOptionsCheck(collection, options);
+    if (pointCheck !== 0) {
+      return pointCheck;
+    }
+  }
+
+  if (factor <= 0.0) {
+    return 610;
+  }
+
+  if (PropertyRecord.propertyIsNumerical(baseCollection.propertyRecord.getId(sizeProperty))) {
+    return 620;
+  }
+
+  return 0;
 }
 
 // TODO: Decide if we should implement correction by adding the correct buffer.
@@ -53,6 +75,21 @@ export function sampleRelascopePoints(
     ...opts
   }: SampleRelascopePointsOptions,
 ): FeatureCollection<Point> {
+  const optionsError = sampleRelascopePointsOptionsCheck(
+    collection,
+    {
+      buffer,
+      baseCollection,
+      factor,
+      sizeProperty,
+      ...opts,
+    },
+    false,
+  );
+  if (optionsError !== 0) {
+    throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
+  }
+
   // Square root of relascope factor
   const sqrtRf = Math.sqrt(factor);
   // Select sample of points (optional buffer via opts)
@@ -61,22 +98,20 @@ export function sampleRelascopePoints(
   // To store sampled features
   // Fix property record (same as base layer, but add design variables)
   const newCollection = FeatureCollection.newPoint<Point>([], baseCollection.propertyRecord, false);
-  newCollection.propertyRecord['_designWeight'] = createDesignWeightProperty();
-  newCollection.propertyRecord['_parent'] = createParentProperty();
+  newCollection.propertyRecord.addDesignWeight();
+  newCollection.propertyRecord.addParent();
 
   // const sampledFeatures: PointFeature[] = [];
 
-  // Find selected points in base layer and check if seleccted base point
-  // is in frame and transfer _designWeight
+  // Find selected points in base layer and check if selected base point is in frame and transfer dw
   baseCollection.forEach((pointFeature) => {
     // if (Point.isObject(pointFeature.geometry)) {
     const basePointCoords = pointFeature.geometry.coordinates;
-    let sizePropertyValue = 0;
-    if (pointFeature.properties !== undefined) {
-      sizePropertyValue = pointFeature.properties[sizeProperty] || 0;
-    }
+    const sizePropertyValue = (pointFeature?.properties?.[sizeProperty] ?? 0.0) as number;
+
     // Radius of inclusion zone
     const radius = (50 * sizePropertyValue) / sqrtRf;
+    const baseDw = 1.0 / (Math.PI * radius * radius);
 
     pointSample.forEach((samplePoint, samplePointIndex) => {
       const dist = Geodesic.distance(basePointCoords, samplePoint.geometry.coordinates);
@@ -91,16 +126,12 @@ export function sampleRelascopePoints(
           if (intersect === null) continue;
 
           // Follow the design weight
-          let dw = 1 / (Math.PI * radius * radius);
-          if (samplePoint.properties?.['_designWeight']) {
-            dw *= samplePoint.properties['_designWeight'];
-          }
-          // If buffer = 0, then sample point has already collected
-          // design weight from frame. If buffer > 0, then we need to
-          // collect the weight here.
-          if (frameFeature.properties?.['_designWeight'] && buffer > 0) {
-            dw *= frameFeature.properties['_designWeight'];
-          }
+          // If buffer = 0, then sample point has already collected design weight from frame. If
+          // buffer > 0, then we need to collect the weight here.
+          const dw =
+            baseDw *
+            samplePoint.getSpecialPropertyDesignWeight() *
+            (buffer > 0.0 ? frameFeature.getSpecialPropertyDesignWeight() : 1.0);
 
           newCollection.addGeometry(
             pointFeature.geometry,

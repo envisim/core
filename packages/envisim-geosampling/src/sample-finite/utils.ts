@@ -1,8 +1,11 @@
 import {
   type AreaObject,
+  type CategoricalProperty,
   FeatureCollection,
   type LineObject,
+  type NumericalProperty,
   type PointObject,
+  PropertyRecord,
 } from '@envisim/geojson-utils';
 import {bbox4, longitudeCenter} from '@envisim/geojson-utils';
 import {ColumnVector, Matrix} from '@envisim/matrix';
@@ -16,16 +19,11 @@ import type {SampleFiniteOptions} from './sample-finite.js';
  */
 function extractNumericalProperty(
   collection: FeatureCollection<AreaObject | LineObject | PointObject>,
-  property: string,
+  property: NumericalProperty,
 ): ColumnVector {
-  const rec = collection.propertyRecord[property];
-  if (!(rec.type === 'numerical')) {
-    throw new Error('Expected numerical property');
-  }
-
   const N = collection.size();
   const vec = Array.from<number>({length: N});
-  collection.forEachProperty(property, (v, i) => (vec[i] = v));
+  collection.forEachProperty(property.id, (v, i) => (vec[i] = v as number));
   return new ColumnVector(vec, true);
 }
 
@@ -37,21 +35,17 @@ function extractNumericalProperty(
  */
 function extractCategoricalProperty(
   collection: FeatureCollection<AreaObject | LineObject | PointObject>,
-  property: string,
+  property: CategoricalProperty,
 ): ColumnVector[] {
-  const rec = collection.propertyRecord[property];
-  if (!(rec.type === 'categorical')) {
-    throw new Error('Expected categorical property');
-  }
-
   const N = collection.size();
   const props: ColumnVector[] = [];
-  for (let i = 0; i < rec.values.length; i++) {
+
+  for (const rv of property.values) {
     const cv = Array.from<number>({length: N});
     let allZeros: boolean = true;
 
-    collection.forEachProperty(property, (x, j) => {
-      if (i === x) {
+    collection.forEachProperty(property.id, (x, j) => {
+      if (rv === x) {
         allZeros = false;
         cv[j] = 1.0;
       } else {
@@ -82,8 +76,6 @@ export function spreadMatrixFromLayer(
   spreadGeo: boolean = true,
 ): Matrix {
   const rec = collection.propertyRecord;
-  if (!properties.every((prop) => Object.hasOwn(rec, prop)))
-    throw new Error('all properties not present on property record');
 
   const newprops: ColumnVector[] = [];
 
@@ -114,23 +106,28 @@ export function spreadMatrixFromLayer(
     }
   }
 
-  properties.forEach((prop) => {
+  properties.forEach((id) => {
+    const prop = rec.getId(id);
+
     // Collect numerical properties and standardize
     // ignore constant variables.
-    if (rec[prop].type === 'numerical') {
+    if (PropertyRecord.propertyIsNumerical(prop)) {
       const vec = extractNumericalProperty(collection, prop);
       if (vec.sd() > 0.0) {
         newprops.push(vec.standardize(false, true));
       }
     }
+
     // Collect categorical properties a set of 0-1 vectors
-    if (rec[prop].type === 'categorical') {
+    if (PropertyRecord.propertyIsCategorical(prop)) {
       const arr = extractCategoricalProperty(collection, prop);
       // skip last column
       for (let i = 0; i < arr.length - 1; i++) {
         newprops.push(arr[i]);
       }
     }
+
+    throw new Error('all properties not present on property record');
   });
 
   return Matrix.cbind(...newprops);
@@ -150,9 +147,6 @@ export function balancingMatrixFromLayer(
   properties: string[],
 ): Matrix {
   const rec = collection.propertyRecord;
-  if (!properties.every((prop) => Object.hasOwn(rec, prop))) {
-    throw new Error('all properties not present on property record');
-  }
 
   const newprops: ColumnVector[] = [];
 
@@ -160,53 +154,64 @@ export function balancingMatrixFromLayer(
   const N = collection.size();
   newprops.push(new ColumnVector(Array.from<number>({length: N}).fill(1.0), true));
 
-  properties.forEach((prop) => {
+  properties.forEach((id) => {
+    const prop = rec.getId(id);
+
     // Collect numerical properties, no standardization here
-    if (rec[prop].type === 'numerical') {
+    if (PropertyRecord.propertyIsNumerical(prop)) {
       const vec = extractNumericalProperty(collection, prop);
       // Ignore constant variable here
       if (vec.sd() > 0.0) {
         newprops.push(vec);
       }
     }
+
     // Collect categorical properties a set of 0-1 vectors
-    if (rec[prop].type === 'categorical') {
+    if (PropertyRecord.propertyIsCategorical(prop)) {
       const arr = extractCategoricalProperty(collection, prop);
       // skip last column
       for (let i = 0; i < arr.length - 1; i++) {
         newprops.push(arr[i]);
       }
     }
+
+    throw new Error('all properties not present on property record');
   });
 
   return Matrix.cbind(...newprops);
 }
 
+/**
+ * Returns a vector of ones as the inclusion probabilities, if probabilitiesFrom is not set
+ */
 function probsFromLayer(
   collection: FeatureCollection<AreaObject | LineObject | PointObject>,
   {probabilitiesFrom, probabilitiesFromSize}: SampleFiniteOptions,
 ): ColumnVector {
-  const N = collection.size();
-  let prop: ColumnVector;
+  let probs: ColumnVector;
 
   if (probabilitiesFromSize !== undefined) {
     // Probabilities from the size of the features
     const sizes: number[] = collection.features.map((f) => f.geometry.measure());
-    prop = new ColumnVector(sizes);
+    probs = new ColumnVector(sizes);
   } else {
     // Probabilities from numerical property
 
-    if (typeof probabilitiesFrom !== 'string') {
-      return new ColumnVector(Array.from<number>({length: N}).fill(1.0), true);
+    const prop = collection.propertyRecord.getId(probabilitiesFrom);
+
+    if (prop === null) {
+      return ColumnVector.create(1.0, collection.size());
+    } else if (!PropertyRecord.propertyIsNumerical(prop)) {
+      throw new TypeError('probabilitiesFrom must be numerical');
     }
 
-    prop = extractNumericalProperty(collection, probabilitiesFrom);
+    probs = extractNumericalProperty(collection, prop);
   }
 
   // OR set to 0.0?
-  if (!prop.every((e) => e >= 0.0)) throw new Error('the selected property has negative values');
+  if (!probs.every((e) => e >= 0.0)) throw new Error('the selected property has negative values');
 
-  return prop;
+  return probs;
 }
 
 /**

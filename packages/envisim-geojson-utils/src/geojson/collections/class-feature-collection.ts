@@ -1,4 +1,4 @@
-import {type OptionalParam, copy} from '@envisim/utils';
+import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
 import {type BufferOptions} from '../../buffer/index.js';
@@ -7,13 +7,13 @@ import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {CirclesToPolygonsOptions} from '../../utils/circles-to-polygons.js';
 import {Feature} from '../features/index.js';
 import {GeometricPrimitive} from '../geometric-primitive/index.js';
-import {AreaObject, Circle, LineObject, MultiCircle, PointObject} from '../objects/index.js';
-import {PropertyRecord, createPropertyRecordFromFeature} from '../property-record.js';
+import {AreaObject, LineObject, PointObject} from '../objects/index.js';
+import {PropertyRecord} from '../property-record.js';
 
 type ForEachCallback<T> = (obj: T, index: number) => void;
 
 export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
-  implements GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number>>
+  implements GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>>
 {
   readonly type = 'FeatureCollection';
   features: Feature<T>[] = [];
@@ -99,7 +99,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
 
     let pr: PropertyRecord | undefined = undefined;
     if (createPropertyRecord === true) {
-      pr = createPropertyRecordFromFeature(features[fmap[0]]);
+      pr = PropertyRecord.createFromFeature(features[fmap[0]]);
 
       for (let i = 0; i < feats.length; i++) {
         feats[i].properties = setPropertiesOfFeature(pr, features[fmap[i]].properties ?? {});
@@ -130,7 +130,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
 
     let pr: PropertyRecord | undefined = undefined;
     if (createPropertyRecord === true) {
-      pr = createPropertyRecordFromFeature(features[fmap[0]]);
+      pr = PropertyRecord.createFromFeature(features[fmap[0]]);
 
       for (let i = 0; i < feats.length; i++) {
         feats[i].properties = setPropertiesOfFeature(pr, features[fmap[i]].properties ?? {});
@@ -161,7 +161,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
 
     let pr: PropertyRecord | undefined = undefined;
     if (createPropertyRecord === true) {
-      pr = createPropertyRecordFromFeature(features[fmap[0]]);
+      pr = PropertyRecord.createFromFeature(features[fmap[0]]);
 
       for (let i = 0; i < feats.length; i++) {
         feats[i].properties = setPropertiesOfFeature(pr, features[fmap[i]].properties ?? {});
@@ -182,7 +182,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
 
     return new FeatureCollection(
       features.map((f) => new Feature(f.geometry, f.properties, false)),
-      propertyRecord === undefined ? undefined : copy(propertyRecord),
+      propertyRecord?.copy(shallow),
       GeometricPrimitive.AREA,
     );
   }
@@ -197,7 +197,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
 
     return new FeatureCollection(
       features.map((f) => new Feature(f.geometry, f.properties, false)),
-      propertyRecord === undefined ? undefined : copy(propertyRecord),
+      propertyRecord?.copy(shallow),
       GeometricPrimitive.LINE,
     );
   }
@@ -212,7 +212,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
 
     return new FeatureCollection(
       features.map((f) => new Feature(f.geometry, f.properties, false)),
-      propertyRecord === undefined ? undefined : copy(propertyRecord),
+      propertyRecord?.copy(shallow),
       GeometricPrimitive.POINT,
     );
   }
@@ -224,23 +224,42 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
   ) {
     this.primitive = primitive;
     this.features = features;
-    this.propertyRecord = propertyRecord ?? {};
+    this.propertyRecord = propertyRecord ?? new PropertyRecord();
   }
 
-  copy(shallow: boolean = true): FeatureCollection<T> {
+  /**
+   * Transforms the categorical properties back to strings, and returns the json
+   * @param options if `options.convertCircles` is `true` (default), then circles will be converted
+   * to polygons.
+   */
+  copy(
+    shallow: boolean = true,
+    {
+      convertCircles = false,
+      ...options
+    }: CirclesToPolygonsOptions & {convertCircles?: boolean} = {},
+  ): FeatureCollection<T> {
+    if (FeatureCollection.isArea(this) && convertCircles) {
+      const features: Feature<T>[] = [];
+
+      for (const f of this.features) {
+        const g = f.geometry.toPolygon(options);
+        if (g === null) continue;
+        features.push(new Feature(g, f.properties, shallow) as Feature<T>);
+      }
+
+      return new FeatureCollection(features, this.propertyRecord.copy(shallow), this.primitive);
+    }
+
     return new FeatureCollection(
       this.features.map((f) => new Feature(f.geometry, f.properties, shallow)),
-      shallow === true ? this.propertyRecord : copy(this.propertyRecord),
+      this.propertyRecord.copy(shallow),
       this.primitive,
     );
   }
 
   copyEmpty(shallow: boolean = true): FeatureCollection<T> {
-    return new FeatureCollection(
-      [],
-      shallow === true ? this.propertyRecord : copy(this.propertyRecord),
-      this.primitive,
-    );
+    return new FeatureCollection([], this.propertyRecord.copy(shallow), this.primitive);
   }
 
   geometricPrimitive(): GeometricPrimitive {
@@ -330,7 +349,11 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
   }
 
   // FEATURE HANDLING
-  addGeometry(geometry: T, properties: GJ.FeatureProperties = {}, shallow: boolean = true): number {
+  addGeometry(
+    geometry: T,
+    properties: GJ.FeatureProperties<number | string> = {},
+    shallow: boolean = true,
+  ): number {
     return this.features.push(new Feature(geometry, properties, shallow));
   }
 
@@ -347,7 +370,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
   }
 
   // PROPERTY HANDLING
-  initProperty(property: string, defaultValue: number = 0.0): void {
+  initProperty(property: string, defaultValue: number | string): void {
     this.forEach((feature) => feature.initProperty(property, defaultValue));
   }
 
@@ -355,12 +378,15 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     this.forEach((feature) => feature.removeProperty(property));
   }
 
-  setProperty(property: string, index: number, value: number): void {
+  setProperty(property: string, index: number, value: number | string): void {
     if (index < 0 || index >= this.size()) throw new Error('no feature with this index exists');
     this.features[index].setProperty(property, value);
   }
 
-  forEachProperty(property: string, callback: (value: number, index: number) => void): void {
+  forEachProperty(
+    property: string,
+    callback: (value: number | string, index: number) => void,
+  ): void {
     this.forEach((feature, index) => {
       callback(feature.properties[property], index);
     });
@@ -372,8 +398,8 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
       throw new TypeError('layer types does not match');
     }
 
-    const thisKeys = Object.keys(this.propertyRecord);
-    const fcKeys = Object.keys(fc.propertyRecord);
+    const thisKeys = this.propertyRecord.getIds();
+    const fcKeys = fc.propertyRecord.getIds();
 
     if (thisKeys.length !== fcKeys.length || !thisKeys.every((id) => fcKeys.includes(id))) {
       throw new RangeError('propertyRecords does not match');
@@ -381,99 +407,43 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
 
     fc.forEach((feat) => this.addFeature(feat, shallow));
   }
-
-  /**
-   * Transforms the categorical properties back to strings, and returns the json
-   * @param options if `options.convertCircles` is `true` (default), then circles will be converted
-   * to polygons.
-   */
-  toGeoJSON({
-    convertCircles = true,
-    ...options
-  }: CirclesToPolygonsOptions & {convertCircles?: boolean} = {}): GJ.BaseFeatureCollection<
-    GJ.BaseFeature<GJ.SingleTypeObject, number | string>
-  > {
-    const features: GJ.BaseFeature<GJ.SingleTypeObject, number | string>[] = [];
-    const pr = this.propertyRecord;
-
-    this.forEach((feature) => {
-      const oldProps = feature.properties;
-      const newProps: GJ.FeatureProperties<number | string> = {};
-
-      Object.keys(pr).forEach((key) => {
-        const rec = pr[key];
-        const name = rec.name ?? rec.id;
-        if (rec.type === 'numerical') {
-          newProps[name] = oldProps[rec.id];
-        } else if (rec.type == 'categorical') {
-          newProps[name] = rec.values[oldProps[rec.id]];
-        }
-      });
-
-      let geometry: AreaObject | LineObject | PointObject | null;
-      if (
-        convertCircles === true &&
-        (Circle.isObject(feature.geometry) || MultiCircle.isObject(feature.geometry))
-      ) {
-        geometry = feature.geometry.toPolygon(options);
-      } else {
-        geometry = copy(feature.geometry);
-      }
-
-      if (geometry !== null) {
-        features.push({
-          type: 'Feature',
-          geometry,
-          properties: newProps,
-        });
-      }
-    });
-
-    return {type: 'FeatureCollection', features};
-  }
 }
 
 function setPropertiesOfFeature(
   propertyRecord: PropertyRecord,
   properties: GJ.FeatureProperties<any>,
-): GJ.FeatureProperties<number> {
-  const newProps: GJ.FeatureProperties<number> = {};
+): GJ.FeatureProperties<number | string> {
+  const newProps: GJ.FeatureProperties<number | string> = {};
 
-  for (const prop of Object.values(propertyRecord)) {
-    const name = prop.name ?? '';
+  for (const prop of propertyRecord.getRecord()) {
+    const id = prop.id;
 
     // If the prop does not exist on the feature, we have a problem
-    if (!Object.hasOwn(properties, name)) {
+    if (!Object.hasOwn(properties, id)) {
       throw new Error('All features must have the same properties.');
     }
 
-    const value: unknown = properties[name];
+    const value: unknown = properties[id];
 
-    // Add numerical property
-    if (prop.type === 'numerical') {
+    if (PropertyRecord.propertyIsNumerical(prop)) {
+      // Add numerical property
       if (typeof value !== 'number') {
         throw new Error('All features must have the same types on the properties.');
       }
-
-      newProps[prop.id] = value;
-      continue;
-    }
-
-    // Add categorical property
-    // We fill the value array, as new values are encountered.
-    if (prop.type === 'categorical') {
+    } else {
+      // prop.type === 'categorical'
+      // Add categorical property
+      // We fill the value array, as new values are encountered.
       if (typeof value !== 'string') {
         throw new Error('All features must have the same types on the properties.');
       }
 
-      let valueIndex = prop.values.indexOf(value);
-
-      if (valueIndex === -1) {
-        valueIndex = prop.values.push(value) - 1;
+      if (!prop.values.includes(value)) {
+        prop.values.push(value);
       }
-
-      newProps[prop.id] = valueIndex;
     }
+
+    newProps[prop.id] = value;
   }
 
   return newProps;

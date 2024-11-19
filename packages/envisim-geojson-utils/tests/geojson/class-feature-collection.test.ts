@@ -175,7 +175,7 @@ test('appendFromLayerWithDifferentProps', () => {
   expect(() => fcArea.appendFeatureCollection(collection)).toThrowError();
 });
 
-test('toGeoJSON', () => {
+test('copy', () => {
   const fc = FeatureCollection.newArea();
   fc.addGeometry(Circle.create([20.27, 63.83], 10));
   fc.addGeometry(
@@ -197,8 +197,8 @@ test('toGeoJSON', () => {
       ],
     ]),
   );
-  const woc = fc.toGeoJSON({convertCircles: true});
-  const wc = fc.toGeoJSON({convertCircles: false});
+  const woc = fc.copy(true, {convertCircles: true});
+  const wc = fc.copy(true, {convertCircles: false});
 
   expect(woc.features.map((f) => f.geometry.type)).toEqual(['Polygon', 'MultiPolygon', 'Polygon']);
   expect(wc.features.map((f) => f.geometry.type)).toEqual(['Point', 'MultiPoint', 'Polygon']);

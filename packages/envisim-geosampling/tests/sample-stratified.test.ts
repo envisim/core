@@ -6,6 +6,7 @@ import {
   FeatureCollection,
   type PointObject,
   Polygon,
+  PropertyRecord,
 } from '@envisim/geojson-utils';
 
 import {SampleBaseOptions} from '../src/sample-continuous/options.js';
@@ -39,14 +40,14 @@ const createPolygon = (prop: number) =>
     ]),
     {'prop-name': prop},
   );
-const propRecord = {
+const propRecord = new PropertyRecord({
   'prop-name': {
     id: 'prop-name',
     name: 'prop-name',
     values: ['a', 'b', 'c', 'd'],
     type: 'categorical' as const,
   },
-};
+});
 
 const baseCollection = FeatureCollection.newArea(
   [0, 0, 0, 1, 1, 2, 3].map(createPolygon),
