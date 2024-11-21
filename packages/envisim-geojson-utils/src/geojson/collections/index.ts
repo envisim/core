@@ -1,1 +1,1 @@
-export {FeatureCollection} from './class-feature-collection.js';
+export {type DistributiveCollection, FeatureCollection} from './class-feature-collection.js';

@@ -1,7 +1,7 @@
 import * as sampling from '@envisim/sampling';
 import {
   type AreaObject,
-  FeatureCollection,
+  type DistributiveCollection,
   type LineObject,
   type PointObject,
   PropertyRecord,
@@ -166,10 +166,14 @@ export function sampleFiniteOptionsCheck(
  * @param collection
  * @param opts
  */
+// export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
+//   collection: FeatureCollection<T>,
+//   opts: SampleFiniteOptions,
+// ): FeatureCollection<T> {
 export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
-  collection: FeatureCollection<T>,
+  collection: DistributiveCollection<T>,
   opts: SampleFiniteOptions,
-): FeatureCollection<T> {
+): DistributiveCollection<T> {
   const optionsError = sampleFiniteOptionsCheck(opts, collection.propertyRecord);
   if (optionsError !== null) {
     throw new RangeError(`sampleFinite error: ${optionsError}`);

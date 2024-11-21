@@ -24,7 +24,7 @@ export {
 export {Feature} from './features/index.js';
 
 // FeatureCollections
-export {FeatureCollection} from './collections/index.js';
+export {type DistributiveCollection, FeatureCollection} from './collections/index.js';
 
 // PropertyRecord
 export {
