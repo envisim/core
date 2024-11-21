@@ -1,5 +1,5 @@
 import * as GJ from '../types/geojson.js';
-import {Segment, intersects, upwardIntersection} from './class-segment.js';
+import {Segment, intersects, rightIntersection} from './class-segment.js';
 
 type IntersectSegment = {segment: number; param: number; visited: boolean};
 type IntersectPoint = {segments: IntersectSegment[]; position: GJ.Position2};
@@ -398,7 +398,7 @@ export class IntersectList {
           continue; // Without incrementing j
         }
 
-        const p = upwardIntersection(segList[queueIdx], sweepPoint, positive[queueIdx]);
+        const p = rightIntersection(segList[queueIdx], sweepPoint);
         if (p !== null && p < distance) {
           parent[idx] = queueIdx;
           distance = p;

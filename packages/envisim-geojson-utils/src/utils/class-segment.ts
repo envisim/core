@@ -95,41 +95,40 @@ export class Segment {
     return s;
   }
 
-  upwardIntersectFromPoint(point: GJ.Position, isPositive: boolean = true): number | null {
-    // Misses segment by x
-    if (this.p1[0] <= this.p2[0]) {
-      if (point[0] < this.p1[0] || point[0] > this.p2[0]) return null;
-    } else {
-      if (point[0] > this.p1[0] || point[0] < this.p2[0]) return null;
+  /**
+   * Calculates the distance between a point and a segment along a ray travelling rightward from the
+   * point.
+   *
+   * (1) An upward segment excludes its final point
+   * (2) A downward segment excludes its starting point
+   * (3) Horizontal segments are excluded
+   * (4) The segment/ray intersection point must be strictly to the right of the point
+   */
+  rightIntersectFromPoint(point: GJ.Position): number | null {
+    if (this.delta[1] === 0.0) {
+      return null; // (3)
+    } else if (Math.max(this.p1[0], this.p2[0]) < point[0]) {
+      return null; // Segment completely to the left of the point -- can't intersect ray
     }
 
-    // Is above segment
-    if (Math.max(this.p1[1], this.p2[1]) <= point[1]) {
-      return null;
+    if (this.delta[1] > 0.0) {
+      // Upward segment
+      if (point[1] < this.p1[1] || this.p2[1] <= point[1]) return null; // (1)
+    } else {
+      // Downward segment
+      if (point[1] <= this.p1[1] || this.p2[1] < point[1]) return null; // (2)
     }
 
     const xdiff = point[0] - this.p1[0];
     const ydiff = point[1] - this.p1[1];
 
-    // Is on vertical line
-    if (this.delta[0] === 0.0) {
-      if (xdiff === 0.0) {
-        // Only accept if it encloses the point, assuming point is leftmost point. A leftmost point is
-        // enclosed by a segment if it is to the left of a segment in positive direction, or to the
-        // right of a segment in a negative direction.
-        return this.delta[1] < 0.0 === isPositive ? 0.0 : null;
-      } else {
-        return null;
-      }
+    const distance = (this.delta[0] * ydiff) / this.delta[1] - xdiff;
+
+    if (distance <= 0.0) {
+      return null; // (4)
     }
 
-    const s = (this.delta[1] * xdiff) / this.delta[0] - ydiff;
-
-    if (s === 0.0) {
-      return this.delta[1] < 0.0 === isPositive ? 0.0 : null;
-    }
-
-    return s < 0.0 ? null : s;
+    return distance;
   }
 
   // Moves segment to the right by radius
@@ -286,16 +285,12 @@ export function segmentsToPolygon(segments: Segment[]): GJ.Position2[] {
   return poly;
 }
 
-export function upwardIntersection(
-  segments: Segment[],
-  point: GJ.Position,
-  isPositive: boolean,
-): number | null {
+export function rightIntersection(segments: Segment[], point: GJ.Position): number | null {
   let minimumDistance = Number.MAX_VALUE;
   let crossings = 0;
 
   for (const seg of segments) {
-    const d = seg.upwardIntersectFromPoint(point, isPositive);
+    const d = seg.rightIntersectFromPoint(point);
     if (d === null || d < 0.0) {
       continue;
     }
