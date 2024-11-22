@@ -104,7 +104,7 @@ export class Segment {
    * (2) A downward segment excludes its starting point
    * (3) Horizontal segments are excluded
    * (4) The segment/ray intersection point must be strictly to the right of the point
-   * However, (1) and (2) are disregarded, we only exclude horizontal segments not on the point, and
+   * However, we only exclude horizontal segments not on the point, and
    * allow intersections to happen on the point. Thus, 0.0 returns should be disregarded when
    * determining point-in-polygon.
    *
@@ -119,10 +119,14 @@ export class Segment {
       }
     } else if (Math.max(this.p1[0], this.p2[0]) < point[0]) {
       return null; // Segment completely to the left of the point -- can't intersect ray
-    } else if (Math.max(this.p1[1], this.p2[1]) < point[1]) {
-      return null;
-    } else if (Math.min(this.p1[1], this.p2[1]) > point[1]) {
-      return null;
+    }
+
+    if (this.delta[1] > 0.0) {
+      // Upward segment
+      if (point[1] < this.p1[1] || this.p2[1] <= point[1]) return null; // (1)
+    } else {
+      // Downward segment
+      if (point[1] <= this.p1[1] || this.p2[1] < point[1]) return null; // (2)
     }
 
     const xdiff = point[0] - this.p1[0];
@@ -301,6 +305,7 @@ export function rightDistanceToParent(
   leftPoint: GJ.Position,
 ): number | null {
   let minimumDistance = Number.MAX_VALUE;
+  let crossings: number | null = 0;
 
   for (const pseg of parent) {
     const d = pseg.rightDistanceOfPoint(leftPoint);
@@ -309,11 +314,23 @@ export function rightDistanceToParent(
       continue;
     } else if (d < minimumDistance) {
       minimumDistance = d;
-      if (d === 0.0) break;
+      if (d === 0.0) {
+        crossings = null;
+        break;
+      }
     }
+
+    crossings += 1;
   }
 
-  let crossings: number | null = null;
+  // We might be able to determine polygon-in-polygon by the leftmost point
+  if (crossings !== null) {
+    if (crossings % 2 === 0) {
+      return null;
+    }
+
+    return minimumDistance;
+  }
 
   for (const seg of self) {
     crossings = 0;
