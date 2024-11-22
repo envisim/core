@@ -41,7 +41,7 @@ export function sampleSystematicLinesOnAreas(
     rotation,
   });
   if (optionsError !== null) {
-    throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
+    throw new RangeError(optionsError);
   }
 
   const numPointsPerLine = 20;

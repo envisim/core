@@ -12,7 +12,7 @@ import {PropertyRecord} from '../property-record.js';
 
 type ForEachCallback<T> = (obj: T, index: number) => void;
 
-export class FeatureCollection<out T extends AreaObject | LineObject | PointObject>
+export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
   implements GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>>
 {
   readonly type = 'FeatureCollection';
@@ -449,9 +449,12 @@ function setPropertiesOfFeature(
   return newProps;
 }
 
-export type DistributiveCollection<T extends AreaObject | LineObject | PointObject> = [T] extends
-  | [AreaObject]
-  | [LineObject]
-  | [PointObject]
-  ? FeatureCollection<T>
-  : never;
+export type PureCollection<
+  T extends AreaObject | LineObject | PointObject = AreaObject | LineObject | PointObject,
+> = T extends AreaObject
+  ? FeatureCollection<AreaObject>
+  : T extends LineObject
+    ? FeatureCollection<LineObject>
+    : T extends PointObject
+      ? FeatureCollection<PointObject>
+      : never;

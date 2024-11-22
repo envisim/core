@@ -12,7 +12,7 @@ import {
   toPointObject,
 } from '../objects/index.js';
 
-export class Feature<out T extends AreaObject | LineObject | PointObject>
+export class Feature<T extends AreaObject | LineObject | PointObject>
   implements GJ.BaseFeature<GJ.SingleTypeObject, number | string>
 {
   readonly type = 'Feature';
@@ -177,3 +177,13 @@ export class Feature<out T extends AreaObject | LineObject | PointObject>
     return ((this.properties['_designWeight'] as number) *= value);
   }
 }
+
+export type PureFeature<
+  T extends AreaObject | LineObject | PointObject = AreaObject | LineObject | PointObject,
+> = T extends AreaObject
+  ? Feature<AreaObject>
+  : T extends LineObject
+    ? Feature<LineObject>
+    : T extends PointObject
+      ? Feature<PointObject>
+      : never;

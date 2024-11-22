@@ -26,3 +26,6 @@ export {toAreaObject, toLineObject, toPointObject} from './to-object.js';
 export type AreaObject = Circle | MultiCircle | Polygon | MultiPolygon;
 export type LineObject = LineString | MultiLineString;
 export type PointObject = Point | MultiPoint;
+export type PureObject<
+  T extends AreaObject | LineObject | PointObject = AreaObject | LineObject | PointObject,
+> = T extends AreaObject ? T : T extends LineObject ? T : T extends PointObject ? T : never;

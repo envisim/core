@@ -1,4 +1,10 @@
 export const SamplingError = {
+  // incorrect collection
+  EXPECTED_AREA: 'expected-area',
+  EXPECTED_LINE: 'expected-line',
+  EXPECTED_POINT: 'expected-point',
+  INCORRECT_PRIMITIVE: 'incorrect-primitive',
+
   // sample base specific errors
   SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER: 'sample-error-sample-size',
 

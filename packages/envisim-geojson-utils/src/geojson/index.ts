@@ -18,13 +18,14 @@ export {
   toAreaObject,
   toLineObject,
   toPointObject,
+  type PureObject,
 } from './objects/index.js';
 
 // Features
-export {Feature} from './features/index.js';
+export {Feature, type PureFeature} from './features/index.js';
 
 // FeatureCollections
-export {type DistributiveCollection, FeatureCollection} from './collections/index.js';
+export {FeatureCollection, type PureCollection} from './collections/index.js';
 
 // PropertyRecord
 export {
