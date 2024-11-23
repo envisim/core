@@ -2,9 +2,9 @@ import type * as GJ from '../types/geojson.js';
 import {IntersectList} from '../utils/class-intersects.js';
 import {
   type Segment,
+  rightDistanceToParent,
   ringToSegments,
   segmentsToPolygon,
-  upwardIntersection,
 } from '../utils/class-segment.js';
 
 /**
@@ -78,7 +78,7 @@ export function intersectPolygons(
         continue; // Without incrementing j
       }
 
-      const p = upwardIntersection(segList[queueIdx], sweepPoint, positive[queueIdx]);
+      const p = rightDistanceToParent(segList[queueIdx], segList[idx], sweepPoint);
 
       if (p !== null && p < distance) {
         parent[idx] = queueIdx;

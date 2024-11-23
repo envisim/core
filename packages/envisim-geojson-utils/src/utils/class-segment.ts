@@ -95,41 +95,50 @@ export class Segment {
     return s;
   }
 
-  upwardIntersectFromPoint(point: GJ.Position, isPositive: boolean = true): number | null {
-    // Misses segment by x
-    if (this.p1[0] <= this.p2[0]) {
-      if (point[0] < this.p1[0] || point[0] > this.p2[0]) return null;
-    } else {
-      if (point[0] > this.p1[0] || point[0] < this.p2[0]) return null;
+  /**
+   * Calculates the distance between a point and a segment along a ray travelling rightward from the
+   * point.
+   *
+   * We should (but do not) assume that:
+   * (1) An upward segment excludes its final point
+   * (2) A downward segment excludes its starting point
+   * (3) Horizontal segments are excluded
+   * (4) The segment/ray intersection point must be strictly to the right of the point
+   * However, we only exclude horizontal segments not on the point, and
+   * allow intersections to happen on the point. Thus, 0.0 returns should be disregarded when
+   * determining point-in-polygon.
+   *
+   * @returns `null` or a non-negative number
+   */
+  rightDistanceOfPoint(point: GJ.Position): number | null {
+    if (this.delta[1] === 0.0) {
+      if (this.delta[0] > 0.0) {
+        return this.p1[0] < point[0] && point[0] < this.p2[0] ? 0.0 : null;
+      } else {
+        return this.p2[0] < point[0] && point[0] < this.p1[0] ? 0.0 : null;
+      }
+    } else if (Math.max(this.p1[0], this.p2[0]) < point[0]) {
+      return null; // Segment completely to the left of the point -- can't intersect ray
     }
 
-    // Is above segment
-    if (Math.max(this.p1[1], this.p2[1]) <= point[1]) {
-      return null;
+    if (this.delta[1] > 0.0) {
+      // Upward segment
+      if (point[1] < this.p1[1] || this.p2[1] <= point[1]) return null; // (1)
+    } else {
+      // Downward segment
+      if (point[1] <= this.p1[1] || this.p2[1] < point[1]) return null; // (2)
     }
 
     const xdiff = point[0] - this.p1[0];
     const ydiff = point[1] - this.p1[1];
 
-    // Is on vertical line
-    if (this.delta[0] === 0.0) {
-      if (xdiff === 0.0) {
-        // Only accept if it encloses the point, assuming point is leftmost point. A leftmost point is
-        // enclosed by a segment if it is to the left of a segment in positive direction, or to the
-        // right of a segment in a negative direction.
-        return this.delta[1] < 0.0 === isPositive ? 0.0 : null;
-      } else {
-        return null;
-      }
+    const distance = (this.delta[0] * ydiff) / this.delta[1] - xdiff;
+
+    if (distance < 0.0) {
+      return null;
     }
 
-    const s = (this.delta[1] * xdiff) / this.delta[0] - ydiff;
-
-    if (s === 0.0) {
-      return this.delta[1] < 0.0 === isPositive ? 0.0 : null;
-    }
-
-    return s < 0.0 ? null : s;
+    return distance;
   }
 
   // Moves segment to the right by radius
@@ -286,26 +295,76 @@ export function segmentsToPolygon(segments: Segment[]): GJ.Position2[] {
   return poly;
 }
 
-export function upwardIntersection(
-  segments: Segment[],
-  point: GJ.Position,
-  isPositive: boolean,
+/**
+ * Use the leftpoint to calculate the distance, use midpoint of self to determine parent.
+ * Assumes that self is either fully inside or fully outside the potential parent.
+ */
+export function rightDistanceToParent(
+  parent: Segment[],
+  self: Segment[],
+  leftPoint: GJ.Position,
 ): number | null {
   let minimumDistance = Number.MAX_VALUE;
-  let crossings = 0;
+  let crossings: number | null = 0;
 
-  for (const seg of segments) {
-    const d = seg.upwardIntersectFromPoint(point, isPositive);
-    if (d === null || d < 0.0) {
+  for (const pseg of parent) {
+    const d = pseg.rightDistanceOfPoint(leftPoint);
+
+    if (d === null) {
       continue;
+    } else if (d < minimumDistance) {
+      minimumDistance = d;
+      if (d === 0.0) {
+        crossings = null;
+        break;
+      }
     }
 
     crossings += 1;
-
-    if (d < minimumDistance) {
-      minimumDistance = d;
-    }
   }
 
-  return crossings % 2 === 0 ? null : minimumDistance;
+  // We might be able to determine polygon-in-polygon by the leftmost point
+  if (crossings !== null) {
+    if (crossings % 2 === 0) {
+      return null;
+    }
+
+    return minimumDistance;
+  }
+
+  for (const seg of self) {
+    crossings = 0;
+    const point = seg.position(0.5);
+
+    for (const pseg of parent) {
+      const d = pseg.rightDistanceOfPoint(point);
+
+      if (d === null) {
+        continue;
+      } else if (d === 0.0) {
+        crossings = null;
+        break;
+      }
+
+      crossings += 1;
+    }
+
+    // If crossings is null, we have inconclusive results, and need to continue the search,
+    // otherwise we have found a solution, since polygons are either fully inside, or fully outside,
+    // the potential parent.
+    if (crossings !== null) break;
+  }
+
+  if (crossings === null) {
+    // No crossing is conclusive indicates that the segments are equal -- we return this as a 0.0
+    // distance overlap
+    return 0.0;
+  }
+
+  // Otherwise, a parent exists if crossings is odd
+  if (crossings % 2 === 0) {
+    return null;
+  }
+
+  return minimumDistance;
 }
