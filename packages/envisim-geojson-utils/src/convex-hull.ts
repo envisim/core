@@ -157,15 +157,26 @@ function cross(a: GJ.Position, b: GJ.Position, o: GJ.Position): number {
 function collinear(points: GJ.Position[]): boolean {
   if (points.length < 3) return true;
 
-  const [x1, y1] = points[0];
-  const [x2, y2] = points[1];
-  const initialSlope = x2 !== x1 ? (y2 - y1) / (x2 - x1) : Infinity;
+  // Find the first two distinct points
+  const p1 = points[0];
+  let p2: GJ.Position | null = null;
 
-  for (let i = 2; i < points.length; i++) {
-    const [x, y] = points[i];
-    const slope = x !== x1 ? (y - y1) / (x - x1) : Infinity;
-    if (slope !== initialSlope) return false;
+  for (let i = 1; i < points.length; i++) {
+    if (points[i][0] !== p1[0] || points[i][1] !== p1[1]) {
+      p2 = points[i];
+      break;
+    }
   }
 
-  return true;
+  // If all points are identical
+  if (!p2) return true;
+
+  const [x1, y1] = p1;
+  const [x2, y2] = p2;
+
+  // Check if all points are on the line formed by p1 and p2
+  return points.every(([x, y]) => {
+    // Use cross-product to avoid division (slope comparison)
+    return (x - x1) * (y2 - y1) === (y - y1) * (x2 - x1);
+  });
 }
