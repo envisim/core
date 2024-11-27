@@ -11,7 +11,14 @@ export {Rhumb} from './utils/class-rhumb.js';
 export {PlateCarree} from './utils/class-plate-carree.js';
 
 export {areaOfPolygonLonLat} from './utils/area.js';
-export {bbox4, bboxFromPositions, bboxInBBox, pointInBBox, unionOfBBoxes} from './utils/bbox.js';
+export {
+  bbox4,
+  bboxFromPositions,
+  bboxInBBox,
+  pointInBBox,
+  unionOfBBoxes,
+  bboxCenter,
+} from './utils/bbox.js';
 export {type CirclesToPolygonsOptions} from './utils/circles-to-polygons.js';
 export {lengthOfLineString} from './utils/length.js';
 export {pointInSinglePolygonPosition} from './utils/point-in-polygon.js';
