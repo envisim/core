@@ -265,5 +265,6 @@ export function bboxCenter(bbox: GJ.BBox): GJ.Position {
 }
 
 export function bboxCrossesAntimeridian(bbox: GJ.BBox): boolean {
-  return bbox[0] > bbox[2];
+  const box = bbox4(bbox);
+  return box[0] > box[2];
 }

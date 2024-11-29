@@ -9,7 +9,7 @@ import {
   Point,
   PropertyRecord,
   bbox4,
-  longitudeCenter,
+  bboxCenter,
   longitudeDistance,
   normalizeLongitude,
   unionOfPolygons,
@@ -19,6 +19,13 @@ import {SAMPLE_POINT_OPTIONS, type SamplePointOptions, samplePointOptionsCheck} 
 
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;
+
+// Internal.
+function placePoint(point: GJ.Position, position: GJ.Position, rotation: number): GJ.Position {
+  const dist = Math.sqrt(point[0] * point[0] + point[1] * point[1]);
+  const angle = 90 - (Math.atan2(point[1], point[0]) * 180) / Math.PI + rotation;
+  return Geodesic.destination(position, dist, angle);
+}
 
 /**
  * Selects points on areas (if features have bbox, it is used in pointInPolygon
@@ -35,6 +42,8 @@ export function samplePointsOnAreas(
     sampleSize,
     buffer = SAMPLE_POINT_OPTIONS.buffer,
     ratio = SAMPLE_POINT_OPTIONS.ratio,
+    rotation = SAMPLE_POINT_OPTIONS.rotation,
+    randomRotation = SAMPLE_POINT_OPTIONS.randomRotation,
   }: SamplePointOptions,
 ): FeatureCollection<Point> {
   const optionsError = samplePointOptionsCheck(collection, {
@@ -42,6 +51,8 @@ export function samplePointsOnAreas(
     sampleSize,
     buffer,
     ratio,
+    rotation,
+    randomRotation,
   });
   if (optionsError !== 0) {
     throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
@@ -77,11 +88,10 @@ export function samplePointsOnAreas(
 
   // Pre-calculations for both metods 'uniform' and 'systematic'.
   const A = buffered.measure();
-  let designWeight = A / sampleSize;
+  const designWeight = A / sampleSize;
   const box = bbox4(buffered.getBBox());
   const pointFeatures: Feature<Point>[] = [];
   const parentIndex: number[] = [];
-  let pointLonLat: GJ.Position;
 
   switch (pointSelection) {
     case 'independent': {
@@ -103,13 +113,13 @@ export function samplePointsOnAreas(
         const yRand = y1 + (y2 - y1) * rand.float();
         const lat = 90 - Math.acos(2.0 * yRand - 1.0) * TO_DEG;
         const lon = normalizeLongitude(box[0] + lonDist * rand.float());
-        pointLonLat = [lon, lat];
+        const lonLat: GJ.Position = [lon, lat];
 
         // Check if point is in any feature.
         for (let i = 0; i < buffered.features.length; i++) {
-          if (buffered.features[i].geometry.includesPosition(pointLonLat)) {
+          if (buffered.features[i].geometry.includesPosition(lonLat)) {
             // Point is in feature. Create and store new point feature.
-            const pointFeature = new Feature(Point.create(pointLonLat), {
+            const pointFeature = new Feature(Point.create(lonLat), {
               _designWeight: designWeight,
             });
             pointFeatures.push(pointFeature);
@@ -126,45 +136,32 @@ export function samplePointsOnAreas(
 
     case 'systematic': {
       // Precalculations for systematic sampling.
-      const boxHeight = Geodesic.distance([box[0], box[1]], [box[0], box[3]]);
-      const latPerMeter = (box[3] - box[1]) / boxHeight;
-      // ratio = dx/dy
-      // Compute distances in x (longitude) and y (latitude) between points in meters.
+      const center = bboxCenter(box);
+      const bottomLeft: GJ.Position = [box[0], box[1]];
+      const topRight: GJ.Position = [box[2], box[3]];
+      const radius = Math.max(
+        Geodesic.distance(center, bottomLeft),
+        Geodesic.distance(center, topRight),
+      );
+      const angle = randomRotation === true ? rand.float() * 360.0 : rotation;
       const dy = Math.sqrt(A / (sampleSize * ratio));
       const dx = ratio * dy;
-      designWeight = dx * dy;
       // generate random offset in x and y
       const xoff = rand.float() * dx;
       const yoff = rand.float() * dy;
-      const centerLon = longitudeCenter(box[0], box[2]);
-      // Compute maximum number of points in latitude direction.
-      const ny = Math.ceil(boxHeight / dy);
-      // Generate the points.
-      for (let j = 0; j < ny; j++) {
-        const latCoord = box[1] + (yoff + j * dy) * latPerMeter;
+      // maximum number of points in each direction
+      const nx = Math.ceil((2 * radius) / dx);
+      const ny = Math.ceil((2 * radius) / dy);
 
-        // Find longitudes per meter at this latitude.
-        const dLonMeter = Geodesic.distance([box[0], latCoord], [box[2], latCoord]);
-        const lonPerMeter = longitudeDistance(box[0], box[2]) / dLonMeter;
-
-        // Find how many points to place in the box at this latitude.
-        let nx = Math.ceil(dLonMeter / dx);
-        if (nx % 2 == 1) {
-          nx += 1;
-        }
-
-        // Compute the points
-        for (let i = 0; i <= nx; i++) {
-          const lonCoord = normalizeLongitude(
-            centerLon + (xoff + dx * (i - nx / 2.0)) * lonPerMeter,
-          );
-          pointLonLat = [lonCoord, latCoord];
-
+      for (let i = 0; i < nx; i++) {
+        for (let j = 0; j < ny; j++) {
+          const xy: GJ.Position = [-radius + i * dx + xoff, -radius + j * dy + yoff];
+          const lonLat = placePoint(xy, center, angle);
           // Check if point is in any feature and then store.
           for (let k = 0; k < buffered.features.length; k++) {
-            if (buffered.features[k].geometry.includesPosition(pointLonLat)) {
+            if (buffered.features[k].geometry.includesPosition(lonLat)) {
               // Point is in feature. Create and store new point feature.
-              const pointFeature = new Feature(Point.create(pointLonLat), {
+              const pointFeature = new Feature(Point.create(lonLat), {
                 _designWeight: designWeight,
               });
               pointFeatures.push(pointFeature);
@@ -174,7 +171,6 @@ export function samplePointsOnAreas(
           }
         }
       }
-
       break;
     }
 
