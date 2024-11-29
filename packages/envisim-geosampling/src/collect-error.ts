@@ -4,8 +4,9 @@ export const CollectError = {
   EXPECTED_LINE: 'collect-error-collection-is-not-line',
   EXPECTED_POINT: 'collect-error-collection-is-not-point',
   COLLECTION_MISSING: 'collect-error-collection-is-missing',
-  BASE_COLLECTION_NOT_AREA: 'collect-error-base-collection-is-not-area',
-  BASE_COLLECTION_NOT_AREA_OR_LINE: 'collect-error-base-collection-is-not-area-or-line',
+  BASE_COLLECTION_EXPECTED_AREA: 'collect-error-base-collection-is-not-area',
+  BASE_COLLECTION_EXPECTED_LINE: 'collect-error-base-collection-is-not-line',
+  BASE_COLLECTION_EXPECTED_POINT: 'collect-error-base-collection-is-not-line',
   BASE_COLLECTION_MISSING: 'collect-error-collection-is-missing',
 
   // collect properties
