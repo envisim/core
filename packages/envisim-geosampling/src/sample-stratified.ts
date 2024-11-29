@@ -36,13 +36,7 @@ export interface SampleStratifiedOptions<O extends SampleFiniteOptions | SampleC
 }
 
 /**
- * Returns the following errors
- * - {@link SamplingError.STRATIFY_DO_NOT_EXIST}
- * - {@link SamplingError.STRATIFY_NOT_CATEGORICAL}
- * - {@link SamplingError.STRATIFY_NO_VALUES}
- * - {@link SamplingError.STRATIFY_OPTIONS_LENGTH_MISMATCH}
- *
- * @returns `null` if check passes
+ * @returns `null` if check passes, {@link SamplingError} otherwise.
  */
 export function sampleStratifiedOptionsCheck(
   {stratify, options}: SampleStratifiedOptions<SampleFiniteOptions | SampleContinuousOptions>,
@@ -51,7 +45,7 @@ export function sampleStratifiedOptionsCheck(
   const property = propertyRecord.getId(stratify);
   if (property === null) {
     // stratify must exist on propertyRecord
-    return SamplingError.STRATIFY_DO_NOT_EXIST;
+    return SamplingError.STRATIFY_MISSING;
   }
 
   if (!PropertyRecord.propertyIsCategorical(property)) {

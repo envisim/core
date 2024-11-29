@@ -81,16 +81,7 @@ export interface SampleFiniteOptions {
 }
 
 /**
- * Returns the following errors:
- * - {@link SamplingError.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER}
- * - {@link SamplingError.PROBABILITIES_FROM_DO_NOT_EXIST}
- * - {@link SamplingError.PROBABILITIES_FROM_NOT_NUMERICAL}
- * - {@link SamplingError.SPATIALLY_BALANCED_MUST_USE_SPREAD}
- * - {@link SamplingError.SPREAD_ON_DO_NOT_EXIST}
- * - {@link SamplingError.BALANCE_MUST_USE_BALANCE}
- * - {@link SamplingError.BALANCE_ON_DO_NOT_EXIST}
- *
- * @returns `null` if check passes
+ * @returns `null` if check passes, {@link SamplingError} otherwise
  */
 export function sampleFiniteOptionsCheck(
   {
@@ -114,7 +105,7 @@ export function sampleFiniteOptionsCheck(
     const property = properties.getId(probabilitiesFrom);
     if (property === null) {
       // probabilitiesFrom must exist on propertyRecord
-      return SamplingError.PROBABILITIES_FROM_DO_NOT_EXIST;
+      return SamplingError.PROBABILITIES_FROM_MISSING;
     }
 
     if (!PropertyRecord.propertyIsNumerical(property)) {
@@ -131,12 +122,12 @@ export function sampleFiniteOptionsCheck(
     if (spreadOn === undefined) {
       if (spreadGeo === undefined) {
         // Must use either spreadOn or spreadGeo
-        return SamplingError.SPATIALLY_BALANCED_MUST_USE_SPREAD;
+        return SamplingError.SPREAD_ON_MISSING;
       }
     } else {
       if (!spreadOn.every((prop) => Object.hasOwn(properties, prop))) {
         // spredOn entries must exist on propertyRecord
-        return SamplingError.SPREAD_ON_DO_NOT_EXIST;
+        return SamplingError.SPREAD_ON_MISSING;
       }
     }
   }
@@ -146,13 +137,10 @@ export function sampleFiniteOptionsCheck(
     (SAMPLE_FINITE_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName) ||
     (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName)
   ) {
-    if (!balanceOn) {
+    if (!balanceOn || !balanceOn.every((prop) => Object.hasOwn(properties, prop))) {
       // Must use balanceOn
-      return SamplingError.BALANCE_MUST_USE_BALANCE;
-    }
-    if (!balanceOn.every((prop) => Object.hasOwn(properties, prop))) {
       // balanceOn entries must exist on propertyRecord
-      return SamplingError.BALANCE_ON_DO_NOT_EXIST;
+      return SamplingError.BALANCE_ON_MISSING;
     }
   }
 
