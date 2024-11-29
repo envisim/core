@@ -68,6 +68,14 @@ export interface SamplePointOptions extends SampleBaseOptions {
    * Optional buffer in meters.
    */
   buffer?: number;
+  /**
+   * Optional rotation
+   */
+  rotation?: number;
+  /**
+   * Optional random rotation
+   */
+  randomRotation?: boolean;
 }
 
 export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
@@ -76,6 +84,8 @@ export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
   sampleSize: 1,
   ratio: 1.0,
   buffer: 0.0,
+  rotation: 0.0,
+  randomRotation: false,
 };
 
 /**
