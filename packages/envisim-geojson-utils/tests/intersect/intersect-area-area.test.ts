@@ -149,3 +149,27 @@ test('intersect converted circle-polygon', () => {
   const int1 = intersectAreaAreaGeometries(polygon, polycircle);
   expect(int1).not.toBeNull();
 });
+
+test('non-overlapping', () => {
+  const poly1 = Polygon.create([
+    [
+      [20.382250571191626, 63.79941345753493],
+      [20.38253248161436, 63.799284398430416],
+      [20.382824408311265, 63.79940902934919],
+      [20.38254249797854, 63.79953808902122],
+      [20.382250571191626, 63.79941345753493],
+    ],
+  ]);
+  const poly2 = Polygon.create([
+    [
+      [20.383759, 63.800804],
+      [20.380669, 63.800037],
+      [20.383523, 63.799279],
+      [20.386033, 63.800188],
+      [20.383759, 63.800804],
+    ],
+  ]);
+
+  const int1 = intersectAreaAreaGeometries(poly1, poly2);
+  expect(int1).toBeNull();
+});

@@ -126,7 +126,7 @@ export class Segment {
       if (point[1] < this.p1[1] || this.p2[1] <= point[1]) return null; // (1)
     } else {
       // Downward segment
-      if (point[1] <= this.p1[1] || this.p2[1] < point[1]) return null; // (2)
+      if (point[1] < this.p2[1] || this.p1[1] <= point[1]) return null; // (2)
     }
 
     const xdiff = point[0] - this.p1[0];
