@@ -11,7 +11,6 @@ import {
   intersectLineLineGeometries,
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
-import {copy} from '@envisim/utils';
 
 import {projectedLengthOfGeometry} from '../utils/index.js';
 
@@ -118,7 +117,7 @@ export function selectIntersects(
   // but values need to be updated for categorical props and
   // two design properties must be added to the new property
   // record. Set initial record here.
-  const record = copy(base.propertyRecord);
+  const record = base.propertyRecord.copy();
   record.addDesignWeight();
   record.addParent();
 
