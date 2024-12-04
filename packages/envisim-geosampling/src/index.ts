@@ -31,7 +31,6 @@ export {
 
 // Errors
 export {SamplingError} from './sampling-error.js';
-export {CollectError} from './collect-error.js';
 export {type ErrorType} from './utils/index.js';
 
 // Model features/tracts
@@ -55,7 +54,10 @@ export {
 } from './model-feature.js';
 
 // Collection from layers
-export {collectProperties, collectPropertyRecord, collectIntersects} from './collect/index.js';
+export {collectProperties, collectPropertyRecord, CollectError} from './collect/index.js';
+
+// Select from layers
+export {selectIntersects, SelectError} from './select/index.js';
 
 // Point processes
 export {

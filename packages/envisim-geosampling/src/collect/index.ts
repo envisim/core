@@ -1,5 +1,2 @@
-export {collectIntersects} from './collect-intersects.js';
-export {
-  collectProperties,
-  collectPropertyRecord,
-} from './collect-properties.js';
+export {CollectError} from './collect-error.js';
+export {collectProperties, collectPropertyRecord} from './collect-properties.js';

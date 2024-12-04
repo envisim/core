@@ -80,15 +80,15 @@ function createPropertiesForLine(
 }
 
 /**
- * Collect intersect of features as the new frame from base-collection.
+ * Select intersect of features as the new frame from base-collection.
  * @param frame
  * @param base
  */
-export function collectIntersects(
+export function selectIntersects(
   frame: FeatureCollection<PointObject>,
   base: FeatureCollection<AreaObject>,
 ): FeatureCollection<PointObject>;
-export function collectIntersects<
+export function selectIntersects<
   B extends FeatureCollection<AreaObject> | FeatureCollection<LineObject>,
 >(
   frame: FeatureCollection<LineObject>,
@@ -96,13 +96,13 @@ export function collectIntersects<
 ): B extends FeatureCollection<AreaObject>
   ? FeatureCollection<LineObject>
   : FeatureCollection<PointObject>;
-export function collectIntersects<
+export function selectIntersects<
   B extends
     | FeatureCollection<AreaObject>
     | FeatureCollection<LineObject>
     | FeatureCollection<PointObject>,
 >(frame: FeatureCollection<AreaObject>, base: B): B;
-export function collectIntersects(
+export function selectIntersects(
   frame:
     | FeatureCollection<AreaObject>
     | FeatureCollection<LineObject>
