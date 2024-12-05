@@ -1,12 +1,11 @@
 import {
-  AreaCollection,
+  AreaObject,
   type CategoricalProperty,
+  FeatureCollection,
   type GeoJSON as GJ,
-  GeometricPrimitive,
-  Layer,
-  LineCollection,
-  PointCollection,
-  createDesignWeightProperty,
+  LineObject,
+  PointObject,
+  PropertyRecord,
 } from '@envisim/geojson-utils';
 
 import {
@@ -27,9 +26,7 @@ type SampleContinuousOptions =
   | SampleSystematicLineOnAreaOptions
   | SampleBeltOnAreaOptions;
 
-interface SampleStratifiedOptions<
-  O extends SampleFiniteOptions | SampleContinuousOptions,
-> {
+interface SampleStratifiedOptions<O extends SampleFiniteOptions | SampleContinuousOptions> {
   stratify: string;
   options: O | O[];
 }
@@ -45,20 +42,19 @@ interface SampleStratifiedOptions<
  * @returns `0` if check passes
  */
 export function sampleStratifiedOptionsCheck(
-  layer: Layer<PointCollection> | Layer<LineCollection> | Layer<AreaCollection>,
-  {
-    stratify,
-    options,
-  }: SampleStratifiedOptions<SampleFiniteOptions | SampleContinuousOptions>,
+  fc:
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
+  {stratify, options}: SampleStratifiedOptions<SampleFiniteOptions | SampleContinuousOptions>,
 ): number {
-  if (!Object.hasOwn(layer.propertyRecord, stratify)) {
+  const property = fc.propertyRecord.getId(stratify);
+  if (property === null) {
     // stratify must exist on propertyRecord
     return 110;
   }
 
-  const property = layer.propertyRecord[stratify];
-
-  if (property.type !== 'categorical') {
+  if (!PropertyRecord.propertyIsCategorical(property)) {
     // stratify prop must be categorical -- no stratification on numerical
     return 120;
   }
@@ -78,20 +74,20 @@ export function sampleStratifiedOptionsCheck(
 
 export function sampleStratified<
   IN extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
   OUT extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
   OPTS extends SampleFiniteOptions | SampleContinuousOptions,
 >(
   sampleFn: (arg0: IN, arg1: OPTS) => OUT,
-  layer: IN,
+  fc: IN,
   {stratify, options}: SampleStratifiedOptions<OPTS>,
 ): OUT {
-  const optionsError = sampleStratifiedOptionsCheck(layer, {
+  const optionsError = sampleStratifiedOptionsCheck(fc, {
     stratify,
     options,
   });
@@ -100,7 +96,7 @@ export function sampleStratified<
   }
 
   // Already checked that it exists
-  const property = layer.propertyRecord[stratify] as CategoricalProperty;
+  const property = fc.propertyRecord.getId(stratify) as CategoricalProperty;
   const optionsArray = Array.isArray(options)
     ? options
     : Array.from<OPTS>({
@@ -108,45 +104,31 @@ export function sampleStratified<
       }).fill(options);
 
   let stratumSampleLayers: OUT[];
-  if (Layer.isLayer(layer, GeometricPrimitive.POINT)) {
+
+  if (FeatureCollection.isArea(fc)) {
     stratumSampleLayers = property.values.map((_, i) => {
-      const features = layer.collection.features.filter(
-        (f) => f.properties[stratify] === i,
-      );
+      const features = fc.features.filter((f) => f.properties[stratify] === i);
 
       return sampleFn(
-        new Layer(
-          new PointCollection({features}, true),
-          layer.propertyRecord,
-        ) as IN,
+        FeatureCollection.newArea(features, fc.propertyRecord, true) as IN,
         optionsArray[i],
       );
     });
-  } else if (Layer.isLayer(layer, GeometricPrimitive.LINE)) {
+  } else if (FeatureCollection.isLine(fc)) {
     stratumSampleLayers = property.values.map((_, i) => {
-      const features = layer.collection.features.filter(
-        (f) => f.properties[stratify] === i,
-      );
+      const features = fc.features.filter((f) => f.properties[stratify] === i);
 
       return sampleFn(
-        new Layer(
-          new LineCollection({features}, true),
-          layer.propertyRecord,
-        ) as IN,
+        FeatureCollection.newLine(features, fc.propertyRecord, true) as IN,
         optionsArray[i],
       );
     });
-  } else if (Layer.isLayer(layer, GeometricPrimitive.AREA)) {
+  } else if (FeatureCollection.isPoint(fc)) {
     stratumSampleLayers = property.values.map((_, i) => {
-      const features = layer.collection.features.filter(
-        (f) => f.properties[stratify] === i,
-      );
+      const features = fc.features.filter((f) => f.properties[stratify] === i);
 
       return sampleFn(
-        new Layer(
-          new AreaCollection({features}, true),
-          layer.propertyRecord,
-        ) as IN,
+        FeatureCollection.newPoint(features, fc.propertyRecord, true) as IN,
         optionsArray[i],
       );
     });
@@ -154,18 +136,16 @@ export function sampleStratified<
     throw Error('Incorrect input Layer');
   }
 
-  const newLayer = stratumSampleLayers.reduce((prev, curr) => {
+  const newCollection = stratumSampleLayers.reduce((prev, curr) => {
     // TS can't work out if all layers are of same type, which should be
     // guaranteed by all layers being generated by the same function.
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-argument */
-    prev.appendFromLayer(curr as any);
+    prev.appendFeatureCollection(curr as any);
     return prev;
   }) as OUT;
 
   // Add _designWeight to propertyRecord if it does not exist
-  if (!Object.hasOwn(newLayer.propertyRecord, '_designWeight')) {
-    newLayer.propertyRecord['_designWeight'] = createDesignWeightProperty();
-  }
+  newCollection.propertyRecord.addDesignWeight();
 
-  return newLayer;
+  return newCollection;
 }

@@ -1,4 +1,44 @@
-export * from './objects/index.js';
-export * from './gcs/index.js';
-export * from './features/index.js';
-export * from './collections/index.js';
+// Objects
+export {
+  // Areas
+  Polygon,
+  MultiPolygon,
+  Circle,
+  MultiCircle,
+  type AreaObject,
+  // Lines
+  LineString,
+  MultiLineString,
+  type LineObject,
+  // Points
+  Point,
+  MultiPoint,
+  type PointObject,
+  // Transform
+  toAreaObject,
+  toLineObject,
+  toPointObject,
+} from './objects/index.js';
+
+// Features
+export {Feature} from './features/index.js';
+
+// FeatureCollections
+export {FeatureCollection} from './collections/index.js';
+
+// PropertyRecord
+export {
+  type CategoricalProperty,
+  type NumericalProperty,
+  type Property,
+  PropertyRecord,
+} from './property-record.js';
+
+// GeometricPrimitive
+export {
+  GeometricPrimitive,
+  getGeometryPrimitive,
+  isGeometryPrimitive,
+  getFeaturePrimitive,
+  getCollectionPrimitive,
+} from './geometric-primitive/index.js';

@@ -1,10 +1,9 @@
 import {
-  type AreaCollection,
+  type AreaObject,
+  FeatureCollection,
   type GeoJSON as GJ,
-  GeometricPrimitive,
-  Layer,
-  type LineCollection,
-  type PointCollection,
+  type LineObject,
+  type PointObject,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
@@ -35,14 +34,12 @@ export const SAMPLE_BASE_OPTIONS: Readonly<Required<SampleBaseOptions>> = {
  *
  * @returns `0` if check passes
  */
-export function sampleBaseOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
->(_: T, {pointsPerCircle}: SampleBaseOptions): number {
+export function sampleBaseOptionsCheck<T extends AreaObject | LineObject | PointObject>(
+  _: FeatureCollection<T>,
+  {pointsPerCircle}: SampleBaseOptions,
+): number {
   if (
-    pointsPerCircle &&
+    pointsPerCircle !== undefined &&
     (!Number.isInteger(pointsPerCircle) || pointsPerCircle <= 0)
   ) {
     return 110;
@@ -74,6 +71,14 @@ export interface SamplePointOptions extends SampleBaseOptions {
    * Optional buffer in meters.
    */
   buffer?: number;
+  /**
+   * Optional rotation
+   */
+  rotation?: number;
+  /**
+   * Optional random rotation
+   */
+  randomRotation?: boolean;
 }
 
 export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
@@ -82,6 +87,8 @@ export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
   sampleSize: 1,
   ratio: 1.0,
   buffer: 0.0,
+  rotation: 0.0,
+  randomRotation: false,
 };
 
 /**
@@ -92,13 +99,8 @@ export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
  *
  * @returns `0` if check passes
  */
-export function samplePointOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
->(
-  layer: T,
+export function samplePointOptionsCheck<T extends AreaObject | LineObject | PointObject>(
+  collection: FeatureCollection<T>,
   {
     // pointSelection,
     sampleSize,
@@ -107,7 +109,7 @@ export function samplePointOptionsCheck<
     ...options
   }: SamplePointOptions,
 ): number {
-  const baseCheck = sampleBaseOptionsCheck(layer, options);
+  const baseCheck = sampleBaseOptionsCheck(collection, options);
   if (baseCheck !== 0) {
     return baseCheck;
   }
@@ -116,7 +118,7 @@ export function samplePointOptionsCheck<
     return 210;
   }
 
-  if (ratio && ratio <= 0.0) {
+  if (ratio !== undefined && ratio <= 0.0) {
     return 220;
   }
 
@@ -128,9 +130,8 @@ export function samplePointOptionsCheck<
  * @see {@link SAMPLE_FEATURE_OPTIONS | default values}
  * @see {@link sampleFeatureOptionsCheck | error codes}
  */
-export interface SampleFeatureOptions<
-  F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
-> extends SamplePointOptions {
+export interface SampleFeatureOptions<F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>
+  extends SamplePointOptions {
   /**
    * A model feature of points or lines or areas to be placed on the selcted
    * points.
@@ -151,10 +152,7 @@ export interface SampleFeatureOptions<
 
 export const SAMPLE_FEATURE_OPTIONS: Readonly<
   Required<
-    Omit<
-      SampleFeatureOptions<GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>,
-      'modelFeature'
-    >
+    Omit<SampleFeatureOptions<GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>, 'modelFeature'>
   >
 > = {
   ...SAMPLE_POINT_OPTIONS,
@@ -167,18 +165,15 @@ export const SAMPLE_FEATURE_OPTIONS: Readonly<
 /**
  * Returns the following errors:
  * - <300: any error from {@link samplePointOptionsCheck}
- * - 310: layer is not {@link Layer<AreaCollection>}
+ * - 310: layer is not {@link FeatureCollection<AreaCollection>}
  *
  * @returns `0` if check passes
  */
 export function sampleFeatureOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
+  T extends AreaObject | LineObject | PointObject,
   F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
 >(
-  layer: T,
+  collection: FeatureCollection<T>,
   {
     // modelFeature,
     // rotation,
@@ -186,12 +181,12 @@ export function sampleFeatureOptionsCheck<
     ...options
   }: SampleFeatureOptions<F>,
 ): number {
-  const pointCheck = samplePointOptionsCheck(layer, options);
+  const pointCheck = samplePointOptionsCheck(collection, options);
   if (pointCheck !== 0) {
     return pointCheck;
   }
 
-  if (!Layer.isLayer(layer, GeometricPrimitive.AREA)) {
+  if (!FeatureCollection.isArea(collection)) {
     return 310;
   }
 
@@ -230,19 +225,16 @@ export const SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS: Readonly<
  * @returns `0` if check passes
  */
 export function sampleSystematicLineOnAreaOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
+  T extends AreaObject | LineObject | PointObject,
 >(
-  layer: T,
+  collection: FeatureCollection<T>,
   {
     distBetween,
     // rotation,
     ...options
   }: SampleSystematicLineOnAreaOptions,
 ): number {
-  const baseCheck = sampleBaseOptionsCheck(layer, options);
+  const baseCheck = sampleBaseOptionsCheck(collection, options);
   if (baseCheck !== 0) {
     return baseCheck;
   }
@@ -259,8 +251,7 @@ export function sampleSystematicLineOnAreaOptionsCheck<
  * @see {@link SAMPLE_BELT_ON_AREA_OPTIONS | default values}
  * @see {@link sampleBeltOnAreaOptionsCheck | error codes}
  */
-export interface SampleBeltOnAreaOptions
-  extends SampleSystematicLineOnAreaOptions {
+export interface SampleBeltOnAreaOptions extends SampleSystematicLineOnAreaOptions {
   /**
    * The half-width of the belt.
    */
@@ -280,13 +271,11 @@ export const SAMPLE_BELT_ON_AREA_OPTIONS: Readonly<
  *
  * @returns `0` if check passes
  */
-export function sampleBeltOnAreaOptionsCheck<
-  T extends
-    | Layer<PointCollection>
-    | Layer<LineCollection>
-    | Layer<AreaCollection>,
->(layer: T, {halfWidth, ...options}: SampleBeltOnAreaOptions): number {
-  const systematicLineOnAreaCheck = sampleBaseOptionsCheck(layer, options);
+export function sampleBeltOnAreaOptionsCheck<T extends AreaObject | LineObject | PointObject>(
+  collection: FeatureCollection<T>,
+  {halfWidth, ...options}: SampleBeltOnAreaOptions,
+): number {
+  const systematicLineOnAreaCheck = sampleBaseOptionsCheck(collection, options);
   if (systematicLineOnAreaCheck !== 0) {
     return systematicLineOnAreaCheck;
   }

@@ -1,34 +1,23 @@
-import {describe, expect, test} from 'vitest';
+import {expect, test} from 'vitest';
 
-import {
-  GeoJSON,
-  Layer,
-  LineCollection,
-  LineFeature,
-} from '@envisim/geojson-utils';
+import {Feature, FeatureCollection, LineString} from '@envisim/geojson-utils';
 
 import {samplePointsOnLines} from '../../src/sample-continuous/points-on-lines.js';
 
-describe('samplePointsOnLines', () => {
-  const ls: GeoJSON.LineString = {
-    type: 'LineString',
-    coordinates: [
-      [0, 0],
-      [1, 0],
-      [1, 1],
-      [0, 1],
-      [0, 0],
-    ],
-  };
-  const collection = LineCollection.create([LineFeature.create(ls, {})]);
-  const frame = new Layer(collection, {});
-  const sample = samplePointsOnLines(frame, {
-    pointSelection: 'independent',
-    sampleSize: 10,
-  });
-  //console.log(JSON.stringify(sample, null, 2));
+const ls = LineString.create([
+  [0, 0],
+  [1, 0],
+  [1, 1],
+  [0, 1],
+  [0, 0],
+]);
 
-  test('samplePointsOnLines', () => {
-    expect(sample.collection.features.length).toBe(10);
-  });
+const frame = FeatureCollection.newLine([new Feature(ls)]);
+const sample = samplePointsOnLines(frame, {
+  pointSelection: 'independent',
+  sampleSize: 10,
+});
+
+test('samplePointsOnLines', () => {
+  expect(sample.size()).toBe(10);
 });

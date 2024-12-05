@@ -1,22 +1,20 @@
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuid} from 'uuid';
 
 import {
-  AreaCollection,
-  AreaFeature,
+  type AreaObject,
+  Feature,
+  FeatureCollection,
   Geodesic,
-  Layer,
-  LineCollection,
-  LineFeature,
-  PointCollection,
-  PointFeature,
-  type PropertyRecord,
-  intersectAreaAreaFeatures,
-  intersectLineAreaFeatures,
-  intersectLineLineFeatures,
-  intersectPointAreaFeatures,
+  type LineObject,
+  type PointObject,
+  PropertyRecord,
+  intersectAreaAreaGeometries,
+  intersectLineAreaGeometries,
+  intersectLineLineGeometries,
+  intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 
-import {projectedLengthOfFeature} from '../utils/index.js';
+import {projectedLengthOfGeometry} from '../utils/index.js';
 
 // A type for an object to hold all the data we need to aggregate from
 // one feature to another.
@@ -32,89 +30,55 @@ type AggregateOpts = {
  * @param opts object with additional information needed to aggregate properties.
  */
 function aggregateInPlace(
-  to: PointFeature,
-  from: AreaFeature,
-  opts: AggregateOpts,
-): void;
-function aggregateInPlace(
-  to: LineFeature,
-  from: LineFeature,
-  opts: AggregateOpts,
-): void;
-function aggregateInPlace(
-  to: LineFeature,
-  from: AreaFeature,
-  opts: AggregateOpts,
-): void;
-function aggregateInPlace(
-  to: AreaFeature,
-  from: PointFeature,
-  opts: AggregateOpts,
-): void;
-function aggregateInPlace(
-  to: AreaFeature,
-  from: LineFeature,
-  opts: AggregateOpts,
-): void;
-function aggregateInPlace(
-  to: AreaFeature,
-  from: AreaFeature,
-  opts: AggregateOpts,
-): void;
-function aggregateInPlace(
-  to: PointFeature | LineFeature | AreaFeature,
-  from: PointFeature | LineFeature | AreaFeature,
+  to: Feature<AreaObject | LineObject | PointObject>,
+  from: Feature<AreaObject | LineObject | PointObject>,
   opts: AggregateOpts,
 ): void {
   // If line collects from line an additional factor is needed
   let factor = 1;
-  if (LineFeature.isFeature(from) && LineFeature.isFeature(to)) {
+  if (Feature.isLine(from) && Feature.isLine(to)) {
     if (to.properties?.['_randomRotation'] === 1) {
       // Here the line that collects can be any curve,
       // as long as it has been randomly rotated.
-      factor = Math.PI / (2.0 * from.length());
+      factor = Math.PI / (2.0 * from.geometry.length());
     } else {
       // Here the line that collects should be straight,
       // which is why we can use the first segment of the line
       // to find the direction of the line.
       let azimuth = 0;
       if (to.geometry.type === 'LineString') {
-        azimuth = Geodesic.forwardAzimuth(
-          to.geometry.coordinates[0],
-          to.geometry.coordinates[1],
-        );
+        azimuth = Geodesic.forwardAzimuth(to.geometry.coordinates[0], to.geometry.coordinates[1]);
       } else if (to.geometry.type === 'MultiLineString') {
         azimuth = Geodesic.forwardAzimuth(
           to.geometry.coordinates[0][0],
           to.geometry.coordinates[0][1],
         );
       }
-      factor = 1.0 / projectedLengthOfFeature(from, azimuth);
+      factor = 1.0 / projectedLengthOfGeometry(from.geometry, azimuth);
     }
   }
 
   // Go through all the properties and aggregate them.
   // All new properties are of type numerical.
-  Object.keys(opts.properties).forEach((key) => {
-    const property = opts.properties[key];
-
+  for (const property of opts.properties.getRecord()) {
+    const id = property.id;
     // Type must be numerical
-    if (property.type === 'numerical') {
+    if (PropertyRecord.propertyIsNumerical(property)) {
       if (Array.isArray(property.parent)) {
         // Collect from categorical variable
         const [id, value] = property.parent;
 
         // Only collect if value is equal to value
         if (from.properties[id] === value) {
-          to.properties[key] += opts.intersectSize * factor;
+          (to.properties[id] as number) += opts.intersectSize * factor;
         }
       } else {
         // Collect from numerical (same key)
-        to.properties[key] +=
-          from.properties[key] * opts.intersectSize * factor;
+        (to.properties[id] as number) +=
+          (from.properties[id] as number) * opts.intersectSize * factor;
       }
     }
-  });
+  }
 }
 
 /**
@@ -127,183 +91,139 @@ function aggregateInPlace(
  * @returns a new layer
  */
 export function collectProperties(
-  frameLayer: Layer<PointCollection>,
-  baseLayer: Layer<AreaCollection>,
+  frame: FeatureCollection<PointObject>,
+  base: FeatureCollection<AreaObject>,
   properties: string[] | PropertyRecord,
-): Layer<PointCollection>;
+): FeatureCollection<PointObject>;
 export function collectProperties(
-  frameLayer: Layer<LineCollection>,
-  baseLayer: Layer<LineCollection | AreaCollection>,
+  frame: FeatureCollection<LineObject>,
+  base: FeatureCollection<LineObject> | FeatureCollection<AreaObject>,
   properties: string[] | PropertyRecord,
-): Layer<LineCollection>;
+): FeatureCollection<LineObject>;
 export function collectProperties(
-  frameLayer: Layer<AreaCollection>,
-  baseLayer: Layer<PointCollection | LineCollection | AreaCollection>,
+  frame: FeatureCollection<AreaObject>,
+  base:
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
   properties: string[] | PropertyRecord,
-): Layer<AreaCollection>;
+): FeatureCollection<AreaObject>;
 export function collectProperties(
-  frameLayer: Layer<PointCollection | LineCollection | AreaCollection>,
-  baseLayer: Layer<PointCollection | LineCollection | AreaCollection>,
+  frame:
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
+  base:
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
   properties: string[] | PropertyRecord,
-): Layer<PointCollection | LineCollection | AreaCollection> {
+): FeatureCollection<AreaObject> | FeatureCollection<LineObject> | FeatureCollection<PointObject> {
   // Make a full copy of the frame layer
-  const newLayer = new Layer(
-    frameLayer.collection,
-    frameLayer.propertyRecord,
-    false,
-  );
-  const frame = newLayer.collection;
-  const base = baseLayer.collection;
+  const newCollection = frame.copy(false);
+  // const newLayer = new Layer(frameLayer.collection, frameLayer.propertyRecord, false);
 
   // The property record of new properties to collect
   const rec =
     Array.isArray(properties) === true
-      ? collectPropertyRecord(baseLayer.propertyRecord, properties)
+      ? collectPropertyRecord(base.propertyRecord, properties)
       : properties;
 
   // Check that the properties to collect are present in the baseLayer record
   // and not in the frameLayer record.
-  Object.keys(rec).forEach((key) => {
-    const property = rec[key];
-    if (property.type === 'numerical') {
-      const id = property.parent ? property.parent[0] : property.id;
-      if (!Object.hasOwn(baseLayer.propertyRecord, id)) {
-        throw new Error(
-          'Property to collect does not exist in the baseLayer property record.',
-        );
-      }
-    } else {
+  for (const property of rec.getRecord()) {
+    if (!PropertyRecord.propertyIsNumerical(property)) {
       // Categorical properties should not exist in this record
-      throw new Error(
-        'Property record to collect cannot contain categorical properties.',
-      );
+      throw new Error('Property record to collect must only contain numerical properties.');
     }
-    if (Object.hasOwn(frameLayer.propertyRecord, key)) {
-      throw new Error(
-        'Property to collect already exist in the frameLayer property record.',
-      );
-    }
-  });
 
-  // Add new properties to new collection
-  // and property record.
-  Object.keys(rec).forEach((key) => {
+    const id = property.parent ? property.parent[0] : property.id;
+    if (!base.propertyRecord.hasId(id)) {
+      throw new Error('Property to collect does not exist in the baseLayer property record.');
+    }
+
+    if (frame.propertyRecord.hasId(property.id)) {
+      throw new Error('Property to collect already exist in the frameLayer property record.');
+    }
+
+    // Add new properties to new collection and property record.
     // Initialize each with value 0
-    frame.initProperty(key, 0.0);
-
+    frame.initProperty(property.id, 0.0);
     // Add to the record
-    newLayer.propertyRecord[key] = rec[key];
-  });
+    newCollection.propertyRecord.addNumerical(property);
+  }
 
   // Do the collect for the different cases.
-  if (
-    PointCollection.isCollection(frame) &&
-    AreaCollection.isCollection(base)
-  ) {
+  if (FeatureCollection.isPoint(frame) && FeatureCollection.isArea(base)) {
     // Points collect from areas.
-    frame.features.forEach((frameFeature) => {
-      base.features.forEach((baseFeature) => {
-        const intersect = intersectPointAreaFeatures(frameFeature, baseFeature);
-        if (intersect) {
-          const intersectSize = intersect.count();
-          aggregateInPlace(frameFeature, baseFeature, {
-            intersectSize,
-            properties: rec,
-          });
-        }
-      });
-    });
-    return newLayer;
+    intersectFeatures(frame.features, base.features, intersectPointAreaGeometries, rec);
+    return newCollection;
   }
 
-  if (LineCollection.isCollection(frame) && LineCollection.isCollection(base)) {
-    // Lines collect from lines.
-    frame.features.forEach((frameFeature) => {
-      base.features.forEach((baseFeature) => {
-        const intersect = intersectLineLineFeatures(frameFeature, baseFeature);
-        if (intersect) {
-          const intersectSize = intersect.count();
-          aggregateInPlace(frameFeature, baseFeature, {
-            intersectSize,
-            properties: rec,
-          });
-        }
-      });
-    });
-    return newLayer;
+  if (FeatureCollection.isLine(frame)) {
+    if (FeatureCollection.isLine(base)) {
+      // Lines collect from lines.
+      intersectFeatures(frame.features, base.features, intersectLineLineGeometries, rec);
+      return newCollection;
+    }
+
+    if (FeatureCollection.isArea(base)) {
+      // Lines collect from areas.
+      intersectFeatures(frame.features, base.features, intersectLineAreaGeometries, rec);
+      return newCollection;
+    }
   }
 
-  if (LineCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
-    // Lines collect from areas.
-    frame.features.forEach((frameFeature) => {
-      base.features.forEach((baseFeature) => {
-        const intersect = intersectLineAreaFeatures(frameFeature, baseFeature);
-        if (intersect) {
-          const intersectSize = intersect.length();
-          aggregateInPlace(frameFeature, baseFeature, {
-            intersectSize,
-            properties: rec,
-          });
-        }
-      });
-    });
-    return newLayer;
+  FeatureCollection.assertArea(frame);
+
+  if (FeatureCollection.isPoint(base)) {
+    intersectFeatures(
+      frame.features,
+      base.features,
+      (f, b) => intersectPointAreaGeometries(b, f),
+      rec,
+    );
+    return newCollection;
   }
 
-  if (
-    AreaCollection.isCollection(frame) &&
-    PointCollection.isCollection(base)
-  ) {
-    // Areas collect from points.
-    frame.features.forEach((frameFeature) => {
-      base.features.forEach((baseFeature) => {
-        const intersect = intersectPointAreaFeatures(baseFeature, frameFeature);
-        if (intersect) {
-          const intersectSize = intersect.count();
-          aggregateInPlace(frameFeature, baseFeature, {
-            intersectSize,
-            properties: rec,
-          });
-        }
-      });
-    });
-    return newLayer;
-  }
-
-  if (AreaCollection.isCollection(frame) && LineCollection.isCollection(base)) {
+  if (FeatureCollection.isLine(base)) {
     // Areas collect from lines.
-    frame.features.forEach((frameFeature) => {
-      base.features.forEach((baseFeature) => {
-        const intersect = intersectLineAreaFeatures(baseFeature, frameFeature);
-        if (intersect) {
-          const intersectSize = intersect.length();
-          aggregateInPlace(frameFeature, baseFeature, {
-            intersectSize,
-            properties: rec,
-          });
-        }
-      });
-    });
-    return newLayer;
+    intersectFeatures(
+      frame.features,
+      base.features,
+      (f, b) => intersectLineAreaGeometries(b, f),
+      rec,
+    );
+    return newCollection;
   }
 
-  if (AreaCollection.isCollection(frame) && AreaCollection.isCollection(base)) {
-    // Areas collect from areas.
-    frame.features.forEach((frameFeature) => {
-      base.features.forEach((baseFeature) => {
-        const intersect = intersectAreaAreaFeatures(frameFeature, baseFeature);
-        if (intersect) {
-          const intersectSize = intersect.area();
-          aggregateInPlace(frameFeature, baseFeature, {
-            intersectSize,
-            properties: rec,
-          });
-        }
+  FeatureCollection.assertArea(base);
+
+  intersectFeatures(frame.features, base.features, intersectAreaAreaGeometries, rec);
+  return newCollection;
+}
+
+function intersectFeatures<
+  F extends AreaObject | LineObject | PointObject,
+  B extends AreaObject | LineObject | PointObject,
+>(
+  frame: Feature<F>[],
+  base: Feature<B>[],
+  intersectFunction: (a: F, b: B) => AreaObject | LineObject | PointObject | null,
+  rec: PropertyRecord,
+) {
+  frame.forEach((frameFeature) => {
+    base.forEach((baseFeature) => {
+      const intersect = intersectFunction(frameFeature.geometry, baseFeature.geometry);
+
+      if (intersect === null) return;
+      const intersectSize = intersect.measure();
+      aggregateInPlace(frameFeature, baseFeature, {
+        intersectSize,
+        properties: rec,
       });
     });
-    return newLayer;
-  }
-  throw new Error('Collect operation failed.');
+  });
 }
 
 /**
@@ -323,45 +243,30 @@ export function collectPropertyRecord(
 ): PropertyRecord {
   // Collected numerical properties keep their original id,
   // but categorical properties recieve new id for each category.
-  const newRecord: PropertyRecord = {};
+  const newRecord = new PropertyRecord();
 
-  properties.forEach((key) => {
-    // Check that the properties to collect are present in the record
-    if (!Object.hasOwn(propertyRecord, key)) {
-      throw new Error(
-        'Property to collect does not exist in the property record.',
-      );
+  for (const id of properties) {
+    const rec = propertyRecord.getId(id);
+    if (rec === null) {
+      throw new Error(`Property ${id} to collect does not exist in the property record.`);
     }
 
-    // Get record of the property
-    const rec = propertyRecord[key];
-
-    if (rec.type === 'numerical') {
-      // Keep old id
-      const newId = rec.id;
-
-      newRecord[newId] = {
-        id: newId,
-        type: 'numerical',
-        name: rec.name,
-      };
-    } else if (rec.type === 'categorical') {
+    if (PropertyRecord.propertyIsCategorical(rec)) {
       // Create new record for each category
-
       rec.values.forEach((value: string, i: number) => {
         // Generate new id
-        const newId = uuidv4();
 
         // Store also parent id, index
-        newRecord[newId] = {
-          id: newId,
-          type: 'numerical',
+        newRecord.addNumerical({
+          id: uuid(),
           name: rec.name + '-' + value,
           parent: [rec.id, i],
-        };
+        });
       });
+    } else {
+      newRecord.addNumerical({id: rec.id, name: rec.name});
     }
-  });
+  }
 
   return newRecord;
 }

@@ -1,34 +1,15 @@
 // GeoJSON
 export * from './geojson/index.js';
 
-// Layer
-export {
-  Layer,
-  mergePropertyRecords,
-  type CategoricalProperty,
-  type NumericalProperty,
-  type Property,
-  type PropertyRecord,
-  PropertySpecialKeys,
-  createDesignWeightProperty,
-  createDistanceProperty,
-  createParentProperty,
-} from './layer/index.js';
-
 // Types
 export type * as GeoJSON from './types/geojson.js';
 export * as typeGuards from './types/type-guards.js';
 
-// GeometricPrimitive
-export {
-  GeometricPrimitive,
-  getGeometryPrimitive,
-  isGeometryPrimitive,
-  getFeaturePrimitive,
-  getCollectionPrimitive,
-} from './geometric-primitive/index.js';
-
 // Utils
+export {Geodesic} from './utils/class-geodesic.js';
+export {Rhumb} from './utils/class-rhumb.js';
+export {PlateCarree} from './utils/class-plate-carree.js';
+
 export {areaOfPolygonLonLat} from './utils/area.js';
 export {
   bbox4,
@@ -36,14 +17,11 @@ export {
   bboxInBBox,
   pointInBBox,
   unionOfBBoxes,
+  bboxCenter,
 } from './utils/bbox.js';
-export {Geodesic} from './utils/Geodesic.js';
-export {Rhumb} from './utils/Rhumb.js';
-export {PlateCarree} from './utils/PlateCarree.js';
-export {distancePositionToSegment} from './utils/distancePositionToSegment.js';
-export {intersectSegments, Segment} from './utils/intersectSegments.js';
+export {type CirclesToPolygonsOptions} from './utils/circles-to-polygons.js';
 export {lengthOfLineString} from './utils/length.js';
-export {pointInSinglePolygonPosition} from './utils/pointInPolygonPosition.js';
+export {pointInSinglePolygonPosition} from './utils/point-in-polygon.js';
 export {
   checkInRange,
   checkLongitudeInRange,
@@ -51,14 +29,15 @@ export {
   longitudeCenter,
   normalizeLongitude,
 } from './utils/position.js';
-export {rotateCoord} from './utils/rotateCoord.js';
+export {rotateCoord} from './utils/rotate-coord.js';
 export {cutLineGeometry, cutAreaGeometry} from './utils/antimeridian.js';
 
 // Dependent
-export {buffer} from './buffer.js';
-export {intersectLineLineFeatures} from './intersectLineLineFeatures.js';
-export {intersectLineAreaFeatures} from './intersectLineAreaFeatures.js';
-export {intersectAreaAreaFeatures} from './intersectAreaAreaFeatures.js';
-export {intersectPointAreaFeatures} from './intersectPointAreaFeatures.js';
-export {pointInAreaFeature, pointInAreaGeometry} from './pointInPolygon.js';
-export {unionOfPolygons} from './unionOfPolygons.js';
+export {
+  intersectAreaAreaGeometries,
+  intersectLineAreaGeometries,
+  intersectLineLineGeometries,
+  intersectPointAreaGeometries,
+} from './intersect/index.js';
+export {perimeter} from './perimeter.js';
+export {unionOfCollection as unionOfPolygons} from './union-of-polygons.js';

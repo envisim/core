@@ -1,8 +1,11 @@
 import {
-  AreaCollection,
-  Layer,
-  LineCollection,
-  PointCollection,
+  type AreaObject,
+  type CategoricalProperty,
+  FeatureCollection,
+  type LineObject,
+  type NumericalProperty,
+  type PointObject,
+  PropertyRecord,
 } from '@envisim/geojson-utils';
 import {bbox4, longitudeCenter} from '@envisim/geojson-utils';
 import {ColumnVector, Matrix} from '@envisim/matrix';
@@ -11,47 +14,38 @@ import type {SampleFiniteOptions} from './sample-finite.js';
 
 /**
  * Get a numerical property as a ColumnVector
- * @param layer
+ * @param collection
  * @param property
  */
 function extractNumericalProperty(
-  layer: Layer<AreaCollection | LineCollection | PointCollection>,
-  property: string,
+  collection: FeatureCollection<AreaObject | LineObject | PointObject>,
+  property: NumericalProperty,
 ): ColumnVector {
-  const rec = layer.propertyRecord[property];
-  if (!(rec.type === 'numerical')) {
-    throw new Error('Expected numerical property');
-  }
-
-  const N = layer.collection.size;
+  const N = collection.size();
   const vec = Array.from<number>({length: N});
-  layer.collection.forEachProperty(property, (v, i) => (vec[i] = v));
+  collection.forEachProperty(property.id, (v, i) => (vec[i] = v as number));
   return new ColumnVector(vec, true);
 }
 
 /**
  * Get a categorical property as an array of ColumnVectors, where the
  * length of the array is the number of non-all-zero categories.
- * @param layer
+ * @param collection
  * @param property
  */
 function extractCategoricalProperty(
-  layer: Layer<AreaCollection | LineCollection | PointCollection>,
-  property: string,
+  collection: FeatureCollection<AreaObject | LineObject | PointObject>,
+  property: CategoricalProperty,
 ): ColumnVector[] {
-  const rec = layer.propertyRecord[property];
-  if (!(rec.type === 'categorical')) {
-    throw new Error('Expected categorical property');
-  }
-
-  const N = layer.collection.size;
+  const N = collection.size();
   const props: ColumnVector[] = [];
-  for (let i = 0; i < rec.values.length; i++) {
+
+  for (const rv of property.values) {
     const cv = Array.from<number>({length: N});
     let allZeros: boolean = true;
 
-    layer.collection.forEachProperty(property, (x, j) => {
-      if (i === x) {
+    collection.forEachProperty(property.id, (x, j) => {
+      if (rv === x) {
         allZeros = false;
         cv[j] = 1.0;
       } else {
@@ -72,31 +66,29 @@ function extractCategoricalProperty(
  * as h-1 columns of indicators. Numerical properties are
  * standardized.
  *
- * @param layer
+ * @param collection
  * @param properties array of properties to spread on.
  * @param spreadGeo if true includes spatial coordinates.
  */
 export function spreadMatrixFromLayer(
-  layer: Layer<AreaCollection | LineCollection | PointCollection>,
+  collection: FeatureCollection<AreaObject | LineObject | PointObject>,
   properties: string[],
   spreadGeo: boolean = true,
 ): Matrix {
-  const rec = layer.propertyRecord;
-  if (!properties.every((prop) => Object.hasOwn(rec, prop)))
-    throw new Error('all properties not present on property record');
+  const rec = collection.propertyRecord;
 
   const newprops: ColumnVector[] = [];
 
   if (spreadGeo) {
     // For now use center of bbox for longitude and latitude
-    const N = layer.collection.size;
+    const N = collection.size();
     const lon = Array.from<number>({length: N});
     const lat = Array.from<number>({length: N});
     const alt = Array.from<number>({length: N}).fill(0.0);
     let hasAlt = false;
 
-    layer.collection.forEach((f, i) => {
-      const bbox = f.getBBox();
+    collection.forEach((f, i) => {
+      const bbox = f.geometry.getBBox();
       const box4 = bbox4(bbox);
       lat[i] = (box4[1] + box4[3]) / 2.0;
       lon[i] = longitudeCenter(box4[0], box4[2]);
@@ -114,23 +106,28 @@ export function spreadMatrixFromLayer(
     }
   }
 
-  properties.forEach((prop) => {
+  properties.forEach((id) => {
+    const prop = rec.getId(id);
+
     // Collect numerical properties and standardize
     // ignore constant variables.
-    if (rec[prop].type === 'numerical') {
-      const vec = extractNumericalProperty(layer, prop);
+    if (PropertyRecord.propertyIsNumerical(prop)) {
+      const vec = extractNumericalProperty(collection, prop);
       if (vec.sd() > 0.0) {
         newprops.push(vec.standardize(false, true));
       }
     }
+
     // Collect categorical properties a set of 0-1 vectors
-    if (rec[prop].type === 'categorical') {
-      const arr = extractCategoricalProperty(layer, prop);
+    if (PropertyRecord.propertyIsCategorical(prop)) {
+      const arr = extractCategoricalProperty(collection, prop);
       // skip last column
       for (let i = 0; i < arr.length - 1; i++) {
         newprops.push(arr[i]);
       }
     }
+
+    throw new Error('all properties not present on property record');
   });
 
   return Matrix.cbind(...newprops);
@@ -142,96 +139,92 @@ export function spreadMatrixFromLayer(
  * If unequal probabilities, then the same property as used for
  * inclusion probabilities should be included as the first
  * property if a fixed sample size is desired.
- * @param layer
+ * @param collection
  * @param properties an array of properties to balance on.
  */
 export function balancingMatrixFromLayer(
-  layer: Layer<AreaCollection | LineCollection | PointCollection>,
+  collection: FeatureCollection<AreaObject | LineObject | PointObject>,
   properties: string[],
 ): Matrix {
-  const rec = layer.propertyRecord;
-  if (!properties.every((prop) => Object.hasOwn(rec, prop))) {
-    throw new Error('all properties not present on property record');
-  }
+  const rec = collection.propertyRecord;
 
   const newprops: ColumnVector[] = [];
 
   // Always balance on a constant
-  const N = layer.collection.size;
-  newprops.push(
-    new ColumnVector(Array.from<number>({length: N}).fill(1.0), true),
-  );
+  const N = collection.size();
+  newprops.push(new ColumnVector(Array.from<number>({length: N}).fill(1.0), true));
 
-  properties.forEach((prop) => {
+  properties.forEach((id) => {
+    const prop = rec.getId(id);
+
     // Collect numerical properties, no standardization here
-    if (rec[prop].type === 'numerical') {
-      const vec = extractNumericalProperty(layer, prop);
+    if (PropertyRecord.propertyIsNumerical(prop)) {
+      const vec = extractNumericalProperty(collection, prop);
       // Ignore constant variable here
       if (vec.sd() > 0.0) {
         newprops.push(vec);
       }
     }
+
     // Collect categorical properties a set of 0-1 vectors
-    if (rec[prop].type === 'categorical') {
-      const arr = extractCategoricalProperty(layer, prop);
+    if (PropertyRecord.propertyIsCategorical(prop)) {
+      const arr = extractCategoricalProperty(collection, prop);
       // skip last column
       for (let i = 0; i < arr.length - 1; i++) {
         newprops.push(arr[i]);
       }
     }
+
+    throw new Error('all properties not present on property record');
   });
 
   return Matrix.cbind(...newprops);
 }
 
+/**
+ * Returns a vector of ones as the inclusion probabilities, if probabilitiesFrom is not set
+ */
 function probsFromLayer(
-  layer: Layer<AreaCollection | LineCollection | PointCollection>,
+  collection: FeatureCollection<AreaObject | LineObject | PointObject>,
   {probabilitiesFrom, probabilitiesFromSize}: SampleFiniteOptions,
 ): ColumnVector {
-  const N = layer.collection.size;
-  let prop: ColumnVector;
+  let probs: ColumnVector;
 
-  if (probabilitiesFromSize) {
+  if (probabilitiesFromSize !== undefined) {
     // Probabilities from the size of the features
-    let sizes: number[];
-
-    if (AreaCollection.isCollection(layer.collection)) {
-      sizes = layer.collection.features.map((feature) => feature.area());
-    } else if (LineCollection.isCollection(layer.collection)) {
-      sizes = layer.collection.features.map((feature) => feature.length());
-    } else {
-      sizes = layer.collection.features.map((feature) => feature.count());
-    }
-
-    prop = new ColumnVector(sizes);
+    const sizes: number[] = collection.features.map((f) => f.geometry.measure());
+    probs = new ColumnVector(sizes);
   } else {
     // Probabilities from numerical property
 
-    if (typeof probabilitiesFrom !== 'string') {
-      return new ColumnVector(Array.from<number>({length: N}).fill(1.0), true);
+    const prop = collection.propertyRecord.getId(probabilitiesFrom);
+
+    if (prop === null) {
+      return ColumnVector.create(1.0, collection.size());
+    } else if (!PropertyRecord.propertyIsNumerical(prop)) {
+      throw new TypeError('probabilitiesFrom must be numerical');
     }
 
-    prop = extractNumericalProperty(layer, probabilitiesFrom);
+    probs = extractNumericalProperty(collection, prop);
   }
 
   // OR set to 0.0?
-  if (!prop.every((e) => e >= 0.0))
-    throw new Error('the selected property has negative values');
+  if (!probs.every((e) => e >= 0.0)) throw new Error('the selected property has negative values');
 
-  return prop;
+  return probs;
 }
 
 /**
  * Computes the drawing propabilities from a layer and options.
  *
- * @param layer
+ * @param collection
  * @param options
  */
 export function drawprobsFromLayer(
-  layer: Layer<AreaCollection | LineCollection | PointCollection>,
+  collection: FeatureCollection<AreaObject | LineObject | PointObject>,
   options: SampleFiniteOptions,
 ): ColumnVector {
-  const probs = probsFromLayer(layer, options);
+  const probs = probsFromLayer(collection, options);
   const sum = probs.sum();
 
   return probs.map((e) => e / sum, true);
@@ -240,17 +233,17 @@ export function drawprobsFromLayer(
 /**
  * Computes the inclusion propabilities from a layer and options.
  *
- * @param layer
+ * @param collection
  * @param options
  */
 export function inclprobsFromLayer(
-  layer: Layer<AreaCollection | LineCollection | PointCollection>,
+  collection: FeatureCollection<AreaObject | LineObject | PointObject>,
   options: SampleFiniteOptions,
 ): ColumnVector {
   if (options.sampleSize <= 0) throw new RangeError('sampleSize is <= 0');
-  const x = probsFromLayer(layer, options);
+  const x = probsFromLayer(collection, options);
   let n = Math.round(options.sampleSize);
-  const N = layer.collection.size;
+  const N = collection.size();
 
   let sum: number;
   let failed: boolean = true;
@@ -281,9 +274,12 @@ export function inclprobsFromLayer(
         if (ips.at(i) === 1.0) {
           return;
         }
-        if (e >= 1.0) {
+        if (e > 1.0) {
           n--;
-          failed = e > 1.0;
+          failed = true;
+          ips.ed(i, 1.0);
+        } else if (e === 1.0) {
+          n--;
           ips.ed(i, 1.0);
         } else {
           ips.ed(i, e);

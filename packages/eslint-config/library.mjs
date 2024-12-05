@@ -16,6 +16,7 @@ export default tseslint.config(
       '@typescript-eslint/no-inferrable-types': 'off',
       '@typescript-eslint/no-loss-of-precision': 'off',
       '@typescript-eslint/no-unnecessary-type-assertion': 'off',
+      '@typescript-eslint/strict-boolean-expressions': 'warn',
       '@typescript-eslint/unbound-method': 'off',
     },
   },
