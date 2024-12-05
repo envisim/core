@@ -121,16 +121,24 @@ export class Segment {
       return null; // Segment completely to the left of the point -- can't intersect ray
     }
 
+    const xdiff = point[0] - this.p1[0];
+    const ydiff = point[1] - this.p1[1];
+
     if (this.delta[1] > 0.0) {
       // Upward segment
       if (point[1] < this.p1[1] || this.p2[1] <= point[1]) return null; // (1)
+      // SHOULD not be needed, distance SHOULD still evaluate to xdiff, however keep for consistency
+      // with downward segment. xdiff measures negative distance, tho
+      if (ydiff === 0.0) return xdiff <= 0.0 ? -xdiff : null;
     } else {
       // Downward segment
       if (point[1] < this.p2[1] || this.p1[1] <= point[1]) return null; // (2)
+      // Branch below needed b/c numerical instability of distance if diff === 0.0
+      if (point[1] === this.p2[1]) {
+        const diff = this.p2[0] - point[0];
+        return diff >= 0.0 ? diff : null;
+      }
     }
-
-    const xdiff = point[0] - this.p1[0];
-    const ydiff = point[1] - this.p1[1];
 
     const distance = (this.delta[0] * ydiff) / this.delta[1] - xdiff;
 
