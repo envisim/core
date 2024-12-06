@@ -11,7 +11,7 @@ export class Vector extends BaseMatrix {
   /**
    * @returns `true` if `mat` is a Vector
    */
-  static isColumnVector(mat: unknown): mat is Vector {
+  static isVector(mat: unknown): mat is Vector {
     return mat instanceof Vector;
   }
 
@@ -32,13 +32,22 @@ export class Vector extends BaseMatrix {
     return new Vector(Array.from<number>({length}).fill(fill), true);
   }
 
+  static borrow(vec: Vector | number[]): number[] {
+    return Vector.isVector(vec) ? vec.internal : vec;
+  }
+
   /**
    * @param arr the values used to form the Vector in column-order
    * @param shallow if `true`, uses the internal arrays of `arr` as a reference
    */
-  constructor(arr: number[], shallow: boolean = false) {
+  constructor(arr: number[] | Vector, shallow: boolean = false) {
     const dims: MatrixDim = [arr.length, 1];
-    super(shallow ? arr : arr.slice(), dims);
+
+    if (Vector.isVector(arr)) {
+      super(arr.slice(), dims);
+    } else {
+      super(shallow ? arr : arr.slice(), dims);
+    }
   }
 
   // @ts-expect-error clone needs to be defined for any deriving class

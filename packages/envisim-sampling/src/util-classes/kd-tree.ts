@@ -1,4 +1,4 @@
-import {type Matrix, type RowVector} from '@envisim/matrix';
+import {type Matrix} from '@envisim/matrix';
 import {swap} from '@envisim/utils';
 
 import {KdNode} from './kd-node.js';
@@ -18,15 +18,15 @@ export class KdTree {
   }
 
   constructor(dt: Matrix, bucketSize: number = 40) {
-    if (dt.nelements <= 0) throw new TypeError('dt must have elements');
+    if (dt.length <= 0) throw new TypeError('dt must have elements');
 
     if (bucketSize < 1) throw new TypeError('bucketSize must be >= 1');
 
     this.dt = dt;
     this.bucketSize = Math.trunc(bucketSize);
 
-    this.liml = this.dt.colMins().toArray();
-    this.limr = this.dt.colMaxs().toArray();
+    this.liml = this.dt.colMins().slice();
+    this.limr = this.dt.colMaxs().slice();
 
     this.splitUnits = new Array<number>(this.dt.nrow);
     for (let i = 0; i < this.dt.nrow; i++) this.splitUnits[i] = i;
@@ -83,11 +83,9 @@ export class KdTree {
     // Get current window's limits by traversing up the tree
     for (let par = node; par.parent != null; par = par.parent) {
       if (par.parent.cleft === par) {
-        if (par.parent.value < maxs[par.parent.split])
-          maxs[par.parent.split] = par.parent.value;
+        if (par.parent.value < maxs[par.parent.split]) maxs[par.parent.split] = par.parent.value;
       } else {
-        if (par.parent.value > mins[par.parent.split])
-          mins[par.parent.split] = par.parent.value;
+        if (par.parent.value > mins[par.parent.split]) mins[par.parent.split] = par.parent.value;
       }
     }
 
@@ -203,8 +201,7 @@ export class KdTree {
     let node: KdNode | null = this.topNode;
 
     while (node != null && !node.terminal)
-      node =
-        this.dt.atRC(id, node.split) <= node.value ? node.cleft : node.cright;
+      node = this.dt.atDim([id, node.split]) <= node.value ? node.cleft : node.cright;
 
     return node;
   }
@@ -229,28 +226,27 @@ export class KdTree {
     let distance = 0.0;
 
     for (let k = 0; k < this.dt.ncol; k++) {
-      const temp = this.dt.atRC(id1, k) - this.dt.atRC(id2, k);
+      const temp = this.dt.atDim([id1, k]) - this.dt.atDim([id2, k]);
       distance += temp * temp;
     }
 
     return distance;
   }
 
-  protected distanceBetweenUnits(u1: RowVector, u2: RowVector): number {
-    if (u1.length !== u2.length)
-      throw new RangeError('RowVectors does not match');
+  protected distanceBetweenUnits(u1: number[], u2: number[]): number {
+    if (u1.length !== u2.length) throw new RangeError('RowVectors does not match');
 
     let distance = 0.0;
 
     for (let k = 0; k < u1.length; k++) {
-      const temp = u1.at(k) - u2.at(k);
+      const temp = u1[k] - u2[k];
       distance += temp * temp;
     }
 
     return distance;
   }
 
-  findNeighbours(store: KdStore, id: number | RowVector): void {
+  findNeighbours(store: KdStore, id: number | number[]): void {
     store.reset();
 
     if (this.topNode == null) throw new Error('topNode is null');
@@ -267,7 +263,7 @@ export class KdTree {
   protected traverseNodesForNeighbours(
     store: KdStore,
     id: number,
-    unit: RowVector,
+    unit: number[],
     node: KdNode | null,
   ) {
     if (node == null) throw new Error('node is null');
@@ -282,23 +278,20 @@ export class KdTree {
       return;
     }
 
-    const distance = unit.at(node.split) - node.value;
+    const distance = unit[node.split] - node.value;
     const [nextNode1, nextNode2] =
       distance <= 0.0 ? [node.cleft, node.cright] : [node.cright, node.cleft];
 
     this.traverseNodesForNeighbours(store, id, unit, nextNode1);
 
-    if (
-      !store.sizeFulfilled() ||
-      distance * distance <= store.maximumDistance()
-    )
+    if (!store.sizeFulfilled() || distance * distance <= store.maximumDistance())
       this.traverseNodesForNeighbours(store, id, unit, nextNode2);
   }
 
   protected searchNodeForNeighbour1(
     store: KdStore,
     id: number,
-    unit: RowVector,
+    unit: number[],
     node: KdNode,
   ): void {
     const nodeSize = node.getSize();
@@ -308,8 +301,7 @@ export class KdTree {
     const distFn =
       0 <= id && id < this.dt.nrow
         ? (tid: number): number => this.distanceBetweenIds(id, tid)
-        : (tid: number): number =>
-            this.distanceBetweenUnits(unit, this.dt.extractRow(tid));
+        : (tid: number): number => this.distanceBetweenUnits(unit, this.dt.extractRow(tid));
 
     let currentMinimum = store.minimumDistance();
 
@@ -334,7 +326,7 @@ export class KdTree {
   protected searchNodeForNeighbours(
     store: KdStore,
     id: number,
-    unit: RowVector,
+    unit: number[],
     node: KdNode,
   ): void {
     const nodeSize = node.getSize();
@@ -344,8 +336,7 @@ export class KdTree {
     const distFn =
       0 <= id && id < this.dt.nrow
         ? (tid: number): number => this.distanceBetweenIds(id, tid)
-        : (tid: number): number =>
-            this.distanceBetweenUnits(unit, this.dt.extractRow(tid));
+        : (tid: number): number => this.distanceBetweenUnits(unit, this.dt.extractRow(tid));
 
     const originalSize = store.getSize();
     const originalFulfilled = store.sizeFulfilled();
@@ -439,16 +430,13 @@ export class KdTree {
       return;
     }
 
-    const distance = this.dt.atRC(id, node.split) - node.value;
+    const distance = this.dt.atDim([id, node.split]) - node.value;
     const [nextNode1, nextNode2] =
       distance <= 0.0 ? [node.cleft, node.cright] : [node.cright, node.cleft];
 
     this.traverseNodesForNeighboursCps(store, probabilities, id, nextNode1);
 
-    if (
-      store.totalWeight < 1.0 ||
-      distance * distance <= store.maximumDistance()
-    )
+    if (store.totalWeight < 1.0 || distance * distance <= store.maximumDistance())
       this.traverseNodesForNeighboursCps(store, probabilities, id, nextNode2);
   }
 

@@ -1,4 +1,4 @@
-import {type Matrix, type RowVector} from '@envisim/matrix';
+import {type Matrix} from '@envisim/matrix';
 
 import {KdStore} from './kd-store.js';
 import {KdTree} from './kd-tree.js';
@@ -27,7 +27,7 @@ export class NearestNeighbour {
    *   in the provided data.
    * @returns the nearest neighbour(s) of the unit in the provided data.
    */
-  findNearestNeighbours(unit: number | RowVector): number[] {
+  findNearestNeighbours(unit: number | number[]): number[] {
     this.tree.findNeighbours(this.store, unit);
     return [...this.store.neighbours];
   }
@@ -38,7 +38,7 @@ export class NearestNeighbour {
    * @returns the distance to the nearest neighbour(s) of the unit in the
    *   provided data.
    */
-  findNearestDistance(unit: number | RowVector): number {
+  findNearestDistance(unit: number | number[]): number {
     this.tree.findNeighbours(this.store, unit);
     return this.store.minimumDistance();
   }
