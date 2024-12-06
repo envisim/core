@@ -1,4 +1,5 @@
 import {randomArray} from '@envisim/random';
+import {reducedRowEchelonForm} from '@envisim/utils';
 
 import {BaseMatrix, MatrixCallback, type MatrixDim} from './base-matrix.js';
 import {Vector} from './vector.js';
@@ -15,10 +16,7 @@ export class Matrix extends BaseMatrix {
    * @param msg message to pass
    * @throws TypeError if `obj` is not Matrix
    */
-  static assert(
-    obj: unknown,
-    msg: string = 'Expected Matrix',
-  ): asserts obj is Matrix {
+  static assert(obj: unknown, msg: string = 'Expected Matrix'): asserts obj is Matrix {
     if (!(obj instanceof Matrix)) {
       throw new TypeError(msg);
     }
@@ -84,11 +82,7 @@ export class Matrix extends BaseMatrix {
    * @returns a new Matrix of size `dim` filled with `fill`
    */
   static create(fill: number, dim: MatrixDim): Matrix {
-    return new Matrix(
-      Array.from<number>({length: dim[0] * dim[1]}).fill(fill),
-      dim[0],
-      true,
-    );
+    return new Matrix(Array.from<number>({length: dim[0] * dim[1]}).fill(fill), dim[0], true);
   }
 
   /**
@@ -101,6 +95,7 @@ export class Matrix extends BaseMatrix {
     super(shallow ? arr : arr.slice(), dims);
   }
 
+  // @ts-expect-error clone needs to be defined for any deriving class
   clone(): Matrix {
     return new Matrix(this.internal.slice(), this.rows, true);
   }
@@ -109,6 +104,7 @@ export class Matrix extends BaseMatrix {
    * @param inPlace performes the map in place if `true`
    * @returns a copy, where each element has been mapped by the callback fn.
    */
+  // @ts-expect-error map needs to be defined for any deriving class
   map(callback: MatrixCallback<number>, inPlace: boolean = false): Matrix {
     return inPlace
       ? super.baseMapInPlace(callback)
@@ -120,9 +116,7 @@ export class Matrix extends BaseMatrix {
       throw new RangeError('columnIndex out of bounds');
     }
 
-    return new Vector(
-      this.internal.slice(col * this.rows, (col + 1) * this.rows),
-    );
+    return new Vector(this.internal.slice(col * this.rows, (col + 1) * this.rows));
   }
 
   extractRow(row: number): number[] {
@@ -131,8 +125,7 @@ export class Matrix extends BaseMatrix {
 
     const s = Array.from<number>({length: this.cols});
 
-    for (let i = row, j = 0; i < this.len; i += this.rows, j++)
-      s[j] = this.internal[i]!;
+    for (let i = row, j = 0; i < this.len; i += this.rows, j++) s[j] = this.internal[i]!;
 
     return s;
   }
@@ -167,16 +160,9 @@ export class Matrix extends BaseMatrix {
   }
 
   /**
-   * @param rowStart The index of the first row to include in the submatrix.
-   * @param colStart The index of the first column to include in the submatrix.
-   * @param rowEnd The index of the last row to include in the submatrix.
-   * @param colEnd The index of the last column to include in the submatrix.
    * @returns a sub-matrix defined by the parameters.
    */
-  extractSubMatrix(
-    start: MatrixDim,
-    end: MatrixDim = [this.rows - 1, this.cols - 1],
-  ): Matrix {
+  extractSubMatrix(start: MatrixDim, end: MatrixDim = [this.rows - 1, this.cols - 1]): Matrix {
     if (!Number.isInteger(start[0]) || !Number.isInteger(end[0])) {
       throw new RangeError('rows must be integer');
     }
@@ -198,13 +184,9 @@ export class Matrix extends BaseMatrix {
     }
 
     const s = [];
-    for (let c = start[1]; c < end[1]; c++) {
-      s.push(
-        ...this.internal.slice(
-          this.indexOfDim([start[0], start[1] + c]),
-          this.indexOfDim([end[0], start[1] + c]) + 1,
-        ),
-      );
+    for (let c = start[1]; c <= end[1]; c++) {
+      const i = this.indexOfDim([start[0], c]);
+      s.push(...this.internal.slice(i, i + nrow));
     }
 
     return new Matrix(s, nrow, true);
@@ -289,8 +271,8 @@ export class Matrix extends BaseMatrix {
    * Calculates the column variances, using `n-1` as denominator.
    */
   colVars(): Vector {
-    const s1 = Array.from<number>({length: this.cols});
-    const s2 = Array.from<number>({length: this.cols});
+    const s1 = Array.from<number>({length: this.cols}).fill(0.0);
+    const s2 = Array.from<number>({length: this.cols}).fill(0.0);
 
     for (let c = 0, i = 0; c < this.cols; c++) {
       for (let r = 0; r < this.rows; r++, i++) {
@@ -319,8 +301,7 @@ export class Matrix extends BaseMatrix {
     const s = Vector.create(0.0, this.cols);
 
     return s.map(
-      (_, i) =>
-        Math.min(...this.internal.slice(i * this.rows, (i + 1) * this.rows)),
+      (_, i) => Math.min(...this.internal.slice(i * this.rows, (i + 1) * this.rows)),
       true,
     );
   }
@@ -332,8 +313,7 @@ export class Matrix extends BaseMatrix {
     const s = Vector.create(0.0, this.cols);
 
     return s.map(
-      (_, i) =>
-        Math.max(...this.internal.slice(i * this.rows, (i + 1) * this.rows)),
+      (_, i) => Math.max(...this.internal.slice(i * this.rows, (i + 1) * this.rows)),
       true,
     );
   }
@@ -372,10 +352,7 @@ export class Matrix extends BaseMatrix {
   covariance(): Matrix {
     const means = this.colMeans();
 
-    const xme = this.clone().map(
-      (e, i) => e - means.at(this.colOfIndex(i)),
-      true,
-    );
+    const xme = this.clone().map((e, i) => e - means.at(this.colOfIndex(i)), true);
 
     return xme
       .transpose()
@@ -477,10 +454,7 @@ export class Matrix extends BaseMatrix {
       return null;
     }
 
-    const sim = Matrix.cbind(this, identityMatrix(this.rows)).reducedRowEchelon(
-      eps,
-      true,
-    );
+    const sim = Matrix.cbind(this, identityMatrix(this.rows)).reducedRowEchelon(eps, true);
 
     return new Matrix(sim.internal.slice(this.len), this.rows, true);
   }
@@ -491,10 +465,7 @@ export class Matrix extends BaseMatrix {
  *
  * @param seed A seed used in the random number generator.
  */
-export function randomMatrix(
-  [nrow, ncol]: MatrixDim,
-  seed?: string | number,
-): Matrix {
+export function randomMatrix([nrow, ncol]: MatrixDim, seed?: string | number): Matrix {
   return new Matrix(randomArray(nrow * ncol, seed), nrow, true);
 }
 

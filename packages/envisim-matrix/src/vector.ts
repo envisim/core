@@ -19,10 +19,7 @@ export class Vector extends BaseMatrix {
    * @param msg message to pass
    * @throws TypeError if `obj` is not Vector
    */
-  static assert(
-    obj: unknown,
-    msg: string = 'Expected Vector',
-  ): asserts obj is Vector {
+  static assert(obj: unknown, msg: string = 'Expected Vector'): asserts obj is Vector {
     if (!(obj instanceof Vector)) {
       throw new TypeError(msg);
     }
@@ -44,6 +41,7 @@ export class Vector extends BaseMatrix {
     super(shallow ? arr : arr.slice(), dims);
   }
 
+  // @ts-expect-error clone needs to be defined for any deriving class
   clone(): Vector {
     return new Vector(this.internal.slice(), true);
   }
@@ -52,10 +50,9 @@ export class Vector extends BaseMatrix {
    * @param inPlace performes the map in place if `true`
    * @returns a copy, where each element has been mapped by the callback fn.
    */
+  // @ts-expect-error map needs to be defined for any deriving class
   map(callback: MatrixCallback<number>, inPlace: boolean = false): Vector {
-    return inPlace
-      ? super.baseMapInPlace(callback)
-      : new Vector(super.baseMap(callback), true);
+    return inPlace ? super.baseMapInPlace(callback) : new Vector(super.baseMap(callback), true);
   }
 
   /**
@@ -70,9 +67,7 @@ export class Vector extends BaseMatrix {
    * the elements
    * @returns a sorted vector
    */
-  sort(
-    callback: MatrixCallbackCompare = (a: number, b: number) => a - b,
-  ): Vector {
+  sort(callback: MatrixCallbackCompare = (a: number, b: number) => a - b): Vector {
     return new Vector(this.slice().sort(callback));
   }
 
@@ -87,8 +82,7 @@ export class Vector extends BaseMatrix {
    * @returns the indices that sorts the vector
    */
   sortIndex(
-    callback: MatrixCallbackCompare = (a: number, b: number) =>
-      this.at(a) - this.at(b),
+    callback: MatrixCallbackCompare = (a: number, b: number) => this.at(a) - this.at(b),
   ): number[] {
     const idx = Array.from<number>({length: this.len});
     for (let i = 0; i < this.len; i++) idx[i] = i;
@@ -157,9 +151,7 @@ export class Vector extends BaseMatrix {
    */
   intersect(vec: Vector): Vector {
     return new Vector(
-      this.internal.filter(
-        (v, i) => this.internal.indexOf(v) === i && vec.internal.includes(v),
-      ),
+      this.internal.filter((v, i) => this.internal.indexOf(v) === i && vec.internal.includes(v)),
     );
   }
 
@@ -186,10 +178,7 @@ export class Vector extends BaseMatrix {
     }
 
     return (
-      this.subtract(this.mean())
-        .multiply(vec.subtract(vec.mean()), true)
-        .sum() /
-      (this.len - 1)
+      this.subtract(this.mean()).multiply(vec.subtract(vec.mean()), true).sum() / (this.len - 1)
     );
   }
 

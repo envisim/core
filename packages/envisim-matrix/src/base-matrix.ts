@@ -4,11 +4,7 @@ function equalsApprox(a: number, b: number, eps: number): boolean {
 
 export type MatrixDim = [row: number, col: number];
 export type MatrixCallback<T> = (element: number, index: number) => T;
-export type MatrixCallbackDim<T> = (
-  element: number,
-  index: number,
-  dim: MatrixDim,
-) => T;
+export type MatrixCallbackDim<T> = (element: number, index: number, dim: MatrixDim) => T;
 export type MatrixCallbackCompare = (a: number, b: number) => number;
 
 export abstract class BaseMatrix {
@@ -223,10 +219,7 @@ export abstract class BaseMatrix {
   swap(index1: number, index2: number): void {
     if (index1 === index2) return;
 
-    [this.internal[index1], this.internal[index2]] = [
-      this.internal[index2],
-      this.internal[index1],
-    ];
+    [this.internal[index1], this.internal[index2]] = [this.internal[index2], this.internal[index1]];
   }
 
   /**
@@ -303,9 +296,7 @@ export abstract class BaseMatrix {
    * @returns `true` if `this` is equal to `mat`
    */
   equals(mat: BaseMatrix): boolean {
-    return this.hasSizeOf(mat)
-      ? this.internal.every((e, i) => e === mat.internal[i])
-      : false;
+    return this.hasSizeOf(mat) ? this.internal.every((e, i) => e === mat.internal[i]) : false;
   }
 
   /**
@@ -351,7 +342,7 @@ export abstract class BaseMatrix {
    * Maximum value of all elements
    */
   max(): number {
-    return Math.min(...this.internal);
+    return Math.max(...this.internal);
   }
 
   /**
@@ -453,7 +444,7 @@ export abstract class BaseMatrix {
       s2 += Math.pow(v, 2);
     });
 
-    return s1 / Math.pow(s2, 1.5);
+    return (s1 / Math.pow(s2, 1.5)) * Math.sqrt(this.length);
   }
 
   quantiles(probs: number | number[]): number[] {
@@ -487,10 +478,7 @@ export abstract class BaseMatrix {
    * - if `normalize` is `true`: normalizes the values by `(x-min)/(max-min)`
    * - otherwise: standardizes the values by `(x - mu)/sigma`
    */
-  standardize(
-    normalize: boolean = false,
-    inPlace: boolean = false,
-  ): BaseMatrix {
+  standardize(normalize: boolean = false, inPlace: boolean = false): this {
     let offset: number;
     let denom: number;
 
@@ -512,7 +500,7 @@ export abstract class BaseMatrix {
    * @param inPlace - If `true`, performes the operation in place.
    * @group Basic operators
    */
-  add(mat: number | BaseMatrix, inPlace: boolean = false): BaseMatrix {
+  add(mat: number | BaseMatrix, inPlace: boolean = false): this {
     let fn: MatrixCallback<number>;
     if (typeof mat === 'number') fn = (e: number) => e + mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e + mat.at(i);
@@ -527,7 +515,7 @@ export abstract class BaseMatrix {
    * @param inPlace If `true`, performes the operation in place.
    * @group Basic operators
    */
-  subtract(mat: number | BaseMatrix, inPlace: boolean = false): BaseMatrix {
+  subtract(mat: number | BaseMatrix, inPlace: boolean = false): this {
     let fn: MatrixCallback<number>;
     if (typeof mat === 'number') fn = (e: number) => e - mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e - mat.at(i);
@@ -542,7 +530,7 @@ export abstract class BaseMatrix {
    * @param inPlace If `true`, performes the operation in place.
    * @group Basic operators
    */
-  divide(mat: number | BaseMatrix, inPlace: boolean = false): BaseMatrix {
+  divide(mat: number | BaseMatrix, inPlace: boolean = false): this {
     let fn: MatrixCallback<number>;
     if (typeof mat === 'number') fn = (e: number) => e / mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e / mat.at(i);
@@ -557,7 +545,7 @@ export abstract class BaseMatrix {
    * @param inPlace If `true`, performes the operation in place.
    * @group Basic operators
    */
-  multiply(mat: number | BaseMatrix, inPlace: boolean = false): BaseMatrix {
+  multiply(mat: number | BaseMatrix, inPlace: boolean = false): this {
     let fn: MatrixCallback<number>;
     if (typeof mat === 'number') fn = (e: number) => e * mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e * mat.at(i);
@@ -572,7 +560,7 @@ export abstract class BaseMatrix {
    * @param inPlace If `true`, performes the operation in place.
    * @group Basic operators
    */
-  mod(mat: number | BaseMatrix, inPlace: boolean = false): BaseMatrix {
+  mod(mat: number | BaseMatrix, inPlace: boolean = false): this {
     let fn: MatrixCallback<number>;
     if (typeof mat === 'number') fn = (e: number) => e % mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e % mat.at(i);
@@ -581,6 +569,6 @@ export abstract class BaseMatrix {
     return this.map(fn, inPlace);
   }
 
-  abstract clone(): BaseMatrix;
-  abstract map(callback: MatrixCallback<number>, inPlace: boolean): BaseMatrix;
+  abstract clone(): this;
+  abstract map(callback: MatrixCallback<number>, inPlace: boolean): this;
 }
