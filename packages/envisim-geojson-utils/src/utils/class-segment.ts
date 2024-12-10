@@ -1,5 +1,6 @@
 import type * as GJ from '../types/geojson.js';
 import {Geodesic} from './class-geodesic.js';
+import {azimuthalEquidistant} from './projections.js';
 
 export class Segment {
   static checkParameter(param: number): boolean {
@@ -186,20 +187,29 @@ export class Segment {
     return this.p1[0] < this.p2[0] ? this.p2 : this.p1;
   }
 
+  /**
+   * Distance from a position to the segment.
+   * Note that this is not intended to be used for very long platé carree segments.
+   * This function uses the azimuthal equidistant projection with position as reference point.
+   *
+   * @returns the distance from the position to the segment
+   */
   distanceToPosition(position: GJ.Position): number {
-    const p1diff = [position[0] - this.p1[0], position[1] - this.p1[1]];
-
-    const c1 = this.delta[0] * p1diff[0] + this.delta[1] * p1diff[1];
+    const proj = azimuthalEquidistant(position);
+    const p1 = proj.project(this.p1);
+    const p2 = proj.project(this.p2);
+    const p1diff = [-p1[0], -p1[1]];
+    const delta = [p2[0] - p1[0], p2[1] - p1[1]];
+    const c1 = delta[0] * p1diff[0] + delta[1] * p1diff[1];
     if (c1 <= 0.0) {
-      return Geodesic.distance(position, this.p1);
+      return Math.sqrt(p1[0] ** 2 + p1[1] ** 2);
     }
-
-    const c2 = this.delta[0] * this.delta[0] + this.delta[1] * this.delta[1];
+    const c2 = delta[0] * delta[0] + delta[1] * delta[1];
     if (c2 <= c1) {
-      return Geodesic.distance(position, this.p2);
+      return Math.sqrt(p2[0] ** 2 + p2[1] ** 2);
     }
-
-    return Geodesic.distance(position, this.position(c1 / c2));
+    const p3 = [p1[0] + (c1 / c2) * delta[0], p1[1] + (c1 / c2) * delta[1]];
+    return Math.sqrt(p3[0] ** 2 + p3[1] ** 2);
   }
 }
 

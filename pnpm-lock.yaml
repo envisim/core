@@ -44,9 +44,6 @@ importers:
 
   packages/envisim-distributions:
     dependencies:
-      '@envisim/matrix':
-        specifier: workspace:*
-        version: link:../envisim-matrix
       '@envisim/random':
         specifier: workspace:*
         version: link:../envisim-random

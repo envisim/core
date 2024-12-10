@@ -1,18 +1,15 @@
 import {logGammaFunction} from './gamma-utils.js';
+import {ParamsBeta} from './params.js';
 
 const SAE = -20; //9;
-const EPS = Math.pow(10, SAE);
+// const EPS = Math.pow(10, SAE);
 
-export function betaFunction(alpha: number, beta: number): number {
-  return Math.exp(logBetaFunction(alpha, beta));
+export function betaFunction(params: ParamsBeta): number {
+  return Math.exp(logBetaFunction(params));
 }
 
-export function logBetaFunction(alpha: number, beta: number): number {
-  return (
-    logGammaFunction(alpha) +
-    logGammaFunction(beta) -
-    logGammaFunction(alpha + beta)
-  );
+export function logBetaFunction({alpha, beta}: ParamsBeta): number {
+  return logGammaFunction(alpha) + logGammaFunction(beta) - logGammaFunction(alpha + beta);
 }
 
 /*
@@ -30,23 +27,23 @@ export function logBetaFunction(alpha: number, beta: number): number {
  */
 export function regularizedBetaFunction(
   x: number,
-  alpha: number,
-  beta: number,
-  logbetafn?: number,
+  params: ParamsBeta,
+  eps: number = 1e-20,
+  logbetafn: number = logBetaFunction(params),
 ): number {
+  const {alpha, beta} = params;
+
   if (x < 0.0 || 1.0 < x) return NaN;
   if (alpha <= 0.0 || beta <= 0.0) return NaN;
   if (x === 0.0 || x === 1.0) return x;
   if (alpha === 1.0) return 1.0 - Math.pow(1.0 - x, beta);
   if (beta === 1.0) return Math.pow(x, alpha);
 
-  const bf = logbetafn ?? logBetaFunction(alpha, beta);
-
   // 1
   let psq = alpha + beta;
   const cx = 1.0 - x;
   if (alpha < psq * x)
-    return 1.0 - regularizedBetaFunction(cx, beta, alpha, bf);
+    return 1.0 - regularizedBetaFunction(cx, {alpha: beta, beta: alpha}, eps, logbetafn);
 
   // 2
   let term = 1.0;
@@ -64,7 +61,7 @@ export function regularizedBetaFunction(
     term *= (temp * rx) / (alpha + ai);
     ret += term;
     temp = Math.abs(term);
-    if (temp <= EPS && temp <= EPS * ret) break;
+    if (temp <= eps && temp <= eps * ret) break;
     ai += 1.0;
     ns -= 1;
     if (ns >= 0.0) {
@@ -78,20 +75,16 @@ export function regularizedBetaFunction(
   }
 
   // 5
-  return (
-    (ret * Math.exp(alpha * Math.log(x) + (beta - 1.0) * Math.log(cx) - bf)) /
-    alpha
-  );
+  return (ret * Math.exp(alpha * Math.log(x) + (beta - 1.0) * Math.log(cx) - logbetafn)) / alpha;
 }
 
 export function incompleteBetaFunction(
   x: number,
-  alpha: number,
-  beta: number,
-  logbetafn?: number,
+  params: ParamsBeta,
+  eps: number = 1e-20,
+  logbetafn: number = logBetaFunction(params),
 ): number {
-  const bf = logbetafn ?? logBetaFunction(alpha, beta);
-  return Math.exp(bf) * regularizedBetaFunction(x, alpha, beta, bf);
+  return Math.exp(logbetafn) * regularizedBetaFunction(x, params, eps, logbetafn);
 }
 
 /*
@@ -120,10 +113,12 @@ export function incompleteBetaFunction(
  */
 export function inverseRegularizedBetaFunction(
   p: number,
-  alpha: number,
-  beta: number,
-  logbetafn?: number,
+  params: ParamsBeta,
+  eps: number = 1e-20,
+  logbetafn: number = logBetaFunction(params),
 ): number {
+  const {alpha, beta} = params;
+
   /* AS 64:
    * p = alpha
    * q = beta
@@ -132,25 +127,21 @@ export function inverseRegularizedBetaFunction(
    * AS 109
    * beta = logbetafn
    */
-  if (alpha <= 0.0 || beta <= 0.0)
-    throw new RangeError('alpha, beta must be > 0.0');
+  if (alpha <= 0.0 || beta <= 0.0) throw new RangeError('alpha, beta must be > 0.0');
   if (p < 0.0 || p > 1.0) throw new RangeError('p must be in [0,1]');
   if (p === 0.0) return 0.0;
   if (p === 1.0) return 1.0;
 
-  const bf = logbetafn ?? logBetaFunction(alpha, beta);
-
   // 1
   if (p > 0.5)
-    return 1.0 - inverseRegularizedBetaFunction(1.0 - p, beta, alpha, bf);
+    return (
+      1.0 - inverseRegularizedBetaFunction(1.0 - p, {alpha: beta, beta: alpha}, eps, logbetafn)
+    );
 
-  const fpu = EPS;
+  const fpu = eps;
   let ret = p;
 
-  const iex = Math.max(
-    -5.0 / Math.pow(alpha, 2) - 1.0 / Math.pow(p, 0.2) - 13.0,
-    SAE,
-  );
+  const iex = Math.max(-5.0 / Math.pow(alpha, 2) - 1.0 / Math.pow(p, 0.2) - 13.0, SAE);
   const acu = Math.pow(10, iex);
 
   const logp = Math.log(p);
@@ -164,8 +155,7 @@ export function inverseRegularizedBetaFunction(
     s = 1.0 / (alpha + alpha - 1.0);
     t = 1.0 / (beta + beta - 1.0);
     h = 2.0 / (s + t);
-    w =
-      (y * Math.sqrt(h + r)) / h - (t - s) * (r + 5.0 / 6.0 - 2.0 / (3.0 * h));
+    w = (y * Math.sqrt(h + r)) / h - (t - s) * (r + 5.0 / 6.0 - 2.0 / (3.0 * h));
     ret = alpha / (alpha + beta * Math.exp(w + w));
   } else {
     // 2
@@ -175,12 +165,12 @@ export function inverseRegularizedBetaFunction(
 
     if (t <= 0.0) {
       // 3
-      ret = 1.0 - Math.exp((Math.log(1.0 - p) + Math.log(beta) + bf) / beta);
+      ret = 1.0 - Math.exp((Math.log(1.0 - p) + Math.log(beta) + logbetafn) / beta);
     } else {
       t = (4.0 * beta + r - 2.0) / t;
       if (t <= 1.0) {
         // 4
-        ret = Math.exp((Math.log(p * alpha) + bf) / alpha);
+        ret = Math.exp((Math.log(p * alpha) + logbetafn) / alpha);
       } else {
         ret = 1.0 - 2.0 / (t + 1.0);
       }
@@ -202,11 +192,11 @@ export function inverseRegularizedBetaFunction(
   let run2 = 0;
   outer: while (run1++ <= 1e5) {
     // 7
-    y = regularizedBetaFunction(ret, alpha, beta, bf);
+    y = regularizedBetaFunction(ret, params, eps, logbetafn);
     if (y === 0.0) throw new Error('something went wrong');
 
     // 8
-    y = (y - p) * Math.exp(bf + r * Math.log(ret) + t * Math.log(1.0 - ret));
+    y = (y - p) * Math.exp(logbetafn + r * Math.log(ret) + t * Math.log(1.0 - ret));
     if (y * yprev <= 0.0) prev = Math.max(sq, fpu);
     g = 1.0;
 
@@ -245,11 +235,8 @@ export function inverseRegularizedBetaFunction(
  * Cambridge University Press.
  * ISBN: 9780521430647
  */
-export function betaContinuedFraction(
-  x: number,
-  alpha: number,
-  beta: number,
-): number {
+export function betaContinuedFraction(x: number, params: ParamsBeta, eps: number = 1e-20): number {
+  const {alpha, beta} = params;
   const qab = alpha + beta;
   const qap = alpha + 1.0;
   const qam = alpha - 1.0;
@@ -278,7 +265,7 @@ export function betaContinuedFraction(
     d = 1.0 / d;
     del = d * c;
     h *= del;
-    if (Math.abs(del - 1.0) < EPS) break;
+    if (Math.abs(del - 1.0) < eps) break;
   }
 
   return h;

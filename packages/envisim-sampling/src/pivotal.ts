@@ -1,4 +1,4 @@
-import {vectorToArray, vectorToArrayOfLength} from '@envisim/matrix';
+import {Vector} from '@envisim/matrix';
 
 import {
   type AuxiliaryFixedSizedOptions,
@@ -7,6 +7,14 @@ import {
   type PipsOptions,
 } from './base-options/index.js';
 import {Pivotal, PivotalMethod} from './sampling-classes/index.js';
+
+function vectorToArrayOfLength(p: Vector | number[], size: number): number[] {
+  if (p.length !== size) {
+    throw new RangeError('size of vector does not match');
+  }
+
+  return Vector.borrow(p);
+}
 
 /**
  * Selects a (pips) sample using the local pivotal method 1.
@@ -22,20 +30,9 @@ export function lpm1({
   ...options
 }: AuxiliaryOptions | AuxiliaryFixedSizedOptions): number[] {
   const N = auxiliaries.nrow;
-  const p =
-    'n' in options
-      ? options.n
-      : vectorToArrayOfLength(options.probabilities, N, true, 'probabilities');
+  const p = 'n' in options ? options.n : vectorToArrayOfLength(options.probabilities, N);
 
-  const lpm = new Pivotal(
-    PivotalMethod.LPM1,
-    p,
-    auxiliaries,
-    N,
-    treeBucketSize,
-    eps,
-    rand,
-  );
+  const lpm = new Pivotal(PivotalMethod.LPM1, p, auxiliaries, N, treeBucketSize, eps, rand);
   lpm.run();
 
   return lpm.sample;
@@ -55,20 +52,9 @@ export function lpm2({
   ...options
 }: AuxiliaryOptions | AuxiliaryFixedSizedOptions): number[] {
   const N = auxiliaries.nrow;
-  const p =
-    'n' in options
-      ? options.n
-      : vectorToArrayOfLength(options.probabilities, N, true, 'probabilities');
+  const p = 'n' in options ? options.n : vectorToArrayOfLength(options.probabilities, N);
 
-  const lpm = new Pivotal(
-    PivotalMethod.LPM2,
-    p,
-    auxiliaries,
-    N,
-    treeBucketSize,
-    eps,
-    rand,
-  );
+  const lpm = new Pivotal(PivotalMethod.LPM2, p, auxiliaries, N, treeBucketSize, eps, rand);
   lpm.run();
 
   return lpm.sample;
@@ -91,20 +77,9 @@ export function lpm1s({
   ...options
 }: AuxiliaryOptions | AuxiliaryFixedSizedOptions): number[] {
   const N = auxiliaries.nrow;
-  const p =
-    'n' in options
-      ? options.n
-      : vectorToArrayOfLength(options.probabilities, N, true, 'probabilities');
+  const p = 'n' in options ? options.n : vectorToArrayOfLength(options.probabilities, N);
 
-  const lpm = new Pivotal(
-    PivotalMethod.LPM1SEARCH,
-    p,
-    auxiliaries,
-    N,
-    treeBucketSize,
-    eps,
-    rand,
-  );
+  const lpm = new Pivotal(PivotalMethod.LPM1SEARCH, p, auxiliaries, N, treeBucketSize, eps, rand);
   lpm.run();
 
   return lpm.sample;
@@ -121,7 +96,7 @@ export function rpm({
   rand = BASE_OPTIONS.rand,
   eps = BASE_OPTIONS.eps,
 }: PipsOptions): number[] {
-  const p = vectorToArray(probabilities, true);
+  const p = Vector.borrow(probabilities);
   const N = p.length;
 
   const lpm = new Pivotal(PivotalMethod.RPM, p, undefined, N, N, eps, rand);
@@ -141,7 +116,7 @@ export function spm({
   rand = BASE_OPTIONS.rand,
   eps = BASE_OPTIONS.eps,
 }: PipsOptions): number[] {
-  const p = vectorToArray(probabilities, true);
+  const p = Vector.borrow(probabilities);
   const N = p.length;
 
   const lpm = new Pivotal(PivotalMethod.SPM, p, undefined, N, N, eps, rand);

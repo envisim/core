@@ -1,4 +1,4 @@
-import {ColumnVector, Matrix} from '@envisim/matrix';
+import {Matrix, Vector} from '@envisim/matrix';
 import {Random} from '@envisim/random';
 
 export interface BaseOptions {
@@ -29,7 +29,7 @@ export interface PipsOptions extends BaseOptions {
   /**
    * Inclusion probabilities of size N
    */
-  probabilities: number[] | ColumnVector;
+  probabilities: number[] | Vector;
 }
 
 export interface FixedSizedOptions extends BaseOptions {

@@ -33,25 +33,25 @@ export {
 export {SamplingError} from './sampling-error.js';
 export {type ErrorType} from './utils/index.js';
 
-// Model features/tracts
+// Model geometries/tracts
 export {
-  radiusOfModelFeature,
-  sizeOfModelFeature,
-  straightLineFeature,
-  ellLineFeature,
-  rectangularLineFeature,
-  squareLineFeature,
-  regularPolygonLineFeature,
-  regularPolygonPointFeature,
-  circleLineFeature,
-  circleAreaFeature,
-  squareCircleAreaFeature,
-  regularPolygonAreaFeature,
-  rectangularAreaFeature,
-  squareAreaFeature,
-  pointFeature,
-  squarePointFeature,
-} from './model-feature.js';
+  radiusOfModelGeometry,
+  sizeOfModelGeometry,
+  straightLineGeometry,
+  ellLineGeometry,
+  rectangularLineGeometry,
+  squareLineGeometry,
+  regularPolygonLineGeometry,
+  regularPolygonPointGeometry,
+  circleLineGeometry,
+  circleAreaGeometry,
+  squareCircleAreaGeometry,
+  regularPolygonAreaGeometry,
+  rectangularAreaGeometry,
+  squareAreaGeometry,
+  pointGeometry,
+  squarePointGeometry,
+} from './model-geometry.js';
 
 // Collection from layers
 export {collectProperties, collectPropertyRecord, CollectError} from './collect/index.js';

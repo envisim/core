@@ -71,11 +71,11 @@ export interface SamplePointOptions extends SampleBaseOptions {
   /**
    * Optional rotation
    */
-  rotation?: number;
+  rotationOfGrid?: number;
   /**
    * Optional random rotation
    */
-  randomRotation?: boolean;
+  randomRotationOfGrid?: boolean;
 }
 
 export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
@@ -84,8 +84,8 @@ export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
   sampleSize: 1,
   ratio: 1.0,
   buffer: 0.0,
-  rotation: 0.0,
-  randomRotation: false,
+  rotationOfGrid: 0.0,
+  randomRotationOfGrid: false,
 };
 
 /**
@@ -124,36 +124,48 @@ export function samplePointOptionsCheck({
  * @see {@link SAMPLE_FEATURE_OPTIONS | default values}
  * @see {@link sampleFeatureOptionsCheck | error codes}
  */
-export interface SampleFeatureOptions<F extends GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>
+export interface SampleFeatureOptions<G extends GJ.PointObject | GJ.LineObject | GJ.AreaObject>
   extends SamplePointOptions {
   /**
    * A model feature of points or lines or areas to be placed on the selcted
    * points.
    */
-  modelFeature: F;
+  modelGeometry: G;
   /**
-   * Optional rotation angle in degrees to rotate the model feature.
+   * Optional rotation angle in degrees to rotate the model geometry.
    * @defaultValue `0.0`
    */
-  rotation?: number;
+  rotationOfGeometry?: number;
   /**
-   * If true, then the model feature will be randomly rotated. Forced random
-   * rotation is used for line features.
+   * If true, then the model geometry will be randomly rotated. Forced random
+   * rotation is used for line geometries.
    * @defaultValue `false`
    */
-  randomRotation?: boolean;
+  randomRotationOfGeometry?: boolean;
+  /**
+   * If true, then the grid will be rotated
+   * @defaultValue `0.0`
+   */
+  rotationOfGrid?: number;
+  /**
+   * If true, then the grid will be randomly rotated
+   * @defaultValue `false`
+   */
+  randomRotationOfGrid?: boolean;
 }
 
 export const SAMPLE_FEATURE_OPTIONS: Readonly<
   Required<
-    Omit<SampleFeatureOptions<GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature>, 'modelFeature'>
+    Omit<SampleFeatureOptions<GJ.PointObject | GJ.LineObject | GJ.AreaObject>, 'modelGeometry'>
   >
 > = {
   ...SAMPLE_POINT_OPTIONS,
   pointSelection: 'independent',
   sampleSize: 1,
-  rotation: 0.0,
-  randomRotation: false,
+  rotationOfGeometry: 0.0,
+  randomRotationOfGeometry: false,
+  rotationOfGrid: 0.0,
+  randomRotationOfGrid: false,
 };
 
 /**
@@ -163,13 +175,13 @@ export const SAMPLE_FEATURE_OPTIONS: Readonly<
  * @returns `null` if check passes
  */
 export function sampleFeatureOptionsCheck<
-  F extends GJ.AreaFeature | GJ.LineFeature | GJ.PointFeature,
+  G extends GJ.AreaObject | GJ.LineObject | GJ.PointObject,
 >({
   // modelFeature,
   // rotation,
   // randomRotation,
   ...options
-}: SampleFeatureOptions<F>): ErrorType<typeof SamplingError> {
+}: SampleFeatureOptions<G>): ErrorType<typeof SamplingError> {
   const pointCheck = samplePointOptionsCheck(options);
   if (pointCheck !== null) {
     return pointCheck;

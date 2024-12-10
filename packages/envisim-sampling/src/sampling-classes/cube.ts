@@ -47,8 +47,7 @@ export class Cube extends BaseSampling {
         break;
       case CubeMethod.LCUBE:
         this.draw = this.drawLcube;
-        if (!Matrix.isMatrix(xxspread))
-          throw new Error('xxspread is not Matrix');
+        if (!Matrix.isMatrix(xxspread)) throw new Error('xxspread is not Matrix');
         this.tree = new KdTree(xxspread, treeBucketSize);
         this.store = new KdStore(this.N, this.pbalance);
         break;
@@ -61,15 +60,12 @@ export class Cube extends BaseSampling {
     this.amat = new Array<number>(this.N * this.pbalance);
     this.bmat = new Array<number>((this.pbalance + 1) * this.pbalance);
     this.uvec = new Array<number>(this.pbalance + 1);
-    this.mIdxR = (r: number, c: number, p: number = this.pbalance): number =>
-      r * p + c;
-    this.mIdxC = (r: number, c: number, n: number = this.N): number =>
-      c * n + r;
+    this.mIdxR = (r: number, c: number, p: number = this.pbalance): number => r * p + c;
+    this.mIdxC = (r: number, c: number, n: number = this.N): number => c * n + r;
 
     for (let i = 0; i < this.N; i++)
       for (let k = 0; k < this.pbalance; k++)
-        this.amat[this.mIdxC(i, k)] =
-          xxbalance.atRC(i, k) / this.probabilities[i];
+        this.amat[this.mIdxC(i, k)] = xxbalance.atDim([i, k]) / this.probabilities[i];
   }
 
   maxSize(): number {
@@ -102,8 +98,7 @@ export class Cube extends BaseSampling {
 
     // If we have no equal dist units at the end, we can just return the candidates
     if (size === maxSize) {
-      for (let i = 0; i < size; i++)
-        this.drawUnits.push(this.store.neighbours[i]);
+      for (let i = 0; i < size; i++) this.drawUnits.push(this.store.neighbours[i]);
       return;
     }
 
@@ -154,12 +149,8 @@ export class Cube extends BaseSampling {
         this.uvec[i] = -this.bmat[this.mIdxR(i, maxSize - 1, maxSize)];
       }
 
-      const lval1 = Math.abs(
-        this.probabilities[this.drawUnits[i]] / this.uvec[i],
-      );
-      const lval2 = Math.abs(
-        (1.0 - this.probabilities[this.drawUnits[i]]) / this.uvec[i],
-      );
+      const lval1 = Math.abs(this.probabilities[this.drawUnits[i]] / this.uvec[i]);
+      const lval2 = Math.abs((1.0 - this.probabilities[this.drawUnits[i]]) / this.uvec[i]);
 
       if (this.uvec[i] >= 0.0) {
         if (lambda1 > lval2) lambda1 = lval2;
@@ -170,8 +161,7 @@ export class Cube extends BaseSampling {
       }
     }
 
-    const lambda =
-      this.rand.float() * (lambda1 + lambda2) < lambda2 ? lambda1 : -lambda2;
+    const lambda = this.rand.float() * (lambda1 + lambda2) < lambda2 ? lambda1 : -lambda2;
 
     for (let i = 0; i < maxSize; i++) {
       const id = this.drawUnits[i];
@@ -184,8 +174,7 @@ export class Cube extends BaseSampling {
     const maxSize = this.drawUnits.length;
     for (let i = 0; i < maxSize; i++)
       for (let k = 0; k < maxSize - 1; k++)
-        this.bmat[this.mIdxR(k, i, maxSize)] =
-          this.amat[this.mIdxC(this.drawUnits[i], k)];
+        this.bmat[this.mIdxR(k, i, maxSize)] = this.amat[this.mIdxC(this.drawUnits[i], k)];
   }
 
   runFlight(): void {
@@ -214,8 +203,7 @@ export class Cube extends BaseSampling {
 
     if (this.idx.length() === 1) {
       const id = this.idx.getId(0);
-      this.probabilities[id] =
-        this.rand.float() < this.probabilities[id] ? 1.0 : 0.0;
+      this.probabilities[id] = this.rand.float() < this.probabilities[id] ? 1.0 : 0.0;
       this.resolveUnit(id);
     }
   }

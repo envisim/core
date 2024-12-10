@@ -46,7 +46,7 @@ export function sampleRelascopePointsOptionsCheck(
   const prop = baseCollection.propertyRecord.getId(sizeProperty);
   if (prop === null) {
     return SamplingError.SIZE_PROPERTY_MISSING;
-  } else if (PropertyRecord.propertyIsNumerical(prop)) {
+  } else if (!PropertyRecord.propertyIsNumerical(prop)) {
     return SamplingError.SIZE_PROPERTY_NOT_NUMERICAL;
   }
 

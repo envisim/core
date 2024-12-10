@@ -42,8 +42,8 @@ export function samplePointsOnAreas(
     sampleSize,
     buffer = SAMPLE_POINT_OPTIONS.buffer,
     ratio = SAMPLE_POINT_OPTIONS.ratio,
-    rotation = SAMPLE_POINT_OPTIONS.rotation,
-    randomRotation = SAMPLE_POINT_OPTIONS.randomRotation,
+    rotationOfGrid = SAMPLE_POINT_OPTIONS.rotationOfGrid,
+    randomRotationOfGrid = SAMPLE_POINT_OPTIONS.randomRotationOfGrid,
   }: SamplePointOptions,
 ): FeatureCollection<Point> {
   const optionsError = samplePointOptionsCheck({
@@ -51,8 +51,8 @@ export function samplePointsOnAreas(
     sampleSize,
     buffer,
     ratio,
-    rotation,
-    randomRotation,
+    rotationOfGrid,
+    randomRotationOfGrid,
   });
   if (optionsError !== null) {
     throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
@@ -143,7 +143,7 @@ export function samplePointsOnAreas(
         Geodesic.distance(center, bottomLeft),
         Geodesic.distance(center, topRight),
       );
-      const angle = randomRotation === true ? rand.float() * 360.0 : rotation;
+      const angle = randomRotationOfGrid === true ? rand.float() * 360.0 : rotationOfGrid;
       const dy = Math.sqrt(A / (sampleSize * ratio));
       const dx = ratio * dy;
       // generate random offset in x and y

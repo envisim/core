@@ -8,27 +8,27 @@ import {
   PropertyRecord,
 } from '@envisim/geojson-utils';
 import {bbox4, longitudeCenter} from '@envisim/geojson-utils';
-import {ColumnVector, Matrix} from '@envisim/matrix';
+import {Matrix, Vector} from '@envisim/matrix';
 
 import type {SampleFiniteOptions} from './sample-finite.js';
 
 /**
- * Get a numerical property as a ColumnVector
+ * Get a numerical property as a Vector
  * @param collection
  * @param property
  */
 function extractNumericalProperty(
   collection: FeatureCollection<AreaObject | LineObject | PointObject>,
   property: NumericalProperty,
-): ColumnVector {
+): Vector {
   const N = collection.size();
   const vec = Array.from<number>({length: N});
   collection.forEachProperty(property.id, (v, i) => (vec[i] = v as number));
-  return new ColumnVector(vec, true);
+  return new Vector(vec, true);
 }
 
 /**
- * Get a categorical property as an array of ColumnVectors, where the
+ * Get a categorical property as an array of Vectors, where the
  * length of the array is the number of non-all-zero categories.
  * @param collection
  * @param property
@@ -36,9 +36,9 @@ function extractNumericalProperty(
 function extractCategoricalProperty(
   collection: FeatureCollection<AreaObject | LineObject | PointObject>,
   property: CategoricalProperty,
-): ColumnVector[] {
+): Vector[] {
   const N = collection.size();
-  const props: ColumnVector[] = [];
+  const props: Vector[] = [];
 
   for (const rv of property.values) {
     const cv = Array.from<number>({length: N});
@@ -54,7 +54,7 @@ function extractCategoricalProperty(
     });
 
     if (!allZeros) {
-      props.push(new ColumnVector(cv, true));
+      props.push(new Vector(cv, true));
     }
   }
   return props;
@@ -77,7 +77,7 @@ export function spreadMatrixFromLayer(
 ): Matrix {
   const rec = collection.propertyRecord;
 
-  const newprops: ColumnVector[] = [];
+  const newprops: Vector[] = [];
 
   if (spreadGeo) {
     // For now use center of bbox for longitude and latitude
@@ -98,11 +98,11 @@ export function spreadMatrixFromLayer(
       }
     });
 
-    newprops.push(new ColumnVector(lon, true).standardize(false, true));
-    newprops.push(new ColumnVector(lat, true).standardize(false, true));
+    newprops.push(new Vector(lon, true).standardize(false, true));
+    newprops.push(new Vector(lat, true).standardize(false, true));
 
     if (hasAlt) {
-      newprops.push(new ColumnVector(alt, true).standardize(false, true));
+      newprops.push(new Vector(alt, true).standardize(false, true));
     }
   }
 
@@ -148,11 +148,11 @@ export function balancingMatrixFromLayer(
 ): Matrix {
   const rec = collection.propertyRecord;
 
-  const newprops: ColumnVector[] = [];
+  const newprops: Vector[] = [];
 
   // Always balance on a constant
   const N = collection.size();
-  newprops.push(new ColumnVector(Array.from<number>({length: N}).fill(1.0), true));
+  newprops.push(new Vector(Array.from<number>({length: N}).fill(1.0), true));
 
   properties.forEach((id) => {
     const prop = rec.getId(id);
@@ -187,20 +187,20 @@ export function balancingMatrixFromLayer(
 function probsFromLayer(
   collection: FeatureCollection<AreaObject | LineObject | PointObject>,
   {probabilitiesFrom, probabilitiesFromSize}: SampleFiniteOptions,
-): ColumnVector {
-  let probs: ColumnVector;
+): Vector {
+  let probs: Vector;
 
   if (probabilitiesFromSize !== undefined) {
     // Probabilities from the size of the features
     const sizes: number[] = collection.features.map((f) => f.geometry.measure());
-    probs = new ColumnVector(sizes);
+    probs = new Vector(sizes);
   } else {
     // Probabilities from numerical property
 
     const prop = collection.propertyRecord.getId(probabilitiesFrom);
 
     if (prop === null) {
-      return ColumnVector.create(1.0, collection.size());
+      return Vector.create(1.0, collection.size());
     } else if (!PropertyRecord.propertyIsNumerical(prop)) {
       throw new TypeError('probabilitiesFrom must be numerical');
     }
@@ -223,7 +223,7 @@ function probsFromLayer(
 export function drawprobsFromLayer(
   collection: FeatureCollection<AreaObject | LineObject | PointObject>,
   options: SampleFiniteOptions,
-): ColumnVector {
+): Vector {
   const probs = probsFromLayer(collection, options);
   const sum = probs.sum();
 
@@ -239,7 +239,7 @@ export function drawprobsFromLayer(
 export function inclprobsFromLayer(
   collection: FeatureCollection<AreaObject | LineObject | PointObject>,
   options: SampleFiniteOptions,
-): ColumnVector {
+): Vector {
   if (options.sampleSize <= 0) throw new RangeError('sampleSize is <= 0');
   const x = probsFromLayer(collection, options);
   let n = Math.round(options.sampleSize);
@@ -248,7 +248,7 @@ export function inclprobsFromLayer(
   let sum: number;
   let failed: boolean = true;
   // The return vector
-  const ips = new ColumnVector(Array.from<number>({length: N}).fill(0.0), true);
+  const ips = new Vector(Array.from<number>({length: N}).fill(0.0), true);
 
   /*
    * Continue this loop while there are still units to decide

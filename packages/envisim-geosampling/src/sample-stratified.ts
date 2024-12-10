@@ -23,12 +23,12 @@ import {type ErrorType} from './utils/index.js';
 export type SampleContinuousOptions =
   | SampleBaseOptions
   | SamplePointOptions
-  | SampleFeatureOptions<GJ.PointFeature>
-  | SampleFeatureOptions<GJ.LineFeature>
-  | SampleFeatureOptions<GJ.AreaFeature>
-  | SampleBeltOnAreaOptions
+  | SampleFeatureOptions<GJ.PointObject>
+  | SampleFeatureOptions<GJ.LineObject>
+  | SampleFeatureOptions<GJ.AreaObject>
   | SampleRelascopePointsOptions
-  | SampleSystematicLineOnAreaOptions;
+  | SampleSystematicLineOnAreaOptions
+  | SampleBeltOnAreaOptions;
 
 export interface SampleStratifiedOptions<O extends SampleFiniteOptions | SampleContinuousOptions> {
   stratify: string;
