@@ -5,17 +5,17 @@ import {
   randomOptionsDefault,
 } from '../abstract-distribution.js';
 import {
+  inverseRegularizedBetaFunction,
+  logBetaFunction,
+  regularizedBetaFunction,
+} from '../beta-utils.js';
+import {
   type ParamsDegreesOfFreedom2,
   degreesOfFreedomCheck,
   degreesOfFreedomDefault,
 } from '../params.js';
 import {assertPositiveInteger} from '../utils.js';
 import {randomBeta} from './beta-random.js';
-import {
-  inverseRegularizedBetaFunction,
-  logBetaFunction,
-  regularizedBetaFunction,
-} from './beta-utils.js';
 
 export class FRatio extends Distribution<ParamsDegreesOfFreedom2> {
   protected params: ParamsDegreesOfFreedom2 = [degreesOfFreedomDefault, degreesOfFreedomDefault];

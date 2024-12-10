@@ -6,7 +6,7 @@ import {
   RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
-import {betaContinuedFraction} from '../continuous/beta-utils.js';
+import {betaContinuedFraction} from '../beta-utils.js';
 import {stdNormalQuantile} from '../continuous/normal-utils.js';
 import {ParamsBernoulli, bernoulliCheck, bernoulliDefault} from '../params.js';
 import {assertPositiveInteger} from '../utils.js';

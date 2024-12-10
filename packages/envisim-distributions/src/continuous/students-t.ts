@@ -4,10 +4,10 @@ import {
   RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
+import {logBetaFunction, regularizedBetaFunction} from '../beta-utils.js';
 import {HALF_PI} from '../math-constants.js';
 import {ParamsDegreesOfFreedom, degreesOfFreedomCheck, degreesOfFreedomDefault} from '../params.js';
 import {assertPositiveInteger} from '../utils.js';
-import {logBetaFunction, regularizedBetaFunction} from './beta-utils.js';
 import {randomShapeGamma} from './gamma-random.js';
 import {stdNormalQuantile} from './normal-utils.js';
 
@@ -78,7 +78,7 @@ export class StudentsT extends Distribution<ParamsDegreesOfFreedom> {
     const df = this.params;
 
     if (q === 0.5) {
-      return 0.5;
+      return 0.0;
     } else if (df === 1) {
       return Math.tan(Math.PI * (q - 0.5));
     } else if (df === 2) {

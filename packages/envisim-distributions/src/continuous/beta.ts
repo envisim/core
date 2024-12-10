@@ -4,14 +4,14 @@ import {
   type RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
-import {ParamsBeta, betaDefault} from '../params.js';
-import {assertPositiveInteger} from '../utils.js';
-import {randomBeta} from './beta-random.js';
 import {
   inverseRegularizedBetaFunction,
   logBetaFunction,
   regularizedBetaFunction,
-} from './beta-utils.js';
+} from '../beta-utils.js';
+import {ParamsBeta, betaDefault} from '../params.js';
+import {assertPositiveInteger} from '../utils.js';
+import {randomBeta} from './beta-random.js';
 
 export class Beta extends Distribution<ParamsBeta> {
   protected params: ParamsBeta = {...betaDefault};

@@ -194,8 +194,7 @@ export class Interval {
   }
 
   checkCDFInt(x: number): number | null {
-    if (x <= this.l) return !this.lo && x === this.l ? null : 0.0;
-    if (this.l >= x) return 0.0;
+    if (x < this.l || (this.lo && x === this.l)) return 0.0;
     if (this.r <= x) return 1.0;
     return null;
   }

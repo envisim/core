@@ -1,9 +1,9 @@
 import {describe} from 'vitest';
 
-import {ExtremeValue as Dist} from '../src/extremevalue';
-import {distTests, fromTo} from './_distributions.testf';
+import {ExtremeValue} from '../../src/index.js';
+import {distributionTests, fromTo} from '../_distributions.testf.js';
 
-describe('extremevalue(10, 5)', () => {
+describe('ExtremeValue(10, 5)', () => {
   const pdf = [
     0.035874815746803435934, 0.063408384215588420307, 0.07357588823428846958,
     0.066140859778083607723, 0.050929276008716502233, 0.035701303702624184733,
@@ -28,7 +28,6 @@ describe('extremevalue(10, 5)', () => {
     Infinity,
   ];
   const x = fromTo(5, 25, 2.5);
-  const params = {location: 10, scale: 5};
 
-  distTests({Dist, x, params, pdf, cdf, quantile});
+  distributionTests(new ExtremeValue(10, 5), {x, pdf, cdf, quantile});
 });

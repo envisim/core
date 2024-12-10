@@ -4,9 +4,9 @@ import {
   RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
+import {inverseRegularizedBetaFunction} from '../beta-utils.js';
 import {assertPositiveInteger} from '../utils.js';
 import {randomBeta} from './beta-random.js';
-import {inverseRegularizedBetaFunction} from './beta-utils.js';
 
 /** @group Parameter interfaces */
 type ParamsRadius = number;

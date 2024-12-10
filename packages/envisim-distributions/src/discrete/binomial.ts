@@ -4,7 +4,7 @@ import {
   RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
-import {regularizedBetaFunction} from '../continuous/beta-utils.js';
+import {regularizedBetaFunction} from '../beta-utils.js';
 import {randomShapeGamma} from '../continuous/gamma-random.js';
 import {stdNormalQuantile} from '../continuous/normal-utils.js';
 import {ParamsBinomial, binomialCheck, binomialDefault} from '../params.js';

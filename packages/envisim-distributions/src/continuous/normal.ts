@@ -186,7 +186,7 @@ export class LogNormal extends Distribution<ParamsNormal> {
         return randomNormalBoxMuller(this.params, n, {rand}).map((z) => Math.exp(z));
       case 'inverse':
       default:
-        return rand.floatArray(n).map((u) => Math.exp(this.quantile(u)));
+        return rand.floatArray(n).map((u) => this.quantile(u));
     }
   }
 
@@ -306,7 +306,7 @@ export class FoldedNormal extends Distribution<ParamsNormal> {
         return randomNormalBoxMuller(this.params, n, {rand}).map((z) => Math.abs(z));
       case 'inverse':
       default:
-        return rand.floatArray(n).map((u) => Math.abs(this.quantile(u)));
+        return rand.floatArray(n).map((u) => this.quantile(u));
     }
   }
 

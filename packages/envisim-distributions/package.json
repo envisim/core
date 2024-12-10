@@ -11,7 +11,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/matrix": "workspace:*",
     "@envisim/random": "workspace:*"
   },
   "devDependencies": {

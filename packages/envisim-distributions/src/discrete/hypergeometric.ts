@@ -119,7 +119,7 @@ export class Hypergeometric extends Distribution<ParamsHypergeometric> {
     let NK = this.params.K;
     let KN = this.params.N - this.params.K;
 
-    let xx = x;
+    let xx0 = x;
     let flip = false;
 
     if (x < Math.max(0, this.params.n - KN)) {
@@ -127,11 +127,13 @@ export class Hypergeometric extends Distribution<ParamsHypergeometric> {
     } else if (x >= Math.min(this.params.n, this.params.K)) {
       return 1.0;
     } else if (x * this.params.N > this.params.n * this.params.K) {
-      xx = this.params.n - x - 1;
+      xx0 = this.params.n - x - 1;
       NK = KN;
       KN = this.params.K;
       flip = true;
     }
+
+    let xx = xx0;
 
     let e = 1.0;
     let s = 1.0;
@@ -142,7 +144,11 @@ export class Hypergeometric extends Distribution<ParamsHypergeometric> {
       xx--;
     }
 
-    return flip ? 1.0 - s * this.pdf(x) : s * this.pdf(x);
+    const pdf = Math.exp(
+      logBinomialCoefficient(NK, xx0) + logBinomialCoefficient(KN, this.params.n - xx0) - this.lbc,
+    );
+
+    return flip ? 1.0 - s * pdf : s * pdf;
   }
 
   quantile(q: number): number {

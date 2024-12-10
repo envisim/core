@@ -1,14 +1,11 @@
 import {Distribution, Interval} from '../abstract-distribution.js';
 
 /** @group Parameter interfaces */
-interface ParamsBenfordMantissa {
-  /** @defaultValue 10 */
-  base: number;
-}
-const benfordMantissaDefault: ParamsBenfordMantissa = {base: 10};
+type ParamsBenfordMantissa = number;
+const benfordMantissaDefault: ParamsBenfordMantissa = 10;
 
 export class BenfordMantissa extends Distribution<ParamsBenfordMantissa> {
-  protected params: ParamsBenfordMantissa = {...benfordMantissaDefault};
+  protected params: ParamsBenfordMantissa = benfordMantissaDefault;
   protected logBase!: number;
 
   /**
@@ -21,17 +18,17 @@ export class BenfordMantissa extends Distribution<ParamsBenfordMantissa> {
    * x.quantile(0.1)
    * x.random(10);
    */
-  constructor(base: number = benfordMantissaDefault.base) {
+  constructor(base: number = benfordMantissaDefault) {
     super();
-    this.setParameters({base});
+    this.setParameters(base);
     return this;
   }
 
-  setParameters(params: ParamsBenfordMantissa = {...benfordMantissaDefault}): void {
-    if (params.base <= 1.0) throw new RangeError('base must be larger than 1');
-    this.support = new Interval(1.0 / params.base, 1.0, false, true);
-    this.params.base = params.base;
-    this.logBase = Math.log(params.base);
+  setParameters(base: ParamsBenfordMantissa = benfordMantissaDefault): void {
+    if (base <= 1.0) throw new RangeError('base must be larger than 1');
+    this.support = new Interval(1.0 / base, 1.0, false, true);
+    this.params = base;
+    this.logBase = Math.log(base);
   }
 
   pdf(x: number): number {
@@ -43,25 +40,26 @@ export class BenfordMantissa extends Distribution<ParamsBenfordMantissa> {
   }
 
   quantile(q: number): number {
-    return this.support.checkQuantile(q) ?? Math.pow(this.params.base, q - 1.0);
+    return this.support.checkQuantile(q) ?? Math.pow(this.params, q - 1.0);
   }
 
   mean(): number {
-    const {base} = this.params;
+    const base = this.params;
     return (base - 1) / (base * Math.log(base));
   }
 
   variance(): number {
-    const {base} = this.params;
+    const base = this.params;
     const logb = Math.log(base);
     return ((base - 1) / (Math.pow(base, 2) * logb)) * (0.5 + base / 2 - (base - 1) / logb);
   }
 
   mode(): number {
-    const {base} = this.params;
+    const base = this.params;
     return base / Math.log(base);
   }
 
+  /** @deprecated */
   skewness(): number {
     // Not implemented
     return NaN;
