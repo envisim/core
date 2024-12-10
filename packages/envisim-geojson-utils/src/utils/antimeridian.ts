@@ -85,7 +85,7 @@ function cutLineStringCoords(ls: GJ.Position[]): GJ.Position[][] {
  * @param g the LineGeometry to cut
  * @returns the cut LineGeometry
  */
-export function cutLineGeometry(g: GJ.LineGeometry): GJ.LineGeometry {
+export function cutLineGeometry(g: GJ.LineObject): GJ.LineObject {
   const gjType = g.type;
   let mls: GJ.Position[][] = [];
   let imls: GJ.Position[][] = [];
@@ -101,24 +101,6 @@ export function cutLineGeometry(g: GJ.LineGeometry): GJ.LineGeometry {
         imls.forEach((ls) => mls.push(ls));
       });
       break;
-
-    case 'GeometryCollection':
-      g.geometries.forEach((geom) => {
-        switch (geom.type) {
-          case 'LineString':
-            imls = cutLineStringCoords(geom.coordinates);
-            imls.forEach((ls) => mls.push(ls));
-            break;
-          case 'MultiLineString':
-            geom.coordinates.forEach((ls) => {
-              imls = cutLineStringCoords(ls);
-              imls.forEach((ls) => mls.push(ls));
-            });
-            break;
-        }
-      });
-      break;
-
     default:
       throw new Error('Invalid type');
   }
@@ -201,7 +183,7 @@ function cutPolygonCoords(pol: GJ.Position[][]): GJ.Position[][][] {
  * @param g the AreaGeometry to cut
  * @returns the cut AreaGeometry
  */
-export function cutAreaGeometry(g: GJ.AreaGeometry): GJ.AreaGeometry {
+export function cutAreaGeometry(g: GJ.AreaObject): GJ.AreaObject {
   const geom = copy(g);
   const type = geom.type;
   let mpc: GJ.Position[][][] = [];
@@ -223,11 +205,6 @@ export function cutAreaGeometry(g: GJ.AreaGeometry): GJ.AreaGeometry {
         impc.forEach((p) => mpc.push(p));
       });
       return {type: 'MultiPolygon', coordinates: mpc};
-    case 'GeometryCollection':
-      for (let i = 0; i < geom.geometries.length; i++) {
-        geom.geometries[i] = cutAreaGeometry(geom.geometries[i]) as GJ.AreaObject;
-      }
-      return geom;
     default:
       throw new Error('Invalid type');
   }

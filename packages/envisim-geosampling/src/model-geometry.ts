@@ -4,14 +4,13 @@ import {
   GeometricPrimitive,
   cutAreaGeometry,
   cutLineGeometry,
-  getFeaturePrimitive,
+  getGeometryPrimitive,
   typeGuards,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
-import {copy} from '@envisim/utils';
 
 // This file has a set of functions to deal with a model
-// feature (tract), which is a GeoJSON feature with cartesian
+// geometry (tract), which is a GeoJSON geometry with cartesian
 // coordinates in meters relative to (0,0).
 
 // Internal.
@@ -23,7 +22,7 @@ function placePoint(point: GJ.Position, position: GJ.Position, rotation: number)
 
 // Internal.
 function setCoordinatesForGeometry(
-  geometry: GJ.Geometry,
+  geometry: GJ.AreaObject | GJ.LineObject | GJ.PointObject,
   position: GJ.Position,
   rotation: number,
 ): void {
@@ -58,11 +57,6 @@ function setCoordinatesForGeometry(
         }
       }
       break;
-    case 'GeometryCollection':
-      for (let i = 0; i < geometry.geometries.length; i++) {
-        setCoordinatesForGeometry(geometry.geometries[i], position, rotation);
-      }
-      break;
     default:
       throw new Error('Not a geometry.');
   }
@@ -77,9 +71,9 @@ interface PlaceOpts<GP extends GeometricPrimitive = GeometricPrimitive> {
 }
 
 /**
- * Positions a modelFeature at position and optionally rotates the coordinates around position.
+ * Positions a modelGeometry at position and optionally rotates the coordinates around position.
  *
- * @param modelFeature a model Feature with coordinates in meters relative to (0,0). Same structure as GeoJSON Feature.
+ * @param modelGeometry a model Geometry with coordinates in meters relative to (0,0). Same structure as GeoJSON Feature.
  * @param position a position [lon,lat].
  * @param opts an object containing rotation in degrees (optional) and boolean randomRotation (default false).
  * @param opts.rotation angel of rotation in degrees from north.
@@ -87,55 +81,59 @@ interface PlaceOpts<GP extends GeometricPrimitive = GeometricPrimitive> {
  * @param opts.rand optional instance of Random.
  * @param opts.radius optional radius of modelFeature.
  * @param opts.type optional type of modelFeature ('point','line','area').
- * @returns a GeoJSON Point/Line/AreaFeature.
+ * @returns a GeoJSON Point/Line/AreaObject.
  */
-function placeModelFeature(
-  modelFeature: GJ.PointFeature,
+function placeModelGeometry(
+  modelGeometry: GJ.PointObject,
   position: GJ.Position,
   opts: PlaceOpts<GeometricPrimitive.POINT>,
-): GJ.PointFeature;
-function placeModelFeature(
-  modelFeature: GJ.LineFeature,
+): GJ.PointObject;
+function placeModelGeometry(
+  modelGeometry: GJ.LineObject,
   position: GJ.Position,
   opts: PlaceOpts<GeometricPrimitive.LINE>,
-): GJ.LineFeature;
-function placeModelFeature(
-  modelFeature: GJ.AreaFeature,
+): GJ.LineObject;
+function placeModelGeometry(
+  modelGeometry: GJ.AreaObject,
   position: GJ.Position,
   opts: PlaceOpts<GeometricPrimitive.AREA>,
-): GJ.AreaFeature;
-function placeModelFeature(
-  modelFeature: GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
+): GJ.AreaObject;
+function placeModelGeometry(
+  modelGeometry: GJ.PointObject | GJ.LineObject | GJ.AreaObject,
   position: GJ.Position,
   {
     rotation: optsRotation = 0,
     randomRotation = false,
     rand = new Random(),
-    type: primitive = getFeaturePrimitive(modelFeature),
-    radius = radiusOfGeometry(modelFeature.geometry),
+    type: primitive = getGeometryPrimitive(modelGeometry),
+    radius = radiusOfModelGeometry(modelGeometry),
   }: PlaceOpts,
 ) {
   const rotation = randomRotation ? Math.floor(rand.float() * 360) : optsRotation;
-  const feature = copy(modelFeature);
-  setCoordinatesForGeometry(feature.geometry, position, rotation);
+  let geom = structuredClone(modelGeometry);
+  setCoordinatesForGeometry(geom, position, rotation);
 
   // check if antimeridian cut may be needed here
-
   if (Geodesic.distance(position, [180, position[1]]) < radius) {
     // May need cut if area or line as the distance to the antimeridian is less than the radius
     if (primitive === GeometricPrimitive.AREA) {
-      feature.geometry = cutAreaGeometry(feature.geometry as GJ.AreaGeometry);
+      geom = cutAreaGeometry(geom as GJ.AreaObject);
     } else if (primitive === GeometricPrimitive.LINE) {
-      feature.geometry = cutLineGeometry(feature.geometry as GJ.LineGeometry);
+      geom = cutLineGeometry(geom as GJ.LineObject);
     }
   }
 
-  return feature;
+  return geom;
 }
-export {placeModelFeature};
+export {placeModelGeometry};
 
-// Internal, not coordinates in longitude and latitude.
-function radiusOfGeometry(geometry: GJ.Geometry) {
+/**
+ * Computes the radius as maximum distance from (0,0) to any point in the given geometry.
+ *
+ * @param geometry a GeoJSON geometry (not geometry collection).
+ * @returns the maximum distance from (0,0) to any point in the given geometry.
+ */
+export function radiusOfModelGeometry(geometry: GJ.AreaObject | GJ.LineObject | GJ.PointObject) {
   let maxRadius = 0;
   switch (geometry.type) {
     case 'Point':
@@ -188,27 +186,10 @@ function radiusOfGeometry(geometry: GJ.Geometry) {
         });
       });
       break;
-    case 'GeometryCollection':
-      geometry.geometries.forEach((geometry) => {
-        maxRadius = Math.max(maxRadius, radiusOfGeometry(geometry));
-      });
-      break;
     default:
       throw new Error('Needs a type geometry.');
   }
   return maxRadius;
-}
-
-/**
- * Computes the radius of a model feature.
- *
- * @param feature the model feature.
- * @returns the radius of the model feature from (0,0).
- */
-export function radiusOfModelFeature(
-  feature: GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
-): number {
-  return radiusOfGeometry(feature.geometry);
 }
 
 // Internal.
@@ -244,8 +225,17 @@ function areaOfSinglePolygon(coords: GJ.Position[][]): number {
   return area;
 }
 
-// Internal.
-function sizeOfGeometry(geometry: GJ.Geometry): number {
+/**
+ * Computes the size of a model geometry which has cartesian coordinates.
+ * Size is either number of points, length or area depending on the
+ * type of the geometry.
+ *
+ * @param geometry a GeoJSON geometry (not geometry collection).
+ * @returns the size of the geometry.
+ */
+export function sizeOfModelGeometry(
+  geometry: GJ.AreaObject | GJ.LineObject | GJ.PointObject,
+): number {
   switch (geometry.type) {
     case 'Point':
       if (typeGuards.isCircle(geometry)) {
@@ -267,261 +257,200 @@ function sizeOfGeometry(geometry: GJ.Geometry): number {
       return areaOfSinglePolygon(geometry.coordinates);
     case 'MultiPolygon':
       return geometry.coordinates.reduce((size, coords) => size + areaOfSinglePolygon(coords), 0.0);
-    case 'GeometryCollection':
-      return geometry.geometries.reduce((size, g) => size + sizeOfGeometry(g), 0.0);
+    /*case 'GeometryCollection':
+      return geometry.geometries.reduce((size, g) => size + sizeOfModelGeometry(g), 0.0);*/
     default:
       throw new Error('Not a geometry.');
   }
 }
 
-/**
- * Computes the size of a model feature which has cartesian coordinates.
- * Size is either number of points, length or area depending on the
- * type of the model tract.
- *
- * @param feature a GeoJSON format feature, but with cartesian coordinates relative to (0,0).
- * @returns the size of the model feature.
- */
-export function sizeOfModelFeature(
-  feature: GJ.PointFeature | GJ.LineFeature | GJ.AreaFeature,
-): number {
-  return sizeOfGeometry(feature.geometry);
-}
-
 // Below are some functions to ease construction of common
-// model feature configurations.
+// model geometries.
 
 /**
- * Returns a model feature with a straight line (north-south direction).
+ * Returns a model geometry with a straight line (north-south direction).
  *
  * @param length the length of the line in meters.
- * @returns a model feature.
+ * @returns a model geometry.
  */
-export function straightLineFeature(length: number): GJ.LineFeature {
+export function straightLineGeometry(length: number): GJ.LineObject {
   const sideLength = length || 100;
   const halfSide = sideLength / 2;
   return {
-    type: 'Feature',
-    geometry: {
-      type: 'LineString',
-      coordinates: [
-        [0, halfSide],
-        [0, -halfSide],
-      ],
-    },
-    properties: {},
+    type: 'LineString',
+    coordinates: [
+      [0, halfSide],
+      [0, -halfSide],
+    ],
   };
 }
 
 /**
- * Returns an ell-shaped line model feature.
+ * Returns an ell-shaped line model geometry.
  *
  * @param sideLength length of side in meters.
- * @returns a model feature.
+ * @returns a model geometry.
  */
-export function ellLineFeature(sideLength: number): GJ.LineFeature {
+export function ellLineGeometry(sideLength: number): GJ.LineObject {
   const length = sideLength || 100;
   const halfSide = length / 2;
   return {
-    type: 'Feature',
-    geometry: {
-      type: 'LineString',
-      coordinates: [
-        [-halfSide, halfSide],
-        [-halfSide, -halfSide],
-        [halfSide, -halfSide],
-      ],
-    },
-    properties: {},
+    type: 'LineString',
+    coordinates: [
+      [-halfSide, halfSide],
+      [-halfSide, -halfSide],
+      [halfSide, -halfSide],
+    ],
   };
 }
 
 /**
- * Returns a rectangular-shaped line model feature.
+ * Returns a rectangular-shaped line model geometry.
  *
  * @param sideLength1 length of side west-east in meters.
  * @param sideLength2 length of side south-north in meters.
- * @returns a model feature.
+ * @returns a model geometry.
  */
-export function rectangularLineFeature(sideLength1: number, sideLength2: number): GJ.LineFeature {
+export function rectangularLineGeometry(sideLength1: number, sideLength2: number): GJ.LineObject {
   const halfSide1 = (sideLength1 || 100) / 2;
   const halfSide2 = (sideLength2 || 100) / 2;
   return {
-    type: 'Feature',
-    geometry: {
-      type: 'LineString',
-      coordinates: [
+    type: 'LineString',
+    coordinates: [
+      [-halfSide1, halfSide2],
+      [-halfSide1, -halfSide2],
+      [halfSide1, -halfSide2],
+      [halfSide1, halfSide2],
+      [-halfSide1, halfSide2],
+    ],
+  };
+}
+
+/**
+ * Returns a square-shaped line model geometry.
+ *
+ * @param sideLength1 length of side west-east in meters.
+ * @param sideLength2 length of side south-north in meters.
+ * @returns a model geometry.
+ */
+export function squareLineGeometry(sideLength: number): GJ.LineObject {
+  return rectangularLineGeometry(sideLength, sideLength);
+}
+
+/**
+ * Returns a circular area model geometry.
+ *
+ * @param radius the radius in meters.
+ * @returns a model geometry.
+ */
+export function circleAreaGeometry(radius: number): GJ.AreaObject {
+  const r = radius || 10;
+  return {
+    type: 'Point',
+    coordinates: [0, 0],
+    radius: r,
+  };
+}
+
+/**
+ * Returns a square shaped area model geometry with a circle in
+ * each of the four corners.
+ *
+ * @param sideLength the side length in meters.
+ * @param radius the radius in meters.
+ * @returns a model geometry.
+ */
+export function squareCircleAreaGeometry(sideLength: number, radius: number): GJ.AreaObject {
+  const r = radius || 10;
+  const length = sideLength || 100;
+  const halfSide = length / 2;
+  return {
+    type: 'MultiPoint',
+    radius: r,
+    coordinates: [
+      [halfSide, halfSide],
+      [-halfSide, halfSide],
+      [-halfSide, -halfSide],
+      [halfSide, -halfSide],
+    ],
+  };
+}
+
+/**
+ * Returns a rectangular-shaped area model geometry.
+ *
+ * @param sideLength1 length of side west-east in meters.
+ * @param sideLength2 length of side south-north in meters.
+ * @returns a model geometry.
+ */
+export function rectangularAreaGeometry(sideLength1: number, sideLength2: number): GJ.AreaObject {
+  const halfSide1 = (sideLength1 || 100) / 2;
+  const halfSide2 = (sideLength2 || 100) / 2;
+  return {
+    type: 'Polygon',
+    coordinates: [
+      [
         [-halfSide1, halfSide2],
         [-halfSide1, -halfSide2],
         [halfSide1, -halfSide2],
         [halfSide1, halfSide2],
         [-halfSide1, halfSide2],
       ],
-    },
-    properties: {},
+    ],
   };
 }
 
 /**
- * Returns a square-shaped line model feature.
- *
- * @param sideLength1 length of side west-east in meters.
- * @param sideLength2 length of side south-north in meters.
- * @returns a model feature.
- */
-export function squareLineFeature(sideLength: number): GJ.LineFeature {
-  return rectangularLineFeature(sideLength, sideLength);
-}
-
-/**
- * Returns a circular area model feature.
- *
- * @param radius the radius in meters.
- * @returns a model tract.
- */
-export function circleAreaFeature(radius: number): GJ.AreaFeature {
-  const r = radius || 10;
-  return {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [0, 0],
-      radius: r,
-    },
-    properties: {},
-  };
-}
-
-/**
- * Returns a square shaped area model feature with a circle in
- * each of the four corners.
- *
- * @param sideLength the side length in meters.
- * @param radius the radius in meters.
- * @returns a model feature.
- */
-export function squareCircleAreaFeature(sideLength: number, radius: number): GJ.AreaFeature {
-  const r = radius || 10;
-  const length = sideLength || 100;
-  const halfSide = length / 2;
-  return {
-    type: 'Feature',
-    geometry: {
-      type: 'GeometryCollection',
-      geometries: [
-        {
-          type: 'Point',
-          coordinates: [halfSide, halfSide],
-          radius: r,
-        },
-        {
-          type: 'Point',
-          coordinates: [-halfSide, halfSide],
-          radius: r,
-        },
-        {
-          type: 'Point',
-          coordinates: [-halfSide, -halfSide],
-          radius: r,
-        },
-        {
-          type: 'Point',
-          coordinates: [halfSide, -halfSide],
-          radius: r,
-        },
-      ],
-    },
-    properties: {},
-  };
-}
-
-/**
- * Returns a rectangular-shaped area model feature.
- *
- * @param sideLength1 length of side west-east in meters.
- * @param sideLength2 length of side south-north in meters.
- * @returns a model feature.
- */
-export function rectangularAreaFeature(sideLength1: number, sideLength2: number): GJ.AreaFeature {
-  const halfSide1 = (sideLength1 || 100) / 2;
-  const halfSide2 = (sideLength2 || 100) / 2;
-  return {
-    type: 'Feature',
-    geometry: {
-      type: 'Polygon',
-      coordinates: [
-        [
-          [-halfSide1, halfSide2],
-          [-halfSide1, -halfSide2],
-          [halfSide1, -halfSide2],
-          [halfSide1, halfSide2],
-          [-halfSide1, halfSide2],
-        ],
-      ],
-    },
-    properties: {},
-  };
-}
-
-/**
- * Returns a square-shaped area model feature.
+ * Returns a square-shaped area model geometry.
  *
  * @param sideLength length of side in meters.
- * @returns a model feature.
+ * @returns a model geometry.
  */
-export function squareAreaFeature(sideLength: number): GJ.AreaFeature {
-  return rectangularAreaFeature(sideLength, sideLength);
+export function squareAreaGeometry(sideLength: number): GJ.AreaObject {
+  return rectangularAreaGeometry(sideLength, sideLength);
 }
 
 /**
- * Returns a single point model feature
+ * Returns a single point model geometry.
  *
- * @returns a model point feature.
+ * @returns a model point geometry.
  */
-export function pointFeature(): GJ.PointFeature {
+export function pointGeometry(): GJ.PointObject {
   return {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [0, 0],
-    },
-    properties: {},
+    type: 'Point',
+    coordinates: [0, 0],
   };
 }
 
 /**
- * Returns a square shaped model feature with a point in
+ * Returns a square shaped model geometry with a point in
  * each of the four corners.
  *
  * @param sideLength the side length in meters.
- * @returns a model feature.
+ * @returns a model geometry.
  */
-export function squarePointFeature(sideLength: number): GJ.PointFeature {
+export function squarePointGeometry(sideLength: number): GJ.PointObject {
   const length = sideLength || 100;
   const halfSide = length / 2;
   return {
-    type: 'Feature',
-    geometry: {
-      type: 'MultiPoint',
-      coordinates: [
-        [-halfSide, halfSide],
-        [-halfSide, -halfSide],
-        [halfSide, -halfSide],
-        [halfSide, halfSide],
-      ],
-    },
-    properties: {},
+    type: 'MultiPoint',
+    coordinates: [
+      [-halfSide, halfSide],
+      [-halfSide, -halfSide],
+      [halfSide, -halfSide],
+      [halfSide, halfSide],
+    ],
   };
 }
 
 /**
- * Returns a model area feature as a regular polygon.
+ * Returns a model area geometry as a regular polygon.
  *
  * @param sides the number of sides/vertices.
  * @param radius the radius in meters.
- * @returns a model feature.
+ * @returns a model geometry.
  */
-export function regularPolygonAreaFeature(sides: number, radius: number): GJ.AreaFeature {
+export function regularPolygonAreaGeometry(sides: number, radius: number): GJ.AreaObject {
   const n = Math.max(Math.round(sides || 3), 3);
   const r = Math.max(radius, 0.05);
   const coordinates: GJ.Position[] = [];
@@ -533,23 +462,19 @@ export function regularPolygonAreaFeature(sides: number, radius: number): GJ.Are
   }
 
   return {
-    type: 'Feature',
-    geometry: {
-      type: 'Polygon',
-      coordinates: [coordinates],
-    },
-    properties: {},
+    type: 'Polygon',
+    coordinates: [coordinates],
   };
 }
 
 /**
- * Returns a model line feature as a regular polygon.
+ * Returns a model line geometry as a regular polygon.
  *
  * @param sides the number of sides/vertices.
  * @param radius the radius in meters.
- * @returns a model feature.
+ * @returns a model geometry.
  */
-export function regularPolygonLineFeature(sides: number, radius: number): GJ.LineFeature {
+export function regularPolygonLineGeometry(sides: number, radius: number): GJ.LineObject {
   const n = Math.max(Math.round(sides || 3), 3);
   const r = Math.max(radius, 0.05);
   const coordinates: GJ.Position[] = [];
@@ -561,23 +486,19 @@ export function regularPolygonLineFeature(sides: number, radius: number): GJ.Lin
   }
 
   return {
-    type: 'Feature',
-    geometry: {
-      type: 'LineString',
-      coordinates: coordinates,
-    },
-    properties: {},
+    type: 'LineString',
+    coordinates: coordinates,
   };
 }
 
 /**
- * Returns a model point feature as a regular polygon.
+ * Returns a model point geometry as a regular polygon.
  *
  * @param sides the number of sides/vertices.
  * @param radius the radius in meters.
- * @returns a model feature.
+ * @returns a model geometry.
  */
-export function regularPolygonPointFeature(sides: number, radius: number): GJ.PointFeature {
+export function regularPolygonPointGeometry(sides: number, radius: number): GJ.PointObject {
   const n = Math.max(Math.round(sides || 3), 3);
   const r = Math.max(radius, 0.05);
   const coordinates: GJ.Position[] = [];
@@ -589,28 +510,24 @@ export function regularPolygonPointFeature(sides: number, radius: number): GJ.Po
   }
 
   return {
-    type: 'Feature',
-    geometry: {
-      type: 'MultiPoint',
-      coordinates: coordinates,
-    },
-    properties: {},
+    type: 'MultiPoint',
+    coordinates: coordinates,
   };
 }
 
 /**
- * Returns a circular model line feature as a regular polygon with 36
+ * Returns a circular model line geometry as a regular polygon with 36
  * sides. The area of the polygon matches the area of a circle with
  * the given radius.
  *
  * @param radius the radius of the circle in meters.
- * @returns a model feature.
+ * @returns a model geometry.
  */
-export function circleLineFeature(radius: number): GJ.LineFeature {
+export function circleLineGeometry(radius: number): GJ.LineObject {
   const n = 36;
   const v = Math.PI / n;
   // use the radius that gives equal area to the polygon for best approximation
   let r = radius > 0 ? radius : 10;
   r = Math.sqrt((Math.PI * Math.pow(r, 2)) / (n * Math.sin(v) * Math.cos(v)));
-  return regularPolygonLineFeature(n, r);
+  return regularPolygonLineGeometry(n, r);
 }

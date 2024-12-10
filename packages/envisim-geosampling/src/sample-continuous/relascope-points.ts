@@ -42,7 +42,7 @@ export function sampleRelascopePointsOptionsCheck(
     return 610;
   }
 
-  if (PropertyRecord.propertyIsNumerical(baseCollection.propertyRecord.getId(sizeProperty))) {
+  if (!PropertyRecord.propertyIsNumerical(baseCollection.propertyRecord.getId(sizeProperty))) {
     return 620;
   }
 
