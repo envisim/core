@@ -20,9 +20,9 @@ import {SampleFiniteOptions} from './sample-finite/index.js';
 type SampleContinuousOptions =
   | SampleBaseOptions
   | SamplePointOptions
-  | SampleFeatureOptions<GJ.PointFeature>
-  | SampleFeatureOptions<GJ.LineFeature>
-  | SampleFeatureOptions<GJ.AreaFeature>
+  | SampleFeatureOptions<GJ.PointObject>
+  | SampleFeatureOptions<GJ.LineObject>
+  | SampleFeatureOptions<GJ.AreaObject>
   | SampleSystematicLineOnAreaOptions
   | SampleBeltOnAreaOptions;
 

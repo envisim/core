@@ -23,37 +23,30 @@ export {
 export {sampleFinite, sampleFiniteOptionsCheck} from './sample-finite/index.js';
 
 // Stratified
-export {
-  sampleStratified,
-  sampleStratifiedOptionsCheck,
-} from './sample-stratified.js';
+export {sampleStratified, sampleStratifiedOptionsCheck} from './sample-stratified.js';
 
-// Model features/tracts
+// Model geometries/tracts
 export {
-  radiusOfModelFeature,
-  sizeOfModelFeature,
-  straightLineFeature,
-  ellLineFeature,
-  rectangularLineFeature,
-  squareLineFeature,
-  regularPolygonLineFeature,
-  regularPolygonPointFeature,
-  circleLineFeature,
-  circleAreaFeature,
-  squareCircleAreaFeature,
-  regularPolygonAreaFeature,
-  rectangularAreaFeature,
-  squareAreaFeature,
-  pointFeature,
-  squarePointFeature,
-} from './model-feature.js';
+  radiusOfModelGeometry,
+  sizeOfModelGeometry,
+  straightLineGeometry,
+  ellLineGeometry,
+  rectangularLineGeometry,
+  squareLineGeometry,
+  regularPolygonLineGeometry,
+  regularPolygonPointGeometry,
+  circleLineGeometry,
+  circleAreaGeometry,
+  squareCircleAreaGeometry,
+  regularPolygonAreaGeometry,
+  rectangularAreaGeometry,
+  squareAreaGeometry,
+  pointGeometry,
+  squarePointGeometry,
+} from './model-geometry.js';
 
 // Collection from layers
-export {
-  collectProperties,
-  collectPropertyRecord,
-  collectIntersects,
-} from './collect/index.js';
+export {collectProperties, collectPropertyRecord, collectIntersects} from './collect/index.js';
 
 // Point processes
 export {
