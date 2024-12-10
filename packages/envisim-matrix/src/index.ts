@@ -1,22 +1,3 @@
-export {
-  Matrix,
-  diagonalMatrix,
-  identityMatrix,
-  randomMatrix,
-} from './base/Matrix.js';
-export {ColumnVector, randomVector, sequence} from './base/ColumnVector.js';
-export {RowVector} from './base/RowVector.js';
-export {matrixDims} from './base/matrixDims.js';
-export type {MatrixDims, MatrixByRow} from './base/matrixDims.js';
-
-export * from './base/types.js';
-
-export {
-  arrayLikeToArray,
-  isVector,
-  vectorToArray,
-  assertLength,
-  vectorToArrayOfLength,
-  type TArrayLike,
-} from './TArrayLike.js';
-export {regressionCoefficients} from './regressionCoefficients.js';
+export {Matrix, diagonalMatrix, identityMatrix, randomMatrix} from './matrix.js';
+export {Vector, randomVector, sequence} from './vector.js';
+export type {MatrixCallback, MatrixCallbackCompare, MatrixDim} from './base-matrix.js';

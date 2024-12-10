@@ -1,4 +1,4 @@
-import {sequence, vectorToArray} from '@envisim/matrix';
+import {Vector, sequence} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
 
 import {BASE_OPTIONS, type PipsOptions} from './base-options/index.js';
@@ -11,11 +11,7 @@ import {BASE_OPTIONS, type PipsOptions} from './base-options/index.js';
  * @param fun - index function.
  * @returns sample indices.
  */
-const _systematic = (
-  p: number[],
-  fun: (i: number) => number,
-  rand: Random,
-): number[] => {
+const _systematic = (p: number[], fun: (i: number) => number, rand: Random): number[] => {
   const N = p.length;
   const s: number[] = [];
 
@@ -39,11 +35,8 @@ const _systematic = (
  * @param options
  * @returns sample indices.
  */
-export function systematic({
-  probabilities,
-  rand = BASE_OPTIONS.rand,
-}: PipsOptions): number[] {
-  const p = vectorToArray(probabilities, true);
+export function systematic({probabilities, rand = BASE_OPTIONS.rand}: PipsOptions): number[] {
+  const p = Vector.borrow(probabilities);
   return _systematic(p, (i) => i, rand);
 }
 
@@ -53,15 +46,12 @@ export function systematic({
  * @param options
  * @returns sample indices.
  */
-export function randomSystematic({
-  probabilities,
-  rand = BASE_OPTIONS.rand,
-}: PipsOptions): number[] {
-  const p = vectorToArray(probabilities, true);
+export function randomSystematic({probabilities, rand = BASE_OPTIONS.rand}: PipsOptions): number[] {
+  const p = Vector.borrow(probabilities);
   const N = p.length;
   const index = sequence(0, N - 1, 1)
     .sortRandom(true, rand)
-    .toArray();
+    .slice();
 
   return _systematic(p, (i) => index[i], rand).sort((a, b) => a - b);
 }

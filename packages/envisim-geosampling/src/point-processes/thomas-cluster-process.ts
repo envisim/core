@@ -21,7 +21,7 @@ const toDeg = 180 / Math.PI;
 // Sigma is standard deviation.
 function randomPositionInCluster(center: GJ.Position, sigma: number, rand: Random): GJ.Position {
   // Generate two independent Normal(0,sigma).
-  const xy = Normal.random(2, {mu: 0, sigma: sigma}, {rand});
+  const xy = new Normal(0, sigma).random(2, {rand});
   // Compute angle.
   const theta = Math.atan2(xy[1], xy[0]) * toDeg;
   // Compute azimuth = angle from north in degrees clockwise.
@@ -88,7 +88,7 @@ export function thomasClusterProcess(
   // and be incorrect GeoJSON.
 
   const muParents = intensityOfParents * A;
-  const nrOfParents = Poisson.random(1, {rate: muParents}, {rand: rand})[0];
+  const nrOfParents = new Poisson(muParents).random(1, {rand})[0];
 
   const parentsInBox = uniformPositionsInBBox(
     [...westSouth, ...eastNorth] as GJ.BBox,
@@ -99,13 +99,7 @@ export function thomasClusterProcess(
   // To store new features.
   const newCollection = FeatureCollection.newPoint();
   // Generate number of points in each cluster.
-  const nrOfPointsInCluster = Poisson.random(
-    nrOfParents,
-    {
-      rate: meanOfCluster,
-    },
-    {rand: rand},
-  );
+  const nrOfPointsInCluster = new Poisson(meanOfCluster).random(nrOfParents, {rand});
 
   // nr of features in collection
   const nrOfFeatures = collection.features.length;

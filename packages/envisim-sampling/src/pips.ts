@@ -1,4 +1,4 @@
-import {ColumnVector, vectorToArray} from '@envisim/matrix';
+import {Vector} from '@envisim/matrix';
 
 import {BASE_OPTIONS, type PipsOptions} from './base-options/index.js';
 import {conditionalPoissonSampling} from './poisson.js';
@@ -10,11 +10,8 @@ import {discrete} from './pps.js';
  * @param options
  * @returns sample indices.
  */
-export function sampford({
-  probabilities,
-  rand = BASE_OPTIONS.rand,
-}: PipsOptions): number[] {
-  const p = new ColumnVector(probabilities, false);
+export function sampford({probabilities, rand = BASE_OPTIONS.rand}: PipsOptions): number[] {
+  const p = new Vector(probabilities, false);
   const psum = p.sum();
   const q = p.divide(psum);
   const n = Math.round(psum);
@@ -60,7 +57,7 @@ export function pareto({
   rand = BASE_OPTIONS.rand,
   eps = BASE_OPTIONS.eps,
 }: PipsOptions): number[] {
-  const p = vectorToArray(probabilities, true);
+  const p = Vector.borrow(probabilities);
   const psum = p.reduce((t: number, c: number) => t + c);
   const n = Math.round(psum);
 
@@ -88,7 +85,7 @@ export function brewer({
   rand = BASE_OPTIONS.rand,
   eps = BASE_OPTIONS.eps,
 }: PipsOptions): number[] {
-  const pr = vectorToArray(probabilities, false);
+  const pr = Vector.borrow(probabilities);
   const N = pr.length;
 
   const s = [];

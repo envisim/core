@@ -2,18 +2,20 @@ import {expect, test} from 'vitest';
 
 import {Random} from '@envisim/random';
 
-export const QARR = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
-export const PRECISION = 4;
-export const RPRECISION = 2;
-export const RANDN = 100000;
+import {Distribution} from '../src/abstract-distribution';
 
-export const createTable = (...arrs: number[][]): number[][] => {
-  const c: number[][] = [];
-  for (let i = 0; i < arrs[0].length; i++) {
-    c.push(arrs.map((e) => e[i]));
-  }
-  return c;
-};
+export const QUANTILES = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+export const PRECISION = 4;
+export const RANDOM_PRECISION = 2;
+export const RANDOM_ARRAY_LENGTH = 100000;
+
+// export const createTable = (...arrs: number[][]): number[][] => {
+//   const c: number[][] = [];
+//   for (let i = 0; i < arrs[0].length; i++) {
+//     c.push(arrs.map((e) => e[i]));
+//   }
+//   return c;
+// };
 
 export const fromTo = (from: number, to: number, by: number) => {
   const s: number[] = [];
@@ -21,67 +23,105 @@ export const fromTo = (from: number, to: number, by: number) => {
   return s;
 };
 
-export const distTests = ({
-  Dist,
-  x,
-  params,
-  pdf,
-  cdf,
-  quantile,
-  rand = new Random('test'),
-  doTests = [1, 2, 3, 4],
-  randn = RANDN,
-  precision = PRECISION,
-  rprecision = RPRECISION,
-}: {
-  Dist: any;
+interface TestOptionsSkips {
+  pdf?: boolean;
+  cdf?: boolean;
+  quantile?: boolean;
+  random?: boolean;
+}
+
+interface TestOptions {
   x: number[];
-  params: any;
   pdf: number[];
   cdf: number[];
   quantile: number[];
   rand?: Random;
-  doTests?: number[];
-  randn?: number;
+  skip?: TestOptionsSkips;
   precision?: number;
-  rprecision?: number;
-}): void => {
-  if (doTests.indexOf(1) >= 0)
-    test.each(createTable(Dist.pdf(x, params), pdf, x))(
-      'pdf (%f, %f) [%f]',
-      (x: number, v: number) => {
-        expect(x).toBeCloseTo(v, precision);
-      },
-    );
+  randomArrayLength?: number;
+  randomPrecision?: number;
+}
+// {
+//   x,
+//   params,
+//   pdf,
+//   cdf,
+//   quantile,
+//   rand = new Random('test'),
+//   doTests = [1, 2, 3, 4], pdf, cdf, q, r
+//   randn = RANDN,
+//   precision = PRECISION,
+//   rprecision = RPRECISION,
+// }: {
+//   Dist: any;
+//   x: number[];
+//   params: any;
+//   pdf: number[];
+//   cdf: number[];
+//   quantile: number[];
+//   rand?: Random;
+//   doTests?: number[];
+// },
 
-  if (doTests.indexOf(2) >= 0)
-    test.each(createTable(Dist.cdf(x, params), cdf, x))(
-      'cdf (%f, %f) [%f]',
-      (x: number, v: number) => {
-        expect(x).toBeCloseTo(v, precision);
-      },
-    );
-
-  if (doTests.indexOf(3) >= 0)
-    test.each(createTable(Dist.quantile(QARR, params), quantile, QARR))(
-      'quantile (%f, %f) [%f]',
-      (x: number, v: number) => {
-        expect(x).toBeCloseTo(v, precision);
-      },
-    );
-
-  if (doTests.indexOf(4) >= 0) {
-    const r = Dist.random(randn, params, {rand});
-    const rq = x.map(
-      (e) =>
-        r.reduce((t: number, v: number) => t + (v <= e ? 1 : 0), 0) / randn,
-    );
-
-    test.each(createTable(rq, cdf, x))(
-      'random (%f, %f) [%f]',
-      (x: number, v: number) => {
-        expect(x).toBeCloseTo(v, rprecision);
-      },
-    );
+export function distributionTests<T>(
+  instance: Distribution<T>,
+  {
+    x,
+    pdf,
+    cdf,
+    quantile,
+    rand = new Random(4242),
+    skip,
+    precision = PRECISION,
+    randomArrayLength = RANDOM_ARRAY_LENGTH,
+    randomPrecision = RANDOM_PRECISION,
+  }: TestOptions,
+): void {
+  if (skip?.pdf !== true) {
+    test('pdf', () => {
+      const res = x.map((v) => instance.pdf(v));
+      const exp = pdf.map((v) => expect.closeTo(v, precision));
+      expect(res).toEqual(exp);
+    });
   }
-};
+
+  if (skip?.cdf !== true) {
+    test('cdf', () => {
+      const res = x.map((v) => instance.cdf(v));
+      const exp = cdf.map((v) => expect.closeTo(v, precision));
+      expect(res).toEqual(exp);
+    });
+  }
+
+  if (skip?.quantile !== true) {
+    test('quantile', () => {
+      const res = QUANTILES.map((v) => instance.quantile(v));
+      const exp = quantile.map((v) => expect.closeTo(v, precision));
+      expect(res).toEqual(exp);
+    });
+  }
+
+  if (skip?.random !== true) {
+    test('random', () => {
+      const exp = cdf.map((v) => expect.closeTo(v, randomPrecision));
+      const randomValues = instance.random(randomArrayLength, {rand});
+      const empiricalCdf = Array.from<number>({length: x.length}).fill(0);
+
+      for (let i = 0; i < randomArrayLength; i++) {
+        const idx = x.findIndex((v) => randomValues[i] <= v);
+
+        if (idx > -1) {
+          empiricalCdf[idx] += 1;
+        }
+      }
+
+      let cumsum = 0;
+      for (let j = 0; j < x.length; j++) {
+        cumsum += empiricalCdf[j];
+        empiricalCdf[j] = cumsum / randomArrayLength;
+      }
+
+      expect(empiricalCdf).toEqual(exp);
+    });
+  }
+}
