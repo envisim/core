@@ -32,7 +32,7 @@ export function uniformPoissonPointProcess(
 ): FeatureCollection<PointObject> {
   const A = collection.measure();
   const mu = intensity * A;
-  const sampleSize = Poisson.random(1, {rate: mu}, {rand: rand})[0];
+  const sampleSize = new Poisson(mu).random(1, {rand})[0];
 
   if (sampleSize === 0) {
     return FeatureCollection.newPoint();

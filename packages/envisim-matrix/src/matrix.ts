@@ -130,7 +130,7 @@ export class Matrix extends BaseMatrix {
     return s;
   }
 
-  extractColumns(cols: number[]): Matrix {
+  extractColumns(cols: number[] | Vector): Matrix {
     if (!cols.every((e) => Number.isInteger(e) && 0 <= e && e < this.cols)) {
       throw new RangeError('columns must be in valid range');
     }
@@ -143,7 +143,7 @@ export class Matrix extends BaseMatrix {
     return new Matrix(s, this.rows, true);
   }
 
-  extractRows(rows: number[]): Matrix {
+  extractRows(rows: number[] | Vector): Matrix {
     if (!rows.every((e) => Number.isInteger(e) && 0 <= e && e < this.rows)) {
       throw new RangeError('rows must be in valid range');
     }
@@ -152,7 +152,7 @@ export class Matrix extends BaseMatrix {
 
     for (let r = 0; r < rows.length; r++) {
       for (let c = 0; c < this.cols; c++) {
-        s.edDim([r, c], this.atDim([rows[r], c]));
+        s.edDim([r, c], this.atDim([rows.at(r) as number, c]));
       }
     }
 

@@ -1,7 +1,7 @@
-import {ColumnVector, Matrix, TArrayLike} from '@envisim/matrix';
+import {Matrix, Vector} from '@envisim/matrix';
 import {NearestNeighbour} from '@envisim/sampling';
 
-import {parseAndCheckSampleArray} from './utils.js';
+import {checkSampleArray} from './utils.js';
 
 /**
  * Single count Horvitz-Thompson estimator of the total
@@ -13,9 +13,9 @@ import {parseAndCheckSampleArray} from './utils.js';
  * @param prob - inclusion probabilities of size n, $\pi_i$.
  * @returns the Horvitz-Thompson estimate, $\hat\{Y\}$.
  */
-export function horvitzThompson(y: TArrayLike, prob: TArrayLike): number {
-  const ys = new ColumnVector(y, false);
-  const ps = new ColumnVector(prob, true);
+export function horvitzThompson(y: number[] | Vector, prob: number[] | Vector): number {
+  const ys = new Vector(y, false);
+  const ps = new Vector(prob, true);
 
   return ys.divide(ps, true).sum();
 }
@@ -32,13 +32,13 @@ export function horvitzThompson(y: TArrayLike, prob: TArrayLike): number {
  * @returns the Hansen-Hurwitz estimate, $\hat\{Y\}$.
  */
 export function hansenHurwitz(
-  y: TArrayLike,
-  expected: TArrayLike,
-  inclusions: TArrayLike,
+  y: number[] | Vector,
+  expected: number[] | Vector,
+  inclusions: number[] | Vector,
 ): number {
-  const ys = new ColumnVector(y, false);
-  const es = new ColumnVector(expected, true);
-  const ss = new ColumnVector(inclusions, true);
+  const ys = new Vector(y, false);
+  const es = new Vector(expected, true);
+  const ss = new Vector(inclusions, true);
 
   return ys.multiply(ss, true).divide(es, true).sum();
 }
@@ -56,16 +56,15 @@ export function hansenHurwitz(
  * @returns the ratio estimate, $\hat\{T\}$.
  */
 export function ratioEstimator(
-  y: TArrayLike,
-  x: TArrayLike,
+  y: number[] | Vector,
+  x: number[] | Vector,
   totalX: number,
-  prob: TArrayLike,
+  prob: number[] | Vector,
 ): number {
-  const ys = new ColumnVector(y, false);
-  const xs = new ColumnVector(x, false);
-  const ps = new ColumnVector(prob, true);
+  const ys = new Vector(y, false);
+  const xs = new Vector(x, false);
+  const ps = new Vector(prob, true);
 
-  if (typeof totalX !== 'number') throw new TypeError('totalX must be number');
   if (ys.nrow !== xs.nrow) throw new RangeError('y and x must have same size');
 
   return totalX * (ys.divide(ps, true).sum() / xs.divide(ps, true).sum());
@@ -79,9 +78,9 @@ export function ratioEstimator(
  * @param prob - drawing probabilities of size n, $p_i$.
  * @returns the wr estimate, $\hat\{Y\}$.
  */
-export function wrEstimator(y: TArrayLike, prob: TArrayLike): number {
-  const ys = new ColumnVector(y, false);
-  const ps = new ColumnVector(prob, true);
+export function wrEstimator(y: number[] | Vector, prob: number[] | Vector): number {
+  const ys = new Vector(y, false);
+  const ps = new Vector(prob, true);
 
   return ys.divide(ps, true).mean();
 }
@@ -98,19 +97,18 @@ export function wrEstimator(y: TArrayLike, prob: TArrayLike): number {
  * @returns the nearest neighbour estimate
  */
 export function nearestNeighbourEstimator(
-  y: TArrayLike,
+  y: number[] | Vector,
   xm: Matrix,
-  sample: TArrayLike,
+  sample: number[] | Vector,
 ): number {
   const N = xm.nrow;
-  const sampleArr = parseAndCheckSampleArray(sample, N, true);
-  const n = sampleArr.length;
+  checkSampleArray(sample, N);
+  const n = sample.length;
 
-  if (y.length !== n)
-    throw new RangeError('y and sample must have the same length');
+  if (y.length !== n) throw new RangeError('y and sample must have the same length');
 
   const ni = new Array<number>(n).fill(0.0);
-  const nn = new NearestNeighbour(xm.extractRows(sampleArr), 10);
+  const nn = new NearestNeighbour(xm.extractRows(sample), 10);
 
   for (let i = 0; i < N; i++) {
     const unit = xm.extractRow(i);

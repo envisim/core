@@ -6,7 +6,7 @@ import {
   type PointObject,
   PropertyRecord,
 } from '@envisim/geojson-utils';
-import {ColumnVector} from '@envisim/matrix';
+import {Vector} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
 
 import {
@@ -177,7 +177,7 @@ export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
   let mu: number[];
   let n: number;
   const N = collection.size();
-  let probabilities: ColumnVector;
+  let probabilities: Vector;
 
   // Select the correct method, and save indices of the FeatureCollection
   switch (opts.methodName) {
@@ -202,7 +202,7 @@ export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
     case 'pareto':
     case 'brewer':
       // Compute expected number of inclusions / inclusion probabilities
-      mu = inclprobsFromLayer(collection, opts).toArray();
+      mu = inclprobsFromLayer(collection, opts).slice();
 
       // Get selected indexes
       idx = sampling[opts.methodName]({
@@ -217,7 +217,7 @@ export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
 
       // Compute expected number of inclusions / inclusion probabilities
       probabilities = drawprobsFromLayer(collection, opts);
-      mu = probabilities.multiply(n, false).toArray();
+      mu = probabilities.multiply(n, false).slice();
 
       // Get selected indexes
       idx = sampling[opts.methodName]({
@@ -232,7 +232,7 @@ export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
     case 'lpm2':
     case 'scps':
       // Compute expected number of inclusions / inclusion probabilities
-      mu = inclprobsFromLayer(collection, opts).toArray();
+      mu = inclprobsFromLayer(collection, opts).slice();
 
       // Get selected indexes
       idx = sampling[opts.methodName]({
@@ -245,7 +245,7 @@ export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
     // Balancing
     case 'cube':
       // Compute expected number of inclusions / inclusion probabilities
-      mu = inclprobsFromLayer(collection, opts).toArray();
+      mu = inclprobsFromLayer(collection, opts).slice();
 
       // Get selected indexes
       idx = sampling[opts.methodName]({
@@ -258,7 +258,7 @@ export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
     // Balancing + spreading
     case 'localCube':
       // Compute expected number of inclusions / inclusion probabilities
-      mu = inclprobsFromLayer(collection, opts).toArray();
+      mu = inclprobsFromLayer(collection, opts).slice();
 
       // Get selected indexes
       idx = sampling[opts.methodName]({

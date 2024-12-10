@@ -83,7 +83,7 @@ export function maternClusterProcess(
   // TODO?: The expanded box polygon may overlap antimeridian
   // and be incorrect GeoJSON.
   const muParents = intensityOfParents * A;
-  const nrOfParents = Poisson.random(1, {rate: muParents}, {rand: rand})[0];
+  const nrOfParents = new Poisson(muParents).random(1, {rand})[0];
 
   const parentsInBox = uniformPositionsInBBox(
     [...westSouth, ...eastNorth] as GJ.BBox,
@@ -95,13 +95,7 @@ export function maternClusterProcess(
   const newCollection = FeatureCollection.newPoint();
   // const features: Feature<PointObject>[] = [];
   // Generate number of points in each cluster.
-  const nrOfPointsInCluster = Poisson.random(
-    nrOfParents,
-    {
-      rate: meanOfCluster,
-    },
-    {rand: rand},
-  );
+  const nrOfPointsInCluster = new Poisson(meanOfCluster).random(nrOfParents, {rand});
 
   // nr of features in collection
   const nrOfFeatures = fc.features.length;

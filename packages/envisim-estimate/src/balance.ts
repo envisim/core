@@ -1,7 +1,7 @@
-import {Matrix, TArrayLike, isVector} from '@envisim/matrix';
+import {Matrix, Vector} from '@envisim/matrix';
 import {NearestNeighbour} from '@envisim/sampling';
 
-import {parseAndCheckSampleArray} from './utils.js';
+import {checkSampleArray} from './utils.js';
 
 /**
  * @category Spatial balance measure
@@ -11,27 +11,24 @@ import {parseAndCheckSampleArray} from './utils.js';
  * @returns spatial balance based on the voronoi balance measure.
  */
 export function spatialBalanceVO(
-  sample: TArrayLike,
+  sample: number[] | Vector,
   xm: Matrix,
-  prob: TArrayLike,
+  prob: number[] | Vector,
 ): number {
   const N = xm.nrow;
-  const sampleArr = parseAndCheckSampleArray(sample, N, true);
+  checkSampleArray(sample, N);
 
-  if (prob.length !== N)
-    throw new RangeError('xm and prob must have same number of rows');
+  if (prob.length !== N) throw new RangeError('xm and prob must have same number of rows');
 
-  const incl = new Array<number>(sampleArr.length).fill(0.0);
-  const nn = new NearestNeighbour(xm.extractRows(sampleArr), 10);
+  const incl = new Array<number>(sample.length).fill(0.0);
+  const nn = new NearestNeighbour(xm.extractRows(sample), 10);
 
   for (let i = 0; i < N; i++) {
     const unit = xm.extractRow(i);
     const neighbours = nn.findNearestNeighbours(unit);
 
     const ppart =
-      neighbours.length === 1
-        ? (prob.at(i) as number)
-        : (prob.at(i) as number) / neighbours.length;
+      neighbours.length === 1 ? (prob.at(i) as number) : (prob.at(i) as number) / neighbours.length;
     neighbours.forEach((e) => {
       incl[e] += ppart;
     });
@@ -43,7 +40,7 @@ export function spatialBalanceVO(
     return temp * temp;
   }, 0.0);
 
-  return result / sampleArr.length;
+  return result / sample.length;
 }
 
 /**
@@ -54,19 +51,18 @@ export function spatialBalanceVO(
  * @returns spatial balance based on the sum of squares balance measure.
  */
 export function spatialBalanceSS(
-  sample: TArrayLike,
+  sample: number[] | Vector,
   xm: Matrix,
-  prob?: TArrayLike,
+  prob?: number[] | Vector,
 ): number {
   const N = xm.nrow;
   const p = xm.ncol;
-  const sampleArr = parseAndCheckSampleArray(sample, N, true);
+  checkSampleArray(sample, N);
 
   let mat = xm;
-  if (Array.isArray(prob) || isVector(prob)) {
-    if (prob.length !== N)
-      throw new RangeError('xm and prob must have same number of rows');
-    mat = xm.copy();
+  if (prob !== undefined) {
+    if (prob.length !== N) throw new RangeError('xm and prob must have same number of rows');
+    mat = xm.clone();
 
     mat.map((e: number, i: number): number => {
       const r = mat.rowOfIndex(i);
@@ -77,7 +73,7 @@ export function spatialBalanceSS(
   const means = new Array<number>(p).fill(0.0);
   let total = 0.0;
   let result = 0.0;
-  const nn = new NearestNeighbour(mat.extractRows(sampleArr), 10);
+  const nn = new NearestNeighbour(mat.extractRows(sample), 10);
 
   // Find the distance to the closest unit
   for (let i = 0; i < N; i++) {
@@ -91,5 +87,5 @@ export function spatialBalanceSS(
 
   total -= means.reduce((e, t) => (e * e) / N + t, 0.0);
 
-  return (result * sampleArr.length) / total;
+  return (result * sample.length) / total;
 }
