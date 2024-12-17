@@ -124,7 +124,7 @@ export function samplePointOptionsCheck({
  * @see {@link SAMPLE_FEATURE_OPTIONS | default values}
  * @see {@link sampleFeatureOptionsCheck | error codes}
  */
-export interface SampleFeatureOptions<G extends GJ.PointObject | GJ.LineObject | GJ.AreaObject>
+export interface SampleFeatureOptions<G extends GJ.AreaObject | GJ.LineObject | GJ.PointObject>
   extends SamplePointOptions {
   /**
    * A model feature of points or lines or areas to be placed on the selcted
