@@ -46,7 +46,7 @@ export function samplePointsOnAreas(
     randomRotationOfGrid = SAMPLE_POINT_OPTIONS.randomRotationOfGrid,
   }: SamplePointOptions,
 ): FeatureCollection<Point> {
-  const optionsError = samplePointOptionsCheck(collection, {
+  const optionsError = samplePointOptionsCheck({
     pointSelection,
     sampleSize,
     buffer,
@@ -54,7 +54,7 @@ export function samplePointsOnAreas(
     rotationOfGrid,
     randomRotationOfGrid,
   });
-  if (optionsError !== 0) {
+  if (optionsError !== null) {
     throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
   }
 

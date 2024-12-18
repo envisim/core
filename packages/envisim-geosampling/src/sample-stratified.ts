@@ -13,63 +13,57 @@ import {
   SampleBeltOnAreaOptions,
   SampleFeatureOptions,
   SamplePointOptions,
+  SampleRelascopePointsOptions,
   SampleSystematicLineOnAreaOptions,
 } from './sample-continuous/index.js';
 import {SampleFiniteOptions} from './sample-finite/index.js';
+import {SamplingError} from './sampling-error.js';
+import {type ErrorType} from './utils/index.js';
 
-type SampleContinuousOptions =
+export type SampleContinuousOptions =
   | SampleBaseOptions
   | SamplePointOptions
   | SampleFeatureOptions<GJ.PointObject>
   | SampleFeatureOptions<GJ.LineObject>
   | SampleFeatureOptions<GJ.AreaObject>
+  | SampleRelascopePointsOptions
   | SampleSystematicLineOnAreaOptions
   | SampleBeltOnAreaOptions;
 
-interface SampleStratifiedOptions<O extends SampleFiniteOptions | SampleContinuousOptions> {
+export interface SampleStratifiedOptions<O extends SampleFiniteOptions | SampleContinuousOptions> {
   stratify: string;
   options: O | O[];
 }
 
 /**
- * Returns the following errors
- * - 110: stratify does not exist on propertyRecord
- * - 120: stratify property is not categorical
- * - 130: stratify property has no values
- * - 140: options is an array, but its length does not match the length of
- *        stratify property values
- *
- * @returns `0` if check passes
+ * @returns `null` if check passes, {@link SamplingError} otherwise.
  */
 export function sampleStratifiedOptionsCheck(
-  fc:
-    | FeatureCollection<AreaObject>
-    | FeatureCollection<LineObject>
-    | FeatureCollection<PointObject>,
   {stratify, options}: SampleStratifiedOptions<SampleFiniteOptions | SampleContinuousOptions>,
-): number {
-  const property = fc.propertyRecord.getId(stratify);
+  propertyRecord: PropertyRecord,
+): ErrorType<typeof SamplingError> {
+  const property = propertyRecord.getId(stratify);
   if (property === null) {
     // stratify must exist on propertyRecord
-    return 110;
+    return SamplingError.STRATIFY_MISSING;
   }
 
   if (!PropertyRecord.propertyIsCategorical(property)) {
     // stratify prop must be categorical -- no stratification on numerical
-    return 120;
+    return SamplingError.STRATIFY_NOT_CATEGORICAL;
   }
 
   if (property.values.length === 0) {
     // stratify prop must have values
-    return 130;
+    return SamplingError.STRATIFY_NO_VALUES;
   }
 
   if (Array.isArray(options) && options.length !== property.values.length) {
     // if options is an array, the length must match the number of prop values
-    return 140;
+    return SamplingError.STRATIFY_OPTIONS_LENGTH_MISMATCH;
   }
 
-  return 0;
+  return null;
 }
 
 export function sampleStratified<
@@ -84,19 +78,22 @@ export function sampleStratified<
   OPTS extends SampleFiniteOptions | SampleContinuousOptions,
 >(
   sampleFn: (arg0: IN, arg1: OPTS) => OUT,
-  fc: IN,
+  collection: IN,
   {stratify, options}: SampleStratifiedOptions<OPTS>,
 ): OUT {
-  const optionsError = sampleStratifiedOptionsCheck(fc, {
-    stratify,
-    options,
-  });
-  if (optionsError !== 0) {
+  const optionsError = sampleStratifiedOptionsCheck(
+    {
+      stratify,
+      options,
+    },
+    collection.propertyRecord,
+  );
+  if (optionsError !== null) {
     throw new RangeError(`sampleStratified error: ${optionsError}`);
   }
 
   // Already checked that it exists
-  const property = fc.propertyRecord.getId(stratify) as CategoricalProperty;
+  const property = collection.propertyRecord.getId(stratify) as CategoricalProperty;
   const optionsArray = Array.isArray(options)
     ? options
     : Array.from<OPTS>({
@@ -105,30 +102,30 @@ export function sampleStratified<
 
   let stratumSampleLayers: OUT[];
 
-  if (FeatureCollection.isArea(fc)) {
+  if (FeatureCollection.isArea(collection)) {
     stratumSampleLayers = property.values.map((_, i) => {
-      const features = fc.features.filter((f) => f.properties[stratify] === i);
+      const features = collection.features.filter((f) => f.properties[stratify] === i);
 
       return sampleFn(
-        FeatureCollection.newArea(features, fc.propertyRecord, true) as IN,
+        FeatureCollection.newArea(features, collection.propertyRecord, true) as IN,
         optionsArray[i],
       );
     });
-  } else if (FeatureCollection.isLine(fc)) {
+  } else if (FeatureCollection.isLine(collection)) {
     stratumSampleLayers = property.values.map((_, i) => {
-      const features = fc.features.filter((f) => f.properties[stratify] === i);
+      const features = collection.features.filter((f) => f.properties[stratify] === i);
 
       return sampleFn(
-        FeatureCollection.newLine(features, fc.propertyRecord, true) as IN,
+        FeatureCollection.newLine(features, collection.propertyRecord, true) as IN,
         optionsArray[i],
       );
     });
-  } else if (FeatureCollection.isPoint(fc)) {
+  } else if (FeatureCollection.isPoint(collection)) {
     stratumSampleLayers = property.values.map((_, i) => {
-      const features = fc.features.filter((f) => f.properties[stratify] === i);
+      const features = collection.features.filter((f) => f.properties[stratify] === i);
 
       return sampleFn(
-        FeatureCollection.newPoint(features, fc.propertyRecord, true) as IN,
+        FeatureCollection.newPoint(features, collection.propertyRecord, true) as IN,
         optionsArray[i],
       );
     });

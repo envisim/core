@@ -79,35 +79,29 @@ function createPropertiesForLine(
 }
 
 /**
- * Collect intersect of features as the new frame from base-collection.
+ * Select intersect of features as the new frame from base-collection.
  * @param frame
- * @param baseLayer
+ * @param base
  */
-export function collectIntersects(
+export function selectIntersects(
   frame: FeatureCollection<PointObject>,
   base: FeatureCollection<AreaObject>,
 ): FeatureCollection<PointObject>;
-export function collectIntersects(
+export function selectIntersects<
+  B extends FeatureCollection<AreaObject> | FeatureCollection<LineObject>,
+>(
   frame: FeatureCollection<LineObject>,
-  base: FeatureCollection<LineObject>,
-): FeatureCollection<PointObject>;
-export function collectIntersects(
-  frame: FeatureCollection<LineObject>,
-  base: FeatureCollection<AreaObject>,
-): FeatureCollection<LineObject>;
-export function collectIntersects(
-  frame: FeatureCollection<AreaObject>,
-  base: FeatureCollection<PointObject>,
-): FeatureCollection<PointObject>;
-export function collectIntersects(
-  frame: FeatureCollection<AreaObject>,
-  base: FeatureCollection<LineObject>,
-): FeatureCollection<LineObject>;
-export function collectIntersects(
-  frame: FeatureCollection<AreaObject>,
-  base: FeatureCollection<AreaObject>,
-): FeatureCollection<AreaObject>;
-export function collectIntersects(
+  base: B,
+): B extends FeatureCollection<AreaObject>
+  ? FeatureCollection<LineObject>
+  : FeatureCollection<PointObject>;
+export function selectIntersects<
+  B extends
+    | FeatureCollection<AreaObject>
+    | FeatureCollection<LineObject>
+    | FeatureCollection<PointObject>,
+>(frame: FeatureCollection<AreaObject>, base: B): B;
+export function selectIntersects(
   frame:
     | FeatureCollection<AreaObject>
     | FeatureCollection<LineObject>
@@ -123,7 +117,7 @@ export function collectIntersects(
   // but values need to be updated for categorical props and
   // two design properties must be added to the new property
   // record. Set initial record here.
-  const record = base.propertyRecord.copy(false);
+  const record = base.propertyRecord.copy();
   record.addDesignWeight();
   record.addParent();
 

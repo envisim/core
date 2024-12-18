@@ -35,13 +35,13 @@ export function sampleSystematicLinesOnAreas(
     rotation = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.rotation,
   }: SampleSystematicLineOnAreaOptions,
 ): FeatureCollection<LineObject> {
-  const optionsError = sampleSystematicLineOnAreaOptionsCheck(collection, {
+  const optionsError = sampleSystematicLineOnAreaOptionsCheck({
     pointsPerCircle,
     distBetween,
     rotation,
   });
-  if (optionsError !== 0) {
-    throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
+  if (optionsError !== null) {
+    throw new RangeError(optionsError);
   }
 
   const numPointsPerLine = 20;

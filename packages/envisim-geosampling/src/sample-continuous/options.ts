@@ -1,11 +1,9 @@
-import {
-  type AreaObject,
-  FeatureCollection,
-  type GeoJSON as GJ,
-  type LineObject,
-  type PointObject,
-} from '@envisim/geojson-utils';
+import {type GeoJSON as GJ, PropertyRecord} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
+
+import {SamplingError} from '../sampling-error.js';
+import {ErrorType} from '../utils/index.js';
+import {type SampleRelascopePointsOptions} from './relascope-points.js';
 
 // BASE
 /**
@@ -30,22 +28,21 @@ export const SAMPLE_BASE_OPTIONS: Readonly<Required<SampleBaseOptions>> = {
 
 /**
  * Returns the following errors:
- * - 110: pointsPerCircle is not a positive integer
+ * - {@link SamplingError.POINTS_PER_CIRCLE_NOT_POSITIVE_INTEGER}
  *
- * @returns `0` if check passes
+ * @returns `null` if check passes
  */
-export function sampleBaseOptionsCheck<T extends AreaObject | LineObject | PointObject>(
-  _: FeatureCollection<T>,
-  {pointsPerCircle}: SampleBaseOptions,
-): number {
+export function sampleBaseOptionsCheck({
+  pointsPerCircle,
+}: SampleBaseOptions): ErrorType<typeof SamplingError> {
   if (
     pointsPerCircle !== undefined &&
     (!Number.isInteger(pointsPerCircle) || pointsPerCircle <= 0)
   ) {
-    return 110;
+    return SamplingError.POINTS_PER_CIRCLE_NOT_POSITIVE_INTEGER;
   }
 
-  return 0;
+  return null;
 }
 
 // POINT extends BASE
@@ -93,36 +90,33 @@ export const SAMPLE_POINT_OPTIONS: Readonly<Required<SamplePointOptions>> = {
 
 /**
  * Returns the following errors:
- * - <200: any error from {@link sampleBaseOptionsCheck}
- * - 210: sampleSize is not a non-negative integer
- * - 220: ratio is not positive
+ * - any error from {@link sampleBaseOptionsCheck}
+ * - {@link SamplingError.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER}
+ * - {@link SamplingError.RATIO_NOT_POSITIVE}
  *
- * @returns `0` if check passes
+ * @returns `null` if check passes
  */
-export function samplePointOptionsCheck<T extends AreaObject | LineObject | PointObject>(
-  collection: FeatureCollection<T>,
-  {
-    // pointSelection,
-    sampleSize,
-    ratio,
-    // buffer,
-    ...options
-  }: SamplePointOptions,
-): number {
-  const baseCheck = sampleBaseOptionsCheck(collection, options);
-  if (baseCheck !== 0) {
+export function samplePointOptionsCheck({
+  // pointSelection,
+  sampleSize,
+  ratio,
+  // buffer,
+  ...options
+}: SamplePointOptions): ErrorType<typeof SamplingError> {
+  const baseCheck = sampleBaseOptionsCheck(options);
+  if (baseCheck !== null) {
     return baseCheck;
   }
 
   if (!Number.isInteger(sampleSize) || sampleSize < 0) {
-    return 210;
+    return SamplingError.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER;
   }
 
   if (ratio !== undefined && ratio <= 0.0) {
-    return 220;
+    return SamplingError.RATIO_NOT_POSITIVE;
   }
 
-  return 0;
+  return null;
 }
 
 // FEATURE extends POINT
@@ -130,7 +124,7 @@ export function samplePointOptionsCheck<T extends AreaObject | LineObject | Poin
  * @see {@link SAMPLE_FEATURE_OPTIONS | default values}
  * @see {@link sampleFeatureOptionsCheck | error codes}
  */
-export interface SampleFeatureOptions<G extends GJ.PointObject | GJ.LineObject | GJ.AreaObject>
+export interface SampleFeatureOptions<G extends GJ.AreaObject | GJ.LineObject | GJ.PointObject>
   extends SamplePointOptions {
   /**
    * A model feature of points or lines or areas to be placed on the selcted
@@ -176,33 +170,24 @@ export const SAMPLE_FEATURE_OPTIONS: Readonly<
 
 /**
  * Returns the following errors:
- * - <300: any error from {@link samplePointOptionsCheck}
- * - 310: layer is not {@link FeatureCollection<AreaCollection>}
+ * - any error from {@link samplePointOptionsCheck}.
  *
- * @returns `0` if check passes
+ * @returns `null` if check passes
  */
 export function sampleFeatureOptionsCheck<
-  T extends AreaObject | LineObject | PointObject,
-  G extends GJ.PointObject | GJ.LineObject | GJ.AreaObject,
->(
-  collection: FeatureCollection<T>,
-  {
-    // modelGeometry,
-    // rotation,
-    // randomRotation,
-    ...options
-  }: SampleFeatureOptions<G>,
-): number {
-  const pointCheck = samplePointOptionsCheck(collection, options);
-  if (pointCheck !== 0) {
+  G extends GJ.AreaObject | GJ.LineObject | GJ.PointObject,
+>({
+  // modelFeature,
+  // rotation,
+  // randomRotation,
+  ...options
+}: SampleFeatureOptions<G>): ErrorType<typeof SamplingError> {
+  const pointCheck = samplePointOptionsCheck(options);
+  if (pointCheck !== null) {
     return pointCheck;
   }
 
-  if (!FeatureCollection.isArea(collection)) {
-    return 310;
-  }
-
-  return 0;
+  return null;
 }
 
 // SYSTEMATIC LINE ON AREA extends BASE
@@ -231,31 +216,26 @@ export const SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS: Readonly<
 
 /**
  * Returns the following errors:
- * - <400: any error from {@link sampleBaseOptionsCheck}
- * - 410: distBetween is not positive
+ * - any error from {@link sampleBaseOptionsCheck}
+ * - {@link SamplingError.DIST_BETWEEN_NOT_POSITIVE}
  *
- * @returns `0` if check passes
+ * @returns `null` if check passes
  */
-export function sampleSystematicLineOnAreaOptionsCheck<
-  T extends AreaObject | LineObject | PointObject,
->(
-  collection: FeatureCollection<T>,
-  {
-    distBetween,
-    // rotation,
-    ...options
-  }: SampleSystematicLineOnAreaOptions,
-): number {
-  const baseCheck = sampleBaseOptionsCheck(collection, options);
-  if (baseCheck !== 0) {
+export function sampleSystematicLineOnAreaOptionsCheck({
+  distBetween,
+  // rotation,
+  ...options
+}: SampleSystematicLineOnAreaOptions): ErrorType<typeof SamplingError> {
+  const baseCheck = sampleBaseOptionsCheck(options);
+  if (baseCheck !== null) {
     return baseCheck;
   }
 
   if (distBetween <= 0.0) {
-    return 410;
+    return SamplingError.DIST_BETWEEN_NOT_POSITIVE;
   }
 
-  return 0;
+  return null;
 }
 
 // BELT ON AREA extends SYSTEMATIC LINE ON AREA
@@ -278,23 +258,53 @@ export const SAMPLE_BELT_ON_AREA_OPTIONS: Readonly<
 
 /**
  * Returns the following errors:
- * - <500: any error from {@link sampleBaseOptionsCheck}
- * - 510: halfWidth is not positive
+ * - any error from {@link sampleBaseOptionsCheck}
+ * - {@link SamplingError.HALF_WIDTH_NOT_POSITIVE}
  *
- * @returns `0` if check passes
+ * @returns `null` if check passes
  */
-export function sampleBeltOnAreaOptionsCheck<T extends AreaObject | LineObject | PointObject>(
-  collection: FeatureCollection<T>,
-  {halfWidth, ...options}: SampleBeltOnAreaOptions,
-): number {
-  const systematicLineOnAreaCheck = sampleBaseOptionsCheck(collection, options);
-  if (systematicLineOnAreaCheck !== 0) {
+export function sampleBeltOnAreaOptionsCheck({
+  halfWidth,
+  ...options
+}: SampleBeltOnAreaOptions): ErrorType<typeof SamplingError> {
+  const systematicLineOnAreaCheck = sampleBaseOptionsCheck(options);
+  if (systematicLineOnAreaCheck !== null) {
     return systematicLineOnAreaCheck;
   }
 
   if (halfWidth <= 0.0) {
-    return 510;
+    return SamplingError.HALF_WIDTH_NOT_POSITIVE;
   }
 
-  return 0;
+  return null;
+}
+
+export {type SampleRelascopePointsOptions};
+export const SAMPLE_RELASCOPE_POINTS_OPTIONS: Readonly<
+  Required<Omit<SampleRelascopePointsOptions, 'baseCollection' | 'sizeProperty'>>
+> = {
+  ...SAMPLE_POINT_OPTIONS,
+  factor: 1.0,
+};
+export function sampleRelascopePointsOptionsCheck({
+  factor,
+  baseCollection,
+  sizeProperty,
+  ...options
+}: SampleRelascopePointsOptions): ErrorType<typeof SamplingError> {
+  const pointCheck = samplePointOptionsCheck(options);
+  if (pointCheck !== null) {
+    return pointCheck;
+  } else if (factor && factor <= 0.0) {
+    return SamplingError.FACTOR_NOT_POSITIVE;
+  }
+
+  const prop = baseCollection.propertyRecord.getId(sizeProperty);
+  if (prop === null) {
+    return SamplingError.SIZE_PROPERTY_MISSING;
+  } else if (!PropertyRecord.propertyIsNumerical(prop)) {
+    return SamplingError.SIZE_PROPERTY_NOT_NUMERICAL;
+  }
+
+  return null;
 }

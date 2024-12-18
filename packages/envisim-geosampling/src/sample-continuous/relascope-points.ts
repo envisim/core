@@ -7,10 +7,12 @@ import {
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 
+import {SamplingError} from '../sampling-error.js';
+import type {ErrorType} from '../utils/error-type.js';
 import {SAMPLE_POINT_OPTIONS, type SamplePointOptions, samplePointOptionsCheck} from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
 
-interface SampleRelascopePointsOptions extends SamplePointOptions {
+export interface SampleRelascopePointsOptions extends SamplePointOptions {
   /**
    * The point layer to collect objects from.
    */
@@ -27,26 +29,28 @@ interface SampleRelascopePointsOptions extends SamplePointOptions {
 }
 
 export function sampleRelascopePointsOptionsCheck(
-  collection: FeatureCollection<AreaObject>,
   {baseCollection, sizeProperty, factor, ...options}: SampleRelascopePointsOptions,
   recursiveCheck: boolean = false,
-): number {
+): ErrorType<typeof SamplingError> {
   if (recursiveCheck === true) {
-    const pointCheck = samplePointOptionsCheck(collection, options);
-    if (pointCheck !== 0) {
+    const pointCheck = samplePointOptionsCheck(options);
+    if (pointCheck !== null) {
       return pointCheck;
     }
   }
 
   if (factor <= 0.0) {
-    return 610;
+    return SamplingError.FACTOR_NOT_POSITIVE;
   }
 
-  if (!PropertyRecord.propertyIsNumerical(baseCollection.propertyRecord.getId(sizeProperty))) {
-    return 620;
+  const prop = baseCollection.propertyRecord.getId(sizeProperty);
+  if (prop === null) {
+    return SamplingError.SIZE_PROPERTY_MISSING;
+  } else if (!PropertyRecord.propertyIsNumerical(prop)) {
+    return SamplingError.SIZE_PROPERTY_NOT_NUMERICAL;
   }
 
-  return 0;
+  return null;
 }
 
 // TODO: Decide if we should implement correction by adding the correct buffer.
@@ -76,7 +80,6 @@ export function sampleRelascopePoints(
   }: SampleRelascopePointsOptions,
 ): FeatureCollection<Point> {
   const optionsError = sampleRelascopePointsOptionsCheck(
-    collection,
     {
       buffer,
       baseCollection,
@@ -86,7 +89,7 @@ export function sampleRelascopePoints(
     },
     false,
   );
-  if (optionsError !== 0) {
+  if (optionsError !== null) {
     throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
   }
 

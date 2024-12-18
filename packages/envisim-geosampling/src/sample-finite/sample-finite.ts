@@ -1,7 +1,7 @@
 import * as sampling from '@envisim/sampling';
 import {
   type AreaObject,
-  FeatureCollection,
+  type FeatureCollection,
   type LineObject,
   type PointObject,
   PropertyRecord,
@@ -9,6 +9,8 @@ import {
 import {Vector} from '@envisim/matrix';
 import type {Random} from '@envisim/random';
 
+import {SamplingError} from '../sampling-error.js';
+import {ErrorType} from '../utils/index.js';
 import {
   balancingMatrixFromLayer,
   drawprobsFromLayer,
@@ -79,20 +81,9 @@ export interface SampleFiniteOptions {
 }
 
 /**
- * Returns the following errors:
- * - 10: sampleSize is not a non-negative integer
- * - 20: probabilitesFrom is set, but does not exist on propertyRecord
- * - 21: probabilitesFrom is not numerical
- * - 30: method is spatially balanced, but does not use spreadOn or spreadGeo
- * - 31: method is spatially balanced, but spreadOn does not exist on
- *       propertyRecord
- * - 40: method is balanced, but does not use balanceOn
- * - 41: method is balanced, but balanceOn does not exist on propertyRecord
- *
- * @returns `0` if check passes
+ * @returns `null` if check passes, {@link SamplingError} otherwise
  */
-export function sampleFiniteOptionsCheck<T extends AreaObject | LineObject | PointObject>(
-  collection: FeatureCollection<T>,
+export function sampleFiniteOptionsCheck(
   {
     methodName,
     sampleSize,
@@ -102,22 +93,24 @@ export function sampleFiniteOptionsCheck<T extends AreaObject | LineObject | Poi
     balanceOn,
     spreadGeo,
   }: SampleFiniteOptions,
-): number {
+  // primitive: GeometricPrimitive,
+  properties: PropertyRecord,
+): ErrorType<typeof SamplingError> {
   if (!Number.isInteger(sampleSize) || sampleSize < 0) {
     // sampleSize must be a non negative integer
-    return 10;
+    return SamplingError.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER;
   }
 
   if (probabilitiesFrom !== undefined) {
-    const property = collection.propertyRecord.getId(probabilitiesFrom);
+    const property = properties.getId(probabilitiesFrom);
     if (property === null) {
       // probabilitiesFrom must exist on propertyRecord
-      return 20;
+      return SamplingError.PROBABILITIES_FROM_MISSING;
     }
 
     if (!PropertyRecord.propertyIsNumerical(property)) {
       // probabilitiesFrom must be a numerical property
-      return 21;
+      return SamplingError.PROBABILITIES_FROM_NOT_NUMERICAL;
     }
   }
 
@@ -129,12 +122,12 @@ export function sampleFiniteOptionsCheck<T extends AreaObject | LineObject | Poi
     if (spreadOn === undefined) {
       if (spreadGeo === undefined) {
         // Must use either spreadOn or spreadGeo
-        return 30;
+        return SamplingError.SPREAD_ON_MISSING;
       }
     } else {
-      if (!spreadOn.every((prop) => Object.hasOwn(collection.propertyRecord, prop))) {
+      if (!spreadOn.every((prop) => Object.hasOwn(properties, prop))) {
         // spredOn entries must exist on propertyRecord
-        return 31;
+        return SamplingError.SPREAD_ON_MISSING;
       }
     }
   }
@@ -144,17 +137,14 @@ export function sampleFiniteOptionsCheck<T extends AreaObject | LineObject | Poi
     (SAMPLE_FINITE_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName) ||
     (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName)
   ) {
-    if (!balanceOn) {
+    if (!balanceOn || !balanceOn.every((prop) => Object.hasOwn(properties, prop))) {
       // Must use balanceOn
-      return 40;
-    }
-    if (!balanceOn.every((prop) => Object.hasOwn(collection.propertyRecord, prop))) {
       // balanceOn entries must exist on propertyRecord
-      return 41;
+      return SamplingError.BALANCE_ON_MISSING;
     }
   }
 
-  return 0;
+  return null;
 }
 
 /**
@@ -168,8 +158,8 @@ export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
   collection: FeatureCollection<T>,
   opts: SampleFiniteOptions,
 ): FeatureCollection<T> {
-  const optionsError = sampleFiniteOptionsCheck(collection, opts);
-  if (optionsError !== 0) {
+  const optionsError = sampleFiniteOptionsCheck(opts, collection.propertyRecord);
+  if (optionsError !== null) {
     throw new RangeError(`sampleFinite error: ${optionsError}`);
   }
 

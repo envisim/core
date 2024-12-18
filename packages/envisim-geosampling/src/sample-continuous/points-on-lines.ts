@@ -75,11 +75,11 @@ export function samplePointsOnLines(
   collection: FeatureCollection<LineObject>,
   {rand = SAMPLE_POINT_OPTIONS.rand, pointSelection, sampleSize}: SamplePointOptions,
 ): FeatureCollection<Point> {
-  const optionsError = samplePointOptionsCheck(collection, {
+  const optionsError = samplePointOptionsCheck({
     pointSelection,
     sampleSize,
   });
-  if (optionsError !== 0) {
+  if (optionsError !== null) {
     throw new RangeError(`samplePointsOnLines error: ${optionsError}`);
   }
 

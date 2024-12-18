@@ -448,3 +448,13 @@ function setPropertiesOfFeature(
 
   return newProps;
 }
+
+export type PureCollection<
+  T extends AreaObject | LineObject | PointObject = AreaObject | LineObject | PointObject,
+> = T extends AreaObject
+  ? FeatureCollection<AreaObject>
+  : T extends LineObject
+    ? FeatureCollection<LineObject>
+    : T extends PointObject
+      ? FeatureCollection<PointObject>
+      : never;

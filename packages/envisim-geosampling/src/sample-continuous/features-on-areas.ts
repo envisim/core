@@ -54,7 +54,7 @@ function sampleFeaturesOnAreas(
     randomRotationOfGrid = SAMPLE_FEATURE_OPTIONS.randomRotationOfGrid,
   }: SampleFeatureOptions<GJ.AreaObject | GJ.LineObject | GJ.PointObject>,
 ): FeatureCollection<AreaObject> | FeatureCollection<LineObject> | FeatureCollection<PointObject> {
-  const optionsError = sampleFeatureOptionsCheck(collection, {
+  const optionsError = sampleFeatureOptionsCheck({
     rand,
     pointsPerCircle,
     pointSelection,
@@ -66,7 +66,7 @@ function sampleFeaturesOnAreas(
     rotationOfGrid,
     randomRotationOfGrid,
   });
-  if (optionsError !== 0) {
+  if (optionsError !== null) {
     throw new RangeError(`sampleFeaturesOnAreas error: ${optionsError}`);
   }
 

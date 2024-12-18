@@ -177,3 +177,13 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
     return ((this.properties['_designWeight'] as number) *= value);
   }
 }
+
+export type PureFeature<
+  T extends AreaObject | LineObject | PointObject = AreaObject | LineObject | PointObject,
+> = T extends AreaObject
+  ? Feature<AreaObject>
+  : T extends LineObject
+    ? Feature<LineObject>
+    : T extends PointObject
+      ? Feature<PointObject>
+      : never;
