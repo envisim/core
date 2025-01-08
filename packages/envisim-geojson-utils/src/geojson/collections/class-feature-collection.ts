@@ -1,3 +1,5 @@
+import {v4 as uuid} from 'uuid';
+
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
@@ -374,19 +376,25 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
   }
 
   // PROPERTY HANDLING
-  initNumericalProperty(property: NumericalProperty, defaultValue: number): void {
+  initNumericalProperty(
+    {id = uuid(), name = id, parent}: Partial<NumericalProperty>,
+    defaultValue: number,
+  ): void {
     // add the property to the record
-    this.propertyRecord.addNumerical(property);
+    this.propertyRecord.addNumerical({id, name, parent});
     // add the default value to each feature
-    this.forEach((feature) => feature.initProperty(property.id, defaultValue));
+    this.forEach((feature) => feature.initProperty(id, defaultValue));
   }
-  initCategoricalProperty(property: CategoricalProperty, defaultValue: string): void {
+  initCategoricalProperty(
+    {id = uuid(), name = id, values = []}: Partial<CategoricalProperty>,
+    defaultValue: string,
+  ): void {
     // add the property to the record
-    this.propertyRecord.addCategorical(property);
+    this.propertyRecord.addCategorical({id, name, values});
     // add the default value to record if it does not exist
-    this.propertyRecord.addValueToCategory(property.id, defaultValue);
+    this.propertyRecord.addValueToCategory(id, defaultValue);
     // add the default value to each feature
-    this.forEach((feature) => feature.initProperty(property.id, defaultValue));
+    this.forEach((feature) => feature.initProperty(id, defaultValue));
   }
   removeProperty(id: string): void {
     // remove the property from the record
