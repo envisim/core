@@ -32,11 +32,7 @@ export function uniformBinomialPointProcess(
     sampleSize,
     rand,
   });
-
   // Remove _designWeight property
-  pointCollection.forEach((feature) => {
-    feature.properties = {};
-  });
-
+  pointCollection.removeProperty('_designWeight');
   return pointCollection;
 }
