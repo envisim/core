@@ -15,7 +15,7 @@ import {Random} from '@envisim/random';
 import {uniformPositionsInBBox} from '../sample-continuous/index.js';
 
 // For conversion from radians to degrees.
-const toDeg = 180 / Math.PI;
+const TO_DEG = 180 / Math.PI;
 
 // Internal. Generates a point uniformly in a disk of radius around center point.
 // See e.g. https://mathworld.wolfram.com/DiskPointPicking.html
@@ -23,7 +23,7 @@ function randomPositionInCluster(center: GJ.Position, radius: number, rand: Rand
   // Randomize angle.
   const theta = rand.float() * 2 * Math.PI;
   // Compute azimuth = angle from north in degrees clockwise.
-  const azimuth = (90 - theta * toDeg + 360) % 360;
+  const azimuth = (90 - theta * TO_DEG + 360) % 360;
   // Randomize radius (distance from center).
   const dist = radius * Math.sqrt(rand.float());
   return Geodesic.destination(center, dist, azimuth);
@@ -51,13 +51,13 @@ interface MaternClusterProcessOptions {
 
 /**
  * Generates points from a Matérn cluster point process
- * on an area layer.
+ * on an area collection.
  *
- * @param layer
+ * @param collection
  * @param opts
  */
 export function maternClusterProcess(
-  fc: FeatureCollection<AreaObject>,
+  collection: FeatureCollection<AreaObject>,
   {
     intensityOfParents,
     meanOfCluster,
@@ -65,7 +65,7 @@ export function maternClusterProcess(
     rand = new Random(),
   }: MaternClusterProcessOptions,
 ): FeatureCollection<PointObject> {
-  const box = bbox4(fc.getBBox());
+  const box = bbox4(collection.getBBox());
   // Expand box by radius of cluster, as parent points should
   // be allowed outside of area. This is to avoid edge effects.
   const dist = Math.SQRT2 * radiusOfCluster;
@@ -78,10 +78,7 @@ export function maternClusterProcess(
   // Expanded box as Feature.
   const expandedBoxPolygon = Polygon.create(expandedBoxPolygonCoords);
   // Generate parents in expanded box.
-
   const A = expandedBoxPolygon.area();
-  // TODO?: The expanded box polygon may overlap antimeridian
-  // and be incorrect GeoJSON.
   const muParents = intensityOfParents * A;
   const nrOfParents = new Poisson(muParents).random(1, {rand})[0];
 
@@ -93,16 +90,14 @@ export function maternClusterProcess(
 
   // To store new features.
   const newCollection = FeatureCollection.newPoint();
-  // const features: Feature<PointObject>[] = [];
   // Generate number of points in each cluster.
   const nrOfPointsInCluster = new Poisson(meanOfCluster).random(nrOfParents, {rand});
-
-  // nr of features in collection
-  const nrOfFeatures = fc.features.length;
+  // Number of features in collection.
+  const nrOfFeatures = collection.features.length;
 
   parentsInBox.forEach((coords, index: number) => {
     // Generate the child points and push if they are inside
-    // input geoJSON.
+    // input collection.
     const clusterSize = nrOfPointsInCluster[index];
     for (let i = 0; i < clusterSize; i++) {
       // Create random child point in cluster.
@@ -110,7 +105,7 @@ export function maternClusterProcess(
       // If child is in input collection, then push child.
       if (pointInBBox(coordinates, box)) {
         for (let j = 0; j < nrOfFeatures; j++) {
-          const geom = fc.features[j].geometry;
+          const geom = collection.features[j].geometry;
           if (geom.includesPosition(coordinates)) {
             newCollection.addGeometry(Point.create(coordinates));
             break;
