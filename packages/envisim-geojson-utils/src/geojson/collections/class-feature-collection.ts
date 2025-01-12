@@ -383,7 +383,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     // add the property to the record
     this.propertyRecord.addNumerical({id, name, parent});
     // add the default value to each feature
-    this.forEach((feature) => feature.initProperty(id, defaultValue));
+    this.forEach((feature) => feature.setProperty(id, defaultValue));
   }
   initCategoricalProperty(
     {id = uuid(), name = id, values = []}: Partial<CategoricalProperty>,
@@ -394,7 +394,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     // add the default value to record if it does not exist
     this.propertyRecord.addValueToCategory(id, defaultValue);
     // add the default value to each feature
-    this.forEach((feature) => feature.initProperty(id, defaultValue));
+    this.forEach((feature) => feature.setProperty(id, defaultValue));
   }
   removeProperty(id: string): void {
     // remove the property from the record
@@ -406,12 +406,6 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
   setProperty(id: string, index: number, value: number | string): void {
     if (index < 0 || index >= this.size()) throw new Error('no feature with this index exists');
     this.features[index].setProperty(id, value);
-  }
-
-  forEachProperty(id: string, callback: (value: number | string, index: number) => void): void {
-    this.forEach((feature, index) => {
-      callback(feature.properties[id], index);
-    });
   }
 
   // LAYER

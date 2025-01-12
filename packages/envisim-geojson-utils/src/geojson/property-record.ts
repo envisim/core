@@ -196,9 +196,7 @@ export class PropertyRecord {
   }
 
   removeProperty(id: string): void {
-    if (this.hasId(id)) {
-      delete this.record[id];
-    }
+    delete this.record[id];
   }
 
   // SPECIAL PROPERTIES
