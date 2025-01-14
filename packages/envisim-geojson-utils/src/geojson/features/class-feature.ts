@@ -115,29 +115,20 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
     return this.geometry.geometricPrimitive();
   }
 
-  initProperty(property: string, defaultValue: number | string): void {
-    if (!Object.hasOwn(this.properties, property)) {
-      this.properties[property] = defaultValue;
-    }
+  removeProperty(id: string): void {
+    delete this.properties[id];
   }
 
-  removeProperty(property: string): void {
-    delete this.properties[property];
+  getProperty(id: string): number | string {
+    return this.properties[id];
   }
 
-  setProperty(property: string, value: number | string): void {
-    this.properties[property] = value;
+  setProperty(id: string, value: number | string): void {
+    this.properties[id] = value;
   }
 
-  editProperty(
-    property: string,
-    callback: <P extends number | string>(value: P) => P,
-    defaultValue: number = 0.0,
-  ): number | string {
-    this.initProperty(property, defaultValue);
-    const newValue = callback(this.properties[property]);
-    this.properties[property] = newValue;
-    return newValue;
+  editProperty<P extends number | string>(id: string, callback: (value: P) => P): P {
+    return (this.properties[id] = callback(this.properties[id] as P));
   }
 
   replaceProperties(properties: GJ.FeatureProperties<number | string>, shallow: boolean = true) {

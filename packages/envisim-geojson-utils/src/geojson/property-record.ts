@@ -195,6 +195,10 @@ export class PropertyRecord {
     return this.addCategorical(property);
   }
 
+  removeProperty(id: string): void {
+    delete this.record[id];
+  }
+
   // SPECIAL PROPERTIES
   static readonly SPECIAL_KEYS = ['_designWeight', '_distance', '_parent', '_randomRotation'];
 

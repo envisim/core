@@ -15,7 +15,7 @@ import {Random} from '@envisim/random';
 import {uniformPositionsInBBox} from '../sample-continuous/index.js';
 
 // For conversion from radians to degrees.
-const toDeg = 180 / Math.PI;
+const TO_DEG = 180 / Math.PI;
 
 // Internal. Generates point with normally distributed offsets around center.
 // Sigma is standard deviation.
@@ -23,7 +23,7 @@ function randomPositionInCluster(center: GJ.Position, sigma: number, rand: Rando
   // Generate two independent Normal(0,sigma).
   const xy = new Normal(0, sigma).random(2, {rand});
   // Compute angle.
-  const theta = Math.atan2(xy[1], xy[0]) * toDeg;
+  const theta = Math.atan2(xy[1], xy[0]) * TO_DEG;
   // Compute azimuth = angle from north in degrees clockwise.
   const azimuth = (90 - theta + 360) % 360;
   // Compute distance from [0,0].
@@ -55,7 +55,7 @@ interface ThomasClusterProcessOptions {
 
 /**
  * Generates points from a Thomas cluster point process
- * on areas of input area layer.
+ * on areas of input area collection.
  *
  * @param collection
  * @param opts
@@ -84,9 +84,6 @@ export function thomasClusterProcess(
   const expandedBoxPolygon = Polygon.create(expandedBoxPolygonCoords);
   // Generate parents in expanded box.
   const A = expandedBoxPolygon.area();
-  // TODO?: The expanded box polygon may overlap antimeridian
-  // and be incorrect GeoJSON.
-
   const muParents = intensityOfParents * A;
   const nrOfParents = new Poisson(muParents).random(1, {rand})[0];
 
@@ -100,13 +97,12 @@ export function thomasClusterProcess(
   const newCollection = FeatureCollection.newPoint();
   // Generate number of points in each cluster.
   const nrOfPointsInCluster = new Poisson(meanOfCluster).random(nrOfParents, {rand});
-
   // nr of features in collection
   const nrOfFeatures = collection.features.length;
 
   parentsInBox.forEach((coords, index: number) => {
     // Generate the child points and push if they are inside
-    // input geoJSON.
+    // input collection.
     const clusterSize = nrOfPointsInCluster[index];
     for (let i = 0; i < clusterSize; i++) {
       // Create random child point in cluster.

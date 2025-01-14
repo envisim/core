@@ -17,7 +17,7 @@ interface UniformBinomialPointProcessOptions {
 
 /**
  * Generate points from a uniform Binomial point process
- * on areas of input area layer. The points are generated
+ * on areas of input area collection. The points are generated
  * uniformly on a spherical model of the earth.
  *
  * @param collection
@@ -32,11 +32,7 @@ export function uniformBinomialPointProcess(
     sampleSize,
     rand,
   });
-
   // Remove _designWeight property
-  pointCollection.forEach((feature) => {
-    feature.properties = {};
-  });
-
+  pointCollection.removeProperty('_designWeight');
   return pointCollection;
 }

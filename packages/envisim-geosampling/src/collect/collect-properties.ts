@@ -142,43 +142,41 @@ export function collectProperties(
       throw new Error('Property to collect does not exist in the baseLayer property record.');
     }
 
-    if (frame.propertyRecord.hasId(property.id)) {
+    if (newCollection.propertyRecord.hasId(property.id)) {
       throw new Error('Property to collect already exist in the frameLayer property record.');
     }
 
     // Add new properties to new collection and property record.
     // Initialize each with value 0
-    frame.initProperty(property.id, 0.0);
-    // Add to the record
-    newCollection.propertyRecord.addNumerical(property);
+    newCollection.initNumericalProperty(property, 0.0);
   }
 
   // Do the collect for the different cases.
-  if (FeatureCollection.isPoint(frame) && FeatureCollection.isArea(base)) {
+  if (FeatureCollection.isPoint(newCollection) && FeatureCollection.isArea(base)) {
     // Points collect from areas.
-    intersectFeatures(frame.features, base.features, intersectPointAreaGeometries, rec);
+    intersectFeatures(newCollection.features, base.features, intersectPointAreaGeometries, rec);
     return newCollection;
   }
 
-  if (FeatureCollection.isLine(frame)) {
+  if (FeatureCollection.isLine(newCollection)) {
     if (FeatureCollection.isLine(base)) {
       // Lines collect from lines.
-      intersectFeatures(frame.features, base.features, intersectLineLineGeometries, rec);
+      intersectFeatures(newCollection.features, base.features, intersectLineLineGeometries, rec);
       return newCollection;
     }
 
     if (FeatureCollection.isArea(base)) {
       // Lines collect from areas.
-      intersectFeatures(frame.features, base.features, intersectLineAreaGeometries, rec);
+      intersectFeatures(newCollection.features, base.features, intersectLineAreaGeometries, rec);
       return newCollection;
     }
   }
 
-  FeatureCollection.assertArea(frame);
+  FeatureCollection.assertArea(newCollection);
 
   if (FeatureCollection.isPoint(base)) {
     intersectFeatures(
-      frame.features,
+      newCollection.features,
       base.features,
       (f, b) => intersectPointAreaGeometries(b, f),
       rec,
@@ -189,7 +187,7 @@ export function collectProperties(
   if (FeatureCollection.isLine(base)) {
     // Areas collect from lines.
     intersectFeatures(
-      frame.features,
+      newCollection.features,
       base.features,
       (f, b) => intersectLineAreaGeometries(b, f),
       rec,
@@ -199,7 +197,7 @@ export function collectProperties(
 
   FeatureCollection.assertArea(base);
 
-  intersectFeatures(frame.features, base.features, intersectAreaAreaGeometries, rec);
+  intersectFeatures(newCollection.features, base.features, intersectAreaAreaGeometries, rec);
   return newCollection;
 }
 

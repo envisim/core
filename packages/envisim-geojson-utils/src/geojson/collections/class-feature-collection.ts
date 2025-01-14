@@ -1,3 +1,5 @@
+import {v4 as uuid} from 'uuid';
+
 import {type OptionalParam} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
@@ -8,7 +10,11 @@ import {CirclesToPolygonsOptions} from '../../utils/circles-to-polygons.js';
 import {Feature} from '../features/index.js';
 import {GeometricPrimitive} from '../geometric-primitive/index.js';
 import {AreaObject, LineObject, PointObject} from '../objects/index.js';
-import {PropertyRecord} from '../property-record.js';
+import {
+  type CategoricalProperty,
+  type NumericalProperty,
+  PropertyRecord,
+} from '../property-record.js';
 
 type ForEachCallback<T> = (obj: T, index: number) => void;
 
@@ -370,26 +376,36 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
   }
 
   // PROPERTY HANDLING
-  initProperty(property: string, defaultValue: number | string): void {
-    this.forEach((feature) => feature.initProperty(property, defaultValue));
-  }
-
-  removeProperty(property: string): void {
-    this.forEach((feature) => feature.removeProperty(property));
-  }
-
-  setProperty(property: string, index: number, value: number | string): void {
-    if (index < 0 || index >= this.size()) throw new Error('no feature with this index exists');
-    this.features[index].setProperty(property, value);
-  }
-
-  forEachProperty(
-    property: string,
-    callback: (value: number | string, index: number) => void,
+  initNumericalProperty(
+    {id = uuid(), name = id, parent}: Partial<NumericalProperty>,
+    defaultValue: number,
   ): void {
-    this.forEach((feature, index) => {
-      callback(feature.properties[property], index);
-    });
+    // add the property to the record
+    this.propertyRecord.addNumerical({id, name, parent});
+    // add the default value to each feature
+    this.forEach((feature) => feature.setProperty(id, defaultValue));
+  }
+  initCategoricalProperty(
+    {id = uuid(), name = id, values = []}: Partial<CategoricalProperty>,
+    defaultValue: string,
+  ): void {
+    // add the property to the record
+    this.propertyRecord.addCategorical({id, name, values});
+    // add the default value to record if it does not exist
+    this.propertyRecord.addValueToCategory(id, defaultValue);
+    // add the default value to each feature
+    this.forEach((feature) => feature.setProperty(id, defaultValue));
+  }
+  removeProperty(id: string): void {
+    // remove the property from the record
+    this.propertyRecord.removeProperty(id);
+    // remove the property from each feature
+    this.forEach((feature) => feature.removeProperty(id));
+  }
+
+  setProperty(id: string, index: number, value: number | string): void {
+    if (index < 0 || index >= this.size()) throw new Error('no feature with this index exists');
+    this.features[index].setProperty(id, value);
   }
 
   // LAYER

@@ -24,7 +24,7 @@ import {samplePointsOnAreas} from './points-on-areas.js';
 /**
  * Select a sample of features/tracts on areas.
  *
- * @param layer
+ * @param collection
  * @param opts
  */
 function sampleFeaturesOnAreas(
@@ -201,7 +201,7 @@ function sampleFeaturesOnAreas(
     }
 
     default:
-      throw new Error('Model feature type is unknown.');
+      throw new Error('Model geometry type is unknown.');
   }
 }
 export {sampleFeaturesOnAreas};

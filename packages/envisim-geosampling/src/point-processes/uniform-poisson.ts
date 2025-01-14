@@ -18,7 +18,7 @@ interface UniformPoissonProcessOptions {
 
 /**
  * Generates points from a uniform Poisson point process
- * on areas of input layer. Given the (Poisson distributed)
+ * on areas of input collection. Given the (Poisson distributed)
  * random number of points, the points are generated uniformly
  * on a spherical model of the earth.
  *

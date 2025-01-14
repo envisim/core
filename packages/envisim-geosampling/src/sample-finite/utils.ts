@@ -23,7 +23,9 @@ function extractNumericalProperty(
 ): Vector {
   const N = collection.size();
   const vec = Array.from<number>({length: N});
-  collection.forEachProperty(property.id, (v, i) => (vec[i] = v as number));
+  collection.forEach((f, i) => {
+    vec[i] = f.getProperty(property.id) as number;
+  });
   return new Vector(vec, true);
 }
 
@@ -44,12 +46,12 @@ function extractCategoricalProperty(
     const cv = Array.from<number>({length: N});
     let allZeros: boolean = true;
 
-    collection.forEachProperty(property.id, (x, j) => {
-      if (rv === x) {
+    collection.forEach((f, i) => {
+      if (f.getProperty(property.id) === rv) {
         allZeros = false;
-        cv[j] = 1.0;
+        cv[i] = 1.0;
       } else {
-        cv[j] = 0.0;
+        cv[i] = 0.0;
       }
     });
 
