@@ -1,4 +1,4 @@
-import * as GJ from '../types/geojson.js';
+import type * as GJ from '../types/geojson.js';
 
 export function lineToRing(line: GJ.Position[]): GJ.Position[][] {
   const ring: GJ.Position[] = [...line];

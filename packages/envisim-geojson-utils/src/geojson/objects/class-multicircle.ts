@@ -5,7 +5,7 @@ import {type BufferOptions, bufferPolygons, defaultBufferOptions} from '../../bu
 import {moveCoordsAroundEarth} from '../../utils/antimeridian.js';
 import {bboxCrossesAntimeridian, bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
-import {CirclesToPolygonsOptions, circlesToPolygons} from '../../utils/circles-to-polygons.js';
+import {type CirclesToPolygonsOptions, circlesToPolygons} from '../../utils/circles-to-polygons.js';
 import {Geodesic} from '../../utils/class-geodesic.js';
 import {AbstractAreaObject} from './abstract-area-object.js';
 import {Circle} from './class-circle.js';

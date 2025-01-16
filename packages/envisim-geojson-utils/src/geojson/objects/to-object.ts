@@ -1,6 +1,6 @@
 import type * as GJ from '../../types/geojson.js';
 import {isCircle, isMultiCircle} from '../../types/type-guards.js';
-import {CirclesToPolygonsOptions} from '../../utils/circles-to-polygons.js';
+import {type CirclesToPolygonsOptions} from '../../utils/circles-to-polygons.js';
 import {GeometricPrimitive, isGeometryPrimitive} from '../geometric-primitive/index.js';
 import {Circle} from './class-circle.js';
 import {LineString} from './class-linestring.js';

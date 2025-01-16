@@ -1,17 +1,17 @@
 import {
-  AreaObject,
+  type AreaObject,
   Circle,
   FeatureCollection,
   type GeoJSON as GJ,
-  LineObject,
+  type LineObject,
   MultiCircle,
   MultiPolygon,
-  PointObject,
+  type PointObject,
   Polygon,
 } from './index.js';
 import {moveCoordsAroundEarth, rerollPolygons} from './utils/antimeridian.js';
 import {bbox4, bboxCrossesAntimeridian} from './utils/bbox.js';
-import {CirclesToPolygonsOptions} from './utils/circles-to-polygons.js';
+import {type CirclesToPolygonsOptions} from './utils/circles-to-polygons.js';
 
 /**
  * Computes the convex hull from a collection using

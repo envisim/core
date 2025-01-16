@@ -1,7 +1,7 @@
 import type * as GJ from '../types/geojson.js';
-import {AreaObject, Circle, MultiCircle, MultiPolygon, Polygon} from '../geojson/index.js';
+import {type AreaObject, Circle, MultiCircle, MultiPolygon, Polygon} from '../geojson/index.js';
 import {bboxInBBox} from '../utils/bbox.js';
-import {CirclesToPolygonsOptions} from '../utils/circles-to-polygons.js';
+import {type CirclesToPolygonsOptions} from '../utils/circles-to-polygons.js';
 import {Geodesic} from '../utils/class-geodesic.js';
 import {intersectPolygons} from './intersect-polygons.js';
 

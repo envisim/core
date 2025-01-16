@@ -6,10 +6,10 @@ import type * as GJ from '../../types/geojson.js';
 import {type BufferOptions} from '../../buffer/index.js';
 import {unionOfBBoxes} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
-import {CirclesToPolygonsOptions} from '../../utils/circles-to-polygons.js';
+import {type CirclesToPolygonsOptions} from '../../utils/circles-to-polygons.js';
 import {Feature} from '../features/index.js';
 import {GeometricPrimitive} from '../geometric-primitive/index.js';
-import {AreaObject, LineObject, PointObject} from '../objects/index.js';
+import {type AreaObject, type LineObject, type PointObject} from '../objects/index.js';
 import {
   type CategoricalProperty,
   type NumericalProperty,

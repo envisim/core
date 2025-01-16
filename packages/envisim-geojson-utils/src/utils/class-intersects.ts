@@ -1,4 +1,4 @@
-import * as GJ from '../types/geojson.js';
+import type * as GJ from '../types/geojson.js';
 import {Segment, intersects, rightDistanceToParent} from './class-segment.js';
 
 type IntersectSegment = {segment: number; param: number; visited: boolean};

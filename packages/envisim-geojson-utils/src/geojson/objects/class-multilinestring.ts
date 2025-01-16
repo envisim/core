@@ -13,8 +13,8 @@ import {centroidFromMultipleCentroids, centroidOfLineString} from '../../utils/c
 import {Segment} from '../../utils/class-segment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {AbstractLineObject} from './abstract-line-object.js';
-import {MultiPolygon} from './class-multipolygon.js';
-import {Polygon} from './class-polygon.js';
+import {type MultiPolygon} from './class-multipolygon.js';
+import {type Polygon} from './class-polygon.js';
 
 export class MultiLineString
   extends AbstractLineObject<GJ.MultiLineString>

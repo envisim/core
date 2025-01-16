@@ -1,4 +1,4 @@
-import * as GJ from '../../types/geojson.js';
+import type * as GJ from '../../types/geojson.js';
 import {GeometricPrimitive} from './enum-geometric-primitive.js';
 
 function getGeometryPrimitive(obj: GJ.PointGeometry, allowGC?: boolean): GeometricPrimitive.POINT;
