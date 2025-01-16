@@ -6,7 +6,10 @@ import {
 } from '@envisim/geojson-utils';
 import {lpm1, lpm2, scps} from '@envisim/sampling';
 
-import {SampleSpatiallyBalancedOptions, sampleSpatiallyBalancedOptionsCheck} from './options.js';
+import {
+  type SampleSpatiallyBalancedOptions,
+  sampleSpatiallyBalancedOptionsCheck,
+} from './options.js';
 import {inclprobsFromLayer, returnCollectionFromSample, spreadMatrixFromLayer} from './utils.js';
 
 export function sampleSpatiallyBalanced<T extends AreaObject | LineObject | PointObject>(

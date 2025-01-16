@@ -19,8 +19,8 @@ import {
 } from '@envisim/sampling';
 
 import {
-  SAMPLE_FINITE_METHODS_WR,
-  SampleFiniteOptions,
+  type SAMPLE_FINITE_METHODS_WR,
+  type SampleFiniteOptions,
   sampleFiniteOptionsCheck,
 } from './options.js';
 import {drawprobsFromLayer, inclprobsFromLayer, returnCollectionFromSample} from './utils.js';

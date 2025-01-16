@@ -6,7 +6,7 @@ import {
 } from '@envisim/geojson-utils';
 import {localCube} from '@envisim/sampling';
 
-import {SampleDoublyBalancedOptions, sampleDoublyBalancedOptionsCheck} from './options.js';
+import {type SampleDoublyBalancedOptions, sampleDoublyBalancedOptionsCheck} from './options.js';
 import {
   balancingMatrixFromLayer,
   inclprobsFromLayer,

@@ -5,7 +5,7 @@ import {
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 
-import {SampleDistancePointsOptions} from './distance-points.js';
+import {type SampleDistancePointsOptions} from './distance-points.js';
 import {effectiveHalfWidth} from './distance-utils.js';
 import {
   SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS,

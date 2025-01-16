@@ -3,12 +3,12 @@ import {
   Feature,
   FeatureCollection,
   Geodesic,
-  Point,
+  type Point,
   type PointObject,
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 
-import {DetectionFunction, effectiveRadius} from './distance-utils.js';
+import {type DetectionFunction, effectiveRadius} from './distance-utils.js';
 import {SAMPLE_POINT_OPTIONS, type SamplePointOptions} from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
 

@@ -1,22 +1,22 @@
 import {
-  AreaObject,
+  type AreaObject,
   type CategoricalProperty,
   FeatureCollection,
   type GeoJSON as GJ,
-  LineObject,
-  PointObject,
+  type LineObject,
+  type PointObject,
   PropertyRecord,
 } from '@envisim/geojson-utils';
 
 import {
-  SampleBaseOptions,
-  SampleBeltOnAreaOptions,
-  SampleFeatureOptions,
-  SamplePointOptions,
-  SampleRelascopePointsOptions,
-  SampleSystematicLineOnAreaOptions,
+  type SampleBaseOptions,
+  type SampleBeltOnAreaOptions,
+  type SampleFeatureOptions,
+  type SamplePointOptions,
+  type SampleRelascopePointsOptions,
+  type SampleSystematicLineOnAreaOptions,
 } from './sample-continuous/index.js';
-import {SampleFiniteOptions} from './sample-finite/index.js';
+import {type SampleFiniteOptions} from './sample-finite/index.js';
 import {SamplingError} from './sampling-error.js';
 import {type ErrorType} from './utils/index.js';
 

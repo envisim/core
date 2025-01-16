@@ -2,7 +2,7 @@ import {type GeoJSON as GJ, PropertyRecord} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
 import {SamplingError} from '../sampling-error.js';
-import {ErrorType} from '../utils/index.js';
+import {type ErrorType} from '../utils/index.js';
 import {type SampleRelascopePointsOptions} from './relascope-points.js';
 
 // BASE

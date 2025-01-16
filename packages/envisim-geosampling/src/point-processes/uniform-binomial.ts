@@ -1,4 +1,4 @@
-import {type AreaObject, FeatureCollection, type PointObject} from '@envisim/geojson-utils';
+import {type AreaObject, type FeatureCollection, type PointObject} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
 import {samplePointsOnAreas} from '../sample-continuous/index.js';

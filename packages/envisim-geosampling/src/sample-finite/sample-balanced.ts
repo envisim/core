@@ -6,7 +6,7 @@ import {
 } from '@envisim/geojson-utils';
 import {cube} from '@envisim/sampling';
 
-import {SampleBalancedOptions, sampleBalancedOptionsCheck} from './options.js';
+import {type SampleBalancedOptions, sampleBalancedOptionsCheck} from './options.js';
 import {balancingMatrixFromLayer, inclprobsFromLayer, returnCollectionFromSample} from './utils.js';
 
 export function sampleBalanced<T extends AreaObject | LineObject | PointObject>(

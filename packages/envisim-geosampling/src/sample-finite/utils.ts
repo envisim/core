@@ -1,7 +1,7 @@
 import {
   type AreaObject,
   type CategoricalProperty,
-  FeatureCollection,
+  type FeatureCollection,
   type LineObject,
   type NumericalProperty,
   type PointObject,
