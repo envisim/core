@@ -31,6 +31,10 @@ interface SpecialPropertyList {
   _distance?: NumericalProperty;
   _parent?: NumericalProperty;
   _randomRotation?: NumericalProperty;
+  /**
+   * Used to store the values of measure
+   */
+  _measure?: NumericalProperty;
 }
 
 interface PropertyList {
