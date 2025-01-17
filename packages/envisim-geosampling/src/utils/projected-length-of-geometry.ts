@@ -1,10 +1,10 @@
 import {
-  AreaObject,
+  type AreaObject,
   Circle,
-  CirclesToPolygonsOptions,
+  type CirclesToPolygonsOptions,
   type GeoJSON as GJ,
   Geodesic,
-  LineObject,
+  type LineObject,
   MultiCircle,
   bbox4,
   longitudeCenter,

@@ -6,10 +6,10 @@ import {bboxFromPositions} from '../../utils/bbox.js';
 import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {Geodesic} from '../../utils/class-geodesic.js';
 import {AbstractPointObject} from './abstract-point-object.js';
-import {Circle} from './class-circle.js';
+import {type Circle} from './class-circle.js';
 import {MultiCircle} from './class-multicircle.js';
-import {MultiPolygon} from './class-multipolygon.js';
-import {Polygon} from './class-polygon.js';
+import {type MultiPolygon} from './class-multipolygon.js';
+import {type Polygon} from './class-polygon.js';
 
 export class MultiPoint extends AbstractPointObject<GJ.MultiPoint> implements GJ.MultiPoint {
   static isObject(obj: unknown): obj is MultiPoint {

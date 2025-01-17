@@ -1,5 +1,5 @@
 import type * as GJ from '../types/geojson.js';
-import {AreaObject, MultiPoint, Point, PointObject} from '../geojson/index.js';
+import {type AreaObject, MultiPoint, Point, type PointObject} from '../geojson/index.js';
 import {bboxInBBox} from '../utils/bbox.js';
 
 /**

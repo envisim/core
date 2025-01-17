@@ -9,7 +9,7 @@ import {Segment} from '../../utils/class-segment.js';
 import {lengthOfLineString} from '../../utils/length.js';
 import {pointInSinglePolygonPosition} from '../../utils/point-in-polygon.js';
 import {AbstractAreaObject} from './abstract-area-object.js';
-import {MultiPolygon} from './class-multipolygon.js';
+import {type MultiPolygon} from './class-multipolygon.js';
 
 export class Polygon extends AbstractAreaObject<GJ.Polygon> implements GJ.Polygon {
   static isObject(obj: unknown): obj is Polygon {

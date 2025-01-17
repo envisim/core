@@ -1,12 +1,12 @@
 import {type OptionalParam, copy} from '@envisim/utils';
 
 import type * as GJ from '../../types/geojson.js';
-import {CirclesToPolygonsOptions} from '../../utils/circles-to-polygons.js';
+import {type CirclesToPolygonsOptions} from '../../utils/circles-to-polygons.js';
 import {GeometricPrimitive} from '../geometric-primitive/index.js';
 import {
-  AreaObject,
-  LineObject,
-  PointObject,
+  type AreaObject,
+  type LineObject,
+  type PointObject,
   toAreaObject,
   toLineObject,
   toPointObject,

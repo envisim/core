@@ -1,14 +1,14 @@
 import type * as GJ from '../types/geojson.js';
 import {
-  AreaObject,
-  LineObject,
+  type AreaObject,
+  type LineObject,
   LineString,
   MultiLineString,
   MultiPolygon,
   Polygon,
 } from '../geojson/index.js';
 import {bboxInBBox} from '../utils/bbox.js';
-import {CirclesToPolygonsOptions} from '../utils/circles-to-polygons.js';
+import {type CirclesToPolygonsOptions} from '../utils/circles-to-polygons.js';
 import {Segment} from '../utils/class-segment.js';
 import {pointInSinglePolygonPosition} from '../utils/point-in-polygon.js';
 

@@ -1,283 +1,155 @@
-import * as sampling from '@envisim/sampling';
 import {
   type AreaObject,
   type FeatureCollection,
   type LineObject,
   type PointObject,
-  PropertyRecord,
 } from '@envisim/geojson-utils';
-import {Vector} from '@envisim/matrix';
-import type {Random} from '@envisim/random';
-
-import {SamplingError} from '../sampling-error.js';
-import {ErrorType} from '../utils/index.js';
 import {
-  balancingMatrixFromLayer,
-  drawprobsFromLayer,
-  inclprobsFromLayer,
-  spreadMatrixFromLayer,
-} from './utils.js';
+  brewer,
+  pareto,
+  poissonSampling,
+  ppswr,
+  randomSystematic,
+  rpm,
+  sampford,
+  spm,
+  srswor,
+  srswr,
+  systematic,
+} from '@envisim/sampling';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const SAMPLE_FINITE_SIMPLE_METHODS = [
-  'srswr',
-  'srswor',
-  'systematic',
-  'randomSystematic',
-  'poissonSampling',
-  'rpm',
-  'spm',
-  'sampford',
-  'pareto',
-  'brewer',
-  'ppswr',
-] as const;
-const SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS = ['lpm1', 'lpm2', 'scps'] as const;
-const SAMPLE_FINITE_BALANCED_METHODS = ['cube'] as const;
-const SAMPLE_FINITE_DOUBLY_BALANCED_METHODS = ['localCube'] as const;
-
-export interface SampleFiniteOptions {
-  /**
-   * The name of the sampling method to call from sampling
-   */
-  methodName:
-    | (typeof SAMPLE_FINITE_SIMPLE_METHODS)[number]
-    | (typeof SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS)[number]
-    | (typeof SAMPLE_FINITE_BALANCED_METHODS)[number]
-    | (typeof SAMPLE_FINITE_DOUBLY_BALANCED_METHODS)[number];
-  /**
-   * The sample size to use. Should be non-negative integer.
-   */
-  sampleSize: number;
-  /**
-   * The id of the numerical property to use to compute probabilities.
-   */
-  probabilitiesFrom?: string;
-  /**
-   * Compute probabilities from size.
-   * @defaultValue `false`
-   */
-  probabilitiesFromSize?: boolean;
-  /**
-   * An array of id's of properties to use to spread the sample.
-   * This apply to lpm1, lpm2, scps, localCube.
-   */
-  spreadOn?: string[];
-  /**
-   * An array of id's of properties to use to balance the sample.
-   * This apply to cube and localCube.
-   */
-  balanceOn?: string[];
-  /**
-   * Optional spread using geographical coordinates.
-   * This apply to lpm1, lpm2, scps, localCube.
-   */
-  spreadGeo?: boolean;
-  /**
-   * An instance of {@link random.Random}
-   * @defaultValue `new Random()`
-   */
-  rand?: Random;
-}
+import {
+  type SAMPLE_FINITE_METHODS_WR,
+  type SampleFiniteOptions,
+  sampleFiniteOptionsCheck,
+} from './options.js';
+import {drawprobsFromLayer, inclprobsFromLayer, returnCollectionFromSample} from './utils.js';
 
 /**
- * @returns `null` if check passes, {@link SamplingError} otherwise
- */
-export function sampleFiniteOptionsCheck(
-  {
-    methodName,
-    sampleSize,
-    probabilitiesFrom,
-    // probabilitiesFromSize,
-    spreadOn,
-    balanceOn,
-    spreadGeo,
-  }: SampleFiniteOptions,
-  // primitive: GeometricPrimitive,
-  properties: PropertyRecord,
-): ErrorType<typeof SamplingError> {
-  if (!Number.isInteger(sampleSize) || sampleSize < 0) {
-    // sampleSize must be a non negative integer
-    return SamplingError.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER;
-  }
-
-  if (probabilitiesFrom !== undefined) {
-    const property = properties.getId(probabilitiesFrom);
-    if (property === null) {
-      // probabilitiesFrom must exist on propertyRecord
-      return SamplingError.PROBABILITIES_FROM_MISSING;
-    }
-
-    if (!PropertyRecord.propertyIsNumerical(property)) {
-      // probabilitiesFrom must be a numerical property
-      return SamplingError.PROBABILITIES_FROM_NOT_NUMERICAL;
-    }
-  }
-
-  // Checks for spatially balanced methods
-  if (
-    (SAMPLE_FINITE_SPATIALLY_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName) ||
-    (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName)
-  ) {
-    if (spreadOn === undefined) {
-      if (spreadGeo === undefined) {
-        // Must use either spreadOn or spreadGeo
-        return SamplingError.SPREAD_ON_MISSING;
-      }
-    } else {
-      if (!spreadOn.every((prop) => Object.hasOwn(properties, prop))) {
-        // spredOn entries must exist on propertyRecord
-        return SamplingError.SPREAD_ON_MISSING;
-      }
-    }
-  }
-
-  // Checks for balanced methods
-  if (
-    (SAMPLE_FINITE_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName) ||
-    (SAMPLE_FINITE_DOUBLY_BALANCED_METHODS as ReadonlyArray<string>).includes(methodName)
-  ) {
-    if (!balanceOn || !balanceOn.every((prop) => Object.hasOwn(properties, prop))) {
-      // Must use balanceOn
-      // balanceOn entries must exist on propertyRecord
-      return SamplingError.BALANCE_ON_MISSING;
-    }
-  }
-
-  return null;
-}
-
-/**
- * Select a sample from a layer using sampling methods for a finite
- * population.
+ * Select a sample from a layer using sampling methods for a finite population.
  *
  * @param collection
  * @param opts
  */
 export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
   collection: FeatureCollection<T>,
-  opts: SampleFiniteOptions,
+  options: SampleFiniteOptions,
 ): FeatureCollection<T> {
-  const optionsError = sampleFiniteOptionsCheck(opts, collection.propertyRecord);
+  const optionsError = sampleFiniteOptionsCheck(options, collection.propertyRecord);
   if (optionsError !== null) {
     throw new RangeError(`sampleFinite error: ${optionsError}`);
   }
 
-  let idx: number[];
-  let mu: number[];
-  let n: number;
-  const N = collection.size();
-  let probabilities: Vector;
+  // Compute inclusion probabilities
+  const probabilities = inclprobsFromLayer(collection, options);
 
   // Select the correct method, and save indices of the FeatureCollection
-  switch (opts.methodName) {
-    // Standard
-    case 'srswr':
-    case 'srswor':
-      n = opts.methodName === 'srswr' ? opts.sampleSize : Math.min(opts.sampleSize, N);
-      // Compute expected number of inclusions / inclusion probabilities
-      mu = Array.from<number>({length: N}).fill(n / N);
-
-      // Get selected indexes
-      idx = sampling[opts.methodName]({n, N, rand: opts.rand});
-      break;
-
-    // Standard w/ incprobs
+  switch (options.method) {
     case 'systematic':
-    case 'randomSystematic':
-    case 'poissonSampling':
+      return returnCollectionFromSample(
+        collection,
+        systematic({probabilities, rand: options.rand}),
+        probabilities,
+      );
+    case 'systematic-random':
+      return returnCollectionFromSample(
+        collection,
+        randomSystematic({probabilities, rand: options.rand}),
+        probabilities,
+      );
+    case 'poisson-sampling':
+      return returnCollectionFromSample(
+        collection,
+        poissonSampling({probabilities, rand: options.rand}),
+        probabilities,
+      );
     case 'rpm':
+      return returnCollectionFromSample(
+        collection,
+        rpm({probabilities, rand: options.rand}),
+        probabilities,
+      );
     case 'spm':
+      return returnCollectionFromSample(
+        collection,
+        spm({probabilities, rand: options.rand}),
+        probabilities,
+      );
     case 'sampford':
+      return returnCollectionFromSample(
+        collection,
+        sampford({probabilities, rand: options.rand}),
+        probabilities,
+      );
     case 'pareto':
+      return returnCollectionFromSample(
+        collection,
+        pareto({probabilities, rand: options.rand}),
+        probabilities,
+      );
     case 'brewer':
+      return returnCollectionFromSample(
+        collection,
+        brewer({probabilities, rand: options.rand}),
+        probabilities,
+      );
+    case 'srs':
+    default:
+      return returnCollectionFromSample(
+        collection,
+        srswor({n: options.sampleSize, N: collection.size(), rand: options.rand}),
+        probabilities,
+      );
+  }
+}
+
+/**
+ * Select a w/o replacement sample from a layer using sampling methods for a finite population.
+ *
+ * @param collection
+ * @param opts
+ */
+export function sampleFiniteWr<T extends AreaObject | LineObject | PointObject>(
+  collection: FeatureCollection<T>,
+  options: SampleFiniteOptions<(typeof SAMPLE_FINITE_METHODS_WR)[number]>,
+): FeatureCollection<T> {
+  const optionsError = sampleFiniteOptionsCheck(options, collection.propertyRecord);
+  if (optionsError !== null) {
+    throw new RangeError(`sampleFinite error: ${optionsError}`);
+  }
+
+  let sample: number[];
+  let probabilities: number[];
+
+  // Select the correct method, and save indices of the FeatureCollection
+  switch (options.method) {
+    // Standard
+    case 'srs-wr':
+    default:
       // Compute expected number of inclusions / inclusion probabilities
-      mu = inclprobsFromLayer(collection, opts).slice();
+      probabilities = Array.from<number>({length: collection.size()}).fill(
+        options.sampleSize / collection.size(),
+      );
 
       // Get selected indexes
-      idx = sampling[opts.methodName]({
-        probabilities: mu,
-        rand: opts.rand,
-      });
+      sample = srswr({n: options.sampleSize, N: collection.size(), rand: options.rand});
       break;
 
     // Standard w/ drawprob
-    case 'ppswr':
-      n = opts.sampleSize; // TODO: Check if methods do corrections to n
-
+    case 'pps-wr':
       // Compute expected number of inclusions / inclusion probabilities
-      probabilities = drawprobsFromLayer(collection, opts);
-      mu = probabilities.multiply(n, false).slice();
+      probabilities = drawprobsFromLayer(collection, options)
+        .multiply(options.sampleSize, false)
+        .slice();
 
       // Get selected indexes
-      idx = sampling[opts.methodName]({
-        probabilities: probabilities,
-        n: opts.sampleSize,
-        rand: opts.rand,
+      sample = ppswr({
+        probabilities,
+        n: options.sampleSize,
+        rand: options.rand,
       });
       break;
-
-    // Spreading
-    case 'lpm1':
-    case 'lpm2':
-    case 'scps':
-      // Compute expected number of inclusions / inclusion probabilities
-      mu = inclprobsFromLayer(collection, opts).slice();
-
-      // Get selected indexes
-      idx = sampling[opts.methodName]({
-        probabilities: mu,
-        auxiliaries: spreadMatrixFromLayer(collection, opts.spreadOn ?? [], opts.spreadGeo),
-        rand: opts.rand,
-      });
-      break;
-
-    // Balancing
-    case 'cube':
-      // Compute expected number of inclusions / inclusion probabilities
-      mu = inclprobsFromLayer(collection, opts).slice();
-
-      // Get selected indexes
-      idx = sampling[opts.methodName]({
-        probabilities: mu,
-        balancing: balancingMatrixFromLayer(collection, opts.balanceOn ?? []),
-        rand: opts.rand,
-      });
-      break;
-
-    // Balancing + spreading
-    case 'localCube':
-      // Compute expected number of inclusions / inclusion probabilities
-      mu = inclprobsFromLayer(collection, opts).slice();
-
-      // Get selected indexes
-      idx = sampling[opts.methodName]({
-        probabilities: mu,
-        balancing: balancingMatrixFromLayer(collection, opts.balanceOn ?? []),
-        auxiliaries: spreadMatrixFromLayer(collection, opts.spreadOn ?? [], opts.spreadGeo),
-        rand: opts.rand,
-      });
-      break;
-
-    // Default throw
-    default:
-      throw new TypeError('method is not valid');
   }
 
-  const newCollection = collection.copyEmpty(false);
-  // Add _designWeight to propertyRecord if it does not exist
-  newCollection.propertyRecord.addDesignWeight();
-
-  idx.forEach((i) => {
-    newCollection.addGeometry(
-      collection.features[i].geometry,
-      {
-        ...collection.features[i].properties,
-        _designWeight: collection.features[i].getSpecialPropertyDesignWeight() / mu[i],
-      },
-      false,
-    );
-  });
-
-  return newCollection;
+  return returnCollectionFromSample(collection, sample, probabilities);
 }

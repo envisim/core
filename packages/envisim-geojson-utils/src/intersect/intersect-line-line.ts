@@ -1,5 +1,11 @@
 import type * as GJ from '../types/geojson.js';
-import {LineObject, LineString, MultiPoint, Point, PointObject} from '../geojson/index.js';
+import {
+  type LineObject,
+  LineString,
+  MultiPoint,
+  Point,
+  type PointObject,
+} from '../geojson/index.js';
 import {bboxInBBox} from '../utils/bbox.js';
 import {type Segment, ringToSegments} from '../utils/class-segment.js';
 

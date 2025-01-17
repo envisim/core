@@ -1,4 +1,4 @@
-import * as GJ from '../types/geojson.js';
+import type * as GJ from '../types/geojson.js';
 import {MultiPolygon, Polygon} from '../geojson/index.js';
 import {unionOfSegments} from '../union-of-polygons.js';
 import {rerollPolygons} from '../utils/antimeridian.js';

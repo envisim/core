@@ -1,7 +1,7 @@
 import {
   type AreaObject,
   type CategoricalProperty,
-  FeatureCollection,
+  type FeatureCollection,
   type LineObject,
   type NumericalProperty,
   type PointObject,
@@ -10,7 +10,7 @@ import {
 import {bbox4, longitudeCenter} from '@envisim/geojson-utils';
 import {Matrix, Vector} from '@envisim/matrix';
 
-import type {SampleFiniteOptions} from './sample-finite.js';
+import {type SampleFiniteOptions} from './options.js';
 
 /**
  * Get a numerical property as a Vector
@@ -186,20 +186,20 @@ export function balancingMatrixFromLayer(
 /**
  * Returns a vector of ones as the inclusion probabilities, if probabilitiesFrom is not set
  */
-function probsFromLayer(
+function probsFromLayer<M>(
   collection: FeatureCollection<AreaObject | LineObject | PointObject>,
-  {probabilitiesFrom, probabilitiesFromSize}: SampleFiniteOptions,
+  {probabilities}: SampleFiniteOptions<M>, // already checked
 ): Vector {
   let probs: Vector;
 
-  if (probabilitiesFromSize !== undefined) {
+  if (probabilities === '_measure') {
     // Probabilities from the size of the features
     const sizes: number[] = collection.features.map((f) => f.geometry.measure());
     probs = new Vector(sizes);
   } else {
     // Probabilities from numerical property
 
-    const prop = collection.propertyRecord.getId(probabilitiesFrom);
+    const prop = collection.propertyRecord.getId(probabilities);
 
     if (prop === null) {
       return Vector.create(1.0, collection.size());
@@ -222,9 +222,9 @@ function probsFromLayer(
  * @param collection
  * @param options
  */
-export function drawprobsFromLayer(
+export function drawprobsFromLayer<M>(
   collection: FeatureCollection<AreaObject | LineObject | PointObject>,
-  options: SampleFiniteOptions,
+  options: SampleFiniteOptions<M>, // already checked
 ): Vector {
   const probs = probsFromLayer(collection, options);
   const sum = probs.sum();
@@ -238,14 +238,18 @@ export function drawprobsFromLayer(
  * @param collection
  * @param options
  */
-export function inclprobsFromLayer(
+export function inclprobsFromLayer<M>(
   collection: FeatureCollection<AreaObject | LineObject | PointObject>,
-  options: SampleFiniteOptions,
-): Vector {
-  if (options.sampleSize <= 0) throw new RangeError('sampleSize is <= 0');
+  options: SampleFiniteOptions<M>, // already checked
+): number[] {
+  const N = collection.size();
+
+  if (options.probabilities === undefined) {
+    return Array.from<number>({length: N}).fill(options.sampleSize / N);
+  }
+
   const x = probsFromLayer(collection, options);
   let n = Math.round(options.sampleSize);
-  const N = collection.size();
 
   let sum: number;
   let failed: boolean = true;
@@ -290,5 +294,28 @@ export function inclprobsFromLayer(
       });
   }
 
-  return ips;
+  return ips.slice();
+}
+
+export function returnCollectionFromSample<T extends AreaObject | LineObject | PointObject>(
+  collection: FeatureCollection<T>,
+  sample: number[],
+  probabilities: number[],
+): FeatureCollection<T> {
+  const newCollection = collection.copyEmpty(false);
+  // Add _designWeight to propertyRecord if it does not exist
+  newCollection.propertyRecord.addDesignWeight();
+
+  sample.forEach((i) => {
+    newCollection.addGeometry(
+      collection.features[i].geometry,
+      {
+        ...collection.features[i].properties,
+        _designWeight: collection.features[i].getSpecialPropertyDesignWeight() / probabilities[i],
+      },
+      false,
+    );
+  });
+
+  return newCollection;
 }

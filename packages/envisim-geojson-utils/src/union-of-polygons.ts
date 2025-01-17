@@ -1,6 +1,6 @@
-import * as GJ from './types/geojson.js';
-import {AreaObject, FeatureCollection, MultiPolygon, Polygon} from './geojson/index.js';
-import {CirclesToPolygonsOptions} from './utils/circles-to-polygons.js';
+import type * as GJ from './types/geojson.js';
+import {type AreaObject, FeatureCollection, MultiPolygon, Polygon} from './geojson/index.js';
+import {type CirclesToPolygonsOptions} from './utils/circles-to-polygons.js';
 import {IntersectList} from './utils/class-intersects.js';
 import {type Segment, ringToSegments, segmentsToPolygon} from './utils/class-segment.js';
 
