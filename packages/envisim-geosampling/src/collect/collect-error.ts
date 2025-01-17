@@ -1,7 +1,7 @@
 export const CollectError = {
   // collect general
   LINE_EXPECTS_AREA_LINE: 'collect-error-line-expects-area-line',
-  POINT_EXPECTS_AREA: 'collect-error-line-expects-area-line',
+  POINT_EXPECTS_AREA: 'collect-error-point-expects-area',
   BASE_COLLECTION_MISSING: 'collect-error-collection-is-missing',
 
   // collect properties
