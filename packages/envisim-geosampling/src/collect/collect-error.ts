@@ -5,6 +5,7 @@ export const CollectError = {
   BASE_COLLECTION_MISSING: 'collect-error-collection-is-missing',
 
   // collect properties
+  PROPERTY_ID_COLLISION: 'collect-error-property-is-missing',
   PROPERTY_MISSING: 'collect-error-property-is-missing',
   PROPERTY_NOT_NUMERICAL: 'collect-error-property-not-numerical',
 } as const;
