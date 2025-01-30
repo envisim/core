@@ -27,7 +27,7 @@ const propRec = new PropertyRecord({
     values: ['forest'],
   },
 });
-const base = FeatureCollection.newPoint([new Feature(point, {size: 25, class: 0})], propRec);
+const base = FeatureCollection.newPoint([new Feature(point, {size: 25, class: 'forest'})], propRec);
 
 const propRecToCollect = collectPropertyRecord(propRec, ['size', 'class']);
 
