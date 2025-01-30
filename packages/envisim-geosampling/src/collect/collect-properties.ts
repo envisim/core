@@ -20,7 +20,8 @@ import {projectedLengthOfGeometry} from '../utils/index.js';
 // one feature to another.
 type AggregateOpts = {
   intersectSize: number;
-  properties: PropertyRecord;
+  collectProperties: PropertyRecord;
+  fromProperties: PropertyRecord;
 };
 
 /**
@@ -60,17 +61,20 @@ function aggregateInPlace(
 
   // Go through all the properties and aggregate them.
   // All new properties are of type numerical.
-  for (const property of opts.properties.getRecord()) {
+  for (const property of opts.collectProperties.getRecord()) {
     const id = property.id;
     // Type must be numerical
     if (PropertyRecord.propertyIsNumerical(property)) {
       if (Array.isArray(property.parent)) {
         // Collect from categorical variable
-        const [id, value] = property.parent;
-
-        // Only collect if value is equal to value
-        if (from.properties[id] === value) {
-          (to.properties[id] as number) += opts.intersectSize * factor;
+        const [fromID, index] = property.parent;
+        const fromProperty = opts.fromProperties.getId(fromID);
+        if (fromProperty !== null && fromProperty.type === 'categorical') {
+          const value = fromProperty.values[index];
+          // Only collect if value is equal to value
+          if (from.properties[fromID] === value) {
+            (to.properties[id] as number) += opts.intersectSize * factor;
+          }
         }
       } else {
         // Collect from numerical (same key)
@@ -154,20 +158,38 @@ export function collectProperties(
   // Do the collect for the different cases.
   if (FeatureCollection.isPoint(newCollection) && FeatureCollection.isArea(base)) {
     // Points collect from areas.
-    intersectFeatures(newCollection.features, base.features, intersectPointAreaGeometries, rec);
+    intersectFeatures(
+      newCollection.features,
+      base.features,
+      intersectPointAreaGeometries,
+      rec,
+      base.propertyRecord,
+    );
     return newCollection;
   }
 
   if (FeatureCollection.isLine(newCollection)) {
     if (FeatureCollection.isLine(base)) {
       // Lines collect from lines.
-      intersectFeatures(newCollection.features, base.features, intersectLineLineGeometries, rec);
+      intersectFeatures(
+        newCollection.features,
+        base.features,
+        intersectLineLineGeometries,
+        rec,
+        base.propertyRecord,
+      );
       return newCollection;
     }
 
     if (FeatureCollection.isArea(base)) {
       // Lines collect from areas.
-      intersectFeatures(newCollection.features, base.features, intersectLineAreaGeometries, rec);
+      intersectFeatures(
+        newCollection.features,
+        base.features,
+        intersectLineAreaGeometries,
+        rec,
+        base.propertyRecord,
+      );
       return newCollection;
     }
   }
@@ -180,6 +202,7 @@ export function collectProperties(
       base.features,
       (f, b) => intersectPointAreaGeometries(b, f),
       rec,
+      base.propertyRecord,
     );
     return newCollection;
   }
@@ -191,13 +214,20 @@ export function collectProperties(
       base.features,
       (f, b) => intersectLineAreaGeometries(b, f),
       rec,
+      base.propertyRecord,
     );
     return newCollection;
   }
 
   FeatureCollection.assertArea(base);
 
-  intersectFeatures(newCollection.features, base.features, intersectAreaAreaGeometries, rec);
+  intersectFeatures(
+    newCollection.features,
+    base.features,
+    intersectAreaAreaGeometries,
+    rec,
+    base.propertyRecord,
+  );
   return newCollection;
 }
 
@@ -209,6 +239,7 @@ function intersectFeatures<
   base: Feature<B>[],
   intersectFunction: (a: F, b: B) => AreaObject | LineObject | PointObject | null,
   rec: PropertyRecord,
+  baseRec: PropertyRecord,
 ) {
   frame.forEach((frameFeature) => {
     base.forEach((baseFeature) => {
@@ -218,7 +249,8 @@ function intersectFeatures<
       const intersectSize = intersect.measure();
       aggregateInPlace(frameFeature, baseFeature, {
         intersectSize,
-        properties: rec,
+        collectProperties: rec,
+        fromProperties: baseRec,
       });
     });
   });
