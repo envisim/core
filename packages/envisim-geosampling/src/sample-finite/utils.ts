@@ -118,18 +118,16 @@ export function spreadMatrixFromLayer(
       if (vec.sd() > 0.0) {
         newprops.push(vec.standardize(false, true));
       }
-    }
-
-    // Collect categorical properties a set of 0-1 vectors
-    if (PropertyRecord.propertyIsCategorical(prop)) {
+    } else if (PropertyRecord.propertyIsCategorical(prop)) {
+      // Collect categorical properties a set of 0-1 vectors
       const arr = extractCategoricalProperty(collection, prop);
       // skip last column
       for (let i = 0; i < arr.length - 1; i++) {
         newprops.push(arr[i]);
       }
+    } else {
+      throw new Error('all properties not present on property record');
     }
-
-    throw new Error('all properties not present on property record');
   });
 
   return Matrix.cbind(...newprops);
@@ -166,18 +164,16 @@ export function balancingMatrixFromLayer(
       if (vec.sd() > 0.0) {
         newprops.push(vec);
       }
-    }
-
-    // Collect categorical properties a set of 0-1 vectors
-    if (PropertyRecord.propertyIsCategorical(prop)) {
+    } else if (PropertyRecord.propertyIsCategorical(prop)) {
+      // Collect categorical properties a set of 0-1 vectors
       const arr = extractCategoricalProperty(collection, prop);
       // skip last column
       for (let i = 0; i < arr.length - 1; i++) {
         newprops.push(arr[i]);
       }
+    } else {
+      throw new Error('all properties not present on property record');
     }
-
-    throw new Error('all properties not present on property record');
   });
 
   return Matrix.cbind(...newprops);
