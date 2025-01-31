@@ -117,7 +117,7 @@ export function selectIntersects(
   // but values need to be updated for categorical props and
   // two design properties must be added to the new property
   // record. Set initial record here.
-  const record = base.propertyRecord.copy();
+  const record = base.propertyRecord.copy(false);
   record.addDesignWeight();
   record.addParent();
 
