@@ -78,7 +78,11 @@ export function sampleRelascopePoints(
     sizeProperty,
     ...opts
   }: SampleRelascopePointsOptions,
-): FeatureCollection<Point> {
+): {
+  collection: FeatureCollection<Point>;
+  pointSample: FeatureCollection<Point>;
+  areaRatio: number;
+} {
   const optionsError = sampleRelascopePointsOptionsCheck(
     {
       buffer,
@@ -104,7 +108,29 @@ export function sampleRelascopePoints(
   newCollection.propertyRecord.addDesignWeight();
   newCollection.propertyRecord.addParent();
 
-  // const sampledFeatures: PointFeature[] = [];
+  // Compute estimate of area with input area collection
+  const areaEstimateBefore = collection.features.reduce(
+    (p, c) => p + c.geometry.measure() * c.getSpecialPropertyDesignWeight(1.0),
+    0.0,
+  );
+
+  // Compute estimate of area with sampled points
+  let areaEstimateWithPoints = 0.0;
+
+  for (let i = 0; i < pointSample.features.length; i++) {
+    const samplePoint = pointSample.features[i];
+    // check if point is inside area
+    for (let j = 0; j < collection.features.length; j++) {
+      const frameFeature = collection.features[j];
+      if (frameFeature.geometry.includesPosition(samplePoint.geometry.coordinates)) {
+        const dw =
+          samplePoint.getSpecialPropertyDesignWeight() *
+          (buffer > 0.0 ? frameFeature.getSpecialPropertyDesignWeight(1.0) : 1.0);
+        areaEstimateWithPoints += dw;
+        break;
+      }
+    }
+  }
 
   // Find selected points in base layer and check if selected base point is in frame and transfer dw
   baseCollection.forEach((pointFeature) => {
@@ -150,10 +176,11 @@ export function sampleRelascopePoints(
         }
       }
     });
-    // } else {
-    //   throw new Error('Only Features with geometry of type Point is allowed in parameter base.');
-    // }
   });
 
-  return newCollection;
+  return {
+    collection: newCollection,
+    pointSample,
+    areaRatio: areaEstimateWithPoints / areaEstimateBefore,
+  };
 }
