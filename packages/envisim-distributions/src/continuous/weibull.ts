@@ -1,6 +1,6 @@
 import {Distribution, Interval} from '../abstract-distribution.js';
 import {gammaFunction} from '../gamma-utils.js';
-import {ParamsShapeScale, shapeScaleCheck, shapeScaleDefault} from '../params.js';
+import {type ParamsShapeScale, shapeScaleCheck, shapeScaleDefault} from '../params.js';
 
 export class Weibull extends Distribution<ParamsShapeScale> {
   protected params: ParamsShapeScale = {...shapeScaleDefault};

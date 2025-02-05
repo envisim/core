@@ -1,9 +1,9 @@
-import {Random} from '@envisim/random';
+import {type Random} from '@envisim/random';
 
 import {
   Distribution,
   Interval,
-  RandomOptions,
+  type RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
 import {assertPositiveInteger, binomialCoefficient, logBinomialCoefficient} from '../utils.js';

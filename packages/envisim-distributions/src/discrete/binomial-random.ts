@@ -1,4 +1,4 @@
-import {Random} from '@envisim/random';
+import {type Random} from '@envisim/random';
 
 const binomialCoefsFun = (a: number, b: number): number => {
   return (13860.0 - (462.0 - (132.0 - (99.0 - 140.0 / a) / a) / a) / a) / b / 166320.0;

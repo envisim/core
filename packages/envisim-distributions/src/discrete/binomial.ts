@@ -1,13 +1,13 @@
 import {
   Distribution,
   Interval,
-  RandomOptions,
+  type RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
 import {regularizedBetaFunction} from '../beta-utils.js';
 import {randomShapeGamma} from '../continuous/gamma-random.js';
 import {stdNormalQuantile} from '../continuous/normal-utils.js';
-import {ParamsBinomial, binomialCheck, binomialDefault} from '../params.js';
+import {type ParamsBinomial, binomialCheck, binomialDefault} from '../params.js';
 import {assertPositiveInteger, logBinomialCoefficient} from '../utils.js';
 import {randomBinomial} from './binomial-random.js';
 import {randomPoisson} from './poisson-random.js';

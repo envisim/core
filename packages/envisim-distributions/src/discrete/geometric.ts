@@ -1,5 +1,5 @@
 import {Distribution, Interval} from '../abstract-distribution.js';
-import {ParamsBernoulli, bernoulliCheck, bernoulliDefault} from '../params.js';
+import {type ParamsBernoulli, bernoulliCheck, bernoulliDefault} from '../params.js';
 
 export class Geometric extends Distribution<ParamsBernoulli> {
   protected params: ParamsBernoulli = bernoulliDefault;

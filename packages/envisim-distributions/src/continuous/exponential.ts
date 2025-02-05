@@ -1,10 +1,10 @@
 import {
   Distribution,
   Interval,
-  RandomOptions,
+  type RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
-import {ParamsRate, rateCheck, rateDefault} from '../params.js';
+import {type ParamsRate, rateCheck, rateDefault} from '../params.js';
 
 export class Exponential extends Distribution<ParamsRate> {
   protected params = rateDefault;

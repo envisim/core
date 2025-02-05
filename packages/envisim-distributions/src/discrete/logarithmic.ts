@@ -1,14 +1,14 @@
-import {Random} from '@envisim/random';
+import {type Random} from '@envisim/random';
 
 import {
   Distribution,
   Interval,
-  RandomOptions,
+  type RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
 import {betaContinuedFraction} from '../beta-utils.js';
 import {stdNormalQuantile} from '../continuous/normal-utils.js';
-import {ParamsBernoulli, bernoulliCheck, bernoulliDefault} from '../params.js';
+import {type ParamsBernoulli, bernoulliCheck, bernoulliDefault} from '../params.js';
 import {assertPositiveInteger} from '../utils.js';
 
 export class Logarithmic extends Distribution<ParamsBernoulli> {
