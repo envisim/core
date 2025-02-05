@@ -9,8 +9,7 @@ export function reducedRowEchelonForm(
   rowCount: number,
   colCount: number,
   eps: number = 1e-9,
-  mIdx: (r: number, c: number) => number = (r: number, c: number): number =>
-    r * colCount + c,
+  mIdx: (r: number, c: number) => number = (r: number, c: number): number => r * colCount + c,
 ): void {
   let lead = 0;
 
@@ -48,8 +47,7 @@ export function reducedRowEchelonForm(
       if (j === r) continue;
       const temp = mat[mIdx(j, lead)]!;
       mat[mIdx(j, lead)] = 0.0;
-      for (let k = lead + 1; k < colCount; k++)
-        mat[mIdx(j, k)] -= mat[mIdx(r, k)]! * temp;
+      for (let k = lead + 1; k < colCount; k++) mat[mIdx(j, k)] -= mat[mIdx(r, k)]! * temp;
     }
 
     lead += 1;
