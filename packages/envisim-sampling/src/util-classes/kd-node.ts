@@ -40,8 +40,7 @@ export class KdNode {
     const it = this.units.indexOf(id);
     if (it < 0) return;
 
-    if (it < this.units.length - 1)
-      this.units[it] = this.units[this.units.length - 1];
+    if (it < this.units.length - 1) this.units[it] = this.units[this.units.length - 1];
 
     this.units.pop();
   }
