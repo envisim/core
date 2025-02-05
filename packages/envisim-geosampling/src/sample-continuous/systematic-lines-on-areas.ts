@@ -5,11 +5,8 @@ import {
   Geodesic,
   type LineObject,
   bbox4,
+  bboxCenter,
   cutLineGeometry,
-  longitudeCenter,
-  longitudeDistance,
-  normalizeLongitude,
-  rotateCoord,
   toLineObject,
 } from '@envisim/geojson-utils';
 
@@ -19,6 +16,13 @@ import {
   type SampleSystematicLineOnAreaOptions,
   sampleSystematicLineOnAreaOptionsCheck,
 } from './options.js';
+
+// Internal.
+function placePoint(point: GJ.Position, position: GJ.Position, rotation: number): GJ.Position {
+  const dist = Math.sqrt(point[0] * point[0] + point[1] * point[1]);
+  const angle = 90 - (Math.atan2(point[1], point[0]) * 180) / Math.PI + rotation;
+  return Geodesic.destination(position, dist, angle);
+}
 
 /**
  * Selects a sample of lines systematically over all areas.
@@ -44,51 +48,28 @@ export function sampleSystematicLinesOnAreas(
     throw new RangeError(optionsError);
   }
 
-  const numPointsPerLine = 20;
-
   const box = bbox4(collection.getBBox());
-  const randomStart = rand.float() * distBetween;
-
-  const latPerMeter = (box[3] - box[1]) / Geodesic.distance([box[0], box[1]], [box[0], box[3]]);
-
-  const refCoord: GJ.Position = [longitudeCenter(box[0], box[2]), box[1] + (box[3] - box[1]) / 2.0];
-
-  const maxRadius = Math.max(
-    Geodesic.distance([box[0], box[1]], refCoord),
-    Geodesic.distance([box[2], box[3]], refCoord),
+  const center = bboxCenter(box);
+  const bottomLeft: GJ.Position = [box[0], box[1]];
+  const topRight: GJ.Position = [box[2], box[3]];
+  const radius = Math.max(
+    Geodesic.distance(center, bottomLeft),
+    Geodesic.distance(center, topRight),
   );
 
-  let smallestAtLat = 0;
-
-  if (box[3] > 0.0 && box[1] < 0.0) {
-    smallestAtLat = Math.max(box[3], -box[1]);
-  } else if (box[3] < 0.0) {
-    smallestAtLat = box[1];
-  } else if (box[1] > 0.0) {
-    smallestAtLat = box[3];
-  }
-
-  const minLon = Geodesic.destination([refCoord[0], smallestAtLat], maxRadius, 270.0)[0];
-  const maxLon = Geodesic.destination([refCoord[0], smallestAtLat], maxRadius, 90.0)[0];
-  const minLat = Geodesic.destination(refCoord, maxRadius, 180.0)[1];
-  const lonDist = longitudeDistance(minLon, maxLon);
-
-  const numLines = Math.ceil((2.0 * maxRadius) / distBetween);
+  const numPointsPerLine = 20;
+  const numLines = Math.ceil((2.0 * radius) / distBetween);
+  const randomStart = rand.float() * distBetween;
 
   const sc = FeatureCollection.newLine([]);
   sc.propertyRecord.addDesignWeight();
 
   for (let i = 0; i < numLines; i++) {
-    const latitude = minLat + (randomStart + i * distBetween) * latPerMeter;
+    const x = -radius + i * distBetween + randomStart;
     const thisLine = [];
     for (let j = 0; j < numPointsPerLine; j++) {
-      thisLine.push(
-        rotateCoord(
-          [normalizeLongitude(minLon + (j / (numPointsPerLine - 1)) * lonDist), latitude],
-          refCoord,
-          rotation,
-        ),
-      );
+      const y = -radius + (2 * radius * j) / (numPointsPerLine - 1);
+      thisLine.push(placePoint([x, y], center, rotation));
     }
     // Cut at antimeridian if needed
     const lineGeom = toLineObject(

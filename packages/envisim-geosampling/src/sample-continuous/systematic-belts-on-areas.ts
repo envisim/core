@@ -4,11 +4,8 @@ import {
   type GeoJSON as GJ,
   Geodesic,
   bbox4,
+  bboxCenter,
   cutAreaGeometry,
-  longitudeCenter,
-  longitudeDistance,
-  normalizeLongitude,
-  rotateCoord,
   toAreaObject,
 } from '@envisim/geojson-utils';
 
@@ -18,6 +15,13 @@ import {
   type SampleBeltOnAreaOptions,
   sampleBeltOnAreaOptionsCheck,
 } from './options.js';
+
+// Internal.
+function placePoint(point: GJ.Position, position: GJ.Position, rotation: number): GJ.Position {
+  const dist = Math.sqrt(point[0] * point[0] + point[1] * point[1]);
+  const angle = 90 - (Math.atan2(point[1], point[0]) * 180) / Math.PI + rotation;
+  return Geodesic.destination(position, dist, angle);
+}
 
 /**
  * Selects a systematic sample of belts on areas.
@@ -45,64 +49,37 @@ export const sampleSystematicBeltsOnAreas = (
     throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
   }
 
-  const numPointsPerLine = 20;
   const box = bbox4(collection.getBBox());
-  const randomStart = rand.float() * distBetween;
-
-  const latPerMeter = (box[3] - box[1]) / Geodesic.distance([box[0], box[1]], [box[0], box[3]]);
-
-  const refCoord: GJ.Position = [longitudeCenter(box[0], box[2]), box[1] + (box[3] - box[1]) / 2.0];
-
-  const maxRadius = Math.max(
-    Geodesic.distance([box[0], box[1]], refCoord),
-    Geodesic.distance([box[2], box[3]], refCoord),
+  const center = bboxCenter(box);
+  const bottomLeft: GJ.Position = [box[0], box[1]];
+  const topRight: GJ.Position = [box[2], box[3]];
+  const radius = Math.max(
+    Geodesic.distance(center, bottomLeft),
+    Geodesic.distance(center, topRight),
   );
 
-  let smallestAtLat = 0.0;
-
-  if (box[3] > 0.0 && box[1] < 0.0) {
-    smallestAtLat = Math.max(box[3], -box[1]);
-  } else if (box[3] < 0.0) {
-    smallestAtLat = box[1];
-  } else if (box[1] > 0.0) {
-    smallestAtLat = box[3];
-  }
-
-  const minLon = Geodesic.destination([refCoord[0], smallestAtLat], maxRadius, 270.0)[0];
-  const maxLon = Geodesic.destination([refCoord[0], smallestAtLat], maxRadius, 90.0)[0];
-  const minLat = Geodesic.destination(refCoord, maxRadius + halfWidth, 180.0)[1];
-  const lonDist = longitudeDistance(minLon, maxLon);
-  const numLines = Math.ceil((2.0 * maxRadius) / distBetween);
+  const numPointsPerLine = 20;
+  const numLines = Math.ceil((2.0 * radius) / distBetween);
+  const randomStart = rand.float() * distBetween;
 
   const rings: GJ.Position[][] = [];
   for (let i = 0; i < numLines; i++) {
-    const latitude = minLat + (randomStart + i * distBetween) * latPerMeter;
+    // Left and right horizontal positon of vertical belt (before rotation)
+    const x1 = -radius + i * distBetween + randomStart - halfWidth;
+    const x2 = x1 + 2 * halfWidth;
+
     const thisRing: GJ.Position[] = [];
     // First side of belt (counterclockwise).
     for (let j = 0; j < numPointsPerLine; j++) {
-      thisRing.push(
-        rotateCoord(
-          [
-            normalizeLongitude(minLon + (j / (numPointsPerLine - 1)) * lonDist),
-            latitude - halfWidth * latPerMeter,
-          ],
-          refCoord,
-          rotation,
-        ),
-      );
+      // vertical position (before rotation)
+      const y = -radius + (2 * radius * j) / (numPointsPerLine - 1);
+      // rotate and and convert to lon lat
+      thisRing.push(placePoint([x2, y], center, rotation));
     }
     // Reverse direction on other side.
     for (let j = numPointsPerLine - 1; j >= 0; j--) {
-      thisRing.push(
-        rotateCoord(
-          [
-            normalizeLongitude(minLon + (j / (numPointsPerLine - 1)) * lonDist),
-            latitude + halfWidth * latPerMeter,
-          ],
-          refCoord,
-          rotation,
-        ),
-      );
+      const y = -radius + (2 * radius * j) / (numPointsPerLine - 1);
+      thisRing.push(placePoint([x1, y], center, rotation));
     }
     // Close the polygon by adding first coordinate at the end.
     thisRing.push([...thisRing[0]]);
