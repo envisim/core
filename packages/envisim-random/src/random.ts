@@ -108,8 +108,7 @@ class Random {
     // get a pointer to our high-performance "Mash" hash
     // this.#mash = new (Mash as any)();
 
-    if (typeof seed === 'string' || typeof seed === 'number')
-      return this.seed(seed);
+    if (typeof seed === 'string' || typeof seed === 'number') return this.seed(seed);
 
     // fill the array with initial mash hash values
     for (let i = 0; i < this.o; i++) this.s[i] = this.mash(Math.random());
@@ -140,8 +139,7 @@ class Random {
    * @throws `RangeError` if `n` is not at positive integer.
    */
   intn(n: number = 1): number {
-    if (!Number.isInteger(n) || n < 1)
-      throw new RangeError('n must be a positive integer');
+    if (!Number.isInteger(n) || n < 1) throw new RangeError('n must be a positive integer');
     if (n === 1) return 0;
     return (n * this.float()) | 0;
   }
@@ -212,9 +210,7 @@ class Random {
   // time
   /** Adds entropy to Uheprng. */
   addEntropy(...args: string[] | number[]): this {
-    this.hash(
-      [this.k++, new Date().getTime(), ...args, Math.random()].join(''),
-    );
+    this.hash([this.k++, new Date().getTime(), ...args, Math.random()].join(''));
 
     return this;
   }
@@ -246,10 +242,7 @@ class Random {
   // Extracted from intn, see original comments there
   /** @returns Pseudo-random (uniform) number on the interval [0.0, 1.0) */
   float(): number {
-    return (
-      this.rawprng() +
-      ((this.rawprng() * 0x200000) | 0) * 1.1102230246251565e-16
-    ); // 2^-53
+    return this.rawprng() + ((this.rawprng() * 0x200000) | 0) * 1.1102230246251565e-16; // 2^-53
   }
 
   /** @returns An array of (uniform) numbers on the interval `[0.0, 1.0)` */
