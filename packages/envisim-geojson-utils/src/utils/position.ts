@@ -37,11 +37,7 @@ export function checkLongitudeInRange(
  * @param norm the normalizing factor
  * @returnsthe distance in normalized longitudes on range [a, b]
  */
-export function longitudeDistance(
-  a: number,
-  b: number,
-  norm: number = 360.0,
-): number {
+export function longitudeDistance(a: number, b: number, norm: number = 360.0): number {
   a = normalizeLongitude(a);
   b = normalizeLongitude(b);
 
@@ -54,11 +50,7 @@ export function longitudeDistance(
  * @param norm the normalizing factor
  * @returns the midpoint of the longitudes `[a, b]` in `[-norm/2, norm/2]`
  */
-export function longitudeCenter(
-  a: number,
-  b: number,
-  norm: number = 360.0,
-): number {
+export function longitudeCenter(a: number, b: number, norm: number = 360.0): number {
   return normalizeLongitude(a + longitudeDistance(a, b, norm) * 0.5);
 }
 
