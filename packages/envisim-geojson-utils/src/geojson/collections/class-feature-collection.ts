@@ -258,18 +258,18 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
         features.push(new Feature(g, f.properties, shallow) as Feature<T>);
       }
 
-      return new FeatureCollection(features, this.propertyRecord.copy(shallow), this.primitive);
+      return new FeatureCollection(this.primitive, features, this.propertyRecord.copy(shallow));
     }
 
     return new FeatureCollection(
+      this.primitive,
       this.features.map((f) => new Feature(f.geometry, f.properties, shallow)),
       this.propertyRecord.copy(shallow),
-      this.primitive,
     );
   }
 
   copyEmpty(shallow: boolean = true): FeatureCollection<T> {
-    return new FeatureCollection([], this.propertyRecord.copy(shallow), this.primitive);
+    return new FeatureCollection(this.primitive, [], this.propertyRecord.copy(shallow));
   }
 
   geometricPrimitive(): GeometricPrimitive {

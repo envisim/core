@@ -23,7 +23,7 @@ test('belt-sampling', () => {
       [20.386591, 63.800056],
     ],
   ]);
-  const fc1 = FeatureCollection.createArea([]);
+  const fc1 = FeatureCollection.newArea([]);
   fc1.addGeometry(poly1);
   fc1.addGeometry(poly2);
   fc1.features[0].geometry.bbox = [20.380669, 63.799279, 20.386033, 63.800804];
@@ -75,7 +75,7 @@ test('belt-sampling', () => {
     ],
   ]);
 
-  const fc2 = FeatureCollection.createArea([]);
+  const fc2 = FeatureCollection.newArea([]);
   fc2.addGeometry(strip);
 
   const int2 = intersectAreaSampleAreaFrame(fc2, fc1);

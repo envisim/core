@@ -1,6 +1,10 @@
 // Sampling methods
 export {sampleDistancePoints} from './distance-points.js';
-export {sampleFeaturesOnAreas} from './features-on-areas.js';
+export {
+  sampleAreaFeaturesOnAreas,
+  sampleLineFeaturesOnAreas,
+  samplePointFeaturesOnAreas,
+} from './features-on-areas.js';
 export {samplePointsOnAreas} from './points-on-areas.js';
 export {samplePointsOnLines} from './points-on-lines.js';
 export {sampleRelascopePoints} from './relascope-points.js';
