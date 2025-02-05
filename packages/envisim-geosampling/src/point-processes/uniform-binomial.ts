@@ -1,4 +1,4 @@
-import {type AreaObject, type FeatureCollection, type PointObject} from '@envisim/geojson-utils';
+import {type AreaObject, type FeatureCollection, type Point} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
 import {samplePointsOnAreas} from '../sample-continuous/index.js';
@@ -26,7 +26,7 @@ interface UniformBinomialPointProcessOptions {
 export function uniformBinomialPointProcess(
   collection: FeatureCollection<AreaObject>,
   {sampleSize, rand = new Random()}: UniformBinomialPointProcessOptions,
-): FeatureCollection<PointObject> {
+): FeatureCollection<Point> {
   const pointCollection = samplePointsOnAreas(collection, {
     pointSelection: 'independent',
     sampleSize,

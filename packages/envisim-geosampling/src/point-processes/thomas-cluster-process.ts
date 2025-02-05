@@ -5,7 +5,6 @@ import {
   type GeoJSON as GJ,
   Geodesic,
   Point,
-  type PointObject,
   Polygon,
   bbox4,
   pointInBBox,
@@ -69,7 +68,7 @@ export function thomasClusterProcess(
     sigmaOfCluster,
     rand = new Random(),
   }: ThomasClusterProcessOptions,
-): FeatureCollection<PointObject> {
+): FeatureCollection<Point> {
   const box = bbox4(collection.getBBox());
   // Extend box by 4 * sigmaOfCluster to avoid edge effects.
   // Same as spatstat default in R.
@@ -94,7 +93,7 @@ export function thomasClusterProcess(
   );
 
   // To store new features.
-  const newCollection = FeatureCollection.newPoint();
+  const newCollection = FeatureCollection.newPoint<Point>();
   // Generate number of points in each cluster.
   const nrOfPointsInCluster = new Poisson(meanOfCluster).random(nrOfParents, {rand});
   // nr of features in collection

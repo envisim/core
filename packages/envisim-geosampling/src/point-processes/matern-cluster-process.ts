@@ -5,7 +5,6 @@ import {
   type GeoJSON as GJ,
   Geodesic,
   Point,
-  type PointObject,
   Polygon,
   bbox4,
   pointInBBox,
@@ -64,7 +63,7 @@ export function maternClusterProcess(
     radiusOfCluster,
     rand = new Random(),
   }: MaternClusterProcessOptions,
-): FeatureCollection<PointObject> {
+): FeatureCollection<Point> {
   const box = bbox4(collection.getBBox());
   // Expand box by radius of cluster, as parent points should
   // be allowed outside of area. This is to avoid edge effects.
@@ -89,7 +88,7 @@ export function maternClusterProcess(
   );
 
   // To store new features.
-  const newCollection = FeatureCollection.newPoint();
+  const newCollection = FeatureCollection.newPoint<Point>();
   // Generate number of points in each cluster.
   const nrOfPointsInCluster = new Poisson(meanOfCluster).random(nrOfParents, {rand});
   // Number of features in collection.
