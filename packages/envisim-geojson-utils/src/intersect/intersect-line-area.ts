@@ -97,7 +97,7 @@ function lineStringInPolygons(
     }
 
     if (vals[vals.length - 1] < 1.0) {
-      ls.push(seg.position(vals[i]));
+      ls.push(seg.position(vals[vals.length - 1]));
     }
   }
 
