@@ -69,31 +69,31 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
 
   static createArea(
     geometry: GJ.BaseGeometry,
-    properties: GJ.FeatureProperties<number | string> = {},
+    properties?: GJ.FeatureProperties<number | string> | null,
     shallow: boolean = true,
     options: CirclesToPolygonsOptions = {},
   ): Feature<AreaObject> | null {
     const geom = toAreaObject(geometry, true, options);
     if (geom === null) return null;
-    return new Feature(geom, properties, shallow);
+    return new Feature(geom, properties ?? {}, shallow);
   }
   static createLine(
     geometry: GJ.BaseGeometry,
-    properties: GJ.FeatureProperties<number | string> = {},
+    properties?: GJ.FeatureProperties<number | string> | null,
     shallow: boolean = true,
   ): Feature<LineObject> | null {
     const geom = toLineObject(geometry, true);
     if (geom === null) return null;
-    return new Feature(geom, properties, shallow);
+    return new Feature(geom, properties ?? {}, shallow);
   }
   static createPoint(
     geometry: GJ.BaseGeometry,
-    properties: GJ.FeatureProperties<number | string> = {},
+    properties?: GJ.FeatureProperties<number | string> | null,
     shallow: boolean = true,
   ): Feature<PointObject> | null {
     const geom = toPointObject(geometry, true);
     if (geom === null) return null;
-    return new Feature(geom, properties, shallow);
+    return new Feature(geom, properties ?? {}, shallow);
   }
 
   constructor(

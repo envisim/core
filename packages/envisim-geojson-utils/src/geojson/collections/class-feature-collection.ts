@@ -9,7 +9,14 @@ import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
 import {type CirclesToPolygonsOptions} from '../../utils/circles-to-polygons.js';
 import {Feature} from '../features/index.js';
 import {GeometricPrimitive} from '../geometric-primitive/index.js';
-import {type AreaObject, type LineObject, type PointObject} from '../objects/index.js';
+import {
+  type AreaObject,
+  type LineObject,
+  type PointObject,
+  toAreaObject,
+  toLineObject,
+  toPointObject,
+} from '../objects/index.js';
 import {
   type CategoricalProperty,
   type NumericalProperty,
@@ -17,9 +24,23 @@ import {
 } from '../property-record.js';
 
 type ForEachCallback<T> = (obj: T, index: number) => void;
+interface FeatureCollectionExtras {
+  primitive: GeometricPrimitive;
+  propertyRecord: PropertyRecord;
+}
+interface FeatureCollectionExtrasJson {
+  primitive: GeometricPrimitive;
+  propertyRecord: {record: PropertyRecord['record']};
+}
+type StrippedFeatureCollectionJson = OptionalParam<
+  GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>> & FeatureCollectionExtrasJson,
+  'type' | 'primitive' | 'propertyRecord'
+>;
 
 export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
-  implements GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>>
+  implements
+    GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>>,
+    FeatureCollectionExtras
 {
   readonly type = 'FeatureCollection';
   features: Feature<T>[] = [];
@@ -61,120 +82,103 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
   }
 
   static createAreaFromJson(
-    fc: OptionalParam<GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>, 'type'>,
-    createPropertyRecord: boolean = true,
-    shallow: boolean = true,
-  ): FeatureCollection<AreaObject> {
-    return FeatureCollection.createArea(fc.features, createPropertyRecord, shallow);
-  }
-  static createLineFromJson(
-    fc: OptionalParam<GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>, 'type'>,
-    createPropertyRecord: boolean = true,
-    shallow: boolean = true,
-  ): FeatureCollection<LineObject> {
-    return FeatureCollection.createLine(fc.features, createPropertyRecord, shallow);
-  }
-  static createPointFromJson(
-    fc: OptionalParam<GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>>, 'type'>,
-    createPropertyRecord: boolean = true,
-    shallow: boolean = true,
-  ): FeatureCollection<PointObject> {
-    return FeatureCollection.createPoint(fc.features, createPropertyRecord, shallow);
-  }
-
-  static createArea(
-    features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
-    createPropertyRecord: boolean = true,
+    collection: StrippedFeatureCollectionJson,
     shallow: boolean = true,
     options: CirclesToPolygonsOptions = {},
   ): FeatureCollection<AreaObject> {
-    const feats: Feature<AreaObject>[] = [];
-    const fmap: number[] = [];
-
-    for (let i = 0; i < features.length; i++) {
-      const f = features[i];
-      const feature = Feature.createArea(f.geometry, {}, shallow, options);
-      if (feature === null) continue;
-      feats.push(feature);
-      fmap.push(i);
+    if (collection.primitive !== undefined && collection.primitive !== GeometricPrimitive.AREA) {
+      return new FeatureCollection(GeometricPrimitive.AREA);
     }
 
-    if (feats.length === 0) {
-      return new FeatureCollection([], undefined, GeometricPrimitive.AREA);
-    }
+    const {record, existed} = createPropertyRecord(collection, shallow);
+    const fc = new FeatureCollection<AreaObject>(GeometricPrimitive.AREA, [], record);
 
-    let pr: PropertyRecord | undefined = undefined;
-    if (createPropertyRecord === true) {
-      pr = PropertyRecord.createFromFeature(features[fmap[0]]);
-
-      for (let i = 0; i < feats.length; i++) {
-        feats[i].properties = setPropertiesOfFeature(pr, features[fmap[i]].properties ?? {});
+    if (existed) {
+      // If propertyrecord existed on provided collection, we trust it fully to be homogenous
+      for (const f of collection.features) {
+        const feature = Feature.createArea(f.geometry, f.properties, shallow, options);
+        if (feature === null) continue;
+        fc.addFeature(feature, true);
+      }
+    } else {
+      // if it doesn't exist, we need to create it from the provided collection, and will need to
+      // populate it (the categorical especially) by traversing all features. We take a harsher
+      // approach here -- because we're already traversing everything -- and will reject any
+      // collection which is not homogenous
+      for (const f of collection.features) {
+        const geometry = toAreaObject(f.geometry, shallow, options);
+        if (geometry === null) continue;
+        fc.addGeometry(
+          geometry,
+          setPropertiesOfFeature(fc.propertyRecord, f.properties ?? {}),
+          true,
+        );
       }
     }
 
-    return new FeatureCollection(feats, pr, GeometricPrimitive.AREA);
+    return fc;
   }
-  static createLine(
-    features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
-    createPropertyRecord: boolean = true,
+  static createLineFromJson(
+    collection: StrippedFeatureCollectionJson,
     shallow: boolean = true,
   ): FeatureCollection<LineObject> {
-    const feats: Feature<LineObject>[] = [];
-    const fmap: number[] = [];
-
-    for (let i = 0; i < features.length; i++) {
-      const f = features[i];
-      const feature = Feature.createLine(f.geometry, {}, shallow);
-      if (feature === null) continue;
-      feats.push(feature);
-      fmap.push(i);
+    if (collection.primitive !== undefined && collection.primitive !== GeometricPrimitive.LINE) {
+      return new FeatureCollection(GeometricPrimitive.LINE);
     }
 
-    if (feats.length === 0) {
-      return new FeatureCollection([], undefined, GeometricPrimitive.LINE);
-    }
+    const {record, existed} = createPropertyRecord(collection, shallow);
+    const fc = new FeatureCollection<LineObject>(GeometricPrimitive.LINE, [], record);
 
-    let pr: PropertyRecord | undefined = undefined;
-    if (createPropertyRecord === true) {
-      pr = PropertyRecord.createFromFeature(features[fmap[0]]);
-
-      for (let i = 0; i < feats.length; i++) {
-        feats[i].properties = setPropertiesOfFeature(pr, features[fmap[i]].properties ?? {});
+    if (existed) {
+      for (const f of collection.features) {
+        const feature = Feature.createLine(f.geometry, f.properties, shallow);
+        if (feature === null) continue;
+        fc.addFeature(feature, true);
+      }
+    } else {
+      for (const f of collection.features) {
+        const geometry = toLineObject(f.geometry, shallow);
+        if (geometry === null) continue;
+        fc.addGeometry(
+          geometry,
+          setPropertiesOfFeature(fc.propertyRecord, f.properties ?? {}),
+          true,
+        );
       }
     }
 
-    return new FeatureCollection(feats, pr, GeometricPrimitive.LINE);
+    return fc;
   }
-  static createPoint(
-    features: GJ.BaseFeature<GJ.BaseGeometry, any>[],
-    createPropertyRecord: boolean = true,
+  static createPointFromJson(
+    collection: StrippedFeatureCollectionJson,
     shallow: boolean = true,
   ): FeatureCollection<PointObject> {
-    const feats: Feature<PointObject>[] = [];
-    const fmap: number[] = [];
-
-    for (let i = 0; i < features.length; i++) {
-      const f = features[i];
-      const feature = Feature.createPoint(f.geometry, {}, shallow);
-      if (feature === null) continue;
-      feats.push(feature);
-      fmap.push(i);
+    if (collection.primitive !== undefined && collection.primitive !== GeometricPrimitive.POINT) {
+      return new FeatureCollection(GeometricPrimitive.POINT);
     }
 
-    if (feats.length === 0) {
-      return new FeatureCollection([], undefined, GeometricPrimitive.POINT);
-    }
+    const {record, existed} = createPropertyRecord(collection, shallow);
+    const fc = new FeatureCollection<PointObject>(GeometricPrimitive.POINT, [], record);
 
-    let pr: PropertyRecord | undefined = undefined;
-    if (createPropertyRecord === true) {
-      pr = PropertyRecord.createFromFeature(features[fmap[0]]);
-
-      for (let i = 0; i < feats.length; i++) {
-        feats[i].properties = setPropertiesOfFeature(pr, features[fmap[i]].properties ?? {});
+    if (existed) {
+      for (const f of collection.features) {
+        const feature = Feature.createPoint(f.geometry, f.properties, shallow);
+        if (feature === null) continue;
+        fc.addFeature(feature, true);
+      }
+    } else {
+      for (const f of collection.features) {
+        const geometry = toPointObject(f.geometry, shallow);
+        if (geometry === null) continue;
+        fc.addGeometry(
+          geometry,
+          setPropertiesOfFeature(fc.propertyRecord, f.properties ?? {}),
+          true,
+        );
       }
     }
 
-    return new FeatureCollection(feats, pr, GeometricPrimitive.POINT);
+    return fc;
   }
 
   static newArea<F extends AreaObject = AreaObject>(
@@ -183,13 +187,13 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     shallow: boolean = true,
   ): FeatureCollection<F> {
     if (shallow === true) {
-      return new FeatureCollection(features, propertyRecord, GeometricPrimitive.AREA);
+      return new FeatureCollection(GeometricPrimitive.AREA, features, propertyRecord);
     }
 
     return new FeatureCollection(
+      GeometricPrimitive.AREA,
       features.map((f) => new Feature(f.geometry, f.properties, false)),
       propertyRecord?.copy(shallow),
-      GeometricPrimitive.AREA,
     );
   }
   static newLine<F extends LineObject = LineObject>(
@@ -198,13 +202,13 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     shallow: boolean = true,
   ): FeatureCollection<F> {
     if (shallow === true) {
-      return new FeatureCollection(features, propertyRecord, GeometricPrimitive.LINE);
+      return new FeatureCollection(GeometricPrimitive.LINE, features, propertyRecord);
     }
 
     return new FeatureCollection(
+      GeometricPrimitive.LINE,
       features.map((f) => new Feature(f.geometry, f.properties, false)),
       propertyRecord?.copy(shallow),
-      GeometricPrimitive.LINE,
     );
   }
   static newPoint<F extends PointObject = PointObject>(
@@ -213,20 +217,20 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     shallow: boolean = true,
   ): FeatureCollection<F> {
     if (shallow === true) {
-      return new FeatureCollection(features, propertyRecord, GeometricPrimitive.POINT);
+      return new FeatureCollection(GeometricPrimitive.POINT, features, propertyRecord);
     }
 
     return new FeatureCollection(
+      GeometricPrimitive.POINT,
       features.map((f) => new Feature(f.geometry, f.properties, false)),
       propertyRecord?.copy(shallow),
-      GeometricPrimitive.POINT,
     );
   }
 
   private constructor(
-    features: Feature<T>[],
-    propertyRecord: PropertyRecord | undefined,
     primitive: GeometricPrimitive,
+    features: Feature<T>[] = [],
+    propertyRecord?: PropertyRecord,
   ) {
     this.primitive = primitive;
     this.features = features;
@@ -474,3 +478,18 @@ export type PureCollection<
     : T extends PointObject
       ? FeatureCollection<PointObject>
       : never;
+
+function createPropertyRecord(
+  collection: StrippedFeatureCollectionJson,
+  shallow: boolean,
+): {record: PropertyRecord; existed: boolean} {
+  if (collection.propertyRecord === undefined) {
+    // If propertyRecord does not exist, create from feature
+    return {record: PropertyRecord.createFromFeature(collection.features[0]), existed: false};
+  } else if (shallow === false && PropertyRecord.isPropertyRecord(collection.propertyRecord)) {
+    // If shallow is false, we can copy an existing propertyrecord
+    return {record: collection.propertyRecord, existed: true};
+  }
+
+  return {record: new PropertyRecord(collection.propertyRecord.record), existed: true};
+}
