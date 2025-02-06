@@ -199,7 +199,7 @@ function segmentIntersectsArea(segment: Segment, values: number[], area: GJ.Posi
     } else if (tarr[i] > values[j]) {
       if (tarr[i + 1] < values[j + 1]) {
         // f
-        values.splice(j, 0, tarr[i], tarr[i + 1]);
+        values.splice(j + 1, 0, tarr[i], tarr[i + 1]);
         i += 2;
         j += 2;
       } else {
