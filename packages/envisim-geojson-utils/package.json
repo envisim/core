@@ -14,12 +14,12 @@
     "@envisim/utils": "workspace:*",
     "geographiclib-geodesic": "^2.1.1",
     "tslib": "^2.8.1",
-    "uuid": "^11.0.3"
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@envisim/eslint-config": "workspace:*",
     "@envisim/ts-config": "workspace:*",
-    "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
   }
 }

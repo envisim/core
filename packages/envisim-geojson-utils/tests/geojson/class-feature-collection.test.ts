@@ -75,7 +75,7 @@ const feature2: GJ.BaseFeature<GJ.Geometry, any> = {
   },
 };
 
-const collection = FeatureCollection.createArea([feature1, feature2], true, true);
+const collection = FeatureCollection.createAreaFromJson({features: [feature1, feature2]}, true);
 
 test('FeatureCollection', () => {
   expect(FeatureCollection.isArea(collection)).toBe(true);

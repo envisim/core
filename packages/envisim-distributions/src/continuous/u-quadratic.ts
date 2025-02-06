@@ -1,5 +1,5 @@
 import {Distribution, Interval} from '../abstract-distribution.js';
-import {ParamsBound, boundCheck, boundDefault} from '../params.js';
+import {type ParamsBound, boundCheck, boundDefault} from '../params.js';
 
 export class UQuadratic extends Distribution<ParamsBound> {
   protected params: ParamsBound = {...boundDefault};

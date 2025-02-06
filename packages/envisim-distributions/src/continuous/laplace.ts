@@ -1,6 +1,6 @@
 import {Distribution, Interval} from '../abstract-distribution.js';
 import {
-  ParamsLocationScale,
+  type ParamsLocationScale,
   locationScaleCheck,
   locationScaleDefault,
   locationScaleNormalize,

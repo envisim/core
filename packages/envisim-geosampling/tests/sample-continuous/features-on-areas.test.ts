@@ -3,7 +3,10 @@ import {expect, test} from 'vitest';
 import {Feature, FeatureCollection, Polygon} from '@envisim/geojson-utils';
 
 import {pointGeometry, squareAreaGeometry} from '../../src/model-geometry.js';
-import {sampleFeaturesOnAreas} from '../../src/sample-continuous/features-on-areas.js';
+import {
+  sampleAreaFeaturesOnAreas,
+  samplePointFeaturesOnAreas,
+} from '../../src/sample-continuous/features-on-areas.js';
 
 const polygon = Polygon.create([
   [
@@ -19,14 +22,14 @@ const frame = FeatureCollection.newArea([new Feature(polygon)]);
 
 const tract = squareAreaGeometry(10);
 
-const sample = sampleFeaturesOnAreas(frame, {
+const sample = sampleAreaFeaturesOnAreas(frame, {
   pointSelection: 'independent',
   sampleSize: 10,
   modelGeometry: tract,
 });
 
 const tract2 = pointGeometry();
-const sample2 = sampleFeaturesOnAreas(frame, {
+const sample2 = samplePointFeaturesOnAreas(frame, {
   pointSelection: 'independent',
   sampleSize: 10,
   modelGeometry: tract2,

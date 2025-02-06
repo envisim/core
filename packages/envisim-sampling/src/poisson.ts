@@ -1,8 +1,4 @@
-import {
-  BASE_OPTIONS,
-  type FixedSizedOptions,
-  type PipsOptions,
-} from './base-options/index.js';
+import {BASE_OPTIONS, type FixedSizedOptions, type PipsOptions} from './base-options/index.js';
 
 /**
  * Selects a Poisson sample.
@@ -10,10 +6,7 @@ import {
  * @param options
  * @returns sample indices.
  */
-export function poissonSampling({
-  probabilities,
-  rand = BASE_OPTIONS.rand,
-}: PipsOptions): number[] {
+export function poissonSampling({probabilities, rand = BASE_OPTIONS.rand}: PipsOptions): number[] {
   const N = probabilities.length;
   const s: number[] = [];
   s.length = N;
@@ -49,9 +42,7 @@ export function conditionalPoissonSampling({
 
     run++;
     if (run >= 1e5)
-      throw new Error(
-        'conditionalPoissonSampling could not find a sample in 1e5 iterations',
-      );
+      throw new Error('conditionalPoissonSampling could not find a sample in 1e5 iterations');
   }
 
   return s;

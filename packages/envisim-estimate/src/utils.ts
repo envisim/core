@@ -1,4 +1,4 @@
-import {Vector} from '@envisim/matrix';
+import {type Vector} from '@envisim/matrix';
 
 /** @internal */
 export function checkSampleArray(sample: number[] | Vector, N: number): void {

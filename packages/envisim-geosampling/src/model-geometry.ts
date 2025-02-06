@@ -1,13 +1,22 @@
 import {
+  type AreaObject,
+  Circle,
   type GeoJSON as GJ,
   Geodesic,
-  GeometricPrimitive,
+  type LineObject,
+  LineString,
+  MultiCircle,
+  MultiLineString,
+  MultiPoint,
+  MultiPolygon,
+  Point,
+  type PointObject,
+  Polygon,
   cutAreaGeometry,
   cutLineGeometry,
-  getGeometryPrimitive,
   typeGuards,
 } from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
+import {type Random} from '@envisim/random';
 
 // This file has a set of functions to deal with a model
 // geometry (tract), which is a GeoJSON geometry with cartesian
@@ -16,58 +25,16 @@ import {Random} from '@envisim/random';
 // Internal.
 function placePoint(point: GJ.Position, position: GJ.Position, rotation: number): GJ.Position {
   const dist = Math.sqrt(point[0] * point[0] + point[1] * point[1]);
-  const angle = 90 - (Math.atan2(point[1], point[0]) * 180) / Math.PI + rotation;
+  const angle = 90.0 - (Math.atan2(point[1], point[0]) * 180.0) / Math.PI + rotation;
   return Geodesic.destination(position, dist, angle);
 }
 
-// Internal.
-function setCoordinatesForGeometry(
-  geometry: GJ.AreaObject | GJ.LineObject | GJ.PointObject,
-  position: GJ.Position,
-  rotation: number,
-): void {
-  switch (geometry.type) {
-    case 'Point':
-      geometry.coordinates = placePoint(geometry.coordinates, position, rotation);
-      break;
-    case 'MultiPoint':
-    case 'LineString':
-      for (let i = 0; i < geometry.coordinates.length; i++) {
-        geometry.coordinates[i] = placePoint(geometry.coordinates[i], position, rotation);
-      }
-      break;
-    case 'MultiLineString':
-    case 'Polygon':
-      for (let i = 0; i < geometry.coordinates.length; i++) {
-        for (let j = 0; j < geometry.coordinates[i].length; j++) {
-          geometry.coordinates[i][j] = placePoint(geometry.coordinates[i][j], position, rotation);
-        }
-      }
-      break;
-    case 'MultiPolygon':
-      for (let i = 0; i < geometry.coordinates.length; i++) {
-        for (let j = 0; j < geometry.coordinates[i].length; j++) {
-          for (let k = 0; k < geometry.coordinates[i][j].length; k++) {
-            geometry.coordinates[i][j][k] = placePoint(
-              geometry.coordinates[i][j][k],
-              position,
-              rotation,
-            );
-          }
-        }
-      }
-      break;
-    default:
-      throw new Error('Not a geometry.');
-  }
-}
-
-interface PlaceOpts<GP extends GeometricPrimitive = GeometricPrimitive> {
-  rotation: number;
-  randomRotation: boolean;
-  rand?: Random;
-  radius?: number;
-  type?: GP;
+interface PlaceOptions<G extends GJ.SingleTypeObject> {
+  modelGeometry: G;
+  rotationOfGeometry: number;
+  randomRotationOfGeometry: boolean;
+  rand: Random;
+  buffer: number;
 }
 
 /**
@@ -83,49 +50,103 @@ interface PlaceOpts<GP extends GeometricPrimitive = GeometricPrimitive> {
  * @param opts.type optional type of modelFeature ('point','line','area').
  * @returns a GeoJSON Point/Line/AreaObject.
  */
-function placeModelGeometry(
-  modelGeometry: GJ.PointObject,
+export function placeAreaGeometry(
   position: GJ.Position,
-  opts: PlaceOpts<GeometricPrimitive.POINT>,
-): GJ.PointObject;
-function placeModelGeometry(
-  modelGeometry: GJ.LineObject,
-  position: GJ.Position,
-  opts: PlaceOpts<GeometricPrimitive.LINE>,
-): GJ.LineObject;
-function placeModelGeometry(
-  modelGeometry: GJ.AreaObject,
-  position: GJ.Position,
-  opts: PlaceOpts<GeometricPrimitive.AREA>,
-): GJ.AreaObject;
-function placeModelGeometry(
-  modelGeometry: GJ.PointObject | GJ.LineObject | GJ.AreaObject,
-  position: GJ.Position,
-  {
-    rotation: optsRotation = 0,
-    randomRotation = false,
-    rand = new Random(),
-    type: primitive = getGeometryPrimitive(modelGeometry),
-    radius = radiusOfModelGeometry(modelGeometry),
-  }: PlaceOpts,
-) {
-  const rotation = randomRotation ? Math.floor(rand.float() * 360) : optsRotation;
-  let geom = structuredClone(modelGeometry);
-  setCoordinatesForGeometry(geom, position, rotation);
+  {modelGeometry, ...opts}: PlaceOptions<GJ.AreaObject>,
+): AreaObject {
+  const rotation = opts.randomRotationOfGeometry
+    ? Math.floor(opts.rand.float() * 360)
+    : (opts.rotationOfGeometry ?? 0.0);
 
-  // check if antimeridian cut may be needed here
-  if (Geodesic.distance(position, [180, position[1]]) < radius) {
-    // May need cut if area or line as the distance to the antimeridian is less than the radius
-    if (primitive === GeometricPrimitive.AREA) {
-      geom = cutAreaGeometry(geom as GJ.AreaObject);
-    } else if (primitive === GeometricPrimitive.LINE) {
-      geom = cutLineGeometry(geom as GJ.LineObject);
-    }
+  if (modelGeometry.type === 'Point') {
+    return Circle.create(
+      placePoint(modelGeometry.coordinates, position, rotation),
+      modelGeometry.radius,
+      true,
+    );
+  } else if (modelGeometry.type === 'MultiPoint') {
+    return MultiCircle.create(
+      modelGeometry.coordinates.map((p) => placePoint(p, position, rotation)),
+      modelGeometry.radius,
+      true,
+    );
   }
 
-  return geom;
+  let geom: GJ.Polygon | GJ.MultiPolygon;
+  if (modelGeometry.type === 'Polygon') {
+    geom = {
+      type: 'Polygon',
+      coordinates: modelGeometry.coordinates.map((parr) =>
+        parr.map((p) => placePoint(p, position, rotation)),
+      ),
+    };
+  } else {
+    geom = {
+      type: 'MultiPolygon',
+      coordinates: modelGeometry.coordinates.map((pouter) =>
+        pouter.map((pinner) => pinner.map((p) => placePoint(p, position, rotation))),
+      ),
+    };
+  }
+
+  // May need cut if area or line as the distance to the antimeridian is less than the radius
+  if (Geodesic.distance(position, [180, position[1]]) < opts.buffer) {
+    geom = cutAreaGeometry(geom);
+  }
+
+  return geom.type === 'Polygon'
+    ? Polygon.create(geom.coordinates, true)
+    : MultiPolygon.create(geom.coordinates, true);
 }
-export {placeModelGeometry};
+export function placeLineGeometry(
+  position: GJ.Position,
+  {modelGeometry, ...opts}: PlaceOptions<GJ.LineObject>,
+): LineObject {
+  const rotation = opts.randomRotationOfGeometry
+    ? Math.floor(opts.rand.float() * 360)
+    : (opts.rotationOfGeometry ?? 0.0);
+
+  let geom: GJ.LineString | GJ.MultiLineString;
+  if (modelGeometry.type === 'LineString') {
+    geom = {
+      type: 'LineString',
+      coordinates: modelGeometry.coordinates.map((p) => placePoint(p, position, rotation)),
+    };
+  } else {
+    geom = {
+      type: 'MultiLineString',
+      coordinates: modelGeometry.coordinates.map((parr) =>
+        parr.map((p) => placePoint(p, position, rotation)),
+      ),
+    };
+  }
+
+  // May need cut if area or line as the distance to the antimeridian is less than the radius
+  if (Geodesic.distance(position, [180, position[1]]) < opts.buffer) {
+    geom = cutLineGeometry(geom);
+  }
+
+  return geom.type === 'LineString'
+    ? LineString.create(geom.coordinates, true)
+    : MultiLineString.create(geom.coordinates, true);
+}
+export function placePointGeometry(
+  position: GJ.Position,
+  {modelGeometry, ...opts}: PlaceOptions<GJ.PointObject>,
+): PointObject {
+  const rotation = opts.randomRotationOfGeometry
+    ? Math.floor(opts.rand.float() * 360)
+    : (opts.rotationOfGeometry ?? 0.0);
+
+  if (modelGeometry.type === 'Point') {
+    return Point.create(placePoint(modelGeometry.coordinates, position, rotation), true);
+  } else {
+    return MultiPoint.create(
+      modelGeometry.coordinates.map((p) => placePoint(p, position, rotation)),
+      true,
+    );
+  }
+}
 
 /**
  * Computes the radius as maximum distance from (0,0) to any point in the given geometry.

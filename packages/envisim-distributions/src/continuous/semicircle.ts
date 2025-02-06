@@ -1,7 +1,7 @@
 import {
   Distribution,
   Interval,
-  RandomOptions,
+  type RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
 import {inverseRegularizedBetaFunction} from '../beta-utils.js';

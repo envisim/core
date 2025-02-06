@@ -1,5 +1,5 @@
 import {Poisson} from '@envisim/distributions';
-import {type AreaObject, FeatureCollection, type PointObject} from '@envisim/geojson-utils';
+import {type AreaObject, FeatureCollection, type Point} from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
 import {uniformBinomialPointProcess} from './uniform-binomial.js';
@@ -29,13 +29,13 @@ interface UniformPoissonProcessOptions {
 export function uniformPoissonPointProcess(
   collection: FeatureCollection<AreaObject>,
   {intensity, rand = new Random()}: UniformPoissonProcessOptions,
-): FeatureCollection<PointObject> {
+): FeatureCollection<Point> {
   const A = collection.measure();
   const mu = intensity * A;
   const sampleSize = new Poisson(mu).random(1, {rand})[0];
 
   if (sampleSize === 0) {
-    return FeatureCollection.newPoint();
+    return FeatureCollection.newPoint<Point>();
   }
 
   return uniformBinomialPointProcess(collection, {sampleSize, rand});

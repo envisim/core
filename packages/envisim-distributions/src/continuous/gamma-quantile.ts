@@ -1,5 +1,5 @@
 import {logGammaFunction, regularizedLowerGammaFunction} from '../gamma-utils.js';
-import {ParamsShapeScale} from '../params.js';
+import {type ParamsShapeScale} from '../params.js';
 import {chiSquaredQuantile91} from './chi-squared-quantile.js';
 
 /*

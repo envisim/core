@@ -19,7 +19,5 @@ export function assertSizeRange(
 ): void {
   if (!Number.isInteger(n)) throw new TypeError(`${argName} must be integer`);
   if (n < minSize || maxSize < n)
-    throw new RangeError(
-      `${argName} must be between ${minSize} and ${maxSize}`,
-    );
+    throw new RangeError(`${argName} must be between ${minSize} and ${maxSize}`);
 }

@@ -1,5 +1,5 @@
 import {logGammaFunction} from './gamma-utils.js';
-import {ParamsBeta} from './params.js';
+import {type ParamsBeta} from './params.js';
 
 const SAE = -20; //9;
 // const EPS = Math.pow(10, SAE);

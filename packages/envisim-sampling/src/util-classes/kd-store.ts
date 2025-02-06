@@ -89,12 +89,8 @@ export class KdStore {
     );
   }
 
-  sortNeighboursByDistance(
-    fr: number = 0,
-    to: number = this.neighbours.length,
-  ): void {
-    if (to <= fr || this.neighbours.length < to)
-      throw new RangeError('bad input');
+  sortNeighboursByDistance(fr: number = 0, to: number = this.neighbours.length): void {
+    if (to <= fr || this.neighbours.length < to) throw new RangeError('bad input');
     if (fr === 0 && to === this.neighbours.length) {
       this.fullSortNeighboursByDistance();
       return;
@@ -102,23 +98,18 @@ export class KdStore {
 
     const arr = this.neighbours
       .slice(fr, to)
-      .sort((a: number, b: number) =>
-        this.distances[a] < this.distances[b] ? -1 : 1,
-      );
+      .sort((a: number, b: number) => (this.distances[a] < this.distances[b] ? -1 : 1));
 
     const n = to - fr;
     for (let i = 0; i < n; i++) this.neighbours[fr + i] = arr[i];
   }
 
   fullSortNeighboursByWeight(): void {
-    this.neighbours.sort((a: number, b: number) =>
-      this.weights[a] < this.weights[b] ? -1 : 1,
-    );
+    this.neighbours.sort((a: number, b: number) => (this.weights[a] < this.weights[b] ? -1 : 1));
   }
 
   sortNeighboursByWeight(fr: number, to: number): void {
-    if (to <= fr || this.neighbours.length < to)
-      throw new RangeError('bad input');
+    if (to <= fr || this.neighbours.length < to) throw new RangeError('bad input');
     if (fr === 0 && to === this.neighbours.length) {
       this.fullSortNeighboursByWeight();
       return;
@@ -126,9 +117,7 @@ export class KdStore {
 
     const arr = this.neighbours
       .slice(fr, to)
-      .sort((a: number, b: number) =>
-        this.weights[a] < this.weights[b] ? -1 : 1,
-      );
+      .sort((a: number, b: number) => (this.weights[a] < this.weights[b] ? -1 : 1));
 
     const n = to - fr;
     for (let i = 0; i < n; i++) this.neighbours[fr + i] = arr[i];

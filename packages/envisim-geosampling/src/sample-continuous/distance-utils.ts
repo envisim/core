@@ -45,10 +45,7 @@ export function halfNormalDetectionFunction(sigma: number): DetectionFunction {
  * @param cutoff the maximum detection distance in meters.
  * @returns the detection function.
  */
-export function detectionFunction(
-  breakValues: number[],
-  cutoff: number,
-): DetectionFunction {
+export function detectionFunction(breakValues: number[], cutoff: number): DetectionFunction {
   const n = breakValues.length;
   if (cutoff <= 0) {
     throw new Error('cutoff must be a positive number.');
@@ -71,8 +68,7 @@ export function detectionFunction(
       if (x >= left && x <= right) {
         // Interpolate
         return (
-          breakValues[i] +
-          ((breakValues[i + 1] - breakValues[i]) * (x - left)) / (right - left)
+          breakValues[i] + ((breakValues[i + 1] - breakValues[i]) * (x - left)) / (right - left)
         );
       }
     }
@@ -89,12 +85,7 @@ export function detectionFunction(
  * @param n optional, number of intervals will be 3n (default n = 100).
  * @returns number, f integrated from a to b.
  */
-export function integrate(
-  f: IntegrateFunction,
-  a: number,
-  b: number,
-  n = 100,
-): number {
+export function integrate(f: IntegrateFunction, a: number, b: number, n = 100): number {
   // Simpson's 3/8 rule
   const np = 3 * Math.round(n);
   const h = (b - a) / np;
@@ -129,9 +120,6 @@ export function effectiveRadius(g: DetectionFunction, cutoff: number): number {
  * @param cutoff maximum detection distance in meters.
  * @returns the effective half width in meters.
  */
-export function effectiveHalfWidth(
-  g: DetectionFunction,
-  cutoff: number,
-): number {
+export function effectiveHalfWidth(g: DetectionFunction, cutoff: number): number {
   return integrate(g, 0, cutoff);
 }

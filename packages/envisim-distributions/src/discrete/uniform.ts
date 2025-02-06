@@ -1,10 +1,10 @@
 import {
   Distribution,
   Interval,
-  RandomOptions,
+  type RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
-import {ParamsBound, boundCheck, boundDefault} from '../params.js';
+import {type ParamsBound, boundCheck, boundDefault} from '../params.js';
 import {assertPositiveInteger} from '../utils.js';
 
 export class UniformDiscrete extends Distribution<ParamsBound> {

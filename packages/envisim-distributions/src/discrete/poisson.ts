@@ -1,12 +1,12 @@
 import {
   Distribution,
   Interval,
-  RandomOptions,
+  type RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
 import {stdNormalQuantile} from '../continuous/normal-utils.js';
 import {regularizedUpperGammaFunction} from '../gamma-utils.js';
-import {ParamsRate, rateCheck, rateDefault} from '../params.js';
+import {type ParamsRate, rateCheck, rateDefault} from '../params.js';
 import {assertPositiveInteger, logFactorial} from '../utils.js';
 import {randomPoisson} from './poisson-random.js';
 

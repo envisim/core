@@ -84,8 +84,7 @@ export class CorrelatedPoisson extends BaseSampling {
         this.drawUnit = this.idx.getId(0);
         return;
       }
-      if (this.idx.length() === 0)
-        throw new RangeError('trying to find index in empty list');
+      if (this.idx.length() === 0) throw new RangeError('trying to find index in empty list');
     }
 
     let mindist = Number.MAX_VALUE;
@@ -115,8 +114,7 @@ export class CorrelatedPoisson extends BaseSampling {
   }
 
   drawScpsCoord(): void {
-    while (this.drawUnit < this.N && !this.idx.exists(this.drawUnit))
-      this.drawUnit += 1;
+    while (this.drawUnit < this.N && !this.idx.exists(this.drawUnit)) this.drawUnit += 1;
   }
 
   resolve(): void {
@@ -217,8 +215,7 @@ export class CorrelatedPoisson extends BaseSampling {
 
     if (this.idx.length() === 1) {
       const id = this.idx.getId(0);
-      this.probabilities[id] =
-        this.random(id) < this.probabilities[id] ? 1.0 : 0.0;
+      this.probabilities[id] = this.random(id) < this.probabilities[id] ? 1.0 : 0.0;
       this.resolveUnit(id);
     }
 

@@ -1,11 +1,15 @@
 import {
   Distribution,
   Interval,
-  RandomOptions,
+  type RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
 import {logGammaFunction, regularizedLowerGammaFunction} from '../gamma-utils.js';
-import {ParamsDegreesOfFreedom, degreesOfFreedomCheck, degreesOfFreedomDefault} from '../params.js';
+import {
+  type ParamsDegreesOfFreedom,
+  degreesOfFreedomCheck,
+  degreesOfFreedomDefault,
+} from '../params.js';
 import {assertPositiveInteger} from '../utils.js';
 import {gammaQuantile} from './gamma-quantile.js';
 import {randomShapeGamma} from './gamma-random.js';

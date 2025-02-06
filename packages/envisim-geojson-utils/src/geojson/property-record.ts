@@ -37,14 +37,17 @@ interface SpecialPropertyList {
   _measure?: NumericalProperty;
 }
 
-interface PropertyList {
-  [id: string]: Property;
-}
-
 export class PropertyRecord {
-  record: SpecialPropertyList & PropertyList = {};
+  record: SpecialPropertyList & Record<string, Property> = {};
 
-  static createFromFeature({properties = {}}: GJ.BaseFeature<GJ.BaseGeometry, unknown>) {
+  static isPropertyRecord(obj: unknown): obj is PropertyRecord {
+    return obj instanceof PropertyRecord;
+  }
+
+  static createFromFeature(feature?: GJ.BaseFeature<GJ.BaseGeometry, unknown>): PropertyRecord {
+    if (feature === undefined || feature.properties === null) return new PropertyRecord();
+
+    const properties = feature.properties;
     const pr = new PropertyRecord();
 
     for (const [id, prop] of Object.entries(properties ?? {})) {

@@ -2,7 +2,7 @@ import {type Matrix} from '@envisim/matrix';
 import {swap} from '@envisim/utils';
 
 import {KdNode} from './kd-node.js';
-import {KdStore} from './kd-store.js';
+import {type KdStore} from './kd-store.js';
 
 export class KdTree {
   protected dt: Matrix;

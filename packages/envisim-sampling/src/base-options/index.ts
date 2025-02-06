@@ -1,4 +1,4 @@
-import {Matrix, Vector} from '@envisim/matrix';
+import {type Matrix, type Vector} from '@envisim/matrix';
 import {Random} from '@envisim/random';
 
 export interface BaseOptions {

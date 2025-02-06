@@ -9,7 +9,7 @@ import {
   logBetaFunction,
   regularizedBetaFunction,
 } from '../beta-utils.js';
-import {ParamsBeta, betaDefault} from '../params.js';
+import {type ParamsBeta, betaDefault} from '../params.js';
 import {assertPositiveInteger} from '../utils.js';
 import {randomBeta} from './beta-random.js';
 

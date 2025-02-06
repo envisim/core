@@ -1,12 +1,12 @@
 import {
   Distribution,
   Interval,
-  RandomOptions,
+  type RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
 import {
-  ParamsBound,
-  ParamsBoundMid,
+  type ParamsBound,
+  type ParamsBoundMid,
   boundCheck,
   boundDefault,
   boundMidCheck,

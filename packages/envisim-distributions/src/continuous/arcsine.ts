@@ -1,6 +1,6 @@
 import {Distribution, Interval} from '../abstract-distribution.js';
 import {HALF_PI, HALF_PI_INV} from '../math-constants.js';
-import {ParamsBound, boundCheck, boundDefault} from '../params.js';
+import {type ParamsBound, boundCheck, boundDefault} from '../params.js';
 
 export class Arcsine extends Distribution<ParamsBound> {
   protected params = {...boundDefault};

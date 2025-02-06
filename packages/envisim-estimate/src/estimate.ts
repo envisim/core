@@ -1,4 +1,4 @@
-import {Matrix, Vector} from '@envisim/matrix';
+import {type Matrix, Vector} from '@envisim/matrix';
 import {NearestNeighbour} from '@envisim/sampling';
 
 import {checkSampleArray} from './utils.js';

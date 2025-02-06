@@ -1,7 +1,7 @@
 import {randomArray} from '@envisim/random';
 import {reducedRowEchelonForm} from '@envisim/utils';
 
-import {BaseMatrix, MatrixCallback, type MatrixDim} from './base-matrix.js';
+import {BaseMatrix, type MatrixCallback, type MatrixDim} from './base-matrix.js';
 import {Vector} from './vector.js';
 
 export class Matrix extends BaseMatrix {

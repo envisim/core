@@ -1,7 +1,7 @@
 import {Distribution, Interval} from '../abstract-distribution.js';
 import {EULERSCONSTANT} from '../math-constants.js';
 import {
-  ParamsLocationScale,
+  type ParamsLocationScale,
   locationScaleCheck,
   locationScaleDefault,
   locationScaleNormalize,

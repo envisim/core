@@ -68,8 +68,7 @@ export class Pivotal extends BaseSampling {
       case PivotalMethod.LPM2:
       case PivotalMethod.LPM1SEARCH:
         if (!KdTree.isKDTree(this.tree)) throw new Error('KDTree is not set');
-        if (!KdStore.isKDStore(this.store))
-          throw new Error('KDStore is not set');
+        if (!KdStore.isKDStore(this.store)) throw new Error('KDStore is not set');
     }
 
     if (Array.isArray(probabilities)) {
@@ -248,8 +247,7 @@ export class Pivotal extends BaseSampling {
       while (!this.idx.exists(this.pair[0])) {
         this.pair[0] += 1;
 
-        if (this.pair[0] >= this.N)
-          throw new RangeError('invalid value of pair 0');
+        if (this.pair[0] >= this.N) throw new RangeError('invalid value of pair 0');
       }
     }
 
@@ -259,8 +257,7 @@ export class Pivotal extends BaseSampling {
     while (!this.idx.exists(this.pair[1])) {
       this.pair[1] += 1;
 
-      if (this.pair[1] >= this.N)
-        throw new RangeError('invalid value of pair 1');
+      if (this.pair[1] >= this.N) throw new RangeError('invalid value of pair 1');
     }
 
     return;
@@ -309,8 +306,7 @@ export class Pivotal extends BaseSampling {
 
     if (this.idx.length() === 1) {
       const id = this.idx.getId(0);
-      this.probabilities[id] =
-        this.rand.float() < this.probabilities[id] ? 1.0 : 0.0;
+      this.probabilities[id] = this.rand.float() < this.probabilities[id] ? 1.0 : 0.0;
       this.resolveUnit(id);
     }
   }
@@ -321,10 +317,7 @@ export class Pivotal extends BaseSampling {
     const psum = this.probabilities[id1] + this.probabilities[id2];
 
     if (psum > this.N) {
-      if (
-        this.N - this.probabilities[id2] >
-        this.rand.intn(2 * this.N - psum)
-      ) {
+      if (this.N - this.probabilities[id2] > this.rand.intn(2 * this.N - psum)) {
         this.probabilities[id1] = this.N;
         this.probabilities[id2] = psum - this.N;
       } else {
@@ -353,8 +346,7 @@ export class Pivotal extends BaseSampling {
 
     if (this.idx.length() === 1) {
       const id = this.idx.getId(0);
-      this.probabilities[id] =
-        this.rand.intn(this.N) < this.probabilities[id] ? this.N : 0;
+      this.probabilities[id] = this.rand.intn(this.N) < this.probabilities[id] ? this.N : 0;
       this.resolveUnitInt(id);
     }
   }

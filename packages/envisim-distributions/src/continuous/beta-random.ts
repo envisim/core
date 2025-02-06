@@ -1,6 +1,6 @@
 import type {Random} from '@envisim/random';
 
-import {ParamsBeta} from '../params.js';
+import {type ParamsBeta} from '../params.js';
 import {pqMultiplied} from '../utils.js';
 
 export const LOG4 = 2.0 * Math.LN2;

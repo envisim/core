@@ -5,7 +5,7 @@ import {
   randomOptionsDefault,
 } from '../abstract-distribution.js';
 import {logGammaFunction, regularizedLowerGammaFunction} from '../gamma-utils.js';
-import {ParamsShapeScale, shapeScaleCheck, shapeScaleDefault} from '../params.js';
+import {type ParamsShapeScale, shapeScaleCheck, shapeScaleDefault} from '../params.js';
 import {assertPositiveInteger} from '../utils.js';
 import {gammaQuantile} from './gamma-quantile.js';
 import {randomShapeGamma} from './gamma-random.js';

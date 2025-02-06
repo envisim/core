@@ -1,5 +1,3 @@
-import {copy} from '@envisim/utils';
-
 import type * as GJ from '../types/geojson.js';
 import {intersectPolygons} from '../intersect/index.js';
 import {bbox4, bboxCrossesAntimeridian, bboxFromPositions} from './bbox.js';
@@ -86,28 +84,17 @@ function cutLineStringCoords(ls: GJ.Position[]): GJ.Position[][] {
  * @returns the cut LineGeometry
  */
 export function cutLineGeometry(g: GJ.LineObject): GJ.LineObject {
-  const gjType = g.type;
-  let mls: GJ.Position[][] = [];
-  let imls: GJ.Position[][] = [];
+  const coords: GJ.MultiLineString['coordinates'] = [];
 
-  switch (gjType) {
-    case 'LineString':
-      mls = cutLineStringCoords(g.coordinates);
-      break;
-
-    case 'MultiLineString':
-      g.coordinates.forEach((ls) => {
-        imls = cutLineStringCoords(ls);
-        imls.forEach((ls) => mls.push(ls));
-      });
-      break;
-    default:
-      throw new Error('Invalid type');
+  if (g.type === 'LineString') {
+    coords.push(...cutLineStringCoords(g.coordinates));
+  } else {
+    g.coordinates.forEach((p) => coords.push(...cutLineStringCoords(p)));
   }
 
-  if (mls.length === 1) return {type: 'LineString', coordinates: mls[0]};
-
-  return {type: 'MultiLineString', coordinates: mls};
+  return coords.length === 1
+    ? {type: 'LineString', coordinates: coords[0]}
+    : {type: 'MultiLineString', coordinates: coords};
 }
 
 // use these polygons to cut polygons
@@ -183,31 +170,25 @@ function cutPolygonCoords(pol: GJ.Position[][]): GJ.Position[][][] {
  * @param g the AreaGeometry to cut
  * @returns the cut AreaGeometry
  */
+export function cutAreaGeometry(g: GJ.Circle): GJ.Circle;
+export function cutAreaGeometry(g: GJ.MultiCircle): GJ.MultiCircle;
+export function cutAreaGeometry(g: GJ.Polygon | GJ.MultiPolygon): GJ.Polygon | GJ.MultiPolygon;
 export function cutAreaGeometry(g: GJ.AreaObject): GJ.AreaObject {
-  const geom = copy(g);
-  const type = geom.type;
-  let mpc: GJ.Position[][][] = [];
-  switch (type) {
-    case 'Point':
-    case 'MultiPoint':
-      // No need to cut circles as long as they are defined by points
-      return geom;
-    case 'Polygon':
-      mpc = cutPolygonCoords(geom.coordinates);
-      if (mpc.length === 1) {
-        return {type: 'Polygon', coordinates: mpc[0]};
-      }
-      return {type: 'MultiPolygon', coordinates: mpc};
-    case 'MultiPolygon':
-      mpc = [];
-      geom.coordinates.forEach((p) => {
-        const impc = cutPolygonCoords(p);
-        impc.forEach((p) => mpc.push(p));
-      });
-      return {type: 'MultiPolygon', coordinates: mpc};
-    default:
-      throw new Error('Invalid type');
+  if (g.type === 'Point' || g.type === 'MultiPoint') {
+    return g;
   }
+
+  const coords: GJ.MultiPolygon['coordinates'] = [];
+
+  if (g.type === 'Polygon') {
+    coords.push(...cutPolygonCoords(g.coordinates));
+  } else {
+    g.coordinates.forEach((p) => coords.push(...cutPolygonCoords(p)));
+  }
+
+  return coords.length === 1
+    ? {type: 'Polygon', coordinates: coords[0]}
+    : {type: 'MultiPolygon', coordinates: coords};
 }
 
 /**

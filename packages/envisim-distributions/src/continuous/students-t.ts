@@ -1,12 +1,16 @@
 import {
   Distribution,
   Interval,
-  RandomOptions,
+  type RandomOptions,
   randomOptionsDefault,
 } from '../abstract-distribution.js';
 import {logBetaFunction, regularizedBetaFunction} from '../beta-utils.js';
 import {HALF_PI} from '../math-constants.js';
-import {ParamsDegreesOfFreedom, degreesOfFreedomCheck, degreesOfFreedomDefault} from '../params.js';
+import {
+  type ParamsDegreesOfFreedom,
+  degreesOfFreedomCheck,
+  degreesOfFreedomDefault,
+} from '../params.js';
 import {assertPositiveInteger} from '../utils.js';
 import {randomShapeGamma} from './gamma-random.js';
 import {stdNormalQuantile} from './normal-utils.js';
