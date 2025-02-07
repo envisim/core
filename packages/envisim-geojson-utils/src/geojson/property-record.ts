@@ -35,6 +35,10 @@ interface SpecialPropertyList {
    * Used to store the values of measure
    */
   _measure?: NumericalProperty;
+  /**
+   * Used to store the values of count
+   */
+  _count?: NumericalProperty;
 }
 
 export class PropertyRecord {
