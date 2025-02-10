@@ -139,6 +139,13 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
     }
   }
 
+  measure(): number {
+    if (typeof this.properties['_measure'] !== 'number') {
+      this.setSpecialPropertyMeasure();
+    }
+    return this.properties['_measure'] as number;
+  }
+
   // SPECIAL PROPERTIES
   getSpecialPropertyDesignWeight(defaultValue: number = 1.0): number {
     return (this.properties['_designWeight'] ?? defaultValue) as number;
@@ -163,6 +170,9 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
   }
   setSpecialPropertyRandomRotation(value: number = 0) {
     (this.properties['_randomRotation'] as number) = value;
+  }
+  setSpecialPropertyMeasure() {
+    (this.properties['_measure'] as number) = this.geometry.measure();
   }
   multSpecialPropertyDesignWeight(value: number = 1.0): number {
     return ((this.properties['_designWeight'] as number) *= value);
