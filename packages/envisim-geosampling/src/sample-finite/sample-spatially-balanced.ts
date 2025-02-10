@@ -2,6 +2,7 @@ import {type FeatureCollection, type PureObject} from '@envisim/geojson-utils';
 import {lpm1, lpm2, scps} from '@envisim/sampling';
 
 import {
+  type SAMPLE_SPATIALLY_BALANCED_METHODS,
   type SampleSpatiallyBalancedOptions,
   sampleSpatiallyBalancedOptionsCheck,
 } from './options.js';
@@ -9,7 +10,7 @@ import {inclprobsFromLayer, returnCollectionFromSample, spreadMatrixFromLayer} f
 
 export function sampleSpatiallyBalanced<T extends PureObject, P extends string>(
   collection: FeatureCollection<T, P>,
-  options: SampleSpatiallyBalancedOptions<P>,
+  options: SampleSpatiallyBalancedOptions<(typeof SAMPLE_SPATIALLY_BALANCED_METHODS)[number], P>,
 ): FeatureCollection<T, P> {
   const optionsError = sampleSpatiallyBalancedOptionsCheck(options, collection.propertyRecord);
   if (optionsError !== null) {
