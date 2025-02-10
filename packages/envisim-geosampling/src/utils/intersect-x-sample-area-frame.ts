@@ -20,11 +20,9 @@ function intersectAreaFrame<T extends AreaObject | LineObject | PointObject>(
     sample.forEach((sampleFeature) => {
       const intersect = intersectFunction(sampleFeature.geometry, frameFeature.geometry, options);
       if (intersect === null) return;
-
-      const dw =
-        frameFeature.getSpecialPropertyDesignWeight() *
-        sampleFeature.getSpecialPropertyDesignWeight();
-      collection.addGeometry(intersect, {_designWeight: dw}, true);
+      const properties = {...sampleFeature.properties};
+      (properties['_designWeight'] as number) *= frameFeature.getSpecialPropertyDesignWeight();
+      collection.addGeometry(intersect, properties, true);
     });
   });
 }
@@ -40,7 +38,7 @@ export function intersectPointSampleAreaFrame(
   sample: FeatureCollection<PointObject>,
   frame: FeatureCollection<AreaObject>,
 ): FeatureCollection<PointObject> {
-  const collection = FeatureCollection.newPoint();
+  const collection = FeatureCollection.newPoint([], sample.propertyRecord, false);
   intersectAreaFrame(collection, sample, frame, {}, intersectPointAreaGeometries);
   return collection;
 }
@@ -57,7 +55,7 @@ export function intersectLineSampleAreaFrame(
   frame: FeatureCollection<AreaObject>,
   options: CirclesToPolygonsOptions = {},
 ): FeatureCollection<LineObject> {
-  const collection = FeatureCollection.newLine();
+  const collection = FeatureCollection.newLine([], sample.propertyRecord, false);
   intersectAreaFrame(collection, sample, frame, options, intersectLineAreaGeometries);
   return collection;
 }
@@ -74,8 +72,7 @@ export function intersectAreaSampleAreaFrame(
   frame: FeatureCollection<AreaObject>,
   options: CirclesToPolygonsOptions = {},
 ): FeatureCollection<AreaObject> {
-  const collection = FeatureCollection.newArea([]);
-  collection.propertyRecord.addDesignWeight();
+  const collection = FeatureCollection.newArea([], sample.propertyRecord, false);
   intersectAreaFrame(collection, sample, frame, options, intersectAreaAreaGeometries);
   return collection;
 }

@@ -105,12 +105,10 @@ export function sampleRelascopePoints(
   // To store sampled features
   // Fix property record (same as base layer, but add design variables)
   const newCollection = FeatureCollection.newPoint<Point>([], baseCollection.propertyRecord, false);
-  newCollection.propertyRecord.addDesignWeight();
-  newCollection.propertyRecord.addParent();
 
   // Compute estimate of area with input area collection
   const areaEstimateBefore = collection.features.reduce(
-    (p, c) => p + c.geometry.measure() * c.getSpecialPropertyDesignWeight(1.0),
+    (p, c) => p + c.measure() * c.getSpecialPropertyDesignWeight(1.0),
     0.0,
   );
 
