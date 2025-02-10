@@ -22,6 +22,9 @@ function intersectAreaFrame<T extends AreaObject | LineObject | PointObject>(
       if (intersect === null) return;
       const properties = {...sampleFeature.properties};
       (properties['_designWeight'] as number) *= frameFeature.getSpecialPropertyDesignWeight();
+      if (typeof properties['_measure'] === 'number') {
+        properties['_measure'] = intersect.measure();
+      }
       collection.addGeometry(intersect, properties, true);
     });
   });
