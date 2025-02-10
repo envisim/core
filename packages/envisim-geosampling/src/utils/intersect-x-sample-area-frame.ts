@@ -22,7 +22,7 @@ function intersectAreaFrame<T extends AreaObject | LineObject | PointObject>(
       if (intersect === null) return;
       // transfer all properties from sample to intersect
       // same sample object may be split into multiple intersects
-      const properties = structuredClone(sampleFeature.properties);
+      const properties = {...sampleFeature.properties};
       (properties['_designWeight'] as number) *= frameFeature.getSpecialPropertyDesignWeight(1.0);
       collection.addGeometry(intersect, properties, true);
     });
@@ -40,9 +40,7 @@ export function intersectPointSampleAreaFrame(
   sample: FeatureCollection<PointObject>,
   frame: FeatureCollection<AreaObject>,
 ): FeatureCollection<PointObject> {
-  // keep all properties
-  const propertyRecord = sample.propertyRecord.copy(true);
-  const collection = FeatureCollection.newPoint([], propertyRecord);
+  const collection = FeatureCollection.newPoint([], sample.propertyRecord, false);
   intersectAreaFrame(collection, sample, frame, {}, intersectPointAreaGeometries);
   return collection;
 }
@@ -59,9 +57,7 @@ export function intersectLineSampleAreaFrame(
   frame: FeatureCollection<AreaObject>,
   options: CirclesToPolygonsOptions = {},
 ): FeatureCollection<LineObject> {
-  // keep all properties
-  const propertyRecord = sample.propertyRecord.copy(true);
-  const collection = FeatureCollection.newLine([], propertyRecord);
+  const collection = FeatureCollection.newLine([], sample.propertyRecord, false);
   intersectAreaFrame(collection, sample, frame, options, intersectLineAreaGeometries);
   return collection;
 }
@@ -78,9 +74,7 @@ export function intersectAreaSampleAreaFrame(
   frame: FeatureCollection<AreaObject>,
   options: CirclesToPolygonsOptions = {},
 ): FeatureCollection<AreaObject> {
-  // keep all properties
-  const propertyRecord = sample.propertyRecord.copy(true);
-  const collection = FeatureCollection.newArea([], propertyRecord);
+  const collection = FeatureCollection.newArea([], sample.propertyRecord, false);
   intersectAreaFrame(collection, sample, frame, options, intersectAreaAreaGeometries);
   return collection;
 }
