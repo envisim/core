@@ -1,9 +1,4 @@
-import {
-  type AreaObject,
-  type FeatureCollection,
-  type LineObject,
-  type PointObject,
-} from '@envisim/geojson-utils';
+import {type FeatureCollection, type PureObject} from '@envisim/geojson-utils';
 import {localCube} from '@envisim/sampling';
 
 import {type SampleDoublyBalancedOptions, sampleDoublyBalancedOptionsCheck} from './options.js';
@@ -14,10 +9,10 @@ import {
   spreadMatrixFromLayer,
 } from './utils.js';
 
-export function sampleDoublyBalanced<T extends AreaObject | LineObject | PointObject>(
-  collection: FeatureCollection<T>,
-  options: SampleDoublyBalancedOptions,
-): FeatureCollection<T> {
+export function sampleDoublyBalanced<T extends PureObject, P extends string>(
+  collection: FeatureCollection<T, P>,
+  options: SampleDoublyBalancedOptions<P>,
+): FeatureCollection<T, P> {
   const optionsError = sampleDoublyBalancedOptionsCheck(options, collection.propertyRecord);
   if (optionsError !== null) {
     throw new RangeError(`sampleDoublyBalanced error: ${optionsError}`);

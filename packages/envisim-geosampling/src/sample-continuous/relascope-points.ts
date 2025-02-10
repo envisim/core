@@ -1,6 +1,6 @@
 import {
   type AreaObject,
-  FeatureCollection,
+  type FeatureCollection,
   Geodesic,
   type Point,
   PropertyRecord,
@@ -12,24 +12,24 @@ import type {ErrorType} from '../utils/error-type.js';
 import {SAMPLE_POINT_OPTIONS, type SamplePointOptions, samplePointOptionsCheck} from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
 
-export interface SampleRelascopePointsOptions extends SamplePointOptions {
+export interface SampleRelascopePointsOptions<P extends string> extends SamplePointOptions {
   /**
    * The point layer to collect objects from.
    */
-  baseCollection: FeatureCollection<Point>;
+  baseCollection: FeatureCollection<Point, P>;
   /**
    * The sizeProperty is the id of the proberty in the baseLayer that should
    * be used as the size property and should be in meters (e.g. diameter in meters).
    */
-  sizeProperty: string;
+  sizeProperty: P;
   /**
    * The relascope factor to be used.
    */
   factor: number;
 }
 
-export function sampleRelascopePointsOptionsCheck(
-  {baseCollection, sizeProperty, factor, ...options}: SampleRelascopePointsOptions,
+export function sampleRelascopePointsOptionsCheck<P extends string>(
+  {baseCollection, sizeProperty, factor, ...options}: SampleRelascopePointsOptions<P>,
   recursiveCheck: boolean = false,
 ): ErrorType<typeof SamplingError> {
   if (recursiveCheck === true) {
@@ -46,7 +46,7 @@ export function sampleRelascopePointsOptionsCheck(
   const prop = baseCollection.propertyRecord.getId(sizeProperty);
   if (prop === null) {
     return SamplingError.SIZE_PROPERTY_MISSING;
-  } else if (!PropertyRecord.propertyIsNumerical(prop)) {
+  } else if (!PropertyRecord.isNumerical(prop)) {
     return SamplingError.SIZE_PROPERTY_NOT_NUMERICAL;
   }
 
@@ -69,7 +69,7 @@ export function sampleRelascopePointsOptionsCheck(
  * @param collection
  * @param opts
  */
-export function sampleRelascopePoints(
+export function sampleRelascopePoints<P extends string>(
   collection: FeatureCollection<AreaObject>,
   {
     buffer = SAMPLE_POINT_OPTIONS.buffer,
@@ -77,9 +77,9 @@ export function sampleRelascopePoints(
     factor,
     sizeProperty,
     ...opts
-  }: SampleRelascopePointsOptions,
+  }: SampleRelascopePointsOptions<P>,
 ): {
-  collection: FeatureCollection<Point>;
+  collection: FeatureCollection<Point, P>;
   pointSample: FeatureCollection<Point>;
   areaRatio: number;
 } {
@@ -104,13 +104,11 @@ export function sampleRelascopePoints(
 
   // To store sampled features
   // Fix property record (same as base layer, but add design variables)
-  const newCollection = FeatureCollection.newPoint<Point>([], baseCollection.propertyRecord, false);
-  newCollection.propertyRecord.addDesignWeight();
-  newCollection.propertyRecord.addParent();
+  const newCollection = baseCollection.copyEmpty(false);
 
   // Compute estimate of area with input area collection
   const areaEstimateBefore = collection.features.reduce(
-    (p, c) => p + c.geometry.measure() * c.getSpecialPropertyDesignWeight(1.0),
+    (p, c) => p + c.geometry.measure() * c.getSpecialPropertyDesignWeight(),
     0.0,
   );
 
@@ -125,7 +123,7 @@ export function sampleRelascopePoints(
       if (frameFeature.geometry.includesPosition(samplePoint.geometry.coordinates)) {
         const dw =
           samplePoint.getSpecialPropertyDesignWeight() *
-          (buffer > 0.0 ? frameFeature.getSpecialPropertyDesignWeight(1.0) : 1.0);
+          (buffer > 0.0 ? frameFeature.getSpecialPropertyDesignWeight() : 1.0);
         areaEstimateWithPoints += dw;
         break;
       }

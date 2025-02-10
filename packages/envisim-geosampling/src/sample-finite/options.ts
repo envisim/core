@@ -20,7 +20,10 @@ export const SAMPLE_FINITE_METHODS = [
   ...SAMPLE_FINITE_METHODS_WR,
   ...SAMPLE_FINITE_METHODS_WOR,
 ] as const;
-export interface SampleFiniteOptions<M = (typeof SAMPLE_FINITE_METHODS_WOR)[number]> {
+export interface SampleFiniteOptions<
+  M = (typeof SAMPLE_FINITE_METHODS_WOR)[number],
+  P extends string = string,
+> {
   /**
    * An instance of {@link random.Random}
    * @defaultValue `new Random()`
@@ -39,12 +42,12 @@ export interface SampleFiniteOptions<M = (typeof SAMPLE_FINITE_METHODS_WOR)[numb
    * The id of the numerical property to use to compute probabilities.
    * '_measure' calculates probabilities from measure.
    */
-  probabilities?: string;
+  probabilities?: P;
 }
 
-export function sampleFiniteOptionsCheck<M>(
-  {sampleSize, probabilities}: SampleFiniteOptions<M>,
-  record: PropertyRecord,
+export function sampleFiniteOptionsCheck<M, P extends string>(
+  {sampleSize, probabilities}: SampleFiniteOptions<M, P>,
+  record: PropertyRecord<P>,
 ): ErrorType<typeof SamplingError> {
   if (!Number.isInteger(sampleSize) || sampleSize < 0) {
     // sampleSize must be a non negative integer
@@ -58,7 +61,7 @@ export function sampleFiniteOptionsCheck<M>(
       return SamplingError.PROBABILITIES_FROM_MISSING;
     }
 
-    if (!PropertyRecord.propertyIsNumerical(property)) {
+    if (!PropertyRecord.isNumerical(property)) {
       // probabilitiesFrom must be a numerical property
       return SamplingError.PROBABILITIES_FROM_NOT_NUMERICAL;
     }
@@ -68,8 +71,10 @@ export function sampleFiniteOptionsCheck<M>(
 }
 
 export const SAMPLE_BALANCED_METHODS = ['cube'] as const;
-export interface SampleBalancedOptions<M = (typeof SAMPLE_BALANCED_METHODS)[number]>
-  extends SampleFiniteOptions<M> {
+export interface SampleBalancedOptions<
+  M = (typeof SAMPLE_BALANCED_METHODS)[number],
+  P extends string = string,
+> extends SampleFiniteOptions<M, P> {
   /**
    * An array of id's of properties to use to balance the sample.
    * This apply to cube and localCube.
@@ -77,9 +82,9 @@ export interface SampleBalancedOptions<M = (typeof SAMPLE_BALANCED_METHODS)[numb
   balanceOn: string[];
 }
 
-export function sampleBalancedOptionsCheck<M>(
-  {balanceOn, ...options}: SampleBalancedOptions<M>,
-  record: PropertyRecord,
+export function sampleBalancedOptionsCheck<M, P extends string>(
+  {balanceOn, ...options}: SampleBalancedOptions<M, P>,
+  record: PropertyRecord<P>,
 ): ErrorType<typeof SamplingError> {
   const finiteCheck = sampleFiniteOptionsCheck(options, record);
   if (finiteCheck !== null) {
@@ -98,7 +103,8 @@ export function sampleBalancedOptionsCheck<M>(
 export const SAMPLE_SPATIALLY_BALANCED_METHODS = ['lpm1', 'lpm2', 'scps'] as const;
 export interface SampleSpatiallyBalancedOptions<
   M = (typeof SAMPLE_SPATIALLY_BALANCED_METHODS)[number],
-> extends SampleFiniteOptions<M> {
+  P extends string = string,
+> extends SampleFiniteOptions<M, P> {
   /**
    * An array of id's of properties to use to spread the sample.
    * This apply to lpm1, lpm2, scps, localCube.
@@ -111,9 +117,9 @@ export interface SampleSpatiallyBalancedOptions<
   spreadGeo: boolean;
 }
 
-export function sampleSpatiallyBalancedOptionsCheck<M>(
-  {spreadOn, spreadGeo, ...options}: SampleSpatiallyBalancedOptions<M>,
-  record: PropertyRecord,
+export function sampleSpatiallyBalancedOptionsCheck<M, P extends string>(
+  {spreadOn, spreadGeo, ...options}: SampleSpatiallyBalancedOptions<M, P>,
+  record: PropertyRecord<P>,
 ): ErrorType<typeof SamplingError> {
   const finiteCheck = sampleFiniteOptionsCheck(options, record);
   if (finiteCheck !== null) {
@@ -134,14 +140,15 @@ export function sampleSpatiallyBalancedOptionsCheck<M>(
 }
 
 export const SAMPLE_DOUBLY_BALANCED_METHODS = ['local-cube'] as const;
-export type SampleDoublyBalancedOptions = SampleBalancedOptions<
-  (typeof SAMPLE_DOUBLY_BALANCED_METHODS)[number]
+export type SampleDoublyBalancedOptions<P extends string> = SampleBalancedOptions<
+  (typeof SAMPLE_DOUBLY_BALANCED_METHODS)[number],
+  P
 > &
-  SampleSpatiallyBalancedOptions<(typeof SAMPLE_DOUBLY_BALANCED_METHODS)[number]>;
+  SampleSpatiallyBalancedOptions<(typeof SAMPLE_DOUBLY_BALANCED_METHODS)[number], P>;
 
-export function sampleDoublyBalancedOptionsCheck(
-  options: SampleDoublyBalancedOptions,
-  record: PropertyRecord,
+export function sampleDoublyBalancedOptionsCheck<P extends string>(
+  options: SampleDoublyBalancedOptions<P>,
+  record: PropertyRecord<P>,
 ): ErrorType<typeof SamplingError> {
   const balancedCheck = sampleBalancedOptionsCheck(options, record);
   if (balancedCheck !== null) {

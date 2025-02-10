@@ -62,10 +62,6 @@ export function sampleDistancePoints(
 
   // To store sampled features
   const newCollection = FeatureCollection.newPoint([], baseCollection.propertyRecord, false);
-  // Fix property record (same as base layer, but add design variables)
-  newCollection.propertyRecord.addDesignWeight();
-  newCollection.propertyRecord.addDistance();
-  newCollection.propertyRecord.addParent();
 
   // Find selected points in base layer and check if seleccted base point
   // is in frame and transfer _designWeight

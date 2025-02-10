@@ -7,17 +7,19 @@ import {
   type AreaObject,
   type LineObject,
   type PointObject,
+  type PureObject,
   toAreaObject,
   toLineObject,
   toPointObject,
 } from '../objects/index.js';
+import {type FeatureProperties} from '../property-record.js';
 
-export class Feature<T extends AreaObject | LineObject | PointObject>
+export class Feature<T extends PureObject, PID extends string = string>
   implements GJ.BaseFeature<GJ.SingleTypeObject, number | string>
 {
   readonly type = 'Feature';
   geometry: T;
-  properties: GJ.FeatureProperties<number | string>;
+  properties: FeatureProperties<PID>;
 
   static isArea(obj: unknown): obj is Feature<AreaObject> {
     return obj instanceof Feature && obj.geometricPrimitive() === GeometricPrimitive.AREA;
@@ -67,40 +69,39 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
     return Feature.createPoint(feature.geometry, feature.properties ?? {}, shallow);
   }
 
-  static createArea(
+  static createArea<PID extends string = string>(
     geometry: GJ.BaseGeometry,
-    properties?: GJ.FeatureProperties<number | string> | null,
+    properties?: FeatureProperties<PID> | null,
     shallow: boolean = true,
     options: CirclesToPolygonsOptions = {},
-  ): Feature<AreaObject> | null {
+  ): Feature<AreaObject, PID> | null {
     const geom = toAreaObject(geometry, true, options);
     if (geom === null) return null;
-    return new Feature(geom, properties ?? {}, shallow);
+    if (!properties) return new Feature<AreaObject, string>(geom, {}, shallow);
+    return new Feature(geom, properties, shallow);
   }
-  static createLine(
+  static createLine<PID extends string = string>(
     geometry: GJ.BaseGeometry,
-    properties?: GJ.FeatureProperties<number | string> | null,
+    properties?: FeatureProperties<PID> | null,
     shallow: boolean = true,
   ): Feature<LineObject> | null {
     const geom = toLineObject(geometry, true);
     if (geom === null) return null;
+    if (!properties) return new Feature<LineObject, string>(geom, {}, shallow);
     return new Feature(geom, properties ?? {}, shallow);
   }
-  static createPoint(
+  static createPoint<PID extends string = string>(
     geometry: GJ.BaseGeometry,
-    properties?: GJ.FeatureProperties<number | string> | null,
+    properties?: FeatureProperties<PID> | null,
     shallow: boolean = true,
   ): Feature<PointObject> | null {
     const geom = toPointObject(geometry, true);
     if (geom === null) return null;
+    if (!properties) return new Feature<PointObject, string>(geom, {}, shallow);
     return new Feature(geom, properties ?? {}, shallow);
   }
 
-  constructor(
-    geometry: T,
-    properties: GJ.FeatureProperties<number | string> = {},
-    shallow: boolean = true,
-  ) {
+  constructor(geometry: T, properties: FeatureProperties<PID>, shallow: boolean = true) {
     if (shallow === true) {
       this.geometry = geometry;
       this.properties = properties;
@@ -115,66 +116,60 @@ export class Feature<T extends AreaObject | LineObject | PointObject>
     return this.geometry.geometricPrimitive();
   }
 
-  removeProperty(id: string): void {
-    delete this.properties[id];
-  }
-
-  getProperty(id: string): number | string {
+  getProperty(id: PID): number | string {
     return this.properties[id];
   }
 
-  setProperty(id: string, value: number | string): void {
+  setProperty(id: PID, value: FeatureProperties[PID]): void {
     this.properties[id] = value;
   }
 
-  editProperty<P extends number | string>(id: string, callback: (value: P) => P): P {
-    return (this.properties[id] = callback(this.properties[id] as P));
-  }
-
-  replaceProperties(properties: GJ.FeatureProperties<number | string>, shallow: boolean = true) {
-    if (shallow) {
-      this.properties = properties;
-    } else {
-      this.properties = copy(properties);
-    }
+  editProperty(
+    id: PID,
+    callback: (value: FeatureProperties[PID]) => FeatureProperties[PID],
+  ): FeatureProperties[PID] {
+    return (this.properties[id] = callback(this.properties[id]));
   }
 
   // SPECIAL PROPERTIES
-  getSpecialPropertyDesignWeight(defaultValue: number = 1.0): number {
-    return (this.properties['_designWeight'] ?? defaultValue) as number;
+  getSpecialPropertyDesignWeight(): number {
+    return this.properties['_designWeight'] ?? 1.0;
   }
-  getSpecialPropertyDistance(defaultValue: number = 0.0): number {
-    return (this.properties['_distance'] ?? defaultValue) as number;
+  getSpecialPropertyDistance(): number {
+    return this.properties['_distance'] ?? 0.0;
   }
-  getSpecialPropertyParent(defaultValue: number = -1): number {
-    return (this.properties['_parent'] ?? defaultValue) as number;
+  getSpecialPropertyParent(): number {
+    return this.properties['_parent'] ?? -1;
   }
-  getSpecialPropertyRandomRotation(defaultValue: number = 0): number {
-    return (this.properties['_randomRotation'] ?? defaultValue) as number;
+  getSpecialPropertyRandomRotation(): number {
+    return this.properties['_randomRotation'] ?? 0;
   }
-  setSpecialPropertyDesignWeight(value: number = 1.0) {
-    (this.properties['_designWeight'] as number) = value;
+  setSpecialPropertyDesignWeight(value: number) {
+    this.properties['_designWeight'] = value;
   }
-  setSpecialPropertyDistance(value: number = 0.0) {
-    (this.properties['_distance'] as number) = value;
+  setSpecialPropertyDistance(value: number) {
+    this.properties['_distance'] = value;
   }
-  setSpecialPropertyParent(value: number = -1) {
-    (this.properties['_parent'] as number) = value;
+  setSpecialPropertyParent(value: number) {
+    this.properties['_parent'] = value;
   }
-  setSpecialPropertyRandomRotation(value: number = 0) {
-    (this.properties['_randomRotation'] as number) = value;
+  setSpecialPropertyRandomRotation(value: number) {
+    this.properties['_randomRotation'] = value;
   }
-  multSpecialPropertyDesignWeight(value: number = 1.0): number {
-    return ((this.properties['_designWeight'] as number) *= value);
+  multSpecialPropertyDesignWeight(value: number): number {
+    const dw = this.getSpecialPropertyDesignWeight() * value;
+    this.properties['_designWeight'] = dw;
+    return dw;
   }
 }
 
-export type PureFeature<
-  T extends AreaObject | LineObject | PointObject = AreaObject | LineObject | PointObject,
-> = T extends AreaObject
-  ? Feature<AreaObject>
-  : T extends LineObject
-    ? Feature<LineObject>
-    : T extends PointObject
-      ? Feature<PointObject>
-      : never;
+// export type PureFeature<
+//   T extends AreaObject | LineObject | PointObject = AreaObject | LineObject | PointObject,
+//   PID extends string = string,
+// > = T extends AreaObject
+//   ? Feature<AreaObject, PID>
+//   : T extends LineObject
+//     ? Feature<LineObject, PID>
+//     : T extends PointObject
+//       ? Feature<PointObject, PID>
+//       : never;

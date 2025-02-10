@@ -53,7 +53,7 @@ export function unionOfPolygons(polygons: GJ.Position[][][]): GJ.Position2[][][]
 export function unionOfCollection(
   collection: FeatureCollection<AreaObject>,
   options: CirclesToPolygonsOptions = {},
-): FeatureCollection<AreaObject> {
+): FeatureCollection<AreaObject, string> {
   const ppc = {pointsPerCircle: options.pointsPerCircle ?? 16};
   const geoms: GJ.Position[][][] = [];
 
@@ -74,9 +74,9 @@ export function unionOfCollection(
   const fc = FeatureCollection.newArea();
 
   if (unionOfGeoms.length === 1) {
-    fc.addGeometry(Polygon.create(unionOfGeoms[0]));
+    fc.addGeometry(Polygon.create(unionOfGeoms[0]), {});
   } else if (unionOfGeoms.length > 1) {
-    fc.addGeometry(MultiPolygon.create(unionOfGeoms));
+    fc.addGeometry(MultiPolygon.create(unionOfGeoms), {});
   }
 
   return fc;

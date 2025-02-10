@@ -1,11 +1,9 @@
 import {
-  type AreaObject,
   type CategoricalProperty,
   type FeatureCollection,
-  type LineObject,
   type NumericalProperty,
-  type PointObject,
   PropertyRecord,
+  type PureObject,
 } from '@envisim/geojson-utils';
 import {bbox4, longitudeCenter} from '@envisim/geojson-utils';
 import {Matrix, Vector} from '@envisim/matrix';
@@ -17,16 +15,14 @@ import {type SampleFiniteOptions} from './options.js';
  * @param collection
  * @param property
  */
-function extractNumericalProperty(
-  collection: FeatureCollection<AreaObject | LineObject | PointObject>,
-  property: NumericalProperty,
+function extractNumericalProperty<G extends PureObject, P extends string>(
+  collection: FeatureCollection<G, P>,
+  property: NumericalProperty<P>,
 ): Vector {
-  const N = collection.size();
-  const vec = Array.from<number>({length: N});
-  collection.forEach((f, i) => {
-    vec[i] = f.getProperty(property.id) as number;
-  });
-  return new Vector(vec, true);
+  return new Vector(
+    Array.from(collection.features, (f) => f.getProperty(property.id) as number),
+    true,
+  );
 }
 
 /**
@@ -35,30 +31,33 @@ function extractNumericalProperty(
  * @param collection
  * @param property
  */
-function extractCategoricalProperty(
-  collection: FeatureCollection<AreaObject | LineObject | PointObject>,
-  property: CategoricalProperty,
+function extractCategoricalProperty<G extends PureObject, P extends string>(
+  collection: FeatureCollection<G, P>,
+  property: CategoricalProperty<P>,
 ): Vector[] {
   const N = collection.size();
   const props: Vector[] = [];
 
-  for (const rv of property.values) {
-    const cv = Array.from<number>({length: N});
-    let allZeros: boolean = true;
+  if (N === 0) return props;
 
-    collection.forEach((f, i) => {
+  for (const rv of property.values) {
+    let sum = 0;
+
+    const cv = Array.from(collection.features, (f) => {
       if (f.getProperty(property.id) === rv) {
-        allZeros = false;
-        cv[i] = 1.0;
+        sum += 1;
+        return 1;
       } else {
-        cv[i] = 0.0;
+        sum -= 1;
+        return 0;
       }
     });
 
-    if (!allZeros) {
+    if (-N < sum && sum < N) {
       props.push(new Vector(cv, true));
     }
   }
+
   return props;
 }
 
@@ -72,9 +71,9 @@ function extractCategoricalProperty(
  * @param properties array of properties to spread on.
  * @param spreadGeo if true includes spatial coordinates.
  */
-export function spreadMatrixFromLayer(
-  collection: FeatureCollection<AreaObject | LineObject | PointObject>,
-  properties: string[],
+export function spreadMatrixFromLayer<G extends PureObject, P extends string>(
+  collection: FeatureCollection<G, P>,
+  properties: P[],
   spreadGeo: boolean = true,
 ): Matrix {
   const rec = collection.propertyRecord;
@@ -113,12 +112,12 @@ export function spreadMatrixFromLayer(
 
     // Collect numerical properties and standardize
     // ignore constant variables.
-    if (PropertyRecord.propertyIsNumerical(prop)) {
+    if (PropertyRecord.isNumerical(prop)) {
       const vec = extractNumericalProperty(collection, prop);
       if (vec.sd() > 0.0) {
         newprops.push(vec.standardize(false, true));
       }
-    } else if (PropertyRecord.propertyIsCategorical(prop)) {
+    } else if (PropertyRecord.isCategorical(prop)) {
       // Collect categorical properties a set of 0-1 vectors
       const arr = extractCategoricalProperty(collection, prop);
       // skip last column
@@ -142,9 +141,9 @@ export function spreadMatrixFromLayer(
  * @param collection
  * @param properties an array of properties to balance on.
  */
-export function balancingMatrixFromLayer(
-  collection: FeatureCollection<AreaObject | LineObject | PointObject>,
-  properties: string[],
+export function balancingMatrixFromLayer<G extends PureObject, P extends string>(
+  collection: FeatureCollection<G, P>,
+  properties: P[],
 ): Matrix {
   const rec = collection.propertyRecord;
 
@@ -158,13 +157,13 @@ export function balancingMatrixFromLayer(
     const prop = rec.getId(id);
 
     // Collect numerical properties, no standardization here
-    if (PropertyRecord.propertyIsNumerical(prop)) {
+    if (PropertyRecord.isNumerical(prop)) {
       const vec = extractNumericalProperty(collection, prop);
       // Ignore constant variable here
       if (vec.sd() > 0.0) {
         newprops.push(vec);
       }
-    } else if (PropertyRecord.propertyIsCategorical(prop)) {
+    } else if (PropertyRecord.isCategorical(prop)) {
       // Collect categorical properties a set of 0-1 vectors
       const arr = extractCategoricalProperty(collection, prop);
       // skip last column
@@ -182,9 +181,9 @@ export function balancingMatrixFromLayer(
 /**
  * Returns a vector of ones as the inclusion probabilities, if probabilitiesFrom is not set
  */
-function probsFromLayer<M>(
-  collection: FeatureCollection<AreaObject | LineObject | PointObject>,
-  {probabilities}: SampleFiniteOptions<M>, // already checked
+function probsFromLayer<M, G extends PureObject, P extends string>(
+  collection: FeatureCollection<G, P>,
+  {probabilities}: SampleFiniteOptions<M, P>, // already checked
 ): Vector {
   let probs: Vector;
 
@@ -199,7 +198,7 @@ function probsFromLayer<M>(
 
     if (prop === null) {
       return Vector.create(1.0, collection.size());
-    } else if (!PropertyRecord.propertyIsNumerical(prop)) {
+    } else if (!PropertyRecord.isNumerical(prop)) {
       throw new TypeError('probabilitiesFrom must be numerical');
     }
 
@@ -218,8 +217,8 @@ function probsFromLayer<M>(
  * @param collection
  * @param options
  */
-export function drawprobsFromLayer<M>(
-  collection: FeatureCollection<AreaObject | LineObject | PointObject>,
+export function drawprobsFromLayer<M, G extends PureObject>(
+  collection: FeatureCollection<G>,
   options: SampleFiniteOptions<M>, // already checked
 ): Vector {
   const probs = probsFromLayer(collection, options);
@@ -234,8 +233,8 @@ export function drawprobsFromLayer<M>(
  * @param collection
  * @param options
  */
-export function inclprobsFromLayer<M>(
-  collection: FeatureCollection<AreaObject | LineObject | PointObject>,
+export function inclprobsFromLayer<M, G extends PureObject>(
+  collection: FeatureCollection<G>,
   options: SampleFiniteOptions<M>, // already checked
 ): number[] {
   const N = collection.size();
@@ -293,14 +292,12 @@ export function inclprobsFromLayer<M>(
   return ips.slice();
 }
 
-export function returnCollectionFromSample<T extends AreaObject | LineObject | PointObject>(
-  collection: FeatureCollection<T>,
+export function returnCollectionFromSample<G extends PureObject, PID extends string>(
+  collection: FeatureCollection<G, PID>,
   sample: number[],
   probabilities: number[],
-): FeatureCollection<T> {
+): FeatureCollection<G, PID> {
   const newCollection = collection.copyEmpty(false);
-  // Add _designWeight to propertyRecord if it does not exist
-  newCollection.propertyRecord.addDesignWeight();
 
   sample.forEach((i) => {
     newCollection.addGeometry(
