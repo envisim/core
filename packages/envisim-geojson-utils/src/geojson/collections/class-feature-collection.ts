@@ -281,7 +281,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
    * of a line collection, and the total count of a point collection
    */
   measure(): number {
-    return this.features.reduce((p, c) => p + c.geometry.measure(), 0.0);
+    return this.features.reduce((p, c) => p + c.measure(), 0.0);
   }
 
   setBBox(force: boolean = false): GJ.BBox {
