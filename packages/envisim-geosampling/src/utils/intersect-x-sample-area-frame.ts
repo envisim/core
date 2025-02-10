@@ -20,11 +20,11 @@ function intersectAreaFrame<T extends AreaObject | LineObject | PointObject>(
     sample.forEach((sampleFeature) => {
       const intersect = intersectFunction(sampleFeature.geometry, frameFeature.geometry, options);
       if (intersect === null) return;
-
-      const dw =
-        frameFeature.getSpecialPropertyDesignWeight() *
-        sampleFeature.getSpecialPropertyDesignWeight();
-      collection.addGeometry(intersect, {_designWeight: dw}, true);
+      // transfer all properties from sample to intersect
+      // same sample object may be split into multiple intersects
+      const properties = structuredClone(sampleFeature.properties);
+      (properties['_designWeight'] as number) *= frameFeature.getSpecialPropertyDesignWeight(1.0);
+      collection.addGeometry(intersect, properties, true);
     });
   });
 }
@@ -40,7 +40,9 @@ export function intersectPointSampleAreaFrame(
   sample: FeatureCollection<PointObject>,
   frame: FeatureCollection<AreaObject>,
 ): FeatureCollection<PointObject> {
-  const collection = FeatureCollection.newPoint();
+  // keep all properties
+  const propertyRecord = sample.propertyRecord.copy(true);
+  const collection = FeatureCollection.newPoint([], propertyRecord);
   intersectAreaFrame(collection, sample, frame, {}, intersectPointAreaGeometries);
   return collection;
 }
@@ -57,7 +59,9 @@ export function intersectLineSampleAreaFrame(
   frame: FeatureCollection<AreaObject>,
   options: CirclesToPolygonsOptions = {},
 ): FeatureCollection<LineObject> {
-  const collection = FeatureCollection.newLine();
+  // keep all properties
+  const propertyRecord = sample.propertyRecord.copy(true);
+  const collection = FeatureCollection.newLine([], propertyRecord);
   intersectAreaFrame(collection, sample, frame, options, intersectLineAreaGeometries);
   return collection;
 }
@@ -74,8 +78,9 @@ export function intersectAreaSampleAreaFrame(
   frame: FeatureCollection<AreaObject>,
   options: CirclesToPolygonsOptions = {},
 ): FeatureCollection<AreaObject> {
-  const collection = FeatureCollection.newArea([]);
-  collection.propertyRecord.addDesignWeight();
+  // keep all properties
+  const propertyRecord = sample.propertyRecord.copy(true);
+  const collection = FeatureCollection.newArea([], propertyRecord);
   intersectAreaFrame(collection, sample, frame, options, intersectAreaAreaGeometries);
   return collection;
 }
