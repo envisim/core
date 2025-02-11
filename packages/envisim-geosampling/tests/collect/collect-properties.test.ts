@@ -16,7 +16,6 @@ const polygon = Polygon.create([
 const point = Point.create([0.5, 0.5]);
 
 const frame = FeatureCollection.newArea([new Feature(polygon, {_designWeight: 1})]);
-frame.propertyRecord.addDesignWeight();
 
 const propRec = new PropertyRecord({
   size: {id: 'size', name: 'size', type: 'numerical'},

@@ -54,8 +54,6 @@ export function sampleAreaFeaturesOnAreas(
   const pointCollection = samplePointsOnAreas(collection, opts);
 
   const newCollection = FeatureCollection.newArea([]);
-  newCollection.propertyRecord.addDesignWeight();
-  newCollection.propertyRecord.addRandomRotation();
 
   pointCollection.forEach((feature) => {
     const dw = feature.getSpecialPropertyDesignWeight();
@@ -90,8 +88,6 @@ export function sampleLineFeaturesOnAreas(
   const pointCollection = samplePointsOnAreas(collection, opts);
 
   const newCollection = FeatureCollection.newLine([]);
-  newCollection.propertyRecord.addDesignWeight();
-  newCollection.propertyRecord.addRandomRotation();
 
   pointCollection.forEach((feature) => {
     const dw = feature.getSpecialPropertyDesignWeight();
@@ -131,8 +127,6 @@ export function samplePointFeaturesOnAreas(
   }
 
   const newCollection = FeatureCollection.newPoint([]);
-  newCollection.propertyRecord.addDesignWeight();
-  newCollection.propertyRecord.addRandomRotation();
 
   pointCollection.forEach((feature) => {
     const dw = feature.getSpecialPropertyDesignWeight();

@@ -141,8 +141,5 @@ export function sampleStratified<
     return prev;
   }) as OUT;
 
-  // Add _designWeight to propertyRecord if it does not exist
-  newCollection.propertyRecord.addDesignWeight();
-
   return newCollection;
 }

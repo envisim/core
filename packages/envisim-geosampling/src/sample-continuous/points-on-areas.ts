@@ -190,6 +190,5 @@ export function samplePointsOnAreas(
   // may not be used to transfer design weights
   // from parents unless buffer is 0.
   const pr = new PropertyRecord();
-  pr.addDesignWeight();
   return FeatureCollection.newPoint(pointFeatures, pr, true);
 }

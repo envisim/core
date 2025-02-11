@@ -87,7 +87,6 @@ export const sampleSystematicBeltsOnAreas = (
   }
 
   const sc = FeatureCollection.newArea([]);
-  sc.propertyRecord.addDesignWeight();
 
   for (const coords of rings) {
     const geom = toAreaObject(cutAreaGeometry({type: 'Polygon', coordinates: [coords]}));

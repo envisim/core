@@ -299,8 +299,6 @@ export function returnCollectionFromSample<T extends AreaObject | LineObject | P
   probabilities: number[],
 ): FeatureCollection<T> {
   const newCollection = collection.copyEmpty(false);
-  // Add _designWeight to propertyRecord if it does not exist
-  newCollection.propertyRecord.addDesignWeight();
 
   sample.forEach((i) => {
     newCollection.addGeometry(

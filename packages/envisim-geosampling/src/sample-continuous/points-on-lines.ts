@@ -124,7 +124,6 @@ export function samplePointsOnLines(
   });
 
   const newCollection = FeatureCollection.newPoint<Point>([]);
-  newCollection.propertyRecord.addDesignWeight();
 
   for (let i = 0; i < points.length; i++) {
     const coords = points[i];

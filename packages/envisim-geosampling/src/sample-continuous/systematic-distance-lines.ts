@@ -70,9 +70,6 @@ export function sampleSystematicDistanceLines(
 
   // To store sampled features
   const newCollection = FeatureCollection.newPoint<Point>([], baseCollection.propertyRecord, false);
-  newCollection.propertyRecord.addDesignWeight();
-  newCollection.propertyRecord.addParent();
-  newCollection.propertyRecord.addDistance();
 
   // Find selected points in base layer and check if
   // seleccted base point is in frame and transfer _designWeight
