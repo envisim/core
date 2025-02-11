@@ -62,7 +62,6 @@ export function sampleSystematicLinesOnAreas(
   const randomStart = rand.float() * distBetween;
 
   const sc = FeatureCollection.newLine([]);
-  sc.propertyRecord.addDesignWeight();
 
   for (let i = 0; i < numLines; i++) {
     const x = -radius + i * distBetween + randomStart;

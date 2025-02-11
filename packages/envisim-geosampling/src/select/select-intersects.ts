@@ -118,8 +118,6 @@ export function selectIntersects(
   // two design properties must be added to the new property
   // record. Set initial record here.
   const record = base.propertyRecord.copy(false);
-  record.addDesignWeight();
-  record.addParent();
 
   if (FeatureCollection.isPoint(frame) && FeatureCollection.isArea(base)) {
     const layer = FeatureCollection.newPoint([], record);

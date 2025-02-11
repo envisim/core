@@ -20,10 +20,14 @@ function intersectAreaFrame<T extends AreaObject | LineObject | PointObject>(
     sample.forEach((sampleFeature) => {
       const intersect = intersectFunction(sampleFeature.geometry, frameFeature.geometry, options);
       if (intersect === null) return;
-      // transfer all properties from sample to intersect
-      // same sample object may be split into multiple intersects
+
       const properties = {...sampleFeature.properties};
-      (properties['_designWeight'] as number) *= frameFeature.getSpecialPropertyDesignWeight(1.0);
+      (properties['_designWeight'] as number) *= frameFeature.getSpecialPropertyDesignWeight();
+      
+      if (typeof properties['_measure'] === 'number') {
+        properties['_measure'] = intersect.measure();
+      }
+      
       collection.addGeometry(intersect, properties, true);
     });
   });
