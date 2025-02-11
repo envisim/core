@@ -25,10 +25,10 @@ export {
 } from './objects/index.js';
 
 // Features
-export {Feature, type PureFeature} from './features/index.js';
+export {Feature} from './features/index.js';
 
 // FeatureCollections
-export {FeatureCollection, type PureCollection} from './collections/index.js';
+export {FeatureCollection} from './collections/index.js';
 
 // PropertyRecord
 export {

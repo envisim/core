@@ -440,14 +440,3 @@ function createPropertyRecord(
 
   return {record: new PropertyRecord(collection.propertyRecord.record), existed: true};
 }
-
-export type PureCollection<
-  T extends PureObject = PureObject,
-  P extends string = string,
-> = T extends AreaObject
-  ? FeatureCollection<AreaObject, P>
-  : T extends LineObject
-    ? FeatureCollection<LineObject, P>
-    : T extends PointObject
-      ? FeatureCollection<PointObject, P>
-      : never;
