@@ -3,7 +3,7 @@ import {v4 as uuid} from 'uuid';
 import {copy} from '@envisim/utils';
 
 import type * as GJ from '../types/geojson.js';
-import {type Feature} from './features/index.js';
+import {type Feature} from './class-feature.js';
 import {type PureObject} from './objects/index.js';
 
 interface PropertyBase<ID extends string> {

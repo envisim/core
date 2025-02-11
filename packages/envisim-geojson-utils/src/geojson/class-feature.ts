@@ -1,8 +1,8 @@
 import {type OptionalParam, copy} from '@envisim/utils';
 
-import type * as GJ from '../../types/geojson.js';
-import {type CirclesToPolygonsOptions} from '../../utils/circles-to-polygons.js';
-import {GeometricPrimitive} from '../geometric-primitive/index.js';
+import type * as GJ from '../types/geojson.js';
+import {type CirclesToPolygonsOptions} from '../utils/circles-to-polygons.js';
+import {GeometricPrimitive} from './geometric-primitive/index.js';
 import {
   type AreaObject,
   type LineObject,
@@ -11,8 +11,8 @@ import {
   toAreaObject,
   toLineObject,
   toPointObject,
-} from '../objects/index.js';
-import {type FeatureProperties} from '../property-record.js';
+} from './objects/index.js';
+import {type FeatureProperties} from './property-record.js';
 
 export class Feature<T extends PureObject, PID extends string = string>
   implements GJ.BaseFeature<GJ.SingleTypeObject, number | string>

@@ -1,12 +1,12 @@
 import {type OptionalParam} from '@envisim/utils';
 
-import type * as GJ from '../../types/geojson.js';
-import {type BufferOptions} from '../../buffer/index.js';
-import {unionOfBBoxes} from '../../utils/bbox.js';
-import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
-import {type CirclesToPolygonsOptions} from '../../utils/circles-to-polygons.js';
-import {Feature} from '../features/index.js';
-import {GeometricPrimitive} from '../geometric-primitive/index.js';
+import type * as GJ from '../types/geojson.js';
+import {type BufferOptions} from '../buffer/index.js';
+import {unionOfBBoxes} from '../utils/bbox.js';
+import {centroidFromMultipleCentroids} from '../utils/centroid.js';
+import {type CirclesToPolygonsOptions} from '../utils/circles-to-polygons.js';
+import {Feature} from './class-feature.js';
+import {GeometricPrimitive} from './geometric-primitive/index.js';
 import {
   type AreaObject,
   type LineObject,
@@ -15,8 +15,8 @@ import {
   toAreaObject,
   toLineObject,
   toPointObject,
-} from '../objects/index.js';
-import {type FeatureProperties, PropertyRecord} from '../property-record.js';
+} from './objects/index.js';
+import {type FeatureProperties, PropertyRecord} from './property-record.js';
 
 type ForEachCallback<T> = (obj: T, index: number) => void;
 interface FeatureCollectionExtras {
