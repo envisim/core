@@ -79,111 +79,99 @@ function createPropertiesForLine<P extends string>(
  * @param frame
  * @param base
  */
-export function selectIntersects<P extends string>(
-  frame: FeatureCollection<PointObject>,
-  base: FeatureCollection<AreaObject, P>,
-): FeatureCollection<PointObject, P>;
-export function selectIntersects<P extends string, G extends AreaObject | LineObject>(
-  frame: FeatureCollection<LineObject>,
-  base: FeatureCollection<G, P>,
-): G extends AreaObject ? FeatureCollection<LineObject, P> : FeatureCollection<PointObject, P>;
-export function selectIntersects<P extends string, G extends PureObject>(
+export function selectAreaintersectsArea<P extends string>(
   frame: FeatureCollection<AreaObject>,
-  base: FeatureCollection<G, P>,
-): FeatureCollection<G, P>;
-export function selectIntersects<P extends string>(
-  frame: FeatureCollection<PureObject>,
-  base: FeatureCollection<PureObject, P>,
-): FeatureCollection<PureObject, P> {
-  // The same base object may be included in multiple intersects
-  // as collection is done for each frame feature.
-  // The resulting layer contains all props from base layer
-  // but values need to be updated for categorical props and
-  // two design properties must be added to the new property
-  // record. Set initial record here.
-  const record = base.propertyRecord.copy(false);
-
-  if (FeatureCollection.isPoint(frame) && FeatureCollection.isArea(base)) {
-    const layer = FeatureCollection.newPoint([], record);
-    intersectFeatures(
-      layer,
-      frame.features,
-      base.features,
-      intersectPointAreaGeometries,
-      createProperties,
-    );
-    return layer;
-  }
-
-  if (FeatureCollection.isLine(frame)) {
-    if (FeatureCollection.isLine(base)) {
-      const layer = FeatureCollection.newPoint([], record);
-      intersectFeatures(
-        layer,
-        frame.features,
-        base.features,
-        intersectLineLineGeometries,
-        createPropertiesForLine,
-      );
-      return layer;
-    }
-
-    if (FeatureCollection.isArea(base)) {
-      const layer = FeatureCollection.newLine([], record);
-      intersectFeatures(
-        layer,
-        frame.features,
-        base.features,
-        intersectLineAreaGeometries,
-        createProperties,
-      );
-      return layer;
-    }
-  }
-
-  FeatureCollection.assertArea(frame);
-
-  if (FeatureCollection.isPoint(base)) {
-    const layer = FeatureCollection.newPoint([], record);
-    intersectFeatures(
-      layer,
-      frame.features,
-      base.features,
-      (f, b) => intersectPointAreaGeometries(b, f),
-      createProperties,
-    );
-    return layer;
-  }
-
-  if (FeatureCollection.isLine(base)) {
-    const layer = FeatureCollection.newLine([], record);
-    intersectFeatures(
-      layer,
-      frame.features,
-      base.features,
-      (f, b) => intersectLineAreaGeometries(b, f),
-      createProperties,
-    );
-    return layer;
-  }
-
-  FeatureCollection.assertArea(base);
-
-  const layer = FeatureCollection.newArea([], record);
+  base: FeatureCollection<AreaObject, P>,
+): FeatureCollection<AreaObject, P> {
+  const collection = FeatureCollection.newArea([], base.propertyRecord, false);
   intersectFeatures(
-    layer,
+    collection,
     frame.features,
     base.features,
     intersectAreaAreaGeometries,
     createProperties,
   );
-  return layer;
+  return collection;
+}
+export function selectAreaintersectsLine<P extends string>(
+  frame: FeatureCollection<LineObject>,
+  base: FeatureCollection<AreaObject, P>,
+): FeatureCollection<LineObject, P> {
+  const collection = FeatureCollection.newLine([], base.propertyRecord, false);
+  intersectFeatures(
+    collection,
+    frame.features,
+    base.features,
+    intersectLineAreaGeometries,
+    createProperties,
+  );
+  return collection;
+}
+export function selectAreaintersectsPoint<P extends string>(
+  frame: FeatureCollection<PointObject>,
+  base: FeatureCollection<AreaObject, P>,
+): FeatureCollection<PointObject, P> {
+  const collection = FeatureCollection.newPoint([], base.propertyRecord, false);
+  intersectFeatures(
+    collection,
+    frame.features,
+    base.features,
+    intersectPointAreaGeometries,
+    createProperties,
+  );
+  return collection;
+}
+export function selectLineintersectsArea<P extends string>(
+  frame: FeatureCollection<AreaObject>,
+  base: FeatureCollection<LineObject, P>,
+): FeatureCollection<LineObject, P> {
+  // The same base object may be included in multiple intersects as collection is done for each
+  // frame feature. The resulting layer contains all props from base layer but values need to be
+  // updated for categorical props and two design properties must be added to the new property
+  // record.
+  const collection = FeatureCollection.newLine([], base.propertyRecord, false);
+  intersectFeatures(
+    collection,
+    frame.features,
+    base.features,
+    (f, b) => intersectLineAreaGeometries(b, f),
+    createProperties,
+  );
+  return collection;
+}
+export function selectLineintersectsLine<P extends string>(
+  frame: FeatureCollection<LineObject>,
+  base: FeatureCollection<LineObject, P>,
+): FeatureCollection<PointObject, P> {
+  const collection = FeatureCollection.newPoint([], base.propertyRecord, false);
+  intersectFeatures(
+    collection,
+    frame.features,
+    base.features,
+    intersectLineLineGeometries,
+    createPropertiesForLine,
+  );
+  return collection;
+}
+export function selectPointintersectsArea<P extends string>(
+  frame: FeatureCollection<AreaObject>,
+  base: FeatureCollection<PointObject, P>,
+): FeatureCollection<PointObject, P> {
+  const collection = FeatureCollection.newPoint([], base.propertyRecord, false);
+  intersectFeatures(
+    collection,
+    frame.features,
+    base.features,
+    (f, b) => intersectPointAreaGeometries(b, f),
+    createProperties,
+  );
+  return collection;
 }
 
 function intersectFeatures<
-  C extends PureObject,
   F extends PureObject,
   B extends PureObject,
+  C extends PureObject,
   PID extends string,
 >(
   collection: FeatureCollection<C, PID>,
@@ -201,7 +189,6 @@ function intersectFeatures<
         propertiesFunction(frameFeature, baseFeature, index),
         true,
       );
-      // transferPropertiesInPlace(feature, frameFeature, baseFeature, index);
       collection.addFeature(feature, true);
     });
   });

@@ -9,6 +9,7 @@ import {
   type PointObject,
   PropertyRecord,
   type PureObject,
+  type RetractingObject,
   intersectAreaAreaGeometries,
   intersectLineAreaGeometries,
   intersectLineLineGeometries,
@@ -95,37 +96,9 @@ function aggregateInPlace(
  * @param properties
  * @returns collection
  */
-export function collectProperties<PF extends string, PB extends string>(
-  frame: FeatureCollection<PointObject, PF>,
-  base: FeatureCollection<AreaObject, PB>,
-  properties: PB[] | PropertyRecord<PB>,
-): FeatureCollection<PointObject, PF | string>;
-export function collectProperties<
-  PF extends string,
-  PB extends string,
-  GB extends PureObject<AreaObject | LineObject>,
->(
-  frame: FeatureCollection<LineObject>,
-  base: FeatureCollection<GB, PB>,
-  properties: PB[] | PropertyRecord<PB>,
-): FeatureCollection<LineObject, PF | string>;
-export function collectProperties<
-  PF extends string,
-  PB extends string,
-  GB extends PureObject<AreaObject | LineObject>,
->(
-  frame: FeatureCollection<AreaObject, PF>,
-  base: FeatureCollection<GB, PB>,
-  properties: PB[] | PropertyRecord<PB>,
-): FeatureCollection<AreaObject, PF | string>;
-export function collectProperties<
-  PF extends string,
-  PB extends string,
-  GF extends PureObject,
-  GB extends PureObject,
->(
+export function collectProperties<PF extends string, PB extends string, GF extends PureObject>(
   frame: FeatureCollection<GF, PF>,
-  base: FeatureCollection<GB, PB>,
+  base: FeatureCollection<RetractingObject<GF>, PB>,
   properties: PB[] | PropertyRecord<PB>,
 ): FeatureCollection<GF, PF | string> {
   // Make a full copy of the frame layer
