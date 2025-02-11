@@ -21,10 +21,14 @@ function intersectAreaFrame<T extends AreaObject | LineObject | PointObject>(
       const intersect = intersectFunction(sampleFeature.geometry, frameFeature.geometry, options);
       if (intersect === null) return;
 
-      const dw =
-        frameFeature.getSpecialPropertyDesignWeight() *
-        sampleFeature.getSpecialPropertyDesignWeight();
-      collection.addGeometry(intersect, {_designWeight: dw}, true);
+      const properties = {...sampleFeature.properties};
+      (properties['_designWeight'] as number) *= frameFeature.getSpecialPropertyDesignWeight();
+
+      if (typeof properties['_measure'] === 'number') {
+        properties['_measure'] = intersect.measure();
+      }
+
+      collection.addGeometry(intersect, properties, true);
     });
   });
 }

@@ -131,6 +131,14 @@ export class Feature<T extends PureObject, PID extends string = string>
     return (this.properties[id] = callback(this.properties[id]));
   }
 
+  measure(): number {
+    if (typeof this.properties['_measure'] !== 'number') {
+      this.setSpecialPropertyMeasure();
+    }
+
+    return this.properties['_measure'] as number;
+  }
+
   // SPECIAL PROPERTIES
   getSpecialPropertyDesignWeight(): number {
     return this.properties['_designWeight'] ?? 1.0;
@@ -155,6 +163,9 @@ export class Feature<T extends PureObject, PID extends string = string>
   }
   setSpecialPropertyRandomRotation(value: number) {
     this.properties['_randomRotation'] = value;
+  }
+  setSpecialPropertyMeasure() {
+    this.properties['_measure'] = this.geometry.measure();
   }
   multSpecialPropertyDesignWeight(value: number): number {
     const dw = this.getSpecialPropertyDesignWeight() * value;

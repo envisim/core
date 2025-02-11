@@ -185,8 +185,5 @@ export function samplePointsOnAreas(
     });
   }
 
-  // parentIndex refer to buffered features, so
-  // may not be used to transfer design weights
-  // from parents unless buffer is 0.
   return FeatureCollection.newPoint(pointFeatures, undefined, true);
 }

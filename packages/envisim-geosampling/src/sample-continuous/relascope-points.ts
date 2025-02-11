@@ -108,7 +108,7 @@ export function sampleRelascopePoints<P extends string>(
 
   // Compute estimate of area with input area collection
   const areaEstimateBefore = collection.features.reduce(
-    (p, c) => p + c.geometry.measure() * c.getSpecialPropertyDesignWeight(),
+    (p, c) => p + c.measure() * c.getSpecialPropertyDesignWeight(),
     0.0,
   );
 
