@@ -14,7 +14,7 @@ const polygon = Polygon.create([
   ],
 ]);
 
-const frame = FeatureCollection.newArea([new Feature(polygon)]);
+const frame = FeatureCollection.newArea([new Feature(polygon, {})]);
 const sample = samplePointsOnAreas(frame, {
   pointSelection: 'independent',
   sampleSize: 10,

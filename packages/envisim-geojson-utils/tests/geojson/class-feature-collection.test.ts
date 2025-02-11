@@ -1,21 +1,20 @@
 import {expect, test} from 'vitest';
 
-import {FeatureCollection} from '../../src/geojson/collections/class-feature-collection.js';
+import {FeatureCollection} from '../../src/geojson/class-feature-collection.js';
 import {
-  AreaObject,
   Circle,
-  Feature,
   GeoJSON as GJ,
   MultiCircle,
   MultiPoint,
   Point,
   Polygon,
+  PropertyRecord,
 } from '../../src/index.js';
 
 test('geomEach', () => {
   const pointCollection = FeatureCollection.newPoint();
-  pointCollection.addGeometry(Point.create([0, 0]));
-  pointCollection.addGeometry(Point.create([1, 1]));
+  pointCollection.addGeometry(Point.create([0, 0]), {});
+  pointCollection.addGeometry(Point.create([1, 1]), {});
 
   let count = 0;
   pointCollection.geomEach((geom) => {
@@ -24,13 +23,14 @@ test('geomEach', () => {
 
   expect(count).toBe(2);
 
-  pointCollection.addGeometry(Point.create([0, 0]));
+  pointCollection.addGeometry(Point.create([0, 0]), {});
   pointCollection.addGeometry(
     MultiPoint.create([
       [0, 0],
       [1, 0],
       [2, 0],
     ]),
+    {},
   );
 
   count = 0;
@@ -154,30 +154,21 @@ test('FeatureCollection', () => {
 });
 
 test('appendFromLayer', () => {
-  const fcArea = FeatureCollection.newArea(collection.features, collection.propertyRecord);
-  const fcLine = FeatureCollection.newLine(
-    [feature2 as GJ.LineFeature, feature2 as GJ.LineFeature].flatMap((f) => {
-      const ff = Feature.createLine(f.geometry);
-      if (ff === null) return [];
-      return [ff];
-    }),
-    collection.propertyRecord,
-  );
-  expect(() => fcArea.appendFeatureCollection(collection)).not.toThrowError();
-  expect(() =>
-    fcArea.appendFeatureCollection(fcLine as unknown as FeatureCollection<AreaObject>),
-  ).toThrowError();
+  const fcArea = FeatureCollection.newArea(collection.features, collection.propertyRecord, false);
+  fcArea.appendFeatureCollection(collection);
+  expect(fcArea.size()).toEqual(collection.size() * 2);
 });
 
 test('appendFromLayerWithDifferentProps', () => {
   const fcArea = FeatureCollection.newArea(collection.features, undefined, true);
+  fcArea.propertyRecord = new PropertyRecord({});
   expect(() => collection.appendFeatureCollection(fcArea)).toThrowError();
   expect(() => fcArea.appendFeatureCollection(collection)).toThrowError();
 });
 
 test('copy', () => {
   const fc = FeatureCollection.newArea();
-  fc.addGeometry(Circle.create([20.27, 63.83], 10));
+  fc.addGeometry(Circle.create([20.27, 63.83], 10), {});
   fc.addGeometry(
     MultiCircle.create(
       [
@@ -186,6 +177,7 @@ test('copy', () => {
       ],
       100,
     ),
+    {},
   );
   fc.addGeometry(
     Polygon.create([
@@ -196,6 +188,7 @@ test('copy', () => {
         [0, 1],
       ],
     ]),
+    {},
   );
   const woc = fc.copy(true, {convertCircles: true});
   const wc = fc.copy(true, {convertCircles: false});

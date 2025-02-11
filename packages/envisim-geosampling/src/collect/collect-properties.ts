@@ -108,7 +108,10 @@ export function collectProperties<PF extends string, PB extends string, GF exten
       : properties;
 
   const newCollection = frame.copy(false) as FeatureCollection<GF, PF | string>;
-  newCollection.propertyRecord = rec;
+  newCollection.propertyRecord = new PropertyRecord({
+    ...frame.propertyRecord.record,
+    ...rec.record,
+  });
 
   // The property record of new properties to collect
 
@@ -125,7 +128,7 @@ export function collectProperties<PF extends string, PB extends string, GF exten
       throw new Error('Property to collect does not exist in the baseLayer property record.');
     }
 
-    if (newCollection.propertyRecord.hasId(property.id)) {
+    if (frame.propertyRecord.hasId(property.id)) {
       throw new Error('Property to collect already exist in the frameLayer property record.');
     }
 

@@ -18,7 +18,7 @@ const polygon = Polygon.create([
   ],
 ]);
 
-const frame = FeatureCollection.newArea([new Feature(polygon)]);
+const frame = FeatureCollection.newArea([new Feature(polygon, {})]);
 
 const tract = squareAreaGeometry(10);
 

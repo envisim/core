@@ -382,6 +382,13 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
   // LAYER
   appendFeatureCollection(fc: FeatureCollection<T, PID>, shallow: boolean = true): void {
+    const thisKeys = this.propertyRecord.getIds();
+    const fcKeys = fc.propertyRecord.getIds();
+
+    if (thisKeys.length !== fcKeys.length || !thisKeys.every((id) => fcKeys.includes(id))) {
+      throw new RangeError('propertyRecords does not match');
+    }
+
     fc.forEach((feat) => this.addFeature(feat, shallow));
   }
 }
