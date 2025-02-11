@@ -1,4 +1,1 @@
-export {
-  Feature,
-  // type PureFeature
-} from './class-feature.js';
+export {Feature, type PureFeature} from './class-feature.js';

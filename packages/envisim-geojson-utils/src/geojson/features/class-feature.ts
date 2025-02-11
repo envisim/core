@@ -163,13 +163,13 @@ export class Feature<T extends PureObject, PID extends string = string>
   }
 }
 
-// export type PureFeature<
-//   T extends AreaObject | LineObject | PointObject = AreaObject | LineObject | PointObject,
-//   PID extends string = string,
-// > = T extends AreaObject
-//   ? Feature<AreaObject, PID>
-//   : T extends LineObject
-//     ? Feature<LineObject, PID>
-//     : T extends PointObject
-//       ? Feature<PointObject, PID>
-//       : never;
+export type PureFeature<
+  T extends PureObject = PureObject,
+  P extends string = string,
+> = T extends AreaObject
+  ? Feature<AreaObject, P>
+  : T extends LineObject
+    ? Feature<LineObject, P>
+    : T extends PointObject
+      ? Feature<PointObject, P>
+      : never;

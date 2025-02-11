@@ -29,3 +29,27 @@ export type PointObject = Point | MultiPoint;
 export type PureObject<
   T extends AreaObject | LineObject | PointObject = AreaObject | LineObject | PointObject,
 > = T extends AreaObject ? T : T extends LineObject ? T : T extends PointObject ? T : never;
+export type DecreasingObject<G extends PureObject> = //
+  G extends AreaObject
+    ? PureObject
+    : G extends LineObject
+      ? PureObject<LineObject | PointObject>
+      : G extends PointObject
+        ? PointObject
+        : never;
+export type IncreasingObject<G extends PureObject> = //
+  G extends AreaObject
+    ? AreaObject
+    : G extends LineObject
+      ? PureObject<AreaObject | LineObject>
+      : G extends PointObject
+        ? PureObject
+        : never;
+export type RetractingObject<G extends PureObject> = //
+  G extends AreaObject
+    ? PureObject
+    : G extends LineObject
+      ? PureObject<AreaObject | LineObject>
+      : G extends PointObject
+        ? AreaObject
+        : never;

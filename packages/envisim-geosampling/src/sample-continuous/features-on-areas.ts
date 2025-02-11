@@ -1,5 +1,6 @@
 import {
   type AreaObject,
+  Feature,
   FeatureCollection,
   type GeoJSON as GJ,
   type LineObject,
@@ -35,7 +36,7 @@ import {samplePointsOnAreas} from './points-on-areas.js';
 export function sampleAreaFeaturesOnAreas(
   collection: FeatureCollection<AreaObject>,
   {...options}: SampleFeatureOptions<GJ.AreaObject>,
-): FeatureCollection<AreaObject> {
+): FeatureCollection<AreaObject, never> {
   const opts: Required<SampleFeatureOptions<GJ.AreaObject>> = {
     ...SAMPLE_FEATURE_OPTIONS,
     ...options,
@@ -53,15 +54,15 @@ export function sampleAreaFeaturesOnAreas(
   // Select first a sample of points and use radius as buffer.
   const pointCollection = samplePointsOnAreas(collection, opts);
 
-  const newCollection = FeatureCollection.newArea([]);
-
-  pointCollection.forEach((feature) => {
-    const dw = feature.getSpecialPropertyDesignWeight();
-    newCollection.addGeometry(placeAreaGeometry(feature.geometry.coordinates, opts), {
-      _designWeight: dw / sizeOfTract,
-      _randomRotation: opts.randomRotationOfGeometry ? 1 : 0,
-    });
-  });
+  const newCollection = FeatureCollection.newArea<AreaObject, never>(
+    pointCollection.features.map((f) => {
+      const dw = f.getSpecialPropertyDesignWeight();
+      return new Feature<AreaObject, never>(placeAreaGeometry(f.geometry.coordinates, opts), {
+        _designWeight: dw / sizeOfTract,
+        _randomRotation: opts.randomRotationOfGeometry ? 1 : 0,
+      });
+    }),
+  );
 
   return intersectAreaSampleAreaFrame(newCollection, collection, opts);
 }
@@ -69,7 +70,7 @@ export function sampleAreaFeaturesOnAreas(
 export function sampleLineFeaturesOnAreas(
   collection: FeatureCollection<AreaObject>,
   {...options}: SampleFeatureOptions<GJ.LineObject>,
-): FeatureCollection<LineObject> {
+): FeatureCollection<LineObject, never> {
   const opts: Required<SampleFeatureOptions<GJ.LineObject>> = {
     ...SAMPLE_FEATURE_OPTIONS,
     ...options,
@@ -87,15 +88,15 @@ export function sampleLineFeaturesOnAreas(
   // Select first a sample of points and use radius as buffer.
   const pointCollection = samplePointsOnAreas(collection, opts);
 
-  const newCollection = FeatureCollection.newLine([]);
-
-  pointCollection.forEach((feature) => {
-    const dw = feature.getSpecialPropertyDesignWeight();
-    newCollection.addGeometry(placeLineGeometry(feature.geometry.coordinates, opts), {
-      _designWeight: dw / sizeOfTract,
-      _randomRotation: opts.randomRotationOfGeometry ? 1 : 0,
-    });
-  });
+  const newCollection = FeatureCollection.newLine<LineObject, never>(
+    pointCollection.features.map((f) => {
+      const dw = f.getSpecialPropertyDesignWeight();
+      return new Feature<LineObject, never>(placeLineGeometry(f.geometry.coordinates, opts), {
+        _designWeight: dw / sizeOfTract,
+        _randomRotation: opts.randomRotationOfGeometry ? 1 : 0,
+      });
+    }),
+  );
 
   return intersectLineSampleAreaFrame(newCollection, collection, opts);
 }
@@ -103,7 +104,7 @@ export function sampleLineFeaturesOnAreas(
 export function samplePointFeaturesOnAreas(
   collection: FeatureCollection<AreaObject>,
   {...options}: SampleFeatureOptions<GJ.PointObject>,
-): FeatureCollection<PointObject> {
+): FeatureCollection<PointObject, never> {
   const opts: Required<SampleFeatureOptions<GJ.PointObject>> = {
     ...SAMPLE_FEATURE_OPTIONS,
     ...options,
@@ -126,15 +127,15 @@ export function samplePointFeaturesOnAreas(
     return pointCollection;
   }
 
-  const newCollection = FeatureCollection.newPoint([]);
-
-  pointCollection.forEach((feature) => {
-    const dw = feature.getSpecialPropertyDesignWeight();
-    newCollection.addGeometry(placePointGeometry(feature.geometry.coordinates, opts), {
-      _designWeight: dw / sizeOfTract,
-      _randomRotation: opts.randomRotationOfGeometry ? 1 : 0,
-    });
-  });
+  const newCollection = FeatureCollection.newPoint<PointObject, never>(
+    pointCollection.features.map((f) => {
+      const dw = f.getSpecialPropertyDesignWeight();
+      return new Feature<PointObject, never>(placePointGeometry(f.geometry.coordinates, opts), {
+        _designWeight: dw / sizeOfTract,
+        _randomRotation: opts.randomRotationOfGeometry ? 1 : 0,
+      });
+    }),
+  );
 
   return intersectPointSampleAreaFrame(newCollection, collection);
 }

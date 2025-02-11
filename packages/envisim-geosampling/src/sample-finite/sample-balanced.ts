@@ -6,7 +6,7 @@ import {balancingMatrixFromLayer, inclprobsFromLayer, returnCollectionFromSample
 
 export function sampleBalanced<T extends PureObject, P extends string>(
   collection: FeatureCollection<T, P>,
-  options: SampleBalancedOptions,
+  options: SampleBalancedOptions<NoInfer<P>>,
 ): FeatureCollection<T, P> {
   const optionsError = sampleBalancedOptionsCheck(options, collection.propertyRecord);
   if (optionsError !== null) {

@@ -183,7 +183,7 @@ export function balancingMatrixFromLayer<G extends PureObject, P extends string>
  */
 function probsFromLayer<M, G extends PureObject, P extends string>(
   collection: FeatureCollection<G, P>,
-  {probabilities}: SampleFiniteOptions<M, P>, // already checked
+  {probabilities}: SampleFiniteOptions<P, M>, // already checked
 ): Vector {
   let probs: Vector;
 
@@ -217,9 +217,9 @@ function probsFromLayer<M, G extends PureObject, P extends string>(
  * @param collection
  * @param options
  */
-export function drawprobsFromLayer<M, G extends PureObject>(
-  collection: FeatureCollection<G>,
-  options: SampleFiniteOptions<M>, // already checked
+export function drawprobsFromLayer<M, G extends PureObject, P extends string>(
+  collection: FeatureCollection<G, P>,
+  options: SampleFiniteOptions<P, M>, // already checked
 ): Vector {
   const probs = probsFromLayer(collection, options);
   const sum = probs.sum();
@@ -233,9 +233,9 @@ export function drawprobsFromLayer<M, G extends PureObject>(
  * @param collection
  * @param options
  */
-export function inclprobsFromLayer<M, G extends PureObject>(
-  collection: FeatureCollection<G>,
-  options: SampleFiniteOptions<M>, // already checked
+export function inclprobsFromLayer<M, G extends PureObject, P extends string>(
+  collection: FeatureCollection<G, P>,
+  options: SampleFiniteOptions<P, M>, // already checked
 ): number[] {
   const N = collection.size();
 
@@ -292,11 +292,11 @@ export function inclprobsFromLayer<M, G extends PureObject>(
   return ips.slice();
 }
 
-export function returnCollectionFromSample<G extends PureObject, PID extends string>(
-  collection: FeatureCollection<G, PID>,
+export function returnCollectionFromSample<G extends PureObject, P extends string>(
+  collection: FeatureCollection<G, P>,
   sample: number[],
   probabilities: number[],
-): FeatureCollection<G, PID> {
+): FeatureCollection<G, P> {
   const newCollection = collection.copyEmpty(false);
 
   sample.forEach((i) => {

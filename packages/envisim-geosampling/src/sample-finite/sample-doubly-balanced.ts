@@ -11,7 +11,7 @@ import {
 
 export function sampleDoublyBalanced<T extends PureObject, P extends string>(
   collection: FeatureCollection<T, P>,
-  options: SampleDoublyBalancedOptions<P>,
+  options: SampleDoublyBalancedOptions<NoInfer<P>>,
 ): FeatureCollection<T, P> {
   const optionsError = sampleDoublyBalancedOptionsCheck(options, collection.propertyRecord);
   if (optionsError !== null) {

@@ -47,6 +47,9 @@ export type FeatureProperties<IDS extends string = string> = SpecialFeaturePrope
 export class PropertyRecord<IDS extends string = string> {
   // SPECIAL PROPERTIES
   static readonly SPECIAL_KEYS = SPECIAL_KEYS;
+  static isSpecial(k: string): k is SpecialPropertyNames {
+    return (PropertyRecord.SPECIAL_KEYS as ReadonlyArray<string>).includes(k);
+  }
 
   record: PropertyList<IDS>;
 
@@ -153,7 +156,7 @@ export class PropertyRecord<IDS extends string = string> {
     return Object.values(this.record);
   }
 
-  idIsNumerical(id: IDS): boolean {
+  isNumerical(id: IDS): boolean {
     return PropertyRecord.isNumerical(this.record?.[id]);
   }
 
@@ -171,7 +174,7 @@ export class PropertyRecord<IDS extends string = string> {
     return id;
   }
 
-  idIsCategorical(id: IDS): boolean {
+  idCategorical(id: IDS): boolean {
     return PropertyRecord.isCategorical(this.record?.[id]);
   }
 

@@ -43,34 +43,40 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
   readonly primitive: GeometricPrimitive;
   propertyRecord: PropertyRecord<PID>;
 
-  static isArea(obj: unknown): obj is FeatureCollection<AreaObject> {
+  static isArea<P extends string>(
+    obj: FeatureCollection<PureObject, P>,
+  ): obj is FeatureCollection<AreaObject, P> {
     return obj instanceof FeatureCollection && obj.geometricPrimitive() === GeometricPrimitive.AREA;
   }
-  static isLine(obj: unknown): obj is FeatureCollection<LineObject> {
+  static isLine<P extends string>(
+    obj: FeatureCollection<PureObject, P>,
+  ): obj is FeatureCollection<LineObject, P> {
     return obj instanceof FeatureCollection && obj.geometricPrimitive() === GeometricPrimitive.LINE;
   }
-  static isPoint(obj: unknown): obj is FeatureCollection<PointObject> {
+  static isPoint<P extends string>(
+    obj: FeatureCollection<PureObject, P>,
+  ): obj is FeatureCollection<PointObject, P> {
     return (
       obj instanceof FeatureCollection && obj.geometricPrimitive() === GeometricPrimitive.POINT
     );
   }
 
-  static assertArea(
-    obj: unknown,
+  static assertArea<P extends string>(
+    obj: FeatureCollection<PureObject, P>,
     msg: string = 'Expected area',
-  ): asserts obj is FeatureCollection<AreaObject> {
+  ): asserts obj is FeatureCollection<AreaObject, P> {
     if (!FeatureCollection.isArea(obj)) throw new TypeError(msg);
   }
-  static assertLine(
-    obj: unknown,
+  static assertLine<P extends string>(
+    obj: FeatureCollection<PureObject, P>,
     msg: string = 'Expected line',
-  ): asserts obj is FeatureCollection<LineObject> {
+  ): asserts obj is FeatureCollection<LineObject, P> {
     if (!FeatureCollection.isLine(obj)) throw new TypeError(msg);
   }
-  static assertPoint(
-    obj: unknown,
+  static assertPoint<P extends string>(
+    obj: FeatureCollection<PureObject, P>,
     msg: string = 'Expected point',
-  ): asserts obj is FeatureCollection<PointObject> {
+  ): asserts obj is FeatureCollection<PointObject, P> {
     if (!FeatureCollection.isPoint(obj)) throw new TypeError(msg);
   }
 
@@ -435,14 +441,13 @@ function createPropertyRecord(
   return {record: new PropertyRecord(collection.propertyRecord.record), existed: true};
 }
 
-// export type PureCollection<
-// T extends AreaObject | LineObject | PointObject = AreaObject | LineObject | PointObject,
-//   T extends PureObject = PureObject,
-//   PID extends string = string,
-// > = T extends AreaObject
-//   ? FeatureCollection<AreaObject, PID>
-//   : T extends LineObject
-//     ? FeatureCollection<LineObject, PID>
-//     : T extends PointObject
-//       ? FeatureCollection<PointObject, PID>
-//       : never;
+export type PureCollection<
+  T extends PureObject = PureObject,
+  P extends string = string,
+> = T extends AreaObject
+  ? FeatureCollection<AreaObject, P>
+  : T extends LineObject
+    ? FeatureCollection<LineObject, P>
+    : T extends PointObject
+      ? FeatureCollection<PointObject, P>
+      : never;

@@ -19,19 +19,16 @@ export {
   toLineObject,
   toPointObject,
   type PureObject,
+  type IncreasingObject,
+  type DecreasingObject,
+  type RetractingObject,
 } from './objects/index.js';
 
 // Features
-export {
-  Feature,
-  // type PureFeature
-} from './features/index.js';
+export {Feature, type PureFeature} from './features/index.js';
 
 // FeatureCollections
-export {
-  FeatureCollection,
-  // type PureCollection
-} from './collections/index.js';
+export {FeatureCollection, type PureCollection} from './collections/index.js';
 
 // PropertyRecord
 export {
