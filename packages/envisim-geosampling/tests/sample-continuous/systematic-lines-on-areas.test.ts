@@ -14,7 +14,7 @@ const polygon = Polygon.create([
   ],
 ]);
 
-const frame = FeatureCollection.newArea([new Feature(polygon)]);
+const frame = FeatureCollection.newArea([new Feature(polygon, {})]);
 const area = frame.measure();
 const distBetween = 1000;
 

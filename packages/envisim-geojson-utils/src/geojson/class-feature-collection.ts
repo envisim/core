@@ -1,27 +1,22 @@
-import {v4 as uuid} from 'uuid';
-
 import {type OptionalParam} from '@envisim/utils';
 
-import type * as GJ from '../../types/geojson.js';
-import {type BufferOptions} from '../../buffer/index.js';
-import {unionOfBBoxes} from '../../utils/bbox.js';
-import {centroidFromMultipleCentroids} from '../../utils/centroid.js';
-import {type CirclesToPolygonsOptions} from '../../utils/circles-to-polygons.js';
-import {Feature} from '../features/index.js';
-import {GeometricPrimitive} from '../geometric-primitive/index.js';
+import type * as GJ from '../types/geojson.js';
+import {type BufferOptions} from '../buffer/index.js';
+import {unionOfBBoxes} from '../utils/bbox.js';
+import {centroidFromMultipleCentroids} from '../utils/centroid.js';
+import {type CirclesToPolygonsOptions} from '../utils/circles-to-polygons.js';
+import {Feature} from './class-feature.js';
+import {GeometricPrimitive} from './geometric-primitive/index.js';
 import {
   type AreaObject,
   type LineObject,
   type PointObject,
+  type PureObject,
   toAreaObject,
   toLineObject,
   toPointObject,
-} from '../objects/index.js';
-import {
-  type CategoricalProperty,
-  type NumericalProperty,
-  PropertyRecord,
-} from '../property-record.js';
+} from './objects/index.js';
+import {type FeatureProperties, PropertyRecord} from './property-record.js';
 
 type ForEachCallback<T> = (obj: T, index: number) => void;
 interface FeatureCollectionExtras {
@@ -37,47 +32,51 @@ type StrippedFeatureCollectionJson = OptionalParam<
   'type' | 'primitive' | 'propertyRecord'
 >;
 
-export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
+export class FeatureCollection<T extends PureObject, PID extends string = string>
   implements
     GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>>,
     FeatureCollectionExtras
 {
   readonly type = 'FeatureCollection';
-  features: Feature<T>[] = [];
+  features: Feature<T, PID>[] = [];
   bbox?: GJ.BBox;
   readonly primitive: GeometricPrimitive;
+  propertyRecord: PropertyRecord<PID>;
 
-  // Layer
-  propertyRecord: PropertyRecord;
-
-  static isArea(obj: unknown): obj is FeatureCollection<AreaObject> {
+  static isArea<P extends string>(
+    obj: FeatureCollection<PureObject, P>,
+  ): obj is FeatureCollection<AreaObject, P> {
     return obj instanceof FeatureCollection && obj.geometricPrimitive() === GeometricPrimitive.AREA;
   }
-  static isLine(obj: unknown): obj is FeatureCollection<LineObject> {
+  static isLine<P extends string>(
+    obj: FeatureCollection<PureObject, P>,
+  ): obj is FeatureCollection<LineObject, P> {
     return obj instanceof FeatureCollection && obj.geometricPrimitive() === GeometricPrimitive.LINE;
   }
-  static isPoint(obj: unknown): obj is FeatureCollection<PointObject> {
+  static isPoint<P extends string>(
+    obj: FeatureCollection<PureObject, P>,
+  ): obj is FeatureCollection<PointObject, P> {
     return (
       obj instanceof FeatureCollection && obj.geometricPrimitive() === GeometricPrimitive.POINT
     );
   }
 
-  static assertArea(
-    obj: unknown,
+  static assertArea<P extends string>(
+    obj: FeatureCollection<PureObject, P>,
     msg: string = 'Expected area',
-  ): asserts obj is FeatureCollection<AreaObject> {
+  ): asserts obj is FeatureCollection<AreaObject, P> {
     if (!FeatureCollection.isArea(obj)) throw new TypeError(msg);
   }
-  static assertLine(
-    obj: unknown,
+  static assertLine<P extends string>(
+    obj: FeatureCollection<PureObject, P>,
     msg: string = 'Expected line',
-  ): asserts obj is FeatureCollection<LineObject> {
+  ): asserts obj is FeatureCollection<LineObject, P> {
     if (!FeatureCollection.isLine(obj)) throw new TypeError(msg);
   }
-  static assertPoint(
-    obj: unknown,
+  static assertPoint<P extends string>(
+    obj: FeatureCollection<PureObject, P>,
     msg: string = 'Expected point',
-  ): asserts obj is FeatureCollection<PointObject> {
+  ): asserts obj is FeatureCollection<PointObject, P> {
     if (!FeatureCollection.isPoint(obj)) throw new TypeError(msg);
   }
 
@@ -181,11 +180,11 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     return fc;
   }
 
-  static newArea<F extends AreaObject = AreaObject>(
-    features: Feature<F>[] = [],
-    propertyRecord: PropertyRecord | undefined = undefined,
+  static newArea<F extends AreaObject = AreaObject, PID extends string = string>(
+    features: Feature<F, PID>[] = [],
+    propertyRecord?: PropertyRecord<PID>,
     shallow: boolean = true,
-  ): FeatureCollection<F> {
+  ): FeatureCollection<F, PID> {
     if (shallow === true) {
       return new FeatureCollection(GeometricPrimitive.AREA, features, propertyRecord);
     }
@@ -196,11 +195,11 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
       propertyRecord?.copy(shallow),
     );
   }
-  static newLine<F extends LineObject = LineObject>(
-    features: Feature<F>[] = [],
-    propertyRecord: PropertyRecord | undefined = undefined,
+  static newLine<F extends LineObject = LineObject, PID extends string = string>(
+    features: Feature<F, PID>[] = [],
+    propertyRecord?: PropertyRecord<PID>,
     shallow: boolean = true,
-  ): FeatureCollection<F> {
+  ): FeatureCollection<F, PID> {
     if (shallow === true) {
       return new FeatureCollection(GeometricPrimitive.LINE, features, propertyRecord);
     }
@@ -211,11 +210,11 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
       propertyRecord?.copy(shallow),
     );
   }
-  static newPoint<F extends PointObject = PointObject>(
-    features: Feature<F>[] = [],
-    propertyRecord: PropertyRecord | undefined = undefined,
+  static newPoint<F extends PointObject = PointObject, PID extends string = string>(
+    features: Feature<F, PID>[] = [],
+    propertyRecord?: PropertyRecord<PID>,
     shallow: boolean = true,
-  ): FeatureCollection<F> {
+  ): FeatureCollection<F, PID> {
     if (shallow === true) {
       return new FeatureCollection(GeometricPrimitive.POINT, features, propertyRecord);
     }
@@ -229,12 +228,12 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
 
   private constructor(
     primitive: GeometricPrimitive,
-    features: Feature<T>[] = [],
-    propertyRecord?: PropertyRecord,
+    features: Feature<T, PID>[] = [],
+    propertyRecord?: PropertyRecord<PID>,
   ) {
     this.primitive = primitive;
     this.features = features;
-    this.propertyRecord = propertyRecord ?? new PropertyRecord();
+    this.propertyRecord = propertyRecord ?? PropertyRecord.createFromFeature(features[0]);
   }
 
   /**
@@ -268,7 +267,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     );
   }
 
-  copyEmpty(shallow: boolean = true): FeatureCollection<T> {
+  copyEmpty(shallow: boolean = true): FeatureCollection<T, PID> {
     return new FeatureCollection(this.primitive, [], this.propertyRecord.copy(shallow));
   }
 
@@ -338,12 +337,13 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     return centroidFromMultipleCentroids(centroids, this.getBBox(), iterations).centroid;
   }
 
-  buffer(options: BufferOptions): FeatureCollection<AreaObject> | null {
-    const ac = FeatureCollection.newArea();
+  buffer(options: BufferOptions): FeatureCollection<AreaObject, PID> | null {
+    const ac = FeatureCollection.newArea<AreaObject, PID>();
 
     this.forEach((feature) => {
       const bf = feature.geometry.buffer(options);
-      if (bf !== null) ac.addFeature(new Feature(bf), true);
+      if (bf === null) return;
+      ac.addGeometry(bf, feature.properties, true);
     });
 
     if (ac.features.length === 0) return null;
@@ -351,7 +351,7 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
   }
 
   // LOOPING
-  forEach(callback: ForEachCallback<Feature<T>>): void {
+  forEach(callback: ForEachCallback<Feature<T, PID>>): void {
     this.features.forEach(callback);
   }
   geomEach(callback: ForEachCallback<T>): void {
@@ -359,15 +359,11 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
   }
 
   // FEATURE HANDLING
-  addGeometry(
-    geometry: T,
-    properties: GJ.FeatureProperties<number | string> = {},
-    shallow: boolean = true,
-  ): number {
+  addGeometry(geometry: T, properties: FeatureProperties<PID>, shallow: boolean = true): number {
     return this.features.push(new Feature(geometry, properties, shallow));
   }
 
-  addFeature(feature: Feature<T>, shallow: boolean = true): number {
+  addFeature(feature: Feature<T, PID>, shallow: boolean = true): number {
     if (shallow === true) {
       return this.features.push(feature);
     }
@@ -379,45 +375,13 @@ export class FeatureCollection<T extends AreaObject | LineObject | PointObject>
     this.features.splice(index, 1);
   }
 
-  // PROPERTY HANDLING
-  initNumericalProperty(
-    {id = uuid(), name = id, parent}: Partial<NumericalProperty>,
-    defaultValue: number,
-  ): void {
-    // add the property to the record
-    this.propertyRecord.addNumerical({id, name, parent});
-    // add the default value to each feature
-    this.forEach((feature) => feature.setProperty(id, defaultValue));
-  }
-  initCategoricalProperty(
-    {id = uuid(), name = id, values = []}: Partial<CategoricalProperty>,
-    defaultValue: string,
-  ): void {
-    // add the property to the record
-    this.propertyRecord.addCategorical({id, name, values});
-    // add the default value to record if it does not exist
-    this.propertyRecord.addValueToCategory(id, defaultValue);
-    // add the default value to each feature
-    this.forEach((feature) => feature.setProperty(id, defaultValue));
-  }
-  removeProperty(id: string): void {
-    // remove the property from the record
-    this.propertyRecord.removeProperty(id);
-    // remove the property from each feature
-    this.forEach((feature) => feature.removeProperty(id));
-  }
-
-  setProperty(id: string, index: number, value: number | string): void {
+  setProperty(id: PID, index: number, value: number | string): void {
     if (index < 0 || index >= this.size()) throw new Error('no feature with this index exists');
     this.features[index].setProperty(id, value);
   }
 
   // LAYER
-  appendFeatureCollection(fc: FeatureCollection<T>, shallow: boolean = true): void {
-    if (this.geometricPrimitive() !== fc.geometricPrimitive()) {
-      throw new TypeError('layer types does not match');
-    }
-
+  appendFeatureCollection(fc: FeatureCollection<T, PID>, shallow: boolean = true): void {
     const thisKeys = this.propertyRecord.getIds();
     const fcKeys = fc.propertyRecord.getIds();
 
@@ -445,7 +409,7 @@ function setPropertiesOfFeature(
 
     const value: unknown = properties[id];
 
-    if (PropertyRecord.propertyIsNumerical(prop)) {
+    if (PropertyRecord.isNumerical(prop)) {
       // Add numerical property
       if (typeof value !== 'number') {
         throw new Error('All features must have the same types on the properties.');
@@ -469,24 +433,14 @@ function setPropertiesOfFeature(
   return newProps;
 }
 
-export type PureCollection<
-  T extends AreaObject | LineObject | PointObject = AreaObject | LineObject | PointObject,
-> = T extends AreaObject
-  ? FeatureCollection<AreaObject>
-  : T extends LineObject
-    ? FeatureCollection<LineObject>
-    : T extends PointObject
-      ? FeatureCollection<PointObject>
-      : never;
-
 function createPropertyRecord(
   collection: StrippedFeatureCollectionJson,
   shallow: boolean,
 ): {record: PropertyRecord; existed: boolean} {
   if (collection.propertyRecord === undefined) {
     // If propertyRecord does not exist, create from feature
-    return {record: PropertyRecord.createFromFeature(collection.features[0]), existed: false};
-  } else if (shallow === false && PropertyRecord.isPropertyRecord(collection.propertyRecord)) {
+    return {record: PropertyRecord.createFromJson(collection.features[0]), existed: false};
+  } else if (shallow === false && PropertyRecord.isRecord(collection.propertyRecord)) {
     // If shallow is false, we can copy an existing propertyrecord
     return {record: collection.propertyRecord, existed: true};
   }

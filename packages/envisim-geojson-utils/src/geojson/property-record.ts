@@ -3,83 +3,77 @@ import {v4 as uuid} from 'uuid';
 import {copy} from '@envisim/utils';
 
 import type * as GJ from '../types/geojson.js';
+import {type Feature} from './class-feature.js';
+import {type PureObject} from './objects/index.js';
 
-interface PropertyBase {
+interface PropertyBase<ID extends string> {
   /** The UUID of the Features property using this category. */
-  id: string;
+  id: ID;
   type: string;
   /** A human-friendly name */
   name?: string;
 }
 
-export interface NumericalProperty extends PropertyBase {
+export interface NumericalProperty<ID extends string = string> extends PropertyBase<ID> {
   type: 'numerical';
   /** Holds id and index of collected categorical variable */
   parent?: [string, number];
 }
 
-export interface CategoricalProperty extends PropertyBase {
+export interface CategoricalProperty<ID extends string = string> extends PropertyBase<ID> {
   type: 'categorical';
   /** An ordered array of values defined on this category */
   values: string[];
 }
 
-export type Property = NumericalProperty | CategoricalProperty;
+export type Property<ID extends string = string> = NumericalProperty<ID> | CategoricalProperty<ID>;
 
-interface SpecialPropertyList {
-  _designWeight?: NumericalProperty;
-  _distance?: NumericalProperty;
-  _parent?: NumericalProperty;
-  _randomRotation?: NumericalProperty;
-  /**
-   * Used to store the values of measure
-   */
-  _measure?: NumericalProperty;
-}
+type PropertyList<IDS extends string = string> = Record<IDS, Property<IDS>>;
 
-export class PropertyRecord {
-  record: SpecialPropertyList & Record<string, Property> = {};
+const SPECIAL_KEYS = [
+  '_designWeight',
+  '_distance',
+  '_parent',
+  '_randomRotation',
+  '_measure',
+  '_count',
+] as const;
+export type SpecialPropertyNames = (typeof SPECIAL_KEYS)[number];
 
-  static isPropertyRecord(obj: unknown): obj is PropertyRecord {
+type SpecialFeatureProperties = Partial<Record<SpecialPropertyNames, number>>;
+export type FeatureProperties<IDS extends string = string> = SpecialFeatureProperties &
+  Record<IDS, number | string>;
+
+export class PropertyRecord<IDS extends string = string> {
+  // SPECIAL PROPERTIES
+  static readonly SPECIAL_KEYS = SPECIAL_KEYS;
+  static isSpecial(k: string): k is SpecialPropertyNames {
+    return (PropertyRecord.SPECIAL_KEYS as ReadonlyArray<string>).includes(k);
+  }
+
+  record: PropertyList<IDS>;
+
+  static isRecord(obj: unknown): obj is PropertyRecord {
     return obj instanceof PropertyRecord;
   }
 
-  static createFromFeature(feature?: GJ.BaseFeature<GJ.BaseGeometry, unknown>): PropertyRecord {
-    if (feature === undefined || feature.properties === null) return new PropertyRecord();
+  static createFromJson(
+    feature?: GJ.BaseFeature<GJ.BaseGeometry, unknown>,
+  ): PropertyRecord<string> {
+    if (feature === undefined || feature.properties === null) {
+      return new PropertyRecord<string>({}, true);
+    }
 
     const properties = feature.properties;
-    const pr = new PropertyRecord();
+    const pr = new PropertyRecord<string>({}, true);
 
     for (const [id, prop] of Object.entries(properties ?? {})) {
-      if (PropertyRecord.idIsSpecial(id)) {
-        if (typeof prop !== 'number') {
-          throw new TypeError(`${id} is a reserved property and must be a number`);
-        }
-
-        switch (id) {
-          case '_designWeight':
-            pr.addDesignWeight();
-            break;
-          case '_distance':
-            pr.addDistance();
-            break;
-          case '_parent':
-            pr.addParent();
-            break;
-          case '_randomRotation':
-            pr.addRandomRotation();
-            break;
-        }
-
-        continue;
-      }
-
       switch (typeof prop) {
         case 'number':
           pr.addNumerical({id});
           break;
         case 'string':
-          pr.addCategorical({id});
+          pr.addCategorical({id, values: [prop]});
           break;
       }
     }
@@ -87,39 +81,56 @@ export class PropertyRecord {
     return pr;
   }
 
-  static mergePropertyRecords(propertyRecords: PropertyRecord[]): PropertyRecord {
-    const pr = new PropertyRecord();
+  static createFromFeature<IDS1 extends string = string>(
+    feature?: Feature<PureObject, IDS1>,
+  ): PropertyRecord<IDS1> {
+    const pr = new PropertyRecord<string>({}, true);
 
-    for (const record of propertyRecords) {
-      for (const id of Object.keys(record)) {
-        if (pr.hasId(id)) {
-          throw new Error(`Records contain duplicate identifier ${id}.`);
-        }
+    if (feature === undefined) {
+      return pr as PropertyRecord<IDS1>;
+    }
 
-        if (record.idIsNumerical(id)) {
-          pr.addNumerical(record.getId(id) as NumericalProperty);
-        } else {
-          pr.addCategorical(record.getId(id) as CategoricalProperty);
-        }
+    for (const [id, prop] of Object.entries(feature.properties)) {
+      switch (typeof prop) {
+        case 'number':
+          pr.addNumerical({id});
+          break;
+        case 'string':
+          pr.addCategorical({id, values: [prop]});
+          break;
       }
     }
 
-    return pr;
+    return pr as PropertyRecord<IDS1>;
   }
 
-  static propertyIsNumerical(property: Property | null): property is NumericalProperty {
+  static mergeRecords<IDS1 extends string, IDS2 extends string>(
+    record1: PropertyRecord<IDS1>,
+    record2: PropertyRecord<IDS2>,
+  ): PropertyRecord<IDS1 | IDS2> {
+    const keys1 = record1.getIds();
+    record2.getIds().forEach((k) => {
+      if (keys1.includes(k)) {
+        throw new Error('Record contain duplicate identifier ' + k);
+      }
+    });
+
+    return new PropertyRecord({...record1.record, ...record2.record});
+  }
+
+  static isNumerical(property: Property | null): property is NumericalProperty {
     return property?.type === 'numerical';
   }
 
-  static propertyIsCategorical(property: Property | null): property is CategoricalProperty {
+  static isCategorical(property: Property | null): property is CategoricalProperty {
     return property?.type === 'categorical';
   }
 
-  constructor(record: Record<string, Property> = {}, shallow: boolean = true) {
+  constructor(record: PropertyList<IDS>, shallow: boolean = true) {
     this.record = shallow === true ? record : copy(record);
   }
 
-  copy(shallow: boolean = true): PropertyRecord {
+  copy(shallow: boolean = true): PropertyRecord<IDS> {
     return new PropertyRecord(this.record, shallow);
   }
 
@@ -127,7 +138,9 @@ export class PropertyRecord {
     return id !== undefined && Object.hasOwn(this.record, id);
   }
 
-  getId(id?: string): Property | null {
+  getId(id: IDS): Property;
+  getId(id?: IDS): Property | null;
+  getId(id?: IDS): Property | null {
     if (id === undefined || !Object.hasOwn(this.record, id)) {
       return null;
     }
@@ -143,11 +156,14 @@ export class PropertyRecord {
     return Object.values(this.record);
   }
 
-  idIsNumerical(id: string): boolean {
-    return PropertyRecord.propertyIsNumerical(this.record?.[id]);
+  isNumerical(id: IDS): boolean {
+    return PropertyRecord.isNumerical(this.record?.[id]);
   }
 
-  addNumerical({id = uuid(), name = id, parent}: Partial<NumericalProperty>): string {
+  addNumerical(
+    this: PropertyRecord<string>,
+    {id = uuid(), name = id, parent}: Partial<NumericalProperty<string>>,
+  ): string {
     this.record[id] = {
       type: 'numerical',
       id,
@@ -158,11 +174,14 @@ export class PropertyRecord {
     return id;
   }
 
-  idIsCategorical(id: string): boolean {
-    return PropertyRecord.propertyIsCategorical(this.record?.[id]);
+  idCategorical(id: IDS): boolean {
+    return PropertyRecord.isCategorical(this.record?.[id]);
   }
 
-  addCategorical({id = uuid(), name = id, values = []}: Partial<CategoricalProperty>): string {
+  addCategorical(
+    this: PropertyRecord<string>,
+    {id = uuid(), name = id, values = []}: Partial<CategoricalProperty<string>>,
+  ): string {
     this.record[id] = {
       type: 'categorical',
       id,
@@ -173,8 +192,8 @@ export class PropertyRecord {
     return id;
   }
 
-  addValueToCategory(id: string, value: string): number {
-    if (PropertyRecord.propertyIsCategorical(this.record?.[id]) === false) {
+  addValueToCategory(id: IDS, value: string): number {
+    if (PropertyRecord.isCategorical(this.record?.[id]) === false) {
       throw new TypeError(`${id} is not categorical.`);
     }
 
@@ -186,66 +205,23 @@ export class PropertyRecord {
     return this.record[id].values.push(value) - 1;
   }
 
-  categoryHasValue(id: string, value: string): boolean {
-    if (PropertyRecord.propertyIsCategorical(this.record?.[id]) === false) {
+  categoryHasValue(id: IDS, value: string): boolean {
+    if (PropertyRecord.isCategorical(this.record?.[id]) === false) {
       throw new TypeError(`${id} is not categorical.`);
     }
 
     return this.record?.[id].values.includes(value) === true;
   }
 
-  addProperty(property: Property): string {
-    if (PropertyRecord.propertyIsNumerical(property)) {
+  addProperty(this: PropertyRecord<string>, property: Property<string>): string {
+    if (PropertyRecord.isNumerical(property)) {
       return this.addNumerical(property);
     }
 
     return this.addCategorical(property);
   }
 
-  removeProperty(id: string): void {
+  removeProperty(this: PropertyRecord<string>, id: string): void {
     delete this.record[id];
-  }
-
-  // SPECIAL PROPERTIES
-  static readonly SPECIAL_KEYS = ['_designWeight', '_distance', '_parent', '_randomRotation'];
-
-  static idIsSpecial(id: string): boolean {
-    return PropertyRecord.SPECIAL_KEYS.includes(id);
-  }
-
-  addDesignWeight() {
-    if (Object.hasOwn(this.record, '_designWeight')) return;
-    this.record['_designWeight'] = {
-      id: '_designWeight',
-      name: 'design weight',
-      type: 'numerical',
-    };
-  }
-
-  addDistance() {
-    if (Object.hasOwn(this.record, '_distance')) return;
-    this.record['_distance'] = {
-      id: '_distance',
-      name: 'distance',
-      type: 'numerical',
-    };
-  }
-
-  addParent() {
-    if (Object.hasOwn(this.record, '_parent')) return;
-    this.record['_parent'] = {
-      id: '_parent',
-      name: 'parent',
-      type: 'numerical',
-    };
-  }
-
-  addRandomRotation() {
-    if (Object.hasOwn(this.record, '_randomRotation')) return;
-    this.record['_randomRotation'] = {
-      id: '_randomRotation',
-      name: 'random rotation',
-      type: 'numerical',
-    };
   }
 }

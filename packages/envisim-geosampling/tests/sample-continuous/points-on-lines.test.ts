@@ -12,7 +12,7 @@ const ls = LineString.create([
   [0, 0],
 ]);
 
-const frame = FeatureCollection.newLine([new Feature(ls)]);
+const frame = FeatureCollection.newLine([new Feature(ls, {})]);
 const sample = samplePointsOnLines(frame, {
   pointSelection: 'independent',
   sampleSize: 10,

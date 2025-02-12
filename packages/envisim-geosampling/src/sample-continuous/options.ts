@@ -281,17 +281,17 @@ export function sampleBeltOnAreaOptionsCheck({
 
 export {type SampleRelascopePointsOptions};
 export const SAMPLE_RELASCOPE_POINTS_OPTIONS: Readonly<
-  Required<Omit<SampleRelascopePointsOptions, 'baseCollection' | 'sizeProperty'>>
+  Required<Omit<SampleRelascopePointsOptions<string>, 'baseCollection' | 'sizeProperty'>>
 > = {
   ...SAMPLE_POINT_OPTIONS,
   factor: 1.0,
 };
-export function sampleRelascopePointsOptionsCheck({
+export function sampleRelascopePointsOptionsCheck<P extends string>({
   factor,
   baseCollection,
   sizeProperty,
   ...options
-}: SampleRelascopePointsOptions): ErrorType<typeof SamplingError> {
+}: SampleRelascopePointsOptions<P>): ErrorType<typeof SamplingError> {
   const pointCheck = samplePointOptionsCheck(options);
   if (pointCheck !== null) {
     return pointCheck;
@@ -302,7 +302,7 @@ export function sampleRelascopePointsOptionsCheck({
   const prop = baseCollection.propertyRecord.getId(sizeProperty);
   if (prop === null) {
     return SamplingError.SIZE_PROPERTY_MISSING;
-  } else if (!PropertyRecord.propertyIsNumerical(prop)) {
+  } else if (!PropertyRecord.isNumerical(prop)) {
     return SamplingError.SIZE_PROPERTY_NOT_NUMERICAL;
   }
 

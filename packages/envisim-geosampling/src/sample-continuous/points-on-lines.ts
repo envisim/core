@@ -74,7 +74,7 @@ function samplePointsOnGeometry(geometry: LineObject, track: Track, distances: n
 export function samplePointsOnLines(
   collection: FeatureCollection<LineObject>,
   {rand = SAMPLE_POINT_OPTIONS.rand, pointSelection, sampleSize}: SamplePointOptions,
-): FeatureCollection<Point> {
+): FeatureCollection<Point, never> {
   const optionsError = samplePointOptionsCheck({
     pointSelection,
     sampleSize,
@@ -123,7 +123,7 @@ export function samplePointsOnLines(
     parentIndex.push(...Array.from<number>({length: result.length}).fill(index));
   });
 
-  const newCollection = FeatureCollection.newPoint<Point>([]);
+  const newCollection = FeatureCollection.newPoint<Point, never>([]);
 
   for (let i = 0; i < points.length; i++) {
     const coords = points[i];

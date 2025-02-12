@@ -23,11 +23,11 @@ function intersectAreaFrame<T extends AreaObject | LineObject | PointObject>(
 
       const properties = {...sampleFeature.properties};
       (properties['_designWeight'] as number) *= frameFeature.getSpecialPropertyDesignWeight();
-      
+
       if (typeof properties['_measure'] === 'number') {
         properties['_measure'] = intersect.measure();
       }
-      
+
       collection.addGeometry(intersect, properties, true);
     });
   });
@@ -40,11 +40,11 @@ function intersectAreaFrame<T extends AreaObject | LineObject | PointObject>(
  * @param sample
  * @param frame
  */
-export function intersectPointSampleAreaFrame(
-  sample: FeatureCollection<PointObject>,
+export function intersectPointSampleAreaFrame<PID extends string>(
+  sample: FeatureCollection<PointObject, PID>,
   frame: FeatureCollection<AreaObject>,
-): FeatureCollection<PointObject> {
-  const collection = FeatureCollection.newPoint([], sample.propertyRecord, false);
+): FeatureCollection<PointObject, PID> {
+  const collection = FeatureCollection.newPoint<PointObject, PID>();
   intersectAreaFrame(collection, sample, frame, {}, intersectPointAreaGeometries);
   return collection;
 }
@@ -56,12 +56,12 @@ export function intersectPointSampleAreaFrame(
  * @param sample
  * @param frame
  */
-export function intersectLineSampleAreaFrame(
-  sample: FeatureCollection<LineObject>,
+export function intersectLineSampleAreaFrame<PID extends string>(
+  sample: FeatureCollection<LineObject, PID>,
   frame: FeatureCollection<AreaObject>,
   options: CirclesToPolygonsOptions = {},
-): FeatureCollection<LineObject> {
-  const collection = FeatureCollection.newLine([], sample.propertyRecord, false);
+): FeatureCollection<LineObject, PID> {
+  const collection = FeatureCollection.newLine<LineObject, PID>();
   intersectAreaFrame(collection, sample, frame, options, intersectLineAreaGeometries);
   return collection;
 }
@@ -73,12 +73,12 @@ export function intersectLineSampleAreaFrame(
  * @param sample
  * @param frame
  */
-export function intersectAreaSampleAreaFrame(
-  sample: FeatureCollection<AreaObject>,
+export function intersectAreaSampleAreaFrame<PID extends string>(
+  sample: FeatureCollection<AreaObject, PID>,
   frame: FeatureCollection<AreaObject>,
   options: CirclesToPolygonsOptions = {},
-): FeatureCollection<AreaObject> {
-  const collection = FeatureCollection.newArea([], sample.propertyRecord, false);
+): FeatureCollection<AreaObject, PID> {
+  const collection = FeatureCollection.newArea<AreaObject, PID>([]);
   intersectAreaFrame(collection, sample, frame, options, intersectAreaAreaGeometries);
   return collection;
 }

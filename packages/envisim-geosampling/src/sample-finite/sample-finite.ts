@@ -1,9 +1,4 @@
-import {
-  type AreaObject,
-  type FeatureCollection,
-  type LineObject,
-  type PointObject,
-} from '@envisim/geojson-utils';
+import {type FeatureCollection, type PureObject} from '@envisim/geojson-utils';
 import {
   brewer,
   pareto,
@@ -31,10 +26,10 @@ import {drawprobsFromLayer, inclprobsFromLayer, returnCollectionFromSample} from
  * @param collection
  * @param opts
  */
-export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
-  collection: FeatureCollection<T>,
-  options: SampleFiniteOptions,
-): FeatureCollection<T> {
+export function sampleFinite<T extends PureObject, P extends string>(
+  collection: FeatureCollection<T, P>,
+  options: SampleFiniteOptions<NoInfer<P>>,
+): FeatureCollection<T, P> {
   const optionsError = sampleFiniteOptionsCheck(options, collection.propertyRecord);
   if (optionsError !== null) {
     throw new RangeError(`sampleFinite error: ${optionsError}`);
@@ -109,10 +104,10 @@ export function sampleFinite<T extends AreaObject | LineObject | PointObject>(
  * @param collection
  * @param opts
  */
-export function sampleFiniteWr<T extends AreaObject | LineObject | PointObject>(
-  collection: FeatureCollection<T>,
-  options: SampleFiniteOptions<(typeof SAMPLE_FINITE_METHODS_WR)[number]>,
-): FeatureCollection<T> {
+export function sampleFiniteWr<T extends PureObject, P extends string>(
+  collection: FeatureCollection<T, P>,
+  options: SampleFiniteOptions<NoInfer<P>, (typeof SAMPLE_FINITE_METHODS_WR)[number]>,
+): FeatureCollection<T, P> {
   const optionsError = sampleFiniteOptionsCheck(options, collection.propertyRecord);
   if (optionsError !== null) {
     throw new RangeError(`sampleFinite error: ${optionsError}`);

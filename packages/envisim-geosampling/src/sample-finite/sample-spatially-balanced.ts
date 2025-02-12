@@ -1,9 +1,4 @@
-import {
-  type AreaObject,
-  type FeatureCollection,
-  type LineObject,
-  type PointObject,
-} from '@envisim/geojson-utils';
+import {type FeatureCollection, type PureObject} from '@envisim/geojson-utils';
 import {lpm1, lpm2, scps} from '@envisim/sampling';
 
 import {
@@ -12,10 +7,10 @@ import {
 } from './options.js';
 import {inclprobsFromLayer, returnCollectionFromSample, spreadMatrixFromLayer} from './utils.js';
 
-export function sampleSpatiallyBalanced<T extends AreaObject | LineObject | PointObject>(
-  collection: FeatureCollection<T>,
-  options: SampleSpatiallyBalancedOptions,
-): FeatureCollection<T> {
+export function sampleSpatiallyBalanced<T extends PureObject, P extends string>(
+  collection: FeatureCollection<T, P>,
+  options: SampleSpatiallyBalancedOptions<NoInfer<P>>,
+): FeatureCollection<T, P> {
   const optionsError = sampleSpatiallyBalancedOptionsCheck(options, collection.propertyRecord);
   if (optionsError !== null) {
     throw new RangeError(`sampleSpatiallyBalanced error: ${optionsError}`);

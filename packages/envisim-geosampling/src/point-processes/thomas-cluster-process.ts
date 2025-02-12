@@ -68,7 +68,7 @@ export function thomasClusterProcess(
     sigmaOfCluster,
     rand = new Random(),
   }: ThomasClusterProcessOptions,
-): FeatureCollection<Point> {
+): FeatureCollection<Point, never> {
   const box = bbox4(collection.getBBox());
   // Extend box by 4 * sigmaOfCluster to avoid edge effects.
   // Same as spatstat default in R.
@@ -111,7 +111,7 @@ export function thomasClusterProcess(
         for (let j = 0; j < nrOfFeatures; j++) {
           const geom = collection.features[j].geometry;
           if (geom.includesPosition(coordinates)) {
-            newCollection.addGeometry(Point.create(coordinates));
+            newCollection.addGeometry(Point.create(coordinates), {});
             break;
           }
         }

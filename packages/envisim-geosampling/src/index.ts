@@ -92,7 +92,15 @@ export {
 export {collectProperties, collectPropertyRecord, CollectError} from './collect/index.js';
 
 // Select from layers
-export {selectIntersects, SelectError} from './select/index.js';
+export {
+  selectAreaintersectsArea,
+  selectAreaintersectsLine,
+  selectAreaintersectsPoint,
+  selectLineintersectsArea,
+  selectLineintersectsLine,
+  selectPointintersectsArea,
+  SelectError,
+} from './select/index.js';
 
 // Point processes
 export {

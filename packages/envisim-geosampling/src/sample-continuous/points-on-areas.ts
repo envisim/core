@@ -7,7 +7,6 @@ import {
   Geodesic,
   MultiCircle,
   Point,
-  PropertyRecord,
   bbox4,
   bboxCenter,
   longitudeDistance,
@@ -45,7 +44,7 @@ export function samplePointsOnAreas(
     rotationOfGrid = SAMPLE_POINT_OPTIONS.rotationOfGrid,
     randomRotationOfGrid = SAMPLE_POINT_OPTIONS.randomRotationOfGrid,
   }: SamplePointOptions,
-): FeatureCollection<Point> {
+): FeatureCollection<Point, never> {
   const optionsError = samplePointOptionsCheck({
     pointSelection,
     sampleSize,
@@ -59,7 +58,7 @@ export function samplePointsOnAreas(
   }
 
   // copy the collection
-  const gj = FeatureCollection.newArea(collection.features, undefined, false);
+  const gj = FeatureCollection.newArea<AreaObject, string>(collection.features, undefined, false);
 
   // Make polygons of possible circles
   gj.forEach((feature) => {
@@ -119,7 +118,7 @@ export function samplePointsOnAreas(
         for (let i = 0; i < buffered.features.length; i++) {
           if (buffered.features[i].geometry.includesPosition(lonLat)) {
             // Point is in feature. Create and store new point feature.
-            const pointFeature = new Feature(Point.create(lonLat), {
+            const pointFeature = new Feature<Point, never>(Point.create(lonLat), {
               _designWeight: designWeight,
             });
             pointFeatures.push(pointFeature);
@@ -161,7 +160,7 @@ export function samplePointsOnAreas(
           for (let k = 0; k < buffered.features.length; k++) {
             if (buffered.features[k].geometry.includesPosition(lonLat)) {
               // Point is in feature. Create and store new point feature.
-              const pointFeature = new Feature(Point.create(lonLat), {
+              const pointFeature = new Feature<Point, never>(Point.create(lonLat), {
                 _designWeight: designWeight,
               });
               pointFeatures.push(pointFeature);
@@ -186,9 +185,5 @@ export function samplePointsOnAreas(
     });
   }
 
-  // parentIndex refer to buffered features, so
-  // may not be used to transfer design weights
-  // from parents unless buffer is 0.
-  const pr = new PropertyRecord();
-  return FeatureCollection.newPoint(pointFeatures, pr, true);
+  return FeatureCollection.newPoint(pointFeatures, undefined, true);
 }

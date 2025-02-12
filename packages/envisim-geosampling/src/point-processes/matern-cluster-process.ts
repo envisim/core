@@ -63,7 +63,7 @@ export function maternClusterProcess(
     radiusOfCluster,
     rand = new Random(),
   }: MaternClusterProcessOptions,
-): FeatureCollection<Point> {
+): FeatureCollection<Point, never> {
   const box = bbox4(collection.getBBox());
   // Expand box by radius of cluster, as parent points should
   // be allowed outside of area. This is to avoid edge effects.
@@ -106,7 +106,7 @@ export function maternClusterProcess(
         for (let j = 0; j < nrOfFeatures; j++) {
           const geom = collection.features[j].geometry;
           if (geom.includesPosition(coordinates)) {
-            newCollection.addGeometry(Point.create(coordinates));
+            newCollection.addGeometry(Point.create(coordinates), {});
             break;
           }
         }

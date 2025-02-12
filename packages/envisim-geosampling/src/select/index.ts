@@ -1,2 +1,9 @@
 export {SelectError} from './select-error.js';
-export {selectIntersects} from './select-intersects.js';
+export {
+  selectAreaintersectsArea,
+  selectAreaintersectsLine,
+  selectAreaintersectsPoint,
+  selectLineintersectsArea,
+  selectLineintersectsLine,
+  selectPointintersectsArea,
+} from './select-intersects.js';

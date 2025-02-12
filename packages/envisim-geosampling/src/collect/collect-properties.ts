@@ -8,6 +8,8 @@ import {
   type LineObject,
   type PointObject,
   PropertyRecord,
+  type PureObject,
+  type RetractingObject,
   intersectAreaAreaGeometries,
   intersectLineAreaGeometries,
   intersectLineLineGeometries,
@@ -31,8 +33,8 @@ type AggregateOpts = {
  * @param opts object with additional information needed to aggregate properties.
  */
 function aggregateInPlace(
-  to: Feature<AreaObject | LineObject | PointObject>,
-  from: Feature<AreaObject | LineObject | PointObject>,
+  to: Feature<PureObject>,
+  from: Feature<PureObject>,
   opts: AggregateOpts,
 ): void {
   // If line collects from line an additional factor is needed
@@ -64,7 +66,7 @@ function aggregateInPlace(
   for (const property of opts.collectProperties.getRecord()) {
     const id = property.id;
     // Type must be numerical
-    if (PropertyRecord.propertyIsNumerical(property)) {
+    if (PropertyRecord.isNumerical(property)) {
       if (Array.isArray(property.parent)) {
         // Collect from categorical variable
         const [fromID, index] = property.parent;
@@ -94,49 +96,29 @@ function aggregateInPlace(
  * @param properties
  * @returns collection
  */
-export function collectProperties(
-  frame: FeatureCollection<PointObject>,
-  base: FeatureCollection<AreaObject>,
-  properties: string[] | PropertyRecord,
-): FeatureCollection<PointObject>;
-export function collectProperties(
-  frame: FeatureCollection<LineObject>,
-  base: FeatureCollection<AreaObject> | FeatureCollection<LineObject>,
-  properties: string[] | PropertyRecord,
-): FeatureCollection<LineObject>;
-export function collectProperties(
-  frame: FeatureCollection<AreaObject>,
-  base:
-    | FeatureCollection<AreaObject>
-    | FeatureCollection<LineObject>
-    | FeatureCollection<PointObject>,
-  properties: string[] | PropertyRecord,
-): FeatureCollection<AreaObject>;
-export function collectProperties(
-  frame:
-    | FeatureCollection<AreaObject>
-    | FeatureCollection<LineObject>
-    | FeatureCollection<PointObject>,
-  base:
-    | FeatureCollection<AreaObject>
-    | FeatureCollection<LineObject>
-    | FeatureCollection<PointObject>,
-  properties: string[] | PropertyRecord,
-): FeatureCollection<AreaObject> | FeatureCollection<LineObject> | FeatureCollection<PointObject> {
+export function collectProperties<PF extends string, PB extends string, GF extends PureObject>(
+  frame: FeatureCollection<GF, PF>,
+  base: FeatureCollection<RetractingObject<GF>, PB>,
+  properties: PB[] | PropertyRecord<PB>,
+): FeatureCollection<GF, PF | string> {
   // Make a full copy of the frame layer
-  const newCollection = frame.copy(false);
-  // const newLayer = new Layer(frameLayer.collection, frameLayer.propertyRecord, false);
-
-  // The property record of new properties to collect
   const rec =
     Array.isArray(properties) === true
       ? collectPropertyRecord(base.propertyRecord, properties)
       : properties;
 
+  const newCollection = frame.copy(false) as FeatureCollection<GF, PF | string>;
+  newCollection.propertyRecord = new PropertyRecord({
+    ...frame.propertyRecord.record,
+    ...rec.record,
+  });
+
+  // The property record of new properties to collect
+
   // Check that the properties to collect are present in the baseLayer record
   // and not in the frameLayer record.
   for (const property of rec.getRecord()) {
-    if (!PropertyRecord.propertyIsNumerical(property)) {
+    if (!PropertyRecord.isNumerical(property)) {
       // Categorical properties should not exist in this record
       throw new Error('Property record to collect must only contain numerical properties.');
     }
@@ -146,13 +128,13 @@ export function collectProperties(
       throw new Error('Property to collect does not exist in the baseLayer property record.');
     }
 
-    if (newCollection.propertyRecord.hasId(property.id)) {
+    if (frame.propertyRecord.hasId(property.id)) {
       throw new Error('Property to collect already exist in the frameLayer property record.');
     }
 
     // Add new properties to new collection and property record.
     // Initialize each with value 0
-    newCollection.initNumericalProperty(property, 0.0);
+    newCollection.forEach((f: Feature<PureObject, string>) => (f.properties[id] = 0.0));
   }
 
   // Do the collect for the different cases.
@@ -267,13 +249,13 @@ function intersectFeatures<
  * @param properties the ids of the properties to collect.
  * @returns the property record collected properties.
  */
-export function collectPropertyRecord(
-  propertyRecord: PropertyRecord,
-  properties: string[],
-): PropertyRecord {
+export function collectPropertyRecord<P extends string>(
+  propertyRecord: PropertyRecord<P>,
+  properties: P[],
+): PropertyRecord<string> {
   // Collected numerical properties keep their original id,
   // but categorical properties recieve new id for each category.
-  const newRecord = new PropertyRecord();
+  const newRecord = new PropertyRecord<string>({});
 
   for (const id of properties) {
     const rec = propertyRecord.getId(id);
@@ -281,7 +263,7 @@ export function collectPropertyRecord(
       throw new Error(`Property ${id} to collect does not exist in the property record.`);
     }
 
-    if (PropertyRecord.propertyIsCategorical(rec)) {
+    if (PropertyRecord.isCategorical(rec)) {
       // Create new record for each category
       rec.values.forEach((value: string, i: number) => {
         // Generate new id

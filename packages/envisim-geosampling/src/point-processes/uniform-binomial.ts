@@ -26,13 +26,14 @@ interface UniformBinomialPointProcessOptions {
 export function uniformBinomialPointProcess(
   collection: FeatureCollection<AreaObject>,
   {sampleSize, rand = new Random()}: UniformBinomialPointProcessOptions,
-): FeatureCollection<Point> {
+): FeatureCollection<Point, never> {
   const pointCollection = samplePointsOnAreas(collection, {
     pointSelection: 'independent',
     sampleSize,
     rand,
   });
+
   // Remove _designWeight property
-  pointCollection.removeProperty('_designWeight');
+  pointCollection.forEach((f) => delete f.properties._designWeight);
   return pointCollection;
 }

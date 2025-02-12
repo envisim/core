@@ -29,7 +29,7 @@ interface UniformPoissonProcessOptions {
 export function uniformPoissonPointProcess(
   collection: FeatureCollection<AreaObject>,
   {intensity, rand = new Random()}: UniformPoissonProcessOptions,
-): FeatureCollection<Point> {
+): FeatureCollection<Point, never> {
   const A = collection.measure();
   const mu = intensity * A;
   const sampleSize = new Poisson(mu).random(1, {rand})[0];

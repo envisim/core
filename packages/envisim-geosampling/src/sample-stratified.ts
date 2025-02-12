@@ -1,11 +1,9 @@
 import {
-  type AreaObject,
   type CategoricalProperty,
-  FeatureCollection,
+  type FeatureCollection,
   type GeoJSON as GJ,
-  type LineObject,
-  type PointObject,
   PropertyRecord,
+  type PureObject,
 } from '@envisim/geojson-utils';
 
 import {
@@ -20,27 +18,30 @@ import {type SampleFiniteOptions} from './sample-finite/index.js';
 import {SamplingError} from './sampling-error.js';
 import {type ErrorType} from './utils/index.js';
 
-export type SampleContinuousOptions =
+export type SampleContinuousOptions<P extends string> =
   | SampleBaseOptions
   | SamplePointOptions
   | SampleFeatureOptions<GJ.PointObject>
   | SampleFeatureOptions<GJ.LineObject>
   | SampleFeatureOptions<GJ.AreaObject>
-  | SampleRelascopePointsOptions
+  | SampleRelascopePointsOptions<P>
   | SampleSystematicLineOnAreaOptions
   | SampleBeltOnAreaOptions;
 
-export interface SampleStratifiedOptions<O extends SampleFiniteOptions | SampleContinuousOptions> {
-  stratify: string;
+export interface SampleStratifiedOptions<
+  O extends SampleFiniteOptions | SampleContinuousOptions<P>,
+  P extends string,
+> {
+  stratify: P;
   options: O | O[];
 }
 
 /**
  * @returns `null` if check passes, {@link SamplingError} otherwise.
  */
-export function sampleStratifiedOptionsCheck(
-  {stratify, options}: SampleStratifiedOptions<SampleFiniteOptions | SampleContinuousOptions>,
-  propertyRecord: PropertyRecord,
+export function sampleStratifiedOptionsCheck<P extends string>(
+  {stratify, options}: SampleStratifiedOptions<SampleFiniteOptions | SampleContinuousOptions<P>, P>,
+  propertyRecord: PropertyRecord<P>,
 ): ErrorType<typeof SamplingError> {
   const property = propertyRecord.getId(stratify);
   if (property === null) {
@@ -48,7 +49,7 @@ export function sampleStratifiedOptionsCheck(
     return SamplingError.STRATIFY_MISSING;
   }
 
-  if (!PropertyRecord.propertyIsCategorical(property)) {
+  if (!PropertyRecord.isCategorical(property)) {
     // stratify prop must be categorical -- no stratification on numerical
     return SamplingError.STRATIFY_NOT_CATEGORICAL;
   }
@@ -67,20 +68,15 @@ export function sampleStratifiedOptionsCheck(
 }
 
 export function sampleStratified<
-  IN extends
-    | FeatureCollection<AreaObject>
-    | FeatureCollection<LineObject>
-    | FeatureCollection<PointObject>,
-  OUT extends
-    | FeatureCollection<AreaObject>
-    | FeatureCollection<LineObject>
-    | FeatureCollection<PointObject>,
-  OPTS extends SampleFiniteOptions | SampleContinuousOptions,
+  IN extends PureObject,
+  OUT extends PureObject,
+  OPTS extends SampleFiniteOptions | SampleContinuousOptions<P>,
+  P extends string,
 >(
-  sampleFn: (arg0: IN, arg1: OPTS) => OUT,
-  collection: IN,
-  {stratify, options}: SampleStratifiedOptions<OPTS>,
-): OUT {
+  sampleFn: (arg0: FeatureCollection<IN, P>, arg1: OPTS) => FeatureCollection<OUT, P>,
+  collection: FeatureCollection<IN, P>,
+  {stratify, options}: SampleStratifiedOptions<OPTS, P>,
+): FeatureCollection<OUT, P> {
   const optionsError = sampleStratifiedOptionsCheck(
     {
       stratify,
@@ -93,53 +89,24 @@ export function sampleStratified<
   }
 
   // Already checked that it exists
-  const property = collection.propertyRecord.getId(stratify) as CategoricalProperty;
+  const property = collection.propertyRecord.getId(stratify) as CategoricalProperty<P>;
   const optionsArray = Array.isArray(options)
     ? options
     : Array.from<OPTS>({
         length: property.values.length,
       }).fill(options);
 
-  let stratumSampleLayers: OUT[];
+  const stratumSampleLayers: FeatureCollection<OUT, P>[] = property.values.map((_, i) => {
+    const c = collection.copyEmpty(true);
+    collection.features.filter((f) => f.properties[stratify] === i).forEach((f) => c.addFeature(f));
+    return sampleFn(c, optionsArray[i]);
+  });
 
-  if (FeatureCollection.isArea(collection)) {
-    stratumSampleLayers = property.values.map((_, i) => {
-      const features = collection.features.filter((f) => f.properties[stratify] === i);
-
-      return sampleFn(
-        FeatureCollection.newArea(features, collection.propertyRecord, true) as IN,
-        optionsArray[i],
-      );
-    });
-  } else if (FeatureCollection.isLine(collection)) {
-    stratumSampleLayers = property.values.map((_, i) => {
-      const features = collection.features.filter((f) => f.properties[stratify] === i);
-
-      return sampleFn(
-        FeatureCollection.newLine(features, collection.propertyRecord, true) as IN,
-        optionsArray[i],
-      );
-    });
-  } else if (FeatureCollection.isPoint(collection)) {
-    stratumSampleLayers = property.values.map((_, i) => {
-      const features = collection.features.filter((f) => f.properties[stratify] === i);
-
-      return sampleFn(
-        FeatureCollection.newPoint(features, collection.propertyRecord, true) as IN,
-        optionsArray[i],
-      );
-    });
-  } else {
-    throw Error('Incorrect input Layer');
-  }
-
-  const newCollection = stratumSampleLayers.reduce((prev, curr) => {
+  return stratumSampleLayers.reduce((prev, curr) => {
     // TS can't work out if all layers are of same type, which should be
     // guaranteed by all layers being generated by the same function.
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-argument */
     prev.appendFeatureCollection(curr as any);
     return prev;
-  }) as OUT;
-
-  return newCollection;
+  });
 }

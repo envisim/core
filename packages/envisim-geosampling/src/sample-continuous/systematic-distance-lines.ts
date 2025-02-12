@@ -101,9 +101,6 @@ export function sampleSystematicDistanceLines(
         }
       }
     });
-    // } else {
-    //   throw new Error('Only Features with geometry of type Point is allowed in parameter base.');
-    // }
   });
 
   return newCollection;
