@@ -174,7 +174,7 @@ export class PropertyRecord<IDS extends string = string> {
     return id;
   }
 
-  idCategorical(id: IDS): boolean {
+  isCategorical(id: IDS): boolean {
     return PropertyRecord.isCategorical(this.record?.[id]);
   }
 
