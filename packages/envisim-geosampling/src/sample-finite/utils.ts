@@ -8,7 +8,7 @@ import {
 import {bbox4, longitudeCenter} from '@envisim/geojson-utils';
 import {Matrix, Vector} from '@envisim/matrix';
 
-import {type SampleFiniteOptions} from './options.js';
+import {type OptionsBase} from './options.js';
 
 /**
  * Get a numerical property as a Vector
@@ -183,7 +183,7 @@ export function balancingMatrixFromLayer<G extends PureObject, P extends string>
  */
 function probsFromLayer<M, G extends PureObject, P extends string>(
   collection: FeatureCollection<G, P>,
-  {probabilities}: SampleFiniteOptions<P, M>, // already checked
+  {probabilities}: OptionsBase<P, M>, // already checked
 ): Vector {
   let probs: Vector;
 
@@ -219,7 +219,7 @@ function probsFromLayer<M, G extends PureObject, P extends string>(
  */
 export function drawprobsFromLayer<M, G extends PureObject, P extends string>(
   collection: FeatureCollection<G, P>,
-  options: SampleFiniteOptions<P, M>, // already checked
+  options: OptionsBase<P, M>, // already checked
 ): Vector {
   const probs = probsFromLayer(collection, options);
   const sum = probs.sum();
@@ -235,7 +235,7 @@ export function drawprobsFromLayer<M, G extends PureObject, P extends string>(
  */
 export function inclprobsFromLayer<M, G extends PureObject, P extends string>(
   collection: FeatureCollection<G, P>,
-  options: SampleFiniteOptions<P, M>, // already checked
+  options: OptionsBase<P, M>, // already checked
 ): number[] {
   const N = collection.size();
 

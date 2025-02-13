@@ -1,4 +1,4 @@
-import {type FeatureCollection, type PureObject} from '@envisim/geojson-utils';
+import {type FeatureCollection, PropertyRecord, type PureObject} from '@envisim/geojson-utils';
 import {
   brewer,
   pareto,
@@ -12,13 +12,39 @@ import {
   srswr,
   systematic,
 } from '@envisim/sampling';
+import {throwRangeError} from '@envisim/utils';
 
-import {
-  type SAMPLE_FINITE_METHODS_WR,
-  type SampleFiniteOptions,
-  sampleFiniteOptionsCheck,
-} from './options.js';
+import {SampleError} from '../errors/index.js';
+import {type OptionsBase, optionsBaseCheck} from './options.js';
 import {drawprobsFromLayer, inclprobsFromLayer, returnCollectionFromSample} from './utils.js';
+
+export const SAMPLE_FINITE_METHODS_WR = ['srs-wr', 'pps-wr'] as const;
+export const SAMPLE_FINITE_METHODS_WOR = [
+  'srs',
+  'systematic',
+  'systematic-random',
+  'poisson-sampling',
+  'rpm',
+  'spm',
+  'sampford',
+  'pareto',
+  'brewer',
+] as const;
+export type SampleFiniteOptions<P extends string = string> = OptionsBase<
+  P,
+  (typeof SAMPLE_FINITE_METHODS_WOR)[number]
+>;
+export type SampleFiniteOptionsWr<P extends string = string> = OptionsBase<
+  P,
+  (typeof SAMPLE_FINITE_METHODS_WR)[number]
+>;
+
+export function sampleFiniteCheck<P extends string>(
+  options: SampleFiniteOptions<NoInfer<P>> | SampleFiniteOptionsWr<NoInfer<P>>,
+  record: PropertyRecord<P>,
+): SampleError {
+  return optionsBaseCheck(options, record);
+}
 
 /**
  * Select a sample from a layer using sampling methods for a finite population.
@@ -30,10 +56,7 @@ export function sampleFinite<T extends PureObject, P extends string>(
   collection: FeatureCollection<T, P>,
   options: SampleFiniteOptions<NoInfer<P>>,
 ): FeatureCollection<T, P> {
-  const optionsError = sampleFiniteOptionsCheck(options, collection.propertyRecord);
-  if (optionsError !== null) {
-    throw new RangeError(`sampleFinite error: ${optionsError}`);
-  }
+  throwRangeError(sampleFiniteCheck(options, collection.propertyRecord));
 
   // Compute inclusion probabilities
   const probabilities = inclprobsFromLayer(collection, options);
@@ -106,12 +129,9 @@ export function sampleFinite<T extends PureObject, P extends string>(
  */
 export function sampleFiniteWr<T extends PureObject, P extends string>(
   collection: FeatureCollection<T, P>,
-  options: SampleFiniteOptions<NoInfer<P>, (typeof SAMPLE_FINITE_METHODS_WR)[number]>,
+  options: SampleFiniteOptionsWr<NoInfer<P>>,
 ): FeatureCollection<T, P> {
-  const optionsError = sampleFiniteOptionsCheck(options, collection.propertyRecord);
-  if (optionsError !== null) {
-    throw new RangeError(`sampleFinite error: ${optionsError}`);
-  }
+  throwRangeError(sampleFiniteCheck(options, collection.propertyRecord));
 
   let sample: number[];
   let probabilities: number[];

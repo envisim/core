@@ -34,27 +34,7 @@ export {
   sampleRelascopePointsOptionsCheck,
 } from './sample-continuous/index.js';
 
-export {
-  SAMPLE_BALANCED_METHODS,
-  SAMPLE_DOUBLY_BALANCED_METHODS,
-  SAMPLE_FINITE_METHODS,
-  SAMPLE_FINITE_METHODS_WOR,
-  SAMPLE_FINITE_METHODS_WR,
-  SAMPLE_SPATIALLY_BALANCED_METHODS,
-  type SampleBalancedOptions,
-  type SampleDoublyBalancedOptions,
-  type SampleFiniteOptions,
-  type SampleSpatiallyBalancedOptions,
-  sampleBalancedOptionsCheck,
-  sampleDoublyBalancedOptionsCheck,
-  sampleFiniteOptionsCheck,
-  sampleSpatiallyBalancedOptionsCheck,
-  sampleBalanced,
-  sampleDoublyBalanced,
-  sampleFinite,
-  sampleFiniteWr,
-  sampleSpatiallyBalanced,
-} from './sample-finite/index.js';
+export * from './sample-finite/index.js';
 
 // Stratified
 export {
@@ -63,10 +43,6 @@ export {
   type SampleStratifiedOptions,
   type SampleContinuousOptions,
 } from './sample-stratified.js';
-
-// Errors
-export {SamplingError} from './sampling-error.js';
-export {type ErrorType} from './utils/index.js';
 
 // Model geometries/tracts
 export {
@@ -89,7 +65,7 @@ export {
 } from './model-geometry.js';
 
 // Collection from layers
-export {collectProperties, collectPropertyRecord, CollectError} from './collect/index.js';
+export {collectProperties, collectPropertyRecord} from './collect/index.js';
 
 // Select from layers
 export {
@@ -99,7 +75,6 @@ export {
   selectLineintersectsArea,
   selectLineintersectsLine,
   selectPointintersectsArea,
-  SelectError,
 } from './select/index.js';
 
 // Point processes
@@ -109,3 +84,6 @@ export {
   uniformBinomialPointProcess,
   uniformPoissonPointProcess,
 } from './point-processes/index.js';
+
+// Errors
+export * from './errors/index.js';

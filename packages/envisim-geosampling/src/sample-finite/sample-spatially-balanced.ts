@@ -1,20 +1,31 @@
-import {type FeatureCollection, type PureObject} from '@envisim/geojson-utils';
+import {type FeatureCollection, PropertyRecord, type PureObject} from '@envisim/geojson-utils';
 import {lpm1, lpm2, scps} from '@envisim/sampling';
+import {throwRangeError} from '@envisim/utils';
 
-import {
-  type SampleSpatiallyBalancedOptions,
-  sampleSpatiallyBalancedOptionsCheck,
-} from './options.js';
+import {OptionsBase, OptionsSpatiallyBalanced, optionsSpatiallyBalancedCheck} from './options.js';
+import {optionsBaseCheck} from './options.js';
 import {inclprobsFromLayer, returnCollectionFromSample, spreadMatrixFromLayer} from './utils.js';
+import {SampleError} from '/errors/index.js';
+
+export const SAMPLE_SPATIALLY_BALANCED_METHODS = ['lpm1', 'lpm2', 'scps'] as const;
+export type SampleSpatiallyBalancedOptions<P extends string = string> = OptionsBase<
+  P,
+  (typeof SAMPLE_SPATIALLY_BALANCED_METHODS)[number]
+> &
+  OptionsSpatiallyBalanced<P>;
+
+export function sampleSpatiallyBalancedCheck<P extends string>(
+  options: SampleSpatiallyBalancedOptions<P>,
+  record: PropertyRecord<P>,
+): SampleError {
+  return optionsBaseCheck(options, record) || optionsSpatiallyBalancedCheck(options, record);
+}
 
 export function sampleSpatiallyBalanced<T extends PureObject, P extends string>(
   collection: FeatureCollection<T, P>,
   options: SampleSpatiallyBalancedOptions<NoInfer<P>>,
 ): FeatureCollection<T, P> {
-  const optionsError = sampleSpatiallyBalancedOptionsCheck(options, collection.propertyRecord);
-  if (optionsError !== null) {
-    throw new RangeError(`sampleSpatiallyBalanced error: ${optionsError}`);
-  }
+  throwRangeError(sampleSpatiallyBalancedCheck(options, collection.propertyRecord));
 
   // Compute inclusion probabilities
   const probabilities = inclprobsFromLayer(collection, options);
