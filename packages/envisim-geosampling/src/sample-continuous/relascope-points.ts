@@ -1,18 +1,26 @@
 import {
   type AreaObject,
-  type FeatureCollection,
+  FeatureCollection,
   Geodesic,
   type Point,
-  PropertyRecord,
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
+import {throwRangeError} from '@envisim/utils';
 
-import {SamplingError} from '../sampling-error.js';
-import type {ErrorType} from '../utils/error-type.js';
-import {SAMPLE_POINT_OPTIONS, type SamplePointOptions, samplePointOptionsCheck} from './options.js';
+import {
+  OptionsBase,
+  OptionsCircleConversion,
+  OptionsRotationOfGrid,
+  optionsBaseCheck,
+  optionsCircleConversionCheck,
+} from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
+import {SAMPLE_ERROR_LIST, SampleError} from '~/errors/sample-error.js';
 
-export interface SampleRelascopePointsOptions<P extends string> extends SamplePointOptions {
+export interface SampleRelascopePointsOptions<P extends string>
+  extends OptionsBase,
+    OptionsCircleConversion,
+    OptionsRotationOfGrid {
   /**
    * The point layer to collect objects from.
    */
@@ -26,31 +34,26 @@ export interface SampleRelascopePointsOptions<P extends string> extends SamplePo
    * The relascope factor to be used.
    */
   factor: number;
+  /**
+   * @defaultValue `0.0`
+   */
+  buffer?: number;
 }
 
 export function sampleRelascopePointsOptionsCheck<P extends string>(
-  {baseCollection, sizeProperty, factor, ...options}: SampleRelascopePointsOptions<P>,
-  recursiveCheck: boolean = false,
-): ErrorType<typeof SamplingError> {
-  if (recursiveCheck === true) {
-    const pointCheck = samplePointOptionsCheck(options);
-    if (pointCheck !== null) {
-      return pointCheck;
-    }
+  options: SampleRelascopePointsOptions<P>,
+): SampleError {
+  if (options.factor <= 0.0) {
+    return SAMPLE_ERROR_LIST.FACTOR_NOT_POSITIVE;
+  } else if (FeatureCollection.isPoint(options.baseCollection) == false) {
+    return SAMPLE_ERROR_LIST.EXPECTED_POINT;
+  } else if (options.baseCollection.propertyRecord.hasId(options.sizeProperty) === false) {
+    return SAMPLE_ERROR_LIST.SIZE_PROPERTY_MISSING;
+  } else if (options.baseCollection.propertyRecord.isNumerical(options.sizeProperty) === false) {
+    return SAMPLE_ERROR_LIST.SIZE_PROPERTY_NOT_NUMERICAL;
   }
 
-  if (factor <= 0.0) {
-    return SamplingError.FACTOR_NOT_POSITIVE;
-  }
-
-  const prop = baseCollection.propertyRecord.getId(sizeProperty);
-  if (prop === null) {
-    return SamplingError.SIZE_PROPERTY_MISSING;
-  } else if (!PropertyRecord.isNumerical(prop)) {
-    return SamplingError.SIZE_PROPERTY_NOT_NUMERICAL;
-  }
-
-  return null;
+  return optionsBaseCheck(options) || optionsCircleConversionCheck(options);
 }
 
 // TODO: Decide if we should implement correction by adding the correct buffer.
@@ -71,40 +74,30 @@ export function sampleRelascopePointsOptionsCheck<P extends string>(
  */
 export function sampleRelascopePoints<P extends string>(
   collection: FeatureCollection<AreaObject>,
-  {
-    buffer = SAMPLE_POINT_OPTIONS.buffer,
-    baseCollection,
-    factor,
-    sizeProperty,
-    ...opts
-  }: SampleRelascopePointsOptions<P>,
+  options: SampleRelascopePointsOptions<P>,
+  // {
+  //   buffer = SAMPLE_POINT_OPTIONS.buffer,
+  //   baseCollection,
+  //   factor,
+  //   sizeProperty,
+  //   ...opts
+  // }: SampleRelascopePointsOptions<P>,
 ): {
   collection: FeatureCollection<Point, P>;
   pointSample: FeatureCollection<Point>;
   areaRatio: number;
 } {
-  const optionsError = sampleRelascopePointsOptionsCheck(
-    {
-      buffer,
-      baseCollection,
-      factor,
-      sizeProperty,
-      ...opts,
-    },
-    false,
-  );
-  if (optionsError !== null) {
-    throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
-  }
+  throwRangeError(sampleRelascopePointsOptionsCheck(options));
+  const opts = {...options, buffer: options.buffer ?? 0.0};
 
   // Square root of relascope factor
-  const sqrtRf = Math.sqrt(factor);
+  const sqrtRf = Math.sqrt(options.factor);
   // Select sample of points (optional buffer via opts)
-  const pointSample = samplePointsOnAreas(collection, {buffer, ...opts});
+  const pointSample = samplePointsOnAreas(collection, opts);
 
   // To store sampled features
   // Fix property record (same as base layer, but add design variables)
-  const newCollection = baseCollection.copyEmpty(false);
+  const newCollection = options.baseCollection.copyEmpty(false);
 
   // Compute estimate of area with input area collection
   const areaEstimateBefore = collection.features.reduce(
@@ -123,7 +116,7 @@ export function sampleRelascopePoints<P extends string>(
       if (frameFeature.geometry.includesPosition(samplePoint.geometry.coordinates)) {
         const dw =
           samplePoint.getSpecialPropertyDesignWeight() *
-          (buffer > 0.0 ? frameFeature.getSpecialPropertyDesignWeight() : 1.0);
+          (opts.buffer > 0.0 ? frameFeature.getSpecialPropertyDesignWeight() : 1.0);
         areaEstimateWithPoints += dw;
         break;
       }
@@ -131,13 +124,12 @@ export function sampleRelascopePoints<P extends string>(
   }
 
   // Find selected points in base layer and check if selected base point is in frame and transfer dw
-  baseCollection.forEach((pointFeature) => {
-    // if (Point.isObject(pointFeature.geometry)) {
+  options.baseCollection.forEach((pointFeature) => {
     const basePointCoords = pointFeature.geometry.coordinates;
-    const sizePropertyValue = (pointFeature?.properties?.[sizeProperty] ?? 0.0) as number;
+    const sizePropertyValue = (pointFeature.properties[options.sizeProperty] ?? 0.0) as number;
 
     // Radius of inclusion zone
-    const radius = (50 * sizePropertyValue) / sqrtRf;
+    const radius = (50.0 * sizePropertyValue) / sqrtRf;
     const baseDw = 1.0 / (Math.PI * radius * radius);
 
     pointSample.forEach((samplePoint, samplePointIndex) => {
@@ -158,7 +150,7 @@ export function sampleRelascopePoints<P extends string>(
           const dw =
             baseDw *
             samplePoint.getSpecialPropertyDesignWeight() *
-            (buffer > 0.0 ? frameFeature.getSpecialPropertyDesignWeight() : 1.0);
+            (opts.buffer > 0.0 ? frameFeature.getSpecialPropertyDesignWeight() : 1.0);
 
           newCollection.addGeometry(
             pointFeature.geometry,

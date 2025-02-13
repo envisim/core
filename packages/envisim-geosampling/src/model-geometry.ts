@@ -16,7 +16,7 @@ import {
   cutLineGeometry,
   typeGuards,
 } from '@envisim/geojson-utils';
-import {type Random} from '@envisim/random';
+import {RandomGenerator} from '@envisim/random';
 
 // This file has a set of functions to deal with a model
 // geometry (tract), which is a GeoJSON geometry with cartesian
@@ -31,9 +31,8 @@ function placePoint(point: GJ.Position, position: GJ.Position, rotation: number)
 
 interface PlaceOptions<G extends GJ.SingleTypeObject> {
   modelGeometry: G;
-  rotationOfGeometry: number;
-  randomRotationOfGeometry: boolean;
-  rand: Random;
+  rotationOfGeometry: number | 'random';
+  rand: RandomGenerator;
   buffer: number;
 }
 
@@ -54,9 +53,8 @@ export function placeAreaGeometry(
   position: GJ.Position,
   {modelGeometry, ...opts}: PlaceOptions<GJ.AreaObject>,
 ): AreaObject {
-  const rotation = opts.randomRotationOfGeometry
-    ? Math.floor(opts.rand.float() * 360)
-    : (opts.rotationOfGeometry ?? 0.0);
+  const rotation =
+    opts.rotationOfGeometry === 'random' ? opts.rand.random() * 360 : opts.rotationOfGeometry;
 
   if (modelGeometry.type === 'Point') {
     return Circle.create(
@@ -102,9 +100,8 @@ export function placeLineGeometry(
   position: GJ.Position,
   {modelGeometry, ...opts}: PlaceOptions<GJ.LineObject>,
 ): LineObject {
-  const rotation = opts.randomRotationOfGeometry
-    ? Math.floor(opts.rand.float() * 360)
-    : (opts.rotationOfGeometry ?? 0.0);
+  const rotation =
+    opts.rotationOfGeometry === 'random' ? opts.rand.random() * 360 : opts.rotationOfGeometry;
 
   let geom: GJ.LineString | GJ.MultiLineString;
   if (modelGeometry.type === 'LineString') {
@@ -134,9 +131,8 @@ export function placePointGeometry(
   position: GJ.Position,
   {modelGeometry, ...opts}: PlaceOptions<GJ.PointObject>,
 ): PointObject {
-  const rotation = opts.randomRotationOfGeometry
-    ? Math.floor(opts.rand.float() * 360)
-    : (opts.rotationOfGeometry ?? 0.0);
+  const rotation =
+    opts.rotationOfGeometry === 'random' ? opts.rand.random() * 360 : opts.rotationOfGeometry;
 
   if (modelGeometry.type === 'Point') {
     return Point.create(placePoint(modelGeometry.coordinates, position, rotation), true);

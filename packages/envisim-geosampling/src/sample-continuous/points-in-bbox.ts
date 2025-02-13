@@ -5,44 +5,46 @@ import {
   normalizeLongitude,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
+import {throwRangeError} from '@envisim/utils';
+
+import {OptionsBase, optionsBaseCheck} from './options.js';
+import {SampleError} from '~/errors/sample-error.js';
 
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;
 
+export type SamplePositionsInBbox = OptionsBase;
+
+export function samplePositionsInBboxCheck(options: SamplePositionsInBbox): SampleError {
+  return optionsBaseCheck(options);
+}
+
 /**
  * Generates uniform random positions in bounding box
  * @param box A GeoJSON bounding box.
- * @param n Positive integer sample size.
- * @param opts Options.
- * @param opts.rand Optional instance of Random.
  * @returns Array of GeoJSON positions.
  */
-export function uniformPositionsInBBox(
-  box: GJ.BBox,
-  n: number,
-  {rand = new Random()},
-): GJ.Position[] {
+export function samplePositionsInBbox(box: GJ.BBox, options: SamplePositionsInBbox): GJ.Position[] {
+  throwRangeError(samplePositionsInBboxCheck(options));
+  const {rand = new Random(), sampleSize} = options;
+
   const bbox = bbox4(box);
   const y1 = (Math.cos((90 - bbox[1]) * TO_RAD) + 1) / 2;
   const y2 = (Math.cos((90 - bbox[3]) * TO_RAD) + 1) / 2;
   const lonDist = longitudeDistance(bbox[0], bbox[2]);
   const positions: GJ.Position[] = [];
 
-  if (n < 0) {
-    throw new RangeError('n must be non-negative');
-  }
-
-  for (let i = 0; i < n; i++) {
+  for (let i = 0; i < sampleSize; i++) {
     // Generate the point
-    const yRand = y1 + (y2 - y1) * rand.float();
+    const yRand = y1 + (y2 - y1) * rand.random();
     const lat = 90 - Math.acos(2 * yRand - 1) * TO_DEG;
-    const lon = normalizeLongitude(bbox[0] + lonDist * rand.float());
+    const lon = normalizeLongitude(bbox[0] + lonDist * rand.random());
     positions.push([lon, lat]);
   }
 
   if (box.length === 6) {
-    for (let i = 0; i < n; i++) {
-      const alt = box[2] + (box[5] - box[2]) * rand.float();
+    for (let i = 0; i < sampleSize; i++) {
+      const alt = box[2] + (box[5] - box[2]) * rand.random();
       positions[i].push(alt);
     }
   }

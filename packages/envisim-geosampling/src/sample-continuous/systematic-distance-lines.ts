@@ -4,21 +4,40 @@ import {
   type Point,
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
+import {Random} from '@envisim/random';
+import {throwRangeError} from '@envisim/utils';
 
-import {type SampleDistancePointsOptions} from './distance-points.js';
 import {effectiveHalfWidth} from './distance-utils.js';
 import {
-  SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS,
-  type SampleSystematicLineOnAreaOptions,
-  sampleSystematicLineOnAreaOptionsCheck,
+  OptionsBase,
+  OptionsCircleConversion,
+  OptionsDistancePoints,
+  OptionsParallelLines,
+  OptionsRotationOfGrid,
+  optionsBaseCheck,
+  optionsCircleConversionCheck,
+  optionsDistancePointsCheck,
+  optionsParallelLinesCheck,
 } from './options.js';
 import {sampleSystematicLinesOnAreas} from './systematic-lines-on-areas.js';
+import {SampleError} from '~/errors/sample-error.js';
 
-/**
- * @interface
- */
-type SampleSystematicDistanceLinesOptions = SampleSystematicLineOnAreaOptions &
-  SampleDistancePointsOptions;
+export type SampleSystematicDistanceLinesOptions = OptionsBase &
+  OptionsCircleConversion &
+  OptionsParallelLines &
+  OptionsRotationOfGrid &
+  OptionsDistancePoints;
+
+export function sampleSystematicDistanceLinesCheck(
+  options: SampleSystematicDistanceLinesOptions,
+): SampleError {
+  return (
+    optionsBaseCheck(options) ||
+    optionsCircleConversionCheck(options) ||
+    optionsParallelLinesCheck(options) ||
+    optionsDistancePointsCheck(options)
+  );
+}
 
 /**
  * Distance sampling with line transects.
@@ -31,54 +50,36 @@ type SampleSystematicDistanceLinesOptions = SampleSystematicLineOnAreaOptions &
  */
 export function sampleSystematicDistanceLines(
   collection: FeatureCollection<AreaObject>,
-  {
-    rand = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.rand,
-    pointsPerCircle = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.pointsPerCircle,
-    distBetween,
-    rotation = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.rotation,
-    baseCollection,
-    detectionFunction,
-    cutoff,
-  }: SampleSystematicDistanceLinesOptions,
+  options: SampleSystematicDistanceLinesOptions,
 ): FeatureCollection<Point> {
-  const optionsError = sampleSystematicLineOnAreaOptionsCheck({
-    rand,
-    pointsPerCircle,
-    distBetween,
-    rotation,
-    // baseLayer,
-    // detectionFunction,
-    // cutoff,
-  });
-  if (optionsError !== null) {
-    throw new RangeError(`sampleSystematicDistanceLines error: ${optionsError}`);
-  }
+  throwRangeError(sampleSystematicDistanceLinesCheck(options));
+
+  const {rand = new Random(), interspace, detectionFunction, cutoff} = options;
 
   // Compute effective half width
   const effHalfWidth = effectiveHalfWidth(detectionFunction, cutoff);
 
   // Compute design weight for this selection
-  const dw = distBetween / (effHalfWidth * 2.0);
+  const dw = interspace / (effHalfWidth * 2.0);
 
   // Select sample of lines
-  const lineFeatures = sampleSystematicLinesOnAreas(collection, {
-    distBetween,
-    rotation,
-    rand,
-    pointsPerCircle,
-  }).features;
+  const lineFeatures = sampleSystematicLinesOnAreas(collection, {...options, rand}).features;
 
   // To store sampled features
-  const newCollection = FeatureCollection.newPoint<Point>([], baseCollection.propertyRecord, false);
+  const newCollection = FeatureCollection.newPoint<Point>(
+    [],
+    options.baseCollection.propertyRecord,
+    false,
+  );
 
   // Find selected points in base layer and check if
   // seleccted base point is in frame and transfer _designWeight
-  baseCollection.forEach((pointFeature) => {
+  options.baseCollection.forEach((pointFeature) => {
     // if (Point.isObject(pointFeature.geometry)) {
     lineFeatures.forEach((sampleLine, sampleLineIndex) => {
       const dist = sampleLine.geometry.distanceToPosition(pointFeature.geometry.coordinates);
 
-      if (dist < cutoff && rand.float() < detectionFunction(dist)) {
+      if (dist < cutoff && rand.random() < detectionFunction(dist)) {
         // Check if base point exists in this frame (frame could be part/stratum)
         for (let i = 0; i < collection.features.length; i++) {
           const frameFeature = collection.features[i];

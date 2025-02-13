@@ -1,39 +1,4 @@
-export {
-  samplePointsOnLines,
-  samplePointsOnAreas,
-  sampleSystematicLinesOnAreas,
-  sampleSystematicBeltsOnAreas,
-  sampleAreaFeaturesOnAreas,
-  sampleLineFeaturesOnAreas,
-  samplePointFeaturesOnAreas,
-  sampleRelascopePoints,
-  sampleDistancePoints,
-  sampleSystematicDistanceLines,
-  integrate,
-  effectiveRadius,
-  effectiveHalfWidth,
-  uniformDetectionFunction,
-  halfNormalDetectionFunction,
-  type SampleBaseOptions,
-  SAMPLE_BASE_OPTIONS,
-  sampleBaseOptionsCheck,
-  type SamplePointOptions,
-  SAMPLE_POINT_OPTIONS,
-  samplePointOptionsCheck,
-  type SampleFeatureOptions,
-  SAMPLE_FEATURE_OPTIONS,
-  sampleFeatureOptionsCheck,
-  type SampleSystematicLineOnAreaOptions,
-  SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS,
-  sampleSystematicLineOnAreaOptionsCheck,
-  type SampleBeltOnAreaOptions,
-  SAMPLE_BELT_ON_AREA_OPTIONS,
-  sampleBeltOnAreaOptionsCheck,
-  type SampleRelascopePointsOptions,
-  SAMPLE_RELASCOPE_POINTS_OPTIONS,
-  sampleRelascopePointsOptionsCheck,
-} from './sample-continuous/index.js';
-
+export * from './sample-continuous/index.js';
 export * from './sample-finite/index.js';
 
 // Stratified

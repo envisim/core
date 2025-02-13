@@ -26,11 +26,17 @@ export const SAMPLE_ERROR_LIST = {
   // sample continuous specific errors
   POINTS_PER_CIRCLE_NOT_POSITIVE_INTEGER: 'sample-error-points-per-circle',
   RATIO_NOT_POSITIVE: 'sample-error-ratio',
-  DIST_BETWEEN_NOT_POSITIVE: 'sample-error-dist-between',
-  HALF_WIDTH_NOT_POSITIVE: 'sample-error-half-width',
+  SEPARATION_NOT_POSITIVE: 'sample-error-separation-not-positive',
+  HALF_WIDTH_NOT_POSITIVE: 'sample-error-half-width-not-positive',
   FACTOR_NOT_POSITIVE: 'sample-error-factor',
   SIZE_PROPERTY_MISSING: 'sample-error-size-property-do-not-exist',
   SIZE_PROPERTY_NOT_NUMERICAL: 'sample-error-size-property-not-numerical',
+  CUTOFF_NOT_POSITIVE: 'sample-error-cutoff-not-positive',
+
+  // MODEL FEATURE
+  MODEL_FEATURE_NOT_AREA: 'sample-error-expected-model-feature-area',
+  MODEL_FEATURE_NOT_LINE: 'sample-error-expected-model-feature-line',
+  MODEL_FEATURE_NOT_POINT: 'sample-error-expected-model-feature-point',
 } as const;
 
 export type SampleError = ErrorType<typeof SAMPLE_ERROR_LIST>;

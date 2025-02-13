@@ -3,30 +3,36 @@ import {
   Feature,
   FeatureCollection,
   Geodesic,
-  type Point,
   type PointObject,
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
+import {Random} from '@envisim/random';
+import {throwRangeError} from '@envisim/utils';
 
-import {type DetectionFunction, effectiveRadius} from './distance-utils.js';
-import {SAMPLE_POINT_OPTIONS, type SamplePointOptions} from './options.js';
+import {effectiveRadius} from './distance-utils.js';
+import {
+  OptionsBase,
+  OptionsCircleConversion,
+  OptionsDistancePoints,
+  OptionsRotationOfGrid,
+  optionsBaseCheck,
+  optionsCircleConversionCheck,
+  optionsDistancePointsCheck,
+} from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
+import {SampleError} from '~/errors/sample-error.js';
 
-export interface SampleDistancePointsOptions extends SamplePointOptions {
-  /**
-   * The point layer to collect objects from.
-   */
-  // baseCollection: Layer<PointObject>;
-  baseCollection: FeatureCollection<Point>;
-  /**
-   * The detection function giving the detection probability as a
-   * function of distance.
-   */
-  detectionFunction: DetectionFunction;
-  /**
-   * The cutoff distance in meters.
-   */
-  cutoff: number;
+export type SampleDistancePointsOptions = OptionsBase &
+  OptionsCircleConversion &
+  OptionsRotationOfGrid &
+  OptionsDistancePoints;
+
+export function sampleDistancePointsCheck(options: SampleDistancePointsOptions): SampleError {
+  return (
+    optionsBaseCheck(options) ||
+    optionsCircleConversionCheck(options) ||
+    optionsDistancePointsCheck(options)
+  );
 }
 
 /**
@@ -40,23 +46,20 @@ export interface SampleDistancePointsOptions extends SamplePointOptions {
  */
 export function sampleDistancePoints(
   collection: FeatureCollection<AreaObject>,
-  {
-    rand = SAMPLE_POINT_OPTIONS.rand,
-    baseCollection,
-    detectionFunction,
-    cutoff,
-    ...opts
-  }: SampleDistancePointsOptions,
+  options: SampleDistancePointsOptions,
 ): FeatureCollection<PointObject> {
+  throwRangeError(sampleDistancePointsCheck(options));
+
+  const {rand = new Random(), baseCollection, detectionFunction, cutoff} = options;
+
   // Compute effective radius
   const effRadius = effectiveRadius(detectionFunction, cutoff);
   const baseDw = 1.0 / (Math.PI * effRadius * effRadius);
 
   // Select sample of points (optional buffer via opts)
-  const buffer = cutoff;
   const pointSample = samplePointsOnAreas(collection, {
-    ...opts,
-    buffer,
+    ...options,
+    buffer: cutoff,
     rand,
   });
 
@@ -71,7 +74,7 @@ export function sampleDistancePoints(
 
     pointSample.forEach((samplePoint, samplePointIndex) => {
       const dist = Geodesic.distance(basePointCoords, samplePoint.geometry.coordinates);
-      if (dist < cutoff && rand.float() < detectionFunction(dist)) {
+      if (dist < cutoff && rand.random() < detectionFunction(dist)) {
         // Check if base point exists in this frame (frame could be part/stratum)
         for (let i = 0; i < collection.features.length; i++) {
           const frameFeature = collection.features[i];
@@ -85,7 +88,7 @@ export function sampleDistancePoints(
             // If buffer = 0, then sample point has already collected
             // design weight from frame. If buffer > 0, then we need
             // to collect the weight here.
-            if (buffer > 0) {
+            if (cutoff > 0) {
               dw *= frameFeature.getSpecialPropertyDesignWeight();
             }
             const newFeature = Feature.createPointFromJson(pointFeature, false);
@@ -100,9 +103,6 @@ export function sampleDistancePoints(
         }
       }
     });
-    // } else {
-    //   throw new Error('Only Features with geometry of type Point is allowed in parameter base.');
-    // }
   });
 
   return newCollection;

@@ -9,19 +9,32 @@ import {
   cutLineGeometry,
   toLineObject,
 } from '@envisim/geojson-utils';
+import {Random} from '@envisim/random';
+import {throwRangeError} from '@envisim/utils';
 
 import {intersectLineSampleAreaFrame} from '../utils/index.js';
 import {
-  SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS,
-  type SampleSystematicLineOnAreaOptions,
-  sampleSystematicLineOnAreaOptionsCheck,
+  OptionsBase,
+  OptionsCircleConversion,
+  OptionsParallelLines,
+  optionsBaseCheck,
+  optionsCircleConversionCheck,
+  optionsParallelLinesCheck,
 } from './options.js';
+import {SampleError} from '~/errors/sample-error.js';
 
-// Internal.
-function placePoint(point: GJ.Position, position: GJ.Position, rotation: number): GJ.Position {
-  const dist = Math.sqrt(point[0] * point[0] + point[1] * point[1]);
-  const angle = 90 - (Math.atan2(point[1], point[0]) * 180) / Math.PI + rotation;
-  return Geodesic.destination(position, dist, angle);
+export type SampleSystematicLinesOnAreas = OptionsBase &
+  OptionsCircleConversion &
+  OptionsParallelLines;
+
+export function sampleSystematicLinesOnAreasCheck(
+  options: SampleSystematicLinesOnAreas,
+): SampleError {
+  return (
+    optionsBaseCheck(options) ||
+    optionsCircleConversionCheck(options) ||
+    optionsParallelLinesCheck(options)
+  );
 }
 
 /**
@@ -32,21 +45,11 @@ function placePoint(point: GJ.Position, position: GJ.Position, rotation: number)
  */
 export function sampleSystematicLinesOnAreas(
   collection: FeatureCollection<AreaObject>,
-  {
-    rand = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.rand,
-    pointsPerCircle = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.pointsPerCircle,
-    distBetween,
-    rotation = SAMPLE_SYSTEMATIC_LINE_ON_AREA_OPTIONS.rotation,
-  }: SampleSystematicLineOnAreaOptions,
+  options: SampleSystematicLinesOnAreas,
 ): FeatureCollection<LineObject> {
-  const optionsError = sampleSystematicLineOnAreaOptionsCheck({
-    pointsPerCircle,
-    distBetween,
-    rotation,
-  });
-  if (optionsError !== null) {
-    throw new RangeError(optionsError);
-  }
+  throwRangeError(sampleSystematicLinesOnAreasCheck(options));
+
+  const {rand = new Random(), interspace, rotation = 0.0} = options;
 
   const box = bbox4(collection.getBBox());
   const center = bboxCenter(box);
@@ -58,13 +61,13 @@ export function sampleSystematicLinesOnAreas(
   );
 
   const numPointsPerLine = 20;
-  const numLines = Math.ceil((2.0 * radius) / distBetween);
-  const randomStart = rand.float() * distBetween;
+  const numLines = Math.ceil((2.0 * radius) / interspace);
+  const randomStart = rand.random() * interspace;
 
   const sc = FeatureCollection.newLine([]);
 
   for (let i = 0; i < numLines; i++) {
-    const x = -radius + i * distBetween + randomStart;
+    const x = -radius + i * interspace + randomStart;
     const thisLine = [];
     for (let j = 0; j < numPointsPerLine; j++) {
       const y = -radius + (2 * radius * j) / (numPointsPerLine - 1);
@@ -78,8 +81,15 @@ export function sampleSystematicLinesOnAreas(
       }),
     );
     if (lineGeom === null) continue;
-    sc.addGeometry(lineGeom, {_designWeight: distBetween}, true);
+    sc.addGeometry(lineGeom, {_designWeight: interspace}, true);
   }
 
-  return intersectLineSampleAreaFrame(sc, collection, {pointsPerCircle});
+  return intersectLineSampleAreaFrame(sc, collection, options);
+}
+
+// Internal.
+function placePoint(point: GJ.Position, position: GJ.Position, rotation: number): GJ.Position {
+  const dist = Math.sqrt(point[0] * point[0] + point[1] * point[1]);
+  const angle = 90 - (Math.atan2(point[1], point[0]) * 180) / Math.PI + rotation;
+  return Geodesic.destination(position, dist, angle);
 }
