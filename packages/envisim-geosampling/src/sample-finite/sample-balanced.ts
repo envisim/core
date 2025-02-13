@@ -2,7 +2,6 @@ import {type FeatureCollection, PropertyRecord, type PureObject} from '@envisim/
 import {cube} from '@envisim/sampling';
 import {throwRangeError} from '@envisim/utils';
 
-import {SampleError} from '../errors/index.js';
 import {
   type OptionsBalanced,
   OptionsBase,
@@ -10,6 +9,7 @@ import {
   optionsBaseCheck,
 } from './options.js';
 import {balancingMatrixFromLayer, inclprobsFromLayer, returnCollectionFromSample} from './utils.js';
+import {SampleError} from '~/errors/index.js';
 
 export const SAMPLE_BALANCED_METHODS = ['cube'] as const;
 export type SampleBalancedOptions<P extends string = string> = OptionsBase<

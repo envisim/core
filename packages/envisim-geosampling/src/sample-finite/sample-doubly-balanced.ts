@@ -2,7 +2,6 @@ import {type FeatureCollection, PropertyRecord, type PureObject} from '@envisim/
 import {localCube} from '@envisim/sampling';
 import {throwRangeError} from '@envisim/utils';
 
-import {SampleError} from '../errors/index.js';
 import {
   OptionsBalanced,
   OptionsBase,
@@ -17,6 +16,7 @@ import {
   returnCollectionFromSample,
   spreadMatrixFromLayer,
 } from './utils.js';
+import {SampleError} from '~/errors/index.js';
 
 export const SAMPLE_DOUBLY_BALANCED_METHODS = ['local-cube'] as const;
 export type SampleDoublyBalancedOptions<P extends string = string> = OptionsBase<

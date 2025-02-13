@@ -1,7 +1,7 @@
 import {PropertyRecord} from '@envisim/geojson-utils';
 import {type Random} from '@envisim/random';
 
-import {SAMPLE_ERROR_LIST, SampleError} from '../errors/index.js';
+import {SAMPLE_ERROR_LIST, SampleError} from '~/errors/index.js';
 
 export interface OptionsBase<P extends string = string, M extends string = string> {
   /**

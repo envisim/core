@@ -181,9 +181,9 @@ export function balancingMatrixFromLayer<G extends PureObject, P extends string>
 /**
  * Returns a vector of ones as the inclusion probabilities, if probabilitiesFrom is not set
  */
-function probsFromLayer<M, G extends PureObject, P extends string>(
+function probsFromLayer<G extends PureObject, P extends string>(
   collection: FeatureCollection<G, P>,
-  {probabilities}: OptionsBase<P, M>, // already checked
+  {probabilities}: OptionsBase<P>, // already checked
 ): Vector {
   let probs: Vector;
 
@@ -217,9 +217,9 @@ function probsFromLayer<M, G extends PureObject, P extends string>(
  * @param collection
  * @param options
  */
-export function drawprobsFromLayer<M, G extends PureObject, P extends string>(
+export function drawprobsFromLayer<G extends PureObject, P extends string>(
   collection: FeatureCollection<G, P>,
-  options: OptionsBase<P, M>, // already checked
+  options: OptionsBase<P>, // already checked
 ): Vector {
   const probs = probsFromLayer(collection, options);
   const sum = probs.sum();
@@ -233,9 +233,9 @@ export function drawprobsFromLayer<M, G extends PureObject, P extends string>(
  * @param collection
  * @param options
  */
-export function inclprobsFromLayer<M, G extends PureObject, P extends string>(
+export function inclprobsFromLayer<G extends PureObject, P extends string>(
   collection: FeatureCollection<G, P>,
-  options: OptionsBase<P, M>, // already checked
+  options: OptionsBase<P>, // already checked
 ): number[] {
   const N = collection.size();
 

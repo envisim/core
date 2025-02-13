@@ -2,10 +2,14 @@ import {type FeatureCollection, PropertyRecord, type PureObject} from '@envisim/
 import {lpm1, lpm2, scps} from '@envisim/sampling';
 import {throwRangeError} from '@envisim/utils';
 
-import {OptionsBase, OptionsSpatiallyBalanced, optionsSpatiallyBalancedCheck} from './options.js';
-import {optionsBaseCheck} from './options.js';
+import {
+  OptionsBase,
+  OptionsSpatiallyBalanced,
+  optionsBaseCheck,
+  optionsSpatiallyBalancedCheck,
+} from './options.js';
 import {inclprobsFromLayer, returnCollectionFromSample, spreadMatrixFromLayer} from './utils.js';
-import {SampleError} from '/errors/index.js';
+import {SampleError} from '~/errors/index.js';
 
 export const SAMPLE_SPATIALLY_BALANCED_METHODS = ['lpm1', 'lpm2', 'scps'] as const;
 export type SampleSpatiallyBalancedOptions<P extends string = string> = OptionsBase<

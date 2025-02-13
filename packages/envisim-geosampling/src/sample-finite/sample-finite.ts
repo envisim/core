@@ -14,9 +14,9 @@ import {
 } from '@envisim/sampling';
 import {throwRangeError} from '@envisim/utils';
 
-import {SampleError} from '../errors/index.js';
 import {type OptionsBase, optionsBaseCheck} from './options.js';
 import {drawprobsFromLayer, inclprobsFromLayer, returnCollectionFromSample} from './utils.js';
+import {SampleError} from '~/errors/index.js';
 
 export const SAMPLE_FINITE_METHODS_WR = ['srs-wr', 'pps-wr'] as const;
 export const SAMPLE_FINITE_METHODS_WOR = [
