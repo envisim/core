@@ -7,17 +7,18 @@ import {
   type PointObject,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
-import {throwRangeError} from '@envisim/utils';
 
 import {
   OptionsBase,
   OptionsCircleConversion,
   OptionsRotationOfGrid,
+  SAMPLE_ERROR_LIST,
+  SampleError,
   optionsBaseCheck,
   optionsCircleConversionCheck,
+  throwRangeError,
 } from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
-import {SAMPLE_ERROR_LIST, SampleError} from '~/errors/sample-error.js';
 import {
   placeAreaGeometry,
   placeLineGeometry,

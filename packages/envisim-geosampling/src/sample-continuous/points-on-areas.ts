@@ -12,16 +12,17 @@ import {
   unionOfCollection,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
-import {throwRangeError} from '@envisim/utils';
 
 import {
   OptionsBase,
   OptionsCircleConversion,
   OptionsRotationOfGrid,
+  SAMPLE_ERROR_LIST,
+  SampleError,
   optionsBaseCheck,
   optionsCircleConversionCheck,
+  throwRangeError,
 } from './options.js';
-import {SAMPLE_ERROR_LIST, SampleError} from '~/errors/sample-error.js';
 
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;

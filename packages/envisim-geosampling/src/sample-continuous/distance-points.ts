@@ -7,7 +7,6 @@ import {
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
-import {throwRangeError} from '@envisim/utils';
 
 import {effectiveRadius} from './distance-utils.js';
 import {
@@ -15,12 +14,13 @@ import {
   OptionsCircleConversion,
   OptionsDistancePoints,
   OptionsRotationOfGrid,
+  SampleError,
   optionsBaseCheck,
   optionsCircleConversionCheck,
   optionsDistancePointsCheck,
+  throwRangeError,
 } from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
-import {SampleError} from '~/errors/sample-error.js';
 
 export type SampleDistancePointsOptions = OptionsBase &
   OptionsCircleConversion &

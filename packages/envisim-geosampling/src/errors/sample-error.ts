@@ -18,8 +18,8 @@ export const SAMPLE_ERROR_LIST = {
   BALANCE_ON_MISSING: 'sample-error-balance-on-do-not-exist',
 
   // sample stratified specific errors
-  STRATIFY_MISSING: 'sample-error-stratify-do-not-exist',
-  STRATIFY_NOT_CATEGORICAL: 'sample-error-stratify-not-categorical',
+  STRATIFY_MISSING: 'sample-error-stratifying-property-do-not-exist',
+  STRATIFY_NOT_CATEGORICAL: 'sample-error-stratifying-not-categorical',
   STRATIFY_NO_VALUES: 'sample-error-stratify-no-values',
   STRATIFY_OPTIONS_LENGTH_MISMATCH: 'sample-error-stratify-options-length-mismatch',
 

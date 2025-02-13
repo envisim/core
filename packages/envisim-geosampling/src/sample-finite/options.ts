@@ -1,7 +1,10 @@
 import {PropertyRecord} from '@envisim/geojson-utils';
 import {type Random} from '@envisim/random';
+import {throwRangeError} from '@envisim/utils';
 
-import {SAMPLE_ERROR_LIST, SampleError} from '~/errors/index.js';
+import {SAMPLE_ERROR_LIST, type SampleError} from '~/errors/index.js';
+
+export {SAMPLE_ERROR_LIST, type SampleError, throwRangeError};
 
 export interface OptionsBase<P extends string = string, M extends string = string> {
   /**
@@ -12,7 +15,7 @@ export interface OptionsBase<P extends string = string, M extends string = strin
   /**
    * Method name
    */
-  method?: M;
+  method: M;
   /**
    * The sample size to use. Should be non-negative integer.
    */

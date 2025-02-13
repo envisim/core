@@ -25,3 +25,8 @@ export {
   SAMPLE_SPATIALLY_BALANCED_METHODS,
   type SampleSpatiallyBalancedOptions,
 } from './sample-spatially-balanced.js';
+export {
+  sampleFiniteStratified,
+  sampleFiniteStratifiedOptionsCheck,
+  type SampleFiniteStratifiedOptions,
+} from './sample-stratified.js';

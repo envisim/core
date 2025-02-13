@@ -10,18 +10,18 @@ import {
   toLineObject,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
-import {throwRangeError} from '@envisim/utils';
 
 import {intersectLineSampleAreaFrame} from '../utils/index.js';
 import {
   OptionsBase,
   OptionsCircleConversion,
   OptionsParallelLines,
+  SampleError,
   optionsBaseCheck,
   optionsCircleConversionCheck,
   optionsParallelLinesCheck,
+  throwRangeError,
 } from './options.js';
-import {SampleError} from '~/errors/sample-error.js';
 
 export type SampleSystematicLinesOnAreas = OptionsBase &
   OptionsCircleConversion &

@@ -8,10 +8,8 @@ import {
   Point,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
-import {throwRangeError} from '@envisim/utils';
 
-import {OptionsBase, optionsBaseCheck} from './options.js';
-import {SampleError} from '~/errors/sample-error.js';
+import {OptionsBase, SampleError, optionsBaseCheck, throwRangeError} from './options.js';
 
 export type SamplePointsOnLinesOptions = OptionsBase;
 

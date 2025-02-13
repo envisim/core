@@ -1,15 +1,15 @@
 import {type FeatureCollection, PropertyRecord, type PureObject} from '@envisim/geojson-utils';
 import {lpm1, lpm2, scps} from '@envisim/sampling';
-import {throwRangeError} from '@envisim/utils';
 
 import {
   OptionsBase,
   OptionsSpatiallyBalanced,
+  SampleError,
   optionsBaseCheck,
   optionsSpatiallyBalancedCheck,
+  throwRangeError,
 } from './options.js';
 import {inclprobsFromLayer, returnCollectionFromSample, spreadMatrixFromLayer} from './utils.js';
-import {SampleError} from '~/errors/index.js';
 
 export const SAMPLE_SPATIALLY_BALANCED_METHODS = ['lpm1', 'lpm2', 'scps'] as const;
 export type SampleSpatiallyBalancedOptions<P extends string = string> = OptionsBase<

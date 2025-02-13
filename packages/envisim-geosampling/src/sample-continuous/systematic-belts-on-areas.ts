@@ -9,18 +9,20 @@ import {
   toAreaObject,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
-import {throwRangeError} from '@envisim/utils';
+import '@envisim/utils';
 
 import {intersectAreaSampleAreaFrame} from '../utils/index.js';
 import {
   OptionsBase,
   OptionsCircleConversion,
   OptionsParallelLines,
+  SAMPLE_ERROR_LIST,
+  SampleError,
   optionsBaseCheck,
   optionsCircleConversionCheck,
   optionsParallelLinesCheck,
+  throwRangeError,
 } from './options.js';
-import {SAMPLE_ERROR_LIST, SampleError} from '~/errors/sample-error.js';
 
 export interface SampleSystematicBeltsOnAreas
   extends OptionsBase,

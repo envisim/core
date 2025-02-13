@@ -5,17 +5,18 @@ import {
   type Point,
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
-import {throwRangeError} from '@envisim/utils';
 
 import {
   OptionsBase,
   OptionsCircleConversion,
   OptionsRotationOfGrid,
+  SAMPLE_ERROR_LIST,
+  SampleError,
   optionsBaseCheck,
   optionsCircleConversionCheck,
+  throwRangeError,
 } from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
-import {SAMPLE_ERROR_LIST, SampleError} from '~/errors/sample-error.js';
 
 export interface SampleRelascopePointsOptions<P extends string>
   extends OptionsBase,

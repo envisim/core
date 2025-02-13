@@ -5,7 +5,6 @@ import {
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
-import {throwRangeError} from '@envisim/utils';
 
 import {effectiveHalfWidth} from './distance-utils.js';
 import {
@@ -14,13 +13,14 @@ import {
   OptionsDistancePoints,
   OptionsParallelLines,
   OptionsRotationOfGrid,
+  SampleError,
   optionsBaseCheck,
   optionsCircleConversionCheck,
   optionsDistancePointsCheck,
   optionsParallelLinesCheck,
+  throwRangeError,
 } from './options.js';
 import {sampleSystematicLinesOnAreas} from './systematic-lines-on-areas.js';
-import {SampleError} from '~/errors/sample-error.js';
 
 export type SampleSystematicDistanceLinesOptions = OptionsBase &
   OptionsCircleConversion &
