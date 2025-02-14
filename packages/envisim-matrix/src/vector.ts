@@ -1,4 +1,4 @@
-import {Random, randomArray} from '@envisim/random';
+import {Random, RandomGenerator, randomArray, randomInt} from '@envisim/random';
 
 import {
   BaseMatrix,
@@ -104,12 +104,12 @@ export class Vector extends BaseMatrix {
    * @group Maps
    * @group Copy methods
    */
-  sortRandom(inPlace: boolean = false, rand: Random = new Random()): Vector {
+  sortRandom(inPlace: boolean = false, rand: RandomGenerator = new Random()): Vector {
     const N = this.len;
 
     if (inPlace === true) {
       for (let i = N - 1; i > 0; i--) {
-        const rnd = rand.intn(i + 1);
+        const rnd = randomInt(i + 1, rand);
         if (i !== rnd) this.swap(i, rnd);
       }
 
@@ -119,7 +119,7 @@ export class Vector extends BaseMatrix {
     const s = this.clone();
 
     for (let i = N - 1; i > 0; i--) {
-      const rnd = rand.intn(i + 1);
+      const rnd = randomInt(i + 1, rand);
       if (i !== rnd) s.swap(i, rnd);
     }
 
@@ -207,8 +207,8 @@ export class Vector extends BaseMatrix {
  * @param seed a seed used in the random number generator.
  * @returns a vector-like of random numbers on [0, 1).
  */
-export function randomVector(length: number, seed?: string | number): Vector {
-  return new Vector(randomArray(length, seed));
+export function randomVector(length: number, rand: RandomGenerator = new Random()): Vector {
+  return new Vector(randomArray(length, rand));
 }
 
 /**

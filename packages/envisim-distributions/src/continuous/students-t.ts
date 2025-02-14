@@ -1,3 +1,5 @@
+import {randomArray} from '@envisim/random';
+
 import {
   Distribution,
   Interval,
@@ -134,11 +136,14 @@ export class StudentsT extends Distribution<ParamsDegreesOfFreedom> {
     return q < 0.5 ? -ret : ret;
   }
 
-  override random(n: number = 1, {rand = randomOptionsDefault.rand}: RandomOptions = {}): number[] {
+  override random(
+    n: number = 1,
+    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
+  ): number[] {
     assertPositiveInteger(n);
 
     // Normal(0, 1)
-    const x1 = rand.floatArray(n).map((u) => stdNormalQuantile(u));
+    const x1 = randomArray(n, rand).map((u) => stdNormalQuantile(u));
     // Chi2(df)
     const x2 = randomShapeGamma(n, this.params * 0.5, rand, 2.0);
 

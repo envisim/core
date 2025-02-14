@@ -1,4 +1,4 @@
-import type {Random} from '@envisim/random';
+import {type RandomGenerator, randomArray} from '@envisim/random';
 
 import {type ParamsBeta} from '../params.js';
 import {pqMultiplied} from '../utils.js';
@@ -37,7 +37,7 @@ interface RandomBetaSmall {
 }
 
 // alpha, beta < 1
-function sakasegawaB00(n: number, a0: number, b0: number, rand: Random): number[] {
+function sakasegawaB00(n: number, a0: number, b0: number, rand: RandomGenerator): number[] {
   let t = (1.0 - a0) / (2.0 - a0 - b0);
   let s = (b0 - a0) * (1.0 - a0 - b0);
   let r = pqMultiplied(a0);
@@ -56,14 +56,17 @@ function sakasegawaB00(n: number, a0: number, b0: number, rand: Random): number[
   return rv;
 }
 
-function sakasegawaB00_inner(rand: Random, {a0, b0, t, s, r, p, q, c}: SakasegawaB00): number {
+function sakasegawaB00_inner(
+  rand: RandomGenerator,
+  {a0, b0, t, s, r, p, q, c}: SakasegawaB00,
+): number {
   let u1: number, u2: number, x: number;
 
   let run = 1;
   while (run++ <= 1e5) {
     // S1
-    u1 = rand.float() * (p + q);
-    u2 = rand.float();
+    u1 = rand.random() * (p + q);
+    u2 = rand.random();
 
     if (u1 <= p) {
       // S2
@@ -87,7 +90,7 @@ function sakasegawaB00_inner(rand: Random, {a0, b0, t, s, r, p, q, c}: Sakasegaw
   return NaN;
 }
 
-function randomBetaLarge(n: number, a0: number, b0: number, rand: Random): number[] {
+function randomBetaLarge(n: number, a0: number, b0: number, rand: RandomGenerator): number[] {
   const alpha = a0 + b0;
   const beta = Math.sqrt((alpha - 2.0) * (2 * a0 * b0 - alpha));
 
@@ -114,7 +117,7 @@ function randomBetaLarge(n: number, a0: number, b0: number, rand: Random): numbe
 }
 
 function randomBetaLarge_inner(
-  rand: Random,
+  rand: RandomGenerator,
   {a0small, alpha, beta, gamma, a, b}: RandomBetaLarge,
 ): number {
   let u: number, v: number, w: number, z: number;
@@ -123,10 +126,10 @@ function randomBetaLarge_inner(
 
   while (run++ <= 1e5) {
     // BB 1
-    u = rand.float();
+    u = rand.random();
     v = beta * Math.log(u / (1 - u));
     w = a * Math.exp(v);
-    z = u * u * rand.float();
+    z = u * u * rand.random();
     r = gamma * v - LOG4;
     s = a + r - w;
     // BB 2
@@ -145,7 +148,7 @@ function randomBetaLarge_inner(
   return NaN;
 }
 
-function randomBetaSmall(n: number, a0: number, b0: number, rand: Random): number[] {
+function randomBetaSmall(n: number, a0: number, b0: number, rand: RandomGenerator): number[] {
   const a0small: boolean = a0 <= b0;
   let a: number, b: number;
 
@@ -180,7 +183,7 @@ function randomBetaSmall(n: number, a0: number, b0: number, rand: Random): numbe
 }
 
 function randomBetaSmall_inner(
-  rand: Random,
+  rand: RandomGenerator,
   {a0small, alpha, beta, kappa1, kappa2, a, b}: RandomBetaSmall,
 ): number {
   let u1: number, u2: number, v: number, y: number, z: number;
@@ -189,8 +192,8 @@ function randomBetaSmall_inner(
   let runs = 1;
   while (runs++ <= 1e5) {
     // BC 1
-    u1 = rand.float();
-    u2 = rand.float();
+    u1 = rand.random();
+    u2 = rand.random();
     y = u1 * u2;
     z = u1 * y;
 
@@ -240,16 +243,16 @@ function randomBetaSmall_inner(
  * Communications of the ACM 21(4), 317-322.
  * https://doi.org/10.1145/359460.359482
  */
-export function randomBeta(n: number, params: ParamsBeta, rand: Random): number[] {
+export function randomBeta(n: number, params: ParamsBeta, rand: RandomGenerator): number[] {
   const {alpha, beta} = params;
-  if (alpha === 1.0 && beta === 1.0) return rand.floatArray(n);
+  if (alpha === 1.0 && beta === 1.0) return randomArray(n, rand);
   if (alpha === 1.0) {
     const pow = 1.0 / beta;
-    return rand.floatArray(n).map((e) => 1.0 - Math.pow(e, pow));
+    return randomArray(n, rand).map((e) => 1.0 - Math.pow(e, pow));
   }
   if (beta === 1.0) {
     const pow = 1.0 / alpha;
-    return rand.floatArray(n).map((e) => Math.pow(e, pow));
+    return randomArray(n, rand).map((e) => Math.pow(e, pow));
   }
 
   if (alpha <= 1.0 || beta <= 1.0) {

@@ -55,7 +55,10 @@ export class Poisson extends Distribution<ParamsRate> {
     return this.quantileCF(q, x, cdf);
   }
 
-  override random(n: number = 1, {rand = randomOptionsDefault.rand}: RandomOptions = {}): number[] {
+  override random(
+    n: number = 1,
+    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
+  ): number[] {
     assertPositiveInteger(n);
     return randomPoisson(n, this.params, rand);
   }

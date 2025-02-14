@@ -1,4 +1,4 @@
-import {Random} from '@envisim/random';
+import {Random, RandomGenerator, randomArray} from '@envisim/random';
 
 import {assertPositiveInteger} from './utils.js';
 
@@ -7,7 +7,7 @@ export interface RandomOptions {
    * An instance of {@link random.Random}
    * @defaultValue `new Random()`
    */
-  rand?: Random;
+  rand?: RandomGenerator;
   /**
    * Epsilon, used during comparisons of floats
    * @defaultValue `1e-12`
@@ -47,9 +47,12 @@ export abstract class Distribution<PAR> {
    * Generate random numbers from the distribution.
    * @param n the number of observations to be generated
    */
-  random(n: number = 1, opts: RandomOptions): number[] {
+  random(
+    n: number = 1,
+    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
+  ): number[] {
     assertPositiveInteger(n);
-    const u = (opts.rand ?? randomOptionsDefault.rand).floatArray(n);
+    const u = randomArray(n, rand);
     return u.map((v) => this.quantile(v));
   }
 

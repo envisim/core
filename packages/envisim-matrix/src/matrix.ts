@@ -1,4 +1,4 @@
-import {randomArray} from '@envisim/random';
+import {Random, RandomGenerator, randomArray} from '@envisim/random';
 import {reducedRowEchelonForm} from '@envisim/utils';
 
 import {BaseMatrix, type MatrixCallback, type MatrixDim} from './base-matrix.js';
@@ -465,8 +465,11 @@ export class Matrix extends BaseMatrix {
  *
  * @param seed A seed used in the random number generator.
  */
-export function randomMatrix([nrow, ncol]: MatrixDim, seed?: string | number): Matrix {
-  return new Matrix(randomArray(nrow * ncol, seed), nrow, true);
+export function randomMatrix(
+  [nrow, ncol]: MatrixDim,
+  generator: RandomGenerator = new Random(),
+): Matrix {
+  return new Matrix(randomArray(nrow * ncol, generator), nrow, true);
 }
 
 /**

@@ -1,3 +1,5 @@
+import {randomArray} from '@envisim/random';
+
 import {
   Distribution,
   Interval,
@@ -44,8 +46,11 @@ export class Exponential extends Distribution<ParamsRate> {
     return this.support.checkQuantile(q) ?? -Math.log(1.0 - q) / this.params;
   }
 
-  override random(n: number = 1, {rand = randomOptionsDefault.rand}: RandomOptions = {}): number[] {
-    return rand.floatArray(n).map((e) => -Math.log(1.0 - e) / this.params);
+  override random(
+    n: number = 1,
+    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
+  ): number[] {
+    return randomArray(n, rand).map((e) => -Math.log(1.0 - e) / this.params);
   }
 
   mean(): number {

@@ -1,4 +1,4 @@
-import {type Random} from '@envisim/random';
+import {type RandomGenerator} from '@envisim/random';
 
 import {
   Distribution,
@@ -64,7 +64,10 @@ export class Logarithmic extends Distribution<ParamsBernoulli> {
     return this.quantileCF(q, x, this.cdf(x));
   }
 
-  override random(n: number = 1, {rand = randomOptionsDefault.rand}: RandomOptions = {}): number[] {
+  override random(
+    n: number = 1,
+    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
+  ): number[] {
     assertPositiveInteger(n);
     const s = Array.from<number>({length: n});
     for (let i = 0; i < n; i++) {
@@ -110,13 +113,13 @@ export class Logarithmic extends Distribution<ParamsBernoulli> {
  * Journal of the Royal Statistical Society: Series C (Applied Statistics), 30(3), 249-253.
  * https://doi.org/10.2307/2346348
  */
-function randomLogarithmic(p: number, rand: Random): number {
+function randomLogarithmic(p: number, rand: RandomGenerator): number {
   // LK
   if (p >= 0.95) {
     const h = Math.log(1 - p);
-    const u2 = rand.float();
+    const u2 = rand.random();
     if (u2 > p) return 1;
-    const u1 = rand.float();
+    const u1 = rand.random();
     const q = 1 - Math.exp(u1 * h);
     if (u2 < Math.pow(q, 2)) return (1 + Math.log(u2) / Math.log(q)) | 0;
     if (u2 > q) return 1;
@@ -124,7 +127,7 @@ function randomLogarithmic(p: number, rand: Random): number {
   }
 
   // LS
-  let u = rand.float();
+  let u = rand.random();
   let x = 1;
   let f = -p / Math.log(1.0 - p);
 

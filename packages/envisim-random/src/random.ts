@@ -40,7 +40,7 @@
 // 1460910 and 1768863. (We use the largest one that's < 2^21)
 // ============================================================================
 
-class Random {
+export class Random {
   // set the 'order' number of ENTROPY-holding 32-bit values
   /** @ignore */
   private o: number = 48;
@@ -264,34 +264,3 @@ class Random {
     return u;
   }
 }
-
-/**
- * Shorthand constructor for {@link Random}.
- *
- * @param seed - Seed for random number generator.
- * @returns An initialized instance of {@link Random}.
- */
-const random = (seed?: number | string): Random => {
-  return new Random(seed);
-};
-
-/**
- * @param seed - Seed for random number generator
- * @returns Pseudo-random (uniform) number on the interval `[0.0, 1.0)`
- */
-const randomFloat = (seed?: number | string): number => {
-  return new Random(seed).float();
-};
-
-/**
- * Returns an array with psudo-random standard uniform elements.
- *
- * @param n - Length of array.
- * @param seed - Seed for random number generator.
- * @returns Pseudo-random (uniform) array with elements on the interval `[0.0, 1.0)`.
- */
-const randomArray = (n: number, seed?: number | string): number[] => {
-  return new Random(seed).floatArray(n);
-};
-
-export {Random, random, randomFloat, randomArray};
