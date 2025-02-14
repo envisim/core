@@ -1,5 +1,5 @@
 import {type Matrix} from '@envisim/matrix';
-import {Random} from '@envisim/random';
+import {Random, RandomGenerator, randomInt} from '@envisim/random';
 
 import {BASE_OPTIONS} from '../base-options/index.js';
 import {BaseSampling} from './base-sampling.js';
@@ -28,7 +28,7 @@ export class CorrelatedPoisson extends BaseSampling {
     N: number,
     treeBucketSize: number = BASE_OPTIONS.treeBucketSize,
     eps: number = BASE_OPTIONS.eps,
-    rand: Random = new Random(),
+    rand: RandomGenerator = new Random(),
   ) {
     super(xx, N, treeBucketSize, eps, rand);
 
@@ -70,7 +70,7 @@ export class CorrelatedPoisson extends BaseSampling {
   }
 
   randomStd(): number {
-    return this.rand.float();
+    return this.rand.random();
   }
 
   randomArr(id: number): number {
@@ -106,7 +106,7 @@ export class CorrelatedPoisson extends BaseSampling {
     }
 
     // Choose randomly from the units in candidates
-    this.drawUnit = candidates[this.rand.intn(candidates.length)];
+    this.drawUnit = candidates[randomInt(candidates.length, this.rand)];
   }
 
   drawScps(): void {

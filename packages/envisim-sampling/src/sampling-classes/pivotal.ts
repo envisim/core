@@ -1,5 +1,5 @@
 import {type Matrix} from '@envisim/matrix';
-import {Random} from '@envisim/random';
+import {Random, RandomGenerator, randomInt} from '@envisim/random';
 import {swap} from '@envisim/utils';
 
 import {BASE_OPTIONS} from '../base-options/index.js';
@@ -33,7 +33,7 @@ export class Pivotal extends BaseSampling {
     N: number,
     treeBucketSize: number = BASE_OPTIONS.treeBucketSize,
     eps: number = BASE_OPTIONS.eps,
-    rand: Random = new Random(),
+    rand: RandomGenerator = new Random(),
   ) {
     super(xx, N, treeBucketSize, eps, rand);
 
@@ -135,7 +135,7 @@ export class Pivotal extends BaseSampling {
       // If there are still units in candidates, we select randomly amongst these
       // candidates, and return. Otherwise, we continue looking.
       if (len > 0) {
-        this.pair[1] = candidates[this.rand.intn(len)];
+        this.pair[1] = candidates[randomInt(len, this.rand)];
         return;
       }
     }
@@ -144,7 +144,7 @@ export class Pivotal extends BaseSampling {
   drawLpm2(): void {
     this.pair[0] = this.idx.draw(this.rand);
     this.tree.findNeighbours(this.store, this.pair[0]);
-    const k = this.rand.intn(this.store.getSize());
+    const k = randomInt(this.store.getSize(), this.rand);
     this.pair[1] = this.store.neighbours[k];
 
     return;
@@ -202,7 +202,7 @@ export class Pivotal extends BaseSampling {
 
       // If we found one or more mutual neighbours, we select one at random
       if (len > 0) {
-        this.pair[1] = candidates[this.rand.intn(len)];
+        this.pair[1] = candidates[randomInt(len, this.rand)];
         return;
       }
 
@@ -217,7 +217,7 @@ export class Pivotal extends BaseSampling {
 
       // We select a unit at random to become the next history unit, and traverse
       // one step further.
-      const k = this.rand.intn(candidates.length);
+      const k = randomInt(candidates.length, this.rand);
       this.history.push(candidates[k]);
     }
   }
@@ -228,7 +228,7 @@ export class Pivotal extends BaseSampling {
     // If unit i == j, then set j = N
     this.pair[0] = this.idx.draw(this.rand);
     const len = this.idx.length() - 1;
-    this.pair[1] = this.idx.getId(this.rand.intn(len));
+    this.pair[1] = this.idx.getId(randomInt(len, this.rand));
 
     if (this.pair[0] == this.pair[1]) this.pair[1] = this.idx.getId(len);
 
@@ -277,7 +277,7 @@ export class Pivotal extends BaseSampling {
     const psum = this.probabilities[id1] + this.probabilities[id2];
 
     if (psum > 1.0) {
-      if (1.0 - this.probabilities[id2] > this.rand.float() * (2.0 - psum)) {
+      if (1.0 - this.probabilities[id2] > this.rand.random() * (2.0 - psum)) {
         this.probabilities[id1] = 1.0;
         this.probabilities[id2] = psum - 1.0;
       } else {
@@ -285,7 +285,7 @@ export class Pivotal extends BaseSampling {
         this.probabilities[id2] = 1.0;
       }
     } else {
-      if (this.probabilities[id2] > this.rand.float() * psum) {
+      if (this.probabilities[id2] > this.rand.random() * psum) {
         this.probabilities[id1] = 0.0;
         this.probabilities[id2] = psum;
       } else {
@@ -306,7 +306,7 @@ export class Pivotal extends BaseSampling {
 
     if (this.idx.length() === 1) {
       const id = this.idx.getId(0);
-      this.probabilities[id] = this.rand.float() < this.probabilities[id] ? 1.0 : 0.0;
+      this.probabilities[id] = this.rand.random() < this.probabilities[id] ? 1.0 : 0.0;
       this.resolveUnit(id);
     }
   }
@@ -317,7 +317,7 @@ export class Pivotal extends BaseSampling {
     const psum = this.probabilities[id1] + this.probabilities[id2];
 
     if (psum > this.N) {
-      if (this.N - this.probabilities[id2] > this.rand.intn(2 * this.N - psum)) {
+      if (this.N - this.probabilities[id2] > randomInt(2 * this.N - psum, this.rand)) {
         this.probabilities[id1] = this.N;
         this.probabilities[id2] = psum - this.N;
       } else {
@@ -325,7 +325,7 @@ export class Pivotal extends BaseSampling {
         this.probabilities[id2] = this.N;
       }
     } else {
-      if (this.probabilities[id2] > this.rand.intn(psum)) {
+      if (this.probabilities[id2] > randomInt(psum, this.rand)) {
         this.probabilities[id1] = 0;
         this.probabilities[id2] = psum;
       } else {
@@ -346,7 +346,7 @@ export class Pivotal extends BaseSampling {
 
     if (this.idx.length() === 1) {
       const id = this.idx.getId(0);
-      this.probabilities[id] = this.rand.intn(this.N) < this.probabilities[id] ? this.N : 0;
+      this.probabilities[id] = randomInt(this.N, this.rand) < this.probabilities[id] ? this.N : 0;
       this.resolveUnitInt(id);
     }
   }

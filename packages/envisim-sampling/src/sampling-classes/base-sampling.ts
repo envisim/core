@@ -1,5 +1,5 @@
 import {Matrix} from '@envisim/matrix';
-import type {Random} from '@envisim/random';
+import type {RandomGenerator} from '@envisim/random';
 
 import {BASE_OPTIONS} from '../base-options/index.js';
 import {IndexList, KdStore, KdTree} from '../util-classes/index.js';
@@ -11,7 +11,7 @@ export abstract class BaseSampling {
 
   N: number;
   eps: number = BASE_OPTIONS.eps;
-  rand: Random;
+  rand: RandomGenerator;
 
   idx!: IndexList;
   tree!: KdTree;
@@ -25,7 +25,7 @@ export abstract class BaseSampling {
     N: number,
     treeBucketSize: number,
     eps: number,
-    rand: Random,
+    rand: RandomGenerator,
     setTree = true,
   ) {
     this.N = N;

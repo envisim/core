@@ -24,7 +24,7 @@ export function srswor({n, N, rand = BASE_OPTIONS.rand}: SrsOptions): number[] {
   let ns = 0;
 
   for (let i = 0; i < N; i++) {
-    if (rand.float() < (nn - ns) / (N - i)) {
+    if (rand.random() < (nn - ns) / (N - i)) {
       s[ns] = i;
       ns++;
     }
@@ -47,7 +47,7 @@ export function srswr({n, N, rand = BASE_OPTIONS.rand}: SrsOptions): number[] {
   s.length = n;
 
   for (let i = 0; i < n; i++) {
-    s[i] = Math.floor(rand.float() * N);
+    s[i] = Math.floor(rand.random() * N);
   }
 
   s.sort((a, b) => a - b);

@@ -1,12 +1,8 @@
-import {Random} from '@envisim/random';
-
-export class RandomMock extends Random {
+export class RandomMock {
   i = 0;
   arr: number[];
 
   constructor(arr: number | number[] = 0.1) {
-    super();
-
     if (typeof arr === 'number') {
       this.arr = [arr];
       return this;
@@ -16,15 +12,9 @@ export class RandomMock extends Random {
     return this;
   }
 
-  float() {
+  random() {
     if (this.i === this.arr.length) this.resetCounter();
     const v = this.arr[this.i++];
-    return v;
-  }
-
-  intn(len: number) {
-    if (this.i === this.arr.length) this.resetCounter();
-    const v = Math.floor(this.arr[this.i++] * len);
     return v;
   }
 

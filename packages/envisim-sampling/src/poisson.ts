@@ -13,7 +13,7 @@ export function poissonSampling({probabilities, rand = BASE_OPTIONS.rand}: PipsO
 
   let j = 0;
   probabilities.forEach((value, index) => {
-    if (rand.float() <= value) s[j++] = index;
+    if (rand.random() <= value) s[j++] = index;
   });
 
   s.splice(j);

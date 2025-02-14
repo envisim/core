@@ -1,5 +1,5 @@
 import {type Matrix, type Vector} from '@envisim/matrix';
-import {Random} from '@envisim/random';
+import {Random, RandomGenerator} from '@envisim/random';
 
 export interface BaseOptions {
   /**
@@ -8,10 +8,9 @@ export interface BaseOptions {
    */
   eps?: number;
   /**
-   * An instance of {@link random.Random}
    * @defaultValue `new Random()`
    */
-  rand?: Random;
+  rand?: RandomGenerator;
   /**
    * The bucket size to use when building k-d-trees
    * @defaultValue `40`
