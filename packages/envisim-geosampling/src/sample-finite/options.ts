@@ -2,7 +2,7 @@ import {PropertyRecord} from '@envisim/geojson-utils';
 import {type Random} from '@envisim/random';
 import {throwRangeError} from '@envisim/utils';
 
-import {SAMPLE_ERROR_LIST, type SampleError} from '~/errors/index.js';
+import {SAMPLE_ERROR_LIST, type SampleError} from '../errors/index.js';
 
 export {SAMPLE_ERROR_LIST, type SampleError, throwRangeError};
 

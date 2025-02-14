@@ -14,9 +14,6 @@
     "allowJs": true,
 
     "outDir": "${configDir}/dist",
-    "rootDir": "${configDir}/src",
-    "paths": {
-      "~/*": ["${configDir}/src/*"]
-    }
+    "rootDir": "${configDir}/src"
   }
 }

@@ -2,8 +2,8 @@ import {type CirclesToPolygonsOptions, FeatureCollection, type Point} from '@env
 import {type RandomGenerator} from '@envisim/random';
 import {throwRangeError} from '@envisim/utils';
 
+import {SAMPLE_ERROR_LIST, type SampleError} from '../errors/index.js';
 import {type DetectionFunction} from './distance-utils.js';
-import {SAMPLE_ERROR_LIST, type SampleError} from '~/errors/index.js';
 
 export {SAMPLE_ERROR_LIST, type SampleError, throwRangeError};
 
