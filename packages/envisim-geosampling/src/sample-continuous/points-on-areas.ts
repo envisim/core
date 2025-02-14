@@ -14,11 +14,11 @@ import {
 import {Random} from '@envisim/random';
 
 import {
-  OptionsBase,
-  OptionsCircleConversion,
-  OptionsRotationOfGrid,
+  type OptionsBase,
+  type OptionsCircleConversion,
+  type OptionsRotationOfGrid,
   SAMPLE_ERROR_LIST,
-  SampleError,
+  type SampleError,
   optionsBaseCheck,
   optionsCircleConversionCheck,
   throwRangeError,

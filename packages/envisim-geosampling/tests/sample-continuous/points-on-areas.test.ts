@@ -2,7 +2,7 @@ import {expect, test} from 'vitest';
 
 import {Feature, FeatureCollection, Polygon} from '@envisim/geojson-utils';
 
-import {samplePointsOnAreas} from '../../src/sample-continuous/points-on-areas.js';
+import {samplePointsOnAreas} from '../../src/sample-continuous/index.js';
 
 const polygon = Polygon.create([
   [

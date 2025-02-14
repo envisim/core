@@ -1,10 +1,10 @@
-import {type FeatureCollection, PropertyRecord, type PureObject} from '@envisim/geojson-utils';
+import {type FeatureCollection, type PropertyRecord, type PureObject} from '@envisim/geojson-utils';
 import {cube} from '@envisim/sampling';
 
 import {
   type OptionsBalanced,
-  OptionsBase,
-  SampleError,
+  type OptionsBase,
+  type SampleError,
   optionsBalancedCheck,
   optionsBaseCheck,
   throwRangeError,

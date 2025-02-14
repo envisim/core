@@ -1,8 +1,8 @@
-import {CirclesToPolygonsOptions, FeatureCollection, Point} from '@envisim/geojson-utils';
+import {type CirclesToPolygonsOptions, FeatureCollection, type Point} from '@envisim/geojson-utils';
 import {type RandomGenerator} from '@envisim/random';
 import {throwRangeError} from '@envisim/utils';
 
-import {DetectionFunction} from './distance-utils.js';
+import {type DetectionFunction} from './distance-utils.js';
 import {SAMPLE_ERROR_LIST, type SampleError} from '~/errors/index.js';
 
 export {SAMPLE_ERROR_LIST, type SampleError, throwRangeError};

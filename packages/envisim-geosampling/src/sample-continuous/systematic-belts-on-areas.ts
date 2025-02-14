@@ -8,26 +8,24 @@ import {
   cutAreaGeometry,
   toAreaObject,
 } from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
+import {Random, type RandomGenerator} from '@envisim/random';
 import '@envisim/utils';
 
 import {intersectAreaSampleAreaFrame} from '../utils/index.js';
 import {
-  OptionsBase,
-  OptionsCircleConversion,
-  OptionsParallelLines,
+  type OptionsCircleConversion,
+  type OptionsParallelLines,
   SAMPLE_ERROR_LIST,
-  SampleError,
-  optionsBaseCheck,
+  type SampleError,
   optionsCircleConversionCheck,
   optionsParallelLinesCheck,
   throwRangeError,
 } from './options.js';
 
 export interface SampleSystematicBeltsOnAreas
-  extends OptionsBase,
-    OptionsCircleConversion,
+  extends OptionsCircleConversion,
     OptionsParallelLines {
+  rand?: RandomGenerator;
   /**
    * The half-width of the belt.
    */
@@ -41,11 +39,7 @@ export function sampleSystematicBeltsOnAreasCheck(
     return SAMPLE_ERROR_LIST.HALF_WIDTH_NOT_POSITIVE;
   }
 
-  return (
-    optionsBaseCheck(options) ||
-    optionsCircleConversionCheck(options) ||
-    optionsParallelLinesCheck(options)
-  );
+  return optionsCircleConversionCheck(options) || optionsParallelLinesCheck(options);
 }
 
 /**

@@ -1,10 +1,10 @@
-import {type FeatureCollection, PropertyRecord, type PureObject} from '@envisim/geojson-utils';
+import {type FeatureCollection, type PropertyRecord, type PureObject} from '@envisim/geojson-utils';
 import {lpm1, lpm2, scps} from '@envisim/sampling';
 
 import {
-  OptionsBase,
-  OptionsSpatiallyBalanced,
-  SampleError,
+  type OptionsBase,
+  type OptionsSpatiallyBalanced,
+  type SampleError,
   optionsBaseCheck,
   optionsSpatiallyBalancedCheck,
   throwRangeError,

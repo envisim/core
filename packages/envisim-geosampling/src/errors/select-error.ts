@@ -1,4 +1,4 @@
-import {ErrorType} from './utils.js';
+import {type ErrorType} from './utils.js';
 
 export const SELECT_ERROR_LIST = {
   // select general

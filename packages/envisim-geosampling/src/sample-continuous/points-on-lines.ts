@@ -9,7 +9,7 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {OptionsBase, SampleError, optionsBaseCheck, throwRangeError} from './options.js';
+import {type OptionsBase, type SampleError, optionsBaseCheck, throwRangeError} from './options.js';
 
 export type SamplePointsOnLinesOptions = OptionsBase;
 

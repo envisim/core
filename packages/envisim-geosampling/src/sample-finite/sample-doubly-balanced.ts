@@ -1,11 +1,11 @@
-import {type FeatureCollection, PropertyRecord, type PureObject} from '@envisim/geojson-utils';
+import {type FeatureCollection, type PropertyRecord, type PureObject} from '@envisim/geojson-utils';
 import {localCube} from '@envisim/sampling';
 
 import {
-  OptionsBalanced,
-  OptionsBase,
-  OptionsSpatiallyBalanced,
-  SampleError,
+  type OptionsBalanced,
+  type OptionsBase,
+  type OptionsSpatiallyBalanced,
+  type SampleError,
   optionsBalancedCheck,
   optionsBaseCheck,
   optionsSpatiallyBalancedCheck,

@@ -10,11 +10,11 @@ import {Random} from '@envisim/random';
 
 import {effectiveRadius} from './distance-utils.js';
 import {
-  OptionsBase,
-  OptionsCircleConversion,
-  OptionsDistancePoints,
-  OptionsRotationOfGrid,
-  SampleError,
+  type OptionsBase,
+  type OptionsCircleConversion,
+  type OptionsDistancePoints,
+  type OptionsRotationOfGrid,
+  type SampleError,
   optionsBaseCheck,
   optionsCircleConversionCheck,
   optionsDistancePointsCheck,

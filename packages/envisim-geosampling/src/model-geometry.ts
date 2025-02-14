@@ -16,7 +16,7 @@ import {
   cutLineGeometry,
   typeGuards,
 } from '@envisim/geojson-utils';
-import {RandomGenerator} from '@envisim/random';
+import {type RandomGenerator} from '@envisim/random';
 
 // This file has a set of functions to deal with a model
 // geometry (tract), which is a GeoJSON geometry with cartesian

@@ -4,17 +4,15 @@ import {
   type Point,
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
+import {Random, type RandomGenerator} from '@envisim/random';
 
 import {effectiveHalfWidth} from './distance-utils.js';
 import {
-  OptionsBase,
-  OptionsCircleConversion,
-  OptionsDistancePoints,
-  OptionsParallelLines,
-  OptionsRotationOfGrid,
-  SampleError,
-  optionsBaseCheck,
+  type OptionsCircleConversion,
+  type OptionsDistancePoints,
+  type OptionsParallelLines,
+  type OptionsRotationOfGrid,
+  type SampleError,
   optionsCircleConversionCheck,
   optionsDistancePointsCheck,
   optionsParallelLinesCheck,
@@ -22,17 +20,18 @@ import {
 } from './options.js';
 import {sampleSystematicLinesOnAreas} from './systematic-lines-on-areas.js';
 
-export type SampleSystematicDistanceLinesOptions = OptionsBase &
-  OptionsCircleConversion &
-  OptionsParallelLines &
-  OptionsRotationOfGrid &
-  OptionsDistancePoints;
+export interface SampleSystematicDistanceLinesOptions
+  extends OptionsCircleConversion,
+    OptionsParallelLines,
+    OptionsRotationOfGrid,
+    OptionsDistancePoints {
+  rand?: RandomGenerator;
+}
 
 export function sampleSystematicDistanceLinesCheck(
   options: SampleSystematicDistanceLinesOptions,
 ): SampleError {
   return (
-    optionsBaseCheck(options) ||
     optionsCircleConversionCheck(options) ||
     optionsParallelLinesCheck(options) ||
     optionsDistancePointsCheck(options)

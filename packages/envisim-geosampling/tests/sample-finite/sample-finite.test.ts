@@ -2,8 +2,7 @@ import {expect, test} from 'vitest';
 
 import {FeatureCollection, type GeoJSON as GJ, Point} from '@envisim/geojson-utils';
 
-import {sampleFinite} from '../../src/sample-finite/sample-finite.js';
-import {sampleSpatiallyBalanced} from '../../src/sample-finite/sample-spatially-balanced.js';
+import {sampleFinite, sampleSpatiallyBalanced} from '../../src/sample-finite/index.js';
 
 // Create a layer with N random points
 const N = 1000;

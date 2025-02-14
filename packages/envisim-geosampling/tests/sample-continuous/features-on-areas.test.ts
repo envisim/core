@@ -6,7 +6,7 @@ import {pointGeometry, squareAreaGeometry} from '../../src/model-geometry.js';
 import {
   sampleAreaFeaturesOnAreas,
   samplePointFeaturesOnAreas,
-} from '../../src/sample-continuous/features-on-areas.js';
+} from '../../src/sample-continuous/index.js';
 
 const polygon = Polygon.create([
   [

@@ -1,4 +1,4 @@
-import {type FeatureCollection, PropertyRecord, type PureObject} from '@envisim/geojson-utils';
+import {type FeatureCollection, type PropertyRecord, type PureObject} from '@envisim/geojson-utils';
 import {
   brewer,
   pareto,
@@ -13,7 +13,7 @@ import {
   systematic,
 } from '@envisim/sampling';
 
-import {type OptionsBase, SampleError, optionsBaseCheck, throwRangeError} from './options.js';
+import {type OptionsBase, type SampleError, optionsBaseCheck, throwRangeError} from './options.js';
 import {drawprobsFromLayer, inclprobsFromLayer, returnCollectionFromSample} from './utils.js';
 
 export const SAMPLE_FINITE_METHODS_WR = ['srs-wr', 'pps-wr'] as const;

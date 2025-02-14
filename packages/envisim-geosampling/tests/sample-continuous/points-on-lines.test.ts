@@ -2,7 +2,7 @@ import {expect, test} from 'vitest';
 
 import {Feature, FeatureCollection, LineString} from '@envisim/geojson-utils';
 
-import {samplePointsOnLines} from '../../src/sample-continuous/points-on-lines.js';
+import {samplePointsOnLines} from '../../src/sample-continuous/index.js';
 
 const ls = LineString.create([
   [0, 0],

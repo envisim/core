@@ -9,32 +9,28 @@ import {
   cutLineGeometry,
   toLineObject,
 } from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
+import {Random, type RandomGenerator} from '@envisim/random';
 
 import {intersectLineSampleAreaFrame} from '../utils/index.js';
 import {
-  OptionsBase,
-  OptionsCircleConversion,
-  OptionsParallelLines,
-  SampleError,
-  optionsBaseCheck,
+  type OptionsCircleConversion,
+  type OptionsParallelLines,
+  type SampleError,
   optionsCircleConversionCheck,
   optionsParallelLinesCheck,
   throwRangeError,
 } from './options.js';
 
-export type SampleSystematicLinesOnAreas = OptionsBase &
-  OptionsCircleConversion &
-  OptionsParallelLines;
+export interface SampleSystematicLinesOnAreas
+  extends OptionsCircleConversion,
+    OptionsParallelLines {
+  rand?: RandomGenerator;
+}
 
 export function sampleSystematicLinesOnAreasCheck(
   options: SampleSystematicLinesOnAreas,
 ): SampleError {
-  return (
-    optionsBaseCheck(options) ||
-    optionsCircleConversionCheck(options) ||
-    optionsParallelLinesCheck(options)
-  );
+  return optionsCircleConversionCheck(options) || optionsParallelLinesCheck(options);
 }
 
 /**

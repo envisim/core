@@ -6,7 +6,7 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {OptionsBase, SampleError, optionsBaseCheck, throwRangeError} from './options.js';
+import {type OptionsBase, type SampleError, optionsBaseCheck, throwRangeError} from './options.js';
 
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;
