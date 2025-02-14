@@ -1,14 +1,6 @@
 export * from './sample-continuous/index.js';
 export * from './sample-finite/index.js';
 
-// Stratified
-export {
-  sampleStratified,
-  sampleStratifiedOptionsCheck,
-  type SampleStratifiedOptions,
-  type SampleContinuousOptions,
-} from './sample-stratified.js';
-
 // Model geometries/tracts
 export {
   radiusOfModelGeometry,
@@ -30,7 +22,7 @@ export {
 } from './model-geometry.js';
 
 // Collection from layers
-export {collectProperties, collectPropertyRecord} from './collect/index.js';
+export {collectProperties, collectPropertyRecord} from './collect-properties.js';
 
 // Select from layers
 export {
@@ -40,7 +32,7 @@ export {
   selectLineintersectsArea,
   selectLineintersectsLine,
   selectPointintersectsArea,
-} from './select/index.js';
+} from './select-intersects.js';
 
 // Point processes
 export {

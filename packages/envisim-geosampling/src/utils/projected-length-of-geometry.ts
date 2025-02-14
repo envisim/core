@@ -10,7 +10,7 @@ import {
   longitudeCenter,
 } from '@envisim/geojson-utils';
 
-type TdistCoord = {
+type DistCoord = {
   dist: number;
   type: 'start' | 'end';
 };
@@ -22,7 +22,7 @@ function distCoordsForLineString(
   lineString: GJ.Position[],
   refPointLonLat: GJ.Position,
   azimuth: number,
-): TdistCoord[] {
+): DistCoord[] {
   let minDist = Infinity;
   let maxDist = -Infinity;
 
@@ -46,8 +46,8 @@ function distCoordsForMultiLineString(
   multiLineString: GJ.Position[][],
   refPointLonLat: GJ.Position,
   azimuth: number,
-): TdistCoord[] {
-  let distCoords: TdistCoord[] = [];
+): DistCoord[] {
+  let distCoords: DistCoord[] = [];
 
   multiLineString.forEach((lineString) => {
     distCoords = distCoords.concat(distCoordsForLineString(lineString, refPointLonLat, azimuth));
@@ -56,7 +56,7 @@ function distCoordsForMultiLineString(
 }
 
 // Internal, used for computing projected length.
-function lengthFromDistCoords(distCoords: TdistCoord[]): number {
+function lengthFromDistCoords(distCoords: DistCoord[]): number {
   // Sort distCoords by dist first
   // then loop over all to find length of
   // union.
