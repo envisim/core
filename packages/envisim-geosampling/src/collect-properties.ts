@@ -75,13 +75,13 @@ function aggregateInPlace(
           const value = fromProperty.values[index];
           // Only collect if value is equal to value
           if (from.properties[fromID] === value) {
-            (to.properties[id] as number) += opts.intersectSize * factor;
+            (to.properties[id] as number) += (opts.intersectSize / to.measure()) * factor;
           }
         }
       } else {
         // Collect from numerical (same key)
         (to.properties[id] as number) +=
-          (from.properties[id] as number) * opts.intersectSize * factor;
+          (((from.properties[id] as number) * opts.intersectSize) / to.measure()) * factor;
       }
     }
   }

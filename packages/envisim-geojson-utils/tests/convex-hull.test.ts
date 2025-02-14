@@ -19,11 +19,11 @@ const positions2: GJ.Position[] = [
 ];
 
 const pc = FeatureCollection.newPoint();
-pc.addGeometry(MultiPoint.create(positions));
+pc.addGeometry(MultiPoint.create(positions), {});
 const hull = convexHull(pc);
 
 const pc2 = FeatureCollection.newPoint();
-pc2.addGeometry(MultiPoint.create(positions2));
+pc2.addGeometry(MultiPoint.create(positions2), {});
 const hull2 = convexHull(pc2);
 
 test('convexHull', () => {
