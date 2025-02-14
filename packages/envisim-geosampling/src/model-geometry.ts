@@ -96,6 +96,7 @@ export function placeAreaGeometry(
     ? Polygon.create(geom.coordinates, true)
     : MultiPolygon.create(geom.coordinates, true);
 }
+
 export function placeLineGeometry(
   position: GJ.Position,
   {modelGeometry, ...opts}: PlaceOptions<GJ.LineObject>,
@@ -150,63 +151,50 @@ export function placePointGeometry(
  * @param geometry a GeoJSON geometry (not geometry collection).
  * @returns the maximum distance from (0,0) to any point in the given geometry.
  */
-export function radiusOfModelGeometry(geometry: GJ.AreaObject | GJ.LineObject | GJ.PointObject) {
-  let maxRadius = 0;
+export function radiusOfModelGeometry(geometry: GJ.SingleTypeObject) {
   switch (geometry.type) {
     case 'Point':
-      if (typeGuards.isCircle(geometry)) {
-        maxRadius =
-          Math.sqrt(
-            geometry.coordinates[0] * geometry.coordinates[0] +
-              geometry.coordinates[1] * geometry.coordinates[1],
-          ) + geometry.radius;
-      } else {
-        maxRadius = Math.sqrt(
+      return (
+        Math.sqrt(
           geometry.coordinates[0] * geometry.coordinates[0] +
             geometry.coordinates[1] * geometry.coordinates[1],
-        );
-      }
-      break;
+        ) + ((geometry as GJ.Circle).radius ?? 0.0)
+      );
+
     case 'MultiPoint':
-      geometry.coordinates.forEach((coord) => {
-        const radius = Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]);
-        if (typeGuards.isMultiCircle(geometry)) {
-          maxRadius = Math.max(maxRadius, radius + geometry.radius);
-        } else {
-          maxRadius = Math.max(maxRadius, radius);
-        }
-      });
-      break;
+      return (
+        Math.sqrt(geometry.coordinates.reduce((a, b) => Math.max(a, b[0] ** 2 + b[1] ** 2), 0.0)) +
+        ((geometry as GJ.MultiCircle).radius ?? 0.0)
+      );
+
     case 'LineString':
-      geometry.coordinates.forEach((coord) => {
-        maxRadius = Math.max(maxRadius, Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]));
-      });
-      break;
+      return Math.sqrt(
+        geometry.coordinates.reduce((a, b) => Math.max(a, b[0] ** 2 + b[1] ** 2), 0.0),
+      );
+
     case 'MultiLineString':
-      geometry.coordinates.forEach((coords) => {
-        coords.forEach((coord) => {
-          maxRadius = Math.max(maxRadius, Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]));
-        });
-      });
-      break;
+      return Math.sqrt(
+        geometry.coordinates.reduce(
+          (a, ls) => ls.reduce((b, c) => Math.max(b, c[0] ** 2 + c[1] ** 2), a),
+          0.0,
+        ),
+      );
+
     case 'Polygon':
       // Outer ring is sufficient.
-      geometry.coordinates[0].forEach((coord) => {
-        maxRadius = Math.max(maxRadius, Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]));
-      });
-      break;
+      return Math.sqrt(
+        geometry.coordinates[0].reduce((a, b) => Math.max(a, b[0] ** 2 + b[1] ** 2), 0.0),
+      );
+
     case 'MultiPolygon':
-      geometry.coordinates.forEach((coords) => {
-        // Outer ring for each polygon is sufficient.
-        coords[0].forEach((coord) => {
-          maxRadius = Math.max(maxRadius, Math.sqrt(coord[0] * coord[0] + coord[1] * coord[1]));
-        });
-      });
-      break;
-    default:
-      throw new Error('Needs a type geometry.');
+      // Outer ring for each polygon is sufficient.
+      return Math.sqrt(
+        geometry.coordinates.reduce(
+          (a, ls) => ls[0].reduce((b, c) => Math.max(b, c[0] ** 2 + c[1] ** 2), a),
+          0.0,
+        ),
+      );
   }
-  return maxRadius;
 }
 
 // Internal.
@@ -250,34 +238,28 @@ function areaOfSinglePolygon(coords: GJ.Position[][]): number {
  * @param geometry a GeoJSON geometry (not geometry collection).
  * @returns the size of the geometry.
  */
-export function sizeOfModelGeometry(
-  geometry: GJ.AreaObject | GJ.LineObject | GJ.PointObject,
-): number {
+export function sizeOfModelGeometry(geometry: GJ.SingleTypeObject): number {
   switch (geometry.type) {
     case 'Point':
-      if (typeGuards.isCircle(geometry)) {
-        return Math.PI * geometry.radius * geometry.radius;
-      } else {
-        return 1;
-      }
+      return typeGuards.isCircle(geometry) ? Math.PI * geometry.radius * geometry.radius : 1;
+
     case 'MultiPoint':
-      if (typeGuards.isMultiCircle(geometry)) {
-        return Math.PI * geometry.radius * geometry.radius * geometry.coordinates.length;
-      } else {
-        return geometry.coordinates.length;
-      }
+      return (
+        (typeGuards.isMultiCircle(geometry) ? Math.PI * geometry.radius * geometry.radius : 1) *
+        geometry.coordinates.length
+      );
+
     case 'LineString':
       return lengthOfLineString(geometry.coordinates);
+
     case 'MultiLineString':
       return geometry.coordinates.reduce((size, coords) => size + lengthOfLineString(coords), 0.0);
+
     case 'Polygon':
       return areaOfSinglePolygon(geometry.coordinates);
+
     case 'MultiPolygon':
       return geometry.coordinates.reduce((size, coords) => size + areaOfSinglePolygon(coords), 0.0);
-    /*case 'GeometryCollection':
-      return geometry.geometries.reduce((size, g) => size + sizeOfModelGeometry(g), 0.0);*/
-    default:
-      throw new Error('Not a geometry.');
   }
 }
 
@@ -287,12 +269,11 @@ export function sizeOfModelGeometry(
 /**
  * Returns a model geometry with a straight line (north-south direction).
  *
- * @param length the length of the line in meters.
+ * @param sideLength the length of the line in meters.
  * @returns a model geometry.
  */
-export function straightLineGeometry(length: number): GJ.LineObject {
-  const sideLength = length || 100;
-  const halfSide = sideLength / 2;
+export function straightLineGeometry(sideLength: number = 100.0): GJ.LineObject {
+  const halfSide = sideLength * 0.5;
   return {
     type: 'LineString',
     coordinates: [
@@ -308,9 +289,8 @@ export function straightLineGeometry(length: number): GJ.LineObject {
  * @param sideLength length of side in meters.
  * @returns a model geometry.
  */
-export function ellLineGeometry(sideLength: number): GJ.LineObject {
-  const length = sideLength || 100;
-  const halfSide = length / 2;
+export function ellLineGeometry(sideLength: number = 100.0): GJ.LineObject {
+  const halfSide = sideLength * 0.5;
   return {
     type: 'LineString',
     coordinates: [
@@ -324,13 +304,16 @@ export function ellLineGeometry(sideLength: number): GJ.LineObject {
 /**
  * Returns a rectangular-shaped line model geometry.
  *
- * @param sideLength1 length of side west-east in meters.
- * @param sideLength2 length of side south-north in meters.
+ * @param width length of side west-east in meters.
+ * @param height length of side south-north in meters.
  * @returns a model geometry.
  */
-export function rectangularLineGeometry(sideLength1: number, sideLength2: number): GJ.LineObject {
-  const halfSide1 = (sideLength1 || 100) / 2;
-  const halfSide2 = (sideLength2 || 100) / 2;
+export function rectangularLineGeometry(
+  width: number = 100.0,
+  height: number = 100.0,
+): GJ.LineObject {
+  const halfSide1 = width * 0.5;
+  const halfSide2 = height * 0.5;
   return {
     type: 'LineString',
     coordinates: [
@@ -350,7 +333,7 @@ export function rectangularLineGeometry(sideLength1: number, sideLength2: number
  * @param sideLength2 length of side south-north in meters.
  * @returns a model geometry.
  */
-export function squareLineGeometry(sideLength: number): GJ.LineObject {
+export function squareLineGeometry(sideLength: number = 100.0): GJ.LineObject {
   return rectangularLineGeometry(sideLength, sideLength);
 }
 
@@ -360,12 +343,11 @@ export function squareLineGeometry(sideLength: number): GJ.LineObject {
  * @param radius the radius in meters.
  * @returns a model geometry.
  */
-export function circleAreaGeometry(radius: number): GJ.AreaObject {
-  const r = radius || 10;
+export function circleAreaGeometry(radius: number = 10.0): GJ.AreaObject {
   return {
     type: 'Point',
     coordinates: [0, 0],
-    radius: r,
+    radius,
   };
 }
 
@@ -377,13 +359,14 @@ export function circleAreaGeometry(radius: number): GJ.AreaObject {
  * @param radius the radius in meters.
  * @returns a model geometry.
  */
-export function squareCircleAreaGeometry(sideLength: number, radius: number): GJ.AreaObject {
-  const r = radius || 10;
-  const length = sideLength || 100;
-  const halfSide = length / 2;
+export function squareCircleAreaGeometry(
+  sideLength: number = 100.0,
+  radius: number = 10.0,
+): GJ.AreaObject {
+  const halfSide = sideLength * 0.5;
   return {
     type: 'MultiPoint',
-    radius: r,
+    radius: radius,
     coordinates: [
       [halfSide, halfSide],
       [-halfSide, halfSide],
@@ -400,9 +383,12 @@ export function squareCircleAreaGeometry(sideLength: number, radius: number): GJ
  * @param sideLength2 length of side south-north in meters.
  * @returns a model geometry.
  */
-export function rectangularAreaGeometry(sideLength1: number, sideLength2: number): GJ.AreaObject {
-  const halfSide1 = (sideLength1 || 100) / 2;
-  const halfSide2 = (sideLength2 || 100) / 2;
+export function rectangularAreaGeometry(
+  sideLength1: number = 100.0,
+  sideLength2: number = 100.0,
+): GJ.AreaObject {
+  const halfSide1 = sideLength1 * 0.5;
+  const halfSide2 = sideLength2 * 0.5;
   return {
     type: 'Polygon',
     coordinates: [
@@ -423,7 +409,7 @@ export function rectangularAreaGeometry(sideLength1: number, sideLength2: number
  * @param sideLength length of side in meters.
  * @returns a model geometry.
  */
-export function squareAreaGeometry(sideLength: number): GJ.AreaObject {
+export function squareAreaGeometry(sideLength: number = 100.0): GJ.AreaObject {
   return rectangularAreaGeometry(sideLength, sideLength);
 }
 
@@ -446,9 +432,8 @@ export function pointGeometry(): GJ.PointObject {
  * @param sideLength the side length in meters.
  * @returns a model geometry.
  */
-export function squarePointGeometry(sideLength: number): GJ.PointObject {
-  const length = sideLength || 100;
-  const halfSide = length / 2;
+export function squarePointGeometry(sideLength: number = 100.0): GJ.PointObject {
+  const halfSide = sideLength * 0.5;
   return {
     type: 'MultiPoint',
     coordinates: [
@@ -467,11 +452,14 @@ export function squarePointGeometry(sideLength: number): GJ.PointObject {
  * @param radius the radius in meters.
  * @returns a model geometry.
  */
-export function regularPolygonAreaGeometry(sides: number, radius: number): GJ.AreaObject {
-  const n = Math.max(Math.round(sides || 3), 3);
+export function regularPolygonAreaGeometry(
+  sides: number = 3,
+  radius: number = 0.05,
+): GJ.AreaObject {
+  const n = Math.max(Math.round(sides), 3);
   const r = Math.max(radius, 0.05);
   const coordinates: GJ.Position[] = [];
-  const startAngle = -Math.PI / n - Math.PI / 2;
+  const startAngle = -Math.PI / n - Math.PI * 0.5;
 
   for (let i = 0; i < n + 1; i++) {
     const angle = startAngle + (i / n) * 2 * Math.PI;
@@ -491,11 +479,14 @@ export function regularPolygonAreaGeometry(sides: number, radius: number): GJ.Ar
  * @param radius the radius in meters.
  * @returns a model geometry.
  */
-export function regularPolygonLineGeometry(sides: number, radius: number): GJ.LineObject {
-  const n = Math.max(Math.round(sides || 3), 3);
+export function regularPolygonLineGeometry(
+  sides: number = 3,
+  radius: number = 0.05,
+): GJ.LineObject {
+  const n = Math.max(Math.round(sides), 3);
   const r = Math.max(radius, 0.05);
   const coordinates: GJ.Position[] = [];
-  const startAngle = -Math.PI / n - Math.PI / 2;
+  const startAngle = -Math.PI / n - Math.PI * 0.5;
 
   for (let i = 0; i < n + 1; i++) {
     const angle = startAngle + (i / n) * 2 * Math.PI;
@@ -515,11 +506,14 @@ export function regularPolygonLineGeometry(sides: number, radius: number): GJ.Li
  * @param radius the radius in meters.
  * @returns a model geometry.
  */
-export function regularPolygonPointGeometry(sides: number, radius: number): GJ.PointObject {
-  const n = Math.max(Math.round(sides || 3), 3);
-  const r = Math.max(radius, 0.05);
+export function regularPolygonPointGeometry(
+  sides: number = 3,
+  radius: number = 0.05,
+): GJ.PointObject {
+  const n = Math.max(Math.round(sides), 3);
+  const r = Math.max(radius);
   const coordinates: GJ.Position[] = [];
-  const startAngle = -Math.PI / n - Math.PI / 2;
+  const startAngle = -Math.PI / n - Math.PI * 0.5;
 
   for (let i = 0; i < n; i++) {
     const angle = startAngle + (i / n) * 2 * Math.PI;
@@ -540,11 +534,13 @@ export function regularPolygonPointGeometry(sides: number, radius: number): GJ.P
  * @param radius the radius of the circle in meters.
  * @returns a model geometry.
  */
-export function circleLineGeometry(radius: number): GJ.LineObject {
+export function circleLineGeometry(radius: number = 10): GJ.LineObject {
   const n = 36;
   const v = Math.PI / n;
   // use the radius that gives equal area to the polygon for best approximation
-  let r = radius > 0 ? radius : 10;
-  r = Math.sqrt((Math.PI * Math.pow(r, 2)) / (n * Math.sin(v) * Math.cos(v)));
-  return regularPolygonLineGeometry(n, r);
+  const r = radius > 0 ? radius : 10;
+  return regularPolygonLineGeometry(
+    n,
+    Math.sqrt((Math.PI * Math.pow(r, 2)) / (n * Math.sin(v) * Math.cos(v))),
+  );
 }
