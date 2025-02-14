@@ -14,32 +14,21 @@ import {
 import {Random} from '@envisim/random';
 
 import {
-  type OptionsBase,
-  type OptionsCircleConversion,
-  type OptionsRotationOfGrid,
+  type OptionsPointsOnAreas,
   SAMPLE_ERROR_LIST,
   type SampleError,
-  optionsBaseCheck,
-  optionsCircleConversionCheck,
+  optionsPointsOnAreasCheck,
   throwRangeError,
 } from './options.js';
 
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;
 
-export interface SamplePointsOnAreasOptions
-  extends OptionsBase,
-    OptionsCircleConversion,
-    OptionsRotationOfGrid {
+export interface SamplePointsOnAreasOptions extends OptionsPointsOnAreas {
   /**
    * @defaultValue `0.0`
    */
   buffer?: number;
-
-  /**
-   * @defaultValue `1.0`
-   */
-  ratio?: number;
 }
 
 export function samplePointsOnAreasCheck(options: SamplePointsOnAreasOptions): SampleError {
@@ -47,7 +36,7 @@ export function samplePointsOnAreasCheck(options: SamplePointsOnAreasOptions): S
     return SAMPLE_ERROR_LIST.RATIO_NOT_POSITIVE;
   }
 
-  return optionsBaseCheck(options) || optionsCircleConversionCheck(options);
+  return optionsPointsOnAreasCheck(options);
 }
 
 /**
@@ -67,7 +56,6 @@ export function samplePointsOnAreas(
     sampleSize,
     pointSelection,
     buffer,
-    // ratio = SAMPLE_POINTS_ON_AREAS_DEFAULTS.ratio,
     ratio = 1.0,
     rotationOfGrid,
     ...opts

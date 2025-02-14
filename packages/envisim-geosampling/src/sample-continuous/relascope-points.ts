@@ -7,21 +7,15 @@ import {
 } from '@envisim/geojson-utils';
 
 import {
-  type OptionsBase,
-  type OptionsCircleConversion,
-  type OptionsRotationOfGrid,
+  type OptionsPointsOnAreas,
   SAMPLE_ERROR_LIST,
   type SampleError,
-  optionsBaseCheck,
-  optionsCircleConversionCheck,
+  optionsPointsOnAreasCheck,
   throwRangeError,
 } from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
 
-export interface SampleRelascopePointsOptions<P extends string>
-  extends OptionsBase,
-    OptionsCircleConversion,
-    OptionsRotationOfGrid {
+export interface SampleRelascopePointsOptions<P extends string> extends OptionsPointsOnAreas {
   /**
    * The point layer to collect objects from.
    */
@@ -54,7 +48,7 @@ export function sampleRelascopePointsOptionsCheck<P extends string>(
     return SAMPLE_ERROR_LIST.SIZE_PROPERTY_NOT_NUMERICAL;
   }
 
-  return optionsBaseCheck(options) || optionsCircleConversionCheck(options);
+  return optionsPointsOnAreasCheck(options);
 }
 
 // TODO: Decide if we should implement correction by adding the correct buffer.

@@ -10,29 +10,19 @@ import {Random} from '@envisim/random';
 
 import {effectiveRadius} from './distance-utils.js';
 import {
-  type OptionsBase,
-  type OptionsCircleConversion,
   type OptionsDistancePoints,
-  type OptionsRotationOfGrid,
+  type OptionsPointsOnAreas,
   type SampleError,
-  optionsBaseCheck,
-  optionsCircleConversionCheck,
   optionsDistancePointsCheck,
+  optionsPointsOnAreasCheck,
   throwRangeError,
 } from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
 
-export type SampleDistancePointsOptions = OptionsBase &
-  OptionsCircleConversion &
-  OptionsRotationOfGrid &
-  OptionsDistancePoints;
+export type SampleDistancePointsOptions = OptionsPointsOnAreas & OptionsDistancePoints;
 
 export function sampleDistancePointsCheck(options: SampleDistancePointsOptions): SampleError {
-  return (
-    optionsBaseCheck(options) ||
-    optionsCircleConversionCheck(options) ||
-    optionsDistancePointsCheck(options)
-  );
+  return optionsPointsOnAreasCheck(options) || optionsDistancePointsCheck(options);
 }
 
 /**

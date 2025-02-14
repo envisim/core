@@ -9,13 +9,10 @@ import {
 import {Random} from '@envisim/random';
 
 import {
-  type OptionsBase,
-  type OptionsCircleConversion,
-  type OptionsRotationOfGrid,
+  type OptionsPointsOnAreas,
   SAMPLE_ERROR_LIST,
   type SampleError,
-  optionsBaseCheck,
-  optionsCircleConversionCheck,
+  optionsPointsOnAreasCheck,
   throwRangeError,
 } from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
@@ -33,9 +30,7 @@ import {
 } from '~/utils/index.js';
 
 export interface SampleFeaturesOnAreasOptions<G extends GJ.SingleTypeObject>
-  extends OptionsBase,
-    OptionsCircleConversion,
-    OptionsRotationOfGrid {
+  extends OptionsPointsOnAreas {
   /**
    * A model feature of points or lines or areas to be placed on the selected points.
    */
@@ -63,7 +58,11 @@ export function sampleAreaFeaturesOnAreasCheck(
       return SAMPLE_ERROR_LIST.MODEL_FEATURE_NOT_AREA;
   }
 
-  return optionsBaseCheck(options) || optionsCircleConversionCheck(options);
+  if (typeof options.rotationOfGeometry === 'string' && options.rotationOfGeometry !== 'random') {
+    return SAMPLE_ERROR_LIST.ROTATION_OF_MODEL_FEATURE_ERROR;
+  }
+
+  return optionsPointsOnAreasCheck(options);
 }
 
 /**
@@ -116,7 +115,11 @@ export function sampleLineFeaturesOnAreasCheck(
       return SAMPLE_ERROR_LIST.MODEL_FEATURE_NOT_LINE;
   }
 
-  return optionsBaseCheck(options) || optionsCircleConversionCheck(options);
+  if (typeof options.rotationOfGeometry === 'string' && options.rotationOfGeometry !== 'random') {
+    return SAMPLE_ERROR_LIST.ROTATION_OF_MODEL_FEATURE_ERROR;
+  }
+
+  return optionsPointsOnAreasCheck(options);
 }
 
 export function sampleLineFeaturesOnAreas(
@@ -162,7 +165,11 @@ export function samplePointFeaturesOnAreasCheck(
       return SAMPLE_ERROR_LIST.MODEL_FEATURE_NOT_POINT;
   }
 
-  return optionsBaseCheck(options) || optionsCircleConversionCheck(options);
+  if (typeof options.rotationOfGeometry === 'string' && options.rotationOfGeometry !== 'random') {
+    return SAMPLE_ERROR_LIST.ROTATION_OF_MODEL_FEATURE_ERROR;
+  }
+
+  return optionsPointsOnAreasCheck(options);
 }
 
 export function samplePointFeaturesOnAreas(

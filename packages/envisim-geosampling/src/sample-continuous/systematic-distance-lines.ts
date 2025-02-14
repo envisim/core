@@ -11,7 +11,6 @@ import {
   type OptionsCircleConversion,
   type OptionsDistancePoints,
   type OptionsParallelLines,
-  type OptionsRotationOfGrid,
   type SampleError,
   optionsCircleConversionCheck,
   optionsDistancePointsCheck,
@@ -23,7 +22,6 @@ import {sampleSystematicLinesOnAreas} from './systematic-lines-on-areas.js';
 export interface SampleSystematicDistanceLinesOptions
   extends OptionsCircleConversion,
     OptionsParallelLines,
-    OptionsRotationOfGrid,
     OptionsDistancePoints {
   rand?: RandomGenerator;
 }

@@ -43,12 +43,31 @@ export function optionsCircleConversionCheck({
   return null;
 }
 
-export interface OptionsRotationOfGrid {
+export interface OptionsPointsOnAreas extends OptionsBase, OptionsCircleConversion {
   /**
-   * If true, then the grid will be rotated
+   * @defaultValue `1.0`
+   */
+  ratio?: number;
+
+  /**
+   * If true, then the grid will be rotated (systematic only)
    * @defaultValue `0.0`
    */
   rotationOfGrid?: number | 'random';
+}
+
+export function optionsPointsOnAreasCheck({
+  ratio,
+  rotationOfGrid,
+  ...options
+}: OptionsPointsOnAreas): SampleError {
+  if (ratio !== undefined && ratio <= 0.0) {
+    return SAMPLE_ERROR_LIST.RATIO_NOT_POSITIVE;
+  } else if (typeof rotationOfGrid === 'string' && rotationOfGrid !== 'random') {
+    return SAMPLE_ERROR_LIST.ROTATION_OF_GRID_ERROR;
+  }
+
+  return optionsBaseCheck(options) || optionsCircleConversionCheck(options);
 }
 
 export interface OptionsParallelLines {

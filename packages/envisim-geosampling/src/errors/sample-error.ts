@@ -32,11 +32,13 @@ export const SAMPLE_ERROR_LIST = {
   SIZE_PROPERTY_MISSING: 'sample-error-size-property-do-not-exist',
   SIZE_PROPERTY_NOT_NUMERICAL: 'sample-error-size-property-not-numerical',
   CUTOFF_NOT_POSITIVE: 'sample-error-cutoff-not-positive',
+  ROTATION_OF_GRID_ERROR: 'sample-error-rotation-of-grid-incorrect',
 
   // MODEL FEATURE
   MODEL_FEATURE_NOT_AREA: 'sample-error-expected-model-feature-area',
   MODEL_FEATURE_NOT_LINE: 'sample-error-expected-model-feature-line',
   MODEL_FEATURE_NOT_POINT: 'sample-error-expected-model-feature-point',
+  ROTATION_OF_MODEL_FEATURE_ERROR: 'sample-error-model-feature-rotation-incorrect',
 } as const;
 
 export type SampleError = ErrorType<typeof SAMPLE_ERROR_LIST>;
