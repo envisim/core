@@ -1,4 +1,4 @@
-import {Random, RandomGenerator, randomArray} from '@envisim/random';
+import {Random, type RandomGenerator, randomArray} from '@envisim/random';
 import {reducedRowEchelonForm} from '@envisim/utils';
 
 import {BaseMatrix, type MatrixCallback, type MatrixDim} from './base-matrix.js';

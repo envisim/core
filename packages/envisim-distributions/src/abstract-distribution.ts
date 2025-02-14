@@ -1,4 +1,4 @@
-import {Random, RandomGenerator, randomArray} from '@envisim/random';
+import {Random, type RandomGenerator, randomArray} from '@envisim/random';
 
 import {assertPositiveInteger} from './utils.js';
 

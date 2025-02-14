@@ -1,5 +1,5 @@
 import {Matrix} from '@envisim/matrix';
-import {Random, RandomGenerator, randomInt} from '@envisim/random';
+import {Random, type RandomGenerator, randomInt} from '@envisim/random';
 import {reducedRowEchelonForm, swap} from '@envisim/utils';
 
 import {BASE_OPTIONS} from '../base-options/index.js';

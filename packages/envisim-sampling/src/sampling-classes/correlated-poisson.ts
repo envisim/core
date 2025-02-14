@@ -1,5 +1,5 @@
 import {type Matrix} from '@envisim/matrix';
-import {Random, RandomGenerator, randomInt} from '@envisim/random';
+import {Random, type RandomGenerator, randomInt} from '@envisim/random';
 
 import {BASE_OPTIONS} from '../base-options/index.js';
 import {BaseSampling} from './base-sampling.js';

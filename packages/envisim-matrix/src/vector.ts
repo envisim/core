@@ -1,4 +1,4 @@
-import {Random, RandomGenerator, randomArray, randomInt} from '@envisim/random';
+import {Random, type RandomGenerator, randomArray, randomInt} from '@envisim/random';
 
 import {
   BaseMatrix,

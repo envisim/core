@@ -1,5 +1,5 @@
 import {type Matrix, type Vector} from '@envisim/matrix';
-import {Random, RandomGenerator} from '@envisim/random';
+import {Random, type RandomGenerator} from '@envisim/random';
 
 export interface BaseOptions {
   /**

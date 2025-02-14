@@ -1,4 +1,4 @@
-import {RandomGenerator, randomFloatOpen} from '@envisim/random';
+import {type RandomGenerator, randomFloatOpen} from '@envisim/random';
 
 import {LOGKFAC, SQRT_PI} from '../math-constants.js';
 
