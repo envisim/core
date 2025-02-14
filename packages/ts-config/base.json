@@ -1,5 +1,9 @@
 {
   "extends": "@tsconfig/strictest/tsconfig.json",
+
+  "include": ["${configDir}/src/**/*"],
+  "exclude": ["${configDir}/dist", "${configDir}/node_modules", "${configDir}/tests"],
+
   "compilerOptions": {
     "target": "es2022",
     "module": "nodenext",
@@ -7,6 +11,12 @@
     "declaration": true,
     "exactOptionalPropertyTypes": false,
     "noUncheckedIndexedAccess": false,
-    "allowJs": true
+    "allowJs": true,
+
+    "outDir": "${configDir}/dist",
+    "rootDir": "${configDir}/src",
+    "paths": {
+      "~/*": ["${configDir}/src/*"]
+    }
   }
 }

@@ -1,4 +1,3 @@
-export {type ErrorType} from './error-type.js';
 export {
   intersectPointSampleAreaFrame,
   intersectLineSampleAreaFrame,

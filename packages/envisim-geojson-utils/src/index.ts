@@ -40,4 +40,4 @@ export {
   intersectPointAreaGeometries,
 } from './intersect/index.js';
 export {perimeter} from './perimeter.js';
-export {unionOfCollection as unionOfPolygons} from './union-of-polygons.js';
+export {unionOfCollection} from './union-of-polygons.js';

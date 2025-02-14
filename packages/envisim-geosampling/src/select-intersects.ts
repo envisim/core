@@ -13,7 +13,7 @@ import {
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
 
-import {projectedLengthOfGeometry} from '../utils/index.js';
+import {projectedLengthOfGeometry} from './utils/index.js';
 
 /**
  * Internal function to transfer properties to the intersect from the base feature and transfer

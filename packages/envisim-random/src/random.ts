@@ -242,13 +242,16 @@ class Random {
   // Extracted from intn, see original comments there
   /** @returns Pseudo-random (uniform) number on the interval [0.0, 1.0) */
   float(): number {
+    return this.random();
+  }
+  random(): number {
     return this.rawprng() + ((this.rawprng() * 0x200000) | 0) * 1.1102230246251565e-16; // 2^-53
   }
 
   /** @returns An array of (uniform) numbers on the interval `[0.0, 1.0)` */
   floatArray(n: number): number[] {
     const s = new Array<number>(n);
-    for (let i = 0; i < n; i++) s[i] = this.float();
+    for (let i = 0; i < n; i++) s[i] = this.random();
     return s;
   }
 
@@ -256,7 +259,7 @@ class Random {
   floate(): number {
     let u: number;
     do {
-      u = this.float();
+      u = this.random();
     } while (u === 0.0);
     return u;
   }

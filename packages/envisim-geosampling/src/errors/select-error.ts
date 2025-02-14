@@ -1,4 +1,6 @@
-export const SelectError = {
+import {type ErrorType} from './utils.js';
+
+export const SELECT_ERROR_LIST = {
   // select general
   EXPECTED_AREA: 'select-error-collection-is-not-area',
   EXPECTED_LINE: 'select-error-collection-is-not-line',
@@ -8,3 +10,5 @@ export const SelectError = {
   BASE_COLLECTION_EXPECTED_LINE: 'select-error-base-collection-is-not-line',
   BASE_COLLECTION_EXPECTED_POINT: 'select-error-base-collection-is-not-line',
 } as const;
+
+export type SelectError = ErrorType<typeof SELECT_ERROR_LIST>;

@@ -1,29 +1,42 @@
 import {
   type AreaObject,
-  Circle,
   Feature,
   FeatureCollection,
   type GeoJSON as GJ,
   Geodesic,
-  MultiCircle,
   Point,
   bbox4,
   bboxCenter,
   longitudeDistance,
   normalizeLongitude,
-  unionOfPolygons,
+  unionOfCollection,
 } from '@envisim/geojson-utils';
+import {Random} from '@envisim/random';
 
-import {SAMPLE_POINT_OPTIONS, type SamplePointOptions, samplePointOptionsCheck} from './options.js';
+import {
+  type OptionsPointsOnAreas,
+  SAMPLE_ERROR_LIST,
+  type SampleError,
+  optionsPointsOnAreasCheck,
+  throwRangeError,
+} from './options.js';
 
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;
 
-// Internal.
-function placePoint(point: GJ.Position, position: GJ.Position, rotation: number): GJ.Position {
-  const dist = Math.sqrt(point[0] * point[0] + point[1] * point[1]);
-  const angle = 90 - (Math.atan2(point[1], point[0]) * 180) / Math.PI + rotation;
-  return Geodesic.destination(position, dist, angle);
+export interface SamplePointsOnAreasOptions extends OptionsPointsOnAreas {
+  /**
+   * @defaultValue `0.0`
+   */
+  buffer?: number;
+}
+
+export function samplePointsOnAreasCheck(options: SamplePointsOnAreasOptions): SampleError {
+  if (options.ratio !== undefined && options.ratio <= 0.0) {
+    return SAMPLE_ERROR_LIST.RATIO_NOT_POSITIVE;
+  }
+
+  return optionsPointsOnAreasCheck(options);
 }
 
 /**
@@ -35,64 +48,37 @@ function placePoint(point: GJ.Position, position: GJ.Position, rotation: number)
  */
 export function samplePointsOnAreas(
   collection: FeatureCollection<AreaObject>,
-  {
-    rand = SAMPLE_POINT_OPTIONS.rand,
-    pointSelection,
-    sampleSize,
-    buffer = SAMPLE_POINT_OPTIONS.buffer,
-    ratio = SAMPLE_POINT_OPTIONS.ratio,
-    rotationOfGrid = SAMPLE_POINT_OPTIONS.rotationOfGrid,
-    randomRotationOfGrid = SAMPLE_POINT_OPTIONS.randomRotationOfGrid,
-  }: SamplePointOptions,
+  options: SamplePointsOnAreasOptions,
 ): FeatureCollection<Point, never> {
-  const optionsError = samplePointOptionsCheck({
-    pointSelection,
+  throwRangeError(samplePointsOnAreasCheck(options));
+  const {
+    rand = new Random(),
     sampleSize,
+    pointSelection,
     buffer,
-    ratio,
+    ratio = 1.0,
     rotationOfGrid,
-    randomRotationOfGrid,
-  });
-  if (optionsError !== null) {
-    throw new RangeError(`samplePointsOnAreas error: ${optionsError}`);
-  }
-
-  // copy the collection
-  const gj = FeatureCollection.newArea<AreaObject, string>(collection.features, undefined, false);
-
-  // Make polygons of possible circles
-  gj.forEach((feature) => {
-    let geom = feature.geometry;
-    if (Circle.isObject(geom) || MultiCircle.isObject(geom)) {
-      const p = geom.toPolygon();
-      if (p === null) return;
-      geom = p;
-    }
-  });
+    ...opts
+  } = options;
 
   // Buffer the Collection if needed.
-
-  let buffered: FeatureCollection<AreaObject> | null;
-  if (buffer > 0.0) {
-    buffered = gj.buffer({distance: buffer, steps: 10});
-
-    if (buffered === null) {
-      throw new Error('Buffering failed.');
-    }
-    buffered = unionOfPolygons(buffered);
-  } else {
-    // Should union be used here as well?
-    buffered = gj;
-  }
+  const buffered =
+    buffer !== undefined && buffer > 0.0
+      ? unionOfCollection(
+          collection.buffer({distance: buffer, steps: 10}) ?? FeatureCollection.newArea(),
+          opts,
+        )
+      : collection;
 
   // Pre-calculations for both metods 'uniform' and 'systematic'.
   const A = buffered.measure();
   const designWeight = A / sampleSize;
   const box = bbox4(buffered.getBBox());
-  const pointFeatures: Feature<Point>[] = [];
+  const pointFeatures: Feature<Point, never>[] = [];
   const parentIndex: number[] = [];
 
   switch (pointSelection) {
+    default:
     case 'independent': {
       // Store number of iterations and number of hits.
       let iterations = 0;
@@ -109,9 +95,9 @@ export function samplePointsOnAreas(
 
       while (hits < sampleSize && iterations < 1e7) {
         // Generate the point
-        const yRand = y1 + (y2 - y1) * rand.float();
+        const yRand = y1 + (y2 - y1) * rand.random();
         const lat = 90 - Math.acos(2.0 * yRand - 1.0) * TO_DEG;
-        const lon = normalizeLongitude(box[0] + lonDist * rand.float());
+        const lon = normalizeLongitude(box[0] + lonDist * rand.random());
         const lonLat: GJ.Position = [lon, lat];
 
         // Check if point is in any feature.
@@ -142,12 +128,14 @@ export function samplePointsOnAreas(
         Geodesic.distance(center, bottomLeft),
         Geodesic.distance(center, topRight),
       );
-      const angle = randomRotationOfGrid === true ? rand.float() * 360.0 : rotationOfGrid;
+
+      const angle = rotationOfGrid === 'random' ? rand.random() * 360.0 : (rotationOfGrid ?? 0.0);
+
       const dy = Math.sqrt(A / (sampleSize * ratio));
       const dx = ratio * dy;
       // generate random offset in x and y
-      const xoff = rand.float() * dx;
-      const yoff = rand.float() * dy;
+      const xoff = rand.random() * dx;
+      const yoff = rand.random() * dy;
       // maximum number of points in each direction
       const nx = Math.ceil((2 * radius) / dx);
       const ny = Math.ceil((2 * radius) / dy);
@@ -172,18 +160,22 @@ export function samplePointsOnAreas(
       }
       break;
     }
-
-    default:
-      throw new Error('Unknown method.');
   }
 
   if (buffer === 0.0) {
     // Transfer design weights here.
     pointFeatures.forEach((pf, i) => {
-      const feature = gj.features[parentIndex[i]];
+      const feature = buffered.features[parentIndex[i]];
       pf.multSpecialPropertyDesignWeight(feature.getSpecialPropertyDesignWeight());
     });
   }
 
   return FeatureCollection.newPoint(pointFeatures, undefined, true);
+}
+
+// Internal.
+function placePoint(point: GJ.Position, position: GJ.Position, rotation: number): GJ.Position {
+  const dist = Math.sqrt(point[0] * point[0] + point[1] * point[1]);
+  const angle = 90 - (Math.atan2(point[1], point[0]) * 180) / Math.PI + rotation;
+  return Geodesic.destination(position, dist, angle);
 }

@@ -1,7 +1,16 @@
-import {type FeatureCollection, type PureObject} from '@envisim/geojson-utils';
+import {type FeatureCollection, type PropertyRecord, type PureObject} from '@envisim/geojson-utils';
 import {localCube} from '@envisim/sampling';
 
-import {type SampleDoublyBalancedOptions, sampleDoublyBalancedOptionsCheck} from './options.js';
+import {
+  type OptionsBalanced,
+  type OptionsBase,
+  type OptionsSpatiallyBalanced,
+  type SampleError,
+  optionsBalancedCheck,
+  optionsBaseCheck,
+  optionsSpatiallyBalancedCheck,
+  throwRangeError,
+} from './options.js';
 import {
   balancingMatrixFromLayer,
   inclprobsFromLayer,
@@ -9,14 +18,30 @@ import {
   spreadMatrixFromLayer,
 } from './utils.js';
 
+export const SAMPLE_DOUBLY_BALANCED_METHODS = ['local-cube'] as const;
+export type SampleDoublyBalancedOptions<P extends string = string> = OptionsBase<
+  P,
+  (typeof SAMPLE_DOUBLY_BALANCED_METHODS)[number]
+> &
+  OptionsBalanced<P> &
+  OptionsSpatiallyBalanced<P>;
+
+export function sampleDoublyBalancedCheck<P extends string>(
+  options: SampleDoublyBalancedOptions<NoInfer<P>>,
+  record: PropertyRecord<P>,
+): SampleError {
+  return (
+    optionsBaseCheck(options, record) ||
+    optionsBalancedCheck(options, record) ||
+    optionsSpatiallyBalancedCheck(options, record)
+  );
+}
+
 export function sampleDoublyBalanced<T extends PureObject, P extends string>(
   collection: FeatureCollection<T, P>,
   options: SampleDoublyBalancedOptions<NoInfer<P>>,
 ): FeatureCollection<T, P> {
-  const optionsError = sampleDoublyBalancedOptionsCheck(options, collection.propertyRecord);
-  if (optionsError !== null) {
-    throw new RangeError(`sampleDoublyBalanced error: ${optionsError}`);
-  }
+  throwRangeError(sampleDoublyBalancedCheck(options, collection.propertyRecord));
 
   // Compute inclusion probabilities
   const probabilities = inclprobsFromLayer(collection, options);

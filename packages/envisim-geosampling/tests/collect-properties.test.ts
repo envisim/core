@@ -2,7 +2,7 @@ import {expect, test} from 'vitest';
 
 import {Feature, FeatureCollection, Point, Polygon, PropertyRecord} from '@envisim/geojson-utils';
 
-import {collectProperties, collectPropertyRecord} from '../../src/collect/collect-properties.js';
+import {collectProperties, collectPropertyRecord} from '../src/collect-properties.js';
 
 const polygon = Polygon.create([
   [

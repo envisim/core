@@ -11,7 +11,7 @@ import {
 } from '@envisim/geojson-utils';
 import {Random} from '@envisim/random';
 
-import {uniformPositionsInBBox} from '../sample-continuous/index.js';
+import {samplePositionsInBbox} from '../sample-continuous/index.js';
 
 // For conversion from radians to degrees.
 const TO_DEG = 180 / Math.PI;
@@ -81,11 +81,10 @@ export function maternClusterProcess(
   const muParents = intensityOfParents * A;
   const nrOfParents = new Poisson(muParents).random(1, {rand})[0];
 
-  const parentsInBox = uniformPositionsInBBox(
-    [...westSouth, ...eastNorth] as GJ.BBox,
-    nrOfParents,
-    {rand},
-  );
+  const parentsInBox = samplePositionsInBbox([...westSouth, ...eastNorth] as GJ.BBox, {
+    sampleSize: nrOfParents,
+    rand,
+  });
 
   // To store new features.
   const newCollection = FeatureCollection.newPoint<Point>();

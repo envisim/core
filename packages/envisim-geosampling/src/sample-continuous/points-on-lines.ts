@@ -1,4 +1,5 @@
 import {
+  Feature,
   FeatureCollection,
   type GeoJSON as GJ,
   type LineObject,
@@ -6,8 +7,77 @@ import {
   PlateCarree,
   Point,
 } from '@envisim/geojson-utils';
+import {Random} from '@envisim/random';
 
-import {SAMPLE_POINT_OPTIONS, type SamplePointOptions, samplePointOptionsCheck} from './options.js';
+import {type OptionsBase, type SampleError, optionsBaseCheck, throwRangeError} from './options.js';
+
+export type SamplePointsOnLinesOptions = OptionsBase;
+
+export function samplePointsOnLinesCheck(options: SamplePointsOnLinesOptions): SampleError {
+  return optionsBaseCheck(options);
+}
+
+/**
+ * Selects points according to method and sampleSize on a line layer.
+ *
+ * @param collection
+ * @param opts
+ */
+export function samplePointsOnLines(
+  collection: FeatureCollection<LineObject>,
+  options: SamplePointsOnLinesOptions,
+): FeatureCollection<Point, never> {
+  throwRangeError(samplePointsOnLinesCheck(options));
+  const {rand = new Random(), pointSelection, sampleSize} = options;
+
+  const L = collection.measure(); // total length of input geoJSON
+  if (L === 0) {
+    throw new Error('Input layer has zero length.');
+  }
+
+  let distances: number[] = []; // Holds sample points as distances from 0 to L.
+
+  switch (pointSelection) {
+    default:
+    case 'independent':
+      distances = new Array(sampleSize)
+        .fill(0)
+        .map(() => rand.random() * L)
+        .sort((a, b) => a - b);
+      break;
+
+    case 'systematic': {
+      const start = (rand.random() * L) / sampleSize;
+      distances = new Array(sampleSize)
+        .fill(0)
+        .map((_val, index) => (index * L) / sampleSize + start);
+      break;
+    }
+  }
+
+  const track = {dt: 0, currentIndex: 0};
+  const points: GJ.Position[] = [];
+  const parentIndex: number[] = [];
+  const designWeight = L / sampleSize;
+
+  collection.forEach((feature, index) => {
+    const geom = feature.geometry;
+    const result = samplePointsOnGeometry(geom, track, distances);
+
+    points.push(...result);
+    parentIndex.push(...Array.from<number>({length: result.length}).fill(index));
+  });
+
+  return FeatureCollection.newPoint<Point, never>(
+    points.map(
+      (p, i) =>
+        new Feature<Point, never>(Point.create(p), {
+          _designWeight:
+            designWeight * collection.features[parentIndex[i]].getSpecialPropertyDesignWeight(),
+        }),
+    ),
+  );
+}
 
 /**
  * Type for keeping track of distance travelled (dt) and index of sample point
@@ -63,73 +133,4 @@ function samplePointsOnGeometry(geometry: LineObject, track: Track, distances: n
   }
 
   return points;
-}
-
-/**
- * Selects points according to method and sampleSize on a line layer.
- *
- * @param collection
- * @param opts
- */
-export function samplePointsOnLines(
-  collection: FeatureCollection<LineObject>,
-  {rand = SAMPLE_POINT_OPTIONS.rand, pointSelection, sampleSize}: SamplePointOptions,
-): FeatureCollection<Point, never> {
-  const optionsError = samplePointOptionsCheck({
-    pointSelection,
-    sampleSize,
-  });
-  if (optionsError !== null) {
-    throw new RangeError(`samplePointsOnLines error: ${optionsError}`);
-  }
-
-  const L = collection.measure(); // total length of input geoJSON
-  if (L === 0) {
-    throw new Error('Input layer has zero length.');
-  }
-
-  let distances: number[] = []; // Holds sample points as distances from 0 to L.
-
-  switch (pointSelection) {
-    case 'independent':
-      distances = new Array(sampleSize)
-        .fill(0)
-        .map(() => rand.float() * L)
-        .sort((a, b) => a - b);
-      break;
-
-    case 'systematic': {
-      const start = (rand.float() * L) / sampleSize;
-      distances = new Array(sampleSize)
-        .fill(0)
-        .map((_val, index) => (index * L) / sampleSize + start);
-      break;
-    }
-
-    default:
-      throw new Error('Unknown method');
-  }
-
-  const track = {dt: 0, currentIndex: 0};
-  const points: GJ.Position[] = [];
-  const parentIndex: number[] = [];
-  const designWeight = L / sampleSize;
-
-  collection.forEach((feature, index) => {
-    const geom = feature.geometry;
-    const result = samplePointsOnGeometry(geom, track, distances);
-
-    points.push(...result);
-    parentIndex.push(...Array.from<number>({length: result.length}).fill(index));
-  });
-
-  const newCollection = FeatureCollection.newPoint<Point, never>([]);
-
-  for (let i = 0; i < points.length; i++) {
-    const coords = points[i];
-    const dw = designWeight * collection.features[parentIndex[i]].getSpecialPropertyDesignWeight();
-    newCollection.addGeometry(Point.create(coords), {_designWeight: dw});
-  }
-
-  return newCollection;
 }
