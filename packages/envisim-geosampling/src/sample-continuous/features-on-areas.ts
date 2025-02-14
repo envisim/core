@@ -9,6 +9,18 @@ import {
 import {Random} from '@envisim/random';
 
 import {
+  placeAreaGeometry,
+  placeLineGeometry,
+  placePointGeometry,
+  radiusOfModelGeometry,
+  sizeOfModelGeometry,
+} from '../model-geometry.js';
+import {
+  intersectAreaSampleAreaFrame,
+  intersectLineSampleAreaFrame,
+  intersectPointSampleAreaFrame,
+} from '../utils/index.js';
+import {
   type OptionsPointsOnAreas,
   SAMPLE_ERROR_LIST,
   type SampleError,
@@ -16,18 +28,6 @@ import {
   throwRangeError,
 } from './options.js';
 import {samplePointsOnAreas} from './points-on-areas.js';
-import {
-  placeAreaGeometry,
-  placeLineGeometry,
-  placePointGeometry,
-  radiusOfModelGeometry,
-  sizeOfModelGeometry,
-} from '~/model-geometry.js';
-import {
-  intersectAreaSampleAreaFrame,
-  intersectLineSampleAreaFrame,
-  intersectPointSampleAreaFrame,
-} from '~/utils/index.js';
 
 export interface SampleFeaturesOnAreasOptions<G extends GJ.SingleTypeObject>
   extends OptionsPointsOnAreas {
