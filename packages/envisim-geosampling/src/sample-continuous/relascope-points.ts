@@ -76,13 +76,6 @@ export function sampleRelascopePointsOptionsCheck<P extends string>(
 export function sampleRelascopePoints<P extends string>(
   collection: FeatureCollection<AreaObject>,
   options: SampleRelascopePointsOptions<P>,
-  // {
-  //   buffer = SAMPLE_POINT_OPTIONS.buffer,
-  //   baseCollection,
-  //   factor,
-  //   sizeProperty,
-  //   ...opts
-  // }: SampleRelascopePointsOptions<P>,
 ): {
   collection: FeatureCollection<Point, P>;
   pointSample: FeatureCollection<Point>;
