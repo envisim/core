@@ -1,4 +1,4 @@
-import {type Random} from '@envisim/random';
+import {type RandomGenerator} from '@envisim/random';
 
 import {
   Distribution,
@@ -187,7 +187,10 @@ export class Hypergeometric extends Distribution<ParamsHypergeometric> {
    * Journal of Statistical Computation and Simulation, 22(2), 127-145.
    * https://doi.org/10.1080/00949658508810839
    */
-  override random(n: number = 1, {rand = randomOptionsDefault.rand}: RandomOptions = {}): number[] {
+  override random(
+    n: number = 1,
+    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
+  ): number[] {
     assertPositiveInteger(n);
 
     const rv = Array.from<number>({length: n});
@@ -208,7 +211,7 @@ export class Hypergeometric extends Distribution<ParamsHypergeometric> {
     const m = (((k + 1) * (n1 + 1)) / (n0 + 2)) | 0;
     if (m - Math.max(0, k - n2) < 10) {
       for (let i = 0; i < n; i++) {
-        rv[i] = this.quantile(rand.float());
+        rv[i] = this.quantile(rand.random());
       }
       return rv;
     }
@@ -296,7 +299,7 @@ interface HypergeometricRandom {
 }
 
 function randomHypergeometric_inner(
-  rand: Random,
+  rand: RandomGenerator,
   params: ParamsHypergeometric,
   {n0, n1, n2, k, m, xl, xr, lambdal, lambdar, p1, p2, p3}: HypergeometricRandom,
 ): number {
@@ -314,8 +317,8 @@ function randomHypergeometric_inner(
 
   let run = 0;
   while (run++ <= 1e5) {
-    u = rand.float() * p3;
-    v = rand.float();
+    u = rand.random() * p3;
+    v = rand.random();
     if (u <= p1) {
       // H2PE 1
       y = (xl + u) | 0;

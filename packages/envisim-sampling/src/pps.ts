@@ -13,7 +13,7 @@ import {assertSizeRange} from './utils.js';
 export function discrete({probabilities, rand = BASE_OPTIONS.rand}: PipsOptions): number {
   const p = Vector.borrow(probabilities);
   const N = p.length;
-  const rn = rand.float();
+  const rn = rand.random();
   let psum = 0.0;
 
   for (let x = 0; x < N; x++) {
@@ -42,7 +42,7 @@ export function discreteArr({
   const s = Array.from<number>({length: n}).fill(N - 1);
 
   for (let i = 0; i < n; i++) {
-    const re = rand.float();
+    const re = rand.random();
     // let psum = 0.0;
     // let x = 0;
 

@@ -1,5 +1,5 @@
 import {Matrix} from '@envisim/matrix';
-import {Random} from '@envisim/random';
+import {Random, type RandomGenerator, randomInt} from '@envisim/random';
 import {reducedRowEchelonForm, swap} from '@envisim/utils';
 
 import {BASE_OPTIONS} from '../base-options/index.js';
@@ -33,7 +33,7 @@ export class Cube extends BaseSampling {
     xxspread: Matrix | undefined,
     treeBucketSize: number = BASE_OPTIONS.treeBucketSize,
     eps: number = BASE_OPTIONS.eps,
-    rand: Random = new Random(),
+    rand: RandomGenerator = new Random(),
   ) {
     super(undefined, N, treeBucketSize, eps, rand, false);
 
@@ -119,7 +119,7 @@ export class Cube extends BaseSampling {
       // Draw a random number from 0 to size - i.
       // If i = 2, size = 5, that means that we have already selected two units
       // and we have 3 more available in the store.
-      const k = this.rand.intn(size - 1);
+      const k = randomInt(size - 1, this.rand);
       this.drawUnits.push(this.store.neighbours[k + i]);
       if (k !== 0) swap(this.store.neighbours, k + i, i);
     }
@@ -161,7 +161,7 @@ export class Cube extends BaseSampling {
       }
     }
 
-    const lambda = this.rand.float() * (lambda1 + lambda2) < lambda2 ? lambda1 : -lambda2;
+    const lambda = this.rand.random() * (lambda1 + lambda2) < lambda2 ? lambda1 : -lambda2;
 
     for (let i = 0; i < maxSize; i++) {
       const id = this.drawUnits[i];
@@ -203,7 +203,7 @@ export class Cube extends BaseSampling {
 
     if (this.idx.length() === 1) {
       const id = this.idx.getId(0);
-      this.probabilities[id] = this.rand.float() < this.probabilities[id] ? 1.0 : 0.0;
+      this.probabilities[id] = this.rand.random() < this.probabilities[id] ? 1.0 : 0.0;
       this.resolveUnit(id);
     }
   }

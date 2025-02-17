@@ -1,3 +1,5 @@
+import {randomArray} from '@envisim/random';
+
 import {
   Distribution,
   Interval,
@@ -58,10 +60,13 @@ export class UniformDiscrete extends Distribution<ParamsBound> {
     return this.support.checkQuantile(q) ?? Math.ceil(q * c2) - c1;
   }
 
-  override random(n: number = 1, {rand = randomOptionsDefault.rand}: RandomOptions = {}): number[] {
+  override random(
+    n: number = 1,
+    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
+  ): number[] {
     assertPositiveInteger(n);
     const c = this.params.b - this.params.a + 1;
-    return rand.floatArray(n).map((e) => this.params.a + Math.floor(c * e));
+    return randomArray(n, rand).map((e) => this.params.a + Math.floor(c * e));
   }
 
   mean(): number {

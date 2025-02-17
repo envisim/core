@@ -1,4 +1,4 @@
-import {type Random} from '@envisim/random';
+import {type RandomGenerator, randomInt} from '@envisim/random';
 import {swap} from '@envisim/utils';
 
 export class IndexList {
@@ -57,9 +57,9 @@ export class IndexList {
     this.len = len;
   }
 
-  shuffle(rand: Random): void {
+  shuffle(rand: RandomGenerator): void {
     for (let i = 0; i < this.len - 1; i++) {
-      const k = i + rand.intn(this.len - i);
+      const k = i + randomInt(this.len - i, rand);
 
       if (i === k) continue;
 
@@ -97,8 +97,8 @@ export class IndexList {
     return this.reverse[id] < this.len;
   }
 
-  draw(rand: Random): number {
-    return this.list[rand.intn(this.len)];
+  draw(rand: RandomGenerator): number {
+    return this.list[randomInt(this.len, rand)];
   }
 
   erase(id: number): void {

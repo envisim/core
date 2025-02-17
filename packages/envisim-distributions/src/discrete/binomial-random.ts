@@ -1,4 +1,4 @@
-import {type Random} from '@envisim/random';
+import {type RandomGenerator} from '@envisim/random';
 
 const binomialCoefsFun = (a: number, b: number): number => {
   return (13860.0 - (462.0 - (132.0 - (99.0 - 140.0 / a) / a) / a) / a) / b / 166320.0;
@@ -44,7 +44,7 @@ interface RandomBinomialSmall {
  * Communications of the ACM, 31(2), 216-222.
  * https://doi.org/10.1145/42372.42381
  */
-function randomBinomialLarge(n: number, n0: number, p0: number, rand: Random): number[] {
+function randomBinomialLarge(n: number, n0: number, p0: number, rand: RandomGenerator): number[] {
   const upperTail = p0 > 0.5;
   const p = upperTail ? 1.0 - p0 : p0;
   const q = 1.0 - p;
@@ -95,7 +95,7 @@ function randomBinomialLarge(n: number, n0: number, p0: number, rand: Random): n
 }
 
 function randomBinomialLarge_inner(
-  rand: Random,
+  rand: RandomGenerator,
   {
     upperTail,
     n0,
@@ -125,8 +125,8 @@ function randomBinomialLarge_inner(
   let run = 1;
   while (run++ <= 1e5) {
     // BTPE 1
-    u = rand.float() * p4;
-    v = rand.float();
+    u = rand.random() * p4;
+    v = rand.random();
 
     if (u <= p1) {
       y = (xm - p1 * v + u) | 0;
@@ -202,7 +202,7 @@ function randomBinomialLarge_inner(
   return NaN;
 }
 
-function randomBinomialSmall(n: number, n0: number, p0: number, rand: Random): number[] {
+function randomBinomialSmall(n: number, n0: number, p0: number, rand: RandomGenerator): number[] {
   const upperTail: boolean = p0 > 0.5;
   const p = upperTail ? 1.0 - p0 : p0;
   const q = 1.0 - p;
@@ -224,10 +224,10 @@ function randomBinomialSmall(n: number, n0: number, p0: number, rand: Random): n
 }
 
 function randomBinomialSmall_inner(
-  rand: Random,
+  rand: RandomGenerator,
   {upperTail, n0, frac, delta, pmf0}: RandomBinomialSmall,
 ): number {
-  let u = rand.float();
+  let u = rand.random();
   let pmf = pmf0;
 
   let k = 0;
@@ -240,7 +240,7 @@ function randomBinomialSmall_inner(
   return upperTail ? n0 - k : k;
 }
 
-export function randomBinomial(n: number, n0: number, p0: number, rand: Random): number[] {
+export function randomBinomial(n: number, n0: number, p0: number, rand: RandomGenerator): number[] {
   if (n0 * p0 <= 30.0) return randomBinomialSmall(n, n0, p0, rand);
   return randomBinomialLarge(n, n0, p0, rand);
 }

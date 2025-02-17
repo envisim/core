@@ -1,3 +1,5 @@
+import {randomArray} from '@envisim/random';
+
 import {
   Distribution,
   Interval,
@@ -41,8 +43,8 @@ function randomNormalBoxMuller(
   const n2 = n1 + (n & 1);
 
   const c = 2.0 * Math.PI;
-  const R = rand.floatArray(n2).map((u) => Math.sqrt(-Math.log(1.0 - u) * 2.0));
-  const T = rand.floatArray(n2).map((e) => e * c);
+  const R = randomArray(n2, rand).map((u) => Math.sqrt(-Math.log(1.0 - u) * 2.0));
+  const T = randomArray(n2, rand).map((e) => e * c);
 
   const s = new Array<number>(n);
   for (let i = 0; i < n1; i++) {
@@ -109,7 +111,7 @@ export class Normal extends Distribution<ParamsNormal> {
         return randomNormalBoxMuller(this.params, n, {rand});
       case 'inverse':
       default:
-        return rand.floatArray(n).map((u) => this.quantile(u));
+        return randomArray(n, rand).map((u) => this.quantile(u));
     }
   }
 
@@ -186,7 +188,7 @@ export class LogNormal extends Distribution<ParamsNormal> {
         return randomNormalBoxMuller(this.params, n, {rand}).map((z) => Math.exp(z));
       case 'inverse':
       default:
-        return rand.floatArray(n).map((u) => this.quantile(u));
+        return randomArray(n, rand).map((u) => this.quantile(u));
     }
   }
 
@@ -306,7 +308,7 @@ export class FoldedNormal extends Distribution<ParamsNormal> {
         return randomNormalBoxMuller(this.params, n, {rand}).map((z) => Math.abs(z));
       case 'inverse':
       default:
-        return rand.floatArray(n).map((u) => this.quantile(u));
+        return randomArray(n, rand).map((u) => this.quantile(u));
     }
   }
 

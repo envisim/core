@@ -1,4 +1,4 @@
-import {type Random} from '@envisim/random';
+import {type RandomGenerator, randomFloatOpen} from '@envisim/random';
 
 import {LOGKFAC, SQRT_PI} from '../math-constants.js';
 
@@ -18,7 +18,7 @@ interface RandomLarge {
   vr: number;
 }
 
-function randomSmall(n: number, rate0: number, rand: Random): number[] {
+function randomSmall(n: number, rate0: number, rand: RandomGenerator): number[] {
   const constants: RandomSmall = {
     rate0,
     pdf0: Math.exp(-rate0),
@@ -29,8 +29,8 @@ function randomSmall(n: number, rate0: number, rand: Random): number[] {
   return rv;
 }
 
-function randomSmall_inner(rand: Random, {rate0, pdf0}: RandomSmall): number {
-  const u = rand.float();
+function randomSmall_inner(rand: RandomGenerator, {rate0, pdf0}: RandomSmall): number {
+  const u = rand.random();
   let k = 0;
   let cdf = 0.0;
   let pdf = pdf0;
@@ -51,7 +51,7 @@ function randomSmall_inner(rand: Random, {rate0, pdf0}: RandomSmall): number {
  * Insurance: Mathematics and Economics, 12(1), 39-45.
  * https://doi.org/10.1016/0167-6687(93)90997-4
  */
-function randomLarge(n: number, rate0: number, rand: Random): number[] {
+function randomLarge(n: number, rate0: number, rand: RandomGenerator): number[] {
   // PTRD 0
   const smu = Math.sqrt(rate0);
   const b = 0.931 + 2.53 * smu;
@@ -73,7 +73,10 @@ function randomLarge(n: number, rate0: number, rand: Random): number[] {
   return rv;
 }
 
-function randomLarge_inner(rand: Random, {rate0, smu, b, a, alphainv, vr}: RandomLarge): number {
+function randomLarge_inner(
+  rand: RandomGenerator,
+  {rate0, smu, b, a, alphainv, vr}: RandomLarge,
+): number {
   let k: number;
   let u: number;
   let us: number;
@@ -81,7 +84,7 @@ function randomLarge_inner(rand: Random, {rate0, smu, b, a, alphainv, vr}: Rando
   let run = 0;
 
   while (run++ <= 1e5) {
-    v = rand.float();
+    v = rand.random();
 
     // PTRD 1
     if (v <= 0.86 * vr) {
@@ -91,11 +94,11 @@ function randomLarge_inner(rand: Random, {rate0, smu, b, a, alphainv, vr}: Rando
 
     // PTRD 2
     if (v >= vr) {
-      u = rand.floate() - 0.5;
+      u = randomFloatOpen(rand) - 0.5;
     } else {
       u = v / vr - 0.93;
       u = u >= 0.0 ? 0.5 - u : -0.5 - u;
-      v = rand.floate() * vr;
+      v = randomFloatOpen(rand) * vr;
     }
 
     // PTRD 3.0
@@ -124,7 +127,7 @@ function randomLarge_inner(rand: Random, {rate0, smu, b, a, alphainv, vr}: Rando
   return NaN;
 }
 
-export function randomPoisson(n: number, rate0: number, rand: Random): number[] {
+export function randomPoisson(n: number, rate0: number, rand: RandomGenerator): number[] {
   if (rate0 <= 10) return randomSmall(n, rate0, rand);
   return randomLarge(n, rate0, rand);
 }

@@ -63,7 +63,7 @@ export function pareto({
 
   return p
     .map((e: number, i: number): [number, number] => {
-      const u = rand.float();
+      const u = rand.random();
       if (eps < e && e < 1 - eps) return [i, u / (1 - u) / (p[i] / (1 - p[i]))];
       if (e <= eps) return [i, Infinity];
       return [i, 0];

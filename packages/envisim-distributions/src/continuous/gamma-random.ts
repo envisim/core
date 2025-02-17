@@ -1,4 +1,4 @@
-import {type Random} from '@envisim/random';
+import {type RandomGenerator} from '@envisim/random';
 
 import {stdNormalQuantile} from './normal-utils.js';
 
@@ -27,7 +27,12 @@ interface RandomShapeLarge {
  * Computing, 30(2), 185-188.
  * https://doi.org/10.1007/BF02280789
  */
-function randomShapeSmall(n: number, shape0: number, rand: Random, scale0: number = 1.0): number[] {
+function randomShapeSmall(
+  n: number,
+  shape0: number,
+  rand: RandomGenerator,
+  scale0: number = 1.0,
+): number[] {
   const z = 0.07 + 0.75 * Math.sqrt(1.0 - shape0);
   const b = 1.0 + (Math.exp(-z) * shape0) / z;
 
@@ -42,19 +47,22 @@ function randomShapeSmall(n: number, shape0: number, rand: Random, scale0: numbe
   return rv;
 }
 
-function randomShapeSmall_inner(rand: Random, {shape0, shape0inv, b, z}: RandomShapeSmall): number {
+function randomShapeSmall_inner(
+  rand: RandomGenerator,
+  {shape0, shape0inv, b, z}: RandomShapeSmall,
+): number {
   let u: number, p: number, x: number, y: number;
   let run = 1;
 
   while (run++ <= 1e5) {
     // RGS 1
-    u = rand.float();
+    u = rand.random();
     p = b * u;
 
     if (p <= 1.0) {
       // RGS 2
       x = z * Math.pow(p, shape0inv);
-      u = rand.float();
+      u = rand.random();
       // RGS 3
       if (u <= (2.0 - x) / (2.0 + x) || u <= Math.exp(-x)) return x;
       continue;
@@ -63,7 +71,7 @@ function randomShapeSmall_inner(rand: Random, {shape0, shape0inv, b, z}: RandomS
     // RGS 4
     x = -Math.log(z * (b - p) * shape0inv);
     y = x / z;
-    u = rand.float();
+    u = rand.random();
     if (u * (shape0 + y - shape0 * y) < 1.0) return x;
     // RGS 5
     if (u <= Math.pow(y, shape0 - 1.0)) return x;
@@ -90,7 +98,12 @@ const GAMMACOEFS = [
  * Communications of the ACM, 25(1), 47-54.
  * https://doi.org/10.1145/358315.358390
  */
-function randomShapeLarge(n: number, shape0: number, rand: Random, scale0: number = 1.0): number[] {
+function randomShapeLarge(
+  n: number,
+  shape0: number,
+  rand: RandomGenerator,
+  scale0: number = 1.0,
+): number[] {
   const shape0inv = 1.0 / shape0;
 
   // GD 1
@@ -128,16 +141,16 @@ function randomShapeLarge(n: number, shape0: number, rand: Random, scale0: numbe
 }
 
 function randomShapeLarge_inner(
-  rand: Random,
+  rand: RandomGenerator,
   {s2, s, d, q0, b, sigma, c}: RandomShapeLarge,
 ): number {
   // GD 2
-  let t = stdNormalQuantile(rand.float());
+  let t = stdNormalQuantile(rand.random());
   const x = s + t * 0.5;
   if (t >= 0.0) return Math.pow(x, 2);
 
   // GD 3
-  let u = rand.float();
+  let u = rand.random();
   if (d * u <= Math.pow(t, 3)) return Math.pow(x, 2);
 
   // GD 4
@@ -158,8 +171,8 @@ function randomShapeLarge_inner(
 
   while (run++ <= 1e4) {
     // GD 8
-    e = -Math.log(1.0 - rand.float()); // Random standard exponential
-    u = rand.float() * 2 - 1;
+    e = -Math.log(1.0 - rand.random()); // Random standard exponential
+    u = rand.random() * 2 - 1;
     t = b + e * sigma * (u < 0.0 ? -1 : 1);
     // GD 9
     if (t <= -0.71874483771719) continue;
@@ -182,7 +195,7 @@ function randomShapeLarge_inner(
 export function randomShapeGamma(
   n: number,
   shape0: number,
-  rand: Random,
+  rand: RandomGenerator,
   scale0: number = 1.0,
 ): number[] {
   if (shape0 < 1.0) return randomShapeSmall(n, shape0, rand, scale0);

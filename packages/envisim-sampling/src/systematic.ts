@@ -1,5 +1,5 @@
 import {Vector, sequence} from '@envisim/matrix';
-import type {Random} from '@envisim/random';
+import type {RandomGenerator} from '@envisim/random';
 
 import {BASE_OPTIONS, type PipsOptions} from './base-options/index.js';
 
@@ -11,11 +11,11 @@ import {BASE_OPTIONS, type PipsOptions} from './base-options/index.js';
  * @param fun - index function.
  * @returns sample indices.
  */
-const _systematic = (p: number[], fun: (i: number) => number, rand: Random): number[] => {
+const _systematic = (p: number[], fun: (i: number) => number, rand: RandomGenerator): number[] => {
   const N = p.length;
   const s: number[] = [];
 
-  let r = rand.float();
+  let r = rand.random();
   let psum = 0.0;
 
   for (let i = 0; i < N; i++) {

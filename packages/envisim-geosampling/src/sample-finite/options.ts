@@ -1,5 +1,5 @@
 import {PropertyRecord} from '@envisim/geojson-utils';
-import {type Random} from '@envisim/random';
+import {type RandomGenerator} from '@envisim/random';
 import {throwRangeError} from '@envisim/utils';
 
 import {SAMPLE_ERROR_LIST, type SampleError} from '../errors/index.js';
@@ -11,7 +11,7 @@ export interface OptionsBase<P extends string = string, M extends string = strin
    * An instance of {@link random.Random}
    * @defaultValue `new Random()`
    */
-  rand?: Random;
+  rand?: RandomGenerator;
   /**
    * Method name
    */

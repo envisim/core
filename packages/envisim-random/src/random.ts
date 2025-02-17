@@ -40,7 +40,7 @@
 // 1460910 and 1768863. (We use the largest one that's < 2^21)
 // ============================================================================
 
-class Random {
+export class Random {
   // set the 'order' number of ENTROPY-holding 32-bit values
   /** @ignore */
   private o: number = 48;
@@ -52,7 +52,7 @@ class Random {
   private p: number = this.o;
   // declare our intermediate variables array
   /** @ignore */
-  private s: number[] = new Array<number>(this.o);
+  private s: number[] = Array.from<number>({length: this.o});
 
   // general purpose local
   /** @ignore */
@@ -141,7 +141,7 @@ class Random {
   intn(n: number = 1): number {
     if (!Number.isInteger(n) || n < 1) throw new RangeError('n must be a positive integer');
     if (n === 1) return 0;
-    return (n * this.float()) | 0;
+    return (n * this.random()) | 0;
   }
 
   // this EXPORTED function 'string(n)' returns a pseudo-random string of
@@ -241,18 +241,16 @@ class Random {
 
   // Extracted from intn, see original comments there
   /** @returns Pseudo-random (uniform) number on the interval [0.0, 1.0) */
-  float(): number {
-    return this.random();
-  }
   random(): number {
     return this.rawprng() + ((this.rawprng() * 0x200000) | 0) * 1.1102230246251565e-16; // 2^-53
+  }
+  float(): number {
+    return this.random();
   }
 
   /** @returns An array of (uniform) numbers on the interval `[0.0, 1.0)` */
   floatArray(n: number): number[] {
-    const s = new Array<number>(n);
-    for (let i = 0; i < n; i++) s[i] = this.random();
-    return s;
+    return Array.from({length: n}, () => this.random());
   }
 
   /** @returns Pseudo-random (uniform) number o nthe interval `(0.0, 1.0)` */
@@ -264,34 +262,3 @@ class Random {
     return u;
   }
 }
-
-/**
- * Shorthand constructor for {@link Random}.
- *
- * @param seed - Seed for random number generator.
- * @returns An initialized instance of {@link Random}.
- */
-const random = (seed?: number | string): Random => {
-  return new Random(seed);
-};
-
-/**
- * @param seed - Seed for random number generator
- * @returns Pseudo-random (uniform) number on the interval `[0.0, 1.0)`
- */
-const randomFloat = (seed?: number | string): number => {
-  return new Random(seed).float();
-};
-
-/**
- * Returns an array with psudo-random standard uniform elements.
- *
- * @param n - Length of array.
- * @param seed - Seed for random number generator.
- * @returns Pseudo-random (uniform) array with elements on the interval `[0.0, 1.0)`.
- */
-const randomArray = (n: number, seed?: number | string): number[] => {
-  return new Random(seed).floatArray(n);
-};
-
-export {Random, random, randomFloat, randomArray};
