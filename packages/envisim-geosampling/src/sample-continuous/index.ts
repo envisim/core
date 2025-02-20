@@ -43,6 +43,11 @@ export {
   sampleSystematicLinesOnAreasCheck,
   type SampleSystematicLinesOnAreas,
 } from './systematic-lines-on-areas.js';
+export {
+  sampleSystematicLinesOnLines,
+  sampleSystematicLinesOnLinesCheck,
+  type SampleSystematicLinesOnLines,
+} from './systematic-lines-on-lines.js';
 
 // Distance sampling utils.
 export {
