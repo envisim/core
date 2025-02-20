@@ -14,6 +14,7 @@ export {areaOfPolygonLonLat} from './utils/area.js';
 export {
   bbox4,
   bboxFromPositions,
+  bboxFromPositionsUnwrapped,
   bboxInBBox,
   pointInBBox,
   unionOfBBoxes,
@@ -27,6 +28,8 @@ export {
   checkLongitudeInRange,
   longitudeDistance,
   longitudeCenter,
+  midpoint,
+  midpointRaw,
   normalizeLongitude,
 } from './utils/position.js';
 export {rotateCoord} from './utils/rotate-coord.js';

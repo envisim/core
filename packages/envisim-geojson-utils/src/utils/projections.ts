@@ -10,7 +10,7 @@ const geodDirectOpts = geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE;
 const TO_DEG = 180 / Math.PI;
 const TO_RAD = Math.PI / 180;
 
-export type ProjectionFunction = (coord: GJ.Position) => GJ.Position;
+export type ProjectionFunction = (coord: GJ.Position) => GJ.Position2;
 export type NestedPosition = GJ.Position | NestedPosition[];
 
 /**
@@ -41,7 +41,7 @@ export type Projection = {
  */
 export const azimuthalEquidistant = (refCoord: GJ.Position): Projection => {
   return {
-    project: (coord: GJ.Position): GJ.Position => {
+    project: (coord: GJ.Position): GJ.Position2 => {
       const result = geod.Inverse(refCoord[1], refCoord[0], coord[1], coord[0], geodInverseOpts);
       if (typeof result.s12 === 'number' && typeof result.azi1 === 'number') {
         return [
@@ -51,7 +51,7 @@ export const azimuthalEquidistant = (refCoord: GJ.Position): Projection => {
       }
       throw new Error('Not able to project.');
     },
-    unproject: (coord: GJ.Position): GJ.Position => {
+    unproject: (coord: GJ.Position): GJ.Position2 => {
       const dist = (coord[0] ** 2 + coord[1] ** 2) ** 0.5;
       const angle = Math.atan2(coord[1], coord[0]) * TO_DEG;
       const result = geod.Direct(refCoord[1], refCoord[0], 90 - angle, dist, geodDirectOpts);
