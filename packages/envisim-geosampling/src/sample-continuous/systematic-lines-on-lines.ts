@@ -55,7 +55,7 @@ export function sampleSystematicLinesOnLines(
 
   const L = collection.measure(); // total length of input geoJSON
   if (L === 0) {
-    throw new Error('Input layer has zero length.');
+    return FeatureCollection.newLine<LineString, never>([]);
   }
 
   const intervalLength = dashLength + voidLength;
