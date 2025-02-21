@@ -32,6 +32,7 @@ export const SAMPLE_ERROR_LIST = {
   SIZE_PROPERTY_MISSING: 'sample-error-size-property-do-not-exist',
   SIZE_PROPERTY_NOT_NUMERICAL: 'sample-error-size-property-not-numerical',
   CUTOFF_NOT_POSITIVE: 'sample-error-cutoff-not-positive',
+  DASH_LENGTH_NOT_POSITIVE: 'sample-error-dash-length-not-positive',
   ROTATION_OF_GRID_ERROR: 'sample-error-rotation-of-grid-incorrect',
 
   // MODEL FEATURE
