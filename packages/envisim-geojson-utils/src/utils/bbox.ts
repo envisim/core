@@ -155,25 +155,11 @@ export function bboxFromPositions(positions: GJ.Position[]): GJ.BBox {
     return [...positions[0], ...positions[0]] as GJ.BBox;
   }
 
-  const box: GJ.BBox = positions.every((a) => a.length === 2)
-    ? [Infinity, Infinity, -Infinity, -Infinity]
-    : [Infinity, Infinity, Infinity, -Infinity, -Infinity, -Infinity];
+  const box = bboxFromPositionsUnwrapped(positions);
 
-  if (box.length === 4) {
-    for (let i = 0; i < positions.length; i++) {
-      box[1] = Math.min(positions[i][1], box[1]);
-      box[3] = Math.max(positions[i][1], box[3]);
-    }
-  } else {
-    for (let i = 0; i < positions.length; i++) {
-      box[1] = Math.min(positions[i][1], box[1]);
-      box[4] = Math.max(positions[i][1], box[4]);
-
-      if (positions[i].length === 3) {
-        box[2] = Math.min(positions[i][2] as number, box[2]);
-        box[5] = Math.max(positions[i][2] as number, box[5]);
-      }
-    }
+  if (getBBoxValue(box, BBoxEnum.blon) - getBBoxValue(box, BBoxEnum.alon) < 180.0) {
+    // Should be OK? If Positions are normalized
+    return box;
   }
 
   const sorted = positions.map((p) => p[0]).sort((a, b) => a - b);
