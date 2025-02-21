@@ -1,3 +1,5 @@
+import {type GeoJSON as GJ} from '../index.js';
+
 /**
  * @param p the longitude to normalize
  * @param norm the normalizing factor
@@ -56,4 +58,12 @@ export function longitudeCenter(a: number, b: number, norm: number = 360.0): num
 
 export function checkInRange(x: number, a: number, b: number): boolean {
   return a <= x && x <= b;
+}
+
+export function midpointRaw(p1: GJ.Position2, p2: GJ.Position2): GJ.Position2 {
+  return [(p1[0] + p2[0]) * 0.5, (p1[1] + p2[1]) * 0.5];
+}
+
+export function midpoint(p1: GJ.Position2, p2: GJ.Position2): GJ.Position2 {
+  return [longitudeCenter(p1[0], p2[0]), (p1[1] + p2[1]) * 0.5];
 }

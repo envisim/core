@@ -1,11 +1,6 @@
 import type * as GJ from '../types/geojson.js';
 import {Geodesic} from './class-geodesic.js';
-import {
-  checkInRange,
-  checkLongitudeInRange,
-  longitudeCenter,
-  longitudeDistance,
-} from './position.js';
+import {checkInRange, checkLongitudeInRange, longitudeDistance, midpoint} from './position.js';
 
 enum BBoxEnum {
   alon,
@@ -115,6 +110,37 @@ export function bboxInBBox(b1: GJ.BBox, b2: GJ.BBox): boolean {
   return true;
 }
 
+export function bboxFromPositionsUnwrapped(positions: GJ.Position2[]): GJ.BBox2;
+export function bboxFromPositionsUnwrapped(positions: GJ.Position3[]): GJ.BBox3;
+export function bboxFromPositionsUnwrapped(positions: GJ.Position[]): GJ.BBox;
+export function bboxFromPositionsUnwrapped(positions: GJ.Position[]): GJ.BBox {
+  if (positions.length === 0) {
+    throw new Error('positions must not be empty');
+  } else if (positions.length === 1) {
+    return [...positions[0], ...positions[0]] as GJ.BBox;
+  }
+
+  const box: GJ.BBox3 = [Infinity, Infinity, Infinity, -Infinity, -Infinity, -Infinity];
+
+  for (let i = 0; i < positions.length; i++) {
+    box[0] = Math.min(positions[i][0], box[0]);
+    box[1] = Math.min(positions[i][1], box[1]);
+    box[3] = Math.max(positions[i][0], box[3]);
+    box[4] = Math.max(positions[i][1], box[4]);
+
+    if (positions[i].length === 3) {
+      box[2] = Math.min(positions[i][2] as number, box[2]);
+      box[5] = Math.max(positions[i][2] as number, box[5]);
+    }
+  }
+
+  if (Number.isFinite(box[2])) {
+    return box;
+  }
+
+  return [box[0], box[1], box[3], box[4]];
+}
+
 /**
  * @param positions - an array of positions
  * @returns the bounding box around the array of positions
@@ -129,25 +155,11 @@ export function bboxFromPositions(positions: GJ.Position[]): GJ.BBox {
     return [...positions[0], ...positions[0]] as GJ.BBox;
   }
 
-  const box: GJ.BBox = positions.every((a) => a.length === 2)
-    ? [Infinity, Infinity, -Infinity, -Infinity]
-    : [Infinity, Infinity, Infinity, -Infinity, -Infinity, -Infinity];
+  const box = bboxFromPositionsUnwrapped(positions);
 
-  if (box.length === 4) {
-    for (let i = 0; i < positions.length; i++) {
-      box[1] = Math.min(positions[i][1], box[1]);
-      box[3] = Math.max(positions[i][1], box[3]);
-    }
-  } else {
-    for (let i = 0; i < positions.length; i++) {
-      box[1] = Math.min(positions[i][1], box[1]);
-      box[4] = Math.max(positions[i][1], box[4]);
-
-      if (positions[i].length === 3) {
-        box[2] = Math.min(positions[i][2] as number, box[2]);
-        box[5] = Math.max(positions[i][2] as number, box[5]);
-      }
-    }
+  if (getBBoxValue(box, BBoxEnum.blon) - getBBoxValue(box, BBoxEnum.alon) < 180.0) {
+    // Should be OK? If Positions are normalized
+    return box;
   }
 
   const sorted = positions.map((p) => p[0]).sort((a, b) => a - b);
@@ -246,12 +258,12 @@ export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox {
  * @param bbox - a bounding box.
  * @returns - a bounding box of length 4.
  */
-export function bbox4(bbox: GJ.BBox): [number, number, number, number] {
+export function bbox4(bbox: GJ.BBox): GJ.BBox2 {
   if (bbox.length === 6) {
     return [bbox[0], bbox[1], bbox[3], bbox[4]];
   }
 
-  return [...bbox] as [number, number, number, number];
+  return [...bbox];
 }
 
 /**
@@ -259,9 +271,9 @@ export function bbox4(bbox: GJ.BBox): [number, number, number, number] {
  * @param bbox - a bounding box
  * @returns - the center of the bounding box
  */
-export function bboxCenter(bbox: GJ.BBox): GJ.Position {
+export function bboxCenter(bbox: GJ.BBox): GJ.Position2 {
   const box = bbox4(bbox);
-  return [longitudeCenter(box[0], box[2]), (box[1] + box[3]) / 2];
+  return midpoint([box[0], box[1]], [box[2], box[3]]);
 }
 
 export function bboxCrossesAntimeridian(bbox: GJ.BBox): boolean {

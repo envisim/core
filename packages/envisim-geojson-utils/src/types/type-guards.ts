@@ -1,23 +1,21 @@
 import type * as GJ from './geojson.js';
 
-export function isPoint(obj: GJ.Point | GJ.Circle): obj is GJ.Point {
-  return !Object.hasOwn(obj, 'radius');
+export function isPoint(obj: GJ.SingleTypeObject): obj is GJ.Point {
+  return obj.type === 'Point' && 'radius' in obj === false;
 }
-export function isMultiPoint(obj: GJ.MultiPoint | GJ.MultiCircle): obj is GJ.MultiPoint {
-  return !Object.hasOwn(obj, 'radius');
+export function isMultiPoint(obj: GJ.SingleTypeObject): obj is GJ.MultiPoint {
+  return obj.type === 'MultiPoint' && 'radius' in obj === false;
 }
 
 export function isCircle(
-  obj: GJ.Point | GJ.Circle,
+  obj: GJ.SingleTypeObject,
   checkPositiveRadius: boolean = false,
 ): obj is GJ.Circle {
-  return Object.hasOwn(obj, 'radius') && (!checkPositiveRadius || (obj as GJ.Circle).radius > 0.0);
+  return obj.type === 'Point' && 'radius' in obj && (!checkPositiveRadius || obj.radius > 0.0);
 }
 export function isMultiCircle(
-  obj: GJ.MultiPoint | GJ.MultiCircle,
+  obj: GJ.SingleTypeObject,
   checkPositiveRadius: boolean = false,
 ): obj is GJ.MultiCircle {
-  return (
-    Object.hasOwn(obj, 'radius') && (!checkPositiveRadius || (obj as GJ.MultiCircle).radius > 0.0)
-  );
+  return obj.type === 'MultiPoint' && 'radius' in obj && (!checkPositiveRadius || obj.radius > 0.0);
 }
