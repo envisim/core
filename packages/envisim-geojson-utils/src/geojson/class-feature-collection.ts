@@ -360,10 +360,13 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
   // FEATURE HANDLING
   addGeometry(geometry: T, properties: FeatureProperties<PID>, shallow: boolean = true): number {
+    delete this.bbox;
     return this.features.push(new Feature(geometry, properties, shallow));
   }
 
   addFeature(feature: Feature<T, PID>, shallow: boolean = true): number {
+    delete this.bbox;
+
     if (shallow === true) {
       return this.features.push(feature);
     }
@@ -372,7 +375,13 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
   }
 
   removeFeature(index: number): void {
+    delete this.bbox;
     this.features.splice(index, 1);
+  }
+
+  clearFeatures(): void {
+    delete this.bbox;
+    this.features = [];
   }
 
   setProperty(id: PID, index: number, value: number | string): void {

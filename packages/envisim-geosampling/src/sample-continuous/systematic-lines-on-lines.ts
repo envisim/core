@@ -83,7 +83,9 @@ export function sampleSystematicLinesOnLines(
       }
 
       if (distances.length > 0) {
-        let dashLines: GJ.Position[][] = new Array(distances.length).fill([]);
+        const dashLines: GJ.Position[][] = Array.from<GJ.Position[]>({
+          length: distances.length,
+        }).fill([]);
         let dashOpen = -1;
         let dashClosed = -1;
         let distTravelled = 0;
