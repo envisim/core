@@ -375,7 +375,13 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
   }
 
   removeFeature(index: number): void {
+    delete this.bbox;
     this.features.splice(index, 1);
+  }
+
+  clearFeatures(): void {
+    delete this.bbox;
+    this.features = [];
   }
 
   setProperty(id: PID, index: number, value: number | string): void {
