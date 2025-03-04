@@ -423,19 +423,6 @@ export function rectangularCircleGeometry(
   return {...rectangularPointGeometry(width, height), radius: Math.min(diameter, width) * 0.5};
 }
 
-/**
- * @param sides the number of sides/vertices.
- * @param polygonDiameter the diameter of the containing circle in meters.
- * @returns a point model geometry in a regular polygon formation.
- */
-export function regularPolygonPointGeometry(
-  sides: number = 3,
-  polygonDiameter: number = 1.0,
-): GJ.MultiPoint {
-  const coordinates = regularPolygonCoordinates(sides, polygonDiameter);
-  return {type: 'MultiPoint', coordinates};
-}
-
 function regularPolygonCoordinates(
   sides: number = 3,
   polygonDiameter: number = 1.0,
@@ -457,6 +444,19 @@ function regularPolygonCoordinates(
   }
 
   return coordinates;
+}
+
+/**
+ * @param sides the number of sides/vertices.
+ * @param polygonDiameter the diameter of the containing circle in meters.
+ * @returns a point model geometry in a regular polygon formation.
+ */
+export function regularPolygonPointGeometry(
+  sides: number = 3,
+  polygonDiameter: number = 1.0,
+): GJ.MultiPoint {
+  const coordinates = regularPolygonCoordinates(sides, polygonDiameter);
+  return {type: 'MultiPoint', coordinates};
 }
 
 /**
