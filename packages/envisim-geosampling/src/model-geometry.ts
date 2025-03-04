@@ -1,6 +1,7 @@
 import {
   type AreaObject,
   Circle,
+  type CirclesToPolygonsOptions,
   type GeoJSON as GJ,
   Geodesic,
   type LineObject,
@@ -267,12 +268,21 @@ export function sizeOfModelGeometry(geometry: GJ.SingleTypeObject): number {
 // model geometries.
 
 /**
- * Returns a model geometry with a straight line (north-south direction).
- *
- * @param sideLength the length of the line in meters.
- * @returns a model geometry.
+ * @returns a single point model geometry.
  */
-export function straightLineGeometry(sideLength: number = 100.0): GJ.LineString {
+export function pointGeometry(): GJ.Point {
+  return {type: 'Point', coordinates: [0, 0]};
+}
+
+/**
+ * @param sideLength the length of the line in meters.
+ * @returns a north-south straight line model geometry.
+ */
+export function straightLineGeometry(sideLength: number = 10.0): GJ.LineString {
+  if (sideLength <= 0.0) {
+    throw new RangeError('sideLength must be positive');
+  }
+
   const halfSide = sideLength * 0.5;
   return {
     type: 'LineString',
@@ -284,12 +294,14 @@ export function straightLineGeometry(sideLength: number = 100.0): GJ.LineString 
 }
 
 /**
- * Returns an ell-shaped line model geometry.
- *
  * @param sideLength length of side in meters.
- * @returns a model geometry.
+ * @returns an ell-shaped line model geometry.
  */
-export function ellLineGeometry(sideLength: number = 100.0): GJ.LineString {
+export function ellLineGeometry(sideLength: number = 10.0): GJ.LineString {
+  if (sideLength <= 0.0) {
+    throw new RangeError('sideLength must be positive');
+  }
+
   const halfSide = sideLength * 0.5;
   return {
     type: 'LineString',
@@ -302,242 +314,203 @@ export function ellLineGeometry(sideLength: number = 100.0): GJ.LineString {
 }
 
 /**
- * Returns a rectangular-shaped line model geometry.
- *
+ * @param diameter the diameter of the circle in meters.
+ * @returns a circle-shaped line model geometry.
+ */
+export function circleLineGeometry(
+  diameter: number = 1.0,
+  options?: CirclesToPolygonsOptions,
+): GJ.LineString {
+  const pointsPerCircle = options?.pointsPerCircle ?? 16;
+
+  if (pointsPerCircle < 3 || !Number.isInteger(pointsPerCircle)) {
+    throw new RangeError('sides must be an integer larger than 3');
+  } else if (diameter <= 0.0) {
+    throw new RangeError('diameter must be positive');
+  }
+
+  // use the radius that gives equal area to the polygon for best approximation
+  const v = Math.PI / pointsPerCircle;
+  const r = diameter * 0.5;
+
+  return regularPolygonLineGeometry(
+    pointsPerCircle,
+    Math.sqrt((Math.PI * Math.pow(r, 2)) / (pointsPerCircle * Math.sin(v) * Math.cos(v))),
+  );
+}
+
+/**
+ * @param diameter the diameter in meters.
+ * @returns a circle model geometry.
+ */
+export function circleAreaGeometry(diameter: number = 10.0): GJ.Circle {
+  if (diameter <= 0.0) {
+    throw new RangeError('diameter must be positive');
+  }
+
+  return {...pointGeometry(), radius: diameter * 0.5};
+}
+
+function rectangularCoordinates(width: number = 10.0, height: number = 10.0): GJ.Position2[] {
+  if (width <= 0.0 || height <= 0.0) {
+    throw new RangeError('width and height must be positive');
+  }
+
+  const halfWidth = width * 0.5;
+  const halfHeight = height * 0.5;
+  return [
+    [-halfWidth, halfHeight],
+    [-halfWidth, -halfHeight],
+    [halfWidth, -halfHeight],
+    [halfWidth, halfHeight],
+  ];
+}
+
+/**
  * @param width length of side west-east in meters.
  * @param height length of side south-north in meters.
- * @returns a model geometry.
+ * @returns a point model geometry in a rectangular formation.
+ */
+export function rectangularPointGeometry(
+  width: number = 10.0,
+  height: number = 10.0,
+): GJ.MultiPoint {
+  const coordinates = rectangularCoordinates(width, height);
+  return {type: 'MultiPoint', coordinates};
+}
+
+/**
+ * @param width length of side west-east in meters.
+ * @param height length of side south-north in meters.
+ * @returns a rectangular-shaped line model geometry.
  */
 export function rectangularLineGeometry(
-  width: number = 100.0,
-  height: number = 100.0,
+  width: number = 10.0,
+  height: number = 10.0,
 ): GJ.LineString {
-  const halfSide1 = width * 0.5;
-  const halfSide2 = height * 0.5;
-  return {
-    type: 'LineString',
-    coordinates: [
-      [-halfSide1, halfSide2],
-      [-halfSide1, -halfSide2],
-      [halfSide1, -halfSide2],
-      [halfSide1, halfSide2],
-      [-halfSide1, halfSide2],
-    ],
-  };
+  const coordinates = rectangularCoordinates(width, height);
+  coordinates.push(coordinates[0]);
+  return {type: 'LineString', coordinates};
 }
 
 /**
- * Returns a square-shaped line model geometry.
- *
- * @param sideLength1 length of side west-east in meters.
- * @param sideLength2 length of side south-north in meters.
- * @returns a model geometry.
+ * @param width length of side west-east in meters.
+ * @param height length of side south-north in meters.
+ * @returns a rectangular-shaped area model geometry.
  */
-export function squareLineGeometry(sideLength: number = 100.0): GJ.LineString {
-  return rectangularLineGeometry(sideLength, sideLength);
+export function rectangularAreaGeometry(width: number = 10.0, height: number = 10.0): GJ.Polygon {
+  const coordinates = rectangularCoordinates(width, height);
+  coordinates.push(coordinates[0]);
+  return {type: 'Polygon', coordinates: [coordinates]};
 }
 
 /**
- * Returns a circular area model geometry.
- *
- * @param radius the radius in meters.
- * @returns a model geometry.
+ * @param width length of side west-east in meters.
+ * @param height length of side south-north in meters.
+ * @param diameter the diameter in meters. If diameter is smaller than width, diameter is replaced
+ * by width.
+ * @returns a circle model geometry in a rectangular formation.
  */
-export function circleAreaGeometry(radius: number = 10.0): GJ.Circle {
-  return {
-    type: 'Point',
-    coordinates: [0, 0],
-    radius,
-  };
-}
-
-/**
- * Returns a square shaped area model geometry with a circle in
- * each of the four corners.
- *
- * @param sideLength the side length in meters.
- * @param radius the radius in meters.
- * @returns a model geometry.
- */
-export function squareCircleAreaGeometry(
-  sideLength: number = 100.0,
-  radius: number = 10.0,
+export function rectangularCircleGeometry(
+  width: number = 10.0,
+  height: number = 10.0,
+  diameter: number = 1.0,
 ): GJ.MultiCircle {
-  const halfSide = sideLength * 0.5;
-  return {
-    type: 'MultiPoint',
-    radius: radius,
-    coordinates: [
-      [halfSide, halfSide],
-      [-halfSide, halfSide],
-      [-halfSide, -halfSide],
-      [halfSide, -halfSide],
-    ],
-  };
-}
-
-/**
- * Returns a rectangular-shaped area model geometry.
- *
- * @param sideLength1 length of side west-east in meters.
- * @param sideLength2 length of side south-north in meters.
- * @returns a model geometry.
- */
-export function rectangularAreaGeometry(
-  sideLength1: number = 100.0,
-  sideLength2: number = 100.0,
-): GJ.Polygon {
-  const halfSide1 = sideLength1 * 0.5;
-  const halfSide2 = sideLength2 * 0.5;
-  return {
-    type: 'Polygon',
-    coordinates: [
-      [
-        [-halfSide1, halfSide2],
-        [-halfSide1, -halfSide2],
-        [halfSide1, -halfSide2],
-        [halfSide1, halfSide2],
-        [-halfSide1, halfSide2],
-      ],
-    ],
-  };
-}
-
-/**
- * Returns a square-shaped area model geometry.
- *
- * @param sideLength length of side in meters.
- * @returns a model geometry.
- */
-export function squareAreaGeometry(sideLength: number = 100.0): GJ.Polygon {
-  return rectangularAreaGeometry(sideLength, sideLength);
-}
-
-/**
- * Returns a single point model geometry.
- *
- * @returns a model point geometry.
- */
-export function pointGeometry(): GJ.Point {
-  return {
-    type: 'Point',
-    coordinates: [0, 0],
-  };
-}
-
-/**
- * Returns a square shaped model geometry with a point in
- * each of the four corners.
- *
- * @param sideLength the side length in meters.
- * @returns a model geometry.
- */
-export function squarePointGeometry(sideLength: number = 100.0): GJ.MultiPoint {
-  const halfSide = sideLength * 0.5;
-  return {
-    type: 'MultiPoint',
-    coordinates: [
-      [-halfSide, halfSide],
-      [-halfSide, -halfSide],
-      [halfSide, -halfSide],
-      [halfSide, halfSide],
-    ],
-  };
-}
-
-/**
- * Returns a model area geometry as a regular polygon.
- *
- * @param sides the number of sides/vertices.
- * @param radius the radius in meters.
- * @returns a model geometry.
- */
-export function regularPolygonAreaGeometry(sides: number = 3, radius: number = 0.05): GJ.Polygon {
-  const n = Math.max(Math.round(sides), 3);
-  const r = Math.max(radius, 0.05);
-  const coordinates: GJ.Position[] = [];
-  const startAngle = -Math.PI / n - Math.PI * 0.5;
-
-  for (let i = 0; i < n + 1; i++) {
-    const angle = startAngle + (i / n) * 2 * Math.PI;
-    coordinates.push([r * Math.cos(angle), r * Math.sin(angle)]);
+  if (diameter <= 0.0) {
+    throw new RangeError('diameter must be positive');
   }
 
-  return {
-    type: 'Polygon',
-    coordinates: [coordinates],
-  };
+  return {...rectangularPointGeometry(width, height), radius: Math.min(diameter, width) * 0.5};
 }
 
 /**
- * Returns a model line geometry as a regular polygon.
- *
  * @param sides the number of sides/vertices.
- * @param radius the radius in meters.
- * @returns a model geometry.
- */
-export function regularPolygonLineGeometry(
-  sides: number = 3,
-  radius: number = 0.05,
-): GJ.LineString {
-  const n = Math.max(Math.round(sides), 3);
-  const r = Math.max(radius, 0.05);
-  const coordinates: GJ.Position[] = [];
-  const startAngle = -Math.PI / n - Math.PI * 0.5;
-
-  for (let i = 0; i < n + 1; i++) {
-    const angle = startAngle + (i / n) * 2 * Math.PI;
-    coordinates.push([r * Math.cos(angle), r * Math.sin(angle)]);
-  }
-
-  return {
-    type: 'LineString',
-    coordinates: coordinates,
-  };
-}
-
-/**
- * Returns a model point geometry as a regular polygon.
- *
- * @param sides the number of sides/vertices.
- * @param radius the radius in meters.
- * @returns a model geometry.
+ * @param polygonDiameter the diameter of the containing circle in meters.
+ * @returns a point model geometry in a regular polygon formation.
  */
 export function regularPolygonPointGeometry(
   sides: number = 3,
-  radius: number = 0.05,
+  polygonDiameter: number = 1.0,
 ): GJ.MultiPoint {
-  const n = Math.max(Math.round(sides), 3);
-  const r = Math.max(radius);
-  const coordinates: GJ.Position[] = [];
-  const startAngle = -Math.PI / n - Math.PI * 0.5;
+  const coordinates = regularPolygonCoordinates(sides, polygonDiameter);
+  return {type: 'MultiPoint', coordinates};
+}
 
-  for (let i = 0; i < n; i++) {
-    const angle = startAngle + (i / n) * 2 * Math.PI;
-    coordinates.push([r * Math.cos(angle), r * Math.sin(angle)]);
+function regularPolygonCoordinates(
+  sides: number = 3,
+  polygonDiameter: number = 1.0,
+): GJ.Position2[] {
+  if (sides < 3 || !Number.isInteger(sides)) {
+    throw new RangeError('sides must be an integer larger than 3');
+  } else if (polygonDiameter <= 0.0) {
+    throw new RangeError('diameter must be positive');
   }
 
-  return {
-    type: 'MultiPoint',
-    coordinates: coordinates,
-  };
+  const r = polygonDiameter * 0.5;
+  const coordinates = Array.from<GJ.Position2>({length: sides});
+  let angle = -Math.PI / sides - Math.PI * 0.5;
+  const delta = (2.0 / sides) * Math.PI;
+
+  for (let i = 0; i < sides; i++) {
+    coordinates[i] = [r * Math.cos(angle), r * Math.sin(angle)];
+    angle += delta;
+  }
+
+  return coordinates;
 }
 
 /**
- * Returns a circular model line geometry as a regular polygon with 36
- * sides. The area of the polygon matches the area of a circle with
- * the given radius.
- *
- * @param radius the radius of the circle in meters.
- * @returns a model geometry.
+ * @param sides the number of sides/vertices.
+ * @param polygonDiameter the diameter of the containing circle in meters.
+ * @returns a regular polygon line model geometry.
  */
-export function circleLineGeometry(radius: number = 10): GJ.LineString {
-  const n = 36;
-  const v = Math.PI / n;
-  // use the radius that gives equal area to the polygon for best approximation
-  const r = radius > 0 ? radius : 10;
-  return regularPolygonLineGeometry(
-    n,
-    Math.sqrt((Math.PI * Math.pow(r, 2)) / (n * Math.sin(v) * Math.cos(v))),
-  );
+export function regularPolygonLineGeometry(
+  sides: number = 3,
+  polygonDiameter: number = 1.0,
+): GJ.LineString {
+  const coordinates = regularPolygonCoordinates(sides, polygonDiameter);
+  coordinates.push(coordinates[0]);
+  return {type: 'LineString', coordinates};
+}
+
+/**
+ * @param sides the number of sides/vertices.
+ * @param polygonDiameter the diameter of the containing circle in meters.
+ * @returns a regular polygon area model geometry.
+ */
+export function regularPolygonAreaGeometry(
+  sides: number = 3,
+  polygonDiameter: number = 1.0,
+): GJ.Polygon {
+  const coordinates = regularPolygonCoordinates(sides, polygonDiameter);
+  coordinates.push(coordinates[0]);
+  return {type: 'Polygon', coordinates: [coordinates]};
+}
+
+/**
+ * @param sides the number of sides/vertices.
+ * @param polygonDiameter the diameter of the containing circle in meters.
+ * @param diameter the diameter of the circles in meters. If diameter is smaller than the distance
+ * between the points in the polygon, the diameter is replaced by this distance.
+ * @returns a circle model geometry in a regular polygon formation.
+ */
+export function regularPolygonCircleGeometry(
+  sides: number = 3,
+  polygonDiameter: number = 10.0,
+  diameter: number = 1.0,
+): GJ.MultiCircle {
+  if (diameter <= 0.0) {
+    throw new RangeError('diameter must be positive');
+  }
+
+  const coordinates = regularPolygonCoordinates(sides, polygonDiameter);
+  const d =
+    (coordinates[0][0] - coordinates[1][0]) ** 2 + (coordinates[0][1] - coordinates[1][1]) ** 2;
+  let radius = diameter * 0.5;
+
+  if (d < diameter ** 2) {
+    radius = Math.sqrt(d) * 0.5;
+  }
+
+  return {type: 'MultiPoint', coordinates, radius};
 }
