@@ -351,7 +351,7 @@ export function circleAreaGeometry(diameter: number = 10.0): GJ.Circle {
   return {...pointGeometry(), radius: diameter * 0.5};
 }
 
-function rectangularCoordinates(width: number = 10.0, height: number = 10.0): GJ.Position2[] {
+function rectangularCoordinates(width: number = 10.0, height: number = width): GJ.Position2[] {
   if (width <= 0.0 || height <= 0.0) {
     throw new RangeError('width and height must be positive');
   }
@@ -373,7 +373,7 @@ function rectangularCoordinates(width: number = 10.0, height: number = 10.0): GJ
  */
 export function rectangularPointGeometry(
   width: number = 10.0,
-  height: number = 10.0,
+  height: number = width,
 ): GJ.MultiPoint {
   const coordinates = rectangularCoordinates(width, height);
   return {type: 'MultiPoint', coordinates};
@@ -386,7 +386,7 @@ export function rectangularPointGeometry(
  */
 export function rectangularLineGeometry(
   width: number = 10.0,
-  height: number = 10.0,
+  height: number = width,
 ): GJ.LineString {
   const coordinates = rectangularCoordinates(width, height);
   coordinates.push(coordinates[0]);
@@ -398,7 +398,7 @@ export function rectangularLineGeometry(
  * @param height length of side south-north in meters.
  * @returns a rectangular-shaped area model geometry.
  */
-export function rectangularAreaGeometry(width: number = 10.0, height: number = 10.0): GJ.Polygon {
+export function rectangularAreaGeometry(width: number = 10.0, height: number = width): GJ.Polygon {
   const coordinates = rectangularCoordinates(width, height);
   coordinates.push(coordinates[0]);
   return {type: 'Polygon', coordinates: [coordinates]};
@@ -413,7 +413,7 @@ export function rectangularAreaGeometry(width: number = 10.0, height: number = 1
  */
 export function rectangularCircleGeometry(
   width: number = 10.0,
-  height: number = 10.0,
+  height: number = width,
   diameter: number = 1.0,
 ): GJ.MultiCircle {
   if (diameter <= 0.0) {
