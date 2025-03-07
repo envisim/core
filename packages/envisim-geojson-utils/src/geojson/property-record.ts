@@ -1,7 +1,5 @@
 import {v4 as uuid} from 'uuid';
 
-import {copy} from '@envisim/utils';
-
 import type * as GJ from '../types/geojson.js';
 import {type Feature} from './class-feature.js';
 import {type PureObject} from './objects/index.js';
@@ -147,7 +145,7 @@ export class PropertyRecord<IDS extends string = string> {
   record: PropertyList<IDS>;
 
   constructor(record: PropertyList<IDS>, shallow: boolean = true) {
-    this.record = shallow === true ? record : copy(record);
+    this.record = shallow === true ? record : PropertyRecord.copyRecord(record);
   }
 
   copy(shallow: boolean = true): PropertyRecord<IDS> {
