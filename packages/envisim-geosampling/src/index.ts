@@ -5,20 +5,22 @@ export * from './sample-finite/index.js';
 export {
   radiusOfModelGeometry,
   sizeOfModelGeometry,
+  // Common shapes
+  pointGeometry,
   straightLineGeometry,
   ellLineGeometry,
-  rectangularLineGeometry,
-  squareLineGeometry,
-  regularPolygonLineGeometry,
-  regularPolygonPointGeometry,
   circleLineGeometry,
   circleAreaGeometry,
-  squareCircleAreaGeometry,
-  regularPolygonAreaGeometry,
+  // Rectangles
+  rectangularPointGeometry,
+  rectangularLineGeometry,
   rectangularAreaGeometry,
-  squareAreaGeometry,
-  pointGeometry,
-  squarePointGeometry,
+  rectangularCircleGeometry,
+  // Regular polygons
+  regularPolygonLineGeometry,
+  regularPolygonPointGeometry,
+  regularPolygonAreaGeometry,
+  regularPolygonCircleGeometry,
 } from './model-geometry.js';
 
 // Collection from layers
