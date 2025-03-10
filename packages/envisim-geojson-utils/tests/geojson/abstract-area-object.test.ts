@@ -24,3 +24,11 @@ test('includesPosition', () => {
   const res = points.map((p) => polygon.includesPosition(p));
   expect(res).toEqual([true, false, true, true, false]);
 });
+
+test('full copy', () => {
+  const p = Polygon.create(polygon.coordinates, false);
+  expect(p.coordinates).toEqual(polygon.coordinates);
+  p.coordinates[0][1][0] = 10;
+  console.log(polygon.coordinates);
+  expect(p.coordinates).not.toEqual(polygon.coordinates);
+});
