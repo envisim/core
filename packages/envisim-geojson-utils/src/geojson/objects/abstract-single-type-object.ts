@@ -1,7 +1,6 @@
-import {copy} from '@envisim/utils';
-
 import type * as GJ from '../../types/geojson.js';
 import {pointInBBox} from '../../utils/bbox.js';
+import {copyCoordinates} from '../../utils/coordinates.js';
 import {GeometricPrimitive} from '../geometric-primitive/index.js';
 import type {AreaObject, LineObject, PointObject} from './index.js';
 
@@ -29,7 +28,7 @@ export abstract class AbstractSingleTypeObject<T extends GJ.SingleTypeObject> {
       return;
     }
 
-    this.coordinates = copy(obj.coordinates);
+    this.coordinates = copyCoordinates(obj.coordinates);
     if (obj.bbox) this.bbox = [...obj.bbox];
   }
 

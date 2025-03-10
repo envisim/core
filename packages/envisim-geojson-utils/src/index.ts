@@ -21,6 +21,7 @@ export {
   bboxCenter,
 } from './utils/bbox.js';
 export {type CirclesToPolygonsOptions} from './utils/circles-to-polygons.js';
+export {copyCoordinates} from './utils/coordinates.js';
 export {lengthOfLineString} from './utils/length.js';
 export {pointInSinglePolygonPosition} from './utils/point-in-polygon.js';
 export {
