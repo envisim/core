@@ -1,7 +1,5 @@
 import {v4 as uuid} from 'uuid';
 
-import {copy} from '@envisim/utils';
-
 import type * as GJ from '../types/geojson.js';
 import {type Feature} from './class-feature.js';
 import {type PureObject} from './objects/index.js';
@@ -28,7 +26,7 @@ export interface CategoricalProperty<ID extends string = string> extends Propert
 
 export type Property<ID extends string = string> = NumericalProperty<ID> | CategoricalProperty<ID>;
 
-type PropertyList<IDS extends string = string> = Record<IDS, Property<IDS>>;
+export type PropertyList<IDS extends string = string> = Record<IDS, Property<IDS>>;
 
 const SPECIAL_KEYS = [
   '_designWeight',
@@ -50,8 +48,6 @@ export class PropertyRecord<IDS extends string = string> {
   static isSpecial(k: string): k is SpecialPropertyNames {
     return (PropertyRecord.SPECIAL_KEYS as ReadonlyArray<string>).includes(k);
   }
-
-  record: PropertyList<IDS>;
 
   static isRecord(obj: unknown): obj is PropertyRecord {
     return obj instanceof PropertyRecord;
@@ -118,6 +114,26 @@ export class PropertyRecord<IDS extends string = string> {
     return new PropertyRecord({...record1.record, ...record2.record});
   }
 
+  static copyRecord<IDS extends string>(record: PropertyList<IDS>): PropertyList<IDS> {
+    const o: PropertyList<string> = {};
+
+    for (const k in record) {
+      const c = {...record[k]};
+
+      if (c.type === 'numerical') {
+        if (c.parent !== undefined) {
+          c.parent = [c.parent[0], c.parent[1]];
+        }
+      } else if (c.type === 'categorical') {
+        c.values = [...c.values];
+      }
+
+      o[k] = c;
+    }
+
+    return o as PropertyList<IDS>;
+  }
+
   static isNumerical(property: Property | null): property is NumericalProperty {
     return property?.type === 'numerical';
   }
@@ -126,8 +142,10 @@ export class PropertyRecord<IDS extends string = string> {
     return property?.type === 'categorical';
   }
 
+  record: PropertyList<IDS>;
+
   constructor(record: PropertyList<IDS>, shallow: boolean = true) {
-    this.record = shallow === true ? record : copy(record);
+    this.record = shallow === true ? record : PropertyRecord.copyRecord(record);
   }
 
   copy(shallow: boolean = true): PropertyRecord<IDS> {

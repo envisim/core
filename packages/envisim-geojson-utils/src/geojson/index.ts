@@ -35,6 +35,7 @@ export {
   type CategoricalProperty,
   type NumericalProperty,
   type Property,
+  type PropertyList,
   type SpecialPropertyNames,
   type FeatureProperties,
   PropertyRecord,
