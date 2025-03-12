@@ -37,12 +37,6 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
     GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>>,
     FeatureCollectionExtras
 {
-  readonly type = 'FeatureCollection';
-  features: Feature<T, PID>[] = [];
-  bbox?: GJ.BBox;
-  readonly primitive: GeometricPrimitive;
-  propertyRecord: PropertyRecord<PID>;
-
   static isArea<P extends string>(
     obj: FeatureCollection<PureObject, P>,
   ): obj is FeatureCollection<AreaObject, P> {
@@ -225,6 +219,15 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
       propertyRecord?.copy(shallow),
     );
   }
+
+  readonly type = 'FeatureCollection';
+  features: Feature<T, PID>[] = [];
+  bbox?: GJ.BBox;
+
+  name?: string;
+  color?: [number, number, number];
+  readonly primitive: GeometricPrimitive;
+  propertyRecord: PropertyRecord<PID>;
 
   private constructor(
     primitive: GeometricPrimitive,
