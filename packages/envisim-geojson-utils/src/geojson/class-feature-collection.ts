@@ -224,9 +224,15 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
   features: Feature<T, PID>[] = [];
   bbox?: GJ.BBox;
 
-  name?: string;
+  /** Foreign member, the id of the collection */
+  id?: string;
+  /** Foreign member, the human readable name of the collection */
+  title?: string;
+  /** Foreign member, an RGB value associated with the collection */
   color?: [number, number, number];
+  /** Foreign member, geometric primitive of the collection */
   readonly primitive: GeometricPrimitive;
+  /** Foreign member, the allowed properties of the collection */
   propertyRecord: PropertyRecord<PID>;
 
   private constructor(
