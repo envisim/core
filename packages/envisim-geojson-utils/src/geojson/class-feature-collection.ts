@@ -22,10 +22,16 @@ type ForEachCallback<T> = (obj: T, index: number) => void;
 interface FeatureCollectionExtras {
   primitive: GeometricPrimitive;
   propertyRecord: PropertyRecord;
+  id?: string;
+  title?: string;
+  color?: [number, number, number];
 }
 interface FeatureCollectionExtrasJson {
   primitive: GeometricPrimitive;
   propertyRecord: {record: PropertyRecord['record']};
+  id?: string;
+  title?: string;
+  color?: [number, number, number];
 }
 type StrippedFeatureCollectionJson = OptionalParam<
   GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>> & FeatureCollectionExtrasJson,
@@ -85,6 +91,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
     const {record, existed} = createPropertyRecord(collection, shallow);
     const fc = new FeatureCollection<AreaObject>(GeometricPrimitive.AREA, [], record);
+    addCollectionExtras(fc, collection);
 
     if (existed) {
       // If propertyrecord existed on provided collection, we trust it fully to be homogenous
@@ -121,6 +128,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
     const {record, existed} = createPropertyRecord(collection, shallow);
     const fc = new FeatureCollection<LineObject>(GeometricPrimitive.LINE, [], record);
+    addCollectionExtras(fc, collection);
 
     if (existed) {
       for (const f of collection.features) {
@@ -152,6 +160,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
     const {record, existed} = createPropertyRecord(collection, shallow);
     const fc = new FeatureCollection<PointObject>(GeometricPrimitive.POINT, [], record);
+    addCollectionExtras(fc, collection);
 
     if (existed) {
       for (const f of collection.features) {
@@ -464,4 +473,21 @@ function createPropertyRecord(
   }
 
   return {record: new PropertyRecord(collection.propertyRecord.record), existed: true};
+}
+
+function addCollectionExtras(
+  collection: FeatureCollection<PureObject>,
+  json: StrippedFeatureCollectionJson,
+) {
+  if (json.id !== undefined) {
+    collection.id = json.id;
+  }
+
+  if (json.title !== undefined) {
+    collection.title = json.title;
+  }
+
+  if (json.color !== undefined) {
+    collection.color = [...json.color];
+  }
 }
