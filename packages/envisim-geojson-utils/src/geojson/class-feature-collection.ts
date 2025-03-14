@@ -22,10 +22,16 @@ type ForEachCallback<T> = (obj: T, index: number) => void;
 interface FeatureCollectionExtras {
   primitive: GeometricPrimitive;
   propertyRecord: PropertyRecord;
+  id?: string;
+  title?: string;
+  color?: [number, number, number];
 }
 interface FeatureCollectionExtrasJson {
   primitive: GeometricPrimitive;
   propertyRecord: {record: PropertyRecord['record']};
+  id?: string;
+  title?: string;
+  color?: [number, number, number];
 }
 type StrippedFeatureCollectionJson = OptionalParam<
   GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>> & FeatureCollectionExtrasJson,
@@ -37,12 +43,6 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
     GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>>,
     FeatureCollectionExtras
 {
-  readonly type = 'FeatureCollection';
-  features: Feature<T, PID>[] = [];
-  bbox?: GJ.BBox;
-  readonly primitive: GeometricPrimitive;
-  propertyRecord: PropertyRecord<PID>;
-
   static isArea<P extends string>(
     obj: FeatureCollection<PureObject, P>,
   ): obj is FeatureCollection<AreaObject, P> {
@@ -91,6 +91,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
     const {record, existed} = createPropertyRecord(collection, shallow);
     const fc = new FeatureCollection<AreaObject>(GeometricPrimitive.AREA, [], record);
+    addCollectionExtras(fc, collection);
 
     if (existed) {
       // If propertyrecord existed on provided collection, we trust it fully to be homogenous
@@ -127,6 +128,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
     const {record, existed} = createPropertyRecord(collection, shallow);
     const fc = new FeatureCollection<LineObject>(GeometricPrimitive.LINE, [], record);
+    addCollectionExtras(fc, collection);
 
     if (existed) {
       for (const f of collection.features) {
@@ -158,6 +160,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
     const {record, existed} = createPropertyRecord(collection, shallow);
     const fc = new FeatureCollection<PointObject>(GeometricPrimitive.POINT, [], record);
+    addCollectionExtras(fc, collection);
 
     if (existed) {
       for (const f of collection.features) {
@@ -226,6 +229,21 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
     );
   }
 
+  readonly type = 'FeatureCollection';
+  features: Feature<T, PID>[] = [];
+  bbox?: GJ.BBox;
+
+  /** Foreign member, the id of the collection */
+  id?: string;
+  /** Foreign member, the human readable name of the collection */
+  title?: string;
+  /** Foreign member, an RGB value associated with the collection */
+  color?: [number, number, number];
+  /** Foreign member, geometric primitive of the collection */
+  readonly primitive: GeometricPrimitive;
+  /** Foreign member, the allowed properties of the collection */
+  propertyRecord: PropertyRecord<PID>;
+
   private constructor(
     primitive: GeometricPrimitive,
     features: Feature<T, PID>[] = [],
@@ -248,6 +266,8 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
       ...options
     }: CirclesToPolygonsOptions & {convertCircles?: boolean} = {},
   ): FeatureCollection<T> {
+    let c: FeatureCollection<T>;
+
     if (FeatureCollection.isArea(this) && convertCircles) {
       const features: Feature<T>[] = [];
 
@@ -257,14 +277,17 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
         features.push(new Feature(g, f.properties, shallow) as Feature<T>);
       }
 
-      return new FeatureCollection(this.primitive, features, this.propertyRecord.copy(shallow));
+      c = new FeatureCollection(this.primitive, features, this.propertyRecord.copy(shallow));
+    } else {
+      c = new FeatureCollection(
+        this.primitive,
+        this.features.map((f) => new Feature(f.geometry, f.properties, shallow)),
+        this.propertyRecord.copy(shallow),
+      );
     }
 
-    return new FeatureCollection(
-      this.primitive,
-      this.features.map((f) => new Feature(f.geometry, f.properties, shallow)),
-      this.propertyRecord.copy(shallow),
-    );
+    addCollectionExtras(c, this);
+    return c;
   }
 
   copyEmpty(shallow: boolean = true): FeatureCollection<T, PID> {
@@ -455,4 +478,21 @@ function createPropertyRecord(
   }
 
   return {record: new PropertyRecord(collection.propertyRecord.record), existed: true};
+}
+
+function addCollectionExtras(
+  collection: FeatureCollection<PureObject>,
+  json: StrippedFeatureCollectionJson,
+) {
+  if (json.id !== undefined) {
+    collection.id = json.id;
+  }
+
+  if (json.title !== undefined) {
+    collection.title = json.title;
+  }
+
+  if (json.color !== undefined) {
+    collection.color = [...json.color];
+  }
 }
