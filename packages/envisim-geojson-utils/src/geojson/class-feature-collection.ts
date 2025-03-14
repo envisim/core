@@ -266,6 +266,8 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
       ...options
     }: CirclesToPolygonsOptions & {convertCircles?: boolean} = {},
   ): FeatureCollection<T> {
+    let c: FeatureCollection<T>;
+
     if (FeatureCollection.isArea(this) && convertCircles) {
       const features: Feature<T>[] = [];
 
@@ -275,14 +277,17 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
         features.push(new Feature(g, f.properties, shallow) as Feature<T>);
       }
 
-      return new FeatureCollection(this.primitive, features, this.propertyRecord.copy(shallow));
+      c = new FeatureCollection(this.primitive, features, this.propertyRecord.copy(shallow));
+    } else {
+      c = new FeatureCollection(
+        this.primitive,
+        this.features.map((f) => new Feature(f.geometry, f.properties, shallow)),
+        this.propertyRecord.copy(shallow),
+      );
     }
 
-    return new FeatureCollection(
-      this.primitive,
-      this.features.map((f) => new Feature(f.geometry, f.properties, shallow)),
-      this.propertyRecord.copy(shallow),
-    );
+    addCollectionExtras(c, this);
+    return c;
   }
 
   copyEmpty(shallow: boolean = true): FeatureCollection<T, PID> {
