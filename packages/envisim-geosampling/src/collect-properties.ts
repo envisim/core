@@ -134,7 +134,7 @@ export function collectProperties<PF extends string, PB extends string, GF exten
 
     // Add new properties to new collection and property record.
     // Initialize each with value 0
-    newCollection.forEach((f: Feature<PureObject, string>) => (f.properties[id] = 0.0));
+    newCollection.forEach((f: Feature<PureObject, string>) => (f.properties[property.id] = 0.0));
   }
 
   // Do the collect for the different cases.
