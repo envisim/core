@@ -1,12 +1,5 @@
 import type * as GJ from '../types/geojson.js';
-import {
-  type AreaObject,
-  type LineObject,
-  LineString,
-  MultiLineString,
-  MultiPolygon,
-  Polygon,
-} from '../geojson/index.js';
+import {type AreaObject, type LineObject, LineString, MultiLineString} from '../geojson/index.js';
 import {bboxInBBox} from '../utils/bbox.js';
 import {type CirclesToPolygonsOptions} from '../utils/circles-to-polygons.js';
 import {Segment} from '../utils/class-segment.js';
@@ -34,14 +27,8 @@ export function intersectLineAreaGeometries(
   const multiLineString: GJ.Position[][] = line.getCoordinateArray();
 
   // Construct the MultiPolygon (areas) by fetching all polygons
-  let areas: GJ.Position[][][];
-  if (Polygon.isObject(area) || MultiPolygon.isObject(area)) {
-    areas = area.getCoordinateArray();
-  } else {
-    const p = area.toPolygon(options);
-    if (p === null) return null;
-    areas = p.getCoordinateArray();
-  }
+  const areas: GJ.Position[][][] | undefined = area.toPolygon(options)?.getCoordinateArray();
+  if (areas === undefined) return null;
 
   // Since lineStringInAreaFeature returns MultiLineString, we need to flatten
   const coords = multiLineString.flatMap((ls) => lineStringInPolygons(ls, areas));
@@ -137,8 +124,9 @@ function segmentIntersectsArea(segment: Segment, values: number[], area: GJ.Posi
 
   for (let i = 0; i < area.length; i++) {
     for (let j = 1; j < area[i].length; j++) {
-      const t = segment.parametricIntersect(new Segment(area[i][j - 1], area[i][j]), false);
-      if (t && t[0] > vsmall) tarr.push(t[0]);
+      // Returns the parametric intersect of the line and area segment, first value being the line
+      const t = segment.parametricIntersect(new Segment(area[i][j - 1], area[i][j]), false)?.[0];
+      if (t !== undefined && t > vsmall) tarr.push(t);
     }
   }
 
@@ -212,7 +200,7 @@ function segmentIntersectsArea(segment: Segment, values: number[], area: GJ.Posi
 
   // if tarr was odd, the last i point to the end of an ex-zone
   // thus, we can remove all remaining
-  if (i < tarr.length && tarr.length % 2 === 1) {
+  if (i < tarr.length) {
     while (j < values.length) {
       if (tarr[i] >= values[j + 1]) {
         j += 2;
