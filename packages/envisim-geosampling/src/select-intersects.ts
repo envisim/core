@@ -25,6 +25,8 @@ function createProperties<G1 extends PureObject, G2 extends PureObject, P extend
   parent: number,
 ): FeatureProperties<P> {
   const properties = {...baseFeature.properties};
+  delete properties['_measure'];
+  delete properties['_count'];
 
   // Transfer designWeight to newFeature from frameFeature
   if (frameFeature.properties?.['_designWeight'] !== undefined) {
@@ -42,6 +44,8 @@ function createPropertiesForLine<P extends string>(
   parent: number,
 ): FeatureProperties<P> {
   const properties = createProperties(frameFeature, baseFeature, parent);
+  delete properties['_measure'];
+  delete properties['_count'];
 
   if (properties['_designWeight'] === undefined) {
     return properties;
