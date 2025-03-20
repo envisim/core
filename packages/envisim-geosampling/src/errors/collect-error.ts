@@ -2,7 +2,7 @@ import {type ErrorType} from './utils.js';
 
 export const COLLECT_ERROR_LIST = {
   // collect general
-  LINE_EXPECTS_AREA_LINE: 'collect-error-line-expects-area-line',
+  LINE_EXPECTS_AREA: 'collect-error-line-expects-area',
   POINT_EXPECTS_AREA: 'collect-error-point-expects-area',
   BASE_COLLECTION_MISSING: 'collect-error-collection-is-missing',
 

@@ -32,7 +32,6 @@ export {
   selectAreaintersectsLine,
   selectAreaintersectsPoint,
   selectLineintersectsArea,
-  selectLineintersectsLine,
   selectPointintersectsArea,
 } from './select-intersects.js';
 

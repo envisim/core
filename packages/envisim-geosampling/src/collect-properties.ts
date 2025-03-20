@@ -4,7 +4,6 @@ import {
   type AreaObject,
   Feature,
   FeatureCollection,
-  Geodesic,
   type LineObject,
   type PointObject,
   PropertyRecord,
@@ -12,11 +11,8 @@ import {
   type RetractingObject,
   intersectAreaAreaGeometries,
   intersectLineAreaGeometries,
-  intersectLineLineGeometries,
   intersectPointAreaGeometries,
 } from '@envisim/geojson-utils';
-
-import {projectedLengthOfGeometry} from './utils/index.js';
 
 // A type for an object to hold all the data we need to aggregate from
 // one feature to another.
@@ -37,30 +33,6 @@ function aggregateInPlace(
   from: Feature<PureObject>,
   opts: AggregateOpts,
 ): void {
-  // If line collects from line an additional factor is needed
-  let factor = 1;
-  if (Feature.isLine(from) && Feature.isLine(to)) {
-    if (to.properties?.['_randomRotation'] === 1) {
-      // Here the line that collects can be any curve,
-      // as long as it has been randomly rotated.
-      factor = Math.PI / (2.0 * from.geometry.length());
-    } else {
-      // Here the line that collects should be straight,
-      // which is why we can use the first segment of the line
-      // to find the direction of the line.
-      let azimuth = 0;
-      if (to.geometry.type === 'LineString') {
-        azimuth = Geodesic.forwardAzimuth(to.geometry.coordinates[0], to.geometry.coordinates[1]);
-      } else if (to.geometry.type === 'MultiLineString') {
-        azimuth = Geodesic.forwardAzimuth(
-          to.geometry.coordinates[0][0],
-          to.geometry.coordinates[0][1],
-        );
-      }
-      factor = 1.0 / projectedLengthOfGeometry(from.geometry, azimuth);
-    }
-  }
-
   // Go through all the properties and aggregate them.
   // All new properties are of type numerical.
   for (const property of opts.collectProperties.getRecord()) {
@@ -75,13 +47,13 @@ function aggregateInPlace(
           const value = fromProperty.values[index];
           // Only collect if value is equal to value
           if (from.properties[fromID] === value) {
-            (to.properties[id] as number) += (opts.intersectSize / to.measure()) * factor;
+            (to.properties[id] as number) += opts.intersectSize / to.measure();
           }
         }
       } else {
         // Collect from numerical (same key)
         (to.properties[id] as number) +=
-          (((from.properties[id] as number) * opts.intersectSize) / to.measure()) * factor;
+          ((from.properties[id] as number) * opts.intersectSize) / to.measure();
       }
     }
   }
@@ -150,30 +122,16 @@ export function collectProperties<PF extends string, PB extends string, GF exten
     return newCollection;
   }
 
-  if (FeatureCollection.isLine(newCollection)) {
-    if (FeatureCollection.isLine(base)) {
-      // Lines collect from lines.
-      intersectFeatures(
-        newCollection.features,
-        base.features,
-        intersectLineLineGeometries,
-        rec,
-        base.propertyRecord,
-      );
-      return newCollection;
-    }
-
-    if (FeatureCollection.isArea(base)) {
-      // Lines collect from areas.
-      intersectFeatures(
-        newCollection.features,
-        base.features,
-        intersectLineAreaGeometries,
-        rec,
-        base.propertyRecord,
-      );
-      return newCollection;
-    }
+  if (FeatureCollection.isLine(newCollection) && FeatureCollection.isArea(base)) {
+    // Lines collect from areas.
+    intersectFeatures(
+      newCollection.features,
+      base.features,
+      intersectLineAreaGeometries,
+      rec,
+      base.propertyRecord,
+    );
+    return newCollection;
   }
 
   FeatureCollection.assertArea(newCollection);
