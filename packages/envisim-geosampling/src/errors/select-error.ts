@@ -8,7 +8,7 @@ export const SELECT_ERROR_LIST = {
   COLLECTION_MISSING: 'select-error-collection-is-missing',
   BASE_COLLECTION_EXPECTED_AREA: 'select-error-base-collection-is-not-area',
   BASE_COLLECTION_EXPECTED_LINE: 'select-error-base-collection-is-not-line',
-  BASE_COLLECTION_EXPECTED_POINT: 'select-error-base-collection-is-not-line',
+  BASE_COLLECTION_EXPECTED_POINT: 'select-error-base-collection-is-not-point',
 } as const;
 
 export type SelectError = ErrorType<typeof SELECT_ERROR_LIST>;
