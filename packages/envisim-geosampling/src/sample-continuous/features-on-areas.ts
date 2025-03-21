@@ -131,12 +131,13 @@ export function sampleLineFeaturesOnAreas(
   const opts = {
     ...options,
     rand: options.rand ?? new Random(),
-    rotationOfGeometry: 'random' as const,
+    rotationOfGeometry: options.rotationOfGeometry ?? 0.0,
     buffer: radiusOfModelGeometry(options.modelGeometry),
   };
 
   // Compute radius and size of the model tract.
   const sizeOfTract = sizeOfModelGeometry(opts.modelGeometry);
+  const _randomRotation = options.rotationOfGeometry === 'random' ? 1 : 0;
 
   // Select first a sample of points and use radius as buffer.
   const pointCollection = samplePointsOnAreas(collection, opts);
@@ -146,7 +147,7 @@ export function sampleLineFeaturesOnAreas(
       const dw = f.getSpecialPropertyDesignWeight();
       return new Feature<LineObject, never>(placeLineGeometry(f.geometry.coordinates, opts), {
         _designWeight: dw / sizeOfTract,
-        _randomRotation: 1,
+        _randomRotation,
       });
     }),
   );
