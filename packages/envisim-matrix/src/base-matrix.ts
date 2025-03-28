@@ -10,10 +10,10 @@ export type MatrixCallbackCompare = (a: number, b: number) => number;
 export abstract class BaseMatrix {
   constructor(arr: number[], [nrow, ncol]: MatrixDim) {
     if (!Number.isInteger(nrow) || nrow <= 0) {
-      throw new TypeError('nrow must be positive integer');
+      throw new TypeError("nrow must be positive integer");
     }
     if (!Number.isInteger(ncol) || ncol <= 0) {
-      throw new TypeError('ncol must be positive integer');
+      throw new TypeError("ncol must be positive integer");
     }
 
     this.internal = arr;
@@ -22,7 +22,7 @@ export abstract class BaseMatrix {
     this.len = nrow * ncol;
 
     if (this.len !== arr.length) {
-      throw new TypeError('the dimensions and arr does not match');
+      throw new TypeError("the dimensions and arr does not match");
     }
   }
 
@@ -63,10 +63,10 @@ export abstract class BaseMatrix {
    */
   indexOfDim([row, col]: MatrixDim): number {
     if (row < 0 || row >= this.rows) {
-      throw new RangeError('row is not in range');
+      throw new RangeError("row is not in range");
     }
     if (col < 0 || col >= this.cols) {
-      throw new RangeError('column is not in range');
+      throw new RangeError("column is not in range");
     }
 
     return row + col * this.rows;
@@ -85,12 +85,12 @@ export abstract class BaseMatrix {
    */
   rowOfIndex(index: number): MatrixDim[0] {
     if (index >= this.len) {
-      throw new RangeError('index is not in range');
+      throw new RangeError("index is not in range");
     }
 
     if (index < 0) {
       if (index < -this.len) {
-        throw new RangeError('index is not in range');
+        throw new RangeError("index is not in range");
       }
       index += this.len;
     }
@@ -104,12 +104,12 @@ export abstract class BaseMatrix {
    */
   colOfIndex(index: number): MatrixDim[1] {
     if (index >= this.len) {
-      throw new RangeError('index is not in range');
+      throw new RangeError("index is not in range");
     }
 
     if (index < 0) {
       if (index < -this.len) {
-        throw new RangeError('index is not in range');
+        throw new RangeError("index is not in range");
       }
       index += this.len;
     }
@@ -131,7 +131,7 @@ export abstract class BaseMatrix {
    */
   at(index: number): number {
     if (index < -this.len || index >= this.len) {
-      throw new RangeError('index is not in range');
+      throw new RangeError("index is not in range");
     }
     return this.internal.at(index) as number;
   }
@@ -144,12 +144,12 @@ export abstract class BaseMatrix {
    */
   ed(index: number, value: number): number {
     if (index >= this.len) {
-      throw new RangeError('index is not in range');
+      throw new RangeError("index is not in range");
     }
 
     if (index < 0) {
       if (index < -this.len) {
-        throw new RangeError('index is not in range');
+        throw new RangeError("index is not in range");
       }
       index += this.len;
     }
@@ -174,17 +174,17 @@ export abstract class BaseMatrix {
    */
   fn(index: number, callback: MatrixCallback<number>): number {
     if (index >= this.len) {
-      throw new RangeError('index is not in range');
+      throw new RangeError("index is not in range");
     }
 
     if (index < 0) {
       if (index < -this.len) {
-        throw new RangeError('index is not in range');
+        throw new RangeError("index is not in range");
       }
       index += this.len;
     }
 
-    const value = callback(this.internal[index]!, index);
+    const value = callback(this.internal[index], index);
     this.internal[index] = value;
     return value;
   }
@@ -380,10 +380,10 @@ export abstract class BaseMatrix {
     const s = this.internal.slice().sort((a, b) => a - b);
     let n = s.length;
 
-    if ((n & 1) === 1) return s[(n - 1) >> 1]!;
+    if ((n & 1) === 1) return s[(n - 1) >> 1];
 
     n = n >> 1;
-    return (s[n]! + s[n - 1]!) * 0.5;
+    return (s[n] + s[n - 1]) * 0.5;
   }
 
   /**
@@ -452,7 +452,7 @@ export abstract class BaseMatrix {
     if (p.length === 0) return [];
 
     const s = this.slice().sort((a: number, b: number) => a - b);
-    const res = Array.from<number>({length: p.length});
+    const res = Array.from<number>({ length: p.length });
     const n = s.length;
     let unit: number;
     let low: number;
@@ -461,13 +461,13 @@ export abstract class BaseMatrix {
     for (let i = 0; i < p.length; i++) {
       const pq = p[i];
       if (pq < 0.0 || 1.0 < pq) {
-        throw new RangeError('probs must be in [0.0, 1.0]');
+        throw new RangeError("probs must be in [0.0, 1.0]");
       }
 
       unit = pq * n - 1.0;
       low = Math.floor(unit);
       high = Math.ceil(unit);
-      res[i] = s[low]! + (unit - low) * (s[high]! - s[low]!);
+      res[i] = s[low] + (unit - low) * (s[high] - s[low]);
     }
 
     return res;
@@ -502,9 +502,9 @@ export abstract class BaseMatrix {
    */
   add(mat: number | BaseMatrix, inPlace: boolean = false): this {
     let fn: MatrixCallback<number>;
-    if (typeof mat === 'number') fn = (e: number) => e + mat;
+    if (typeof mat === "number") fn = (e: number) => e + mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e + mat.at(i);
-    else throw new TypeError('mat must be of same size as this');
+    else throw new TypeError("mat must be of same size as this");
 
     return this.map(fn, inPlace);
   }
@@ -517,9 +517,9 @@ export abstract class BaseMatrix {
    */
   subtract(mat: number | BaseMatrix, inPlace: boolean = false): this {
     let fn: MatrixCallback<number>;
-    if (typeof mat === 'number') fn = (e: number) => e - mat;
+    if (typeof mat === "number") fn = (e: number) => e - mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e - mat.at(i);
-    else throw new TypeError('mat must be of same size as this');
+    else throw new TypeError("mat must be of same size as this");
 
     return this.map(fn, inPlace);
   }
@@ -532,9 +532,9 @@ export abstract class BaseMatrix {
    */
   divide(mat: number | BaseMatrix, inPlace: boolean = false): this {
     let fn: MatrixCallback<number>;
-    if (typeof mat === 'number') fn = (e: number) => e / mat;
+    if (typeof mat === "number") fn = (e: number) => e / mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e / mat.at(i);
-    else throw new TypeError('mat must be of same size as this');
+    else throw new TypeError("mat must be of same size as this");
 
     return this.map(fn, inPlace);
   }
@@ -547,9 +547,9 @@ export abstract class BaseMatrix {
    */
   multiply(mat: number | BaseMatrix, inPlace: boolean = false): this {
     let fn: MatrixCallback<number>;
-    if (typeof mat === 'number') fn = (e: number) => e * mat;
+    if (typeof mat === "number") fn = (e: number) => e * mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e * mat.at(i);
-    else throw new TypeError('mat must be of same size as this');
+    else throw new TypeError("mat must be of same size as this");
 
     return this.map(fn, inPlace);
   }
@@ -562,9 +562,9 @@ export abstract class BaseMatrix {
    */
   mod(mat: number | BaseMatrix, inPlace: boolean = false): this {
     let fn: MatrixCallback<number>;
-    if (typeof mat === 'number') fn = (e: number) => e % mat;
+    if (typeof mat === "number") fn = (e: number) => e % mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e % mat.at(i);
-    else throw new TypeError('mat must be of same size as this');
+    else throw new TypeError("mat must be of same size as this");
 
     return this.map(fn, inPlace);
   }

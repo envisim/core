@@ -1,8 +1,7 @@
-import {Random, type RandomGenerator, randomArray} from '@envisim/random';
-import {reducedRowEchelonForm} from '@envisim/utils';
-
-import {BaseMatrix, type MatrixCallback, type MatrixDim} from './base-matrix.js';
-import {Vector} from './vector.js';
+import { Random, type RandomGenerator, randomArray } from "@envisim/random";
+import { reducedRowEchelonForm } from "@envisim/utils";
+import { BaseMatrix, type MatrixCallback, type MatrixDim } from "./base-matrix.js";
+import { Vector } from "./vector.js";
 
 export class Matrix extends BaseMatrix {
   /**
@@ -16,7 +15,7 @@ export class Matrix extends BaseMatrix {
    * @param msg message to pass
    * @throws TypeError if `obj` is not Matrix
    */
-  static assert(obj: unknown, msg: string = 'Expected Matrix'): asserts obj is Matrix {
+  static assert(obj: unknown, msg: string = "Expected Matrix"): asserts obj is Matrix {
     if (!(obj instanceof Matrix)) {
       throw new TypeError(msg);
     }
@@ -28,13 +27,13 @@ export class Matrix extends BaseMatrix {
    */
   static cbind(...matrices: BaseMatrix[]): Matrix {
     if (matrices.length === 0) {
-      throw new Error('Nothing to cbind');
+      throw new Error("Nothing to cbind");
     }
 
     const nrow = matrices[0].nrow;
 
     if (!matrices.every((m) => nrow === m.nrow)) {
-      throw new RangeError('Dimensions of matrices does not match');
+      throw new RangeError("Dimensions of matrices does not match");
     }
 
     return new Matrix(
@@ -50,13 +49,13 @@ export class Matrix extends BaseMatrix {
    */
   static rbind(...matrices: BaseMatrix[]): Matrix {
     if (matrices.length === 0) {
-      throw new Error('Nothing to rbind');
+      throw new Error("Nothing to rbind");
     }
 
-    const ncol = matrices[0]!.ncol;
+    const ncol = matrices[0].ncol;
 
     if (!matrices.every((m) => ncol === m.ncol)) {
-      throw new RangeError('Dimensions of matrices does not match');
+      throw new RangeError("Dimensions of matrices does not match");
     }
 
     const nrow = matrices.reduce((s, m) => s + m.nrow, 0);
@@ -66,13 +65,13 @@ export class Matrix extends BaseMatrix {
     let rows = 0;
 
     for (let i = 0; i < matrices.length; i++) {
-      for (let col = 0; col < matrices[i]!.ncol; col++) {
-        for (let row = 0; row < matrices[i]!.nrow; row++) {
-          s.edDim([row + rows, col], matrices[i]!.atDim([row, col]));
+      for (let col = 0; col < matrices[i].ncol; col++) {
+        for (let row = 0; row < matrices[i].nrow; row++) {
+          s.edDim([row + rows, col], matrices[i].atDim([row, col]));
         }
       }
 
-      rows += matrices[i]!.nrow;
+      rows += matrices[i].nrow;
     }
 
     return s;
@@ -82,7 +81,7 @@ export class Matrix extends BaseMatrix {
    * @returns a new Matrix of size `dim` filled with `fill`
    */
   static create(fill: number, dim: MatrixDim): Matrix {
-    return new Matrix(Array.from<number>({length: dim[0] * dim[1]}).fill(fill), dim[0], true);
+    return new Matrix(Array.from<number>({ length: dim[0] * dim[1] }).fill(fill), dim[0], true);
   }
 
   /**
@@ -113,7 +112,7 @@ export class Matrix extends BaseMatrix {
 
   extractColumn(col: number): Vector {
     if (!Number.isInteger(col) || col < 0 || col >= this.cols) {
-      throw new RangeError('columnIndex out of bounds');
+      throw new RangeError("columnIndex out of bounds");
     }
 
     return new Vector(this.internal.slice(col * this.rows, (col + 1) * this.rows));
@@ -121,9 +120,9 @@ export class Matrix extends BaseMatrix {
 
   extractRow(row: number): number[] {
     if (!Number.isInteger(row) || row < 0 || row >= this.rows)
-      throw new RangeError('columnIndex out of bounds');
+      throw new RangeError("columnIndex out of bounds");
 
-    const s = Array.from<number>({length: this.cols});
+    const s = Array.from<number>({ length: this.cols });
 
     for (let i = row, j = 0; i < this.len; i += this.rows, j++) s[j] = this.internal[i]!;
 
@@ -132,7 +131,7 @@ export class Matrix extends BaseMatrix {
 
   extractColumns(cols: number[] | Vector): Matrix {
     if (!cols.every((e) => Number.isInteger(e) && 0 <= e && e < this.cols)) {
-      throw new RangeError('columns must be in valid range');
+      throw new RangeError("columns must be in valid range");
     }
 
     const s: number[] = [];
@@ -145,7 +144,7 @@ export class Matrix extends BaseMatrix {
 
   extractRows(rows: number[] | Vector): Matrix {
     if (!rows.every((e) => Number.isInteger(e) && 0 <= e && e < this.rows)) {
-      throw new RangeError('rows must be in valid range');
+      throw new RangeError("rows must be in valid range");
     }
 
     const s = Matrix.create(0.0, [rows.length, this.cols]);
@@ -164,23 +163,23 @@ export class Matrix extends BaseMatrix {
    */
   extractSubMatrix(start: MatrixDim, end: MatrixDim = [this.rows - 1, this.cols - 1]): Matrix {
     if (!Number.isInteger(start[0]) || !Number.isInteger(end[0])) {
-      throw new RangeError('rows must be integer');
+      throw new RangeError("rows must be integer");
     }
     if (!Number.isInteger(start[0]) || !Number.isInteger(end[1])) {
-      throw new RangeError('cols must be integer');
+      throw new RangeError("cols must be integer");
     }
     if (start[0] < 0 || this.rows <= end[0]) {
-      throw new RangeError('rows out of bounds');
+      throw new RangeError("rows out of bounds");
     }
     if (start[0] < 0 || this.cols <= end[1]) {
-      throw new RangeError('cols out of bounds');
+      throw new RangeError("cols out of bounds");
     }
 
     const nrow = end[0] - start[0] + 1;
     const ncol = end[1] - start[1] + 1;
 
     if (nrow < 1 || ncol < 1) {
-      throw new RangeError('end must be at least as large as start');
+      throw new RangeError("end must be at least as large as start");
     }
 
     const s = [];
@@ -207,10 +206,10 @@ export class Matrix extends BaseMatrix {
    */
   static mmult(mat1: BaseMatrix, mat2: BaseMatrix): Matrix {
     if (mat1.ncol !== mat2.nrow) {
-      throw new RangeError('Dimensions of matrices does not match');
+      throw new RangeError("Dimensions of matrices does not match");
     }
 
-    const s = Array.from<number>({length: mat1.nrow * mat2.ncol});
+    const s = Array.from<number>({ length: mat1.nrow * mat2.ncol });
 
     for (let r = 0; r < mat1.nrow; r++) {
       for (let c = 0; c < mat2.ncol; c++) {
@@ -249,7 +248,7 @@ export class Matrix extends BaseMatrix {
    * Calculates the column sums
    */
   colSums(): Vector {
-    const s = Array.from<number>({length: this.cols}).fill(0.0);
+    const s = Array.from<number>({ length: this.cols }).fill(0.0);
 
     for (let c = 0, i = 0; c < this.cols; c++) {
       for (let r = 0; r < this.rows; r++, i++) {
@@ -271,8 +270,8 @@ export class Matrix extends BaseMatrix {
    * Calculates the column variances, using `n-1` as denominator.
    */
   colVars(): Vector {
-    const s1 = Array.from<number>({length: this.cols}).fill(0.0);
-    const s2 = Array.from<number>({length: this.cols}).fill(0.0);
+    const s1 = Array.from<number>({ length: this.cols }).fill(0.0);
+    const s2 = Array.from<number>({ length: this.cols }).fill(0.0);
 
     for (let c = 0, i = 0; c < this.cols; c++) {
       for (let r = 0; r < this.rows; r++, i++) {
@@ -437,7 +436,7 @@ export class Matrix extends BaseMatrix {
    * @group Linear algebra
    */
   determinant(): number {
-    if (!this.isSquare()) throw new Error('Matrix must be square');
+    if (!this.isSquare()) throw new Error("Matrix must be square");
 
     return this.rightTriangular().diagonal().prodSum();
   }
@@ -447,10 +446,10 @@ export class Matrix extends BaseMatrix {
    * @group Linear algebra
    */
   inverse(eps: number = 1e-9): Matrix | null {
-    if (!this.isSquare()) throw new Error('Matrix is not square.');
+    if (!this.isSquare()) throw new Error("Matrix is not square.");
 
     if (this.determinant() === 0) {
-      console.warn('Determinant is 0.');
+      console.warn("Determinant is 0.");
       return null;
     }
 
@@ -489,5 +488,5 @@ export function diagonalMatrix(arr: number[]): Matrix {
  * @returns a new identity matrix of size `nrow * nrow`.
  */
 export function identityMatrix(nrow: number): Matrix {
-  return diagonalMatrix(Array.from<number>({length: nrow}).fill(1.0));
+  return diagonalMatrix(Array.from<number>({ length: nrow }).fill(1.0));
 }

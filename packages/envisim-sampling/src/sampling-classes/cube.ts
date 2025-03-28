@@ -1,10 +1,9 @@
-import {Matrix} from '@envisim/matrix';
-import {Random, type RandomGenerator, randomInt} from '@envisim/random';
-import {reducedRowEchelonForm, swap} from '@envisim/utils';
-
-import {BASE_OPTIONS} from '../base-options/index.js';
-import {KdStore, KdTree} from '../util-classes/index.js';
-import {BaseSampling} from './base-sampling.js';
+import { Matrix } from "@envisim/matrix";
+import { Random, type RandomGenerator, randomInt } from "@envisim/random";
+import { reducedRowEchelonForm, swap } from "@envisim/utils";
+import { BASE_OPTIONS } from "../base-options/index.js";
+import { KdStore, KdTree } from "../util-classes/index.js";
+import { BaseSampling } from "./base-sampling.js";
 
 export enum CubeMethod {
   CUBE,
@@ -43,11 +42,11 @@ export class Cube extends BaseSampling {
 
     switch (this.method) {
       case CubeMethod.CUBE:
-        this.draw = this.drawCube;
+        this.draw = this.drawCube.bind(this);
         break;
       case CubeMethod.LCUBE:
-        this.draw = this.drawLcube;
-        if (!Matrix.isMatrix(xxspread)) throw new Error('xxspread is not Matrix');
+        this.draw = this.drawLcube.bind(this);
+        if (!Matrix.isMatrix(xxspread)) throw new Error("xxspread is not Matrix");
         this.tree = new KdTree(xxspread, treeBucketSize);
         this.store = new KdStore(this.N, this.pbalance);
         break;
@@ -102,7 +101,7 @@ export class Cube extends BaseSampling {
       return;
     }
 
-    if (size < maxSize) throw new Error('size < maxSize - 1');
+    if (size < maxSize) throw new Error("size < maxSize - 1");
 
     const maximumDistance = this.store.maximumDistance();
     let i = 0;
@@ -178,7 +177,7 @@ export class Cube extends BaseSampling {
   }
 
   runFlight(): void {
-    if (this.setDraw !== true) throw new Error('draw-type is not set');
+    if (this.setDraw !== true) throw new Error("draw-type is not set");
 
     const maxSize = this.maxSize();
 
@@ -190,10 +189,10 @@ export class Cube extends BaseSampling {
   }
 
   runLanding(): void {
-    if (this.setDraw !== true) throw new Error('draw-type is not set');
+    if (this.setDraw !== true) throw new Error("draw-type is not set");
 
     if (this.idx.length() >= this.pbalance + 1)
-      throw new RangeError('landingphase committed early');
+      throw new RangeError("landingphase committed early");
 
     while (this.idx.length() > 1) {
       this.drawLanding();
@@ -209,7 +208,7 @@ export class Cube extends BaseSampling {
   }
 
   run(): void {
-    if (this.setDraw !== true) throw new Error('draw-type is not set');
+    if (this.setDraw !== true) throw new Error("draw-type is not set");
 
     this.runFlight();
     this.runLanding();

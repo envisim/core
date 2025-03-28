@@ -1,11 +1,10 @@
-import {type Matrix} from '@envisim/matrix';
-import {Random, type RandomGenerator, randomInt} from '@envisim/random';
-import {swap} from '@envisim/utils';
-
-import {BASE_OPTIONS} from '../base-options/index.js';
-import {IndexList, KdStore, KdTree} from '../util-classes/index.js';
-import {arrayBack} from '../utils.js';
-import {BaseSampling} from './base-sampling.js';
+import { type Matrix } from "@envisim/matrix";
+import { Random, type RandomGenerator, randomInt } from "@envisim/random";
+import { swap } from "@envisim/utils";
+import { BASE_OPTIONS } from "../base-options/index.js";
+import { IndexList, KdStore, KdTree } from "../util-classes/index.js";
+import { arrayBack } from "../utils.js";
+import { BaseSampling } from "./base-sampling.js";
 
 export enum PivotalMethod {
   LPM1,
@@ -43,22 +42,22 @@ export class Pivotal extends BaseSampling {
 
     switch (this.method) {
       case PivotalMethod.LPM1:
-        this.draw = this.drawLpm1;
+        this.draw = this.drawLpm1.bind(this);
         break;
       case PivotalMethod.LPM2:
-        this.draw = this.drawLpm2;
+        this.draw = this.drawLpm2.bind(this);
         break;
       case PivotalMethod.LPM1SEARCH:
-        this.draw = this.drawLpm1Search;
+        this.draw = this.drawLpm1Search.bind(this);
         break;
       case PivotalMethod.RPM:
-        this.draw = this.drawRpm;
+        this.draw = this.drawRpm.bind(this);
         break;
       case PivotalMethod.SPM:
-        this.draw = this.drawSpm;
+        this.draw = this.drawSpm.bind(this);
         break;
       default:
-        throw new Error('no such PivotalMethod');
+        throw new Error("no such PivotalMethod");
     }
 
     this.setDraw = true;
@@ -67,18 +66,18 @@ export class Pivotal extends BaseSampling {
       case PivotalMethod.LPM1:
       case PivotalMethod.LPM2:
       case PivotalMethod.LPM1SEARCH:
-        if (!KdTree.isKDTree(this.tree)) throw new Error('KDTree is not set');
-        if (!KdStore.isKDStore(this.store)) throw new Error('KDStore is not set');
+        if (!KdTree.isKDTree(this.tree)) throw new Error("KDTree is not set");
+        if (!KdStore.isKDStore(this.store)) throw new Error("KDStore is not set");
     }
 
     if (Array.isArray(probabilities)) {
       this.init(probabilities);
-      this.runInternal = this.runDouble;
+      this.runInternal = this.runDouble.bind(this);
       this.setRun = true;
-    } else if (typeof probabilities === 'number') {
+    } else if (typeof probabilities === "number") {
       this.initInt(probabilities);
     } else {
-      throw new Error('wrong types of probabilities');
+      throw new Error("wrong types of probabilities");
     }
   }
 
@@ -94,7 +93,7 @@ export class Pivotal extends BaseSampling {
       this.probabilities.fill(probability);
     }
 
-    this.runInternal = this.runInt;
+    this.runInternal = this.runInt.bind(this);
     this.setRun = true;
   }
 
@@ -247,7 +246,7 @@ export class Pivotal extends BaseSampling {
       while (!this.idx.exists(this.pair[0])) {
         this.pair[0] += 1;
 
-        if (this.pair[0] >= this.N) throw new RangeError('invalid value of pair 0');
+        if (this.pair[0] >= this.N) throw new RangeError("invalid value of pair 0");
       }
     }
 
@@ -257,7 +256,7 @@ export class Pivotal extends BaseSampling {
     while (!this.idx.exists(this.pair[1])) {
       this.pair[1] += 1;
 
-      if (this.pair[1] >= this.N) throw new RangeError('invalid value of pair 1');
+      if (this.pair[1] >= this.N) throw new RangeError("invalid value of pair 1");
     }
 
     return;
@@ -352,8 +351,8 @@ export class Pivotal extends BaseSampling {
   }
 
   run(): void {
-    if (this.setRun !== true) throw new Error('run-type is not set');
-    if (this.setDraw !== true) throw new Error('draw-type is not set');
+    if (this.setRun !== true) throw new Error("run-type is not set");
+    if (this.setDraw !== true) throw new Error("draw-type is not set");
 
     this.runInternal();
     this.sample.sort();

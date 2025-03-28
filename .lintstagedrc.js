@@ -1,3 +1,1 @@
-export default {
-  '*.{json,js,cjs,mjs,jsx,ts,tsx,html}': ['prettier --write --ignore-unknown'],
-};
+export {default} from '@envisim/config-eslint/.lintstagedrc.js'

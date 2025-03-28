@@ -1,8 +1,7 @@
-import {Vector} from '@envisim/matrix';
-
-import {BASE_OPTIONS, type PipsOptions} from './base-options/index.js';
-import {conditionalPoissonSampling} from './poisson.js';
-import {discrete} from './pps.js';
+import { Vector } from "@envisim/matrix";
+import { BASE_OPTIONS, type PipsOptions } from "./base-options/index.js";
+import { conditionalPoissonSampling } from "./poisson.js";
+import { discrete } from "./pps.js";
 
 /**
  * Selects a Sampford (pips) sample using the rejective method.
@@ -10,14 +9,14 @@ import {discrete} from './pps.js';
  * @param options
  * @returns sample indices.
  */
-export function sampford({probabilities, rand = BASE_OPTIONS.rand}: PipsOptions): number[] {
+export function sampford({ probabilities, rand = BASE_OPTIONS.rand }: PipsOptions): number[] {
   const p = new Vector(probabilities, false);
   const psum = p.sum();
   const q = p.divide(psum);
   const n = Math.round(psum);
 
   if (n <= 1) {
-    return [discrete({probabilities: q, rand})];
+    return [discrete({ probabilities: q, rand })];
   }
 
   let found = false;
@@ -26,9 +25,9 @@ export function sampford({probabilities, rand = BASE_OPTIONS.rand}: PipsOptions)
   let s: number[] = [];
 
   while (found === false) {
-    nr1 = discrete({probabilities: q, rand});
+    nr1 = discrete({ probabilities: q, rand });
 
-    s = conditionalPoissonSampling({n: n - 1, probabilities, rand});
+    s = conditionalPoissonSampling({ n: n - 1, probabilities, rand });
     found2 = false;
 
     for (let i = 0; i < s.length; i++) {
@@ -116,11 +115,11 @@ export function brewer({
       psum += pk[j];
     });
 
-    pk.forEach((_: any, j: number) => {
+    pk.forEach((_: unknown, j: number) => {
       pk[j] /= psum;
     });
 
-    u = discrete({probabilities: pk, rand});
+    u = discrete({ probabilities: pk, rand });
     s.push(u);
     I[u - 1] = 1;
     del1 += pr[u - 1];

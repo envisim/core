@@ -8,7 +8,7 @@ export class KdStore {
   totalWeight: number = 0.0;
   weights: number[] = [];
 
-  static isKDStore(t: any): t is KdStore {
+  static isKDStore(t: unknown): t is KdStore {
     return t instanceof KdStore;
   }
 
@@ -21,8 +21,8 @@ export class KdStore {
     N = Math.trunc(N);
     maxSize = Math.trunc(maxSize);
 
-    if (N <= 0) throw new RangeError('N must be > 0');
-    if (maxSize <= 0) throw new RangeError('maxSize must be > 0');
+    if (N <= 0) throw new RangeError("N must be > 0");
+    if (maxSize <= 0) throw new RangeError("maxSize must be > 0");
 
     this.N = N;
     this.maxSize = maxSize;
@@ -90,7 +90,7 @@ export class KdStore {
   }
 
   sortNeighboursByDistance(fr: number = 0, to: number = this.neighbours.length): void {
-    if (to <= fr || this.neighbours.length < to) throw new RangeError('bad input');
+    if (to <= fr || this.neighbours.length < to) throw new RangeError("bad input");
     if (fr === 0 && to === this.neighbours.length) {
       this.fullSortNeighboursByDistance();
       return;
@@ -109,7 +109,7 @@ export class KdStore {
   }
 
   sortNeighboursByWeight(fr: number, to: number): void {
-    if (to <= fr || this.neighbours.length < to) throw new RangeError('bad input');
+    if (to <= fr || this.neighbours.length < to) throw new RangeError("bad input");
     if (fr === 0 && to === this.neighbours.length) {
       this.fullSortNeighboursByWeight();
       return;

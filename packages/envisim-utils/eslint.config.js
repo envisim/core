@@ -1,1 +1,3 @@
-export {default} from '@envisim/eslint-config/library.mjs';
+import config from "@envisim/config-eslint";
+
+export default config(import.meta.dirname);

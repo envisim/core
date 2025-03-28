@@ -1,0 +1,24 @@
+{
+  "name": "@envisim/config-eslint",
+  "version": "0.0.0",
+  "contributors": [
+    "Anton Grafström <anton.grafstrom@gmail.com>",
+    "Wilmer Prentius <wilmer.prentius@gmail.com>"
+  ],
+  "type": "module",
+  "exports": {
+    ".": "./config.js",
+    "./lintstaged": "./lintstaged/config.js",
+    "./prettier": "./prettier/config.js"
+  },
+  "dependencies": {
+    "@eslint/compat": "^1.2.5",
+    "@eslint/js": "^9.23.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "eslint": "^9.23.0",
+    "eslint-config-prettier": "^10.0.1",
+    "prettier": "^3.5.3",
+    "prettier-plugin-packagejson": "^2.5.10",
+    "typescript-eslint": "^8.28.0"
+  }
+}
