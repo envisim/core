@@ -1,6 +1,5 @@
-import {expect, test} from 'vitest';
-
-import {GeoJSON as GJ, Polygon} from '../../src/index.js';
+import { expect, test } from "vitest";
+import { GeoJSON as GJ, Polygon } from "../../src/index.js";
 
 const polygon = Polygon.create([
   [
@@ -20,15 +19,14 @@ const points: GJ.Position2[] = [
   [1.000001, 1.000001],
 ];
 
-test('includesPosition', () => {
+test("includesPosition", () => {
   const res = points.map((p) => polygon.includesPosition(p));
   expect(res).toEqual([true, false, true, true, false]);
 });
 
-test('full copy', () => {
+test("full copy", () => {
   const p = Polygon.create(polygon.coordinates, false);
   expect(p.coordinates).toEqual(polygon.coordinates);
   p.coordinates[0][1][0] = 10;
-  console.log(polygon.coordinates);
   expect(p.coordinates).not.toEqual(polygon.coordinates);
 });

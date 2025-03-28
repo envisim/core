@@ -95,7 +95,12 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
     if (existed) {
       // If propertyrecord existed on provided collection, we trust it fully to be homogenous
       for (const f of collection.features) {
-        const feature = Feature.createArea(f.geometry, f.properties, shallow, options);
+        const feature = Feature.createArea(
+          f.geometry,
+          f.properties as GJ.FeatureProperties<string | number, string>,
+          shallow,
+          options,
+        );
         if (feature === null) continue;
         fc.addFeature(feature, true);
       }
@@ -131,7 +136,11 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
     if (existed) {
       for (const f of collection.features) {
-        const feature = Feature.createLine(f.geometry, f.properties, shallow);
+        const feature = Feature.createLine(
+          f.geometry,
+          f.properties as GJ.FeatureProperties<string | number, string>,
+          shallow,
+        );
         if (feature === null) continue;
         fc.addFeature(feature, true);
       }
@@ -163,7 +172,11 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
     if (existed) {
       for (const f of collection.features) {
-        const feature = Feature.createPoint(f.geometry, f.properties, shallow);
+        const feature = Feature.createPoint(
+          f.geometry,
+          f.properties as GJ.FeatureProperties<string | number, string>,
+          shallow,
+        );
         if (feature === null) continue;
         fc.addFeature(feature, true);
       }

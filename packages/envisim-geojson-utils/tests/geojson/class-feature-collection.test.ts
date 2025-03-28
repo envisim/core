@@ -1,6 +1,5 @@
-import {expect, test} from 'vitest';
-
-import {FeatureCollection} from '../../src/geojson/class-feature-collection.js';
+import { expect, test } from "vitest";
+import { FeatureCollection } from "../../src/geojson/class-feature-collection.js";
 import {
   Circle,
   GeoJSON as GJ,
@@ -9,9 +8,9 @@ import {
   Point,
   Polygon,
   PropertyRecord,
-} from '../../src/index.js';
+} from "../../src/index.js";
 
-test('geomEach', () => {
+test("geomEach", () => {
   const pointCollection = FeatureCollection.newPoint();
   pointCollection.addGeometry(Point.create([0, 0]), {});
   pointCollection.addGeometry(Point.create([1, 1]), {});
@@ -49,40 +48,40 @@ const ring: GJ.Position[] = [
   [12.888806360606111, 61.4879814554327],
 ];
 const poly: GJ.Polygon = {
-  type: 'Polygon',
+  type: "Polygon",
   coordinates: [ring],
 };
 const line: GJ.LineString = {
-  type: 'LineString',
+  type: "LineString",
   coordinates: ring,
 };
 const feature1: GJ.BaseFeature<GJ.Geometry, any> = {
-  type: 'Feature',
+  type: "Feature",
   geometry: poly,
   properties: {
-    a: 'stringValue1',
+    a: "stringValue1",
     b: 1,
     _designWeight: 0.5,
   },
 };
 const feature2: GJ.BaseFeature<GJ.Geometry, any> = {
-  type: 'Feature',
+  type: "Feature",
   geometry: line,
   properties: {
-    a: 'stringValue2',
+    a: "stringValue2",
     b: 2,
     _designWeight: 0.5,
   },
 };
 
-const collection = FeatureCollection.createAreaFromJson({features: [feature1, feature2]}, true);
+const collection = FeatureCollection.createAreaFromJson({ features: [feature1, feature2] }, true);
 
-test('FeatureCollection', () => {
+test("FeatureCollection", () => {
   expect(FeatureCollection.isArea(collection)).toBe(true);
 
-  const fcArea = FeatureCollection.createAreaFromJson({features: [feature1, feature2]});
-  const fcLine = FeatureCollection.createLineFromJson({features: [feature1, feature2]});
-  const fcPoint = FeatureCollection.createPointFromJson({features: [feature1, feature2]});
+  const fcArea = FeatureCollection.createAreaFromJson({ features: [feature1, feature2] });
+  const fcLine = FeatureCollection.createLineFromJson({ features: [feature1, feature2] });
+  const fcPoint = FeatureCollection.createPointFromJson({ features: [feature1, feature2] });
   expect(FeatureCollection.isArea(fcArea)).toBe(true);
   expect(FeatureCollection.isLine(fcLine)).toBe(true);
   expect(FeatureCollection.isPoint(fcPoint)).toBe(true);
@@ -94,33 +93,33 @@ test('FeatureCollection', () => {
   const fcGC = FeatureCollection.createPointFromJson({
     features: [
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Point',
+          type: "Point",
           coordinates: [0, 1],
         },
         properties: null,
       },
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'GeometryCollection',
+          type: "GeometryCollection",
           geometries: [
             {
-              type: 'GeometryCollection',
+              type: "GeometryCollection",
               geometries: [
                 {
-                  type: 'GeometryCollection',
+                  type: "GeometryCollection",
                   geometries: [
                     {
-                      type: 'MultiPoint',
+                      type: "MultiPoint",
                       coordinates: [
                         [0, 1],
                         [0, 2],
                       ],
                     },
                     {
-                      type: 'LineString',
+                      type: "LineString",
                       coordinates: [
                         [1, 0],
                         [1, 1],
@@ -128,10 +127,10 @@ test('FeatureCollection', () => {
                     },
                   ],
                 },
-                {type: 'Point', coordinates: [0, 3]},
+                { type: "Point", coordinates: [0, 3] },
               ],
             },
-            {type: 'Point', coordinates: [0, 4]},
+            { type: "Point", coordinates: [0, 4] },
           ],
         },
         properties: null,
@@ -153,20 +152,20 @@ test('FeatureCollection', () => {
   );
 });
 
-test('appendFromLayer', () => {
+test("appendFromLayer", () => {
   const fcArea = FeatureCollection.newArea(collection.features, collection.propertyRecord, false);
   fcArea.appendFeatureCollection(collection);
   expect(fcArea.size()).toEqual(collection.size() * 2);
 });
 
-test('appendFromLayerWithDifferentProps', () => {
+test("appendFromLayerWithDifferentProps", () => {
   const fcArea = FeatureCollection.newArea(collection.features, undefined, true);
   fcArea.propertyRecord = new PropertyRecord({});
   expect(() => collection.appendFeatureCollection(fcArea)).toThrowError();
   expect(() => fcArea.appendFeatureCollection(collection)).toThrowError();
 });
 
-test('copy', () => {
+test("copy", () => {
   const fc = FeatureCollection.newArea();
   fc.addGeometry(Circle.create([20.27, 63.83], 10), {});
   fc.addGeometry(
@@ -190,9 +189,9 @@ test('copy', () => {
     ]),
     {},
   );
-  const woc = fc.copy(true, {convertCircles: true});
-  const wc = fc.copy(true, {convertCircles: false});
+  const woc = fc.copy(true, { convertCircles: true });
+  const wc = fc.copy(true, { convertCircles: false });
 
-  expect(woc.features.map((f) => f.geometry.type)).toEqual(['Polygon', 'MultiPolygon', 'Polygon']);
-  expect(wc.features.map((f) => f.geometry.type)).toEqual(['Point', 'MultiPoint', 'Polygon']);
+  expect(woc.features.map((f) => f.geometry.type)).toEqual(["Polygon", "MultiPolygon", "Polygon"]);
+  expect(wc.features.map((f) => f.geometry.type)).toEqual(["Point", "MultiPoint", "Polygon"]);
 });
