@@ -23,20 +23,20 @@ export interface BaseObject<T extends string, C> extends GeoJsonObject<T> {
   coordinates: C;
 }
 
-export type Point = BaseObject<'Point', Position>;
-export type MultiPoint = BaseObject<'MultiPoint', Position[]>;
+export type Point = BaseObject<"Point", Position>;
+export type MultiPoint = BaseObject<"MultiPoint", Position[]>;
 export type PointObject = Point | MultiPoint;
 
-export type LineString = BaseObject<'LineString', Position[]>;
-export type MultiLineString = BaseObject<'MultiLineString', Position[][]>;
+export type LineString = BaseObject<"LineString", Position[]>;
+export type MultiLineString = BaseObject<"MultiLineString", Position[][]>;
 export type LineObject = LineString | MultiLineString;
 
-export type Polygon = BaseObject<'Polygon', Position[][]>;
-export type MultiPolygon = BaseObject<'MultiPolygon', Position[][][]>;
-export interface Circle extends BaseObject<'Point', Position> {
+export type Polygon = BaseObject<"Polygon", Position[][]>;
+export type MultiPolygon = BaseObject<"MultiPolygon", Position[][][]>;
+export interface Circle extends BaseObject<"Point", Position> {
   radius: number;
 }
-export interface MultiCircle extends BaseObject<'MultiPoint', Position[]> {
+export interface MultiCircle extends BaseObject<"MultiPoint", Position[]> {
   radius: number;
 }
 export type AreaObject = Polygon | MultiPolygon | Circle | MultiCircle;
@@ -45,7 +45,7 @@ export type SingleTypeObject = PointObject | LineObject | AreaObject;
 
 // GEOMETRY COLLECTIONS
 export interface BaseGeometryCollection<G extends BaseGeometry = BaseGeometry>
-  extends GeoJsonObject<'GeometryCollection'> {
+  extends GeoJsonObject<"GeometryCollection"> {
   geometries: G[];
 }
 export type GeometryCollection<O extends SingleTypeObject> = BaseGeometryCollection<O>;
@@ -61,8 +61,8 @@ export type AreaGeometry = AreaObject | AreaGeometryCollection;
 export type Geometry = PointGeometry | LineGeometry | AreaGeometry;
 
 // FEATURES
-export interface BaseFeature<G extends BaseGeometry | null = BaseGeometry, P = any>
-  extends GeoJsonObject<'Feature'> {
+export interface BaseFeature<G extends BaseGeometry | null = BaseGeometry, P = unknown>
+  extends GeoJsonObject<"Feature"> {
   geometry: G;
   properties: FeatureProperties<P> | null;
 }
@@ -73,7 +73,7 @@ export type AreaFeature = Feature<AreaGeometry>;
 
 // FEATURE COLLECTIONS
 export interface BaseFeatureCollection<F extends BaseFeature = BaseFeature>
-  extends GeoJsonObject<'FeatureCollection'> {
+  extends GeoJsonObject<"FeatureCollection"> {
   features: F[];
 }
 export type FeatureCollection<F extends Feature = Feature> = BaseFeatureCollection<F>;

@@ -52,7 +52,7 @@ export class Random {
   private p: number = this.o;
   // declare our intermediate variables array
   /** @ignore */
-  private s: number[] = Array.from<number>({length: this.o});
+  private s: number[] = Array.from<number>({ length: this.o });
 
   // general purpose local
   /** @ignore */
@@ -108,7 +108,7 @@ export class Random {
     // get a pointer to our high-performance "Mash" hash
     // this.#mash = new (Mash as any)();
 
-    if (typeof seed === 'string' || typeof seed === 'number') return this.seed(seed);
+    if (typeof seed === "string" || typeof seed === "number") return this.seed(seed);
 
     // fill the array with initial mash hash values
     for (let i = 0; i < this.o; i++) this.s[i] = this.mash(Math.random());
@@ -124,9 +124,9 @@ export class Random {
   /** @ignore */
   private rawprng(): number {
     if (++this.p >= this.o) this.p = 0;
-    const t = 1768863 * this.s[this.p]! + this.c * 2.3283064365386963e-10; // 2^-32
+    const t = 1768863 * this.s[this.p] + this.c * 2.3283064365386963e-10; // 2^-32
     this.s[this.p] = t - (this.c = t | 0);
-    return this.s[this.p]!;
+    return this.s[this.p];
   }
 
   // this EXPORTED function is the default function returned by this library.
@@ -139,7 +139,7 @@ export class Random {
    * @throws `RangeError` if `n` is not at positive integer.
    */
   intn(n: number = 1): number {
-    if (!Number.isInteger(n) || n < 1) throw new RangeError('n must be a positive integer');
+    if (!Number.isInteger(n) || n < 1) throw new RangeError("n must be a positive integer");
     if (n === 1) return 0;
     return (n * this.random()) | 0;
   }
@@ -151,7 +151,7 @@ export class Random {
    *   `chr(33)` to `chr(126)` inclusive.
    */
   str(n: number): string {
-    let s = '';
+    let s = "";
     for (let i = 0; i < n; i++) {
       s += String.fromCharCode(33 + this.intn(94));
     }
@@ -165,8 +165,8 @@ export class Random {
   private hash(...args: number[] | string[]): void {
     for (let i = 0; i < args.length; i++) {
       for (let j = 0; j < this.o; j++) {
-        this.s[j] -= this.mash(args[i]!);
-        if (this.s[j]! < 0) this.s[j] += 1;
+        this.s[j] -= this.mash(args[i]);
+        if (this.s[j] < 0) this.s[j] += 1;
       }
     }
   }
@@ -178,12 +178,12 @@ export class Random {
   /** @internal */
   cleanString(inStr: string): string {
     // remove any/all leading spaces
-    inStr = inStr.replace(/(^\s*)|(\s*$)/gi, '');
+    inStr = inStr.replace(/(^\s*)|(\s*$)/gi, "");
     // remove any/all control characters
     /* eslint no-control-regex: "off" */
-    inStr = inStr.replace(/[\x00-\x1F]/gi, '');
+    inStr = inStr.replace(/[\x00-\x1F]/gi, "");
     // remove any/all trailing spaces
-    inStr = inStr.replace(/\n /, '\n');
+    inStr = inStr.replace(/\n /, "\n");
     return inStr; // return the cleaned up result
   }
 
@@ -199,7 +199,7 @@ export class Random {
       for (let j = 0; j < this.o; j++) {
         //	"mash" it into the UHEPRNG state
         this.s[j] -= this.mash(this.k);
-        if (this.s[j]! < 0) this.s[j] += 1;
+        if (this.s[j] < 0) this.s[j] += 1;
       }
     }
 
@@ -210,7 +210,7 @@ export class Random {
   // time
   /** Adds entropy to Uheprng. */
   addEntropy(...args: string[] | number[]): this {
-    this.hash([this.k++, new Date().getTime(), ...args, Math.random()].join(''));
+    this.hash([this.k++, new Date().getTime(), ...args, Math.random()].join(""));
 
     return this;
   }
@@ -223,7 +223,7 @@ export class Random {
   initState(): this {
     this.mashInit(); // pass a null arg to force mash hash to init
     for (let i = 0; i < this.o; i++) {
-      this.s[i] = this.mash(' '); // fill the array with initial mash hash values
+      this.s[i] = this.mash(" "); // fill the array with initial mash hash values
     }
     this.c = 1; // init our multiply-with-carry carry
     this.p = this.o; // init our phase
@@ -234,8 +234,8 @@ export class Random {
   /** Seed the random generator */
   seed(seed: number | string = Math.random()): this {
     this.initState();
-    if (typeof seed === 'string') return this.hashString(seed);
-    if (typeof seed === 'number') return this.hashString(seed.toString());
+    if (typeof seed === "string") return this.hashString(seed);
+    if (typeof seed === "number") return this.hashString(seed.toString());
     return this.hashString(Math.random().toString());
   }
 
@@ -250,7 +250,7 @@ export class Random {
 
   /** @returns An array of (uniform) numbers on the interval `[0.0, 1.0)` */
   floatArray(n: number): number[] {
-    return Array.from({length: n}, () => this.random());
+    return Array.from({ length: n }, () => this.random());
   }
 
   /** @returns Pseudo-random (uniform) number o nthe interval `(0.0, 1.0)` */

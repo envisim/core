@@ -17,12 +17,13 @@
     "@envisim/random": "workspace:*",
     "@envisim/sampling": "workspace:*",
     "@envisim/utils": "workspace:*",
-    "uuid": "^11.0.5"
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "@envisim/eslint-config": "workspace:*",
-    "@envisim/ts-config": "workspace:*",
-    "typescript": "^5.7.3",
-    "vitest": "^3.0.5"
+    "@envisim/config-eslint": "workspace:*",
+    "@envisim/config-ts": "workspace:*",
+    "eslint": "^9.23.0",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.9"
   }
 }

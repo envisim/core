@@ -1,12 +1,11 @@
-import {type OptionalParam} from '@envisim/utils';
-
-import type * as GJ from '../types/geojson.js';
-import {type BufferOptions} from '../buffer/index.js';
-import {unionOfBBoxes} from '../utils/bbox.js';
-import {centroidFromMultipleCentroids} from '../utils/centroid.js';
-import {type CirclesToPolygonsOptions} from '../utils/circles-to-polygons.js';
-import {Feature} from './class-feature.js';
-import {GeometricPrimitive} from './geometric-primitive/index.js';
+import { type OptionalParam } from "@envisim/utils";
+import { type BufferOptions } from "../buffer/index.js";
+import type * as GJ from "../types/geojson.js";
+import { unionOfBBoxes } from "../utils/bbox.js";
+import { centroidFromMultipleCentroids } from "../utils/centroid.js";
+import { type CirclesToPolygonsOptions } from "../utils/circles-to-polygons.js";
+import { Feature } from "./class-feature.js";
+import { GeometricPrimitive } from "./geometric-primitive/index.js";
 import {
   type AreaObject,
   type LineObject,
@@ -15,8 +14,8 @@ import {
   toAreaObject,
   toLineObject,
   toPointObject,
-} from './objects/index.js';
-import {type FeatureProperties, PropertyRecord} from './property-record.js';
+} from "./objects/index.js";
+import { type FeatureProperties, PropertyRecord } from "./property-record.js";
 
 type ForEachCallback<T> = (obj: T, index: number) => void;
 interface FeatureCollectionExtras {
@@ -28,14 +27,14 @@ interface FeatureCollectionExtras {
 }
 interface FeatureCollectionExtrasJson {
   primitive: GeometricPrimitive;
-  propertyRecord: {record: PropertyRecord['record']};
+  propertyRecord: { record: PropertyRecord["record"] };
   id?: string;
   title?: string;
   color?: [number, number, number];
 }
 type StrippedFeatureCollectionJson = OptionalParam<
-  GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, any>> & FeatureCollectionExtrasJson,
-  'type' | 'primitive' | 'propertyRecord'
+  GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, unknown>> & FeatureCollectionExtrasJson,
+  "type" | "primitive" | "propertyRecord"
 >;
 
 export class FeatureCollection<T extends PureObject, PID extends string = string>
@@ -63,19 +62,19 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
   static assertArea<P extends string>(
     obj: FeatureCollection<PureObject, P>,
-    msg: string = 'Expected area',
+    msg: string = "Expected area",
   ): asserts obj is FeatureCollection<AreaObject, P> {
     if (!FeatureCollection.isArea(obj)) throw new TypeError(msg);
   }
   static assertLine<P extends string>(
     obj: FeatureCollection<PureObject, P>,
-    msg: string = 'Expected line',
+    msg: string = "Expected line",
   ): asserts obj is FeatureCollection<LineObject, P> {
     if (!FeatureCollection.isLine(obj)) throw new TypeError(msg);
   }
   static assertPoint<P extends string>(
     obj: FeatureCollection<PureObject, P>,
-    msg: string = 'Expected point',
+    msg: string = "Expected point",
   ): asserts obj is FeatureCollection<PointObject, P> {
     if (!FeatureCollection.isPoint(obj)) throw new TypeError(msg);
   }
@@ -89,14 +88,19 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
       return new FeatureCollection(GeometricPrimitive.AREA);
     }
 
-    const {record, existed} = createPropertyRecord(collection, shallow);
+    const { record, existed } = createPropertyRecord(collection, shallow);
     const fc = new FeatureCollection<AreaObject>(GeometricPrimitive.AREA, [], record);
     addCollectionExtras(fc, collection);
 
     if (existed) {
       // If propertyrecord existed on provided collection, we trust it fully to be homogenous
       for (const f of collection.features) {
-        const feature = Feature.createArea(f.geometry, f.properties, shallow, options);
+        const feature = Feature.createArea(
+          f.geometry,
+          f.properties as GJ.FeatureProperties<string | number, string>,
+          shallow,
+          options,
+        );
         if (feature === null) continue;
         fc.addFeature(feature, true);
       }
@@ -126,13 +130,17 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
       return new FeatureCollection(GeometricPrimitive.LINE);
     }
 
-    const {record, existed} = createPropertyRecord(collection, shallow);
+    const { record, existed } = createPropertyRecord(collection, shallow);
     const fc = new FeatureCollection<LineObject>(GeometricPrimitive.LINE, [], record);
     addCollectionExtras(fc, collection);
 
     if (existed) {
       for (const f of collection.features) {
-        const feature = Feature.createLine(f.geometry, f.properties, shallow);
+        const feature = Feature.createLine(
+          f.geometry,
+          f.properties as GJ.FeatureProperties<string | number, string>,
+          shallow,
+        );
         if (feature === null) continue;
         fc.addFeature(feature, true);
       }
@@ -158,13 +166,17 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
       return new FeatureCollection(GeometricPrimitive.POINT);
     }
 
-    const {record, existed} = createPropertyRecord(collection, shallow);
+    const { record, existed } = createPropertyRecord(collection, shallow);
     const fc = new FeatureCollection<PointObject>(GeometricPrimitive.POINT, [], record);
     addCollectionExtras(fc, collection);
 
     if (existed) {
       for (const f of collection.features) {
-        const feature = Feature.createPoint(f.geometry, f.properties, shallow);
+        const feature = Feature.createPoint(
+          f.geometry,
+          f.properties as GJ.FeatureProperties<string | number, string>,
+          shallow,
+        );
         if (feature === null) continue;
         fc.addFeature(feature, true);
       }
@@ -229,7 +241,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
     );
   }
 
-  readonly type = 'FeatureCollection';
+  readonly type = "FeatureCollection";
   features: Feature<T, PID>[] = [];
   bbox?: GJ.BBox;
 
@@ -264,7 +276,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
     {
       convertCircles = false,
       ...options
-    }: CirclesToPolygonsOptions & {convertCircles?: boolean} = {},
+    }: CirclesToPolygonsOptions & { convertCircles?: boolean } = {},
   ): FeatureCollection<T> {
     let c: FeatureCollection<T>;
 
@@ -307,7 +319,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
   }
 
   setBBox(force: boolean = false): GJ.BBox {
-    const bboxArray = Array.from<GJ.BBox>({length: this.features.length});
+    const bboxArray = Array.from<GJ.BBox>({ length: this.features.length });
 
     if (force === true) {
       this.geomEach((geometry: T, index: number) => {
@@ -408,7 +420,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
   }
 
   setProperty(id: PID, index: number, value: number | string): void {
-    if (index < 0 || index >= this.size()) throw new Error('no feature with this index exists');
+    if (index < 0 || index >= this.size()) throw new Error("no feature with this index exists");
     this.features[index].setProperty(id, value);
   }
 
@@ -418,7 +430,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
     const fcKeys = fc.propertyRecord.getIds();
 
     if (thisKeys.length !== fcKeys.length || !thisKeys.every((id) => fcKeys.includes(id))) {
-      throw new RangeError('propertyRecords does not match');
+      throw new RangeError("propertyRecords does not match");
     }
 
     fc.forEach((feat) => this.addFeature(feat, shallow));
@@ -427,7 +439,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
 function setPropertiesOfFeature(
   propertyRecord: PropertyRecord,
-  properties: GJ.FeatureProperties<any>,
+  properties: GJ.FeatureProperties<unknown>,
 ): GJ.FeatureProperties<number | string> {
   const newProps: GJ.FeatureProperties<number | string> = {};
 
@@ -436,22 +448,22 @@ function setPropertiesOfFeature(
 
     // If the prop does not exist on the feature, we have a problem
     if (!Object.hasOwn(properties, id)) {
-      throw new Error('All features must have the same properties.');
+      throw new Error("All features must have the same properties.");
     }
 
     const value: unknown = properties[id];
 
     if (PropertyRecord.isNumerical(prop)) {
       // Add numerical property
-      if (typeof value !== 'number') {
-        throw new Error('All features must have the same types on the properties.');
+      if (typeof value !== "number") {
+        throw new Error("All features must have the same types on the properties.");
       }
     } else {
       // prop.type === 'categorical'
       // Add categorical property
       // We fill the value array, as new values are encountered.
-      if (typeof value !== 'string') {
-        throw new Error('All features must have the same types on the properties.');
+      if (typeof value !== "string") {
+        throw new Error("All features must have the same types on the properties.");
       }
 
       if (!prop.values.includes(value)) {
@@ -468,16 +480,16 @@ function setPropertiesOfFeature(
 function createPropertyRecord(
   collection: StrippedFeatureCollectionJson,
   shallow: boolean,
-): {record: PropertyRecord; existed: boolean} {
+): { record: PropertyRecord; existed: boolean } {
   if (collection.propertyRecord === undefined) {
     // If propertyRecord does not exist, create from feature
-    return {record: PropertyRecord.createFromJson(collection.features[0]), existed: false};
+    return { record: PropertyRecord.createFromJson(collection.features[0]), existed: false };
   } else if (shallow === false && PropertyRecord.isRecord(collection.propertyRecord)) {
     // If shallow is false, we can copy an existing propertyrecord
-    return {record: collection.propertyRecord, existed: true};
+    return { record: collection.propertyRecord, existed: true };
   }
 
-  return {record: new PropertyRecord(collection.propertyRecord.record), existed: true};
+  return { record: new PropertyRecord(collection.propertyRecord.record), existed: true };
 }
 
 function addCollectionExtras(

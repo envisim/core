@@ -1,8 +1,7 @@
-import {type Matrix} from '@envisim/matrix';
-import {Random, type RandomGenerator, randomInt} from '@envisim/random';
-
-import {BASE_OPTIONS} from '../base-options/index.js';
-import {BaseSampling} from './base-sampling.js';
+import { type Matrix } from "@envisim/matrix";
+import { Random, type RandomGenerator, randomInt } from "@envisim/random";
+import { BASE_OPTIONS } from "../base-options/index.js";
+import { BaseSampling } from "./base-sampling.js";
 
 export enum CorrelatedPoissonMethod {
   LCPS,
@@ -10,11 +9,13 @@ export enum CorrelatedPoissonMethod {
   SCPSCOORD,
 }
 
+type RandomFn = (id: number) => number;
+
 export class CorrelatedPoisson extends BaseSampling {
   setDirect: boolean = false;
   setRandom: boolean = false;
 
-  random: (id: number) => number = this.randomStd;
+  random: RandomFn = this.randomStd.bind(this);
 
   method: CorrelatedPoissonMethod;
   randomValues!: number[];
@@ -37,16 +38,16 @@ export class CorrelatedPoisson extends BaseSampling {
 
     switch (this.method) {
       case CorrelatedPoissonMethod.LCPS:
-        this.draw = this.drawLcps;
+        this.draw = this.drawLcps.bind(this);
         break;
       case CorrelatedPoissonMethod.SCPS:
-        this.draw = this.drawScps;
+        this.draw = this.drawScps.bind(this);
         break;
       case CorrelatedPoissonMethod.SCPSCOORD:
-        this.draw = this.drawScpsCoord;
+        this.draw = this.drawScpsCoord.bind(this);
         break;
       default:
-        throw new Error('no such CpsMethod');
+        throw new Error("no such CpsMethod");
     }
 
     this.setDraw = true;
@@ -59,13 +60,13 @@ export class CorrelatedPoisson extends BaseSampling {
   }
 
   setRandomStd(): void {
-    this.random = this.randomStd;
+    this.random = this.randomStd.bind(this);
     this.setRandom = true;
   }
 
   setRandomArr(randArr: number[]): void {
     this.randomValues = randArr;
-    this.random = this.randomArr;
+    this.random = this.randomArr.bind(this);
     this.setRandom = true;
   }
 
@@ -84,7 +85,7 @@ export class CorrelatedPoisson extends BaseSampling {
         this.drawUnit = this.idx.getId(0);
         return;
       }
-      if (this.idx.length() === 0) throw new RangeError('trying to find index in empty list');
+      if (this.idx.length() === 0) throw new RangeError("trying to find index in empty list");
     }
 
     let mindist = Number.MAX_VALUE;
@@ -205,8 +206,8 @@ export class CorrelatedPoisson extends BaseSampling {
   }
 
   run(): void {
-    if (this.setRandom !== true) throw new Error('random-type is not set');
-    if (this.setDraw !== true) throw new Error('draw-type is not set');
+    if (this.setRandom !== true) throw new Error("random-type is not set");
+    if (this.setDraw !== true) throw new Error("draw-type is not set");
 
     while (this.idx.length() > 1) {
       this.draw();

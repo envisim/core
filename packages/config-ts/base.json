@@ -5,15 +5,18 @@
   "exclude": ["${configDir}/dist", "${configDir}/node_modules", "${configDir}/tests"],
 
   "compilerOptions": {
-    "target": "es2022",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "declaration": true,
     "exactOptionalPropertyTypes": false,
     "noUncheckedIndexedAccess": false,
-    "allowJs": true,
-
+    "strict": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "rootDir": "${configDir}/src",
+    "declaration": true,
     "outDir": "${configDir}/dist",
-    "rootDir": "${configDir}/src"
+    "allowJs": true,
+    "checkJs": true,
+    "verbatimModuleSyntax": true,
+    "target": "es2022",
+    "skipLibCheck": true
   }
 }

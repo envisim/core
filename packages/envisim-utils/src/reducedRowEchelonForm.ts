@@ -18,7 +18,7 @@ export function reducedRowEchelonForm(
 
     let i = r;
 
-    while (Math.abs(mat[mIdx(i, lead)]!) < eps) {
+    while (Math.abs(mat[mIdx(i, lead)]) < eps) {
       i += 1;
 
       if (i === rowCount) {
@@ -31,23 +31,23 @@ export function reducedRowEchelonForm(
 
     if (i !== r) {
       for (let k = 0; k < colCount; k++) {
-        const temp = mat[mIdx(i, k)]!;
+        const temp = mat[mIdx(i, k)];
         mat[mIdx(i, k)] = mat[mIdx(r, k)]!;
         mat[mIdx(r, k)] = temp!;
       }
     }
 
     {
-      const temp = mat[mIdx(r, lead)]!;
+      const temp = mat[mIdx(r, lead)];
       mat[mIdx(r, lead)] = 1.0;
       for (let k = lead + 1; k < colCount; k++) mat[mIdx(r, k)] /= temp;
     }
 
     for (let j = 0; j < rowCount; j++) {
       if (j === r) continue;
-      const temp = mat[mIdx(j, lead)]!;
+      const temp = mat[mIdx(j, lead)];
       mat[mIdx(j, lead)] = 0.0;
-      for (let k = lead + 1; k < colCount; k++) mat[mIdx(j, k)] -= mat[mIdx(r, k)]! * temp;
+      for (let k = lead + 1; k < colCount; k++) mat[mIdx(j, k)] -= mat[mIdx(r, k)] * temp;
     }
 
     lead += 1;

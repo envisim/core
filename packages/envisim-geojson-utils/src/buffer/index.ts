@@ -1,8 +1,8 @@
-import type {BufferOptions} from './types.js';
+import type { BufferOptions } from "./types.js";
 
-export {BufferOptions};
-export {lineToRing} from './line-to-ring.js';
-export {bufferPolygons} from './buffer-polygons.js';
+export type { BufferOptions };
+export { lineToRing } from "./line-to-ring.js";
+export { bufferPolygons } from "./buffer-polygons.js";
 
 export function defaultBufferOptions(options: BufferOptions): Required<BufferOptions> {
   return {

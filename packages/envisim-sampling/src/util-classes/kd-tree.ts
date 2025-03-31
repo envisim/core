@@ -1,8 +1,7 @@
-import {type Matrix} from '@envisim/matrix';
-import {swap} from '@envisim/utils';
-
-import {KdNode} from './kd-node.js';
-import {type KdStore} from './kd-store.js';
+import { type Matrix } from "@envisim/matrix";
+import { swap } from "@envisim/utils";
+import { KdNode } from "./kd-node.js";
+import { type KdStore } from "./kd-store.js";
 
 export class KdTree {
   protected dt: Matrix;
@@ -13,14 +12,14 @@ export class KdTree {
   protected limr: number[] = [];
   protected splitUnits: number[];
 
-  static isKDTree(t: any): t is KdTree {
+  static isKDTree(t: unknown): t is KdTree {
     return t instanceof KdTree;
   }
 
   constructor(dt: Matrix, bucketSize: number = 40) {
-    if (dt.length <= 0) throw new TypeError('dt must have elements');
+    if (dt.length <= 0) throw new TypeError("dt must have elements");
 
-    if (bucketSize < 1) throw new TypeError('bucketSize must be >= 1');
+    if (bucketSize < 1) throw new TypeError("bucketSize must be >= 1");
 
     this.dt = dt;
     this.bucketSize = Math.trunc(bucketSize);
@@ -48,7 +47,7 @@ export class KdTree {
     const m = this.splitByMidpointSlide(node, fr, to);
 
     // Sanity check
-    if (m > to) throw new RangeError('(SplitNode) m > to');
+    if (m > to) throw new RangeError("(SplitNode) m > to");
 
     //If m is fr or to, we need to accept all units into the node
     if (m <= fr || m >= to) {
@@ -194,7 +193,7 @@ export class KdTree {
       return fr + r;
     }
 
-    throw new Error('Something went wrong in splitting');
+    throw new Error("Something went wrong in splitting");
   }
 
   protected findNode(id: number): KdNode | null {
@@ -209,7 +208,7 @@ export class KdTree {
   unitExists(id: number): boolean {
     const node = this.findNode(id);
 
-    if (node == null) throw new Error('node error');
+    if (node == null) throw new Error("node error");
 
     return node.unitExists(id);
   }
@@ -217,7 +216,7 @@ export class KdTree {
   removeUnit(id: number): void {
     const node = this.findNode(id);
 
-    if (node == null) throw new Error('node error');
+    if (node == null) throw new Error("node error");
 
     node.removeUnit(id);
   }
@@ -234,7 +233,7 @@ export class KdTree {
   }
 
   protected distanceBetweenUnits(u1: number[], u2: number[]): number {
-    if (u1.length !== u2.length) throw new RangeError('RowVectors does not match');
+    if (u1.length !== u2.length) throw new RangeError("RowVectors does not match");
 
     let distance = 0.0;
 
@@ -249,9 +248,9 @@ export class KdTree {
   findNeighbours(store: KdStore, id: number | number[]): void {
     store.reset();
 
-    if (this.topNode == null) throw new Error('topNode is null');
+    if (this.topNode == null) throw new Error("topNode is null");
 
-    if (typeof id === 'number') {
+    if (typeof id === "number") {
       const unit = this.dt.extractRow(id);
       this.traverseNodesForNeighbours(store, id, unit, this.topNode);
       return;
@@ -266,7 +265,7 @@ export class KdTree {
     unit: number[],
     node: KdNode | null,
   ) {
-    if (node == null) throw new Error('node is null');
+    if (node == null) throw new Error("node is null");
 
     if (node.terminal) {
       if (store.maxSize == 1) {
@@ -412,7 +411,7 @@ export class KdTree {
   findNeighboursCps(store: KdStore, probabilities: number[], id: number): void {
     store.reset();
 
-    if (this.topNode == null) throw new Error('topNode is null');
+    if (this.topNode == null) throw new Error("topNode is null");
 
     this.traverseNodesForNeighboursCps(store, probabilities, id, this.topNode);
   }
@@ -423,7 +422,7 @@ export class KdTree {
     id: number,
     node: KdNode | null,
   ): void {
-    if (node == null) throw new Error('node is null');
+    if (node == null) throw new Error("node is null");
 
     if (node.terminal) {
       this.searchNodeForNeighboursCps(store, probabilities, id, node);

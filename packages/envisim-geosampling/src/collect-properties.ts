@@ -1,8 +1,7 @@
-import {v4 as uuid} from 'uuid';
-
+import { v4 as uuid } from "uuid";
 import {
   type AreaObject,
-  Feature,
+  type Feature,
   FeatureCollection,
   type LineObject,
   type PointObject,
@@ -12,7 +11,7 @@ import {
   intersectAreaAreaGeometries,
   intersectLineAreaGeometries,
   intersectPointAreaGeometries,
-} from '@envisim/geojson-utils';
+} from "@envisim/geojson-utils";
 
 // A type for an object to hold all the data we need to aggregate from
 // one feature to another.
@@ -43,7 +42,7 @@ function aggregateInPlace(
         // Collect from categorical variable
         const [fromID, index] = property.parent;
         const fromProperty = opts.fromProperties.getId(fromID);
-        if (fromProperty !== null && fromProperty.type === 'categorical') {
+        if (fromProperty !== null && fromProperty.type === "categorical") {
           const value = fromProperty.values[index];
           // Only collect if value is equal to value
           if (from.properties[fromID] === value) {
@@ -92,16 +91,16 @@ export function collectProperties<PF extends string, PB extends string, GF exten
   for (const property of rec.getRecord()) {
     if (!PropertyRecord.isNumerical(property)) {
       // Categorical properties should not exist in this record
-      throw new Error('Property record to collect must only contain numerical properties.');
+      throw new Error("Property record to collect must only contain numerical properties.");
     }
 
     const id = property.parent ? property.parent[0] : property.id;
     if (!base.propertyRecord.hasId(id)) {
-      throw new Error('Property to collect does not exist in the baseLayer property record.');
+      throw new Error("Property to collect does not exist in the baseLayer property record.");
     }
 
     if (frame.propertyRecord.hasId(property.id)) {
-      throw new Error('Property to collect already exist in the frameLayer property record.');
+      throw new Error("Property to collect already exist in the frameLayer property record.");
     }
 
     // Add new properties to new collection and property record.
@@ -229,12 +228,12 @@ export function collectPropertyRecord<P extends string>(
         // Store also parent id, index
         newRecord.addNumerical({
           id: uuid(),
-          name: rec.name + '-' + value,
+          name: rec.name + "-" + value,
           parent: [rec.id, i],
         });
       });
     } else {
-      newRecord.addNumerical({id: rec.id, name: rec.name});
+      newRecord.addNumerical({ id: rec.id, name: rec.name });
     }
   }
 
