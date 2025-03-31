@@ -4,11 +4,10 @@ import {
   type NumericalProperty,
   PropertyRecord,
   type PureObject,
-} from '@envisim/geojson-utils';
-import {bbox4, longitudeCenter} from '@envisim/geojson-utils';
-import {Matrix, Vector} from '@envisim/matrix';
-
-import {type OptionsBase} from './options.js';
+} from "@envisim/geojson";
+import { bbox4, longitudeCenter } from "@envisim/geojson-utils";
+import { Matrix, Vector } from "@envisim/matrix";
+import { type OptionsBase } from "./options.js";
 
 /**
  * Get a numerical property as a Vector
@@ -83,9 +82,9 @@ export function spreadMatrixFromLayer<G extends PureObject, P extends string>(
   if (spreadGeo) {
     // For now use center of bbox for longitude and latitude
     const N = collection.size();
-    const lon = Array.from<number>({length: N});
-    const lat = Array.from<number>({length: N});
-    const alt = Array.from<number>({length: N}).fill(0.0);
+    const lon = Array.from<number>({ length: N });
+    const lat = Array.from<number>({ length: N });
+    const alt = Array.from<number>({ length: N }).fill(0.0);
     let hasAlt = false;
 
     collection.forEach((f, i) => {
@@ -125,7 +124,7 @@ export function spreadMatrixFromLayer<G extends PureObject, P extends string>(
         newprops.push(arr[i]);
       }
     } else {
-      throw new Error('all properties not present on property record');
+      throw new Error("all properties not present on property record");
     }
   });
 
@@ -151,7 +150,7 @@ export function balancingMatrixFromLayer<G extends PureObject, P extends string>
 
   // Always balance on a constant
   const N = collection.size();
-  newprops.push(new Vector(Array.from<number>({length: N}).fill(1.0), true));
+  newprops.push(new Vector(Array.from<number>({ length: N }).fill(1.0), true));
 
   properties.forEach((id) => {
     const prop = rec.getId(id);
@@ -171,7 +170,7 @@ export function balancingMatrixFromLayer<G extends PureObject, P extends string>
         newprops.push(arr[i]);
       }
     } else {
-      throw new Error('all properties not present on property record');
+      throw new Error("all properties not present on property record");
     }
   });
 
@@ -183,11 +182,11 @@ export function balancingMatrixFromLayer<G extends PureObject, P extends string>
  */
 function probsFromLayer<G extends PureObject, P extends string>(
   collection: FeatureCollection<G, P>,
-  {probabilities}: OptionsBase<P>, // already checked
+  { probabilities }: OptionsBase<P>, // already checked
 ): Vector {
   let probs: Vector;
 
-  if (probabilities === '_measure') {
+  if (probabilities === "_measure") {
     // Probabilities from the size of the features
     const sizes: number[] = collection.features.map((f) => f.geometry.measure());
     probs = new Vector(sizes);
@@ -199,14 +198,14 @@ function probsFromLayer<G extends PureObject, P extends string>(
     if (prop === null) {
       return Vector.create(1.0, collection.size());
     } else if (!PropertyRecord.isNumerical(prop)) {
-      throw new TypeError('probabilitiesFrom must be numerical');
+      throw new TypeError("probabilitiesFrom must be numerical");
     }
 
     probs = extractNumericalProperty(collection, prop);
   }
 
   // OR set to 0.0?
-  if (!probs.every((e) => e >= 0.0)) throw new Error('the selected property has negative values');
+  if (!probs.every((e) => e >= 0.0)) throw new Error("the selected property has negative values");
 
   return probs;
 }
@@ -240,7 +239,7 @@ export function inclprobsFromLayer<G extends PureObject, P extends string>(
   const N = collection.size();
 
   if (options.probabilities === undefined) {
-    return Array.from<number>({length: N}).fill(options.sampleSize / N);
+    return Array.from<number>({ length: N }).fill(options.sampleSize / N);
   }
 
   const x = probsFromLayer(collection, options);
@@ -249,7 +248,7 @@ export function inclprobsFromLayer<G extends PureObject, P extends string>(
   let sum: number;
   let failed: boolean = true;
   // The return vector
-  const ips = new Vector(Array.from<number>({length: N}).fill(0.0), true);
+  const ips = new Vector(Array.from<number>({ length: N }).fill(0.0), true);
 
   /*
    * Continue this loop while there are still units to decide

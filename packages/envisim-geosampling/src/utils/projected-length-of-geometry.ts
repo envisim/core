@@ -2,17 +2,15 @@ import {
   type AreaObject,
   Circle,
   type CirclesToPolygonsOptions,
-  type GeoJSON as GJ,
-  Geodesic,
   type LineObject,
   MultiCircle,
-  bbox4,
-  longitudeCenter,
-} from '@envisim/geojson-utils';
+} from "@envisim/geojson";
+import { Geodesic, bbox4, longitudeCenter } from "@envisim/geojson-utils";
+import type * as GJ from "@envisim/geojson-utils/geojson";
 
 type DistCoord = {
   dist: number;
-  type: 'start' | 'end';
+  type: "start" | "end";
 };
 
 const toRad = Math.PI / 180;
@@ -36,8 +34,8 @@ function distCoordsForLineString(
   });
 
   return [
-    {dist: minDist, type: 'start'},
-    {dist: maxDist, type: 'end'},
+    { dist: minDist, type: "start" },
+    { dist: maxDist, type: "end" },
   ];
 }
 
@@ -68,7 +66,7 @@ function lengthFromDistCoords(distCoords: DistCoord[]): number {
   let p2 = 0; // end point of an interval
 
   distCoords.forEach((e) => {
-    if (e.type == 'start') {
+    if (e.type == "start") {
       if (start == end) {
         p1 = e.dist;
       }

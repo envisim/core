@@ -1,6 +1,5 @@
-import {type FeatureCollection, type PropertyRecord, type PureObject} from '@envisim/geojson-utils';
-import {lpm1, lpm2, scps} from '@envisim/sampling';
-
+import { type FeatureCollection, type PropertyRecord, type PureObject } from "@envisim/geojson";
+import { lpm1, lpm2, scps } from "@envisim/sampling";
 import {
   type OptionsBase,
   type OptionsSpatiallyBalanced,
@@ -8,10 +7,10 @@ import {
   optionsBaseCheck,
   optionsSpatiallyBalancedCheck,
   throwRangeError,
-} from './options.js';
-import {inclprobsFromLayer, returnCollectionFromSample, spreadMatrixFromLayer} from './utils.js';
+} from "./options.js";
+import { inclprobsFromLayer, returnCollectionFromSample, spreadMatrixFromLayer } from "./utils.js";
 
-export const SAMPLE_SPATIALLY_BALANCED_METHODS = ['lpm1', 'lpm2', 'scps'] as const;
+export const SAMPLE_SPATIALLY_BALANCED_METHODS = ["lpm1", "lpm2", "scps"] as const;
 export type SampleSpatiallyBalancedOptions<P extends string = string> = OptionsBase<
   P,
   (typeof SAMPLE_SPATIALLY_BALANCED_METHODS)[number]
@@ -41,19 +40,19 @@ export function sampleSpatiallyBalanced<T extends PureObject, P extends string>(
   };
 
   switch (options.method) {
-    case 'lpm1':
+    case "lpm1":
       return returnCollectionFromSample(
         collection,
         lpm1(samplingOptions),
         samplingOptions.probabilities,
       );
-    case 'scps':
+    case "scps":
       return returnCollectionFromSample(
         collection,
         scps(samplingOptions),
         samplingOptions.probabilities,
       );
-    case 'lpm2':
+    case "lpm2":
     default:
       return returnCollectionFromSample(
         collection,

@@ -113,6 +113,34 @@ importers:
         specifier: ^3.0.9
         version: 3.0.9(yaml@2.7.0)
 
+  packages/envisim-geojson:
+    dependencies:
+      '@envisim/geojson-utils':
+        specifier: workspace:*
+        version: link:../envisim-geojson-utils
+      '@envisim/utils':
+        specifier: workspace:*
+        version: link:../envisim-utils
+      uuid:
+        specifier: ^11.1.0
+        version: 11.1.0
+    devDependencies:
+      '@envisim/config-eslint':
+        specifier: workspace:*
+        version: link:../config-eslint
+      '@envisim/config-ts':
+        specifier: workspace:*
+        version: link:../config-ts
+      eslint:
+        specifier: ^9.23.0
+        version: 9.23.0
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.2
+      vitest:
+        specifier: ^3.0.9
+        version: 3.0.9(yaml@2.7.0)
+
   packages/envisim-geojson-utils:
     dependencies:
       '@envisim/utils':
@@ -121,12 +149,6 @@ importers:
       geographiclib-geodesic:
         specifier: ^2.1.1
         version: 2.1.1
-      tslib:
-        specifier: ^2.8.1
-        version: 2.8.1
-      uuid:
-        specifier: ^11.1.0
-        version: 11.1.0
     devDependencies:
       '@envisim/config-eslint':
         specifier: workspace:*
@@ -149,6 +171,9 @@ importers:
       '@envisim/distributions':
         specifier: workspace:*
         version: link:../envisim-distributions
+      '@envisim/geojson':
+        specifier: workspace:*
+        version: link:../envisim-geojson
       '@envisim/geojson-utils':
         specifier: workspace:*
         version: link:../envisim-geojson-utils

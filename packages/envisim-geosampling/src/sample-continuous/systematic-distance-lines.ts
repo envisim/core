@@ -3,10 +3,9 @@ import {
   FeatureCollection,
   type Point,
   intersectPointAreaGeometries,
-} from '@envisim/geojson-utils';
-import {Random, type RandomGenerator} from '@envisim/random';
-
-import {effectiveHalfWidth} from './distance-utils.js';
+} from "@envisim/geojson";
+import { Random, type RandomGenerator } from "@envisim/random";
+import { effectiveHalfWidth } from "./distance-utils.js";
 import {
   type OptionsCircleConversion,
   type OptionsDistancePoints,
@@ -16,8 +15,8 @@ import {
   optionsDistancePointsCheck,
   optionsParallelLinesCheck,
   throwRangeError,
-} from './options.js';
-import {sampleSystematicLinesOnAreas} from './systematic-lines-on-areas.js';
+} from "./options.js";
+import { sampleSystematicLinesOnAreas } from "./systematic-lines-on-areas.js";
 
 export interface SampleSystematicDistanceLinesOptions
   extends OptionsCircleConversion,
@@ -51,7 +50,7 @@ export function sampleSystematicDistanceLines(
 ): FeatureCollection<Point> {
   throwRangeError(sampleSystematicDistanceLinesCheck(options));
 
-  const {rand = new Random(), interspace, detectionFunction, cutoff} = options;
+  const { rand = new Random(), interspace, detectionFunction, cutoff } = options;
 
   // Compute effective half width
   const effHalfWidth = effectiveHalfWidth(detectionFunction, cutoff);
@@ -60,7 +59,7 @@ export function sampleSystematicDistanceLines(
   const dw = interspace / (effHalfWidth * 2.0);
 
   // Select sample of lines
-  const lineFeatures = sampleSystematicLinesOnAreas(collection, {...options, rand}).features;
+  const lineFeatures = sampleSystematicLinesOnAreas(collection, { ...options, rand }).features;
 
   // To store sampled features
   const newCollection = FeatureCollection.newPoint<Point>(

@@ -2,8 +2,6 @@ import {
   type AreaObject,
   Circle,
   type CirclesToPolygonsOptions,
-  type GeoJSON as GJ,
-  Geodesic,
   type LineObject,
   LineString,
   MultiCircle,
@@ -13,11 +11,11 @@ import {
   Point,
   type PointObject,
   Polygon,
-  cutAreaGeometry,
-  cutLineGeometry,
-  typeGuards,
-} from '@envisim/geojson-utils';
-import {type RandomGenerator} from '@envisim/random';
+} from "@envisim/geojson";
+import { cutAreaGeometry, cutLineGeometry, Geodesic } from "@envisim/geojson-utils";
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { isCircle, isMultiCircle } from "@envisim/geojson-utils/type-guards";
+import { type RandomGenerator } from "@envisim/random";
 
 // This file has a set of functions to deal with a model
 // geometry (tract), which is a GeoJSON geometry with cartesian
@@ -32,7 +30,7 @@ function placePoint(point: GJ.Position, position: GJ.Position, rotation: number)
 
 interface PlaceOptions<G extends GJ.SingleTypeObject> {
   modelGeometry: G;
-  rotationOfGeometry: number | 'random';
+  rotationOfGeometry: number | "random";
   rand: RandomGenerator;
   buffer: number;
 }
@@ -52,18 +50,18 @@ interface PlaceOptions<G extends GJ.SingleTypeObject> {
  */
 export function placeAreaGeometry(
   position: GJ.Position,
-  {modelGeometry, ...opts}: PlaceOptions<GJ.AreaObject>,
+  { modelGeometry, ...opts }: PlaceOptions<GJ.AreaObject>,
 ): AreaObject {
   const rotation =
-    opts.rotationOfGeometry === 'random' ? opts.rand.random() * 360 : opts.rotationOfGeometry;
+    opts.rotationOfGeometry === "random" ? opts.rand.random() * 360 : opts.rotationOfGeometry;
 
-  if (modelGeometry.type === 'Point') {
+  if (modelGeometry.type === "Point") {
     return Circle.create(
       placePoint(modelGeometry.coordinates, position, rotation),
       modelGeometry.radius,
       true,
     );
-  } else if (modelGeometry.type === 'MultiPoint') {
+  } else if (modelGeometry.type === "MultiPoint") {
     return MultiCircle.create(
       modelGeometry.coordinates.map((p) => placePoint(p, position, rotation)),
       modelGeometry.radius,
@@ -72,16 +70,16 @@ export function placeAreaGeometry(
   }
 
   let geom: GJ.Polygon | GJ.MultiPolygon;
-  if (modelGeometry.type === 'Polygon') {
+  if (modelGeometry.type === "Polygon") {
     geom = {
-      type: 'Polygon',
+      type: "Polygon",
       coordinates: modelGeometry.coordinates.map((parr) =>
         parr.map((p) => placePoint(p, position, rotation)),
       ),
     };
   } else {
     geom = {
-      type: 'MultiPolygon',
+      type: "MultiPolygon",
       coordinates: modelGeometry.coordinates.map((pouter) =>
         pouter.map((pinner) => pinner.map((p) => placePoint(p, position, rotation))),
       ),
@@ -93,27 +91,27 @@ export function placeAreaGeometry(
     geom = cutAreaGeometry(geom);
   }
 
-  return geom.type === 'Polygon'
+  return geom.type === "Polygon"
     ? Polygon.create(geom.coordinates, true)
     : MultiPolygon.create(geom.coordinates, true);
 }
 
 export function placeLineGeometry(
   position: GJ.Position,
-  {modelGeometry, ...opts}: PlaceOptions<GJ.LineObject>,
+  { modelGeometry, ...opts }: PlaceOptions<GJ.LineObject>,
 ): LineObject {
   const rotation =
-    opts.rotationOfGeometry === 'random' ? opts.rand.random() * 360 : opts.rotationOfGeometry;
+    opts.rotationOfGeometry === "random" ? opts.rand.random() * 360 : opts.rotationOfGeometry;
 
   let geom: GJ.LineString | GJ.MultiLineString;
-  if (modelGeometry.type === 'LineString') {
+  if (modelGeometry.type === "LineString") {
     geom = {
-      type: 'LineString',
+      type: "LineString",
       coordinates: modelGeometry.coordinates.map((p) => placePoint(p, position, rotation)),
     };
   } else {
     geom = {
-      type: 'MultiLineString',
+      type: "MultiLineString",
       coordinates: modelGeometry.coordinates.map((parr) =>
         parr.map((p) => placePoint(p, position, rotation)),
       ),
@@ -125,18 +123,18 @@ export function placeLineGeometry(
     geom = cutLineGeometry(geom);
   }
 
-  return geom.type === 'LineString'
+  return geom.type === "LineString"
     ? LineString.create(geom.coordinates, true)
     : MultiLineString.create(geom.coordinates, true);
 }
 export function placePointGeometry(
   position: GJ.Position,
-  {modelGeometry, ...opts}: PlaceOptions<GJ.PointObject>,
+  { modelGeometry, ...opts }: PlaceOptions<GJ.PointObject>,
 ): PointObject {
   const rotation =
-    opts.rotationOfGeometry === 'random' ? opts.rand.random() * 360 : opts.rotationOfGeometry;
+    opts.rotationOfGeometry === "random" ? opts.rand.random() * 360 : opts.rotationOfGeometry;
 
-  if (modelGeometry.type === 'Point') {
+  if (modelGeometry.type === "Point") {
     return Point.create(placePoint(modelGeometry.coordinates, position, rotation), true);
   } else {
     return MultiPoint.create(
@@ -154,7 +152,7 @@ export function placePointGeometry(
  */
 export function radiusOfModelGeometry(geometry: GJ.SingleTypeObject) {
   switch (geometry.type) {
-    case 'Point':
+    case "Point":
       return (
         Math.sqrt(
           geometry.coordinates[0] * geometry.coordinates[0] +
@@ -162,18 +160,18 @@ export function radiusOfModelGeometry(geometry: GJ.SingleTypeObject) {
         ) + ((geometry as GJ.Circle).radius ?? 0.0)
       );
 
-    case 'MultiPoint':
+    case "MultiPoint":
       return (
         Math.sqrt(geometry.coordinates.reduce((a, b) => Math.max(a, b[0] ** 2 + b[1] ** 2), 0.0)) +
         ((geometry as GJ.MultiCircle).radius ?? 0.0)
       );
 
-    case 'LineString':
+    case "LineString":
       return Math.sqrt(
         geometry.coordinates.reduce((a, b) => Math.max(a, b[0] ** 2 + b[1] ** 2), 0.0),
       );
 
-    case 'MultiLineString':
+    case "MultiLineString":
       return Math.sqrt(
         geometry.coordinates.reduce(
           (a, ls) => ls.reduce((b, c) => Math.max(b, c[0] ** 2 + c[1] ** 2), a),
@@ -181,13 +179,13 @@ export function radiusOfModelGeometry(geometry: GJ.SingleTypeObject) {
         ),
       );
 
-    case 'Polygon':
+    case "Polygon":
       // Outer ring is sufficient.
       return Math.sqrt(
         geometry.coordinates[0].reduce((a, b) => Math.max(a, b[0] ** 2 + b[1] ** 2), 0.0),
       );
 
-    case 'MultiPolygon':
+    case "MultiPolygon":
       // Outer ring for each polygon is sufficient.
       return Math.sqrt(
         geometry.coordinates.reduce(
@@ -241,25 +239,25 @@ function areaOfSinglePolygon(coords: GJ.Position[][]): number {
  */
 export function sizeOfModelGeometry(geometry: GJ.SingleTypeObject): number {
   switch (geometry.type) {
-    case 'Point':
-      return typeGuards.isCircle(geometry) ? Math.PI * geometry.radius * geometry.radius : 1;
+    case "Point":
+      return isCircle(geometry) ? Math.PI * geometry.radius * geometry.radius : 1;
 
-    case 'MultiPoint':
+    case "MultiPoint":
       return (
-        (typeGuards.isMultiCircle(geometry) ? Math.PI * geometry.radius * geometry.radius : 1) *
+        (isMultiCircle(geometry) ? Math.PI * geometry.radius * geometry.radius : 1) *
         geometry.coordinates.length
       );
 
-    case 'LineString':
+    case "LineString":
       return lengthOfLineString(geometry.coordinates);
 
-    case 'MultiLineString':
+    case "MultiLineString":
       return geometry.coordinates.reduce((size, coords) => size + lengthOfLineString(coords), 0.0);
 
-    case 'Polygon':
+    case "Polygon":
       return areaOfSinglePolygon(geometry.coordinates);
 
-    case 'MultiPolygon':
+    case "MultiPolygon":
       return geometry.coordinates.reduce((size, coords) => size + areaOfSinglePolygon(coords), 0.0);
   }
 }
@@ -271,7 +269,7 @@ export function sizeOfModelGeometry(geometry: GJ.SingleTypeObject): number {
  * @returns a single point model geometry.
  */
 export function pointGeometry(): GJ.Point {
-  return {type: 'Point', coordinates: [0, 0]};
+  return { type: "Point", coordinates: [0, 0] };
 }
 
 /**
@@ -280,12 +278,12 @@ export function pointGeometry(): GJ.Point {
  */
 export function straightLineGeometry(sideLength: number = 10.0): GJ.LineString {
   if (sideLength <= 0.0) {
-    throw new RangeError('sideLength must be positive');
+    throw new RangeError("sideLength must be positive");
   }
 
   const halfSide = sideLength * 0.5;
   return {
-    type: 'LineString',
+    type: "LineString",
     coordinates: [
       [0, halfSide],
       [0, -halfSide],
@@ -299,12 +297,12 @@ export function straightLineGeometry(sideLength: number = 10.0): GJ.LineString {
  */
 export function ellLineGeometry(sideLength: number = 10.0): GJ.LineString {
   if (sideLength <= 0.0) {
-    throw new RangeError('sideLength must be positive');
+    throw new RangeError("sideLength must be positive");
   }
 
   const halfSide = sideLength * 0.5;
   return {
-    type: 'LineString',
+    type: "LineString",
     coordinates: [
       [-halfSide, halfSide],
       [-halfSide, -halfSide],
@@ -324,9 +322,9 @@ export function circleLineGeometry(
   const pointsPerCircle = options?.pointsPerCircle ?? 16;
 
   if (pointsPerCircle < 3 || !Number.isInteger(pointsPerCircle)) {
-    throw new RangeError('sides must be an integer larger than 3');
+    throw new RangeError("sides must be an integer larger than 3");
   } else if (diameter <= 0.0) {
-    throw new RangeError('diameter must be positive');
+    throw new RangeError("diameter must be positive");
   }
 
   // use the radius that gives equal area to the polygon for best approximation
@@ -345,15 +343,15 @@ export function circleLineGeometry(
  */
 export function circleAreaGeometry(diameter: number = 10.0): GJ.Circle {
   if (diameter <= 0.0) {
-    throw new RangeError('diameter must be positive');
+    throw new RangeError("diameter must be positive");
   }
 
-  return {...pointGeometry(), radius: diameter * 0.5};
+  return { ...pointGeometry(), radius: diameter * 0.5 };
 }
 
 function rectangularCoordinates(width: number = 10.0, height: number = width): GJ.Position2[] {
   if (width <= 0.0 || height <= 0.0) {
-    throw new RangeError('width and height must be positive');
+    throw new RangeError("width and height must be positive");
   }
 
   const halfWidth = width * 0.5;
@@ -376,7 +374,7 @@ export function rectangularPointGeometry(
   height: number = width,
 ): GJ.MultiPoint {
   const coordinates = rectangularCoordinates(width, height);
-  return {type: 'MultiPoint', coordinates};
+  return { type: "MultiPoint", coordinates };
 }
 
 /**
@@ -390,7 +388,7 @@ export function rectangularLineGeometry(
 ): GJ.LineString {
   const coordinates = rectangularCoordinates(width, height);
   coordinates.push(coordinates[0]);
-  return {type: 'LineString', coordinates};
+  return { type: "LineString", coordinates };
 }
 
 /**
@@ -401,7 +399,7 @@ export function rectangularLineGeometry(
 export function rectangularAreaGeometry(width: number = 10.0, height: number = width): GJ.Polygon {
   const coordinates = rectangularCoordinates(width, height);
   coordinates.push(coordinates[0]);
-  return {type: 'Polygon', coordinates: [coordinates]};
+  return { type: "Polygon", coordinates: [coordinates] };
 }
 
 /**
@@ -417,10 +415,10 @@ export function rectangularCircleGeometry(
   diameter: number = 1.0,
 ): GJ.MultiCircle {
   if (diameter <= 0.0) {
-    throw new RangeError('diameter must be positive');
+    throw new RangeError("diameter must be positive");
   }
 
-  return {...rectangularPointGeometry(width, height), radius: Math.min(diameter, width) * 0.5};
+  return { ...rectangularPointGeometry(width, height), radius: Math.min(diameter, width) * 0.5 };
 }
 
 function regularPolygonCoordinates(
@@ -428,13 +426,13 @@ function regularPolygonCoordinates(
   polygonDiameter: number = 1.0,
 ): GJ.Position2[] {
   if (sides < 3 || !Number.isInteger(sides)) {
-    throw new RangeError('sides must be an integer larger than 3');
+    throw new RangeError("sides must be an integer larger than 3");
   } else if (polygonDiameter <= 0.0) {
-    throw new RangeError('diameter must be positive');
+    throw new RangeError("diameter must be positive");
   }
 
   const r = polygonDiameter * 0.5;
-  const coordinates = Array.from<GJ.Position2>({length: sides});
+  const coordinates = Array.from<GJ.Position2>({ length: sides });
   let angle = -Math.PI / sides - Math.PI * 0.5;
   const delta = (2.0 / sides) * Math.PI;
 
@@ -456,7 +454,7 @@ export function regularPolygonPointGeometry(
   polygonDiameter: number = 1.0,
 ): GJ.MultiPoint {
   const coordinates = regularPolygonCoordinates(sides, polygonDiameter);
-  return {type: 'MultiPoint', coordinates};
+  return { type: "MultiPoint", coordinates };
 }
 
 /**
@@ -470,7 +468,7 @@ export function regularPolygonLineGeometry(
 ): GJ.LineString {
   const coordinates = regularPolygonCoordinates(sides, polygonDiameter);
   coordinates.push(coordinates[0]);
-  return {type: 'LineString', coordinates};
+  return { type: "LineString", coordinates };
 }
 
 /**
@@ -484,7 +482,7 @@ export function regularPolygonAreaGeometry(
 ): GJ.Polygon {
   const coordinates = regularPolygonCoordinates(sides, polygonDiameter);
   coordinates.push(coordinates[0]);
-  return {type: 'Polygon', coordinates: [coordinates]};
+  return { type: "Polygon", coordinates: [coordinates] };
 }
 
 /**
@@ -500,7 +498,7 @@ export function regularPolygonCircleGeometry(
   diameter: number = 1.0,
 ): GJ.MultiCircle {
   if (diameter <= 0.0) {
-    throw new RangeError('diameter must be positive');
+    throw new RangeError("diameter must be positive");
   }
 
   const coordinates = regularPolygonCoordinates(sides, polygonDiameter);
@@ -512,5 +510,5 @@ export function regularPolygonCircleGeometry(
     radius = Math.sqrt(d) * 0.5;
   }
 
-  return {type: 'MultiPoint', coordinates, radius};
+  return { type: "MultiPoint", coordinates, radius };
 }

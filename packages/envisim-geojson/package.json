@@ -1,0 +1,25 @@
+{
+  "name": "@envisim/geojson",
+  "type": "module",
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src/",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@envisim/geojson-utils": "workspace:*",
+    "@envisim/utils": "workspace:*",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@envisim/config-eslint": "workspace:*",
+    "@envisim/config-ts": "workspace:*",
+    "eslint": "^9.23.0",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.9"
+  }
+}

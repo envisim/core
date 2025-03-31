@@ -1,6 +1,5 @@
-import {type FeatureCollection, type PropertyRecord, type PureObject} from '@envisim/geojson-utils';
-import {cube} from '@envisim/sampling';
-
+import { type FeatureCollection, type PropertyRecord, type PureObject } from "@envisim/geojson";
+import { cube } from "@envisim/sampling";
 import {
   type OptionsBalanced,
   type OptionsBase,
@@ -8,10 +7,14 @@ import {
   optionsBalancedCheck,
   optionsBaseCheck,
   throwRangeError,
-} from './options.js';
-import {balancingMatrixFromLayer, inclprobsFromLayer, returnCollectionFromSample} from './utils.js';
+} from "./options.js";
+import {
+  balancingMatrixFromLayer,
+  inclprobsFromLayer,
+  returnCollectionFromSample,
+} from "./utils.js";
 
-export const SAMPLE_BALANCED_METHODS = ['cube'] as const;
+export const SAMPLE_BALANCED_METHODS = ["cube"] as const;
 export type SampleBalancedOptions<P extends string = string> = OptionsBase<
   P,
   (typeof SAMPLE_BALANCED_METHODS)[number]

@@ -1,17 +1,9 @@
-import {Normal, Poisson} from '@envisim/distributions';
-import {
-  type AreaObject,
-  FeatureCollection,
-  type GeoJSON as GJ,
-  Geodesic,
-  Point,
-  Polygon,
-  bbox4,
-  pointInBBox,
-} from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
-
-import {samplePositionsInBbox} from '../sample-continuous/index.js';
+import { Normal, Poisson } from "@envisim/distributions";
+import { type AreaObject, FeatureCollection, Point, Polygon } from "@envisim/geojson";
+import { Geodesic, bbox4, pointInBBox } from "@envisim/geojson-utils";
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { Random } from "@envisim/random";
+import { samplePositionsInBbox } from "../sample-continuous/index.js";
 
 // For conversion from radians to degrees.
 const TO_DEG = 180 / Math.PI;
@@ -20,7 +12,7 @@ const TO_DEG = 180 / Math.PI;
 // Sigma is standard deviation.
 function randomPositionInCluster(center: GJ.Position, sigma: number, rand: Random): GJ.Position {
   // Generate two independent Normal(0,sigma).
-  const xy = new Normal(0, sigma).random(2, {rand});
+  const xy = new Normal(0, sigma).random(2, { rand });
   // Compute angle.
   const theta = Math.atan2(xy[1], xy[0]) * TO_DEG;
   // Compute azimuth = angle from north in degrees clockwise.
@@ -84,7 +76,7 @@ export function thomasClusterProcess(
   // Generate parents in expanded box.
   const A = expandedBoxPolygon.area();
   const muParents = intensityOfParents * A;
-  const nrOfParents = new Poisson(muParents).random(1, {rand})[0];
+  const nrOfParents = new Poisson(muParents).random(1, { rand })[0];
 
   const parentsInBox = samplePositionsInBbox([...westSouth, ...eastNorth] as GJ.BBox, {
     sampleSize: nrOfParents,
@@ -94,7 +86,7 @@ export function thomasClusterProcess(
   // To store new features.
   const newCollection = FeatureCollection.newPoint<Point>();
   // Generate number of points in each cluster.
-  const nrOfPointsInCluster = new Poisson(meanOfCluster).random(nrOfParents, {rand});
+  const nrOfPointsInCluster = new Poisson(meanOfCluster).random(nrOfParents, { rand });
   // nr of features in collection
   const nrOfFeatures = collection.features.length;
 

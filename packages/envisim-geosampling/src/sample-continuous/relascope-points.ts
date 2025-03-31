@@ -1,19 +1,18 @@
 import {
   type AreaObject,
   FeatureCollection,
-  Geodesic,
   type Point,
   intersectPointAreaGeometries,
-} from '@envisim/geojson-utils';
-
+} from "@envisim/geojson";
+import { Geodesic } from "@envisim/geojson-utils";
 import {
   type OptionsPointsOnAreas,
   SAMPLE_ERROR_LIST,
   type SampleError,
   optionsPointsOnAreasCheck,
   throwRangeError,
-} from './options.js';
-import {samplePointsOnAreas} from './points-on-areas.js';
+} from "./options.js";
+import { samplePointsOnAreas } from "./points-on-areas.js";
 
 export interface SampleRelascopePointsOptions<P extends string> extends OptionsPointsOnAreas {
   /**
@@ -76,7 +75,7 @@ export function sampleRelascopePoints<P extends string>(
   areaRatio: number;
 } {
   throwRangeError(sampleRelascopePointsOptionsCheck(options));
-  const opts = {...options, buffer: options.buffer ?? 0.0};
+  const opts = { ...options, buffer: options.buffer ?? 0.0 };
 
   // Square root of relascope factor
   const sqrtRf = Math.sqrt(options.factor);

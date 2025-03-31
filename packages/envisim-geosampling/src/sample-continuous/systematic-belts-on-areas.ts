@@ -1,17 +1,9 @@
-import {
-  type AreaObject,
-  FeatureCollection,
-  type GeoJSON as GJ,
-  Geodesic,
-  bbox4,
-  bboxCenter,
-  cutAreaGeometry,
-  toAreaObject,
-} from '@envisim/geojson-utils';
-import {Random, type RandomGenerator} from '@envisim/random';
-import '@envisim/utils';
-
-import {intersectAreaSampleAreaFrame} from '../utils/index.js';
+import { type AreaObject, FeatureCollection, toAreaObject } from "@envisim/geojson";
+import { Geodesic, bbox4, bboxCenter, cutAreaGeometry } from "@envisim/geojson-utils";
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { Random, type RandomGenerator } from "@envisim/random";
+import "@envisim/utils";
+import { intersectAreaSampleAreaFrame } from "../utils/index.js";
 import {
   type OptionsCircleConversion,
   type OptionsParallelLines,
@@ -20,7 +12,7 @@ import {
   optionsCircleConversionCheck,
   optionsParallelLinesCheck,
   throwRangeError,
-} from './options.js';
+} from "./options.js";
 
 export interface SampleSystematicBeltsOnAreas
   extends OptionsCircleConversion,
@@ -54,7 +46,7 @@ export function sampleSystematicBeltsOnAreas(
 ): FeatureCollection<AreaObject> {
   throwRangeError(sampleSystematicBeltsOnAreasCheck(options));
 
-  const {rand = new Random(), interspace, rotation = 0.0, halfWidth} = options;
+  const { rand = new Random(), interspace, rotation = 0.0, halfWidth } = options;
 
   const box = bbox4(collection.getBBox());
   const center = bboxCenter(box);
@@ -96,9 +88,9 @@ export function sampleSystematicBeltsOnAreas(
   const sc = FeatureCollection.newArea([]);
 
   for (const coords of rings) {
-    const geom = toAreaObject(cutAreaGeometry({type: 'Polygon', coordinates: [coords]}));
+    const geom = toAreaObject(cutAreaGeometry({ type: "Polygon", coordinates: [coords] }));
     if (geom === null) continue;
-    sc.addGeometry(geom, {_designWeight: interspace / (halfWidth * 2.0)}, true);
+    sc.addGeometry(geom, { _designWeight: interspace / (halfWidth * 2.0) }, true);
   }
 
   return intersectAreaSampleAreaFrame(sc, collection, options);

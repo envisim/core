@@ -7,7 +7,7 @@ import {
   intersectAreaAreaGeometries,
   intersectLineAreaGeometries,
   intersectPointAreaGeometries,
-} from '@envisim/geojson-utils';
+} from "@envisim/geojson";
 
 function intersectAreaFrame<T extends AreaObject | LineObject | PointObject>(
   collection: FeatureCollection<T>,
@@ -21,11 +21,11 @@ function intersectAreaFrame<T extends AreaObject | LineObject | PointObject>(
       const intersect = intersectFunction(sampleFeature.geometry, frameFeature.geometry, options);
       if (intersect === null) return;
 
-      const properties = {...sampleFeature.properties};
-      (properties['_designWeight'] as number) *= frameFeature.getSpecialPropertyDesignWeight();
+      const properties = { ...sampleFeature.properties };
+      (properties["_designWeight"] as number) *= frameFeature.getSpecialPropertyDesignWeight();
 
-      if (typeof properties['_measure'] === 'number') {
-        properties['_measure'] = intersect.measure();
+      if (typeof properties["_measure"] === "number") {
+        properties["_measure"] = intersect.measure();
       }
 
       collection.addGeometry(intersect, properties, true);

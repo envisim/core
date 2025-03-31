@@ -2,13 +2,12 @@ import {
   type AreaObject,
   Feature,
   FeatureCollection,
-  Geodesic,
   type PointObject,
   intersectPointAreaGeometries,
-} from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
-
-import {effectiveRadius} from './distance-utils.js';
+} from "@envisim/geojson";
+import { Geodesic } from "@envisim/geojson-utils";
+import { Random } from "@envisim/random";
+import { effectiveRadius } from "./distance-utils.js";
 import {
   type OptionsDistancePoints,
   type OptionsPointsOnAreas,
@@ -16,8 +15,8 @@ import {
   optionsDistancePointsCheck,
   optionsPointsOnAreasCheck,
   throwRangeError,
-} from './options.js';
-import {samplePointsOnAreas} from './points-on-areas.js';
+} from "./options.js";
+import { samplePointsOnAreas } from "./points-on-areas.js";
 
 export type SampleDistancePointsOptions = OptionsPointsOnAreas & OptionsDistancePoints;
 
@@ -40,7 +39,7 @@ export function sampleDistancePoints(
 ): FeatureCollection<PointObject> {
   throwRangeError(sampleDistancePointsCheck(options));
 
-  const {rand = new Random(), baseCollection, detectionFunction, cutoff} = options;
+  const { rand = new Random(), baseCollection, detectionFunction, cutoff } = options;
 
   // Compute effective radius
   const effRadius = effectiveRadius(detectionFunction, cutoff);

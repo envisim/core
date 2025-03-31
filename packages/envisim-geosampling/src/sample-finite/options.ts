@@ -1,10 +1,9 @@
-import {PropertyRecord} from '@envisim/geojson-utils';
-import {type RandomGenerator} from '@envisim/random';
-import {throwRangeError} from '@envisim/utils';
+import { PropertyRecord } from "@envisim/geojson";
+import { type RandomGenerator } from "@envisim/random";
+import { throwRangeError } from "@envisim/utils";
+import { SAMPLE_ERROR_LIST, type SampleError } from "../errors/index.js";
 
-import {SAMPLE_ERROR_LIST, type SampleError} from '../errors/index.js';
-
-export {SAMPLE_ERROR_LIST, type SampleError, throwRangeError};
+export { SAMPLE_ERROR_LIST, type SampleError, throwRangeError };
 
 export interface OptionsBase<P extends string = string, M extends string = string> {
   /**
@@ -29,7 +28,7 @@ export interface OptionsBase<P extends string = string, M extends string = strin
 }
 
 export function optionsBaseCheck<P extends string, M extends string>(
-  {sampleSize, probabilities}: OptionsBase<NoInfer<P>, M>,
+  { sampleSize, probabilities }: OptionsBase<NoInfer<P>, M>,
   record: PropertyRecord<P>,
 ): SampleError {
   if (!Number.isInteger(sampleSize) || sampleSize < 0) {
@@ -37,7 +36,7 @@ export function optionsBaseCheck<P extends string, M extends string>(
     return SAMPLE_ERROR_LIST.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER;
   }
 
-  if (probabilities !== undefined && probabilities !== '_measure') {
+  if (probabilities !== undefined && probabilities !== "_measure") {
     const property = record.getId(probabilities);
     if (property === null) {
       // probabilitiesFrom must exist on propertyRecord
@@ -62,7 +61,7 @@ export interface OptionsBalanced<P extends string = string> {
 }
 
 export function optionsBalancedCheck<P extends string>(
-  {balanceOn}: OptionsBalanced<NoInfer<P>>,
+  { balanceOn }: OptionsBalanced<NoInfer<P>>,
   record: PropertyRecord<P>,
 ): SampleError {
   if (balanceOn.length === 0 || balanceOn.some((prop) => !record.hasId(prop))) {
@@ -88,7 +87,7 @@ export interface OptionsSpatiallyBalanced<P extends string = string> {
 }
 
 export function optionsSpatiallyBalancedCheck<P extends string>(
-  {spreadOn, spreadGeo}: OptionsSpatiallyBalanced<NoInfer<P>>,
+  { spreadOn, spreadGeo }: OptionsSpatiallyBalanced<NoInfer<P>>,
   record: PropertyRecord<P>,
 ): SampleError {
   // Uses nothing

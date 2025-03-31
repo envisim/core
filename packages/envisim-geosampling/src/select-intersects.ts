@@ -9,7 +9,9 @@ import {
   intersectAreaAreaGeometries,
   intersectLineAreaGeometries,
   intersectPointAreaGeometries,
-} from '@envisim/geojson-utils';
+} from "@envisim/geojson";
+
+export { type SelectError, SELECT_ERROR_LIST } from "./errors/index.js";
 
 /**
  * Internal function to transfer properties to the intersect from the base feature and transfer
@@ -20,16 +22,16 @@ function createProperties<G1 extends PureObject, G2 extends PureObject, P extend
   baseFeature: Feature<G2, P>,
   parent: number,
 ): FeatureProperties<P> {
-  const properties = {...baseFeature.properties};
-  delete properties['_measure'];
-  delete properties['_count'];
+  const properties = { ...baseFeature.properties };
+  delete properties["_measure"];
+  delete properties["_count"];
 
   // Transfer designWeight to newFeature from frameFeature
-  if (frameFeature.properties?.['_designWeight'] !== undefined) {
-    properties['_designWeight'] = frameFeature.properties['_designWeight'];
+  if (frameFeature.properties?.["_designWeight"] !== undefined) {
+    properties["_designWeight"] = frameFeature.properties["_designWeight"];
   }
   // Transfer index of parent frame unit as _parent
-  properties['_parent'] = parent;
+  properties["_parent"] = parent;
 
   return properties;
 }
