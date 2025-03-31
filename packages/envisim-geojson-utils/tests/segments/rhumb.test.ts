@@ -1,7 +1,6 @@
-import {expect, test} from 'vitest';
-
-import {GeoJSON as GJ} from '../../src/index.js';
-import {Rhumb} from '../../src/utils/class-rhumb.js';
+import { expect, test } from "vitest";
+import type * as GJ from "../../src/geojson.js";
+import Rhumb from "../../src/segments/rhumb.js";
 
 const ring: GJ.Position[] = [
   [12.888806360606111, 61.4879814554327],
@@ -24,7 +23,7 @@ const azi12 = Rhumb.forwardAzimuth([0, 0], [1, 1]);
 const s12 = Rhumb.distance([0, 0], [1, 1]);
 // 156899.568453
 
-test('rhumb', () => {
+test("rhumb", () => {
   expect(area0).toBeCloseTo(area, 1);
   expect(res).toEqual([171.07008849454, 87.0].map((v) => expect.closeTo(v, 10)));
   expect(azi12).toBeCloseTo(45.1909492613, 10);

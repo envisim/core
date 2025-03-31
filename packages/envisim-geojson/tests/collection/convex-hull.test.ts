@@ -1,7 +1,7 @@
-import {expect, test} from 'vitest';
-
-import {convexHull} from '../src/convex-hull.js';
-import {FeatureCollection, GeoJSON as GJ, MultiPoint, Polygon} from '../src/index.js';
+import { expect, test } from "vitest";
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { convexHull } from "../../src/collection/convex-hull.js";
+import { FeatureCollection, MultiPoint, Polygon } from "../../src/index.js";
 
 const positions: GJ.Position[] = [
   [0, 0],
@@ -26,7 +26,7 @@ const pc2 = FeatureCollection.newPoint();
 pc2.addGeometry(MultiPoint.create(positions2), {});
 const hull2 = convexHull(pc2);
 
-test('convexHull', () => {
+test("convexHull", () => {
   expect(hull2).toBe(null);
   Polygon.assert(hull);
   const coords = hull.coordinates[0];

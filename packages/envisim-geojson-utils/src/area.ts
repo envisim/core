@@ -1,5 +1,5 @@
 import type * as GJ from "./geojson.js";
-import { areaOfRing } from "./segments/geodesic.js";
+import { areaOfRing } from "./segments/plate-carree.js";
 
 /**
  * Computes the plate carrée area of a Polygon (not MultiPolygon)

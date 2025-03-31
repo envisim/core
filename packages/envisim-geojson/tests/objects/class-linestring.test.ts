@@ -1,6 +1,6 @@
-import {expect, test} from 'vitest';
-
-import {GeoJSON as GJ, LineString} from '../../src/index.js';
+import { expect, test } from "vitest";
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { LineString } from "../../src/index.js";
 
 let p1: GJ.Position = [0, 90]; // North pole
 let p2: GJ.Position = [0, 0]; // Equator
@@ -10,6 +10,6 @@ const d12 = 10001965.729;
 
 const line = LineString.create([p1, p2], false);
 
-test('length', () => {
+test("length", () => {
   expect(line.length()).toBeCloseTo(d12, 2);
 });

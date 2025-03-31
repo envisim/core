@@ -1,18 +1,7 @@
-import {expect, test} from 'vitest';
+import { expect, test } from "vitest";
+import { bboxFromPositions, bboxInBBox, pointInBBox, unionOfBBoxes } from "../src/bbox.js";
+import * as GJ from "../src/geojson.js";
 
-import {GeoJSON as GJ, Polygon} from '../../src/index.js';
-import {bboxFromPositions, bboxInBBox, pointInBBox, unionOfBBoxes} from '../../src/utils/bbox.js';
-
-// polygon
-const polygon = Polygon.create([
-  [
-    [0, 0],
-    [1, 0],
-    [1, 1],
-    [0, 1],
-    [0, 0],
-  ],
-]);
 // the bounding box
 const box: GJ.BBox = [0, 0, 1, 1];
 // inside box
@@ -27,23 +16,19 @@ const p4: GJ.Position = [0, 0];
 const box2: GJ.BBox = [-1, -1, 0.5, 0.5];
 const box3: GJ.BBox = [-1, -1, -0.5, -0.5];
 
-test('bbox', () => {
-  expect(polygon.getBBox()).toStrictEqual(box);
-});
-
-test('pointInBBox', () => {
+test("pointInBBox", () => {
   expect(pointInBBox(p1, box)).toBe(true);
   expect(pointInBBox(p2, box)).toBe(false);
   expect(pointInBBox(p3, box)).toBe(true);
   expect(pointInBBox(p4, box)).toBe(true);
 });
 
-test('bboxInBBox', () => {
+test("bboxInBBox", () => {
   expect(bboxInBBox(box, box2)).toBe(true);
   expect(bboxInBBox(box, box3)).toBe(false);
 });
 
-test('union of bboxes', () => {
+test("union of bboxes", () => {
   let bboxes: GJ.BBox[] = [
     [-170, -10, -110, 10],
     [-160, -10, -150, 15],
@@ -66,7 +51,7 @@ test('union of bboxes', () => {
   expect(unionOfBBoxes(bboxes)).toEqual([50, -50, 20, 20]);
 });
 
-test('bbox from positions', () => {
+test("bbox from positions", () => {
   let positions: GJ.Position[] = [
     [-58, -63],
     [-74, -72],

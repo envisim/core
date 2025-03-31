@@ -1,6 +1,5 @@
-import {expect, test} from 'vitest';
-
-import {Segment, intersects} from '../../src/utils/class-segment.js';
+import { expect, test } from "vitest";
+import { Segment, intersects } from "../src/class-segment.js";
 
 const segments = [
   /* 0*/ new Segment([10, 0], [0, 10]),
@@ -18,7 +17,7 @@ const segments = [
   /*12*/ new Segment([4, 6], [3, 7]),
 ];
 
-test('delta', () => {
+test("delta", () => {
   expect(segments[0].delta).toEqual([-10, 10]);
   expect(segments[1].delta).toEqual([10, 10]);
   expect(segments[2].delta).toEqual([20, 10]);
@@ -32,7 +31,7 @@ test('delta', () => {
   expect(segments[10].delta).toEqual([10, 0]);
 });
 
-test('vertical', () => {
+test("vertical", () => {
   expect(segments.map((seg) => seg.isVertical())).toEqual([
     false,
     false,
@@ -50,7 +49,7 @@ test('vertical', () => {
   ]);
 });
 
-test('intersect', () => {
+test("intersect", () => {
   expect(intersects(segments[0], segments[1])).toEqual([[0.5, 0.5]]);
   expect(intersects(segments[0], segments[2])).toEqual([[1 / 3, 1 / 3]]);
   expect(intersects(segments[0], segments[3])).toEqual([[0.5, 0.5]]);

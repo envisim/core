@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
-import { Circle, FeatureCollection, type GeoJSON as GJ, Polygon } from "../../src/index.js";
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { Circle, FeatureCollection, Polygon } from "../../src/index.js";
 import { intersectAreaAreaGeometries } from "../../src/intersect/intersect-area-area.js";
 
 const ag1 = Polygon.create([

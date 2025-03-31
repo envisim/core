@@ -1,8 +1,8 @@
 import { expect, test } from "vitest";
-import { FeatureCollection } from "../../src/geojson/class-feature-collection.js";
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { FeatureCollection } from "../../src/collection/class-feature-collection.js";
 import {
   Circle,
-  GeoJSON as GJ,
   MultiCircle,
   MultiPoint,
   Point,

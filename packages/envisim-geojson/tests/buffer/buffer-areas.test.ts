@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
-import { Circle, GeoJSON as GJ, MultiPolygon, Polygon } from "../../src/index.js";
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { Circle, MultiPolygon, Polygon } from "../../src/index.js";
 
 // const UM= [ 20.18, 63.80 ];
 const um = (p: number[]): GJ.Position => [p[0] / 100 + 20.18, p[1] / 200 + 63.8];
