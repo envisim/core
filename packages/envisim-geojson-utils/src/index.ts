@@ -22,12 +22,12 @@ export { IntersectList } from "./class-intersects.js";
 export { Segment, segmentsToPolygon, ringToSegments } from "./class-segment.js";
 export { copyCoordinates } from "./coordinates.js";
 export {
-  GEOMETRIC_PRIMITIVES,
-  type GeometricPrimitive,
-  type GeometricPrimitiveMap,
-  getPrimitiveOfGeometry,
-  getPrimitiveOfFeature,
-  getPrimitiveOfCollection,
+  GeometricPrimitive,
+  type GeometricPrimitiveArea,
+  type GeometricPrimitiveLine,
+  type GeometricPrimitivePoint,
+  type GeometricPrimitiveNone,
+  type GeometricPrimitiveUnion,
 } from "./geometric-primitive.js";
 export { intersectPolygons } from "./intersect-polygons.js";
 export { lengthOfLineString } from "./length.js";

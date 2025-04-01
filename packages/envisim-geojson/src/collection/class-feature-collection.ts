@@ -1,4 +1,8 @@
-import { unionOfBBoxes, GeometricPrimitive } from "@envisim/geojson-utils";
+import {
+  unionOfBBoxes,
+  GeometricPrimitive,
+  type GeometricPrimitiveUnion,
+} from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { type OptionalParam } from "@envisim/utils";
 import { type BufferOptions } from "../buffer/index.js";
@@ -18,14 +22,14 @@ import { type CirclesToPolygonsOptions } from "../utils/circles-to-polygons.js";
 
 type ForEachCallback<T> = (obj: T, index: number) => void;
 interface FeatureCollectionExtras {
-  primitive: GeometricPrimitive;
+  primitive: GeometricPrimitiveUnion;
   propertyRecord: PropertyRecord;
   id?: string;
   title?: string;
   color?: [number, number, number];
 }
 interface FeatureCollectionExtrasJson {
-  primitive: GeometricPrimitive;
+  primitive: GeometricPrimitiveUnion;
   propertyRecord: { record: PropertyRecord["record"] };
   id?: string;
   title?: string;
@@ -44,19 +48,17 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
   static isArea<P extends string>(
     obj: FeatureCollection<PureObject, P>,
   ): obj is FeatureCollection<AreaObject, P> {
-    return obj instanceof FeatureCollection && obj.geometricPrimitive() === GeometricPrimitive.AREA;
+    return obj instanceof FeatureCollection && GeometricPrimitive.isArea(obj.geometricPrimitive());
   }
   static isLine<P extends string>(
     obj: FeatureCollection<PureObject, P>,
   ): obj is FeatureCollection<LineObject, P> {
-    return obj instanceof FeatureCollection && obj.geometricPrimitive() === GeometricPrimitive.LINE;
+    return obj instanceof FeatureCollection && GeometricPrimitive.isLine(obj.geometricPrimitive());
   }
   static isPoint<P extends string>(
     obj: FeatureCollection<PureObject, P>,
   ): obj is FeatureCollection<PointObject, P> {
-    return (
-      obj instanceof FeatureCollection && obj.geometricPrimitive() === GeometricPrimitive.POINT
-    );
+    return obj instanceof FeatureCollection && GeometricPrimitive.isPoint(obj.geometricPrimitive());
   }
 
   static assertArea<P extends string>(
@@ -251,12 +253,12 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
   /** Foreign member, an RGB value associated with the collection */
   color?: [number, number, number];
   /** Foreign member, geometric primitive of the collection */
-  readonly primitive: GeometricPrimitive;
+  readonly primitive: GeometricPrimitiveUnion;
   /** Foreign member, the allowed properties of the collection */
   propertyRecord: PropertyRecord<PID>;
 
   private constructor(
-    primitive: GeometricPrimitive,
+    primitive: GeometricPrimitiveUnion,
     features: Feature<T, PID>[] = [],
     propertyRecord?: PropertyRecord<PID>,
   ) {

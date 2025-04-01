@@ -1,99 +1,104 @@
 import type * as GJ from "./geojson.js";
 
-export const GEOMETRIC_PRIMITIVES = {
-  NONE: "gp-none",
-  POINT: "gp-point",
-  LINE: "gp-line",
-  AREA: "gp-area",
-} as const;
-export type GeometricPrimitiveMap = typeof GEOMETRIC_PRIMITIVES;
-export type GeometricPrimitive = GeometricPrimitiveMap[keyof GeometricPrimitiveMap];
+export type GeometricPrimitiveArea = (typeof GeometricPrimitive)["AREA"];
+export type GeometricPrimitiveLine = (typeof GeometricPrimitive)["LINE"];
+export type GeometricPrimitivePoint = (typeof GeometricPrimitive)["POINT"];
+export type GeometricPrimitiveNone = (typeof GeometricPrimitive)["NONE"];
+export type GeometricPrimitiveUnion =
+  | GeometricPrimitiveArea
+  | GeometricPrimitiveLine
+  | GeometricPrimitivePoint
+  | GeometricPrimitiveNone;
 
-export function getPrimitiveOfGeometry(
-  obj: GJ.PointGeometry,
-  allowGC?: boolean,
-): GeometricPrimitiveMap["POINT"];
-export function getPrimitiveOfGeometry(
-  obj: GJ.LineGeometry,
-  allowGC?: boolean,
-): GeometricPrimitiveMap["LINE"];
-export function getPrimitiveOfGeometry(
-  obj: GJ.AreaGeometry,
-  allowGC?: boolean,
-): GeometricPrimitiveMap["AREA"];
-export function getPrimitiveOfGeometry(obj: GJ.BaseGeometry, allowGC?: boolean): GeometricPrimitive;
-export function getPrimitiveOfGeometry(
-  obj: GJ.BaseGeometry,
-  allowGC: boolean = false,
-): GeometricPrimitive {
-  switch (obj.type) {
-    case "Point":
-    case "MultiPoint":
-      return "radius" in obj ? GEOMETRIC_PRIMITIVES.AREA : GEOMETRIC_PRIMITIVES.POINT;
-    case "LineString":
-    case "MultiLineString":
-      return GEOMETRIC_PRIMITIVES.LINE;
-    case "Polygon":
-    case "MultiPolygon":
-      return GEOMETRIC_PRIMITIVES.AREA;
+export class GeometricPrimitive {
+  static AREA = "gp-area" as const;
+  static LINE = "gp-line" as const;
+  static POINT = "gp-point" as const;
+  static NONE = "gp-none" as const;
+
+  static isArea(obj: unknown): obj is GeometricPrimitiveArea {
+    return obj === GeometricPrimitive.AREA;
+  }
+  static isLine(obj: unknown): obj is GeometricPrimitiveLine {
+    return obj === GeometricPrimitive.LINE;
+  }
+  static isPoint(obj: unknown): obj is GeometricPrimitivePoint {
+    return obj === GeometricPrimitive.POINT;
   }
 
-  if (allowGC && obj.type === "GeometryCollection") {
-    if (obj.geometries.length === 0) {
-      return GEOMETRIC_PRIMITIVES.NONE;
+  static assertArea(obj: unknown): asserts obj is GeometricPrimitiveArea {
+    if (!GeometricPrimitive.isArea(obj)) throw new RangeError("obj is not GeometricPrimitive.AREA");
+  }
+  static assertLine(obj: unknown): asserts obj is GeometricPrimitiveLine {
+    if (!GeometricPrimitive.isLine(obj)) throw new RangeError("obj is not GeometricPrimitive.LINE");
+  }
+  static assertPoint(obj: unknown): asserts obj is GeometricPrimitivePoint {
+    if (!GeometricPrimitive.isPoint(obj))
+      throw new RangeError("obj is not GeometricPrimitive.POINT");
+  }
+
+  static fromGeometry(obj: GJ.AreaGeometry, allowGC?: boolean): GeometricPrimitiveArea;
+  static fromGeometry(obj: GJ.LineGeometry, allowGC?: boolean): GeometricPrimitiveLine;
+  static fromGeometry(obj: GJ.PointGeometry, allowGC?: boolean): GeometricPrimitivePoint;
+  static fromGeometry(obj: GJ.BaseGeometry, allowGC?: boolean): GeometricPrimitiveUnion;
+  static fromGeometry(obj: GJ.BaseGeometry, allowGC: boolean = false): GeometricPrimitiveUnion {
+    switch (obj.type) {
+      case "Point":
+      case "MultiPoint":
+        return "radius" in obj ? GeometricPrimitive.AREA : GeometricPrimitive.POINT;
+      case "LineString":
+      case "MultiLineString":
+        return GeometricPrimitive.LINE;
+      case "Polygon":
+      case "MultiPolygon":
+        return GeometricPrimitive.AREA;
     }
 
-    const gp = getPrimitiveOfGeometry(obj.geometries[0], false);
+    if (allowGC && obj.type === "GeometryCollection") {
+      if (obj.geometries.length === 0) {
+        return GeometricPrimitive.NONE;
+      }
+
+      const gp = GeometricPrimitive.fromGeometry(obj.geometries[0], false);
+
+      if (
+        obj.geometries.length === 1 ||
+        obj.geometries.every((geom) => gp === GeometricPrimitive.fromGeometry(geom, false))
+      ) {
+        return gp;
+      }
+    }
+
+    return GeometricPrimitive.NONE;
+  }
+
+  static fromFeature(obj: GJ.AreaFeature, allowGC?: boolean): GeometricPrimitiveArea;
+  static fromFeature(obj: GJ.LineFeature, allowGC?: boolean): GeometricPrimitiveLine;
+  static fromFeature(obj: GJ.PointFeature, allowGC?: boolean): GeometricPrimitivePoint;
+  static fromFeature(obj: GJ.BaseFeature, allowGC?: boolean): GeometricPrimitiveUnion;
+  static fromFeature(obj: GJ.BaseFeature, allowGC: boolean = false): GeometricPrimitiveUnion {
+    return GeometricPrimitive.fromGeometry(obj.geometry, allowGC);
+  }
+
+  static fromCollection(
+    obj: GJ.BaseFeatureCollection,
+    allowGC: boolean = false,
+    exhaustive: boolean = false,
+  ): GeometricPrimitiveUnion {
+    if (obj.features.length === 0) {
+      return GeometricPrimitive.NONE;
+    }
+
+    const gp = GeometricPrimitive.fromGeometry(obj.features[0].geometry, allowGC);
 
     if (
-      obj.geometries.length === 1 ||
-      obj.geometries.every((geom) => gp === getPrimitiveOfGeometry(geom, false))
+      exhaustive === false ||
+      obj.features.length === 1 ||
+      obj.features.every((feat) => gp === GeometricPrimitive.fromGeometry(feat.geometry, allowGC))
     ) {
       return gp;
     }
+
+    return GeometricPrimitive.NONE;
   }
-
-  return GEOMETRIC_PRIMITIVES.NONE;
-}
-
-export function getPrimitiveOfFeature(
-  obj: GJ.PointFeature,
-  allowGC?: boolean,
-): GeometricPrimitiveMap["POINT"];
-export function getPrimitiveOfFeature(
-  obj: GJ.LineFeature,
-  allowGC?: boolean,
-): GeometricPrimitiveMap["LINE"];
-export function getPrimitiveOfFeature(
-  obj: GJ.AreaFeature,
-  allowGC?: boolean,
-): GeometricPrimitiveMap["AREA"];
-export function getPrimitiveOfFeature(obj: GJ.BaseFeature, allowGC?: boolean): GeometricPrimitive;
-export function getPrimitiveOfFeature(
-  obj: GJ.BaseFeature,
-  allowGC: boolean = false,
-): GeometricPrimitive {
-  return getPrimitiveOfGeometry(obj.geometry, allowGC);
-}
-
-export function getPrimitiveOfCollection(
-  obj: GJ.BaseFeatureCollection,
-  allowGC: boolean = false,
-  exhaustive: boolean = false,
-): GeometricPrimitive {
-  if (obj.features.length === 0) {
-    return GEOMETRIC_PRIMITIVES.NONE;
-  }
-
-  const gp = getPrimitiveOfGeometry(obj.features[0].geometry, allowGC);
-
-  if (
-    exhaustive === false ||
-    obj.features.length === 1 ||
-    obj.features.every((feat) => gp === getPrimitiveOfGeometry(feat.geometry, allowGC))
-  ) {
-    return gp;
-  }
-
-  return GEOMETRIC_PRIMITIVES.NONE;
 }

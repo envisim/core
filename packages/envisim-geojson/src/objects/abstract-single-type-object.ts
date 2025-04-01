@@ -8,13 +8,13 @@ export abstract class AbstractSingleTypeObject<T extends GJ.SingleTypeObject> {
   bbox?: GJ.BBox;
 
   isArea(): this is AreaObject {
-    return this.geometricPrimitive() === GeometricPrimitive.AREA;
+    return GeometricPrimitive.isArea(this.geometricPrimitive());
   }
   isLine(): this is LineObject {
-    return this.geometricPrimitive() === GeometricPrimitive.LINE;
+    return GeometricPrimitive.isLine(this.geometricPrimitive());
   }
   isPoint(): this is PointObject {
-    return this.geometricPrimitive() === GeometricPrimitive.POINT;
+    return GeometricPrimitive.isPoint(this.geometricPrimitive());
   }
 
   constructor(obj: GJ.SingleTypeObject, shallow: boolean = true) {
