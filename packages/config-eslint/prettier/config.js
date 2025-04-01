@@ -4,7 +4,7 @@
 export const defaultConfigObject = {
   printWidth: 100,
   quoteProps: "consistent",
-  importOrder: ["^@types/(.*)$", "<THIRD_PARTY_MODULES>", "^@envisim/(.*)$", "^[$]", , "^[./]"],
+  importOrder: ["^@types/(.*)$", "<THIRD_PARTY_MODULES>", "^@envisim/(.*)$", "^[$]", "^[./]"],
 };
 
 /**
