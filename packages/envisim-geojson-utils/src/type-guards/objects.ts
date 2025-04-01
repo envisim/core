@@ -1,5 +1,5 @@
-import { GeometricPrimitive, getPrimitiveOfGeometry } from "../enum-geometric-primitive.js";
 import type * as GJ from "../geojson.js";
+import { GeometricPrimitive, getPrimitiveOfGeometry } from "../geometric-primitive.js";
 
 export function isPoint(obj: GJ.SingleTypeObject): obj is GJ.Point {
   return obj.type === "Point" && "radius" in obj === false;

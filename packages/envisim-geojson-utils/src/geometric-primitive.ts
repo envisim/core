@@ -1,24 +1,26 @@
 import type * as GJ from "./geojson.js";
 
-export enum GeometricPrimitive {
-  NONE,
-  POINT,
-  LINE,
-  AREA,
-}
+export const GEOMETRIC_PRIMITIVES = {
+  NONE: "gp-none",
+  POINT: "gp-point",
+  LINE: "gp-line",
+  AREA: "gp-area",
+} as const;
+export type GeometricPrimitiveMap = typeof GEOMETRIC_PRIMITIVES;
+export type GeometricPrimitive = GeometricPrimitiveMap[keyof GeometricPrimitiveMap];
 
 export function getPrimitiveOfGeometry(
   obj: GJ.PointGeometry,
   allowGC?: boolean,
-): GeometricPrimitive.POINT;
+): GeometricPrimitiveMap["POINT"];
 export function getPrimitiveOfGeometry(
   obj: GJ.LineGeometry,
   allowGC?: boolean,
-): GeometricPrimitive.LINE;
+): GeometricPrimitiveMap["LINE"];
 export function getPrimitiveOfGeometry(
   obj: GJ.AreaGeometry,
   allowGC?: boolean,
-): GeometricPrimitive.AREA;
+): GeometricPrimitiveMap["AREA"];
 export function getPrimitiveOfGeometry(obj: GJ.BaseGeometry, allowGC?: boolean): GeometricPrimitive;
 export function getPrimitiveOfGeometry(
   obj: GJ.BaseGeometry,
@@ -27,18 +29,18 @@ export function getPrimitiveOfGeometry(
   switch (obj.type) {
     case "Point":
     case "MultiPoint":
-      return "radius" in obj ? GeometricPrimitive.AREA : GeometricPrimitive.POINT;
+      return "radius" in obj ? GEOMETRIC_PRIMITIVES.AREA : GEOMETRIC_PRIMITIVES.POINT;
     case "LineString":
     case "MultiLineString":
-      return GeometricPrimitive.LINE;
+      return GEOMETRIC_PRIMITIVES.LINE;
     case "Polygon":
     case "MultiPolygon":
-      return GeometricPrimitive.AREA;
+      return GEOMETRIC_PRIMITIVES.AREA;
   }
 
   if (allowGC && obj.type === "GeometryCollection") {
     if (obj.geometries.length === 0) {
-      return GeometricPrimitive.NONE;
+      return GEOMETRIC_PRIMITIVES.NONE;
     }
 
     const gp = getPrimitiveOfGeometry(obj.geometries[0], false);
@@ -51,21 +53,21 @@ export function getPrimitiveOfGeometry(
     }
   }
 
-  return GeometricPrimitive.NONE;
+  return GEOMETRIC_PRIMITIVES.NONE;
 }
 
 export function getPrimitiveOfFeature(
   obj: GJ.PointFeature,
   allowGC?: boolean,
-): GeometricPrimitive.POINT;
+): GeometricPrimitiveMap["POINT"];
 export function getPrimitiveOfFeature(
   obj: GJ.LineFeature,
   allowGC?: boolean,
-): GeometricPrimitive.LINE;
+): GeometricPrimitiveMap["LINE"];
 export function getPrimitiveOfFeature(
   obj: GJ.AreaFeature,
   allowGC?: boolean,
-): GeometricPrimitive.AREA;
+): GeometricPrimitiveMap["AREA"];
 export function getPrimitiveOfFeature(obj: GJ.BaseFeature, allowGC?: boolean): GeometricPrimitive;
 export function getPrimitiveOfFeature(
   obj: GJ.BaseFeature,
@@ -80,7 +82,7 @@ export function getPrimitiveOfCollection(
   exhaustive: boolean = false,
 ): GeometricPrimitive {
   if (obj.features.length === 0) {
-    return GeometricPrimitive.NONE;
+    return GEOMETRIC_PRIMITIVES.NONE;
   }
 
   const gp = getPrimitiveOfGeometry(obj.features[0].geometry, allowGC);
@@ -93,5 +95,5 @@ export function getPrimitiveOfCollection(
     return gp;
   }
 
-  return GeometricPrimitive.NONE;
+  return GEOMETRIC_PRIMITIVES.NONE;
 }
