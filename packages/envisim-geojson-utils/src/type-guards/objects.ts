@@ -1,5 +1,5 @@
 import type * as GJ from "../geojson.js";
-import { GeometricPrimitive, getPrimitiveOfGeometry } from "../geometric-primitive.js";
+import { GEOMETRIC_PRIMITIVES, getPrimitiveOfGeometry } from "../geometric-primitive.js";
 
 export function isPoint(obj: GJ.SingleTypeObject): obj is GJ.Point {
   return obj.type === "Point" && "radius" in obj === false;
@@ -35,11 +35,11 @@ export function isCircleish(
 }
 
 export function isAreaGeometry(obj: GJ.BaseGeometry): obj is GJ.AreaGeometry {
-  return getPrimitiveOfGeometry(obj, false) === GeometricPrimitive.AREA;
+  return getPrimitiveOfGeometry(obj, false) === GEOMETRIC_PRIMITIVES.AREA;
 }
 export function isLineGeometry(obj: GJ.BaseGeometry): obj is GJ.LineGeometry {
-  return getPrimitiveOfGeometry(obj, false) === GeometricPrimitive.LINE;
+  return getPrimitiveOfGeometry(obj, false) === GEOMETRIC_PRIMITIVES.LINE;
 }
 export function isPointGeometry(obj: GJ.BaseGeometry): obj is GJ.PointGeometry {
-  return getPrimitiveOfGeometry(obj, false) === GeometricPrimitive.POINT;
+  return getPrimitiveOfGeometry(obj, false) === GEOMETRIC_PRIMITIVES.POINT;
 }
