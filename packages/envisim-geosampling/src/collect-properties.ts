@@ -11,7 +11,9 @@ import {
   intersectAreaAreaGeometries,
   intersectLineAreaGeometries,
   intersectPointAreaGeometries,
-} from "@envisim/geojson-utils";
+} from "@envisim/geojson";
+
+export { type CollectError, COLLECT_ERROR_LIST } from "./errors/index.js";
 
 // A type for an object to hold all the data we need to aggregate from
 // one feature to another.

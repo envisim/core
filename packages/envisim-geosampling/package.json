@@ -1,7 +1,16 @@
 {
   "name": "@envisim/geosampling",
   "type": "module",
-  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/errors/index.js",
+    "./errors": "./dist/errors/index.js",
+    "./model-geometry": "./dist/model-geometry.js",
+    "./sample-continuous": "./dist/sample-continuous/index.js",
+    "./sample-finite": "./dist/sample-finite/index.js",
+    "./collect-properties": "./dist/collect-properties.js",
+    "./select-intersects": "./dist/select-intersects.js",
+    "./point-processes": "./dist/point-processes/index.js"
+  },
   "files": [
     "dist"
   ],
@@ -12,6 +21,7 @@
   },
   "dependencies": {
     "@envisim/distributions": "workspace:*",
+    "@envisim/geojson": "workspace:*",
     "@envisim/geojson-utils": "workspace:*",
     "@envisim/matrix": "workspace:*",
     "@envisim/random": "workspace:*",

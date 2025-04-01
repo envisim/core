@@ -1,12 +1,12 @@
+import { bbox4, longitudeDistance, normalizeLongitude } from "@envisim/geojson-utils";
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { Random } from "@envisim/random";
 import {
-  type GeoJSON as GJ,
-  bbox4,
-  longitudeDistance,
-  normalizeLongitude,
-} from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
-
-import {type OptionsBase, type SampleError, optionsBaseCheck, throwRangeError} from './options.js';
+  type OptionsBase,
+  type SampleError,
+  optionsBaseCheck,
+  throwRangeError,
+} from "./options.js";
 
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;
@@ -24,7 +24,7 @@ export function samplePositionsInBboxCheck(options: SamplePositionsInBbox): Samp
  */
 export function samplePositionsInBbox(box: GJ.BBox, options: SamplePositionsInBbox): GJ.Position[] {
   throwRangeError(samplePositionsInBboxCheck(options));
-  const {rand = new Random(), sampleSize} = options;
+  const { rand = new Random(), sampleSize } = options;
 
   const bbox = bbox4(box);
   const y1 = (Math.cos((90 - bbox[1]) * TO_RAD) + 1) / 2;

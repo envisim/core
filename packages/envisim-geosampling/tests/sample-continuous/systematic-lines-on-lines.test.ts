@@ -1,8 +1,6 @@
-import {expect, test} from 'vitest';
-
-import {Feature, FeatureCollection, LineString} from '@envisim/geojson-utils';
-
-import {sampleSystematicLinesOnLines} from '../../src/sample-continuous/index.js';
+import { expect, test } from "vitest";
+import { Feature, FeatureCollection, LineString } from "@envisim/geojson";
+import { sampleSystematicLinesOnLines } from "../../src/sample-continuous/index.js";
 
 const ls = LineString.create([
   [0, 0],
@@ -20,6 +18,6 @@ const sample = sampleSystematicLinesOnLines(frame, {
 
 //console.log(JSON.stringify(sample, null, 2));
 
-test('sampleSystematicLinesOnLines', () => {
+test("sampleSystematicLinesOnLines", () => {
   expect(sample.size() > 0).toBe(true);
 });

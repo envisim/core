@@ -1,11 +1,10 @@
-import {type CirclesToPolygonsOptions, FeatureCollection, type Point} from '@envisim/geojson-utils';
-import {type RandomGenerator} from '@envisim/random';
-import {throwRangeError} from '@envisim/utils';
+import { type CirclesToPolygonsOptions, FeatureCollection, type Point } from "@envisim/geojson";
+import { type RandomGenerator } from "@envisim/random";
+import { throwRangeError } from "@envisim/utils";
+import { SAMPLE_ERROR_LIST, type SampleError } from "../errors/index.js";
+import { type DetectionFunction } from "./distance-utils.js";
 
-import {SAMPLE_ERROR_LIST, type SampleError} from '../errors/index.js';
-import {type DetectionFunction} from './distance-utils.js';
-
-export {SAMPLE_ERROR_LIST, type SampleError, throwRangeError};
+export { SAMPLE_ERROR_LIST, type SampleError, throwRangeError };
 
 export interface OptionsBase {
   /**
@@ -17,10 +16,10 @@ export interface OptionsBase {
   /**
    * @defaultValue `'independent'`
    */
-  pointSelection?: 'independent' | 'systematic';
+  pointSelection?: "independent" | "systematic";
 }
 
-export function optionsBaseCheck({sampleSize}: OptionsBase) {
+export function optionsBaseCheck({ sampleSize }: OptionsBase) {
   if (!Number.isInteger(sampleSize) || sampleSize < 0) {
     return SAMPLE_ERROR_LIST.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER;
   }
@@ -53,7 +52,7 @@ export interface OptionsPointsOnAreas extends OptionsBase, OptionsCircleConversi
    * If true, then the grid will be rotated (systematic only)
    * @defaultValue `0.0`
    */
-  rotationOfGrid?: number | 'random';
+  rotationOfGrid?: number | "random";
 }
 
 export function optionsPointsOnAreasCheck({
@@ -63,7 +62,7 @@ export function optionsPointsOnAreasCheck({
 }: OptionsPointsOnAreas): SampleError {
   if (ratio !== undefined && ratio <= 0.0) {
     return SAMPLE_ERROR_LIST.RATIO_NOT_POSITIVE;
-  } else if (typeof rotationOfGrid === 'string' && rotationOfGrid !== 'random') {
+  } else if (typeof rotationOfGrid === "string" && rotationOfGrid !== "random") {
     return SAMPLE_ERROR_LIST.ROTATION_OF_GRID_ERROR;
   }
 
@@ -82,7 +81,7 @@ export interface OptionsParallelLines {
   rotation?: number;
 }
 
-export function optionsParallelLinesCheck({interspace}: OptionsParallelLines): SampleError {
+export function optionsParallelLinesCheck({ interspace }: OptionsParallelLines): SampleError {
   if (interspace <= 0.0) {
     return SAMPLE_ERROR_LIST.SEPARATION_NOT_POSITIVE;
   }

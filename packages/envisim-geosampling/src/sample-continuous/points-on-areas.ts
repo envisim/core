@@ -1,25 +1,20 @@
+import { type AreaObject, Feature, FeatureCollection, Point, union } from "@envisim/geojson";
 import {
-  type AreaObject,
-  Feature,
-  FeatureCollection,
-  type GeoJSON as GJ,
   Geodesic,
-  Point,
   bbox4,
   bboxCenter,
   longitudeDistance,
   normalizeLongitude,
-  unionOfCollection,
-} from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
-
+} from "@envisim/geojson-utils";
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { Random } from "@envisim/random";
 import {
   type OptionsPointsOnAreas,
   SAMPLE_ERROR_LIST,
   type SampleError,
   optionsPointsOnAreasCheck,
   throwRangeError,
-} from './options.js';
+} from "./options.js";
 
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;
@@ -64,8 +59,8 @@ export function samplePointsOnAreas(
   // Buffer the Collection if needed.
   const buffered =
     buffer !== undefined && buffer > 0.0
-      ? unionOfCollection(
-          collection.buffer({distance: buffer, steps: 10}) ?? FeatureCollection.newArea(),
+      ? union(
+          collection.buffer({ distance: buffer, steps: 10 }) ?? FeatureCollection.newArea(),
           opts,
         )
       : collection;
@@ -79,7 +74,7 @@ export function samplePointsOnAreas(
 
   switch (pointSelection) {
     default:
-    case 'independent': {
+    case "independent": {
       // Store number of iterations and number of hits.
       let iterations = 0;
       let hits = 0;
@@ -119,7 +114,7 @@ export function samplePointsOnAreas(
       break;
     }
 
-    case 'systematic': {
+    case "systematic": {
       // Precalculations for systematic sampling.
       const center = bboxCenter(box);
       const bottomLeft: GJ.Position = [box[0], box[1]];
@@ -129,7 +124,7 @@ export function samplePointsOnAreas(
         Geodesic.distance(center, topRight),
       );
 
-      const angle = rotationOfGrid === 'random' ? rand.random() * 360.0 : (rotationOfGrid ?? 0.0);
+      const angle = rotationOfGrid === "random" ? rand.random() * 360.0 : (rotationOfGrid ?? 0.0);
 
       const dy = Math.sqrt(A / (sampleSize * ratio));
       const dx = ratio * dy;

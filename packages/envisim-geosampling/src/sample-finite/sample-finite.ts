@@ -1,4 +1,4 @@
-import {type FeatureCollection, type PropertyRecord, type PureObject} from '@envisim/geojson-utils';
+import { type FeatureCollection, type PropertyRecord, type PureObject } from "@envisim/geojson";
 import {
   brewer,
   pareto,
@@ -11,22 +11,26 @@ import {
   srswor,
   srswr,
   systematic,
-} from '@envisim/sampling';
+} from "@envisim/sampling";
+import {
+  type OptionsBase,
+  type SampleError,
+  optionsBaseCheck,
+  throwRangeError,
+} from "./options.js";
+import { drawprobsFromLayer, inclprobsFromLayer, returnCollectionFromSample } from "./utils.js";
 
-import {type OptionsBase, type SampleError, optionsBaseCheck, throwRangeError} from './options.js';
-import {drawprobsFromLayer, inclprobsFromLayer, returnCollectionFromSample} from './utils.js';
-
-export const SAMPLE_FINITE_METHODS_WR = ['srs-wr', 'pps-wr'] as const;
+export const SAMPLE_FINITE_METHODS_WR = ["srs-wr", "pps-wr"] as const;
 export const SAMPLE_FINITE_METHODS_WOR = [
-  'srs',
-  'systematic',
-  'systematic-random',
-  'poisson-sampling',
-  'rpm',
-  'spm',
-  'sampford',
-  'pareto',
-  'brewer',
+  "srs",
+  "systematic",
+  "systematic-random",
+  "poisson-sampling",
+  "rpm",
+  "spm",
+  "sampford",
+  "pareto",
+  "brewer",
 ] as const;
 export type SampleFiniteOptions<P extends string = string> = OptionsBase<
   P,
@@ -61,59 +65,59 @@ export function sampleFinite<T extends PureObject, P extends string>(
 
   // Select the correct method, and save indices of the FeatureCollection
   switch (options.method) {
-    case 'systematic':
+    case "systematic":
       return returnCollectionFromSample(
         collection,
-        systematic({probabilities, rand: options.rand}),
+        systematic({ probabilities, rand: options.rand }),
         probabilities,
       );
-    case 'systematic-random':
+    case "systematic-random":
       return returnCollectionFromSample(
         collection,
-        randomSystematic({probabilities, rand: options.rand}),
+        randomSystematic({ probabilities, rand: options.rand }),
         probabilities,
       );
-    case 'poisson-sampling':
+    case "poisson-sampling":
       return returnCollectionFromSample(
         collection,
-        poissonSampling({probabilities, rand: options.rand}),
+        poissonSampling({ probabilities, rand: options.rand }),
         probabilities,
       );
-    case 'rpm':
+    case "rpm":
       return returnCollectionFromSample(
         collection,
-        rpm({probabilities, rand: options.rand}),
+        rpm({ probabilities, rand: options.rand }),
         probabilities,
       );
-    case 'spm':
+    case "spm":
       return returnCollectionFromSample(
         collection,
-        spm({probabilities, rand: options.rand}),
+        spm({ probabilities, rand: options.rand }),
         probabilities,
       );
-    case 'sampford':
+    case "sampford":
       return returnCollectionFromSample(
         collection,
-        sampford({probabilities, rand: options.rand}),
+        sampford({ probabilities, rand: options.rand }),
         probabilities,
       );
-    case 'pareto':
+    case "pareto":
       return returnCollectionFromSample(
         collection,
-        pareto({probabilities, rand: options.rand}),
+        pareto({ probabilities, rand: options.rand }),
         probabilities,
       );
-    case 'brewer':
+    case "brewer":
       return returnCollectionFromSample(
         collection,
-        brewer({probabilities, rand: options.rand}),
+        brewer({ probabilities, rand: options.rand }),
         probabilities,
       );
-    case 'srs':
+    case "srs":
     default:
       return returnCollectionFromSample(
         collection,
-        srswor({n: options.sampleSize, N: collection.size(), rand: options.rand}),
+        srswor({ n: options.sampleSize, N: collection.size(), rand: options.rand }),
         probabilities,
       );
   }
@@ -137,19 +141,19 @@ export function sampleFiniteWr<T extends PureObject, P extends string>(
   // Select the correct method, and save indices of the FeatureCollection
   switch (options.method) {
     // Standard
-    case 'srs-wr':
+    case "srs-wr":
     default:
       // Compute expected number of inclusions / inclusion probabilities
-      probabilities = Array.from<number>({length: collection.size()}).fill(
+      probabilities = Array.from<number>({ length: collection.size() }).fill(
         options.sampleSize / collection.size(),
       );
 
       // Get selected indexes
-      sample = srswr({n: options.sampleSize, N: collection.size(), rand: options.rand});
+      sample = srswr({ n: options.sampleSize, N: collection.size(), rand: options.rand });
       break;
 
     // Standard w/ drawprob
-    case 'pps-wr':
+    case "pps-wr":
       // Compute expected number of inclusions / inclusion probabilities
       probabilities = drawprobsFromLayer(collection, options)
         .multiply(options.sampleSize, false)

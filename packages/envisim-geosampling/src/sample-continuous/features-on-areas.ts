@@ -2,32 +2,31 @@ import {
   type AreaObject,
   Feature,
   FeatureCollection,
-  type GeoJSON as GJ,
   type LineObject,
   type PointObject,
-} from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
-
+} from "@envisim/geojson";
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { Random } from "@envisim/random";
 import {
   placeAreaGeometry,
   placeLineGeometry,
   placePointGeometry,
   radiusOfModelGeometry,
   sizeOfModelGeometry,
-} from '../model-geometry.js';
+} from "../model-geometry.js";
 import {
   intersectAreaSampleAreaFrame,
   intersectLineSampleAreaFrame,
   intersectPointSampleAreaFrame,
-} from '../utils/index.js';
+} from "../utils/index.js";
 import {
   type OptionsPointsOnAreas,
   SAMPLE_ERROR_LIST,
   type SampleError,
   optionsPointsOnAreasCheck,
   throwRangeError,
-} from './options.js';
-import {samplePointsOnAreas} from './points-on-areas.js';
+} from "./options.js";
+import { samplePointsOnAreas } from "./points-on-areas.js";
 
 export interface SampleFeaturesOnAreasOptions<G extends GJ.SingleTypeObject>
   extends OptionsPointsOnAreas {
@@ -40,25 +39,25 @@ export interface SampleFeaturesOnAreasOptions<G extends GJ.SingleTypeObject>
    * Random rotation is forced for line geometries -- option is ignored.
    * @defaultValue `0.0`
    */
-  rotationOfGeometry?: number | 'random';
+  rotationOfGeometry?: number | "random";
 }
 
 export function sampleAreaFeaturesOnAreasCheck(
   options: SampleFeaturesOnAreasOptions<GJ.AreaObject>,
 ): SampleError {
   switch (options.modelGeometry.type) {
-    case 'Polygon':
-    case 'MultiPolygon':
+    case "Polygon":
+    case "MultiPolygon":
       break;
-    case 'Point':
-    case 'MultiPoint':
+    case "Point":
+    case "MultiPoint":
       if (options.modelGeometry.radius <= 0.0) return SAMPLE_ERROR_LIST.MODEL_FEATURE_NOT_AREA;
       break;
     default:
       return SAMPLE_ERROR_LIST.MODEL_FEATURE_NOT_AREA;
   }
 
-  if (typeof options.rotationOfGeometry === 'string' && options.rotationOfGeometry !== 'random') {
+  if (typeof options.rotationOfGeometry === "string" && options.rotationOfGeometry !== "random") {
     return SAMPLE_ERROR_LIST.ROTATION_OF_MODEL_FEATURE_ERROR;
   }
 
@@ -86,7 +85,7 @@ export function sampleAreaFeaturesOnAreas(
 
   // Compute radius and size of the model tract.
   const sizeOfTract = sizeOfModelGeometry(options.modelGeometry);
-  const _randomRotation = options.rotationOfGeometry === 'random' ? 1 : 0;
+  const _randomRotation = options.rotationOfGeometry === "random" ? 1 : 0;
 
   // Select first a sample of points and use radius as buffer.
   const pointCollection = samplePointsOnAreas(collection, opts);
@@ -108,14 +107,14 @@ export function sampleLineFeaturesOnAreasCheck(
   options: SampleFeaturesOnAreasOptions<GJ.LineObject>,
 ): SampleError {
   switch (options.modelGeometry.type) {
-    case 'LineString':
-    case 'MultiLineString':
+    case "LineString":
+    case "MultiLineString":
       break;
     default:
       return SAMPLE_ERROR_LIST.MODEL_FEATURE_NOT_LINE;
   }
 
-  if (typeof options.rotationOfGeometry === 'string' && options.rotationOfGeometry !== 'random') {
+  if (typeof options.rotationOfGeometry === "string" && options.rotationOfGeometry !== "random") {
     return SAMPLE_ERROR_LIST.ROTATION_OF_MODEL_FEATURE_ERROR;
   }
 
@@ -137,7 +136,7 @@ export function sampleLineFeaturesOnAreas(
 
   // Compute radius and size of the model tract.
   const sizeOfTract = sizeOfModelGeometry(opts.modelGeometry);
-  const _randomRotation = options.rotationOfGeometry === 'random' ? 1 : 0;
+  const _randomRotation = options.rotationOfGeometry === "random" ? 1 : 0;
 
   // Select first a sample of points and use radius as buffer.
   const pointCollection = samplePointsOnAreas(collection, opts);
@@ -159,14 +158,14 @@ export function samplePointFeaturesOnAreasCheck(
   options: SampleFeaturesOnAreasOptions<GJ.PointObject>,
 ): SampleError {
   switch (options.modelGeometry.type) {
-    case 'Point':
-    case 'MultiPoint':
+    case "Point":
+    case "MultiPoint":
       break;
     default:
       return SAMPLE_ERROR_LIST.MODEL_FEATURE_NOT_POINT;
   }
 
-  if (typeof options.rotationOfGeometry === 'string' && options.rotationOfGeometry !== 'random') {
+  if (typeof options.rotationOfGeometry === "string" && options.rotationOfGeometry !== "random") {
     return SAMPLE_ERROR_LIST.ROTATION_OF_MODEL_FEATURE_ERROR;
   }
 
@@ -188,7 +187,7 @@ export function samplePointFeaturesOnAreas(
 
   // Compute radius and size of the model tract.
   const sizeOfTract = sizeOfModelGeometry(opts.modelGeometry);
-  const _randomRotation = options.rotationOfGeometry === 'random' ? 1 : 0;
+  const _randomRotation = options.rotationOfGeometry === "random" ? 1 : 0;
 
   // Select first a sample of points and use radius as buffer.
   const pointCollection = samplePointsOnAreas(collection, opts);

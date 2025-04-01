@@ -1,0 +1,3 @@
+{
+  "extends": "@envisim/config-ts/base.json"
+}

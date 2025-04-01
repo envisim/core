@@ -1,7 +1,14 @@
 {
   "name": "@envisim/geojson-utils",
   "type": "module",
-  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./geojson": "./dist/geojson.js",
+    "./type-guards": "./dist/type-guards/index.js",
+    "./geodesic": "./dist/segments/geodesic.js",
+    "./plate-carree": "./dist/segments/plate-carree.js",
+    "./rhumb": "./dist/segments/rhumb.js"
+  },
   "files": [
     "dist"
   ],
@@ -12,9 +19,7 @@
   },
   "dependencies": {
     "@envisim/utils": "workspace:*",
-    "geographiclib-geodesic": "^2.1.1",
-    "tslib": "^2.8.1",
-    "uuid": "^11.1.0"
+    "geographiclib-geodesic": "^2.1.1"
   },
   "devDependencies": {
     "@envisim/config-eslint": "workspace:*",

@@ -1,84 +1,40 @@
-// GeoJSON
+export { Geodesic, PlateCarree, Rhumb } from "./segments/index.js";
+
+export { areaOfPolygonLonLat } from "./area.js";
 export {
-  // Areas
-  Polygon,
-  MultiPolygon,
-  Circle,
-  MultiCircle,
-  type AreaObject,
-  // Lines
-  LineString,
-  MultiLineString,
-  type LineObject,
-  // Points
-  Point,
-  MultiPoint,
-  type PointObject,
-  // Transform
-  toAreaObject,
-  toLineObject,
-  toPointObject,
-  type PureObject,
-  type IncreasingObject,
-  type DecreasingObject,
-  type RetractingObject,
-  Feature,
-  FeatureCollection,
-  type CategoricalProperty,
-  type NumericalProperty,
-  type Property,
-  type PropertyList,
-  type SpecialPropertyNames,
-  type FeatureProperties,
-  PropertyRecord,
-  GeometricPrimitive,
-  getGeometryPrimitive,
-  isGeometryPrimitive,
-  getFeaturePrimitive,
-  getCollectionPrimitive,
-} from "./geojson/index.js";
-
-// Types
-export type * as GeoJSON from "./types/geojson.js";
-export * as typeGuards from "./types/type-guards.js";
-
-// Utils
-export { Geodesic } from "./utils/class-geodesic.js";
-export { Rhumb } from "./utils/class-rhumb.js";
-export { PlateCarree } from "./utils/class-plate-carree.js";
-
-export { areaOfPolygonLonLat } from "./utils/area.js";
+  cutAreaGeometry,
+  cutLineGeometry,
+  moveCoordsAroundEarth,
+  rerollPolygons,
+} from "./antimeridian.js";
 export {
   bbox4,
+  bboxCenter,
+  bboxCrossesAntimeridian,
   bboxFromPositions,
   bboxFromPositionsUnwrapped,
   bboxInBBox,
+  getPositionsForCircle,
   pointInBBox,
   unionOfBBoxes,
-  bboxCenter,
-} from "./utils/bbox.js";
-export { type CirclesToPolygonsOptions } from "./utils/circles-to-polygons.js";
-export { copyCoordinates } from "./utils/coordinates.js";
-export { lengthOfLineString } from "./utils/length.js";
-export { pointInSinglePolygonPosition } from "./utils/point-in-polygon.js";
+} from "./bbox.js";
+export { IntersectList } from "./class-intersects.js";
+export { Segment, segmentsToPolygon, ringToSegments } from "./class-segment.js";
+export { copyCoordinates } from "./coordinates.js";
 export {
-  checkInRange,
-  checkLongitudeInRange,
-  longitudeDistance,
+  GeometricPrimitive,
+  getPrimitiveOfGeometry,
+  getPrimitiveOfFeature,
+  getPrimitiveOfCollection,
+} from "./enum-geometric-primitive.js";
+export { intersectPolygons } from "./intersect-polygons.js";
+export { lengthOfLineString } from "./length.js";
+export { pointInSinglePolygonPosition, pointInMultiPolygonPosition } from "./point-in-polygon.js";
+export {
   longitudeCenter,
+  longitudeDistance,
   midpoint,
   midpointRaw,
   normalizeLongitude,
-} from "./utils/position.js";
-export { rotateCoord } from "./utils/rotate-coord.js";
-export { cutLineGeometry, cutAreaGeometry } from "./utils/antimeridian.js";
-
-// Dependent
-export {
-  intersectAreaAreaGeometries,
-  intersectLineAreaGeometries,
-  intersectLineLineGeometries,
-  intersectPointAreaGeometries,
-} from "./intersect/index.js";
-export { perimeter } from "./perimeter.js";
-export { unionOfCollection } from "./union-of-polygons.js";
+} from "./position.js";
+export { azimuthalEquidistant } from "./projections.js";

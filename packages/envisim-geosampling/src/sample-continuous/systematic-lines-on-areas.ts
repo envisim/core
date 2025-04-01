@@ -1,17 +1,13 @@
 import {
   type AreaObject,
   FeatureCollection,
-  type GeoJSON as GJ,
-  Geodesic,
   type LineObject,
-  bbox4,
-  bboxCenter,
-  cutLineGeometry,
   toLineObject,
-} from '@envisim/geojson-utils';
-import {Random, type RandomGenerator} from '@envisim/random';
-
-import {intersectLineSampleAreaFrame} from '../utils/index.js';
+} from "@envisim/geojson";
+import { Geodesic, bbox4, bboxCenter, cutLineGeometry } from "@envisim/geojson-utils";
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { Random, type RandomGenerator } from "@envisim/random";
+import { intersectLineSampleAreaFrame } from "../utils/index.js";
 import {
   type OptionsCircleConversion,
   type OptionsParallelLines,
@@ -19,7 +15,7 @@ import {
   optionsCircleConversionCheck,
   optionsParallelLinesCheck,
   throwRangeError,
-} from './options.js';
+} from "./options.js";
 
 export interface SampleSystematicLinesOnAreas
   extends OptionsCircleConversion,
@@ -45,7 +41,7 @@ export function sampleSystematicLinesOnAreas(
 ): FeatureCollection<LineObject> {
   throwRangeError(sampleSystematicLinesOnAreasCheck(options));
 
-  const {rand = new Random(), interspace, rotation = 0.0} = options;
+  const { rand = new Random(), interspace, rotation = 0.0 } = options;
 
   const box = bbox4(collection.getBBox());
   const center = bboxCenter(box);
@@ -72,12 +68,12 @@ export function sampleSystematicLinesOnAreas(
     // Cut at antimeridian if needed
     const lineGeom = toLineObject(
       cutLineGeometry({
-        type: 'LineString',
+        type: "LineString",
         coordinates: thisLine,
       }),
     );
     if (lineGeom === null) continue;
-    sc.addGeometry(lineGeom, {_designWeight: interspace}, true);
+    sc.addGeometry(lineGeom, { _designWeight: interspace }, true);
   }
 
   return intersectLineSampleAreaFrame(sc, collection, options);

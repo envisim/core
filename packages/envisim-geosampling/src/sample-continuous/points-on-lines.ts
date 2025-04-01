@@ -1,15 +1,13 @@
+import { Feature, FeatureCollection, type LineObject, LineString, Point } from "@envisim/geojson";
+import { PlateCarree } from "@envisim/geojson-utils";
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { Random } from "@envisim/random";
 import {
-  Feature,
-  FeatureCollection,
-  type GeoJSON as GJ,
-  type LineObject,
-  LineString,
-  PlateCarree,
-  Point,
-} from '@envisim/geojson-utils';
-import {Random} from '@envisim/random';
-
-import {type OptionsBase, type SampleError, optionsBaseCheck, throwRangeError} from './options.js';
+  type OptionsBase,
+  type SampleError,
+  optionsBaseCheck,
+  throwRangeError,
+} from "./options.js";
 
 export type SamplePointsOnLinesOptions = OptionsBase;
 
@@ -28,25 +26,25 @@ export function samplePointsOnLines(
   options: SamplePointsOnLinesOptions,
 ): FeatureCollection<Point, never> {
   throwRangeError(samplePointsOnLinesCheck(options));
-  const {rand = new Random(), pointSelection, sampleSize} = options;
+  const { rand = new Random(), pointSelection, sampleSize } = options;
 
   const L = collection.measure(); // total length of input geoJSON
   if (L === 0) {
-    throw new Error('Input layer has zero length.');
+    throw new Error("Input layer has zero length.");
   }
 
   let distances: number[] = []; // Holds sample points as distances from 0 to L.
 
   switch (pointSelection) {
     default:
-    case 'independent':
+    case "independent":
       distances = new Array(sampleSize)
         .fill(0)
         .map(() => rand.random() * L)
         .sort((a, b) => a - b);
       break;
 
-    case 'systematic': {
+    case "systematic": {
       const start = (rand.random() * L) / sampleSize;
       distances = new Array(sampleSize)
         .fill(0)
@@ -55,7 +53,7 @@ export function samplePointsOnLines(
     }
   }
 
-  const track = {dt: 0, currentIndex: 0};
+  const track = { dt: 0, currentIndex: 0 };
   const points: GJ.Position[] = [];
   const parentIndex: number[] = [];
   const designWeight = L / sampleSize;
@@ -65,7 +63,7 @@ export function samplePointsOnLines(
     const result = samplePointsOnGeometry(geom, track, distances);
 
     points.push(...result);
-    parentIndex.push(...Array.from<number>({length: result.length}).fill(index));
+    parentIndex.push(...Array.from<number>({ length: result.length }).fill(index));
   });
 
   return FeatureCollection.newPoint<Point, never>(

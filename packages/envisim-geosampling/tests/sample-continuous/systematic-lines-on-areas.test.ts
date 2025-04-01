@@ -1,8 +1,6 @@
-import {expect, test} from 'vitest';
-
-import {Feature, FeatureCollection, Polygon} from '@envisim/geojson-utils';
-
-import {sampleSystematicLinesOnAreas} from '../../src/sample-continuous/index.js';
+import { expect, test } from "vitest";
+import { Feature, FeatureCollection, Polygon } from "@envisim/geojson";
+import { sampleSystematicLinesOnAreas } from "../../src/sample-continuous/index.js";
 
 const polygon = Polygon.create([
   [
@@ -24,6 +22,6 @@ const sample = sampleSystematicLinesOnAreas(frame, {
 });
 const est = sample.measure() * interspace;
 
-test('sampleSystematicLinesOnAreas', () => {
+test("sampleSystematicLinesOnAreas", () => {
   expect(est / area).toBeCloseTo(1, 1);
 });

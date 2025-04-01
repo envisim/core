@@ -1,10 +1,8 @@
-import {expect, test} from 'vitest';
+import { expect, test } from "vitest";
+import { FeatureCollection, Polygon } from "@envisim/geojson";
+import { intersectAreaSampleAreaFrame } from "../../src/utils/intersect-x-sample-area-frame.js";
 
-import {FeatureCollection, Polygon} from '@envisim/geojson-utils';
-
-import {intersectAreaSampleAreaFrame} from '../../src/utils/intersect-x-sample-area-frame.js';
-
-test('belt-sampling', () => {
+test("belt-sampling", () => {
   const poly1 = Polygon.create([
     [
       [20.383759, 63.800804],
@@ -82,12 +80,12 @@ test('belt-sampling', () => {
   expect(int2).not.toBeNull();
 
   const fc3 = FeatureCollection.createAreaFromJson({
-    type: 'FeatureCollection',
+    type: "FeatureCollection",
     features: [
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Polygon',
+          type: "Polygon",
           coordinates: [
             [
               [20.379721763815645, 63.79676616553157],
@@ -139,9 +137,9 @@ test('belt-sampling', () => {
         },
       },
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Polygon',
+          type: "Polygon",
           coordinates: [
             [
               [20.379721763815663, 63.797214699691764],
@@ -193,9 +191,9 @@ test('belt-sampling', () => {
         },
       },
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Polygon',
+          type: "Polygon",
           coordinates: [
             [
               [20.37972176381565, 63.79766323385195],
@@ -247,9 +245,9 @@ test('belt-sampling', () => {
         },
       },
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Polygon',
+          type: "Polygon",
           coordinates: [
             [
               [20.379721763815656, 63.79811176801214],
@@ -301,9 +299,9 @@ test('belt-sampling', () => {
         },
       },
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Polygon',
+          type: "Polygon",
           coordinates: [
             [
               [20.379721763815652, 63.79856030217232],
@@ -355,9 +353,9 @@ test('belt-sampling', () => {
         },
       },
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Polygon',
+          type: "Polygon",
           coordinates: [
             [
               [20.37972176381566, 63.79900883633252],
@@ -409,9 +407,9 @@ test('belt-sampling', () => {
         },
       },
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Polygon',
+          type: "Polygon",
           coordinates: [
             [
               [20.379721763815656, 63.79945737049271],
@@ -463,9 +461,9 @@ test('belt-sampling', () => {
         },
       },
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Polygon',
+          type: "Polygon",
           coordinates: [
             [
               [20.37972176381566, 63.799905904652896],
@@ -517,9 +515,9 @@ test('belt-sampling', () => {
         },
       },
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Polygon',
+          type: "Polygon",
           coordinates: [
             [
               [20.379721763815642, 63.80035443881309],
@@ -571,9 +569,9 @@ test('belt-sampling', () => {
         },
       },
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Polygon',
+          type: "Polygon",
           coordinates: [
             [
               [20.37972176381566, 63.80080297297327],
@@ -625,9 +623,9 @@ test('belt-sampling', () => {
         },
       },
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Polygon',
+          type: "Polygon",
           coordinates: [
             [
               [20.37972176381566, 63.80125150713347],
@@ -679,9 +677,9 @@ test('belt-sampling', () => {
         },
       },
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Polygon',
+          type: "Polygon",
           coordinates: [
             [
               [20.379721763815642, 63.80170004129364],
@@ -733,9 +731,9 @@ test('belt-sampling', () => {
         },
       },
       {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Polygon',
+          type: "Polygon",
           coordinates: [
             [
               [20.379721763815656, 63.80214857545384],

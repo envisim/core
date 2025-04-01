@@ -1,15 +1,8 @@
-import {
-  Feature,
-  FeatureCollection,
-  type GeoJSON as GJ,
-  type LineObject,
-  LineString,
-  PlateCarree,
-  lengthOfLineString,
-} from '@envisim/geojson-utils';
-import {Random, type RandomGenerator} from '@envisim/random';
-
-import {SAMPLE_ERROR_LIST, type SampleError, throwRangeError} from './options.js';
+import { Feature, FeatureCollection, type LineObject, LineString } from "@envisim/geojson";
+import { PlateCarree, lengthOfLineString } from "@envisim/geojson-utils";
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { Random, type RandomGenerator } from "@envisim/random";
+import { SAMPLE_ERROR_LIST, type SampleError, throwRangeError } from "./options.js";
 
 export type SampleSystematicLinesOnLines = {
   /**
@@ -30,10 +23,10 @@ export type SampleSystematicLinesOnLines = {
 export function sampleSystematicLinesOnLinesCheck(
   options: SampleSystematicLinesOnLines,
 ): SampleError {
-  if (typeof options.dashLength !== 'number' || options.dashLength <= 0) {
+  if (typeof options.dashLength !== "number" || options.dashLength <= 0) {
     return SAMPLE_ERROR_LIST.DASH_LENGTH_NOT_POSITIVE;
   }
-  if (typeof options.voidLength !== 'number' || options.voidLength < 0) {
+  if (typeof options.voidLength !== "number" || options.voidLength < 0) {
     return SAMPLE_ERROR_LIST.SEPARATION_NOT_POSITIVE;
   }
   return null;
@@ -51,7 +44,7 @@ export function sampleSystematicLinesOnLines(
   options: SampleSystematicLinesOnLines,
 ): FeatureCollection<LineString, never> {
   throwRangeError(sampleSystematicLinesOnLinesCheck(options));
-  const {rand = new Random(), dashLength, voidLength} = options;
+  const { rand = new Random(), dashLength, voidLength } = options;
 
   const L = collection.measure(); // total length of input geoJSON
   if (L === 0) {
@@ -65,7 +58,7 @@ export function sampleSystematicLinesOnLines(
   //sample each linestring separately
   collection.forEach((f, i) => {
     const coords =
-      f.geometry.type === 'LineString' ? [f.geometry.coordinates] : f.geometry.coordinates;
+      f.geometry.type === "LineString" ? [f.geometry.coordinates] : f.geometry.coordinates;
 
     coords.forEach((ls) => {
       // create and push all "dashes" along this LineString as new LineString features
