@@ -5,7 +5,7 @@ import {
   type LineObject,
   MultiCircle,
 } from "@envisim/geojson";
-import { Geodesic, bbox4, longitudeCenter } from "@envisim/geojson-utils";
+import { Geodesic, BoundingBox, longitudeCenter } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 
 type DistCoord = {
@@ -117,7 +117,7 @@ export function projectedLengthOfGeometry(
   const coords = geometryToMultiLineString(geometry, options);
 
   // 2. Compute reference coordinate as center of box
-  const box = bbox4(geometry.getBBox());
+  const box = BoundingBox.removeAltitude(geometry.getBBox());
 
   const refCoord: GJ.Position = [longitudeCenter(box[0], box[2]), box[1] + (box[3] - box[1]) / 2];
 

@@ -1,5 +1,5 @@
 import { type AreaObject, FeatureCollection, toAreaObject } from "@envisim/geojson";
-import { Geodesic, bbox4, bboxCenter, cutAreaGeometry } from "@envisim/geojson-utils";
+import { Geodesic, BoundingBox, cutAreaGeometry } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { Random, type RandomGenerator } from "@envisim/random";
 import "@envisim/utils";
@@ -48,8 +48,8 @@ export function sampleSystematicBeltsOnAreas(
 
   const { rand = new Random(), interspace, rotation = 0.0, halfWidth } = options;
 
-  const box = bbox4(collection.getBBox());
-  const center = bboxCenter(box);
+  const box = BoundingBox.removeAltitude(collection.getBBox());
+  const center = BoundingBox.center(box);
   const bottomLeft: GJ.Position = [box[0], box[1]];
   const topRight: GJ.Position = [box[2], box[3]];
   const radius = Math.max(

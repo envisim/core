@@ -8,14 +8,11 @@ export {
   rerollPolygons,
 } from "./antimeridian.js";
 export {
-  bbox4,
-  bboxCenter,
-  bboxCrossesAntimeridian,
   bboxFromPositions,
   bboxFromPositionsUnwrapped,
   bboxInBBox,
+  BoundingBox,
   getPositionsForCircle,
-  pointInBBox,
   unionOfBBoxes,
 } from "./bbox.js";
 export { IntersectList } from "./class-intersects.js";

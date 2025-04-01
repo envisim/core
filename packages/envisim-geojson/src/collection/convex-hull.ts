@@ -1,9 +1,4 @@
-import {
-  bbox4,
-  bboxCrossesAntimeridian,
-  moveCoordsAroundEarth,
-  rerollPolygons,
-} from "@envisim/geojson-utils";
+import { BoundingBox, moveCoordsAroundEarth, rerollPolygons } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import {
   type AreaObject,
@@ -43,8 +38,8 @@ export function convexHull(
   }
 
   // Check if coords need to be moved (i.e. the bbox crosses antimeridian)
-  const box = bbox4(collection.getBBox());
-  const crosses = bboxCrossesAntimeridian(box);
+  const box = BoundingBox.removeAltitude(collection.getBBox());
+  const crosses = BoundingBox.includesAntimeridian(box);
   if (crosses) {
     points = moveCoordsAroundEarth(points);
   }

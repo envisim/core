@@ -5,7 +5,7 @@ import {
   lengthOfLineString,
   pointInSinglePolygonPosition,
   pointInMultiPolygonPosition,
-  bboxCrossesAntimeridian,
+  BoundingBox,
   unionOfBBoxes,
   moveCoordsAroundEarth,
 } from "@envisim/geojson-utils";
@@ -116,7 +116,7 @@ export class MultiPolygon extends AbstractAreaObject<GJ.MultiPolygon> implements
 
     if (opts.distance === 0.0) return MultiPolygon.create(this.coordinates, false);
 
-    if (bboxCrossesAntimeridian(this.getBBox())) {
+    if (BoundingBox.includesAntimeridian(this.getBBox())) {
       return bufferPolygons(
         this.coordinates.map((r) => r.map(moveCoordsAroundEarth)),
         opts,

@@ -1,4 +1,4 @@
-import { bbox4, bboxCrossesAntimeridian, bboxFromPositions } from "./bbox.js";
+import { BoundingBox, bboxFromPositions } from "./bbox.js";
 import type * as GJ from "./geojson.js";
 import { intersectPolygons } from "./intersect-polygons.js";
 import { normalizeLongitude } from "./position.js";
@@ -19,8 +19,8 @@ function addPosition(arr: GJ.Position[], coord: GJ.Position) {
 
 // Internal function that cuts lines on the antimeridian
 function cutLineStringCoords(ls: GJ.Position[]): GJ.Position[][] {
-  const box = bbox4(bboxFromPositions(ls));
-  if (bboxCrossesAntimeridian(box) === false) {
+  const box = BoundingBox.removeAltitude(bboxFromPositions(ls));
+  if (BoundingBox.includesAntimeridian(box) === false) {
     return [ls];
   }
   // Crosses the antimeridian
@@ -134,8 +134,8 @@ export const EARTH_BOUNDARIES: {
 
 // Internal function to cut a polygon at the antimeridian
 function cutPolygonCoords(pol: GJ.Position[][]): GJ.Position[][][] {
-  const box = bbox4(bboxFromPositions(pol[0])); // outer ring only
-  if (bboxCrossesAntimeridian(box) === false) {
+  const box = BoundingBox.removeAltitude(bboxFromPositions(pol[0])); // outer ring only
+  if (BoundingBox.includesAntimeridian(box) === false) {
     return [pol];
   }
 

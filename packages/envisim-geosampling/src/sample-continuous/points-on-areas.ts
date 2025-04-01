@@ -1,8 +1,7 @@
 import { type AreaObject, Feature, FeatureCollection, Point, union } from "@envisim/geojson";
 import {
   Geodesic,
-  bbox4,
-  bboxCenter,
+  BoundingBox,
   longitudeDistance,
   normalizeLongitude,
 } from "@envisim/geojson-utils";
@@ -68,7 +67,7 @@ export function samplePointsOnAreas(
   // Pre-calculations for both metods 'uniform' and 'systematic'.
   const A = buffered.measure();
   const designWeight = A / sampleSize;
-  const box = bbox4(buffered.getBBox());
+  const box = BoundingBox.removeAltitude(buffered.getBBox());
   const pointFeatures: Feature<Point, never>[] = [];
   const parentIndex: number[] = [];
 
@@ -116,7 +115,7 @@ export function samplePointsOnAreas(
 
     case "systematic": {
       // Precalculations for systematic sampling.
-      const center = bboxCenter(box);
+      const center = BoundingBox.center(box);
       const bottomLeft: GJ.Position = [box[0], box[1]];
       const topRight: GJ.Position = [box[2], box[3]];
       const radius = Math.max(

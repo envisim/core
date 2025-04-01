@@ -1,4 +1,4 @@
-import { bbox4, longitudeDistance, normalizeLongitude } from "@envisim/geojson-utils";
+import { BoundingBox, longitudeDistance, normalizeLongitude } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { Random } from "@envisim/random";
 import {
@@ -26,7 +26,7 @@ export function samplePositionsInBbox(box: GJ.BBox, options: SamplePositionsInBb
   throwRangeError(samplePositionsInBboxCheck(options));
   const { rand = new Random(), sampleSize } = options;
 
-  const bbox = bbox4(box);
+  const bbox = BoundingBox.removeAltitude(box);
   const y1 = (Math.cos((90 - bbox[1]) * TO_RAD) + 1) / 2;
   const y2 = (Math.cos((90 - bbox[3]) * TO_RAD) + 1) / 2;
   const lonDist = longitudeDistance(bbox[0], bbox[2]);

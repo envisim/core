@@ -3,34 +3,91 @@ import type * as GJ from "./geojson.js";
 import { longitudeInClosedInterval, longitudeDistance, midpoint } from "./position.js";
 import { destination } from "./segments/geodesic.js";
 
-enum BBoxEnum {
-  alon,
-  alat,
-  aalt,
-  blon,
-  blat,
-  balt,
-}
+export class BoundingBox {
+  static min2(bbox: GJ.BBox): GJ.Position2 {
+    return [bbox[0], bbox[1]];
+  }
+  static max2(bbox: GJ.BBox): GJ.Position2 {
+    return [BoundingBox.maxLongitude(bbox), BoundingBox.maxLatitude(bbox)];
+  }
+  static longitudeRange(bbox: GJ.BBox): [number, number] {
+    return [bbox[0], BoundingBox.maxLongitude(bbox)];
+  }
+  static minLongitude(bbox: GJ.BBox) {
+    return bbox[0];
+  }
+  static maxLongitude(bbox: GJ.BBox) {
+    return bbox.length === 4 ? bbox[2] : bbox[3];
+  }
+  static latitudeRange(bbox: GJ.BBox): [number, number] {
+    return [bbox[1], BoundingBox.maxLatitude(bbox)];
+  }
+  static minLatitude(bbox: GJ.BBox) {
+    return bbox[1];
+  }
+  static maxLatitude(bbox: GJ.BBox) {
+    return bbox.length === 4 ? bbox[3] : bbox[4];
+  }
+  static altitudeRange(bbox: GJ.BBox): [number, number] {
+    return bbox.length === 6 ? [bbox[2], bbox[5]] : [Infinity, -Infinity];
+  }
+  static minAltitude(bbox: GJ.BBox) {
+    return bbox.length === 6 ? bbox[2] : Infinity;
+  }
+  static maxAltitude(bbox: GJ.BBox) {
+    return bbox.length === 6 ? bbox[5] : -Infinity;
+  }
+  static longitudeDiff(bbox: GJ.BBox) {
+    return BoundingBox.maxLongitude(bbox) - bbox[0];
+  }
+  static latitudeDiff(bbox: GJ.BBox) {
+    return BoundingBox.maxLatitude(bbox) - bbox[1];
+  }
 
-function getBBoxValue(bbox: GJ.BBox, e: BBoxEnum): number {
-  switch (e) {
-    case BBoxEnum.alon:
-      return bbox[0];
-    case BBoxEnum.alat:
-      return bbox[1];
-    case BBoxEnum.blon:
-      return bbox.length === 4 ? bbox[2] : bbox[3];
-    case BBoxEnum.blat:
-      return bbox.length === 4 ? bbox[3] : bbox[4];
-    case BBoxEnum.aalt:
-      return bbox.length === 4 ? Infinity : bbox[2];
-    case BBoxEnum.balt:
-      return bbox.length === 4 ? -Infinity : bbox[5];
+  /**
+   * Removes altitiude from the bounding box
+   * @param bbox a bounding box.
+   * @returns a copy of the bounding box, with altitude removed (i.e. with length 4).
+   */
+  static removeAltitude(bbox: GJ.BBox): GJ.BBox2 {
+    return bbox.length === 4 ? [...bbox] : [bbox[0], bbox[1], bbox[3], bbox[4]];
+  }
+
+  /**
+   * Computes the parametric center (in longitude and latitude only) of a bounding box
+   * @param bbox a bounding box
+   * @returns the center of the bounding box
+   */
+  static center(bbox: GJ.BBox): GJ.Position2 {
+    return midpoint(BoundingBox.min2(bbox), BoundingBox.max2(bbox));
+  }
+
+  static includesAntimeridian(bbox: GJ.BBox): boolean {
+    return BoundingBox.longitudeDiff(bbox) < 0.0;
+  }
+
+  /**
+   * Checks if position is in bbox.
+   * Considers the altitude only if both have it
+   *
+   * @param point - Point coordinates.
+   * @param bbox - Bounding box.
+   * @returns true if point is in bbox, otherwise false.
+   */
+  static includesPoint(bbox: GJ.BBox, point: GJ.Position): boolean {
+    return (
+      // Check lon
+      longitudeInClosedInterval(point[0], bbox[0], BoundingBox.maxLongitude(bbox)) &&
+      // Check lat
+      inClosedInterval(point[1], bbox[1], BoundingBox.maxLatitude(bbox)) &&
+      // Check z, only if both have it, otherwise they are considered all-covering
+      (point.length === 2 || bbox.length === 4 || inClosedInterval(point[2], bbox[2], bbox[5]))
+    );
   }
 }
 
 /**
- * Computes posisions needed to find bounding box of a PointCircle.
+ * Computes positions needed to find bounding box of a PointCircle.
  * @param point - A position.
  * @param radius - The radius in meters.
  * @returns - An array with four positions [top,right,bottom,left].
@@ -43,25 +100,6 @@ export function getPositionsForCircle(point: GJ.Position, radius: number): GJ.Po
   return [top, right, bottom, left];
 }
 
-/**
- * Checks if position is in bbox.
- * Considers the altitude only if both have it
- *
- * @param point - Point coordinates.
- * @param bbox - Bounding box.
- * @returns true if point is in bbox, otherwise false.
- */
-export function pointInBBox(point: GJ.Position, bbox: GJ.BBox): boolean {
-  return (
-    // Check lon
-    longitudeInClosedInterval(point[0], bbox[0], getBBoxValue(bbox, BBoxEnum.blon)) &&
-    // Check lat
-    inClosedInterval(point[1], bbox[1], getBBoxValue(bbox, BBoxEnum.blat)) &&
-    // Check z, only if both have it, otherwise they are considered all-covering
-    (point.length === 2 || bbox.length === 4 || inClosedInterval(point[2], bbox[2], bbox[5]))
-  );
-}
-
 // TODO: Test this one. Should we use < and > or <= and >= ?
 /**
  * Checks if two bounding boxes overlap.
@@ -71,10 +109,10 @@ export function pointInBBox(point: GJ.Position, bbox: GJ.BBox): boolean {
  * @returns - Returns true if the bboxes overlap, otherwise false.
  */
 export function bboxInBBox(b1: GJ.BBox, b2: GJ.BBox): boolean {
-  const b1lonb = getBBoxValue(b1, BBoxEnum.blon);
-  const b2lonb = getBBoxValue(b2, BBoxEnum.blon);
-  const b1latb = getBBoxValue(b1, BBoxEnum.blat);
-  const b2latb = getBBoxValue(b2, BBoxEnum.blat);
+  const b1lonb = BoundingBox.maxLongitude(b1);
+  const b2lonb = BoundingBox.maxLongitude(b2);
+  const b1latb = BoundingBox.maxLatitude(b1);
+  const b2latb = BoundingBox.maxLatitude(b2);
 
   if (
     !(
@@ -158,7 +196,7 @@ export function bboxFromPositions(positions: GJ.Position[]): GJ.BBox {
 
   const box = bboxFromPositionsUnwrapped(positions);
 
-  if (getBBoxValue(box, BBoxEnum.blon) - getBBoxValue(box, BBoxEnum.alon) < 180.0) {
+  if (BoundingBox.longitudeDiff(box) < 180.0) {
     // Should be OK? If Positions are normalized
     return box;
   }
@@ -204,15 +242,15 @@ export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox {
   } else {
     for (let i = 0; i < bboxes.length; i++) {
       box[1] = Math.min(bboxes[i][1], box[1]);
-      box[2] = Math.min(getBBoxValue(bboxes[i], BBoxEnum.aalt), box[2]);
-      box[4] = Math.max(getBBoxValue(bboxes[i], BBoxEnum.blat), box[4]);
-      box[5] = Math.max(getBBoxValue(bboxes[i], BBoxEnum.balt), box[5]);
+      box[2] = Math.min(BoundingBox.minAltitude(bboxes[i]), box[2]);
+      box[4] = Math.max(BoundingBox.maxLatitude(bboxes[i]), box[4]);
+      box[5] = Math.max(BoundingBox.maxAltitude(bboxes[i]), box[5]);
     }
   }
 
   const merged: [number, number][] = [];
   for (let i = 0; i < bboxes.length; ) {
-    const candidate: [number, number] = [bboxes[i][0], getBBoxValue(bboxes[i], BBoxEnum.blon)];
+    const candidate: [number, number] = [bboxes[i][0], BoundingBox.maxLongitude(bboxes[i])];
 
     // Check if the current candidate holds any other candidate
     let j = i + 1;
@@ -220,9 +258,9 @@ export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox {
       if (!longitudeInClosedInterval(bboxes[j][0], candidate[0], candidate[1])) break;
 
       // We shouldn't update candidate's endpoint if both j-points are in the range
-      const blon = getBBoxValue(bboxes[j], BBoxEnum.blon);
+      const blon = BoundingBox.maxLongitude(bboxes[j]);
       if (!longitudeInClosedInterval(blon, candidate[0], candidate[1]))
-        candidate[1] = getBBoxValue(bboxes[j], BBoxEnum.blon);
+        candidate[1] = BoundingBox.maxLongitude(bboxes[j]);
     }
 
     merged.push(candidate);
@@ -252,32 +290,4 @@ export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox {
     merged[distanceIndex === 0 ? merged.length - 1 : distanceIndex - 1][1];
 
   return box;
-}
-
-/**
- * Converts a bounding box of possible length 6 to a bounding box of length 4.
- * @param bbox - a bounding box.
- * @returns - a bounding box of length 4.
- */
-export function bbox4(bbox: GJ.BBox): GJ.BBox2 {
-  if (bbox.length === 6) {
-    return [bbox[0], bbox[1], bbox[3], bbox[4]];
-  }
-
-  return [...bbox];
-}
-
-/**
- * Computes the center (in longitude and latitude only) of a bounding box
- * @param bbox - a bounding box
- * @returns - the center of the bounding box
- */
-export function bboxCenter(bbox: GJ.BBox): GJ.Position2 {
-  const box = bbox4(bbox);
-  return midpoint([box[0], box[1]], [box[2], box[3]]);
-}
-
-export function bboxCrossesAntimeridian(bbox: GJ.BBox): boolean {
-  const box = bbox4(bbox);
-  return box[0] > box[2];
 }
