@@ -111,7 +111,7 @@ export class Feature<T extends PureObject, PID extends string = string>
     this.properties = copy(properties);
   }
 
-  geometricPrimitive(): GeometricPrimitive {
+  geometricPrimitive() {
     return this.geometry.geometricPrimitive();
   }
 

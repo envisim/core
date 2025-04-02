@@ -307,7 +307,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
     return new FeatureCollection(this.primitive, [], this.propertyRecord.copy(shallow));
   }
 
-  geometricPrimitive(): GeometricPrimitive {
+  geometricPrimitive() {
     return this.primitive;
   }
 
