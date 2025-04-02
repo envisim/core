@@ -11,10 +11,10 @@ export type GeometricPrimitiveUnion =
   | GeometricPrimitiveNone;
 
 export class GeometricPrimitive {
-  static AREA = "gp-area" as const;
-  static LINE = "gp-line" as const;
-  static POINT = "gp-point" as const;
-  static NONE = "gp-none" as const;
+  static AREA = "area" as const;
+  static LINE = "line" as const;
+  static POINT = "point" as const;
+  static NONE = "none" as const;
 
   static isArea(obj: unknown): obj is GeometricPrimitiveArea {
     return obj === GeometricPrimitive.AREA;
