@@ -6,27 +6,34 @@ import { IndexList, KdStore, KdTree } from "../util-classes/index.js";
 import { arrayBack } from "../utils.js";
 import { BaseSampling } from "./base-sampling.js";
 
-export enum PivotalMethod {
-  LPM1,
-  LPM2,
-  LPM1SEARCH,
-  RPM,
-  SPM,
+export namespace PivotalMethod {
+  export type LPM1 = (typeof Pivotal)["LPM1"];
+  export type LPM2 = (typeof Pivotal)["LPM2"];
+  export type LPM1SEARCH = (typeof Pivotal)["LPM1SEARCH"];
+  export type RPM = (typeof Pivotal)["RPM"];
+  export type SPM = (typeof Pivotal)["SPM"];
+  export type UNION = LPM1 | LPM2 | LPM1SEARCH | RPM | SPM;
 }
 
 export class Pivotal extends BaseSampling {
+  static LPM1 = "lpm1" as const;
+  static LPM2 = "lpm2" as const;
+  static LPM1SEARCH = "lpm1-search" as const;
+  static RPM = "rpm" as const;
+  static SPM = "spm" as const;
+
   setDirect: boolean = false;
   setRun: boolean = false;
 
   runInternal!: () => void;
 
-  method: PivotalMethod;
+  method: PivotalMethod.UNION;
 
   pair: [number, number] = [0, 1];
   history: number[] = [];
 
   constructor(
-    method: PivotalMethod,
+    method: PivotalMethod.UNION,
     probabilities: number | number[],
     xx: Matrix | undefined,
     N: number,
@@ -41,19 +48,19 @@ export class Pivotal extends BaseSampling {
     this.probabilities = new Array<number>(N);
 
     switch (this.method) {
-      case PivotalMethod.LPM1:
+      case Pivotal.LPM1:
         this.draw = this.drawLpm1.bind(this);
         break;
-      case PivotalMethod.LPM2:
+      case Pivotal.LPM2:
         this.draw = this.drawLpm2.bind(this);
         break;
-      case PivotalMethod.LPM1SEARCH:
+      case Pivotal.LPM1SEARCH:
         this.draw = this.drawLpm1Search.bind(this);
         break;
-      case PivotalMethod.RPM:
+      case Pivotal.RPM:
         this.draw = this.drawRpm.bind(this);
         break;
-      case PivotalMethod.SPM:
+      case Pivotal.SPM:
         this.draw = this.drawSpm.bind(this);
         break;
       default:
@@ -63,9 +70,9 @@ export class Pivotal extends BaseSampling {
     this.setDraw = true;
 
     switch (this.method) {
-      case PivotalMethod.LPM1:
-      case PivotalMethod.LPM2:
-      case PivotalMethod.LPM1SEARCH:
+      case Pivotal.LPM1:
+      case Pivotal.LPM2:
+      case Pivotal.LPM1SEARCH:
         if (!KdTree.isKDTree(this.tree)) throw new Error("KDTree is not set");
         if (!KdStore.isKDStore(this.store)) throw new Error("KDStore is not set");
     }

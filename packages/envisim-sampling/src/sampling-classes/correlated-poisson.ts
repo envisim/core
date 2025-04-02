@@ -3,27 +3,32 @@ import { Random, type RandomGenerator, randomInt } from "@envisim/random";
 import { BASE_OPTIONS } from "../base-options/index.js";
 import { BaseSampling } from "./base-sampling.js";
 
-export enum CorrelatedPoissonMethod {
-  LCPS,
-  SCPS,
-  SCPSCOORD,
+export namespace CorrelatedPoissonMethod {
+  export type LCPS = (typeof CorrelatedPoisson)["LCPS"];
+  export type SCPS = (typeof CorrelatedPoisson)["SCPS"];
+  export type SCPSCOORD = (typeof CorrelatedPoisson)["SCPSCOORD"];
+  export type UNION = LCPS | SCPS | SCPSCOORD;
 }
 
 type RandomFn = (id: number) => number;
 
 export class CorrelatedPoisson extends BaseSampling {
+  static LCPS = "lcps" as const;
+  static SCPS = "scps" as const;
+  static SCPSCOORD = "scpscoord" as const;
+
   setDirect: boolean = false;
   setRandom: boolean = false;
 
   random: RandomFn = this.randomStd.bind(this);
 
-  method: CorrelatedPoissonMethod;
+  method: CorrelatedPoissonMethod.UNION;
   randomValues!: number[];
 
   drawUnit: number = 0;
 
   constructor(
-    method: CorrelatedPoissonMethod,
+    method: CorrelatedPoissonMethod.UNION,
     probabilities: number[],
     xx: Matrix,
     N: number,
@@ -37,13 +42,13 @@ export class CorrelatedPoisson extends BaseSampling {
     this.method = method;
 
     switch (this.method) {
-      case CorrelatedPoissonMethod.LCPS:
+      case CorrelatedPoisson.LCPS:
         this.draw = this.drawLcps.bind(this);
         break;
-      case CorrelatedPoissonMethod.SCPS:
+      case CorrelatedPoisson.SCPS:
         this.draw = this.drawScps.bind(this);
         break;
-      case CorrelatedPoissonMethod.SCPSCOORD:
+      case CorrelatedPoisson.SCPSCOORD:
         this.draw = this.drawScpsCoord.bind(this);
         break;
       default:

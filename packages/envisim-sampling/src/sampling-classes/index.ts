@@ -1,3 +1,3 @@
-export {CorrelatedPoisson, CorrelatedPoissonMethod} from './correlated-poisson.js';
-export {Cube, CubeMethod} from './cube.js';
-export {Pivotal, PivotalMethod} from './pivotal.js';
+export { CorrelatedPoisson } from "./correlated-poisson.js";
+export { Cube } from "./cube.js";
+export { Pivotal } from "./pivotal.js";
