@@ -346,6 +346,21 @@ export abstract class BaseMatrix {
   }
 
   /**
+   * The range (min-max) of all elements
+   */
+  range(): [number, number] {
+    const range: [number, number] = [this.internal[0], this.internal[0]];
+
+    for (let i = 1; i < this.internal.length; i++) {
+      const v = this.internal[i];
+      if (v < range[0]) range[0] = v;
+      else if (v > range[1]) range[1] = v;
+    }
+
+    return range;
+  }
+
+  /**
    * Sum of all elements
    */
   sum(): number {

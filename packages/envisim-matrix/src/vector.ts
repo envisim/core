@@ -1,11 +1,10 @@
-import {Random, type RandomGenerator, randomArray, randomInt} from '@envisim/random';
-
+import { Random, type RandomGenerator, randomArray, randomInt } from "@envisim/random";
 import {
   BaseMatrix,
   type MatrixCallback,
   type MatrixCallbackCompare,
   type MatrixDim,
-} from './base-matrix.js';
+} from "./base-matrix.js";
 
 export class Vector extends BaseMatrix {
   /**
@@ -19,7 +18,7 @@ export class Vector extends BaseMatrix {
    * @param msg message to pass
    * @throws TypeError if `obj` is not Vector
    */
-  static assert(obj: unknown, msg: string = 'Expected Vector'): asserts obj is Vector {
+  static assert(obj: unknown, msg: string = "Expected Vector"): asserts obj is Vector {
     if (!(obj instanceof Vector)) {
       throw new TypeError(msg);
     }
@@ -29,7 +28,7 @@ export class Vector extends BaseMatrix {
    * @returns a new Vector of size `length` filled with `fill`
    */
   static create(fill: number, length: MatrixDim[0]): Vector {
-    return new Vector(Array.from<number>({length}).fill(fill), true);
+    return new Vector(Array.from<number>({ length }).fill(fill), true);
   }
 
   static borrow(vec: Vector | number[]): number[] {
@@ -93,7 +92,7 @@ export class Vector extends BaseMatrix {
   sortIndex(
     callback: MatrixCallbackCompare = (a: number, b: number) => this.at(a) - this.at(b),
   ): number[] {
-    const idx = Array.from<number>({length: this.len});
+    const idx = Array.from<number>({ length: this.len });
     for (let i = 0; i < this.len; i++) idx[i] = i;
     return idx.sort(callback);
   }
@@ -183,7 +182,7 @@ export class Vector extends BaseMatrix {
    */
   covariance(vec: Vector): number {
     if (!this.hasSizeOf(vec)) {
-      throw new RangeError('vec must be a vector of equal size as this');
+      throw new RangeError("vec must be a vector of equal size as this");
     }
 
     return (
@@ -197,6 +196,49 @@ export class Vector extends BaseMatrix {
    */
   correlation(vec: Vector): number {
     return this.covariance(vec) / Math.sqrt(this.variance() * vec.variance());
+  }
+
+  /**
+   * @returns the values needed in order to construct a histogram
+   * @throws `RangeError` if the provided range is not finite, or in the incorrect order.
+   */
+  histogram(
+    bins: number,
+    range: [number, number] = this.range(),
+  ): { range: [number, number]; bins: number[]; width: number } {
+    bins = Math.ceil(bins);
+
+    if (bins <= 0) {
+      throw new RangeError("bins must be positive");
+    }
+
+    const width = (range[1] - range[0]) / bins;
+
+    if (width < 0.0) {
+      throw new RangeError("range max is smaller than range min");
+    } else if (!Number.isFinite(width)) {
+      throw new RangeError("range is not finite");
+    } else if (width === 0.0) {
+      return {
+        range,
+        bins: [this.internal.reduce((t, v) => (t + v === range[0] ? 1 : 0))],
+        width: 0.0,
+      };
+    }
+
+    const obj = {
+      range,
+      width,
+      bins: Array.from<number>({ length: bins }).fill(0),
+    };
+
+    for (const v of this.internal) {
+      if (v < range[0] || range[1] < v) continue;
+      const i = Math.min(Math.floor((v - range[0]) / width), bins - 1);
+      obj.bins[i] += 1;
+    }
+
+    return obj;
   }
 }
 
@@ -226,15 +268,15 @@ export function randomVector(length: number, rand: RandomGenerator = new Random(
  * @returns A vector of size needed to reach `to`, however not going over it.
  */
 export function sequence(from: number, to: number, by: number = 1.0): Vector {
-  if (by <= 0) throw new RangeError('by must be positive');
+  if (by <= 0) throw new RangeError("by must be positive");
 
   const dim = Math.floor(Math.abs((to - from) / by)) + 1;
 
   if (dim >= 4294967296) {
-    throw new RangeError('by is to small');
+    throw new RangeError("by is to small");
   }
 
-  const s = Array.from<number>({length: dim});
+  const s = Array.from<number>({ length: dim });
   let current = from;
   const b = to < from ? -by : by;
 
