@@ -8,14 +8,11 @@ export {
   rerollPolygons,
 } from "./antimeridian.js";
 export {
-  bbox4,
-  bboxCenter,
-  bboxCrossesAntimeridian,
   bboxFromPositions,
   bboxFromPositionsUnwrapped,
   bboxInBBox,
+  BoundingBox,
   getPositionsForCircle,
-  pointInBBox,
   unionOfBBoxes,
 } from "./bbox.js";
 export { IntersectList } from "./class-intersects.js";
@@ -23,10 +20,12 @@ export { Segment, segmentsToPolygon, ringToSegments } from "./class-segment.js";
 export { copyCoordinates } from "./coordinates.js";
 export {
   GeometricPrimitive,
-  getPrimitiveOfGeometry,
-  getPrimitiveOfFeature,
-  getPrimitiveOfCollection,
-} from "./enum-geometric-primitive.js";
+  type GeometricPrimitiveArea,
+  type GeometricPrimitiveLine,
+  type GeometricPrimitivePoint,
+  type GeometricPrimitiveNone,
+  type GeometricPrimitiveUnion,
+} from "./geometric-primitive.js";
 export { intersectPolygons } from "./intersect-polygons.js";
 export { lengthOfLineString } from "./length.js";
 export { pointInSinglePolygonPosition, pointInMultiPolygonPosition } from "./point-in-polygon.js";

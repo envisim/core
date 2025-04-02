@@ -21,13 +21,13 @@ export class Feature<T extends PureObject, PID extends string = string>
   properties: FeatureProperties<PID>;
 
   static isArea(obj: unknown): obj is Feature<AreaObject> {
-    return obj instanceof Feature && obj.geometricPrimitive() === GeometricPrimitive.AREA;
+    return obj instanceof Feature && GeometricPrimitive.isArea(obj.geometricPrimitive());
   }
   static isLine(obj: unknown): obj is Feature<LineObject> {
-    return obj instanceof Feature && obj.geometricPrimitive() === GeometricPrimitive.LINE;
+    return obj instanceof Feature && GeometricPrimitive.isLine(obj.geometricPrimitive());
   }
   static isPoint(obj: unknown): obj is Feature<PointObject> {
-    return obj instanceof Feature && obj.geometricPrimitive() === GeometricPrimitive.POINT;
+    return obj instanceof Feature && GeometricPrimitive.isPoint(obj.geometricPrimitive());
   }
 
   static assertArea(
@@ -111,7 +111,7 @@ export class Feature<T extends PureObject, PID extends string = string>
     this.properties = copy(properties);
   }
 
-  geometricPrimitive(): GeometricPrimitive {
+  geometricPrimitive() {
     return this.geometry.geometricPrimitive();
   }
 

@@ -1,4 +1,4 @@
-import { bboxCenter, azimuthalEquidistant, PlateCarree } from "@envisim/geojson-utils";
+import { BoundingBox, azimuthalEquidistant, PlateCarree } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 
 // The centroid is the geographic center that minimizes the mean squared
@@ -36,7 +36,7 @@ export function centroidFromMultipleCentroids(
   bbox: GJ.BBox,
   iterations: number = 2,
 ): WeightedCentroid {
-  let center = bboxCenter(bbox);
+  let center = BoundingBox.center(bbox);
   let total = 0.0;
   for (let i = 0; i < iterations; i++) {
     const proj = azimuthalEquidistant(center);
@@ -91,7 +91,7 @@ function centroidOfRing(
   bbox: GJ.BBox,
   iterations: number = 2,
 ): WeightedCentroid {
-  let center = bboxCenter(bbox);
+  let center = BoundingBox.center(bbox);
   let A = 0.0;
   for (let i = 0; i < iterations; i++) {
     const proj = azimuthalEquidistant(center);

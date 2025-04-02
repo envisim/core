@@ -5,7 +5,7 @@ import {
   PropertyRecord,
   type PureObject,
 } from "@envisim/geojson";
-import { bbox4, longitudeCenter } from "@envisim/geojson-utils";
+import { BoundingBox, longitudeCenter } from "@envisim/geojson-utils";
 import { Matrix, Vector } from "@envisim/matrix";
 import { type OptionsBase } from "./options.js";
 
@@ -89,7 +89,7 @@ export function spreadMatrixFromLayer<G extends PureObject, P extends string>(
 
     collection.forEach((f, i) => {
       const bbox = f.geometry.getBBox();
-      const box4 = bbox4(bbox);
+      const box4 = BoundingBox.removeAltitude(bbox);
       lat[i] = (box4[1] + box4[3]) / 2.0;
       lon[i] = longitudeCenter(box4[0], box4[2]);
       if (bbox.length === 6) {

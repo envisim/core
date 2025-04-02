@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { bboxFromPositions, bboxInBBox, pointInBBox, unionOfBBoxes } from "../src/bbox.js";
+import { bboxFromPositions, bboxInBBox, BoundingBox, unionOfBBoxes } from "../src/bbox.js";
 import * as GJ from "../src/geojson.js";
 
 // the bounding box
@@ -17,10 +17,10 @@ const box2: GJ.BBox = [-1, -1, 0.5, 0.5];
 const box3: GJ.BBox = [-1, -1, -0.5, -0.5];
 
 test("pointInBBox", () => {
-  expect(pointInBBox(p1, box)).toBe(true);
-  expect(pointInBBox(p2, box)).toBe(false);
-  expect(pointInBBox(p3, box)).toBe(true);
-  expect(pointInBBox(p4, box)).toBe(true);
+  expect(BoundingBox.includesPoint(box, p1)).toBe(true);
+  expect(BoundingBox.includesPoint(box, p2)).toBe(false);
+  expect(BoundingBox.includesPoint(box, p3)).toBe(true);
+  expect(BoundingBox.includesPoint(box, p4)).toBe(true);
 });
 
 test("bboxInBBox", () => {

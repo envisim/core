@@ -5,12 +5,14 @@ import { BASE_OPTIONS } from "../base-options/index.js";
 import { KdStore, KdTree } from "../util-classes/index.js";
 import { BaseSampling } from "./base-sampling.js";
 
-export enum CubeMethod {
-  CUBE,
-  LCUBE,
-}
+type CUBE = (typeof Cube)["CUBE"];
+type LCUBE = (typeof Cube)["LCUBE"];
+type CubeMethod = CUBE | LCUBE;
 
 export class Cube extends BaseSampling {
+  static CUBE = "cube" as const;
+  static LCUBE = "lcube" as const;
+
   setDirect: boolean = false;
 
   method: CubeMethod;
@@ -41,10 +43,10 @@ export class Cube extends BaseSampling {
     this.pbalance = xxbalance.ncol;
 
     switch (this.method) {
-      case CubeMethod.CUBE:
+      case Cube.CUBE:
         this.draw = this.drawCube.bind(this);
         break;
-      case CubeMethod.LCUBE:
+      case Cube.LCUBE:
         this.draw = this.drawLcube.bind(this);
         if (!Matrix.isMatrix(xxspread)) throw new Error("xxspread is not Matrix");
         this.tree = new KdTree(xxspread, treeBucketSize);

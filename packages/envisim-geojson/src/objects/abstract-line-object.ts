@@ -9,7 +9,7 @@ export abstract class AbstractLineObject<
     super(obj, shallow);
   }
 
-  geometricPrimitive(): GeometricPrimitive.LINE {
+  geometricPrimitive() {
     return GeometricPrimitive.LINE;
   }
   measure(): number {

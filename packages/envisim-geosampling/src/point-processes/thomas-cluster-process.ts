@@ -1,6 +1,6 @@
 import { Normal, Poisson } from "@envisim/distributions";
 import { type AreaObject, FeatureCollection, Point, Polygon } from "@envisim/geojson";
-import { Geodesic, bbox4, pointInBBox } from "@envisim/geojson-utils";
+import { Geodesic, BoundingBox } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { Random } from "@envisim/random";
 import { samplePositionsInBbox } from "../sample-continuous/index.js";
@@ -61,7 +61,7 @@ export function thomasClusterProcess(
     rand = new Random(),
   }: ThomasClusterProcessOptions,
 ): FeatureCollection<Point, never> {
-  const box = bbox4(collection.getBBox());
+  const box = BoundingBox.removeAltitude(collection.getBBox());
   // Extend box by 4 * sigmaOfCluster to avoid edge effects.
   // Same as spatstat default in R.
   const dist = Math.SQRT2 * 4 * sigmaOfCluster;
@@ -98,7 +98,7 @@ export function thomasClusterProcess(
       // Create random child point in cluster.
       const coordinates = randomPositionInCluster(coords, sigmaOfCluster, rand);
       // If child is in input collection, then push child.
-      if (pointInBBox(coordinates, box)) {
+      if (BoundingBox.includesPoint(box, coordinates)) {
         for (let j = 0; j < nrOfFeatures; j++) {
           const geom = collection.features[j].geometry;
           if (geom.includesPosition(coordinates)) {

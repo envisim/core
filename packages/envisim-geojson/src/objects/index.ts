@@ -1,4 +1,10 @@
-import type { GeometricPrimitive } from "@envisim/geojson-utils";
+import type {
+  GeometricPrimitiveArea,
+  GeometricPrimitiveLine,
+  GeometricPrimitiveNone,
+  GeometricPrimitivePoint,
+  GeometricPrimitiveUnion,
+} from "@envisim/geojson-utils";
 import { Circle } from "./class-circle.js";
 import { LineString } from "./class-linestring.js";
 import { MultiCircle } from "./class-multicircle.js";
@@ -57,16 +63,16 @@ export type RetractingObject<G extends PureObject> = //
 
 export type PrimitiveOfObject<T extends AreaObject | LineObject | PointObject> =
   T extends AreaObject
-    ? GeometricPrimitive.AREA
+    ? GeometricPrimitiveArea
     : T extends LineObject
-      ? GeometricPrimitive.LINE
+      ? GeometricPrimitiveLine
       : T extends PointObject
-        ? GeometricPrimitive.POINT
-        : GeometricPrimitive.NONE;
-export type ObjectOfPrimitive<T extends GeometricPrimitive> = T extends GeometricPrimitive.AREA
+        ? GeometricPrimitivePoint
+        : GeometricPrimitiveNone;
+export type ObjectOfPrimitive<T extends GeometricPrimitiveUnion> = T extends GeometricPrimitiveArea
   ? AreaObject
-  : T extends GeometricPrimitive.LINE
+  : T extends GeometricPrimitiveLine
     ? LineObject
-    : T extends GeometricPrimitive.POINT
+    : T extends GeometricPrimitivePoint
       ? PointObject
       : never;

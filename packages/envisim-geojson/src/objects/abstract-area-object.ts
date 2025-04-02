@@ -9,7 +9,7 @@ export abstract class AbstractAreaObject<
     super(obj, shallow);
   }
 
-  geometricPrimitive(): GeometricPrimitive.AREA {
+  geometricPrimitive() {
     return GeometricPrimitive.AREA;
   }
   measure(): number {

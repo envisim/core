@@ -1,6 +1,6 @@
 import {
   bboxFromPositions,
-  bboxCrossesAntimeridian,
+  BoundingBox,
   moveCoordsAroundEarth,
   Geodesic,
 } from "@envisim/geojson-utils";
@@ -167,7 +167,7 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
     const polys = this.toPolygon({ pointsPerCircle: opts.steps * 4 }) as MultiPolygon | null;
     if (polys === null) return null;
 
-    if (bboxCrossesAntimeridian(this.getBBox())) {
+    if (BoundingBox.includesAntimeridian(this.getBBox())) {
       return bufferPolygons(
         polys.coordinates.map((r) => r.map(moveCoordsAroundEarth)),
         opts,

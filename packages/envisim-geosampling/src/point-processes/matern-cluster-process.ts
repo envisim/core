@@ -1,6 +1,6 @@
 import { Poisson } from "@envisim/distributions";
 import { type AreaObject, FeatureCollection, Point, Polygon } from "@envisim/geojson";
-import { Geodesic, bbox4, pointInBBox } from "@envisim/geojson-utils";
+import { Geodesic, BoundingBox } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { Random } from "@envisim/random";
 import { samplePositionsInBbox } from "../sample-continuous/index.js";
@@ -56,7 +56,7 @@ export function maternClusterProcess(
     rand = new Random(),
   }: MaternClusterProcessOptions,
 ): FeatureCollection<Point, never> {
-  const box = bbox4(collection.getBBox());
+  const box = BoundingBox.removeAltitude(collection.getBBox());
   // Expand box by radius of cluster, as parent points should
   // be allowed outside of area. This is to avoid edge effects.
   const dist = Math.SQRT2 * radiusOfCluster;
@@ -93,7 +93,7 @@ export function maternClusterProcess(
       // Create random child point in cluster.
       const coordinates = randomPositionInCluster(coords, radiusOfCluster, rand);
       // If child is in input collection, then push child.
-      if (pointInBBox(coordinates, box)) {
+      if (BoundingBox.includesPoint(box, coordinates)) {
         for (let j = 0; j < nrOfFeatures; j++) {
           const geom = collection.features[j].geometry;
           if (geom.includesPosition(coordinates)) {

@@ -9,7 +9,7 @@ export abstract class AbstractPointObject<
     super(obj, shallow);
   }
 
-  geometricPrimitive(): GeometricPrimitive.POINT {
+  geometricPrimitive() {
     return GeometricPrimitive.POINT;
   }
   measure(): number {

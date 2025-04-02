@@ -1,6 +1,6 @@
 import {
   moveCoordsAroundEarth,
-  bboxCrossesAntimeridian,
+  BoundingBox,
   bboxFromPositions,
   unionOfBBoxes,
   Segment,
@@ -95,7 +95,7 @@ export class MultiLineString
     const opts = defaultBufferOptions(options);
     if (opts.distance <= 0.0) return null;
 
-    if (bboxCrossesAntimeridian(this.getBBox())) {
+    if (BoundingBox.includesAntimeridian(this.getBBox())) {
       return bufferPolygons(this.coordinates.map(moveCoordsAroundEarth).map(lineToRing), opts);
     }
 

@@ -3,15 +3,18 @@ import { Random, type RandomGenerator, randomInt } from "@envisim/random";
 import { BASE_OPTIONS } from "../base-options/index.js";
 import { BaseSampling } from "./base-sampling.js";
 
-export enum CorrelatedPoissonMethod {
-  LCPS,
-  SCPS,
-  SCPSCOORD,
-}
+type LCPS = (typeof CorrelatedPoisson)["LCPS"];
+type SCPS = (typeof CorrelatedPoisson)["SCPS"];
+type SCPSCOORD = (typeof CorrelatedPoisson)["SCPSCOORD"];
+type CorrelatedPoissonMethod = LCPS | SCPS | SCPSCOORD;
 
 type RandomFn = (id: number) => number;
 
 export class CorrelatedPoisson extends BaseSampling {
+  static LCPS = "lcps" as const;
+  static SCPS = "scps" as const;
+  static SCPSCOORD = "scpscoord" as const;
+
   setDirect: boolean = false;
   setRandom: boolean = false;
 
@@ -37,13 +40,13 @@ export class CorrelatedPoisson extends BaseSampling {
     this.method = method;
 
     switch (this.method) {
-      case CorrelatedPoissonMethod.LCPS:
+      case CorrelatedPoisson.LCPS:
         this.draw = this.drawLcps.bind(this);
         break;
-      case CorrelatedPoissonMethod.SCPS:
+      case CorrelatedPoisson.SCPS:
         this.draw = this.drawScps.bind(this);
         break;
-      case CorrelatedPoissonMethod.SCPSCOORD:
+      case CorrelatedPoisson.SCPSCOORD:
         this.draw = this.drawScpsCoord.bind(this);
         break;
       default:
