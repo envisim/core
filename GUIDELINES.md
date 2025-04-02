@@ -3,9 +3,9 @@ Naming is based on [Google Style Guide](https://google.github.io/styleguide/tsgu
 
 | Style            | Category                                                           |
 |------------------|--------------------------------------------------------------------|
-| `UpperCamelCase` | class / interface / type / decorator / type parameters      |
+| `UpperCamelCase` | class / interface / type / decorator / type parameters             |
 | `lowerCamelCase` | variable / parameter / function / method / property / module alias |
-| `CONSTANT_CASE`  | global constant values, including enum values                      |
+| `CONSTANT_CASE`  | global constant values                                             |
 | `#ident`         | private identifiers are never used.                                |
 
 ### File names
