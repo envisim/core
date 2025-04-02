@@ -3,12 +3,10 @@ import { Random, type RandomGenerator, randomInt } from "@envisim/random";
 import { BASE_OPTIONS } from "../base-options/index.js";
 import { BaseSampling } from "./base-sampling.js";
 
-export namespace CorrelatedPoissonMethod {
-  export type LCPS = (typeof CorrelatedPoisson)["LCPS"];
-  export type SCPS = (typeof CorrelatedPoisson)["SCPS"];
-  export type SCPSCOORD = (typeof CorrelatedPoisson)["SCPSCOORD"];
-  export type UNION = LCPS | SCPS | SCPSCOORD;
-}
+type LCPS = (typeof CorrelatedPoisson)["LCPS"];
+type SCPS = (typeof CorrelatedPoisson)["SCPS"];
+type SCPSCOORD = (typeof CorrelatedPoisson)["SCPSCOORD"];
+type CorrelatedPoissonMethod = LCPS | SCPS | SCPSCOORD;
 
 type RandomFn = (id: number) => number;
 
@@ -22,13 +20,13 @@ export class CorrelatedPoisson extends BaseSampling {
 
   random: RandomFn = this.randomStd.bind(this);
 
-  method: CorrelatedPoissonMethod.UNION;
+  method: CorrelatedPoissonMethod;
   randomValues!: number[];
 
   drawUnit: number = 0;
 
   constructor(
-    method: CorrelatedPoissonMethod.UNION,
+    method: CorrelatedPoissonMethod,
     probabilities: number[],
     xx: Matrix,
     N: number,

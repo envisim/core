@@ -6,14 +6,12 @@ import { IndexList, KdStore, KdTree } from "../util-classes/index.js";
 import { arrayBack } from "../utils.js";
 import { BaseSampling } from "./base-sampling.js";
 
-export namespace PivotalMethod {
-  export type LPM1 = (typeof Pivotal)["LPM1"];
-  export type LPM2 = (typeof Pivotal)["LPM2"];
-  export type LPM1SEARCH = (typeof Pivotal)["LPM1SEARCH"];
-  export type RPM = (typeof Pivotal)["RPM"];
-  export type SPM = (typeof Pivotal)["SPM"];
-  export type UNION = LPM1 | LPM2 | LPM1SEARCH | RPM | SPM;
-}
+type LPM1 = (typeof Pivotal)["LPM1"];
+type LPM2 = (typeof Pivotal)["LPM2"];
+type LPM1SEARCH = (typeof Pivotal)["LPM1SEARCH"];
+type RPM = (typeof Pivotal)["RPM"];
+type SPM = (typeof Pivotal)["SPM"];
+type PivotalMethod = LPM1 | LPM2 | LPM1SEARCH | RPM | SPM;
 
 export class Pivotal extends BaseSampling {
   static LPM1 = "lpm1" as const;
@@ -27,13 +25,13 @@ export class Pivotal extends BaseSampling {
 
   runInternal!: () => void;
 
-  method: PivotalMethod.UNION;
+  method: PivotalMethod;
 
   pair: [number, number] = [0, 1];
   history: number[] = [];
 
   constructor(
-    method: PivotalMethod.UNION,
+    method: PivotalMethod,
     probabilities: number | number[],
     xx: Matrix | undefined,
     N: number,
