@@ -9,6 +9,7 @@ export {
   isPointGeometry,
   isLineGeometry,
   isBaseGeometry,
+  isSingleTypeGeometry,
 } from "./objects.js";
-export { isBaseFeature } from "./feature.js";
-export { isBaseCollection } from "./collection.js";
+export { isBaseFeature, isSingleTypeFeature, checkProperties } from "./feature.js";
+export { isBaseCollection, isSingleTypeCollection, isUniformCollection } from "./collection.js";
