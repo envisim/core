@@ -35,9 +35,17 @@ export function isCircleish(
   );
 }
 
+export function isSingleTypeGeometry(
+  obj: unknown,
+  checkCoordinates: boolean = false,
+): obj is GJ.SingleTypeObject {
+  return isBaseGeometry(obj, checkCoordinates, false);
+}
+
 export function isBaseGeometry(
   obj: unknown,
   checkCoordinates: boolean = false,
+  allowGC: boolean = true,
 ): obj is GJ.BaseGeometry {
   if (typeof obj !== "object" || obj === null || Array.isArray(obj)) return false;
   if (!("type" in obj)) return false;
@@ -55,6 +63,7 @@ export function isBaseGeometry(
       return "coordinates" in obj && (!checkCoordinates || isPositionArr3(obj.coordinates));
     case "GeometryCollection":
       return (
+        allowGC &&
         "geometries" in obj &&
         Array.isArray(obj.geometries) &&
         obj.geometries.every((g) => isBaseGeometry(g, checkCoordinates))
