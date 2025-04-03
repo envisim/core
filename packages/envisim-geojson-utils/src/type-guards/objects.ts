@@ -35,13 +35,6 @@ export function isCircleish(
   );
 }
 
-export function isSingleTypeGeometry(
-  obj: unknown,
-  checkCoordinates: boolean = false,
-): obj is GJ.SingleTypeObject {
-  return isBaseGeometry(obj, checkCoordinates, false);
-}
-
 export function isBaseGeometry(
   obj: unknown,
   checkCoordinates: boolean = false,
@@ -80,4 +73,11 @@ export function isLineGeometry(obj: GJ.BaseGeometry): obj is GJ.LineGeometry {
 }
 export function isPointGeometry(obj: GJ.BaseGeometry): obj is GJ.PointGeometry {
   return GeometricPrimitive.isPoint(GeometricPrimitive.fromGeometry(obj, false));
+}
+
+export function isSingleTypeGeometry(
+  obj: unknown,
+  checkCoordinates: boolean = false,
+): obj is GJ.SingleTypeObject {
+  return isBaseGeometry(obj, checkCoordinates, false);
 }
