@@ -1,5 +1,6 @@
 {
   "name": "@envisim/geosampling",
+  "version": "0.0.0",
   "type": "module",
   "exports": {
     ".": "./dist/errors/index.js",
