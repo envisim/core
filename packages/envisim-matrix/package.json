@@ -12,8 +12,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/random": "workspace:*",
-    "@envisim/utils": "workspace:*"
+    "@envisim/random": "workspace:^0.0.0",
+    "@envisim/utils": "workspace:^0.0.0"
   },
   "devDependencies": {
     "@envisim/config-eslint": "workspace:*",

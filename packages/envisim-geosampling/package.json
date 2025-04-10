@@ -21,13 +21,13 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/distributions": "workspace:*",
-    "@envisim/geojson": "workspace:*",
-    "@envisim/geojson-utils": "workspace:*",
-    "@envisim/matrix": "workspace:*",
-    "@envisim/random": "workspace:*",
-    "@envisim/sampling": "workspace:*",
-    "@envisim/utils": "workspace:*",
+    "@envisim/distributions": "workspace:^0.0.0",
+    "@envisim/geojson": "workspace:^0.0.0",
+    "@envisim/geojson-utils": "workspace:^0.0.0",
+    "@envisim/matrix": "workspace:^0.0.0",
+    "@envisim/random": "workspace:^0.0.0",
+    "@envisim/sampling": "workspace:^0.0.0",
+    "@envisim/utils": "workspace:^0.0.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

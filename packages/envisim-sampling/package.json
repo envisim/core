@@ -12,9 +12,9 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/matrix": "workspace:*",
-    "@envisim/random": "workspace:*",
-    "@envisim/utils": "workspace:*"
+    "@envisim/matrix": "workspace:^0.0.0",
+    "@envisim/random": "workspace:^0.0.0",
+    "@envisim/utils": "workspace:^0.0.0"
   },
   "devDependencies": {
     "@envisim/config-eslint": "workspace:*",
