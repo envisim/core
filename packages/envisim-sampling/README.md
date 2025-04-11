@@ -28,7 +28,7 @@ import { srswor } from '@envisim/sampling';
 
 // Example usage simple random sampling without replacement
 const sample = srswor(5,10);
-console.log(result);
+console.log(sample);
 ```
 
 ## Available Designs
