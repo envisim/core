@@ -23,20 +23,3 @@ Each package has its own `README.md` file with more information on installation 
 ## Installation and Development
 
 This repository uses [pnpm](https://pnpm.io/) as the package manager and [Turbo](https://turbo.build/) for managing the monorepo build process.
-
-To install dependencies and set up the monorepo for development:
-
-```bash
-pnpm install
-```
-
-## Available Scripts
-
-The following scripts can be run from the root directory:
-
-*   `pnpm build`: Builds all packages using Turbo.
-*   `pnpm lint`: Lints all packages using ESLint.
-*   `pnpm test`: Runs tests for all packages using Vitest.
-
-You can also run these scripts within individual package directories.
-
