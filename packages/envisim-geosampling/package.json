@@ -1,5 +1,6 @@
 {
   "name": "@envisim/geosampling",
+  "version": "0.0.0",
   "type": "module",
   "exports": {
     ".": "./dist/errors/index.js",
@@ -20,20 +21,20 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/distributions": "workspace:*",
-    "@envisim/geojson": "workspace:*",
-    "@envisim/geojson-utils": "workspace:*",
-    "@envisim/matrix": "workspace:*",
-    "@envisim/random": "workspace:*",
-    "@envisim/sampling": "workspace:*",
-    "@envisim/utils": "workspace:*",
+    "@envisim/distributions": "workspace:^0.0.0",
+    "@envisim/geojson": "workspace:^0.0.0",
+    "@envisim/geojson-utils": "workspace:^0.0.0",
+    "@envisim/matrix": "workspace:^0.0.0",
+    "@envisim/random": "workspace:^0.0.0",
+    "@envisim/sampling": "workspace:^0.0.0",
+    "@envisim/utils": "workspace:^0.0.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@envisim/config-eslint": "workspace:*",
     "@envisim/config-ts": "workspace:*",
-    "eslint": "^9.23.0",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.9"
+    "eslint": "^9.24.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1"
   }
 }

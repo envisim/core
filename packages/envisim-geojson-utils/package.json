@@ -1,5 +1,6 @@
 {
   "name": "@envisim/geojson-utils",
+  "version": "0.0.0",
   "type": "module",
   "exports": {
     ".": "./dist/index.js",
@@ -18,14 +19,14 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/utils": "workspace:*",
+    "@envisim/utils": "workspace:^0.0.0",
     "geographiclib-geodesic": "^2.1.1"
   },
   "devDependencies": {
     "@envisim/config-eslint": "workspace:*",
     "@envisim/config-ts": "workspace:*",
-    "eslint": "^9.23.0",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.9"
+    "eslint": "^9.24.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1"
   }
 }

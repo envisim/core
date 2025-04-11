@@ -1,5 +1,6 @@
 {
   "name": "@envisim/distributions",
+  "version": "0.0.0",
   "type": "module",
   "main": "./dist/index.js",
   "files": [
@@ -11,13 +12,13 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/random": "workspace:*"
+    "@envisim/random": "workspace:^0.0.0"
   },
   "devDependencies": {
     "@envisim/config-eslint": "workspace:*",
     "@envisim/config-ts": "workspace:*",
-    "eslint": "^9.23.0",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.9"
+    "eslint": "^9.24.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1"
   }
 }
