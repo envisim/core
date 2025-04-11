@@ -15,6 +15,7 @@
     "outDir": "${configDir}/dist",
     "allowJs": true,
     "checkJs": true,
+    "erasableSyntaxOnly": true,
     "verbatimModuleSyntax": true,
     "target": "es2022",
     "skipLibCheck": true
