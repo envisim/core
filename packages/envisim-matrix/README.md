@@ -1,8 +1,6 @@
 # @envisim/matrix
 
-This package is part of the [`@envisim/core`](../../) monorepo.
-
-A TypeScript library for matrix operations, providing classes and methods for working with matrices and vectors.
+A TypeScript library for matrix operations, providing classes and methods for working with matrices and vectors. This package is part of the [`@envisim/core`](../../) monorepo.
 
 ## Installation
 
