@@ -1,6 +1,7 @@
 {
   "name": "@envisim/config-ts",
   "version": "0.0.0",
+  "license": "MIT",
   "contributors": [
     "Anton Grafström <anton.grafstrom@gmail.com>",
     "Wilmer Prentius <wilmer.prentius@gmail.com>"
