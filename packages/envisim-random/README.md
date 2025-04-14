@@ -1,31 +1,26 @@
-# envisim/random
+[![npm package](https://img.shields.io/npm/v/@envisim/random?label=%40envisim%2Frandom)](https://npmjs.com/package/@envisim/random)
 
-A TypeScript library with a seedable high-entropy random number generator. This package is part of the [`@envisim/core`](../..) monorepo.
+# @envisim/random
+
+A TypeScript library with a seedable high-entropy random number generator.
+
+Implements the Gibson Research Corporations [UHE PRNG](https://www.grc.com/otg/uheprng.htm)
+algorithm.
 
 ## Installation
 
-Within the monorepo, this package is typically linked via the pnpm workspace.
-
-For external use, install it using your preferred package manager:
-
 ```bash
-# npm
 npm install @envisim/random
-
-# yarn
-yarn add @envisim/random
-
-# pnpm
-pnpm add @envisim/random
 ```
+
 ## Usage
 
 Here's an example of how to use the package:
 
 ```typescript
-import { Random } from '@envisim/random';
+import { Random } from "@envisim/random";
 
 // Example usage with seed
-const rand = new Random(12345); 
+const rand = new Random(12345);
 console.log(rand.random());
 ```

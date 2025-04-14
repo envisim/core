@@ -1,22 +1,13 @@
-# envisim-sampling
+[![npm package](https://img.shields.io/npm/v/@envisim/sampling?label=%40envisim%2Fsampling)](https://npmjs.com/package/@envisim/sampling)
 
-A TypeScript library for finite population sampling. This package is part of the [`@envisim/core`](../..) monorepo.
+# @envisim/sampling
+
+A TypeScript library for finite population sampling.
 
 ## Installation
 
-Within the monorepo, this package is typically linked via the pnpm workspace.
-
-For external use, install it using your preferred package manager:
-
 ```bash
-# npm
 npm install @envisim/sampling
-
-# yarn
-yarn add @envisim/sampling
-
-# pnpm
-pnpm add @envisim/sampling
 ```
 
 ## Usage

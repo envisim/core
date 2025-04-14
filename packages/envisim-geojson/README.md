@@ -1,27 +1,18 @@
-# envisim/geojson
+[![npm package](https://img.shields.io/npm/v/@envisim/geojson?label=%40envisim%2Fgeojson)](https://npmjs.com/package/@envisim/geojson)
 
-A TypeScript library that provides functionality for working with GeoJSON data. This package is part of the [`@envisim/core`](../..) monorepo.
+# @envisim/geojson
+
+A TypeScript library that provides functionality for working with GeoJSON data.
 
 ## Installation
 
-Within the monorepo, this package is typically linked via the pnpm workspace.
-
-For external use, install it using your preferred package manager:
-
 ```bash
-# npm
 npm install @envisim/geojson
-
-# yarn
-yarn add @envisim/geojson
-
-# pnpm
-pnpm add @envisim/geojson
 ```
 
 ## Usage
 
-Here's a basic example of creating a GeoJSON Point feature:
+Example of creating a GeoJSON Point feature:
 
 ```typescript
 import { Point, Feature } from "@envisim/geojson";

@@ -17,7 +17,6 @@ logs
 
 # Local files
 dist
-*.md
 LICENSE
 .eslintignore
 .prettierignore

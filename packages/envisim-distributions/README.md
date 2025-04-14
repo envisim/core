@@ -1,25 +1,14 @@
+[![npm package](https://img.shields.io/npm/v/@envisim/distributions?label=%40envisim%2Fdistributions)](https://npmjs.com/package/@envisim/distributions)
+
 # @envisim/distributions
 
-A TypeScript library for working with various probability distributions. This package is part of the [`@envisim/core`](../..) monorepo.
+A TypeScript library for working with various probability distributions.
 
 ## Installation
 
-Within the monorepo, this package is typically linked via the pnpm workspace.
-
-For external use, install it using your preferred package manager:
-
 ```bash
-# npm
 npm install @envisim/distributions @envisim/random
-
-# yarn
-yarn add @envisim/distributions @envisim/random
-
-# pnpm
-pnpm add @envisim/distributions @envisim/random
 ```
-
-Note: This package has a peer dependency on `@envisim/random` for random number generation, so ensure it's also installed.
 
 ## Usage
 

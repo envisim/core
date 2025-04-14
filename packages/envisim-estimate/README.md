@@ -1,29 +1,18 @@
-# envisim/estimate
+[![npm package](https://img.shields.io/npm/v/@envisim/estimate?label=%40envisim%2Festimate)](https://npmjs.com/package/@envisim/estimate)
 
-A TypeScript library that provides functionality for estimating various parameters. This package is part of the [`@envisim/core`](../..) monorepo.
+# @envisim/estimate
 
-## Installation
-
-Within the monorepo, this package is typically linked via the pnpm workspace.
-
-For external use, install it using your preferred package manager:
-
-```bash
-# npm
-npm install @envisim/estimate
-
-# yarn
-yarn add @envisim/estimate
-
-# pnpm
-pnpm add @envisim/estimate
-```
-
-## Usage
+A TypeScript library that provides functionality for estimating various parameters.
 
 This package provides various statistical estimators, often used in conjunction with sampling designs from `@envisim/sampling`.
 
-### Horvitz-Thompson Estimator
+## Installation
+
+```bash
+npm install @envisim/estimate
+```
+
+## Usage
 
 The Horvitz-Thompson (HT) estimator is used to estimate the population total of a variable when units are sampled with unequal inclusion probabilities.
 

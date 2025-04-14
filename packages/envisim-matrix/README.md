@@ -1,27 +1,16 @@
+[![npm package](https://img.shields.io/npm/v/@envisim/matrix?label=%40envisim%2Fmatrix)](https://npmjs.com/package/@envisim/matrix)
+
 # @envisim/matrix
 
-A TypeScript library for matrix operations, providing classes and methods for working with matrices and vectors. This package is part of the [`@envisim/core`](../../) monorepo.
+A TypeScript library for matrix operations, providing classes and methods for working with matrices and vectors.
 
 ## Installation
 
-Within the monorepo, this package is typically linked via the pnpm workspace.
-
-For external use, install it using your preferred package manager:
-
 ```bash
-# npm
 npm install @envisim/matrix
-
-# yarn
-yarn add @envisim/matrix
-
-# pnpm
-pnpm add @envisim/matrix
 ```
 
 ## Usage
-
-Create and manipulate matrices and vectors.
 
 The `Matrix` constructor takes a flat array of numbers in **column-major order** (all elements of the first column, then all elements of the second column, etc.) and the number of rows.
 
@@ -54,14 +43,4 @@ const identity = new Matrix([1, 0, 0, 1], 2); // 2x2 Identity matrix
 const result = matrix.mmult(identity);
 console.log('Multiplication result data (column-major):', result.slice()); // Output: Multiplication result data (column-major): [ 5, -1, 1, 2 ]
 ```
-
-## API Overview
-
-### Matrix Operations
-
-*   `Matrix` class with methods for various matrix operations
-
-### Vector Operations
-
-*   `Vector` class with methods for vector operations
 

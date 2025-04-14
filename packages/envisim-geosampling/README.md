@@ -1,27 +1,18 @@
-# envisim/geosampling
+[![npm package](https://img.shields.io/npm/v/@envisim/geosampling?label=%40envisim%2Fgeosampling)](https://npmjs.com/package/@envisim/geosampling)
 
-A TypeScript library with functions for spatial sampling. This package is part of the [`@envisim/core`](../..) monorepo.
+# @envisim/geosampling
+
+A TypeScript library with functions for spatial sampling.
+
+This package provides functions for various spatial sampling techniques.
 
 ## Installation
 
-Within the monorepo, this package is typically linked via the pnpm workspace.
-
-For external use, install it using your preferred package manager:
-
 ```bash
-# npm
 npm install @envisim/geosampling
-
-# yarn
-yarn add @envisim/geosampling
-
-# pnpm
-pnpm add @envisim/geosampling
 ```
 
 ## Usage
-
-This package provides functions for various spatial sampling techniques. One example below.
 
 ### Sampling Area Features on Areas
 
@@ -30,7 +21,11 @@ You can sample fixed-size area plots within a collection of areas defined in WGS
 ```typescript
 import { Feature, FeatureCollection } from "@envisim/geojson";
 // Import functions to define model geometry (in meters) and perform sampling
-import { rectangularAreaGeometry, sampleAreaFeaturesOnAreas, SampleFeaturesOnAreasOptions } from "@envisim/geosampling";
+import {
+  rectangularAreaGeometry,
+  sampleAreaFeaturesOnAreas,
+  SampleFeaturesOnAreasOptions,
+} from "@envisim/geosampling";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { Random } from "@envisim/random";
 
@@ -63,4 +58,3 @@ const sample = sampleAreaFeaturesOnAreas(frame, {
 1.  We create a `FeatureCollection` containing the area where sampling will occur, using WGS84 longitude and latitude coordinates.
 2.  We define the shape and size (model geometry) of the individual sample plots using functions like `rectangularAreaGeometry`. These dimensions are specified in **meters**.
 3.  The `sampleAreaFeaturesOnAreas` function takes the WGS84 population areas and the meter-based model geometry options. It calculates the placement of the sample plots onto the WGS84 map, returning a new `FeatureCollection` containing the sampled plots with their coordinates now in WGS84. Each feature includes properties like `_designWeight` which might be useful for subsequent statistical analysis.
-
