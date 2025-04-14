@@ -5,11 +5,14 @@
       "outputs": ["dist/**"],
       "dependsOn": ["^build"]
     },
-    "test": {
-      "dependsOn": ["build"]
+    "doc": {
+      "dependsOn": ["build", "^doc"]
     },
     "lint": {
       "dependsOn": ["^build"]
+    },
+    "test": {
+      "dependsOn": ["build"]
     }
   }
 }
