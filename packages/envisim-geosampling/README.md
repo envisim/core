@@ -114,9 +114,6 @@ import { selectAreaIntersectsArea } from "@envisim/geosampling/select-intersects
 import { FeatureCollection, Polygon } from "@envisim/geojson";
 import { uniformPoissonPointProcess } from "@envisim/geosampling/point-processes";
 
-// 1. Define the population area (sampling frame)
-const polygon = Polygon.create([[]]);
-
 const frame = FeatureCollection.newArea([]);
 frame.addGeometry(
   Polygon.create([
@@ -131,8 +128,8 @@ frame.addGeometry(
   {},
 );
 
-// Sample points uniformly on the frame, with an intensity of .0001 points per square meter.
-uniformPoissonPointProcess(frame, { intensity: 0.0001 });
+// Sample points uniformly on the frame, with an intensity of .00001 points per square meter.
+uniformPoissonPointProcess(frame, { intensity: 0.00001 });
 ```
 
 ### Error code lists
