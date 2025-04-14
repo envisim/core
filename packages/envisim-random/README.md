@@ -15,12 +15,10 @@ npm install @envisim/random
 
 ## Usage
 
-Here's an example of how to use the package:
-
 ```typescript
 import { Random } from "@envisim/random";
 
 // Example usage with seed
 const rand = new Random(12345);
-console.log(rand.random());
+rand.random(); // Generate a random float on the interval [0, 1)
 ```

@@ -15,23 +15,29 @@ npm install @envisim/geojson
 Example of creating a GeoJSON Point feature:
 
 ```typescript
-import { Point, Feature } from "@envisim/geojson";
+import { Feature, LineString } from "@envisim/geojson";
 
-// Create a Point geometry
-const pointGeometry = new Point({ coordinates: [10, 20] }); // Longitude, Latitude
+// Create a LineString, from a vector of coordinates ([Longitude, Latitude] pairs)
+const lineString = LineString.create([
+  [10, 20],
+  [10, 30],
+]);
+
+// Calculate the length of the linstering
+lineString.length();
 
 // Create properties for the feature
 const properties = {
-  name: "Example Point",
   value: 123,
 };
 
 // Create a Feature instance
-const pointFeature = new Feature(pointGeometry, properties);
+const lineFeature = new Feature(lineString, properties);
 
-// Access geometry and properties
-console.log("Feature type:", pointFeature.type); // Output: Feature
-console.log("Geometry type:", pointFeature.geometry.type); // Output: Point
-console.log("Coordinates:", pointFeature.geometry.coordinates); // Output: [10, 20]
-console.log("Properties:", pointFeature.properties); // Output: { name: 'Example Point', value: 123 }
+// Get the measure of the geometry
+lineFeature.measure();
 ```
+
+## See also
+
+- [GeoJSON.org](https://geojson.org)

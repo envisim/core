@@ -19,15 +19,15 @@ npm install @envisim/geosampling
 You can sample fixed-size area plots within a collection of areas defined in WGS84 coordinates (e.g., forest stands, administrative regions). The model geometry for the plots is defined in planar units (meters), and the library handles placing them correctly onto the WGS84 map.
 
 ```typescript
+import type * as GJ from "@envisim/geojson-utils/geojson";
+import { Random } from "@envisim/random";
 import { Feature, FeatureCollection } from "@envisim/geojson";
 // Import functions to define model geometry (in meters) and perform sampling
 import {
   rectangularAreaGeometry,
   sampleAreaFeaturesOnAreas,
   SampleFeaturesOnAreasOptions,
-} from "@envisim/geosampling";
-import type * as GJ from "@envisim/geojson-utils/geojson";
-import { Random } from "@envisim/random";
+} from "@envisim/geosampling/sample-continuous";
 
 // 1. Define the population area (sampling frame)
 const polygon = Polygon.create([
@@ -53,7 +53,7 @@ const sample = sampleAreaFeaturesOnAreas(frame, {
 });
 ```
 
-**Explanation:**
+#### Explanation:
 
 1.  We create a `FeatureCollection` containing the area where sampling will occur, using WGS84 longitude and latitude coordinates.
 2.  We define the shape and size (model geometry) of the individual sample plots using functions like `rectangularAreaGeometry`. These dimensions are specified in **meters**.
