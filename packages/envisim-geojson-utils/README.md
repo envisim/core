@@ -18,7 +18,7 @@ Package exposes the following entry points:
 - [`@envisim/geojson-utils/geojson`](#geojson-types)
 - [`@envisim/geojson-utils/type-guards`](#type-guards)
 - [`@envisim/geojson-utils/geodesic`](#geodesic-segments)
-- [`@envisim/geojson-utils/plate-carree`](#plate-carree-segments)
+- [`@envisim/geojson-utils/plate-carree`](#platé-carrée-segments)
 - [`@envisim/geojson-utils/rhumb`](#rhumb-segments)
 
 ### Default entry point
