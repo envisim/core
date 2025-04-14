@@ -16,7 +16,7 @@ npm install @envisim/estimate
 
 The Horvitz-Thompson (HT) estimator is used to estimate the population total of a variable when units are sampled with unequal inclusion probabilities.
 
-The formula is:
+The formula is: \
 $$\hat{Y}_{HT} = \sum_{i \in S} \frac{y_i}{\pi_i}$$
 where $S$ is the set of sampled units, $y_i$ is the value of the variable of interest for unit $i$, and $\pi_i$ is the inclusion probability of unit $i$.
 
