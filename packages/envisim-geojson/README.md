@@ -12,7 +12,7 @@ npm install @envisim/geojson
 
 ## Usage
 
-Example of creating a GeoJSON Point feature:
+Example of creating a GeoJSON Line feature:
 
 ```typescript
 import { Feature, LineString } from "@envisim/geojson";
