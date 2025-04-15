@@ -1,0 +1,313 @@
+[**@envisim/geosampling**](README.md)
+
+---
+
+[@envisim/geosampling]() / sample-finite
+
+# @envisim/geosampling
+
+## Type Aliases
+
+### SampleBalancedOptions\<P\>
+
+> **SampleBalancedOptions**\<`P`\> = `OptionsBase`\<`P`, _typeof_ [`SAMPLE_BALANCED_METHODS`](#sample_balanced_methods)\[`number`\]\> & `OptionsBalanced`\<`P`\>
+
+#### Type Parameters
+
+| Type Parameter         | Default type |
+| ---------------------- | ------------ |
+| `P` _extends_ `string` | `string`     |
+
+---
+
+### SampleDoublyBalancedOptions\<P\>
+
+> **SampleDoublyBalancedOptions**\<`P`\> = `OptionsBase`\<`P`, _typeof_ [`SAMPLE_DOUBLY_BALANCED_METHODS`](#sample_doubly_balanced_methods)\[`number`\]\> & `OptionsBalanced`\<`P`\> & `OptionsSpatiallyBalanced`\<`P`\>
+
+#### Type Parameters
+
+| Type Parameter         | Default type |
+| ---------------------- | ------------ |
+| `P` _extends_ `string` | `string`     |
+
+---
+
+### SampleFiniteOptions\<P\>
+
+> **SampleFiniteOptions**\<`P`\> = `OptionsBase`\<`P`, _typeof_ [`SAMPLE_FINITE_METHODS_WOR`](#sample_finite_methods_wor)\[`number`\]\>
+
+#### Type Parameters
+
+| Type Parameter         | Default type |
+| ---------------------- | ------------ |
+| `P` _extends_ `string` | `string`     |
+
+---
+
+### SampleFiniteOptionsWr\<P\>
+
+> **SampleFiniteOptionsWr**\<`P`\> = `OptionsBase`\<`P`, _typeof_ [`SAMPLE_FINITE_METHODS_WR`](#sample_finite_methods_wr)\[`number`\]\>
+
+#### Type Parameters
+
+| Type Parameter         | Default type |
+| ---------------------- | ------------ |
+| `P` _extends_ `string` | `string`     |
+
+---
+
+### SampleSpatiallyBalancedOptions\<P\>
+
+> **SampleSpatiallyBalancedOptions**\<`P`\> = `OptionsBase`\<`P`, _typeof_ [`SAMPLE_SPATIALLY_BALANCED_METHODS`](#sample_spatially_balanced_methods)\[`number`\]\> & `OptionsSpatiallyBalanced`\<`P`\>
+
+#### Type Parameters
+
+| Type Parameter         | Default type |
+| ---------------------- | ------------ |
+| `P` _extends_ `string` | `string`     |
+
+## Variables
+
+### SAMPLE_BALANCED_METHODS
+
+> `const` **SAMPLE_BALANCED_METHODS**: readonly \[`"cube"`\]
+
+---
+
+### SAMPLE_DOUBLY_BALANCED_METHODS
+
+> `const` **SAMPLE_DOUBLY_BALANCED_METHODS**: readonly \[`"local-cube"`\]
+
+---
+
+### SAMPLE_FINITE_METHODS_WOR
+
+> `const` **SAMPLE_FINITE_METHODS_WOR**: readonly \[`"srs"`, `"systematic"`, `"systematic-random"`, `"poisson-sampling"`, `"rpm"`, `"spm"`, `"sampford"`, `"pareto"`, `"brewer"`\]
+
+---
+
+### SAMPLE_FINITE_METHODS_WR
+
+> `const` **SAMPLE_FINITE_METHODS_WR**: readonly \[`"srs-wr"`, `"pps-wr"`\]
+
+---
+
+### SAMPLE_SPATIALLY_BALANCED_METHODS
+
+> `const` **SAMPLE_SPATIALLY_BALANCED_METHODS**: readonly \[`"lpm1"`, `"lpm2"`, `"scps"`\]
+
+## Functions
+
+### sampleBalanced()
+
+> **sampleBalanced**\<`T`, `P`\>(`collection`, `options`): `FeatureCollection`\<`T`, `P`\>
+
+#### Type Parameters
+
+| Type Parameter             |
+| -------------------------- |
+| `T` _extends_ `PureObject` |
+| `P` _extends_ `string`     |
+
+#### Parameters
+
+| Parameter    | Type                                                                  |
+| ------------ | --------------------------------------------------------------------- |
+| `collection` | `FeatureCollection`\<`T`, `P`\>                                       |
+| `options`    | [`SampleBalancedOptions`](#samplebalancedoptions)\<`NoInfer`\<`P`\>\> |
+
+#### Returns
+
+`FeatureCollection`\<`T`, `P`\>
+
+---
+
+### sampleBalancedCheck()
+
+> **sampleBalancedCheck**\<`P`\>(`options`, `record`): [`SampleError`](README.md#sampleerror)
+
+#### Type Parameters
+
+| Type Parameter         |
+| ---------------------- |
+| `P` _extends_ `string` |
+
+#### Parameters
+
+| Parameter | Type                                                     |
+| --------- | -------------------------------------------------------- |
+| `options` | [`SampleBalancedOptions`](#samplebalancedoptions)\<`P`\> |
+| `record`  | `PropertyRecord`\<`P`\>                                  |
+
+#### Returns
+
+[`SampleError`](README.md#sampleerror)
+
+---
+
+### sampleDoublyBalanced()
+
+> **sampleDoublyBalanced**\<`T`, `P`\>(`collection`, `options`): `FeatureCollection`\<`T`, `P`\>
+
+#### Type Parameters
+
+| Type Parameter             |
+| -------------------------- |
+| `T` _extends_ `PureObject` |
+| `P` _extends_ `string`     |
+
+#### Parameters
+
+| Parameter    | Type                                                                              |
+| ------------ | --------------------------------------------------------------------------------- |
+| `collection` | `FeatureCollection`\<`T`, `P`\>                                                   |
+| `options`    | [`SampleDoublyBalancedOptions`](#sampledoublybalancedoptions)\<`NoInfer`\<`P`\>\> |
+
+#### Returns
+
+`FeatureCollection`\<`T`, `P`\>
+
+---
+
+### sampleDoublyBalancedCheck()
+
+> **sampleDoublyBalancedCheck**\<`P`\>(`options`, `record`): [`SampleError`](README.md#sampleerror)
+
+#### Type Parameters
+
+| Type Parameter         |
+| ---------------------- |
+| `P` _extends_ `string` |
+
+#### Parameters
+
+| Parameter | Type                                                                              |
+| --------- | --------------------------------------------------------------------------------- |
+| `options` | [`SampleDoublyBalancedOptions`](#sampledoublybalancedoptions)\<`NoInfer`\<`P`\>\> |
+| `record`  | `PropertyRecord`\<`P`\>                                                           |
+
+#### Returns
+
+[`SampleError`](README.md#sampleerror)
+
+---
+
+### sampleFinite()
+
+> **sampleFinite**\<`T`, `P`\>(`collection`, `options`): `FeatureCollection`\<`T`, `P`\>
+
+Select a sample from a layer using sampling methods for a finite population.
+
+#### Type Parameters
+
+| Type Parameter             |
+| -------------------------- |
+| `T` _extends_ `PureObject` |
+| `P` _extends_ `string`     |
+
+#### Parameters
+
+| Parameter    | Type                                                              | Description |
+| ------------ | ----------------------------------------------------------------- | ----------- |
+| `collection` | `FeatureCollection`\<`T`, `P`\>                                   |             |
+| `options`    | [`SampleFiniteOptions`](#samplefiniteoptions)\<`NoInfer`\<`P`\>\> |             |
+
+#### Returns
+
+`FeatureCollection`\<`T`, `P`\>
+
+---
+
+### sampleFiniteCheck()
+
+> **sampleFiniteCheck**\<`P`\>(`options`, `record`): [`SampleError`](README.md#sampleerror)
+
+#### Type Parameters
+
+| Type Parameter         |
+| ---------------------- |
+| `P` _extends_ `string` |
+
+#### Parameters
+
+| Parameter | Type                                                                                                                                       |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `options` | [`SampleFiniteOptions`](#samplefiniteoptions)\<`NoInfer`\<`P`\>\> \| [`SampleFiniteOptionsWr`](#samplefiniteoptionswr)\<`NoInfer`\<`P`\>\> |
+| `record`  | `PropertyRecord`\<`P`\>                                                                                                                    |
+
+#### Returns
+
+[`SampleError`](README.md#sampleerror)
+
+---
+
+### sampleFiniteWr()
+
+> **sampleFiniteWr**\<`T`, `P`\>(`collection`, `options`): `FeatureCollection`\<`T`, `P`\>
+
+Select a w/o replacement sample from a layer using sampling methods for a finite population.
+
+#### Type Parameters
+
+| Type Parameter             |
+| -------------------------- |
+| `T` _extends_ `PureObject` |
+| `P` _extends_ `string`     |
+
+#### Parameters
+
+| Parameter    | Type                                                                  | Description |
+| ------------ | --------------------------------------------------------------------- | ----------- |
+| `collection` | `FeatureCollection`\<`T`, `P`\>                                       |             |
+| `options`    | [`SampleFiniteOptionsWr`](#samplefiniteoptionswr)\<`NoInfer`\<`P`\>\> |             |
+
+#### Returns
+
+`FeatureCollection`\<`T`, `P`\>
+
+---
+
+### sampleSpatiallyBalanced()
+
+> **sampleSpatiallyBalanced**\<`T`, `P`\>(`collection`, `options`): `FeatureCollection`\<`T`, `P`\>
+
+#### Type Parameters
+
+| Type Parameter             |
+| -------------------------- |
+| `T` _extends_ `PureObject` |
+| `P` _extends_ `string`     |
+
+#### Parameters
+
+| Parameter    | Type                                                                                    |
+| ------------ | --------------------------------------------------------------------------------------- |
+| `collection` | `FeatureCollection`\<`T`, `P`\>                                                         |
+| `options`    | [`SampleSpatiallyBalancedOptions`](#samplespatiallybalancedoptions)\<`NoInfer`\<`P`\>\> |
+
+#### Returns
+
+`FeatureCollection`\<`T`, `P`\>
+
+---
+
+### sampleSpatiallyBalancedCheck()
+
+> **sampleSpatiallyBalancedCheck**\<`P`\>(`options`, `record`): [`SampleError`](README.md#sampleerror)
+
+#### Type Parameters
+
+| Type Parameter         |
+| ---------------------- |
+| `P` _extends_ `string` |
+
+#### Parameters
+
+| Parameter | Type                                                                       |
+| --------- | -------------------------------------------------------------------------- |
+| `options` | [`SampleSpatiallyBalancedOptions`](#samplespatiallybalancedoptions)\<`P`\> |
+| `record`  | `PropertyRecord`\<`P`\>                                                    |
+
+#### Returns
+
+[`SampleError`](README.md#sampleerror)
