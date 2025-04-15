@@ -20,12 +20,12 @@ const config = {
   // excludeInternal
   // excludePrivate
   // excludeProtected
-  // excludeReferences
+  excludeReferences: true,
   // excludeCategories
   // maxTypeConversionDepth
   // name
   // includeVersion
-  // disableSources
+  disableSources: true,
   // sourceLinkTemplate
   // gitRevision
   gitRemote: "https://github.com/envisim/core",
@@ -149,14 +149,14 @@ const config = {
   // expandObjects
   // expandParameters
   // blockTagsPreserveOrder
-  // indexFormat
-  // parametersFormat
-  // interfacePropertiesFormat
-  // classPropertiesFormat
-  // typeAliasPropertiesFormat
-  // enumMembersFormat
-  // propertyMembersFormat
-  // typeDeclarationFormat
+  indexFormat: "table",
+  parametersFormat: "table",
+  interfacePropertiesFormat: "table",
+  classPropertiesFormat: "table",
+  typeAliasPropertiesFormat: "table",
+  enumMembersFormat: "table",
+  propertyMembersFormat: "table",
+  typeDeclarationFormat: "table",
   // tableColumnSettings
   // pageTitleTemplates
   //
