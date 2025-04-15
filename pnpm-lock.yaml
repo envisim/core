@@ -91,6 +91,9 @@ importers:
       '@envisim/config-ts':
         specifier: workspace:*
         version: link:../config-ts
+      '@envisim/config-typedoc':
+        specifier: workspace:*
+        version: link:../config-typedoc
       eslint:
         specifier: ^9.24.0
         version: 9.24.0
@@ -119,6 +122,9 @@ importers:
       '@envisim/config-ts':
         specifier: workspace:*
         version: link:../config-ts
+      '@envisim/config-typedoc':
+        specifier: workspace:*
+        version: link:../config-typedoc
       eslint:
         specifier: ^9.24.0
         version: 9.24.0
@@ -147,6 +153,9 @@ importers:
       '@envisim/config-ts':
         specifier: workspace:*
         version: link:../config-ts
+      '@envisim/config-typedoc':
+        specifier: workspace:*
+        version: link:../config-typedoc
       eslint:
         specifier: ^9.24.0
         version: 9.24.0
@@ -218,6 +227,9 @@ importers:
       '@envisim/config-ts':
         specifier: workspace:*
         version: link:../config-ts
+      '@envisim/config-typedoc':
+        specifier: workspace:*
+        version: link:../config-typedoc
       eslint:
         specifier: ^9.24.0
         version: 9.24.0
@@ -243,6 +255,9 @@ importers:
       '@envisim/config-ts':
         specifier: workspace:*
         version: link:../config-ts
+      '@envisim/config-typedoc':
+        specifier: workspace:*
+        version: link:../config-typedoc
       eslint:
         specifier: ^9.24.0
         version: 9.24.0
@@ -261,6 +276,9 @@ importers:
       '@envisim/config-ts':
         specifier: workspace:*
         version: link:../config-ts
+      '@envisim/config-typedoc':
+        specifier: workspace:*
+        version: link:../config-typedoc
       eslint:
         specifier: ^9.24.0
         version: 9.24.0
@@ -289,6 +307,9 @@ importers:
       '@envisim/config-ts':
         specifier: workspace:*
         version: link:../config-ts
+      '@envisim/config-typedoc':
+        specifier: workspace:*
+        version: link:../config-typedoc
       eslint:
         specifier: ^9.24.0
         version: 9.24.0

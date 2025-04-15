@@ -13,6 +13,7 @@
   "type": "module",
   "scripts": {
     "build": "turbo build",
+    "doc": "turbo doc",
     "lint": "turbo lint",
     "prepare": "husky",
     "test": "turbo test"

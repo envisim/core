@@ -8,9 +8,9 @@ const config = {
   //
   // Input Options
   // entryPoints
-  // entryPointStrategy
+  entryPointStrategy: "expand",
   // packageOptions
-  // alwaysCreateEntryPointModule
+  // alwaysCreateEntryPointModule: true,
   // projectDocuments
   // exclude
   // externalPattern
@@ -30,18 +30,19 @@ const config = {
   // gitRevision
   gitRemote: "https://github.com/envisim/core",
   // disableGit
-  // readme
+  readme: "none",
   //
   //
   // Output Options
   // outputs
   out: "./docs",
   // html
-  // json
+  // json: "./json-doc.json",
   // pretty
   // emit
   // theme
-  // router
+  router: "module",
+  // router: "structure",
   // lightHighlightTheme
   // darkHighlightTheme
   // highlightLanguages
@@ -104,7 +105,7 @@ const config = {
   // categoryOrder
   // groupOrder
   // sort
-  // sortEntryPoints
+  sortEntryPoints: false,
   // kindSortOrder
   //
   //
@@ -136,7 +137,7 @@ const config = {
   // fileExtension
   // entryFileName
   // modulesFileName
-  // mergeReadme
+  // mergeReadme: true,
   // flattenOutputFiles
   // excludeScopesInPaths
   //
