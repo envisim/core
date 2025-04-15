@@ -63,8 +63,9 @@ export function sampleRelascopePointsOptionsCheck<P extends string>(
  * Default buffer is zero, which gives a negative bias for estimates of positive
  * quantities.
  *
- * @param collection
- * @param opts
+ * @param collection -
+ * @param options -
+ * @returns an object containing the resulting sample, the relascope points and the area ratio
  */
 export function sampleRelascopePoints<P extends string>(
   collection: FeatureCollection<AreaObject>,

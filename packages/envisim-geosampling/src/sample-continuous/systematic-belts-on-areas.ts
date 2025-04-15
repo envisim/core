@@ -37,8 +37,8 @@ export function sampleSystematicBeltsOnAreasCheck(
 /**
  * Selects a systematic sample of belts on areas.
  *
- * @param collection
- * @param opts
+ * @param collection -
+ * @param options -
  */
 export function sampleSystematicBeltsOnAreas(
   collection: FeatureCollection<AreaObject>,

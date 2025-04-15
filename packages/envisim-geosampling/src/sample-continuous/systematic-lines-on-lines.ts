@@ -36,8 +36,8 @@ export function sampleSystematicLinesOnLinesCheck(
  * Selects systematic line dashes along a line layer. Each LineString recieves its
  * own random starting position of the dashes.
  *
- * @param collection
- * @param opts
+ * @param collection -
+ * @param options -
  */
 export function sampleSystematicLinesOnLines(
   collection: FeatureCollection<LineObject>,

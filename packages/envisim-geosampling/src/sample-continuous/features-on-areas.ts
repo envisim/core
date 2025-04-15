@@ -67,8 +67,8 @@ export function sampleAreaFeaturesOnAreasCheck(
 /**
  * Select a sample of features/tracts on areas.
  *
- * @param collection
- * @param opts
+ * @param collection -
+ * @param options -
  */
 export function sampleAreaFeaturesOnAreas(
   collection: FeatureCollection<AreaObject>,

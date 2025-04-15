@@ -1,10 +1,9 @@
-import {Random, type RandomGenerator, randomArray} from '@envisim/random';
-
-import {assertPositiveInteger} from './utils.js';
+import { Random, type RandomGenerator, randomArray } from "@envisim/random";
+import { assertPositiveInteger } from "./utils.js";
 
 export interface RandomOptions {
   /**
-   * An instance of {@link random.Random}
+   * An RNG
    * @defaultValue `new Random()`
    */
   rand?: RandomGenerator;
@@ -16,7 +15,7 @@ export interface RandomOptions {
   method?: string;
 }
 /** @internal */
-export const randomOptionsDefault: {rand: Random; eps: number} = {
+export const randomOptionsDefault: { rand: Random; eps: number } = {
   rand: new Random(),
   eps: 1e-12,
 };
@@ -49,7 +48,7 @@ export abstract class Distribution<PAR> {
    */
   random(
     n: number = 1,
-    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
+    { rand = randomOptionsDefault.rand }: RandomOptions = randomOptionsDefault,
   ): number[] {
     assertPositiveInteger(n);
     const u = randomArray(n, rand);
@@ -99,7 +98,7 @@ export abstract class Distribution<PAR> {
       }
     }
 
-    console.warn('quantile not found in 1e5 iterations');
+    console.warn("quantile not found in 1e5 iterations");
     return k;
   }
 }
@@ -134,7 +133,7 @@ export const quantileCF = (
     }
   }
 
-  console.warn('quantile not found in 1e5 iterations');
+  console.warn("quantile not found in 1e5 iterations");
   return k;
 };
 
@@ -150,7 +149,7 @@ export class Interval {
   ro: boolean = true;
 
   constructor(l: number, r: number, lo: boolean = true, ro: boolean = true) {
-    if (l > r) throw new RangeError('l must not be larger than r');
+    if (l > r) throw new RangeError("l must not be larger than r");
     this.l = l;
     this.r = r;
     this.lo = Number.isFinite(l) ? lo : true;

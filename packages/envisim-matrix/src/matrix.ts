@@ -462,7 +462,8 @@ export class Matrix extends BaseMatrix {
 /**
  * Generates a matrix of random numbers on [0, 1).
  *
- * @param seed A seed used in the random number generator.
+ * @param dims - the dimensions of the random matrix
+ * @param generator - an RNG.
  */
 export function randomMatrix(
   [nrow, ncol]: MatrixDim,
@@ -485,7 +486,8 @@ export function diagonalMatrix(arr: number[]): Matrix {
 }
 
 /**
- * @returns a new identity matrix of size `nrow * nrow`.
+ * @param nrow - the size of the matrix
+ * @returns a (square) identity matrix.
  */
 export function identityMatrix(nrow: number): Matrix {
   return diagonalMatrix(Array.from<number>({ length: nrow }).fill(1.0));

@@ -1,6 +1,5 @@
-import {Vector} from '@envisim/matrix';
-
-import {BASE_OPTIONS, type FixedSizedOptions} from './base-options/index.js';
+import { Vector } from "@envisim/matrix";
+import { BASE_OPTIONS, type FixedSizedOptions } from "./base-options/index.js";
 
 interface InclusionProbabilitiesOptions extends FixedSizedOptions {
   /**
@@ -12,8 +11,7 @@ interface InclusionProbabilitiesOptions extends FixedSizedOptions {
 /**
  * Calculation of inclusion probabilities from a positive auxiliary variable.
  *
- * @param options.n sample size (sum of inclusion probabilities)
- * @param eps
+ * @param options -
  * @returns Array of inclusion probabilities.
  */
 export function inclusionProbabilities({
@@ -22,7 +20,7 @@ export function inclusionProbabilities({
   eps = BASE_OPTIONS.eps,
 }: InclusionProbabilitiesOptions): number[] {
   if (!auxiliary.every((e) => e >= 0.0)) {
-    throw new RangeError('Every element in arr must be positive');
+    throw new RangeError("Every element in arr must be positive");
   }
 
   const prob = new Vector(auxiliary, false);

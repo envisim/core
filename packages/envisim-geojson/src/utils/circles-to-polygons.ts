@@ -2,11 +2,16 @@ import { Geodesic, rerollPolygons } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 
 export interface CirclesToPolygonsOptions {
+  /** The number of vertices to create on the circle */
   pointsPerCircle?: number;
 }
 
 /**
  * Transform circles to polygons. Assumes that no circles overlap.
+ * @param centres -
+ * @param radius -
+ * @param options -
+ * @returns a MultiPolygon coordinate array of circular polygons. These polygons may overlap.
  */
 export function circlesToPolygons(
   centres: GJ.Position[],

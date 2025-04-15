@@ -37,8 +37,8 @@ export function samplePointsOnAreasCheck(options: SamplePointsOnAreasOptions): S
  * Selects points on areas (if features have bbox, it is used in pointInPolygon
  * to reject point outside bbox if buffer is zero).
  *
- * @param collection
- * @param opts
+ * @param collection -
+ * @param options -
  */
 export function samplePointsOnAreas(
   collection: FeatureCollection<AreaObject>,

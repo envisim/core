@@ -40,9 +40,8 @@ export function sampleSystematicDistanceLinesCheck(
  * Selects a line sample on an area frame and collect point objects from a base
  * layer using a detection function to (randomly) determine inclusion.
  *
- * @param collection
- * @param opts
-
+ * @param collection -
+ * @param options -
  */
 export function sampleSystematicDistanceLines(
   collection: FeatureCollection<AreaObject>,

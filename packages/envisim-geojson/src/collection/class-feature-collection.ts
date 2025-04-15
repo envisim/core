@@ -22,10 +22,15 @@ import { type CirclesToPolygonsOptions } from "../utils/circles-to-polygons.js";
 
 type ForEachCallback<T> = (obj: T, index: number) => void;
 interface FeatureCollectionExtras {
+  /** Foreign GeoJSON member, geometric primitive of the collection */
   primitive: GeometricPrimitiveUnion;
+  /** Foreign GeoJSON member, the allowed properties of the collection */
   propertyRecord: PropertyRecord;
+  /** Foreign GeoJSON member, the id of the collection */
   id?: string;
+  /** Foreign GeoJSON member, the human readable name of the collection */
   title?: string;
+  /** Foreign GeoJSON member, an RGB value associated with the collection */
   color?: [number, number, number];
 }
 interface FeatureCollectionExtrasJson {
@@ -246,15 +251,10 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
   features: Feature<T, PID>[] = [];
   bbox?: GJ.BBox;
 
-  /** Foreign member, the id of the collection */
   id?: string;
-  /** Foreign member, the human readable name of the collection */
   title?: string;
-  /** Foreign member, an RGB value associated with the collection */
   color?: [number, number, number];
-  /** Foreign member, geometric primitive of the collection */
   readonly primitive: GeometricPrimitiveUnion;
-  /** Foreign member, the allowed properties of the collection */
   propertyRecord: PropertyRecord<PID>;
 
   private constructor(
@@ -269,8 +269,9 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
   /**
    * Transforms the categorical properties back to strings, and returns the json
-   * @param options if `options.convertCircles` is `true` (default), then circles will be converted
-   * to polygons.
+   * @param shallow - if `true`, creates shallow copies of the features
+   * @param options -
+   * @param options.convertCircles - if `true`, circles will be converted to polygons.
    */
   copy(
     shallow: boolean = true,

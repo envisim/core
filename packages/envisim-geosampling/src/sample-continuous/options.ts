@@ -12,6 +12,9 @@ export interface OptionsBase {
    * @defaultValue `new Random()`
    */
   rand?: RandomGenerator;
+  /**
+   * Prescribed sample size
+   */
   sampleSize: number;
   /**
    * @defaultValue `'independent'`

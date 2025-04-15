@@ -1,19 +1,17 @@
-import {randomArray} from '@envisim/random';
-
+import { randomArray } from "@envisim/random";
 import {
   Distribution,
   Interval,
   type RandomOptions,
   randomOptionsDefault,
-} from '../abstract-distribution.js';
-import {type ParamsRate, rateCheck, rateDefault} from '../params.js';
+} from "../abstract-distribution.js";
+import { type ParamsRate, rateCheck, rateDefault } from "../params.js";
 
 export class Exponential extends Distribution<ParamsRate> {
   protected params = rateDefault;
 
   /**
    * The Exponential distribution
-   * @see {@link ParamsRate}
    *
    * @example
    * const x = new Exponential(1);
@@ -48,7 +46,7 @@ export class Exponential extends Distribution<ParamsRate> {
 
   override random(
     n: number = 1,
-    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
+    { rand = randomOptionsDefault.rand }: RandomOptions = randomOptionsDefault,
   ): number[] {
     return randomArray(n, rand).map((e) => -Math.log(1.0 - e) / this.params);
   }

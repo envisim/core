@@ -51,8 +51,8 @@ export function sampleFiniteCheck<P extends string>(
 /**
  * Select a sample from a layer using sampling methods for a finite population.
  *
- * @param collection
- * @param opts
+ * @param collection -
+ * @param options -
  */
 export function sampleFinite<T extends PureObject, P extends string>(
   collection: FeatureCollection<T, P>,
@@ -126,8 +126,8 @@ export function sampleFinite<T extends PureObject, P extends string>(
 /**
  * Select a w/o replacement sample from a layer using sampling methods for a finite population.
  *
- * @param collection
- * @param opts
+ * @param collection -
+ * @param options -
  */
 export function sampleFiniteWr<T extends PureObject, P extends string>(
   collection: FeatureCollection<T, P>,
