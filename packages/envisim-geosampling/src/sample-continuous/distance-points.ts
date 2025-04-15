@@ -5,7 +5,7 @@ import {
   type PointObject,
   intersectPointAreaGeometries,
 } from "@envisim/geojson";
-import { Geodesic } from "@envisim/geojson-utils";
+import { distance } from "@envisim/geojson-utils/geodesic";
 import { Random } from "@envisim/random";
 import { effectiveRadius } from "./distance-utils.js";
 import {
@@ -62,7 +62,7 @@ export function sampleDistancePoints(
     const basePointCoords = pointFeature.geometry.coordinates;
 
     pointSample.forEach((samplePoint, samplePointIndex) => {
-      const dist = Geodesic.distance(basePointCoords, samplePoint.geometry.coordinates);
+      const dist = distance(basePointCoords, samplePoint.geometry.coordinates);
       if (dist < cutoff && rand.random() < detectionFunction(dist)) {
         // Check if base point exists in this frame (frame could be part/stratum)
         for (let i = 0; i < collection.features.length; i++) {

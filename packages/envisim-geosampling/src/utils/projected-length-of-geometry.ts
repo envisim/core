@@ -5,7 +5,8 @@ import {
   type LineObject,
   MultiCircle,
 } from "@envisim/geojson";
-import { Geodesic, BoundingBox, longitudeCenter } from "@envisim/geojson-utils";
+import { BoundingBox, longitudeCenter } from "@envisim/geojson-utils";
+import { forwardAzimuthDistance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 
 type DistCoord = {
@@ -25,7 +26,7 @@ function distCoordsForLineString(
   let maxDist = -Infinity;
 
   lineString.forEach((coord) => {
-    const [azi1, dist] = Geodesic.forwardAzimuthDistance(refPointLonLat, coord);
+    const [azi1, dist] = forwardAzimuthDistance(refPointLonLat, coord);
     // Compute equidistant x-coord rotated counterclockwise by azimuth.
     const x = dist * Math.cos((90 - azi1 - azimuth) * toRad);
     // Store min and max x-value.

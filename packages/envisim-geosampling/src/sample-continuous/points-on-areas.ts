@@ -1,10 +1,6 @@
 import { type AreaObject, Feature, FeatureCollection, Point, union } from "@envisim/geojson";
-import {
-  Geodesic,
-  BoundingBox,
-  longitudeDistance,
-  normalizeLongitude,
-} from "@envisim/geojson-utils";
+import { BoundingBox, longitudeDistance, normalizeLongitude } from "@envisim/geojson-utils";
+import { destination, distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { Random } from "@envisim/random";
 import {
@@ -118,10 +114,7 @@ export function samplePointsOnAreas(
       const center = BoundingBox.center(box);
       const bottomLeft: GJ.Position = [box[0], box[1]];
       const topRight: GJ.Position = [box[2], box[3]];
-      const radius = Math.max(
-        Geodesic.distance(center, bottomLeft),
-        Geodesic.distance(center, topRight),
-      );
+      const radius = Math.max(distance(center, bottomLeft), distance(center, topRight));
 
       const angle = rotationOfGrid === "random" ? rand.random() * 360.0 : (rotationOfGrid ?? 0.0);
 
@@ -171,5 +164,5 @@ export function samplePointsOnAreas(
 function placePoint(point: GJ.Position, position: GJ.Position, rotation: number): GJ.Position {
   const dist = Math.sqrt(point[0] * point[0] + point[1] * point[1]);
   const angle = 90 - (Math.atan2(point[1], point[0]) * 180) / Math.PI + rotation;
-  return Geodesic.destination(position, dist, angle);
+  return destination(position, dist, angle);
 }

@@ -1,4 +1,4 @@
-import { Geodesic } from "@envisim/geojson-utils";
+import { distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { type OptionalParam } from "@envisim/utils";
 import { type BufferOptions } from "../buffer/index.js";
@@ -37,7 +37,7 @@ export class Point extends AbstractPointObject<GJ.Point> implements GJ.Point {
   }
 
   distanceToPosition(position: GJ.Position): number {
-    return Geodesic.distance(position, this.coordinates);
+    return distance(position, this.coordinates);
   }
 
   centroid(): GJ.Position {

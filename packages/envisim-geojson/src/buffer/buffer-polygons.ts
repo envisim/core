@@ -1,10 +1,5 @@
-import {
-  rerollPolygons,
-  Geodesic,
-  IntersectList,
-  Segment,
-  segmentsToPolygon,
-} from "@envisim/geojson-utils";
+import { rerollPolygons, IntersectList, Segment, segmentsToPolygon } from "@envisim/geojson-utils";
+import { destinationUnrolled, forwardAzimuth } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { MultiPolygon, Polygon } from "../objects/index.js";
 import { unionOfSegments } from "../utils/union.js";
@@ -150,9 +145,9 @@ function addSegmentConnection(
     return addStraightSegmentConnection(segmentList, start, end);
   }
 
-  let startAngle = Geodesic.forwardAzimuth(origin, start);
+  let startAngle = forwardAzimuth(origin, start);
   if (startAngle < 0.0) startAngle += 360.0;
-  let endAngle = Geodesic.forwardAzimuth(origin, end);
+  let endAngle = forwardAzimuth(origin, end);
   if (endAngle < 0.0) endAngle += 360.0;
 
   let theta = endAngle - startAngle;
@@ -174,7 +169,7 @@ function addSegmentConnection(
   let prev = start;
 
   for (let i = 1; i < numPoints; i++) {
-    const point = Geodesic.destinationUnrolled(origin, dist, angle);
+    const point = destinationUnrolled(origin, dist, angle);
     segmentList.push(new Segment(prev, point));
     prev = point;
     angle += delta;

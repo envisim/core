@@ -1,9 +1,5 @@
-import {
-  bboxFromPositions,
-  BoundingBox,
-  moveCoordsAroundEarth,
-  Geodesic,
-} from "@envisim/geojson-utils";
+import { bboxFromPositions, BoundingBox, moveCoordsAroundEarth } from "@envisim/geojson-utils";
+import { destination, distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { type OptionalParam } from "@envisim/utils";
 import { type BufferOptions, bufferPolygons, defaultBufferOptions } from "../buffer/index.js";
@@ -57,10 +53,10 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
     const bbox = bboxFromPositions(this.coordinates);
     const pos1: GJ.Position = [bbox[0], bbox[1]];
     const pos2: GJ.Position = bbox.length === 4 ? [bbox[2], bbox[3]] : [bbox[3], bbox[4]];
-    const west = Geodesic.destination(pos1, this.radius, 270.0)[0];
-    const south = Geodesic.destination(pos1, this.radius, 180.0)[1];
-    const east = Geodesic.destination(pos2, this.radius, 90.0)[0];
-    const north = Geodesic.destination(pos2, this.radius, 0.0)[1];
+    const west = destination(pos1, this.radius, 270.0)[0];
+    const south = destination(pos1, this.radius, 180.0)[1];
+    const east = destination(pos2, this.radius, 90.0)[0];
+    const north = destination(pos2, this.radius, 0.0)[1];
 
     if (bbox.length === 4) {
       this.bbox = [west, south, east, north];
@@ -80,21 +76,21 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
   }
 
   distanceToPosition(position: GJ.Position): number {
-    let distance = Infinity;
+    let dist = Infinity;
 
     for (const c of this.coordinates) {
-      const d = Geodesic.distance(position, c);
-      if (d < distance) {
+      const d = distance(position, c);
+      if (d < dist) {
         if (d <= this.radius) {
           // Guaranteed to be smallest, because non-overlapping promise
           return d - this.radius;
         }
 
-        distance = d;
+        dist = d;
       }
     }
 
-    return distance - this.radius;
+    return dist - this.radius;
   }
 
   centroid(iterations: number = 2): GJ.Position {
@@ -181,7 +177,7 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
 function distanceBetweenCentresBelowThreshold(points: GJ.Position[], threshold: number): boolean {
   for (let i = 0; i < points.length; i++) {
     for (let j = i + 1; j < points.length; j++) {
-      const d = Geodesic.distance(points[i], points[j]);
+      const d = distance(points[i], points[j]);
       if (d < threshold) return true;
     }
   }
