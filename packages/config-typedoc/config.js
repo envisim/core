@@ -3,18 +3,20 @@ const config = {
   // options
   // tsconfig
   // compilerOptions
-  plugin: ["typedoc-plugin-missing-exports", "typedoc-plugin-markdown"],
+  plugin: ["typedoc-plugin-markdown"],
   //
   //
   // Input Options
   // entryPoints
-  entryPointStrategy: "expand",
-  // packageOptions
+  // entryPointStrategy: "resovle",
+  packageOptions: {
+    excludeExternals: true,
+  },
   // alwaysCreateEntryPointModule: true,
   // projectDocuments
   // exclude
   // externalPattern
-  // excludeExternals
+  excludeExternals: true,
   // excludeNotDocumented
   // excludeNotDocumentedKinds
   // excludeInternal
@@ -95,7 +97,11 @@ const config = {
   // cascadedModifierTags
   // excludeTags
   // notRenderedTags
-  // externalSymbolLinkMappings
+  externalSymbolLinkMappings: {
+    "@envisim/random": {
+      "*": "https://svt.se",
+    },
+  },
   //
   //
   // Organization Options
@@ -130,12 +136,6 @@ const config = {
   logLevel: "Warn",
   // skipErrorChecking
   //
-  //
-  // typedoc-plugin-missing-exports
-  //
-  // internalModule
-  // collapseInternalModule
-  placeInternalsInOwningModule: true,
   //
   // typedoc-plugin-markdown
   //
