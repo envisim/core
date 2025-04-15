@@ -8,23 +8,14 @@
 
 > **distance**(`p1`, `p2`): `number`
 
-Defined in: segments/rhumb.ts:249
-
 Computes the distance in meters along a rhumb line between two point coordinates.
 
 ## Parameters
 
-### p1
-
-[`Position`](../../geojson/type-aliases/Position.md)
-
-point coordinates [lon,lat].
-
-### p2
-
-[`Position`](../../geojson/type-aliases/Position.md)
-
-point coordinates [lon,lat].
+| Parameter | Type                                                 | Description                  |
+| --------- | ---------------------------------------------------- | ---------------------------- |
+| `p1`      | [`Position`](../../geojson/type-aliases/Position.md) | point coordinates [lon,lat]. |
+| `p2`      | [`Position`](../../geojson/type-aliases/Position.md) | point coordinates [lon,lat]. |
 
 ## Returns
 

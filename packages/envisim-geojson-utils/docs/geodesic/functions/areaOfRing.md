@@ -8,18 +8,14 @@
 
 > **areaOfRing**(`coords`): `number`
 
-Defined in: segments/geodesic.ts:155
-
 Computes the area of a polygon ring where the segments are the shortest
 (geodesic) paths between the points.
 
 ## Parameters
 
-### coords
-
-[`Position`](../../geojson/type-aliases/Position.md)[]
-
-coordinates of a polygon ring.
+| Parameter | Type                                                   | Description                    |
+| --------- | ------------------------------------------------------ | ------------------------------ |
+| `coords`  | [`Position`](../../geojson/type-aliases/Position.md)[] | coordinates of a polygon ring. |
 
 ## Returns
 

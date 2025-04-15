@@ -8,13 +8,11 @@
 
 > **throwRangeError**(`err`): asserts err is undefined \| null
 
-Defined in: throw.ts:1
-
 ## Parameters
 
-### err
-
-`undefined` | `null` | `string`
+| Parameter | Type                              |
+| --------- | --------------------------------- |
+| `err`     | `undefined` \| `null` \| `string` |
 
 ## Returns
 

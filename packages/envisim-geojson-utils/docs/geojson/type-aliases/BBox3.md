@@ -7,5 +7,3 @@
 # Type Alias: BBox3
 
 > **BBox3** = \[`number`, `number`, `number`, `number`, `number`, `number`\]
-
-Defined in: geojson.ts:9

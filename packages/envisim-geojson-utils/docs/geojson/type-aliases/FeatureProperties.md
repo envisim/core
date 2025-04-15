@@ -8,14 +8,9 @@
 
 > **FeatureProperties**\<`P`, `ID`\> = `Record`\<`ID`, `P`\>
 
-Defined in: geojson.ts:19
-
 ## Type Parameters
 
-### P
-
-`P` = `number` \| `string`
-
-### ID
-
-`ID` _extends_ `string` = `string`
+| Type Parameter          | Default type         |
+| ----------------------- | -------------------- |
+| `P`                     | `number` \| `string` |
+| `ID` _extends_ `string` | `string`             |

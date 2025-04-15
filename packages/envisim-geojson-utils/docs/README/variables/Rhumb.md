@@ -7,5 +7,3 @@
 # Variable: Rhumb
 
 > `const` **Rhumb**: `Omit`\<`SegmentOperations`, `"destinationUnrolled"` \| `"forwardAzimuthDistance"`\>
-
-Defined in: segments/rhumb.ts:226

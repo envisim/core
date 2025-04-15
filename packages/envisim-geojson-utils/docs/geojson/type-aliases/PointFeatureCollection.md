@@ -7,5 +7,3 @@
 # Type Alias: PointFeatureCollection
 
 > **PointFeatureCollection** = [`FeatureCollection`](FeatureCollection.md)\<[`PointFeature`](PointFeature.md)\>
-
-Defined in: geojson.ts:80

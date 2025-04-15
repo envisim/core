@@ -8,13 +8,11 @@
 
 > **isAreaGeometry**(`obj`): `obj is AreaGeometry`
 
-Defined in: type-guards/objects.ts:105
-
 ## Parameters
 
-### obj
-
-[`BaseGeometry`](../../geojson/type-aliases/BaseGeometry.md)
+| Parameter | Type                                                         |
+| --------- | ------------------------------------------------------------ |
+| `obj`     | [`BaseGeometry`](../../geojson/type-aliases/BaseGeometry.md) |
 
 ## Returns
 

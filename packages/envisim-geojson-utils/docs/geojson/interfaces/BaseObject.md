@@ -6,8 +6,6 @@
 
 # Interface: BaseObject\<T, C\>
 
-Defined in: geojson.ts:22
-
 ## Extends
 
 - [`GeoJsonObject`](GeoJsonObject.md)\<`T`\>
@@ -19,42 +17,15 @@ Defined in: geojson.ts:22
 
 ## Type Parameters
 
-### T
-
-`T` _extends_ `string`
-
-### C
-
-`C`
+| Type Parameter         |
+| ---------------------- |
+| `T` _extends_ `string` |
+| `C`                    |
 
 ## Properties
 
-### bbox?
-
-> `optional` **bbox**: [`BBox`](../type-aliases/BBox.md)
-
-Defined in: geojson.ts:15
-
-#### Inherited from
-
-[`GeoJsonObject`](GeoJsonObject.md).[`bbox`](GeoJsonObject.md#bbox)
-
----
-
-### coordinates
-
-> **coordinates**: `C`
-
-Defined in: geojson.ts:23
-
----
-
-### type
-
-> **type**: `T`
-
-Defined in: geojson.ts:14
-
-#### Inherited from
-
-[`GeoJsonObject`](GeoJsonObject.md).[`type`](GeoJsonObject.md#type)
+| Property                               | Type                              | Inherited from                                                      |
+| -------------------------------------- | --------------------------------- | ------------------------------------------------------------------- |
+| <a id="bbox"></a> `bbox?`              | [`BBox`](../type-aliases/BBox.md) | [`GeoJsonObject`](GeoJsonObject.md).[`bbox`](GeoJsonObject.md#bbox) |
+| <a id="coordinates"></a> `coordinates` | `C`                               | -                                                                   |
+| <a id="type"></a> `type`               | `T`                               | [`GeoJsonObject`](GeoJsonObject.md).[`type`](GeoJsonObject.md#type) |

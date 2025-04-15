@@ -8,13 +8,11 @@
 
 > **isPoint**(`obj`): `obj is Point`
 
-Defined in: type-guards/objects.ts:8
-
 ## Parameters
 
-### obj
-
-[`SingleTypeObject`](../../geojson/type-aliases/SingleTypeObject.md)
+| Parameter | Type                                                                 |
+| --------- | -------------------------------------------------------------------- |
+| `obj`     | [`SingleTypeObject`](../../geojson/type-aliases/SingleTypeObject.md) |
 
 ## Returns
 

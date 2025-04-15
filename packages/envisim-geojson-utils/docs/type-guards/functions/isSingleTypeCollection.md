@@ -8,17 +8,12 @@
 
 > **isSingleTypeCollection**(`obj`, `checkCoordinates`): `obj is BaseFeatureCollection<BaseFeature<SingleTypeObject, unknown>>`
 
-Defined in: type-guards/collection.ts:36
-
 ## Parameters
 
-### obj
-
-`unknown`
-
-### checkCoordinates
-
-`boolean` = `false`
+| Parameter          | Type      | Default value |
+| ------------------ | --------- | ------------- |
+| `obj`              | `unknown` | `undefined`   |
+| `checkCoordinates` | `boolean` | `false`       |
 
 ## Returns
 

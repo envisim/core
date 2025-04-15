@@ -7,5 +7,3 @@
 # Type Alias: LineGeometry
 
 > **LineGeometry** = [`LineObject`](LineObject.md) \| [`LineGeometryCollection`](LineGeometryCollection.md)
-
-Defined in: geojson.ts:59

@@ -7,5 +7,3 @@
 # Type Alias: PointFeature
 
 > **PointFeature** = [`Feature`](Feature.md)\<[`PointGeometry`](PointGeometry.md)\>
-
-Defined in: geojson.ts:70

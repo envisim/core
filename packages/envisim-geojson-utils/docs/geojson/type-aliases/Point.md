@@ -7,5 +7,3 @@
 # Type Alias: Point
 
 > **Point** = [`BaseObject`](../interfaces/BaseObject.md)\<`"Point"`, [`Position`](Position.md)\>
-
-Defined in: geojson.ts:26

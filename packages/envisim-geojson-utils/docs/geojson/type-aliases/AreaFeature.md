@@ -7,5 +7,3 @@
 # Type Alias: AreaFeature
 
 > **AreaFeature** = [`Feature`](Feature.md)\<[`AreaGeometry`](AreaGeometry.md)\>
-
-Defined in: geojson.ts:72

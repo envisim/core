@@ -6,46 +6,20 @@
 
 # Interface: BaseFeatureCollection\<F\>
 
-Defined in: geojson.ts:75
-
 ## Extends
 
 - [`GeoJsonObject`](GeoJsonObject.md)\<`"FeatureCollection"`\>
 
 ## Type Parameters
 
-### F
-
-`F` _extends_ [`BaseFeature`](BaseFeature.md) = [`BaseFeature`](BaseFeature.md)
+| Type Parameter                                | Default type                    |
+| --------------------------------------------- | ------------------------------- |
+| `F` _extends_ [`BaseFeature`](BaseFeature.md) | [`BaseFeature`](BaseFeature.md) |
 
 ## Properties
 
-### bbox?
-
-> `optional` **bbox**: [`BBox`](../type-aliases/BBox.md)
-
-Defined in: geojson.ts:15
-
-#### Inherited from
-
-[`GeoJsonObject`](GeoJsonObject.md).[`bbox`](GeoJsonObject.md#bbox)
-
----
-
-### features
-
-> **features**: `F`[]
-
-Defined in: geojson.ts:77
-
----
-
-### type
-
-> **type**: `"FeatureCollection"`
-
-Defined in: geojson.ts:14
-
-#### Inherited from
-
-[`GeoJsonObject`](GeoJsonObject.md).[`type`](GeoJsonObject.md#type)
+| Property                         | Type                              | Inherited from                                                      |
+| -------------------------------- | --------------------------------- | ------------------------------------------------------------------- |
+| <a id="bbox"></a> `bbox?`        | [`BBox`](../type-aliases/BBox.md) | [`GeoJsonObject`](GeoJsonObject.md).[`bbox`](GeoJsonObject.md#bbox) |
+| <a id="features"></a> `features` | `F`[]                             | -                                                                   |
+| <a id="type"></a> `type`         | `"FeatureCollection"`             | [`GeoJsonObject`](GeoJsonObject.md).[`type`](GeoJsonObject.md#type) |

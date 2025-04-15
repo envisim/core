@@ -8,19 +8,17 @@
 
 > **copy**\<`T`\>(`obj`): `T`
 
-Defined in: copy.ts:1
-
 ## Type Parameters
 
-### T
-
-`T`
+| Type Parameter |
+| -------------- |
+| `T`            |
 
 ## Parameters
 
-### obj
-
-`T`
+| Parameter | Type |
+| --------- | ---- |
+| `obj`     | `T`  |
 
 ## Returns
 

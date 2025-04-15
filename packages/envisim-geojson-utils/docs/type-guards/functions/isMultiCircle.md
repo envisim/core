@@ -8,17 +8,12 @@
 
 > **isMultiCircle**(`obj`, `checkPositiveRadius`): `obj is MultiCircle`
 
-Defined in: type-guards/objects.ts:36
-
 ## Parameters
 
-### obj
-
-[`SingleTypeObject`](../../geojson/type-aliases/SingleTypeObject.md)
-
-### checkPositiveRadius
-
-`boolean` = `false`
+| Parameter             | Type                                                                 | Default value |
+| --------------------- | -------------------------------------------------------------------- | ------------- |
+| `obj`                 | [`SingleTypeObject`](../../geojson/type-aliases/SingleTypeObject.md) | `undefined`   |
+| `checkPositiveRadius` | `boolean`                                                            | `false`       |
 
 ## Returns
 

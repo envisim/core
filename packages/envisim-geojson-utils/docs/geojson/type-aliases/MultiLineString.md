@@ -7,5 +7,3 @@
 # Type Alias: MultiLineString
 
 > **MultiLineString** = [`BaseObject`](../interfaces/BaseObject.md)\<`"MultiLineString"`, [`Position`](Position.md)[][]\>
-
-Defined in: geojson.ts:31

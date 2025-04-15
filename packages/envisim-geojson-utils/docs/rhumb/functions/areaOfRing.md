@@ -8,15 +8,13 @@
 
 > **areaOfRing**(`ring`): `number`
 
-Defined in: segments/rhumb.ts:343
-
 Computes the area of a rhumb polygon ring
 
 ## Parameters
 
-### ring
-
-[`Position`](../../geojson/type-aliases/Position.md)[]
+| Parameter | Type                                                   | Description |
+| --------- | ------------------------------------------------------ | ----------- |
+| `ring`    | [`Position`](../../geojson/type-aliases/Position.md)[] |             |
 
 ## Returns
 

@@ -7,5 +7,3 @@
 # Variable: Geodesic
 
 > `const` **Geodesic**: `SegmentOperations`
-
-Defined in: segments/geodesic.ts:17

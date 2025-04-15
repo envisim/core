@@ -7,5 +7,3 @@
 # Type Alias: Position2
 
 > **Position2** = \[`number`, `number`\]
-
-Defined in: geojson.ts:3

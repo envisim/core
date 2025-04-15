@@ -8,18 +8,14 @@
 
 > **lengthOfLineString**(`ls`): `number`
 
-Defined in: length.ts:10
-
 Computes the approximate length of a LineString, where each segment is
 of type plate carrée.
 
 ## Parameters
 
-### ls
-
-[`Position`](../../geojson/type-aliases/Position.md)[]
-
-Coordinates of a LineString
+| Parameter | Type                                                   | Description                 |
+| --------- | ------------------------------------------------------ | --------------------------- |
+| `ls`      | [`Position`](../../geojson/type-aliases/Position.md)[] | Coordinates of a LineString |
 
 ## Returns
 

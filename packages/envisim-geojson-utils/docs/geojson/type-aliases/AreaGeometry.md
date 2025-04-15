@@ -7,5 +7,3 @@
 # Type Alias: AreaGeometry
 
 > **AreaGeometry** = [`AreaObject`](AreaObject.md) \| [`AreaGeometryCollection`](AreaGeometryCollection.md)
-
-Defined in: geojson.ts:60

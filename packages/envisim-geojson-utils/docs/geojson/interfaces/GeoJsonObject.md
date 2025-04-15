@@ -6,8 +6,6 @@
 
 # Interface: GeoJsonObject\<T\>
 
-Defined in: geojson.ts:13
-
 ## Extended by
 
 - [`BaseObject`](BaseObject.md)
@@ -17,22 +15,13 @@ Defined in: geojson.ts:13
 
 ## Type Parameters
 
-### T
-
-`T` _extends_ `string`
+| Type Parameter         |
+| ---------------------- |
+| `T` _extends_ `string` |
 
 ## Properties
 
-### bbox?
-
-> `optional` **bbox**: [`BBox`](../type-aliases/BBox.md)
-
-Defined in: geojson.ts:15
-
----
-
-### type
-
-> **type**: `T`
-
-Defined in: geojson.ts:14
+| Property                  | Type                              |
+| ------------------------- | --------------------------------- |
+| <a id="bbox"></a> `bbox?` | [`BBox`](../type-aliases/BBox.md) |
+| <a id="type"></a> `type`  | `T`                               |

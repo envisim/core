@@ -7,5 +7,3 @@
 # Type Alias: SingleTypeObject
 
 > **SingleTypeObject** = [`PointObject`](PointObject.md) \| [`LineObject`](LineObject.md) \| [`AreaObject`](AreaObject.md)
-
-Defined in: geojson.ts:44

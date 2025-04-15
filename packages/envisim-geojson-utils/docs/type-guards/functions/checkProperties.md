@@ -8,13 +8,11 @@
 
 > **checkProperties**(`obj`): obj is BaseFeature\<BaseGeometry, string \| number\>
 
-Defined in: type-guards/feature.ts:53
-
 ## Parameters
 
-### obj
-
-[`BaseFeature`](../../geojson/interfaces/BaseFeature.md)
+| Parameter | Type                                                     |
+| --------- | -------------------------------------------------------- |
+| `obj`     | [`BaseFeature`](../../geojson/interfaces/BaseFeature.md) |
 
 ## Returns
 

@@ -7,5 +7,3 @@
 # Type Alias: GeometricPrimitiveArea
 
 > **GeometricPrimitiveArea** = _typeof_ [`GeometricPrimitive`](../classes/GeometricPrimitive.md)\[`"AREA"`\]
-
-Defined in: geometric-primitive.ts:3

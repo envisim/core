@@ -10,27 +10,13 @@
 
 > **isBaseFeature**(`obj`, `checkCoordinates`, `allowGC`): `obj is BaseFeature<SingleTypeObject, unknown>`
 
-Defined in: type-guards/feature.ts:11
-
 ### Parameters
 
-#### obj
-
-`unknown`
-
-#### checkCoordinates
-
-`boolean`
-
-checks the validity of `obj.geometry.coordinates` if `true`, otherwise
-just checks for the existance of `obj.geometry.coordinates`.
-
-#### allowGC
-
-`false`
-
-if `false`, disallowes the existance of `GJ.BaseGeometryCollection` on
-`obj.geometry`
+| Parameter          | Type      | Description                                                                                                                         |
+| ------------------ | --------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `obj`              | `unknown` | -                                                                                                                                   |
+| `checkCoordinates` | `boolean` | checks the validity of `obj.geometry.coordinates` if `true`, otherwise just checks for the existance of `obj.geometry.coordinates`. |
+| `allowGC`          | `false`   | if `false`, disallowes the existance of `GJ.BaseGeometryCollection` on `obj.geometry`                                               |
 
 ### Returns
 
@@ -42,27 +28,13 @@ if `false`, disallowes the existance of `GJ.BaseGeometryCollection` on
 
 > **isBaseFeature**(`obj`, `checkCoordinates?`, `allowGC?`): `obj is BaseFeature<BaseGeometry, unknown>`
 
-Defined in: type-guards/feature.ts:16
-
 ### Parameters
 
-#### obj
-
-`unknown`
-
-#### checkCoordinates?
-
-`boolean`
-
-checks the validity of `obj.geometry.coordinates` if `true`, otherwise
-just checks for the existance of `obj.geometry.coordinates`.
-
-#### allowGC?
-
-`boolean`
-
-if `false`, disallowes the existance of `GJ.BaseGeometryCollection` on
-`obj.geometry`
+| Parameter           | Type      | Description                                                                                                                         |
+| ------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `obj`               | `unknown` | -                                                                                                                                   |
+| `checkCoordinates?` | `boolean` | checks the validity of `obj.geometry.coordinates` if `true`, otherwise just checks for the existance of `obj.geometry.coordinates`. |
+| `allowGC?`          | `boolean` | if `false`, disallowes the existance of `GJ.BaseGeometryCollection` on `obj.geometry`                                               |
 
 ### Returns
 

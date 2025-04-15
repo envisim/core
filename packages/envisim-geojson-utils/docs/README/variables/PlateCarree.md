@@ -7,5 +7,3 @@
 # Variable: PlateCarree
 
 > `const` **PlateCarree**: `Omit`\<`SegmentOperations`, `"destination"` \| `"destinationUnrolled"` \| `"forwardAzimuth"` \| `"forwardAzimuthDistance"`\>
-
-Defined in: segments/plate-carree.ts:24

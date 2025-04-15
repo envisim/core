@@ -7,5 +7,3 @@
 # Type Alias: PointGeometry
 
 > **PointGeometry** = [`PointObject`](PointObject.md) \| [`PointGeometryCollection`](PointGeometryCollection.md)
-
-Defined in: geojson.ts:58

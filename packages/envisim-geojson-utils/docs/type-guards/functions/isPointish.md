@@ -8,13 +8,11 @@
 
 > **isPointish**(`obj`): obj is Point \| MultiPoint
 
-Defined in: type-guards/objects.ts:20
-
 ## Parameters
 
-### obj
-
-[`SingleTypeObject`](../../geojson/type-aliases/SingleTypeObject.md)
+| Parameter | Type                                                                 |
+| --------- | -------------------------------------------------------------------- |
+| `obj`     | [`SingleTypeObject`](../../geojson/type-aliases/SingleTypeObject.md) |
 
 ## Returns
 

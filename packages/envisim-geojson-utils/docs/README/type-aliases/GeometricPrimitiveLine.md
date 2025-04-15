@@ -7,5 +7,3 @@
 # Type Alias: GeometricPrimitiveLine
 
 > **GeometricPrimitiveLine** = _typeof_ [`GeometricPrimitive`](../classes/GeometricPrimitive.md)\[`"LINE"`\]
-
-Defined in: geometric-primitive.ts:4

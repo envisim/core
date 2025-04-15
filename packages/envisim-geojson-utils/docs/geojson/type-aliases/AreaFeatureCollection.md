@@ -7,5 +7,3 @@
 # Type Alias: AreaFeatureCollection
 
 > **AreaFeatureCollection** = [`FeatureCollection`](FeatureCollection.md)\<[`AreaFeature`](AreaFeature.md)\>
-
-Defined in: geojson.ts:82

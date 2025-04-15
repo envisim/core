@@ -8,10 +8,8 @@
 
 > **GeometryCollection**\<`O`\> = [`BaseGeometryCollection`](../interfaces/BaseGeometryCollection.md)\<`O`\>
 
-Defined in: geojson.ts:51
-
 ## Type Parameters
 
-### O
-
-`O` _extends_ [`SingleTypeObject`](SingleTypeObject.md)
+| Type Parameter                                          |
+| ------------------------------------------------------- |
+| `O` _extends_ [`SingleTypeObject`](SingleTypeObject.md) |

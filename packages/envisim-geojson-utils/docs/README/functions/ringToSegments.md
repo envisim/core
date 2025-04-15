@@ -8,13 +8,11 @@
 
 > **ringToSegments**(`polygon`): [`Segment`](../classes/Segment.md)[]
 
-Defined in: class-segment.ts:301
-
 ## Parameters
 
-### polygon
-
-[`Position`](../../geojson/type-aliases/Position.md)[]
+| Parameter | Type                                                   |
+| --------- | ------------------------------------------------------ |
+| `polygon` | [`Position`](../../geojson/type-aliases/Position.md)[] |
 
 ## Returns
 

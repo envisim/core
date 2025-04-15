@@ -8,21 +8,12 @@
 
 > **normalizeLongitude**(`p`, `norm`): `number`
 
-Defined in: position.ts:9
-
 ## Parameters
 
-### p
-
-`number`
-
-the longitude to normalize
-
-### norm
-
-`number` = `360.0`
-
-the normalizing factor
+| Parameter | Type     | Default value | Description                |
+| --------- | -------- | ------------- | -------------------------- |
+| `p`       | `number` | `undefined`   | the longitude to normalize |
+| `norm`    | `number` | `360.0`       | the normalizing factor     |
 
 ## Returns
 

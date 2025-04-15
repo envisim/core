@@ -8,17 +8,12 @@
 
 > **isSingleTypeFeature**(`obj`, `checkCoordinates`): `obj is BaseFeature<SingleTypeObject, unknown>`
 
-Defined in: type-guards/feature.ts:43
-
 ## Parameters
 
-### obj
-
-`unknown`
-
-### checkCoordinates
-
-`boolean` = `false`
+| Parameter          | Type      | Default value |
+| ------------------ | --------- | ------------- |
+| `obj`              | `unknown` | `undefined`   |
+| `checkCoordinates` | `boolean` | `false`       |
 
 ## Returns
 

@@ -8,27 +8,13 @@
 
 > **longitudeDistance**(`a`, `b`, `norm`): `number`
 
-Defined in: position.ts:43
-
 ## Parameters
 
-### a
-
-`number`
-
-the smallest longitude
-
-### b
-
-`number`
-
-the largest longitude
-
-### norm
-
-`number` = `360.0`
-
-the normalizing factor
+| Parameter | Type     | Default value | Description            |
+| --------- | -------- | ------------- | ---------------------- |
+| `a`       | `number` | `undefined`   | the smallest longitude |
+| `b`       | `number` | `undefined`   | the largest longitude  |
+| `norm`    | `number` | `360.0`       | the normalizing factor |
 
 ## Returns
 

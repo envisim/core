@@ -8,15 +8,11 @@
 
 > **unionOfBBoxes**(`bboxes`): [`BBox`](../../geojson/type-aliases/BBox.md)
 
-Defined in: bbox.ts:229
-
 ## Parameters
 
-### bboxes
-
-[`BBox`](../../geojson/type-aliases/BBox.md)[]
-
-an array of bboxes
+| Parameter | Type                                           | Description        |
+| --------- | ---------------------------------------------- | ------------------ |
+| `bboxes`  | [`BBox`](../../geojson/type-aliases/BBox.md)[] | an array of bboxes |
 
 ## Returns
 

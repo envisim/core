@@ -7,5 +7,3 @@
 # Type Alias: MultiPoint
 
 > **MultiPoint** = [`BaseObject`](../interfaces/BaseObject.md)\<`"MultiPoint"`, [`Position`](Position.md)[]\>
-
-Defined in: geojson.ts:27

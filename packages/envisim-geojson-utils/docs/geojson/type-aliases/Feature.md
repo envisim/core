@@ -8,10 +8,8 @@
 
 > **Feature**\<`G`\> = [`BaseFeature`](../interfaces/BaseFeature.md)\<`G`, `number` \| `string`\>
 
-Defined in: geojson.ts:69
-
 ## Type Parameters
 
-### G
-
-`G` _extends_ [`Geometry`](Geometry.md) = [`Geometry`](Geometry.md)
+| Type Parameter                          | Default type              |
+| --------------------------------------- | ------------------------- |
+| `G` _extends_ [`Geometry`](Geometry.md) | [`Geometry`](Geometry.md) |

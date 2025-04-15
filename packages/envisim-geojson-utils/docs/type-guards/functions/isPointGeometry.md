@@ -8,13 +8,11 @@
 
 > **isPointGeometry**(`obj`): `obj is PointGeometry`
 
-Defined in: type-guards/objects.ts:117
-
 ## Parameters
 
-### obj
-
-[`BaseGeometry`](../../geojson/type-aliases/BaseGeometry.md)
+| Parameter | Type                                                         |
+| --------- | ------------------------------------------------------------ |
+| `obj`     | [`BaseGeometry`](../../geojson/type-aliases/BaseGeometry.md) |
 
 ## Returns
 

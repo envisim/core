@@ -6,25 +6,18 @@
 
 # Class: Segment
 
-Defined in: class-segment.ts:6
-
 ## Constructors
 
 ### Constructor
 
 > **new Segment**(`p1`, `p2`): `Segment`
 
-Defined in: class-segment.ts:15
-
 #### Parameters
 
-##### p1
-
-[`Position`](../../geojson/type-aliases/Position.md)
-
-##### p2
-
-[`Position`](../../geojson/type-aliases/Position.md)
+| Parameter | Type                                                 |
+| --------- | ---------------------------------------------------- |
+| `p1`      | [`Position`](../../geojson/type-aliases/Position.md) |
+| `p2`      | [`Position`](../../geojson/type-aliases/Position.md) |
 
 #### Returns
 
@@ -32,27 +25,11 @@ Defined in: class-segment.ts:15
 
 ## Properties
 
-### delta
-
-> **delta**: [`Position2`](../../geojson/type-aliases/Position2.md)
-
-Defined in: class-segment.ts:13
-
----
-
-### p1
-
-> **p1**: [`Position2`](../../geojson/type-aliases/Position2.md)
-
-Defined in: class-segment.ts:11
-
----
-
-### p2
-
-> **p2**: [`Position2`](../../geojson/type-aliases/Position2.md)
-
-Defined in: class-segment.ts:12
+| Property                   | Type                                                   |
+| -------------------------- | ------------------------------------------------------ |
+| <a id="delta"></a> `delta` | [`Position2`](../../geojson/type-aliases/Position2.md) |
+| <a id="p1"></a> `p1`       | [`Position2`](../../geojson/type-aliases/Position2.md) |
+| <a id="p2"></a> `p2`       | [`Position2`](../../geojson/type-aliases/Position2.md) |
 
 ## Methods
 
@@ -60,13 +37,11 @@ Defined in: class-segment.ts:12
 
 > **buffer**(`distance`): `void`
 
-Defined in: class-segment.ts:155
-
 #### Parameters
 
-##### distance
-
-`number`
+| Parameter  | Type     |
+| ---------- | -------- |
+| `distance` | `number` |
 
 #### Returns
 
@@ -78,13 +53,11 @@ Defined in: class-segment.ts:155
 
 > **crossProduct**(`segment`): `number`
 
-Defined in: class-segment.ts:55
-
 #### Parameters
 
-##### segment
-
-`Segment`
+| Parameter | Type      |
+| --------- | --------- |
+| `segment` | `Segment` |
 
 #### Returns
 
@@ -96,17 +69,15 @@ Defined in: class-segment.ts:55
 
 > **distanceToPosition**(`position`): `number`
 
-Defined in: class-segment.ts:198
-
 Distance from a position to the segment.
 Note that this is not intended to be used for very long platé carree segments.
 This function uses the azimuthal equidistant projection with position as reference point.
 
 #### Parameters
 
-##### position
-
-[`Position`](../../geojson/type-aliases/Position.md)
+| Parameter  | Type                                                 |
+| ---------- | ---------------------------------------------------- |
+| `position` | [`Position`](../../geojson/type-aliases/Position.md) |
 
 #### Returns
 
@@ -120,8 +91,6 @@ the distance from the position to the segment
 
 > **end**(): [`Position2`](../../geojson/type-aliases/Position2.md)
 
-Defined in: class-segment.ts:25
-
 #### Returns
 
 [`Position2`](../../geojson/type-aliases/Position2.md)
@@ -132,13 +101,11 @@ Defined in: class-segment.ts:25
 
 > **intersect**(`seg`): `null` \| [`Position2`](../../geojson/type-aliases/Position2.md)
 
-Defined in: class-segment.ts:43
-
 #### Parameters
 
-##### seg
-
-`Segment`
+| Parameter | Type      |
+| --------- | --------- |
+| `seg`     | `Segment` |
 
 #### Returns
 
@@ -150,17 +117,12 @@ Defined in: class-segment.ts:43
 
 > **intersectByPositions**(`p1`, `p2`): `null` \| [`Position2`](../../geojson/type-aliases/Position2.md)
 
-Defined in: class-segment.ts:49
-
 #### Parameters
 
-##### p1
-
-[`Position`](../../geojson/type-aliases/Position.md)
-
-##### p2
-
-[`Position`](../../geojson/type-aliases/Position.md)
+| Parameter | Type                                                 |
+| --------- | ---------------------------------------------------- |
+| `p1`      | [`Position`](../../geojson/type-aliases/Position.md) |
+| `p2`      | [`Position`](../../geojson/type-aliases/Position.md) |
 
 #### Returns
 
@@ -172,8 +134,6 @@ Defined in: class-segment.ts:49
 
 > **isVector**(): `boolean`
 
-Defined in: class-segment.ts:33
-
 #### Returns
 
 `boolean`
@@ -183,8 +143,6 @@ Defined in: class-segment.ts:33
 ### isVertical()
 
 > **isVertical**(): `boolean`
-
-Defined in: class-segment.ts:29
 
 #### Returns
 
@@ -196,8 +154,6 @@ Defined in: class-segment.ts:29
 
 > **leftMost**(): [`Position2`](../../geojson/type-aliases/Position2.md)
 
-Defined in: class-segment.ts:174
-
 #### Returns
 
 [`Position2`](../../geojson/type-aliases/Position2.md)
@@ -208,17 +164,12 @@ Defined in: class-segment.ts:174
 
 > **parametricIntersect**(`segment`, `includeInvalid`): `null` \| \[`number`, `number`\]
 
-Defined in: class-segment.ts:61
-
 #### Parameters
 
-##### segment
-
-`Segment`
-
-##### includeInvalid
-
-`boolean` = `true`
+| Parameter        | Type      | Default value |
+| ---------------- | --------- | ------------- |
+| `segment`        | `Segment` | `undefined`   |
+| `includeInvalid` | `boolean` | `true`        |
 
 #### Returns
 
@@ -230,13 +181,11 @@ Defined in: class-segment.ts:61
 
 > **position**(`param`): [`Position2`](../../geojson/type-aliases/Position2.md)
 
-Defined in: class-segment.ts:37
-
 #### Parameters
 
-##### param
-
-`number`
+| Parameter | Type     |
+| --------- | -------- |
+| `param`   | `number` |
 
 #### Returns
 
@@ -247,8 +196,6 @@ Defined in: class-segment.ts:37
 ### rightDistanceOfPoint()
 
 > **rightDistanceOfPoint**(`point`): `null` \| `number`
-
-Defined in: class-segment.ts:115
 
 Calculates the distance between a point and a segment along a ray travelling rightward from the
 point.
@@ -264,9 +211,9 @@ determining point-in-polygon.
 
 #### Parameters
 
-##### point
-
-[`Position`](../../geojson/type-aliases/Position.md)
+| Parameter | Type                                                 |
+| --------- | ---------------------------------------------------- |
+| `point`   | [`Position`](../../geojson/type-aliases/Position.md) |
 
 #### Returns
 
@@ -280,8 +227,6 @@ determining point-in-polygon.
 
 > **rightMost**(): [`Position2`](../../geojson/type-aliases/Position2.md)
 
-Defined in: class-segment.ts:183
-
 #### Returns
 
 [`Position2`](../../geojson/type-aliases/Position2.md)
@@ -291,8 +236,6 @@ Defined in: class-segment.ts:183
 ### start()
 
 > **start**(): [`Position2`](../../geojson/type-aliases/Position2.md)
-
-Defined in: class-segment.ts:21
 
 #### Returns
 
@@ -304,13 +247,11 @@ Defined in: class-segment.ts:21
 
 > `static` **checkParameter**(`param`): `boolean`
 
-Defined in: class-segment.ts:7
-
 #### Parameters
 
-##### param
-
-`number`
+| Parameter | Type     |
+| --------- | -------- |
+| `param`   | `number` |
 
 #### Returns
 

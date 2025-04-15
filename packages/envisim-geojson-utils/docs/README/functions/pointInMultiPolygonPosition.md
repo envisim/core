@@ -8,22 +8,15 @@
 
 > **pointInMultiPolygonPosition**(`point`, `polygons`): `boolean`
 
-Defined in: point-in-polygon.ts:54
-
 Checks if a point is in a MultiPolygon.
 Note: Not for Polygon.
 
 ## Parameters
 
-### point
-
-[`Position`](../../geojson/type-aliases/Position.md)
-
-Coordinates [lon,lat] of a point.
-
-### polygons
-
-[`Position`](../../geojson/type-aliases/Position.md)[][][]
+| Parameter  | Type                                                       | Description                                 |
+| ---------- | ---------------------------------------------------------- | ------------------------------------------- |
+| `point`    | [`Position`](../../geojson/type-aliases/Position.md)       | Coordinates [lon,lat] of a point.           |
+| `polygons` | [`Position`](../../geojson/type-aliases/Position.md)[][][] | Coordinates of a MultiPolygon, not Polygon. |
 
 ## Returns
 

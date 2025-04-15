@@ -8,17 +8,12 @@
 
 > **isSingleTypeGeometry**(`obj`, `checkCoordinates`): `obj is SingleTypeObject`
 
-Defined in: type-guards/objects.ts:124
-
 ## Parameters
 
-### obj
-
-`unknown`
-
-### checkCoordinates
-
-`boolean` = `false`
+| Parameter          | Type      | Default value |
+| ------------------ | --------- | ------------- |
+| `obj`              | `unknown` | `undefined`   |
+| `checkCoordinates` | `boolean` | `false`       |
 
 ## Returns
 

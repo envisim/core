@@ -8,13 +8,11 @@
 
 > **isUniformCollection**(`obj`): obj is BaseFeatureCollection\<BaseFeature\<SingleTypeObject, string \| number\>\>
 
-Defined in: type-guards/collection.ts:47
-
 ## Parameters
 
-### obj
-
-[`BaseFeatureCollection`](../../geojson/interfaces/BaseFeatureCollection.md)\<[`BaseFeature`](../../geojson/interfaces/BaseFeature.md)\<[`SingleTypeObject`](../../geojson/type-aliases/SingleTypeObject.md), `unknown`\>\>
+| Parameter | Type                                                                                                                                                                                                                        |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `obj`     | [`BaseFeatureCollection`](../../geojson/interfaces/BaseFeatureCollection.md)\<[`BaseFeature`](../../geojson/interfaces/BaseFeature.md)\<[`SingleTypeObject`](../../geojson/type-aliases/SingleTypeObject.md), `unknown`\>\> |
 
 ## Returns
 

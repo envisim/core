@@ -8,27 +8,19 @@
 
 > **swap**\<`T`\>(`arr`, `a`, `b`): `void`
 
-Defined in: swap.ts:1
-
 ## Type Parameters
 
-### T
-
-`T`
+| Type Parameter |
+| -------------- |
+| `T`            |
 
 ## Parameters
 
-### arr
-
-`T`[]
-
-### a
-
-`number`
-
-### b
-
-`number`
+| Parameter | Type     |
+| --------- | -------- |
+| `arr`     | `T`[]    |
+| `a`       | `number` |
+| `b`       | `number` |
 
 ## Returns
 

@@ -6,8 +6,6 @@
 
 # Class: GeometricPrimitive
 
-Defined in: geometric-primitive.ts:13
-
 ## Constructors
 
 ### Constructor
@@ -20,35 +18,12 @@ Defined in: geometric-primitive.ts:13
 
 ## Properties
 
-### AREA
-
-> `static` **AREA**: `"area"`
-
-Defined in: geometric-primitive.ts:14
-
----
-
-### LINE
-
-> `static` **LINE**: `"line"`
-
-Defined in: geometric-primitive.ts:15
-
----
-
-### NONE
-
-> `static` **NONE**: `"none"`
-
-Defined in: geometric-primitive.ts:17
-
----
-
-### POINT
-
-> `static` **POINT**: `"point"`
-
-Defined in: geometric-primitive.ts:16
+| Property                   | Modifier | Type      |
+| -------------------------- | -------- | --------- |
+| <a id="area"></a> `AREA`   | `static` | `"area"`  |
+| <a id="line"></a> `LINE`   | `static` | `"line"`  |
+| <a id="none"></a> `NONE`   | `static` | `"none"`  |
+| <a id="point"></a> `POINT` | `static` | `"point"` |
 
 ## Methods
 
@@ -56,13 +31,11 @@ Defined in: geometric-primitive.ts:16
 
 > `static` **assertArea**(`obj`): `asserts obj is "area"`
 
-Defined in: geometric-primitive.ts:29
-
 #### Parameters
 
-##### obj
-
-`unknown`
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 #### Returns
 
@@ -74,13 +47,11 @@ Defined in: geometric-primitive.ts:29
 
 > `static` **assertLine**(`obj`): `asserts obj is "line"`
 
-Defined in: geometric-primitive.ts:32
-
 #### Parameters
 
-##### obj
-
-`unknown`
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 #### Returns
 
@@ -92,13 +63,11 @@ Defined in: geometric-primitive.ts:32
 
 > `static` **assertPoint**(`obj`): `asserts obj is "point"`
 
-Defined in: geometric-primitive.ts:35
-
 #### Parameters
 
-##### obj
-
-`unknown`
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 #### Returns
 
@@ -110,21 +79,13 @@ Defined in: geometric-primitive.ts:35
 
 > `static` **fromCollection**(`obj`, `allowGC`, `exhaustive`): [`GeometricPrimitiveUnion`](../type-aliases/GeometricPrimitiveUnion.md)
 
-Defined in: geometric-primitive.ts:83
-
 #### Parameters
 
-##### obj
-
-[`BaseFeatureCollection`](../../geojson/interfaces/BaseFeatureCollection.md)
-
-##### allowGC
-
-`boolean` = `false`
-
-##### exhaustive
-
-`boolean` = `false`
+| Parameter    | Type                                                                         | Default value |
+| ------------ | ---------------------------------------------------------------------------- | ------------- |
+| `obj`        | [`BaseFeatureCollection`](../../geojson/interfaces/BaseFeatureCollection.md) | `undefined`   |
+| `allowGC`    | `boolean`                                                                    | `false`       |
+| `exhaustive` | `boolean`                                                                    | `false`       |
 
 #### Returns
 
@@ -138,17 +99,12 @@ Defined in: geometric-primitive.ts:83
 
 > `static` **fromFeature**(`obj`, `allowGC?`): `"area"`
 
-Defined in: geometric-primitive.ts:75
-
 ##### Parameters
 
-###### obj
-
-[`AreaFeature`](../../geojson/type-aliases/AreaFeature.md)
-
-###### allowGC?
-
-`boolean`
+| Parameter  | Type                                                       |
+| ---------- | ---------------------------------------------------------- |
+| `obj`      | [`AreaFeature`](../../geojson/type-aliases/AreaFeature.md) |
+| `allowGC?` | `boolean`                                                  |
 
 ##### Returns
 
@@ -158,17 +114,12 @@ Defined in: geometric-primitive.ts:75
 
 > `static` **fromFeature**(`obj`, `allowGC?`): `"line"`
 
-Defined in: geometric-primitive.ts:76
-
 ##### Parameters
 
-###### obj
-
-[`LineFeature`](../../geojson/type-aliases/LineFeature.md)
-
-###### allowGC?
-
-`boolean`
+| Parameter  | Type                                                       |
+| ---------- | ---------------------------------------------------------- |
+| `obj`      | [`LineFeature`](../../geojson/type-aliases/LineFeature.md) |
+| `allowGC?` | `boolean`                                                  |
 
 ##### Returns
 
@@ -178,17 +129,12 @@ Defined in: geometric-primitive.ts:76
 
 > `static` **fromFeature**(`obj`, `allowGC?`): `"point"`
 
-Defined in: geometric-primitive.ts:77
-
 ##### Parameters
 
-###### obj
-
-[`PointFeature`](../../geojson/type-aliases/PointFeature.md)
-
-###### allowGC?
-
-`boolean`
+| Parameter  | Type                                                         |
+| ---------- | ------------------------------------------------------------ |
+| `obj`      | [`PointFeature`](../../geojson/type-aliases/PointFeature.md) |
+| `allowGC?` | `boolean`                                                    |
 
 ##### Returns
 
@@ -198,17 +144,12 @@ Defined in: geometric-primitive.ts:77
 
 > `static` **fromFeature**(`obj`, `allowGC?`): [`GeometricPrimitiveUnion`](../type-aliases/GeometricPrimitiveUnion.md)
 
-Defined in: geometric-primitive.ts:78
-
 ##### Parameters
 
-###### obj
-
-[`BaseFeature`](../../geojson/interfaces/BaseFeature.md)
-
-###### allowGC?
-
-`boolean`
+| Parameter  | Type                                                     |
+| ---------- | -------------------------------------------------------- |
+| `obj`      | [`BaseFeature`](../../geojson/interfaces/BaseFeature.md) |
+| `allowGC?` | `boolean`                                                |
 
 ##### Returns
 
@@ -222,17 +163,12 @@ Defined in: geometric-primitive.ts:78
 
 > `static` **fromGeometry**(`obj`, `allowGC?`): `"area"`
 
-Defined in: geometric-primitive.ts:40
-
 ##### Parameters
 
-###### obj
-
-[`AreaGeometry`](../../geojson/type-aliases/AreaGeometry.md)
-
-###### allowGC?
-
-`boolean`
+| Parameter  | Type                                                         |
+| ---------- | ------------------------------------------------------------ |
+| `obj`      | [`AreaGeometry`](../../geojson/type-aliases/AreaGeometry.md) |
+| `allowGC?` | `boolean`                                                    |
 
 ##### Returns
 
@@ -242,17 +178,12 @@ Defined in: geometric-primitive.ts:40
 
 > `static` **fromGeometry**(`obj`, `allowGC?`): `"line"`
 
-Defined in: geometric-primitive.ts:41
-
 ##### Parameters
 
-###### obj
-
-[`LineGeometry`](../../geojson/type-aliases/LineGeometry.md)
-
-###### allowGC?
-
-`boolean`
+| Parameter  | Type                                                         |
+| ---------- | ------------------------------------------------------------ |
+| `obj`      | [`LineGeometry`](../../geojson/type-aliases/LineGeometry.md) |
+| `allowGC?` | `boolean`                                                    |
 
 ##### Returns
 
@@ -262,17 +193,12 @@ Defined in: geometric-primitive.ts:41
 
 > `static` **fromGeometry**(`obj`, `allowGC?`): `"point"`
 
-Defined in: geometric-primitive.ts:42
-
 ##### Parameters
 
-###### obj
-
-[`PointGeometry`](../../geojson/type-aliases/PointGeometry.md)
-
-###### allowGC?
-
-`boolean`
+| Parameter  | Type                                                           |
+| ---------- | -------------------------------------------------------------- |
+| `obj`      | [`PointGeometry`](../../geojson/type-aliases/PointGeometry.md) |
+| `allowGC?` | `boolean`                                                      |
 
 ##### Returns
 
@@ -282,17 +208,12 @@ Defined in: geometric-primitive.ts:42
 
 > `static` **fromGeometry**(`obj`, `allowGC?`): [`GeometricPrimitiveUnion`](../type-aliases/GeometricPrimitiveUnion.md)
 
-Defined in: geometric-primitive.ts:43
-
 ##### Parameters
 
-###### obj
-
-[`BaseGeometry`](../../geojson/type-aliases/BaseGeometry.md)
-
-###### allowGC?
-
-`boolean`
+| Parameter  | Type                                                         |
+| ---------- | ------------------------------------------------------------ |
+| `obj`      | [`BaseGeometry`](../../geojson/type-aliases/BaseGeometry.md) |
+| `allowGC?` | `boolean`                                                    |
 
 ##### Returns
 
@@ -304,13 +225,11 @@ Defined in: geometric-primitive.ts:43
 
 > `static` **isArea**(`obj`): `obj is "area"`
 
-Defined in: geometric-primitive.ts:19
-
 #### Parameters
 
-##### obj
-
-`unknown`
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 #### Returns
 
@@ -322,13 +241,11 @@ Defined in: geometric-primitive.ts:19
 
 > `static` **isLine**(`obj`): `obj is "line"`
 
-Defined in: geometric-primitive.ts:22
-
 #### Parameters
 
-##### obj
-
-`unknown`
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 #### Returns
 
@@ -340,13 +257,11 @@ Defined in: geometric-primitive.ts:22
 
 > `static` **isPoint**(`obj`): `obj is "point"`
 
-Defined in: geometric-primitive.ts:25
-
 #### Parameters
 
-##### obj
-
-`unknown`
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 #### Returns
 

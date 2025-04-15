@@ -7,5 +7,3 @@
 # Type Alias: Geometry
 
 > **Geometry** = [`PointGeometry`](PointGeometry.md) \| [`LineGeometry`](LineGeometry.md) \| [`AreaGeometry`](AreaGeometry.md)
-
-Defined in: geojson.ts:61

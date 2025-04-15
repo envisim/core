@@ -7,5 +7,3 @@
 # Type Alias: LineString
 
 > **LineString** = [`BaseObject`](../interfaces/BaseObject.md)\<`"LineString"`, [`Position`](Position.md)[]\>
-
-Defined in: geojson.ts:30

@@ -6,8 +6,6 @@
 
 # Class: BoundingBox
 
-Defined in: bbox.ts:6
-
 ## Constructors
 
 ### Constructor
@@ -24,13 +22,11 @@ Defined in: bbox.ts:6
 
 > `static` **altitudeRange**(`bbox`): \[`number`, `number`\]
 
-Defined in: bbox.ts:31
-
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
+| Parameter | Type                                         |
+| --------- | -------------------------------------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) |
 
 #### Returns
 
@@ -42,17 +38,13 @@ Defined in: bbox.ts:31
 
 > `static` **center**(`bbox`): [`Position2`](../../geojson/type-aliases/Position2.md)
 
-Defined in: bbox.ts:61
-
 Computes the parametric center (in longitude and latitude only) of a bounding box
 
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
-
-a bounding box
+| Parameter | Type                                         | Description    |
+| --------- | -------------------------------------------- | -------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) | a bounding box |
 
 #### Returns
 
@@ -66,13 +58,11 @@ the center of the bounding box
 
 > `static` **includesAntimeridian**(`bbox`): `boolean`
 
-Defined in: bbox.ts:65
-
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
+| Parameter | Type                                         |
+| --------- | -------------------------------------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) |
 
 #### Returns
 
@@ -84,24 +74,15 @@ Defined in: bbox.ts:65
 
 > `static` **includesPoint**(`bbox`, `point`): `boolean`
 
-Defined in: bbox.ts:77
-
 Checks if position is in bbox.
 Considers the altitude only if both have it
 
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
-
-Bounding box.
-
-##### point
-
-[`Position`](../../geojson/type-aliases/Position.md)
-
-Point coordinates.
+| Parameter | Type                                                 | Description        |
+| --------- | ---------------------------------------------------- | ------------------ |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md)         | Bounding box.      |
+| `point`   | [`Position`](../../geojson/type-aliases/Position.md) | Point coordinates. |
 
 #### Returns
 
@@ -115,13 +96,11 @@ true if point is in bbox, otherwise false.
 
 > `static` **latitudeDiff**(`bbox`): `number`
 
-Defined in: bbox.ts:43
-
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
+| Parameter | Type                                         |
+| --------- | -------------------------------------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) |
 
 #### Returns
 
@@ -133,13 +112,11 @@ Defined in: bbox.ts:43
 
 > `static` **latitudeRange**(`bbox`): \[`number`, `number`\]
 
-Defined in: bbox.ts:22
-
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
+| Parameter | Type                                         |
+| --------- | -------------------------------------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) |
 
 #### Returns
 
@@ -151,13 +128,11 @@ Defined in: bbox.ts:22
 
 > `static` **longitudeDiff**(`bbox`): `number`
 
-Defined in: bbox.ts:40
-
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
+| Parameter | Type                                         |
+| --------- | -------------------------------------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) |
 
 #### Returns
 
@@ -169,13 +144,11 @@ Defined in: bbox.ts:40
 
 > `static` **longitudeRange**(`bbox`): \[`number`, `number`\]
 
-Defined in: bbox.ts:13
-
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
+| Parameter | Type                                         |
+| --------- | -------------------------------------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) |
 
 #### Returns
 
@@ -187,13 +160,11 @@ Defined in: bbox.ts:13
 
 > `static` **max2**(`bbox`): [`Position2`](../../geojson/type-aliases/Position2.md)
 
-Defined in: bbox.ts:10
-
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
+| Parameter | Type                                         |
+| --------- | -------------------------------------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) |
 
 #### Returns
 
@@ -205,13 +176,11 @@ Defined in: bbox.ts:10
 
 > `static` **maxAltitude**(`bbox`): `number`
 
-Defined in: bbox.ts:37
-
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
+| Parameter | Type                                         |
+| --------- | -------------------------------------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) |
 
 #### Returns
 
@@ -223,13 +192,11 @@ Defined in: bbox.ts:37
 
 > `static` **maxLatitude**(`bbox`): `number`
 
-Defined in: bbox.ts:28
-
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
+| Parameter | Type                                         |
+| --------- | -------------------------------------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) |
 
 #### Returns
 
@@ -241,13 +208,11 @@ Defined in: bbox.ts:28
 
 > `static` **maxLongitude**(`bbox`): `number`
 
-Defined in: bbox.ts:19
-
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
+| Parameter | Type                                         |
+| --------- | -------------------------------------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) |
 
 #### Returns
 
@@ -259,13 +224,11 @@ Defined in: bbox.ts:19
 
 > `static` **min2**(`bbox`): [`Position2`](../../geojson/type-aliases/Position2.md)
 
-Defined in: bbox.ts:7
-
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
+| Parameter | Type                                         |
+| --------- | -------------------------------------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) |
 
 #### Returns
 
@@ -277,13 +240,11 @@ Defined in: bbox.ts:7
 
 > `static` **minAltitude**(`bbox`): `number`
 
-Defined in: bbox.ts:34
-
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
+| Parameter | Type                                         |
+| --------- | -------------------------------------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) |
 
 #### Returns
 
@@ -295,13 +256,11 @@ Defined in: bbox.ts:34
 
 > `static` **minLatitude**(`bbox`): `number`
 
-Defined in: bbox.ts:25
-
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
+| Parameter | Type                                         |
+| --------- | -------------------------------------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) |
 
 #### Returns
 
@@ -313,13 +272,11 @@ Defined in: bbox.ts:25
 
 > `static` **minLongitude**(`bbox`): `number`
 
-Defined in: bbox.ts:16
-
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
+| Parameter | Type                                         |
+| --------- | -------------------------------------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) |
 
 #### Returns
 
@@ -331,17 +288,13 @@ Defined in: bbox.ts:16
 
 > `static` **removeAltitude**(`bbox`): [`BBox2`](../../geojson/type-aliases/BBox2.md)
 
-Defined in: bbox.ts:52
-
 Removes altitiude from the bounding box
 
 #### Parameters
 
-##### bbox
-
-[`BBox`](../../geojson/type-aliases/BBox.md)
-
-a bounding box.
+| Parameter | Type                                         | Description     |
+| --------- | -------------------------------------------- | --------------- |
+| `bbox`    | [`BBox`](../../geojson/type-aliases/BBox.md) | a bounding box. |
 
 #### Returns
 

@@ -7,5 +7,3 @@
 # Type Alias: GeometricPrimitivePoint
 
 > **GeometricPrimitivePoint** = _typeof_ [`GeometricPrimitive`](../classes/GeometricPrimitive.md)\[`"POINT"`\]
-
-Defined in: geometric-primitive.ts:5

@@ -7,5 +7,3 @@
 # Type Alias: LineObject
 
 > **LineObject** = [`LineString`](LineString.md) \| [`MultiLineString`](MultiLineString.md)
-
-Defined in: geojson.ts:32

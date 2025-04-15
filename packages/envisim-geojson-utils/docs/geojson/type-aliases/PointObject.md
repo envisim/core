@@ -7,5 +7,3 @@
 # Type Alias: PointObject
 
 > **PointObject** = [`Point`](Point.md) \| [`MultiPoint`](MultiPoint.md)
-
-Defined in: geojson.ts:28

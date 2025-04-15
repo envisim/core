@@ -8,13 +8,11 @@
 
 > **isMultiPoint**(`obj`): `obj is MultiPoint`
 
-Defined in: type-guards/objects.ts:14
-
 ## Parameters
 
-### obj
-
-[`SingleTypeObject`](../../geojson/type-aliases/SingleTypeObject.md)
+| Parameter | Type                                                                 |
+| --------- | -------------------------------------------------------------------- |
+| `obj`     | [`SingleTypeObject`](../../geojson/type-aliases/SingleTypeObject.md) |
 
 ## Returns
 

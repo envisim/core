@@ -10,17 +10,13 @@
 
 > **cutAreaGeometry**(`g`): [`Circle`](../../geojson/interfaces/Circle.md)
 
-Defined in: antimeridian.ts:173
-
 Cuts an AreaGeometry on the antimeridian
 
 ### Parameters
 
-#### g
-
-[`Circle`](../../geojson/interfaces/Circle.md)
-
-the AreaGeometry to cut
+| Parameter | Type                                           | Description             |
+| --------- | ---------------------------------------------- | ----------------------- |
+| `g`       | [`Circle`](../../geojson/interfaces/Circle.md) | the AreaGeometry to cut |
 
 ### Returns
 
@@ -32,17 +28,13 @@ the cut AreaGeometry
 
 > **cutAreaGeometry**(`g`): [`MultiCircle`](../../geojson/interfaces/MultiCircle.md)
 
-Defined in: antimeridian.ts:174
-
 Cuts an AreaGeometry on the antimeridian
 
 ### Parameters
 
-#### g
-
-[`MultiCircle`](../../geojson/interfaces/MultiCircle.md)
-
-the AreaGeometry to cut
+| Parameter | Type                                                     | Description             |
+| --------- | -------------------------------------------------------- | ----------------------- |
+| `g`       | [`MultiCircle`](../../geojson/interfaces/MultiCircle.md) | the AreaGeometry to cut |
 
 ### Returns
 
@@ -54,17 +46,13 @@ the cut AreaGeometry
 
 > **cutAreaGeometry**(`g`): [`Polygon`](../../geojson/type-aliases/Polygon.md) \| [`MultiPolygon`](../../geojson/type-aliases/MultiPolygon.md)
 
-Defined in: antimeridian.ts:175
-
 Cuts an AreaGeometry on the antimeridian
 
 ### Parameters
 
-#### g
-
-the AreaGeometry to cut
-
-[`Polygon`](../../geojson/type-aliases/Polygon.md) | [`MultiPolygon`](../../geojson/type-aliases/MultiPolygon.md)
+| Parameter | Type                                                                                                               | Description             |
+| --------- | ------------------------------------------------------------------------------------------------------------------ | ----------------------- |
+| `g`       | [`Polygon`](../../geojson/type-aliases/Polygon.md) \| [`MultiPolygon`](../../geojson/type-aliases/MultiPolygon.md) | the AreaGeometry to cut |
 
 ### Returns
 

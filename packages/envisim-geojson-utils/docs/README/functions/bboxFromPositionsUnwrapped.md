@@ -10,13 +10,11 @@
 
 > **bboxFromPositionsUnwrapped**(`positions`): [`BBox2`](../../geojson/type-aliases/BBox2.md)
 
-Defined in: bbox.ts:152
-
 ### Parameters
 
-#### positions
-
-[`Position2`](../../geojson/type-aliases/Position2.md)[]
+| Parameter   | Type                                                     |
+| ----------- | -------------------------------------------------------- |
+| `positions` | [`Position2`](../../geojson/type-aliases/Position2.md)[] |
 
 ### Returns
 
@@ -26,13 +24,11 @@ Defined in: bbox.ts:152
 
 > **bboxFromPositionsUnwrapped**(`positions`): [`BBox3`](../../geojson/type-aliases/BBox3.md)
 
-Defined in: bbox.ts:153
-
 ### Parameters
 
-#### positions
-
-[`Position3`](../../geojson/type-aliases/Position3.md)[]
+| Parameter   | Type                                                     |
+| ----------- | -------------------------------------------------------- |
+| `positions` | [`Position3`](../../geojson/type-aliases/Position3.md)[] |
 
 ### Returns
 
@@ -42,13 +38,11 @@ Defined in: bbox.ts:153
 
 > **bboxFromPositionsUnwrapped**(`positions`): [`BBox`](../../geojson/type-aliases/BBox.md)
 
-Defined in: bbox.ts:154
-
 ### Parameters
 
-#### positions
-
-[`Position`](../../geojson/type-aliases/Position.md)[]
+| Parameter   | Type                                                   |
+| ----------- | ------------------------------------------------------ |
+| `positions` | [`Position`](../../geojson/type-aliases/Position.md)[] |
 
 ### Returns
 

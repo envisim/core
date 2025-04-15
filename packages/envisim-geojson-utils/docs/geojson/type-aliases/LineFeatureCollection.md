@@ -7,5 +7,3 @@
 # Type Alias: LineFeatureCollection
 
 > **LineFeatureCollection** = [`FeatureCollection`](FeatureCollection.md)\<[`LineFeature`](LineFeature.md)\>
-
-Defined in: geojson.ts:81

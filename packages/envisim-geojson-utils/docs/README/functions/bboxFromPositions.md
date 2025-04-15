@@ -10,15 +10,11 @@
 
 > **bboxFromPositions**(`positions`): [`BBox2`](../../geojson/type-aliases/BBox2.md)
 
-Defined in: bbox.ts:188
-
 ### Parameters
 
-#### positions
-
-[`Position2`](../../geojson/type-aliases/Position2.md)[]
-
-an array of positions
+| Parameter   | Type                                                     | Description           |
+| ----------- | -------------------------------------------------------- | --------------------- |
+| `positions` | [`Position2`](../../geojson/type-aliases/Position2.md)[] | an array of positions |
 
 ### Returns
 
@@ -34,15 +30,11 @@ Error when positions.length === 0
 
 > **bboxFromPositions**(`positions`): [`BBox3`](../../geojson/type-aliases/BBox3.md)
 
-Defined in: bbox.ts:189
-
 ### Parameters
 
-#### positions
-
-[`Position3`](../../geojson/type-aliases/Position3.md)[]
-
-an array of positions
+| Parameter   | Type                                                     | Description           |
+| ----------- | -------------------------------------------------------- | --------------------- |
+| `positions` | [`Position3`](../../geojson/type-aliases/Position3.md)[] | an array of positions |
 
 ### Returns
 
@@ -58,15 +50,11 @@ Error when positions.length === 0
 
 > **bboxFromPositions**(`positions`): [`BBox`](../../geojson/type-aliases/BBox.md)
 
-Defined in: bbox.ts:190
-
 ### Parameters
 
-#### positions
-
-[`Position`](../../geojson/type-aliases/Position.md)[]
-
-an array of positions
+| Parameter   | Type                                                   | Description           |
+| ----------- | ------------------------------------------------------ | --------------------- |
+| `positions` | [`Position`](../../geojson/type-aliases/Position.md)[] | an array of positions |
 
 ### Returns
 

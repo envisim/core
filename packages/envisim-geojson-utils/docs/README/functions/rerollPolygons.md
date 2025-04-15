@@ -8,8 +8,6 @@
 
 > **rerollPolygons**(`polygons`): [`Position2`](../../geojson/type-aliases/Position2.md)[][][]
 
-Defined in: antimeridian.ts:214
-
 An unrolled polygon is a polygon which may exist outside the boundaries of normal earth
 (-180, 180), as if the earth(s) was unrolled on a sheet of paper.
 
@@ -23,9 +21,9 @@ earth, (180, 540), but that the following polygons may exist:
 
 ## Parameters
 
-### polygons
-
-[`Position2`](../../geojson/type-aliases/Position2.md)[][][]
+| Parameter  | Type                                                         |
+| ---------- | ------------------------------------------------------------ |
+| `polygons` | [`Position2`](../../geojson/type-aliases/Position2.md)[][][] |
 
 ## Returns
 

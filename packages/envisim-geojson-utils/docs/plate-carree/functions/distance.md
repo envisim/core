@@ -8,23 +8,14 @@
 
 > **distance**(`p1`, `p2`): `number`
 
-Defined in: segments/plate-carree.ts:44
-
 Computes the plate carrée distance between two points
 
 ## Parameters
 
-### p1
-
-[`Position`](../../geojson/type-aliases/Position.md)
-
-the first point
-
-### p2
-
-[`Position`](../../geojson/type-aliases/Position.md)
-
-the second point
+| Parameter | Type                                                 | Description      |
+| --------- | ---------------------------------------------------- | ---------------- |
+| `p1`      | [`Position`](../../geojson/type-aliases/Position.md) | the first point  |
+| `p2`      | [`Position`](../../geojson/type-aliases/Position.md) | the second point |
 
 ## Returns
 

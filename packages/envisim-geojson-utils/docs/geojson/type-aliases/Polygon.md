@@ -7,5 +7,3 @@
 # Type Alias: Polygon
 
 > **Polygon** = [`BaseObject`](../interfaces/BaseObject.md)\<`"Polygon"`, [`Position`](Position.md)[][]\>
-
-Defined in: geojson.ts:34

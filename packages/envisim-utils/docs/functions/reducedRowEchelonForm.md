@@ -8,37 +8,17 @@
 
 > **reducedRowEchelonForm**(`mat`, `rowCount`, `colCount`, `eps`, `mIdx`): `void`
 
-Defined in: reducedRowEchelonForm.ts:7
-
 Transforms an array into reducedRowEchelonForm in place.
 
 ## Parameters
 
-### mat
-
-`number`[]
-
-A flat array
-
-### rowCount
-
-`number`
-
-The number of rows
-
-### colCount
-
-`number`
-
-The number of columns
-
-### eps
-
-`number` = `1e-9`
-
-### mIdx
-
-(`r`, `c`) => `number`
+| Parameter  | Type                   | Default value | Description           |
+| ---------- | ---------------------- | ------------- | --------------------- |
+| `mat`      | `number`[]             | `undefined`   | A flat array          |
+| `rowCount` | `number`               | `undefined`   | The number of rows    |
+| `colCount` | `number`               | `undefined`   | The number of columns |
+| `eps`      | `number`               | `1e-9`        | -                     |
+| `mIdx`     | (`r`, `c`) => `number` | `...`         | -                     |
 
 ## Returns
 
