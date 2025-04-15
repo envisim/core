@@ -3,7 +3,7 @@ const config = {
   // options
   // tsconfig
   // compilerOptions
-  plugin: ["typedoc-plugin-markdown"],
+  plugin: ["typedoc-plugin-missing-exports", "typedoc-plugin-markdown"],
   //
   //
   // Input Options
@@ -127,9 +127,15 @@ const config = {
   // help
   // version
   // showConfig
-  // logLevel
+  logLevel: "Warn",
   // skipErrorChecking
   //
+  //
+  // typedoc-plugin-missing-exports
+  //
+  // internalModule
+  // collapseInternalModule
+  placeInternalsInOwningModule: true,
   //
   // typedoc-plugin-markdown
   //

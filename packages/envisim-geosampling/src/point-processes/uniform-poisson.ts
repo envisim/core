@@ -9,7 +9,7 @@ interface UniformPoissonProcessOptions {
    */
   intensity: number;
   /**
-   * An instance of {@link random.Random}
+   * An RNG
    * @defaultValue `new Random()`
    */
   rand?: Random;

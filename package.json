@@ -12,11 +12,11 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "turbo build",
-    "doc": "turbo doc",
-    "lint": "turbo lint",
+    "build": "turbo build --log-order=grouped --output-logs=errors-only",
+    "doc": "turbo doc --log-order=grouped",
+    "lint": "turbo lint --log-order=grouped --output-logs=errors-only",
     "prepare": "husky",
-    "test": "turbo test"
+    "test": "turbo test --log-order=grouped --output-logs=errors-only"
   },
   "devDependencies": {
     "@changesets/cli": "^2.28.1",

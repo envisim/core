@@ -7,7 +7,7 @@ export { SAMPLE_ERROR_LIST, type SampleError, throwRangeError };
 
 export interface OptionsBase<P extends string = string, M extends string = string> {
   /**
-   * An instance of {@link random.Random}
+   * An RNG
    * @defaultValue `new Random()`
    */
   rand?: RandomGenerator;

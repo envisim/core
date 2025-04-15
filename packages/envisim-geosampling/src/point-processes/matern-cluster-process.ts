@@ -34,7 +34,7 @@ interface MaternClusterProcessOptions {
    */
   radiusOfCluster: number;
   /**
-   * An instance of {@link random.Random}
+   * An RNG
    * @defaultValue `new Random()`
    */
   rand?: Random;

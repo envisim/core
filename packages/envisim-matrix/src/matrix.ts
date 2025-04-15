@@ -473,8 +473,8 @@ export function randomMatrix(
 }
 
 /**
- * @returns a new diagonal matrix of elements in arr
- * @param nrow size of the diagonal matrix
+ * @param arr - the diagonal elements
+ * @returns a new matrix with diagonal elements set to `arr`
  */
 export function diagonalMatrix(arr: number[]): Matrix {
   const n = arr.length;

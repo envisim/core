@@ -1,6 +1,6 @@
-import {Random} from './random.js';
+import { Random } from "./random.js";
 
-export {Random};
+export { Random };
 
 export interface RandomGenerator {
   random(): number;
@@ -28,11 +28,11 @@ export function randomFloatOpen(generator: RandomGenerator = new Random()): numb
  * Returns an array with psudo-random standard uniform elements.
  *
  * @param n - Length of array.
- * @param seed - Seed for random number generator.
+ * @param generator - Seed for random number generator.
  * @returns Pseudo-random (uniform) array with elements on the interval `[0.0, 1.0)`.
  */
 export function randomArray(n: number, generator: RandomGenerator = new Random()): number[] {
-  return Array.from({length: n}, () => generator.random());
+  return Array.from({ length: n }, () => generator.random());
 }
 
 /**
@@ -41,7 +41,7 @@ export function randomArray(n: number, generator: RandomGenerator = new Random()
  */
 export function randomInt(n: number = 1, generator: RandomGenerator = new Random()): number {
   n = Math.round(n);
-  if (n < 1) throw new RangeError('n must be a positive integer');
+  if (n < 1) throw new RangeError("n must be a positive integer");
   if (n === 1) return 0;
   return (n * generator.random()) | 0;
 }

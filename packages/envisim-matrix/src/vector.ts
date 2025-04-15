@@ -164,7 +164,7 @@ export class Vector extends BaseMatrix {
   }
 
   /**
-   * @returns the cumulative sum of the {@link TVectorLike}
+   * @returns the cumulative sums of the vector elements
    * @group Statistics
    */
   cumulativeSum(): Vector {
