@@ -2,9 +2,9 @@
 
 ---
 
-[@envisim/geosampling]() / point-processes
+[@envisim/geosampling](README.md) / point-processes
 
-# @envisim/geosampling
+# point-processes
 
 ## Functions
 

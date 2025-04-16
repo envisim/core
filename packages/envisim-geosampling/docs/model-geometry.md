@@ -2,9 +2,9 @@
 
 ---
 
-[@envisim/geosampling]() / model-geometry
+[@envisim/geosampling](README.md) / model-geometry
 
-# @envisim/geosampling
+# model-geometry
 
 ## Functions
 

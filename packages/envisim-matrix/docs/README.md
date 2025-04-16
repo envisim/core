@@ -36,12 +36,12 @@
 
 #### Properties
 
-| Property                         | Modifier    | Type       | Description                        | Inherited from        |
-| -------------------------------- | ----------- | ---------- | ---------------------------------- | --------------------- |
-| <a id="cols"></a> `cols`         | `protected` | `number`   | **`Internal`**                     | `BaseMatrix.cols`     |
-| <a id="internal"></a> `internal` | `protected` | `number`[] | **`Internal`** stored column major | `BaseMatrix.internal` |
-| <a id="len"></a> `len`           | `protected` | `number`   | **`Internal`**                     | `BaseMatrix.len`      |
-| <a id="rows"></a> `rows`         | `protected` | `number`   | **`Internal`**                     | `BaseMatrix.rows`     |
+| Property                         | Modifier    | Type       | Description                        |
+| -------------------------------- | ----------- | ---------- | ---------------------------------- |
+| <a id="cols"></a> `cols`         | `protected` | `number`   | **`Internal`**                     |
+| <a id="internal"></a> `internal` | `protected` | `number`[] | **`Internal`** stored column major |
+| <a id="len"></a> `len`           | `protected` | `number`   | **`Internal`**                     |
+| <a id="rows"></a> `rows`         | `protected` | `number`   | **`Internal`**                     |
 
 #### Accessors
 
@@ -1448,12 +1448,12 @@ a new standardized or normalized [Matrix](#matrix)
 
 #### Properties
 
-| Property                           | Modifier    | Type       | Description                        | Inherited from        |
-| ---------------------------------- | ----------- | ---------- | ---------------------------------- | --------------------- |
-| <a id="cols-1"></a> `cols`         | `protected` | `number`   | **`Internal`**                     | `BaseMatrix.cols`     |
-| <a id="internal-1"></a> `internal` | `protected` | `number`[] | **`Internal`** stored column major | `BaseMatrix.internal` |
-| <a id="len-1"></a> `len`           | `protected` | `number`   | **`Internal`**                     | `BaseMatrix.len`      |
-| <a id="rows-1"></a> `rows`         | `protected` | `number`   | **`Internal`**                     | `BaseMatrix.rows`     |
+| Property                           | Modifier    | Type       | Description                        |
+| ---------------------------------- | ----------- | ---------- | ---------------------------------- |
+| <a id="cols-1"></a> `cols`         | `protected` | `number`   | **`Internal`**                     |
+| <a id="internal-1"></a> `internal` | `protected` | `number`[] | **`Internal`** stored column major |
+| <a id="len-1"></a> `len`           | `protected` | `number`   | **`Internal`**                     |
+| <a id="rows-1"></a> `rows`         | `protected` | `number`   | **`Internal`**                     |
 
 #### Accessors
 
@@ -2615,10 +2615,10 @@ Matrix subtraction.
 
 ###### Parameters
 
-| Parameter | Type                                | Default value | Description                               |
-| --------- | ----------------------------------- | ------------- | ----------------------------------------- |
-| `inPlace` | `boolean`                           | `false`       | if `true`, the vector is sorted in place. |
-| `rand`    | [`RandomGenerator`](https://svt.se) | `...`         | -                                         |
+| Parameter | Type              | Default value | Description                               |
+| --------- | ----------------- | ------------- | ----------------------------------------- |
+| `inPlace` | `boolean`         | `false`       | if `true`, the vector is sorted in place. |
+| `rand`    | `RandomGenerator` | `...`         | -                                         |
 
 ###### Returns
 
@@ -2650,10 +2650,10 @@ the unique elements of the intersect
 
 ###### Parameters
 
-| Parameter | Type                                | Default value | Description                               |
-| --------- | ----------------------------------- | ------------- | ----------------------------------------- |
-| `inPlace` | `boolean`                           | `false`       | if `true`, the vector is sorted in place. |
-| `rand`    | [`RandomGenerator`](https://svt.se) | `...`         | -                                         |
+| Parameter | Type              | Default value | Description                               |
+| --------- | ----------------- | ------------- | ----------------------------------------- |
+| `inPlace` | `boolean`         | `false`       | if `true`, the vector is sorted in place. |
+| `rand`    | `RandomGenerator` | `...`         | -                                         |
 
 ###### Returns
 
@@ -2801,10 +2801,10 @@ Generates a matrix of random numbers on [0, 1).
 
 #### Parameters
 
-| Parameter   | Type                                | Description                         |
-| ----------- | ----------------------------------- | ----------------------------------- |
-| `dims`      | [`MatrixDim`](#matrixdim-2)         | the dimensions of the random matrix |
-| `generator` | [`RandomGenerator`](https://svt.se) | an RNG.                             |
+| Parameter   | Type                        | Description                         |
+| ----------- | --------------------------- | ----------------------------------- |
+| `dims`      | [`MatrixDim`](#matrixdim-2) | the dimensions of the random matrix |
+| `generator` | `RandomGenerator`           | an RNG.                             |
 
 #### Returns
 
@@ -2820,10 +2820,10 @@ Generates a vector-like of random numbers on [0, 1).
 
 #### Parameters
 
-| Parameter | Type                                | Description              |
-| --------- | ----------------------------------- | ------------------------ |
-| `length`  | `number`                            | the length of the vector |
-| `rand`    | [`RandomGenerator`](https://svt.se) | an RNG                   |
+| Parameter | Type              | Description              |
+| --------- | ----------------- | ------------------------ |
+| `length`  | `number`          | the length of the vector |
+| `rand`    | `RandomGenerator` | an RNG                   |
 
 #### Returns
 

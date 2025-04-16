@@ -97,11 +97,35 @@ const config = {
   // cascadedModifierTags
   // excludeTags
   // notRenderedTags
-  externalSymbolLinkMappings: {
-    "@envisim/random": {
-      "*": "https://svt.se",
-    },
-  },
+  // externalSymbolLinkMappings: {
+  //   "@envisim/distributions": {
+  //     "*": "../../envisim-distributions/docs",
+  //   },
+  //   "@envisim/estimate": {
+  //     "*": "../../envisim-estimate/docs",
+  //   },
+  //   "@envisim/geojson": {
+  //     "*": "../../envisim-geojson/docs",
+  //   },
+  //   "@envisim/geojson-utils": {
+  //     "*": "../../envisim-geojson-utils/docs",
+  //   },
+  //   "@envisim/geosampling": {
+  //     "*": "../../envisim-geosampling/docs",
+  //   },
+  //   "@envisim/matrix": {
+  //     "*": "../../envisim-matrix/docs",
+  //   },
+  //   "@envisim/random": {
+  //     "*": "../../envisim-random/docs",
+  //   },
+  //   "@envisim/sampling": {
+  //     "*": "../../envisim-sampling/docs",
+  //   },
+  //   "@envisim/utils": {
+  //     "*": "../../envisim-utils/docs",
+  //   },
+  // },
   //
   //
   // Organization Options
@@ -164,7 +188,11 @@ const config = {
   enumMembersFormat: "table",
   propertyMembersFormat: "table",
   typeDeclarationFormat: "table",
-  // tableColumnSettings
+  tableColumnSettings: {
+    hideInherited: true,
+    hideOverrides: true,
+    hideSources: true,
+  },
   // pageTitleTemplates
   //
   //

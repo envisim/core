@@ -2,9 +2,9 @@
 
 ---
 
-[@envisim/geosampling]() / sample-continuous
+[@envisim/geosampling](README.md) / sample-continuous
 
-# @envisim/geosampling
+# sample-continuous
 
 ## Interfaces
 
@@ -22,16 +22,16 @@
 
 #### Properties
 
-| Property                                              | Type                                | Default value   | Description                                                                                                                          | Inherited from                         |
-| ----------------------------------------------------- | ----------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------- |
-| <a id="modelgeometry"></a> `modelGeometry`            | `G`                                 | `undefined`     | A model feature of points or lines or areas to be placed on the selected points.                                                     | -                                      |
-| <a id="pointselection"></a> `pointSelection?`         | `"independent"` \| `"systematic"`   | `'independent'` | -                                                                                                                                    | `OptionsPointsOnAreas.pointSelection`  |
-| <a id="pointspercircle"></a> `pointsPerCircle?`       | `number`                            | `undefined`     | The number of vertices to create on the circle                                                                                       | `OptionsPointsOnAreas.pointsPerCircle` |
-| <a id="rand"></a> `rand?`                             | [`RandomGenerator`](https://svt.se) | `new Random()`  | An random number generator                                                                                                           | `OptionsPointsOnAreas.rand`            |
-| <a id="ratio"></a> `ratio?`                           | `number`                            | `1.0`           | -                                                                                                                                    | `OptionsPointsOnAreas.ratio`           |
-| <a id="rotationofgeometry"></a> `rotationOfGeometry?` | `number` \| `"random"`              | `0.0`           | Optional rotation angle in degrees to rotate the model geometry. Random rotation is forced for line geometries -- option is ignored. | -                                      |
-| <a id="rotationofgrid"></a> `rotationOfGrid?`         | `number` \| `"random"`              | `0.0`           | If true, then the grid will be rotated (systematic only)                                                                             | `OptionsPointsOnAreas.rotationOfGrid`  |
-| <a id="samplesize"></a> `sampleSize`                  | `number`                            | `undefined`     | Prescribed sample size                                                                                                               | `OptionsPointsOnAreas.sampleSize`      |
+| Property                                              | Type                              | Default value   | Description                                                                                                                          |
+| ----------------------------------------------------- | --------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| <a id="modelgeometry"></a> `modelGeometry`            | `G`                               | `undefined`     | A model feature of points or lines or areas to be placed on the selected points.                                                     |
+| <a id="pointselection"></a> `pointSelection?`         | `"independent"` \| `"systematic"` | `'independent'` | -                                                                                                                                    |
+| <a id="pointspercircle"></a> `pointsPerCircle?`       | `number`                          | `undefined`     | The number of vertices to create on the circle                                                                                       |
+| <a id="rand"></a> `rand?`                             | `RandomGenerator`                 | `new Random()`  | An random number generator                                                                                                           |
+| <a id="ratio"></a> `ratio?`                           | `number`                          | `1.0`           | -                                                                                                                                    |
+| <a id="rotationofgeometry"></a> `rotationOfGeometry?` | `number` \| `"random"`            | `0.0`           | Optional rotation angle in degrees to rotate the model geometry. Random rotation is forced for line geometries -- option is ignored. |
+| <a id="rotationofgrid"></a> `rotationOfGrid?`         | `number` \| `"random"`            | `0.0`           | If true, then the grid will be rotated (systematic only)                                                                             |
+| <a id="samplesize"></a> `sampleSize`                  | `number`                          | `undefined`     | Prescribed sample size                                                                                                               |
 
 ---
 
@@ -43,15 +43,15 @@
 
 #### Properties
 
-| Property                                          | Type                                | Default value   | Description                                              | Inherited from                         |
-| ------------------------------------------------- | ----------------------------------- | --------------- | -------------------------------------------------------- | -------------------------------------- |
-| <a id="buffer"></a> `buffer?`                     | `number`                            | `0.0`           | -                                                        | -                                      |
-| <a id="pointselection-1"></a> `pointSelection?`   | `"independent"` \| `"systematic"`   | `'independent'` | -                                                        | `OptionsPointsOnAreas.pointSelection`  |
-| <a id="pointspercircle-1"></a> `pointsPerCircle?` | `number`                            | `undefined`     | The number of vertices to create on the circle           | `OptionsPointsOnAreas.pointsPerCircle` |
-| <a id="rand-1"></a> `rand?`                       | [`RandomGenerator`](https://svt.se) | `new Random()`  | An random number generator                               | `OptionsPointsOnAreas.rand`            |
-| <a id="ratio-1"></a> `ratio?`                     | `number`                            | `1.0`           | -                                                        | `OptionsPointsOnAreas.ratio`           |
-| <a id="rotationofgrid-1"></a> `rotationOfGrid?`   | `number` \| `"random"`              | `0.0`           | If true, then the grid will be rotated (systematic only) | `OptionsPointsOnAreas.rotationOfGrid`  |
-| <a id="samplesize-1"></a> `sampleSize`            | `number`                            | `undefined`     | Prescribed sample size                                   | `OptionsPointsOnAreas.sampleSize`      |
+| Property                                          | Type                              | Default value   | Description                                              |
+| ------------------------------------------------- | --------------------------------- | --------------- | -------------------------------------------------------- |
+| <a id="buffer"></a> `buffer?`                     | `number`                          | `0.0`           | -                                                        |
+| <a id="pointselection-1"></a> `pointSelection?`   | `"independent"` \| `"systematic"` | `'independent'` | -                                                        |
+| <a id="pointspercircle-1"></a> `pointsPerCircle?` | `number`                          | `undefined`     | The number of vertices to create on the circle           |
+| <a id="rand-1"></a> `rand?`                       | `RandomGenerator`                 | `new Random()`  | An random number generator                               |
+| <a id="ratio-1"></a> `ratio?`                     | `number`                          | `1.0`           | -                                                        |
+| <a id="rotationofgrid-1"></a> `rotationOfGrid?`   | `number` \| `"random"`            | `0.0`           | If true, then the grid will be rotated (systematic only) |
+| <a id="samplesize-1"></a> `sampleSize`            | `number`                          | `undefined`     | Prescribed sample size                                   |
 
 ---
 
@@ -69,18 +69,18 @@
 
 #### Properties
 
-| Property                                          | Type                                | Default value   | Description                                                                                                                                             | Inherited from                         |
-| ------------------------------------------------- | ----------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| <a id="basecollection"></a> `baseCollection`      | `FeatureCollection`\<`Point`, `P`\> | `undefined`     | The point layer to collect objects from.                                                                                                                | -                                      |
-| <a id="buffer-1"></a> `buffer?`                   | `number`                            | `0.0`           | -                                                                                                                                                       | -                                      |
-| <a id="factor"></a> `factor`                      | `number`                            | `undefined`     | The relascope factor to be used.                                                                                                                        | -                                      |
-| <a id="pointselection-2"></a> `pointSelection?`   | `"independent"` \| `"systematic"`   | `'independent'` | -                                                                                                                                                       | `OptionsPointsOnAreas.pointSelection`  |
-| <a id="pointspercircle-2"></a> `pointsPerCircle?` | `number`                            | `undefined`     | The number of vertices to create on the circle                                                                                                          | `OptionsPointsOnAreas.pointsPerCircle` |
-| <a id="rand-2"></a> `rand?`                       | [`RandomGenerator`](https://svt.se) | `new Random()`  | An random number generator                                                                                                                              | `OptionsPointsOnAreas.rand`            |
-| <a id="ratio-2"></a> `ratio?`                     | `number`                            | `1.0`           | -                                                                                                                                                       | `OptionsPointsOnAreas.ratio`           |
-| <a id="rotationofgrid-2"></a> `rotationOfGrid?`   | `number` \| `"random"`              | `0.0`           | If true, then the grid will be rotated (systematic only)                                                                                                | `OptionsPointsOnAreas.rotationOfGrid`  |
-| <a id="samplesize-2"></a> `sampleSize`            | `number`                            | `undefined`     | Prescribed sample size                                                                                                                                  | `OptionsPointsOnAreas.sampleSize`      |
-| <a id="sizeproperty"></a> `sizeProperty`          | `P`                                 | `undefined`     | The sizeProperty is the id of the proberty in the baseLayer that should be used as the size property and should be in meters (e.g. diameter in meters). | -                                      |
+| Property                                          | Type                                | Default value   | Description                                                                                                                                             |
+| ------------------------------------------------- | ----------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="basecollection"></a> `baseCollection`      | `FeatureCollection`\<`Point`, `P`\> | `undefined`     | The point layer to collect objects from.                                                                                                                |
+| <a id="buffer-1"></a> `buffer?`                   | `number`                            | `0.0`           | -                                                                                                                                                       |
+| <a id="factor"></a> `factor`                      | `number`                            | `undefined`     | The relascope factor to be used.                                                                                                                        |
+| <a id="pointselection-2"></a> `pointSelection?`   | `"independent"` \| `"systematic"`   | `'independent'` | -                                                                                                                                                       |
+| <a id="pointspercircle-2"></a> `pointsPerCircle?` | `number`                            | `undefined`     | The number of vertices to create on the circle                                                                                                          |
+| <a id="rand-2"></a> `rand?`                       | `RandomGenerator`                   | `new Random()`  | An random number generator                                                                                                                              |
+| <a id="ratio-2"></a> `ratio?`                     | `number`                            | `1.0`           | -                                                                                                                                                       |
+| <a id="rotationofgrid-2"></a> `rotationOfGrid?`   | `number` \| `"random"`              | `0.0`           | If true, then the grid will be rotated (systematic only)                                                                                                |
+| <a id="samplesize-2"></a> `sampleSize`            | `number`                            | `undefined`     | Prescribed sample size                                                                                                                                  |
+| <a id="sizeproperty"></a> `sizeProperty`          | `P`                                 | `undefined`     | The sizeProperty is the id of the proberty in the baseLayer that should be used as the size property and should be in meters (e.g. diameter in meters). |
 
 ---
 
@@ -92,13 +92,13 @@
 
 #### Properties
 
-| Property                                          | Type                                | Default value | Description                                        | Inherited from                            |
-| ------------------------------------------------- | ----------------------------------- | ------------- | -------------------------------------------------- | ----------------------------------------- |
-| <a id="halfwidth"></a> `halfWidth`                | `number`                            | `undefined`   | The half-width of the belt.                        | -                                         |
-| <a id="interspace"></a> `interspace`              | `number`                            | `undefined`   | The distance in meters between the parallel lines. | `OptionsParallelLines.interspace`         |
-| <a id="pointspercircle-3"></a> `pointsPerCircle?` | `number`                            | `undefined`   | The number of vertices to create on the circle     | `OptionsCircleConversion.pointsPerCircle` |
-| <a id="rand-3"></a> `rand?`                       | [`RandomGenerator`](https://svt.se) | `undefined`   | -                                                  | -                                         |
-| <a id="rotation"></a> `rotation?`                 | `number`                            | `0.0`         | Optional fixed rotation angle in degrees.          | `OptionsParallelLines.rotation`           |
+| Property                                          | Type              | Default value | Description                                        |
+| ------------------------------------------------- | ----------------- | ------------- | -------------------------------------------------- |
+| <a id="halfwidth"></a> `halfWidth`                | `number`          | `undefined`   | The half-width of the belt.                        |
+| <a id="interspace"></a> `interspace`              | `number`          | `undefined`   | The distance in meters between the parallel lines. |
+| <a id="pointspercircle-3"></a> `pointsPerCircle?` | `number`          | `undefined`   | The number of vertices to create on the circle     |
+| <a id="rand-3"></a> `rand?`                       | `RandomGenerator` | `undefined`   | -                                                  |
+| <a id="rotation"></a> `rotation?`                 | `number`          | `0.0`         | Optional fixed rotation angle in degrees.          |
 
 ---
 
@@ -110,15 +110,15 @@
 
 #### Properties
 
-| Property                                           | Type                                | Default value | Description                                                                        | Inherited from                            |
-| -------------------------------------------------- | ----------------------------------- | ------------- | ---------------------------------------------------------------------------------- | ----------------------------------------- |
-| <a id="basecollection-1"></a> `baseCollection`     | `FeatureCollection`\<`Point`\>      | `undefined`   | The point layer to collect objects from.                                           | `OptionsDistancePoints.baseCollection`    |
-| <a id="cutoff"></a> `cutoff`                       | `number`                            | `undefined`   | The cutoff distance in meters.                                                     | `OptionsDistancePoints.cutoff`            |
-| <a id="detectionfunction"></a> `detectionFunction` | `DetectionFunction`                 | `undefined`   | The detection function giving the detection probability as a function of distance. | `OptionsDistancePoints.detectionFunction` |
-| <a id="interspace-1"></a> `interspace`             | `number`                            | `undefined`   | The distance in meters between the parallel lines.                                 | `OptionsParallelLines.interspace`         |
-| <a id="pointspercircle-4"></a> `pointsPerCircle?`  | `number`                            | `undefined`   | The number of vertices to create on the circle                                     | `OptionsCircleConversion.pointsPerCircle` |
-| <a id="rand-4"></a> `rand?`                        | [`RandomGenerator`](https://svt.se) | `undefined`   | -                                                                                  | -                                         |
-| <a id="rotation-1"></a> `rotation?`                | `number`                            | `0.0`         | Optional fixed rotation angle in degrees.                                          | `OptionsParallelLines.rotation`           |
+| Property                                           | Type                           | Default value | Description                                                                        |
+| -------------------------------------------------- | ------------------------------ | ------------- | ---------------------------------------------------------------------------------- |
+| <a id="basecollection-1"></a> `baseCollection`     | `FeatureCollection`\<`Point`\> | `undefined`   | The point layer to collect objects from.                                           |
+| <a id="cutoff"></a> `cutoff`                       | `number`                       | `undefined`   | The cutoff distance in meters.                                                     |
+| <a id="detectionfunction"></a> `detectionFunction` | `DetectionFunction`            | `undefined`   | The detection function giving the detection probability as a function of distance. |
+| <a id="interspace-1"></a> `interspace`             | `number`                       | `undefined`   | The distance in meters between the parallel lines.                                 |
+| <a id="pointspercircle-4"></a> `pointsPerCircle?`  | `number`                       | `undefined`   | The number of vertices to create on the circle                                     |
+| <a id="rand-4"></a> `rand?`                        | `RandomGenerator`              | `undefined`   | -                                                                                  |
+| <a id="rotation-1"></a> `rotation?`                | `number`                       | `0.0`         | Optional fixed rotation angle in degrees.                                          |
 
 ---
 
@@ -130,12 +130,12 @@
 
 #### Properties
 
-| Property                                          | Type                                | Default value | Description                                        | Inherited from                            |
-| ------------------------------------------------- | ----------------------------------- | ------------- | -------------------------------------------------- | ----------------------------------------- |
-| <a id="interspace-2"></a> `interspace`            | `number`                            | `undefined`   | The distance in meters between the parallel lines. | `OptionsParallelLines.interspace`         |
-| <a id="pointspercircle-5"></a> `pointsPerCircle?` | `number`                            | `undefined`   | The number of vertices to create on the circle     | `OptionsCircleConversion.pointsPerCircle` |
-| <a id="rand-5"></a> `rand?`                       | [`RandomGenerator`](https://svt.se) | `undefined`   | -                                                  | -                                         |
-| <a id="rotation-2"></a> `rotation?`               | `number`                            | `0.0`         | Optional fixed rotation angle in degrees.          | `OptionsParallelLines.rotation`           |
+| Property                                          | Type              | Default value | Description                                        |
+| ------------------------------------------------- | ----------------- | ------------- | -------------------------------------------------- |
+| <a id="interspace-2"></a> `interspace`            | `number`          | `undefined`   | The distance in meters between the parallel lines. |
+| <a id="pointspercircle-5"></a> `pointsPerCircle?` | `number`          | `undefined`   | The number of vertices to create on the circle     |
+| <a id="rand-5"></a> `rand?`                       | `RandomGenerator` | `undefined`   | -                                                  |
+| <a id="rotation-2"></a> `rotation?`               | `number`          | `0.0`         | Optional fixed rotation angle in degrees.          |
 
 ## Type Aliases
 
@@ -163,11 +163,11 @@
 
 #### Properties
 
-| Property                             | Type                                | Default value  | Description                |
-| ------------------------------------ | ----------------------------------- | -------------- | -------------------------- |
-| <a id="dashlength"></a> `dashLength` | `number`                            | `undefined`    | The dash length            |
-| <a id="rand-6"></a> `rand?`          | [`RandomGenerator`](https://svt.se) | `new Random()` | An random number generator |
-| <a id="voidlength"></a> `voidLength` | `number`                            | `undefined`    | The void length            |
+| Property                             | Type              | Default value  | Description                |
+| ------------------------------------ | ----------------- | -------------- | -------------------------- |
+| <a id="dashlength"></a> `dashLength` | `number`          | `undefined`    | The dash length            |
+| <a id="rand-6"></a> `rand?`          | `RandomGenerator` | `new Random()` | An random number generator |
+| <a id="voidlength"></a> `voidLength` | `number`          | `undefined`    | The void length            |
 
 ## Functions
 
@@ -277,7 +277,7 @@ Select a sample of features/tracts on areas.
 
 ### sampleAreaFeaturesOnAreasCheck()
 
-> **sampleAreaFeaturesOnAreasCheck**(`options`): [`SampleError`](README.md#sampleerror)
+> **sampleAreaFeaturesOnAreasCheck**(`options`): [`SampleError`](errors.md#sampleerror)
 
 #### Parameters
 
@@ -287,7 +287,7 @@ Select a sample of features/tracts on areas.
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 
@@ -314,7 +314,7 @@ to (randomly) determine inclusion.
 
 ### sampleDistancePointsCheck()
 
-> **sampleDistancePointsCheck**(`options`): [`SampleError`](README.md#sampleerror)
+> **sampleDistancePointsCheck**(`options`): [`SampleError`](errors.md#sampleerror)
 
 #### Parameters
 
@@ -324,7 +324,7 @@ to (randomly) determine inclusion.
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 
@@ -347,7 +347,7 @@ to (randomly) determine inclusion.
 
 ### sampleLineFeaturesOnAreasCheck()
 
-> **sampleLineFeaturesOnAreasCheck**(`options`): [`SampleError`](README.md#sampleerror)
+> **sampleLineFeaturesOnAreasCheck**(`options`): [`SampleError`](errors.md#sampleerror)
 
 #### Parameters
 
@@ -357,7 +357,7 @@ to (randomly) determine inclusion.
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 
@@ -380,7 +380,7 @@ to (randomly) determine inclusion.
 
 ### samplePointFeaturesOnAreasCheck()
 
-> **samplePointFeaturesOnAreasCheck**(`options`): [`SampleError`](README.md#sampleerror)
+> **samplePointFeaturesOnAreasCheck**(`options`): [`SampleError`](errors.md#sampleerror)
 
 #### Parameters
 
@@ -390,7 +390,7 @@ to (randomly) determine inclusion.
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 
@@ -416,7 +416,7 @@ to reject point outside bbox if buffer is zero).
 
 ### samplePointsOnAreasCheck()
 
-> **samplePointsOnAreasCheck**(`options`): [`SampleError`](README.md#sampleerror)
+> **samplePointsOnAreasCheck**(`options`): [`SampleError`](errors.md#sampleerror)
 
 #### Parameters
 
@@ -426,7 +426,7 @@ to reject point outside bbox if buffer is zero).
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 
@@ -451,7 +451,7 @@ Selects points according to method and sampleSize on a line layer.
 
 ### samplePointsOnLinesCheck()
 
-> **samplePointsOnLinesCheck**(`options`): [`SampleError`](README.md#sampleerror)
+> **samplePointsOnLinesCheck**(`options`): [`SampleError`](errors.md#sampleerror)
 
 #### Parameters
 
@@ -461,7 +461,7 @@ Selects points according to method and sampleSize on a line layer.
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 
@@ -488,7 +488,7 @@ Array of GeoJSON positions.
 
 ### samplePositionsInBboxCheck()
 
-> **samplePositionsInBboxCheck**(`options`): [`SampleError`](README.md#sampleerror)
+> **samplePositionsInBboxCheck**(`options`): [`SampleError`](errors.md#sampleerror)
 
 #### Parameters
 
@@ -498,7 +498,7 @@ Array of GeoJSON positions.
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 
@@ -543,7 +543,7 @@ an object containing the resulting sample, the relascope points and the area rat
 
 ### sampleRelascopePointsOptionsCheck()
 
-> **sampleRelascopePointsOptionsCheck**\<`P`\>(`options`): [`SampleError`](README.md#sampleerror)
+> **sampleRelascopePointsOptionsCheck**\<`P`\>(`options`): [`SampleError`](errors.md#sampleerror)
 
 #### Type Parameters
 
@@ -559,7 +559,7 @@ an object containing the resulting sample, the relascope points and the area rat
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 
@@ -584,7 +584,7 @@ Selects a systematic sample of belts on areas.
 
 ### sampleSystematicBeltsOnAreasCheck()
 
-> **sampleSystematicBeltsOnAreasCheck**(`options`): [`SampleError`](README.md#sampleerror)
+> **sampleSystematicBeltsOnAreasCheck**(`options`): [`SampleError`](errors.md#sampleerror)
 
 #### Parameters
 
@@ -594,7 +594,7 @@ Selects a systematic sample of belts on areas.
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 
@@ -621,7 +621,7 @@ layer using a detection function to (randomly) determine inclusion.
 
 ### sampleSystematicDistanceLinesCheck()
 
-> **sampleSystematicDistanceLinesCheck**(`options`): [`SampleError`](README.md#sampleerror)
+> **sampleSystematicDistanceLinesCheck**(`options`): [`SampleError`](errors.md#sampleerror)
 
 #### Parameters
 
@@ -631,7 +631,7 @@ layer using a detection function to (randomly) determine inclusion.
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 
@@ -656,7 +656,7 @@ Selects a sample of lines systematically over all areas.
 
 ### sampleSystematicLinesOnAreasCheck()
 
-> **sampleSystematicLinesOnAreasCheck**(`options`): [`SampleError`](README.md#sampleerror)
+> **sampleSystematicLinesOnAreasCheck**(`options`): [`SampleError`](errors.md#sampleerror)
 
 #### Parameters
 
@@ -666,7 +666,7 @@ Selects a sample of lines systematically over all areas.
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 
@@ -692,7 +692,7 @@ own random starting position of the dashes.
 
 ### sampleSystematicLinesOnLinesCheck()
 
-> **sampleSystematicLinesOnLinesCheck**(`options`): [`SampleError`](README.md#sampleerror)
+> **sampleSystematicLinesOnLinesCheck**(`options`): [`SampleError`](errors.md#sampleerror)
 
 #### Parameters
 
@@ -702,7 +702,7 @@ own random starting position of the dashes.
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 

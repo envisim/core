@@ -2,9 +2,9 @@
 
 ---
 
-[@envisim/geosampling]() / collect-properties
+[@envisim/geosampling](README.md) / collect-properties
 
-# @envisim/geosampling
+# collect-properties
 
 ## Functions
 

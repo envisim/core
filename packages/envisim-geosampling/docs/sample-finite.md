@@ -2,9 +2,9 @@
 
 ---
 
-[@envisim/geosampling]() / sample-finite
+[@envisim/geosampling](README.md) / sample-finite
 
-# @envisim/geosampling
+# sample-finite
 
 ## Type Aliases
 
@@ -124,7 +124,7 @@
 
 ### sampleBalancedCheck()
 
-> **sampleBalancedCheck**\<`P`\>(`options`, `record`): [`SampleError`](README.md#sampleerror)
+> **sampleBalancedCheck**\<`P`\>(`options`, `record`): [`SampleError`](errors.md#sampleerror)
 
 #### Type Parameters
 
@@ -141,7 +141,7 @@
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 
@@ -171,7 +171,7 @@
 
 ### sampleDoublyBalancedCheck()
 
-> **sampleDoublyBalancedCheck**\<`P`\>(`options`, `record`): [`SampleError`](README.md#sampleerror)
+> **sampleDoublyBalancedCheck**\<`P`\>(`options`, `record`): [`SampleError`](errors.md#sampleerror)
 
 #### Type Parameters
 
@@ -188,7 +188,7 @@
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 
@@ -220,7 +220,7 @@ Select a sample from a layer using sampling methods for a finite population.
 
 ### sampleFiniteCheck()
 
-> **sampleFiniteCheck**\<`P`\>(`options`, `record`): [`SampleError`](README.md#sampleerror)
+> **sampleFiniteCheck**\<`P`\>(`options`, `record`): [`SampleError`](errors.md#sampleerror)
 
 #### Type Parameters
 
@@ -237,7 +237,7 @@ Select a sample from a layer using sampling methods for a finite population.
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)
 
 ---
 
@@ -293,7 +293,7 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 
 ### sampleSpatiallyBalancedCheck()
 
-> **sampleSpatiallyBalancedCheck**\<`P`\>(`options`, `record`): [`SampleError`](README.md#sampleerror)
+> **sampleSpatiallyBalancedCheck**\<`P`\>(`options`, `record`): [`SampleError`](errors.md#sampleerror)
 
 #### Type Parameters
 
@@ -310,4 +310,4 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 
 #### Returns
 
-[`SampleError`](README.md#sampleerror)
+[`SampleError`](errors.md#sampleerror)

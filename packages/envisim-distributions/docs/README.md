@@ -45,13 +45,13 @@ x.cdf(0.1);
 
 #### Properties
 
-| Property                       | Modifier    | Type       | Description    | Overrides             | Inherited from         |
-| ------------------------------ | ----------- | ---------- | -------------- | --------------------- | ---------------------- |
-| <a id="params"></a> `params`   | `protected` | `object`   | **`Internal`** | `Distribution.params` | -                      |
-| `params.a`                     | `public`    | `number`   | Left bound     | -                     | -                      |
-| `params.b`                     | `public`    | `number`   | Right bound    | -                     | -                      |
-| <a id="range"></a> `range`     | `protected` | `number`   | -              | -                     | -                      |
-| <a id="support"></a> `support` | `protected` | `Interval` | -              | -                     | `Distribution.support` |
+| Property                       | Modifier    | Type       | Description    |
+| ------------------------------ | ----------- | ---------- | -------------- |
+| <a id="params"></a> `params`   | `protected` | `object`   | **`Internal`** |
+| `params.a`                     | `public`    | `number`   | Left bound     |
+| `params.b`                     | `public`    | `number`   | Right bound    |
+| <a id="range"></a> `range`     | `protected` | `number`   | -              |
+| <a id="support"></a> `support` | `protected` | `Interval` | -              |
 
 #### Methods
 
@@ -308,11 +308,11 @@ x.random(10);
 
 #### Properties
 
-| Property                         | Modifier    | Type       | Default value            | Description    | Overrides             | Inherited from         |
-| -------------------------------- | ----------- | ---------- | ------------------------ | -------------- | --------------------- | ---------------------- |
-| <a id="logbase"></a> `logBase`   | `protected` | `number`   | `undefined`              | -              | -                     | -                      |
-| <a id="params-1"></a> `params`   | `protected` | `number`   | `benfordMantissaDefault` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-1"></a> `support` | `protected` | `Interval` | `undefined`              | -              | -                     | `Distribution.support` |
+| Property                         | Modifier    | Type       | Default value            | Description    |
+| -------------------------------- | ----------- | ---------- | ------------------------ | -------------- |
+| <a id="logbase"></a> `logBase`   | `protected` | `number`   | `undefined`              | -              |
+| <a id="params-1"></a> `params`   | `protected` | `number`   | `benfordMantissaDefault` | **`Internal`** |
+| <a id="support-1"></a> `support` | `protected` | `Interval` | `undefined`              | -              |
 
 #### Methods
 
@@ -565,10 +565,10 @@ x.quantile(0.5);
 
 #### Properties
 
-| Property                         | Modifier    | Type       | Default value      | Description    | Overrides             | Inherited from         |
-| -------------------------------- | ----------- | ---------- | ------------------ | -------------- | --------------------- | ---------------------- |
-| <a id="params-2"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-2"></a> `support` | `protected` | `Interval` | `undefined`        | -              | -                     | `Distribution.support` |
+| Property                         | Modifier    | Type       | Default value      | Description    |
+| -------------------------------- | ----------- | ---------- | ------------------ | -------------- |
+| <a id="params-2"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | **`Internal`** |
+| <a id="support-2"></a> `support` | `protected` | `Interval` | `undefined`        | -              |
 
 #### Methods
 
@@ -824,11 +824,11 @@ x.random(10);
 
 #### Properties
 
-| Property                         | Modifier    | Type         | Description    | Overrides             | Inherited from         |
-| -------------------------------- | ----------- | ------------ | -------------- | --------------------- | ---------------------- |
-| <a id="lbf"></a> `lbf`           | `protected` | `number`     | -              | -                     | -                      |
-| <a id="params-3"></a> `params`   | `protected` | `ParamsBeta` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-3"></a> `support` | `protected` | `Interval`   | -              | -                     | `Distribution.support` |
+| Property                         | Modifier    | Type         | Description    |
+| -------------------------------- | ----------- | ------------ | -------------- |
+| <a id="lbf"></a> `lbf`           | `protected` | `number`     | -              |
+| <a id="params-3"></a> `params`   | `protected` | `ParamsBeta` | **`Internal`** |
+| <a id="support-3"></a> `support` | `protected` | `Interval`   | -              |
 
 #### Methods
 
@@ -1086,11 +1086,11 @@ x.random(10);
 
 #### Properties
 
-| Property                         | Modifier    | Type         | Description    | Overrides             | Inherited from         |
-| -------------------------------- | ----------- | ------------ | -------------- | --------------------- | ---------------------- |
-| <a id="lbf-1"></a> `lbf`         | `protected` | `number`     | -              | -                     | -                      |
-| <a id="params-4"></a> `params`   | `protected` | `ParamsBeta` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-4"></a> `support` | `protected` | `Interval`   | -              | -                     | `Distribution.support` |
+| Property                         | Modifier    | Type         | Description    |
+| -------------------------------- | ----------- | ------------ | -------------- |
+| <a id="lbf-1"></a> `lbf`         | `protected` | `number`     | -              |
+| <a id="params-4"></a> `params`   | `protected` | `ParamsBeta` | **`Internal`** |
+| <a id="support-4"></a> `support` | `protected` | `Interval`   | -              |
 
 #### Methods
 
@@ -1349,10 +1349,10 @@ x.random(10);
 
 #### Properties
 
-| Property                         | Modifier    | Type             | Description    | Overrides             | Inherited from         |
-| -------------------------------- | ----------- | ---------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-5"></a> `params`   | `protected` | `ParamsBinomial` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-5"></a> `support` | `protected` | `Interval`       | -              | -                     | `Distribution.support` |
+| Property                         | Modifier    | Type             | Description    |
+| -------------------------------- | ----------- | ---------------- | -------------- |
+| <a id="params-5"></a> `params`   | `protected` | `ParamsBinomial` | **`Internal`** |
+| <a id="support-5"></a> `support` | `protected` | `Interval`       | -              |
 
 #### Methods
 
@@ -1610,10 +1610,10 @@ x.random(10);
 
 #### Properties
 
-| Property                         | Modifier    | Type                  | Description    | Overrides             | Inherited from         |
-| -------------------------------- | ----------- | --------------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-6"></a> `params`   | `protected` | `ParamsLocationScale` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-6"></a> `support` | `protected` | `Interval`            | -              | -                     | `Distribution.support` |
+| Property                         | Modifier    | Type                  | Description    |
+| -------------------------------- | ----------- | --------------------- | -------------- |
+| <a id="params-6"></a> `params`   | `protected` | `ParamsLocationScale` | **`Internal`** |
+| <a id="support-6"></a> `support` | `protected` | `Interval`            | -              |
 
 #### Methods
 
@@ -1868,10 +1868,10 @@ x.random(10);
 
 #### Properties
 
-| Property                         | Modifier    | Type       | Default value             | Description    | Overrides             | Inherited from         |
-| -------------------------------- | ----------- | ---------- | ------------------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-7"></a> `params`   | `protected` | `number`   | `degreesOfFreedomDefault` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-7"></a> `support` | `protected` | `Interval` | `undefined`               | -              | -                     | `Distribution.support` |
+| Property                         | Modifier    | Type       | Default value             | Description    |
+| -------------------------------- | ----------- | ---------- | ------------------------- | -------------- |
+| <a id="params-7"></a> `params`   | `protected` | `number`   | `degreesOfFreedomDefault` | **`Internal`** |
+| <a id="support-7"></a> `support` | `protected` | `Interval` | `undefined`               | -              |
 
 #### Methods
 
@@ -2128,10 +2128,10 @@ x.random(10);
 
 #### Properties
 
-| Property                         | Modifier    | Type       | Default value | Description    | Overrides             | Inherited from         |
-| -------------------------------- | ----------- | ---------- | ------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-8"></a> `params`   | `protected` | `number`   | `rateDefault` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-8"></a> `support` | `protected` | `Interval` | `undefined`   | -              | -                     | `Distribution.support` |
+| Property                         | Modifier    | Type       | Default value | Description    |
+| -------------------------------- | ----------- | ---------- | ------------- | -------------- |
+| <a id="params-8"></a> `params`   | `protected` | `number`   | `rateDefault` | **`Internal`** |
+| <a id="support-8"></a> `support` | `protected` | `Interval` | `undefined`   | -              |
 
 #### Methods
 
@@ -2385,10 +2385,10 @@ x.quantile(0.5);
 
 #### Properties
 
-| Property                         | Modifier    | Type                  | Description    | Overrides             | Inherited from         |
-| -------------------------------- | ----------- | --------------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-9"></a> `params`   | `protected` | `ParamsLocationScale` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-9"></a> `support` | `protected` | `Interval`            | -              | -                     | `Distribution.support` |
+| Property                         | Modifier    | Type                  | Description    |
+| -------------------------------- | ----------- | --------------------- | -------------- |
+| <a id="params-9"></a> `params`   | `protected` | `ParamsLocationScale` | **`Internal`** |
+| <a id="support-9"></a> `support` | `protected` | `Interval`            | -              |
 
 #### Methods
 
@@ -2644,10 +2644,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type           | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | -------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-10"></a> `params`   | `protected` | `ParamsNormal` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-10"></a> `support` | `protected` | `Interval`     | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type           | Description    |
+| --------------------------------- | ----------- | -------------- | -------------- |
+| <a id="params-10"></a> `params`   | `protected` | `ParamsNormal` | **`Internal`** |
+| <a id="support-10"></a> `support` | `protected` | `Interval`     | -              |
 
 #### Methods
 
@@ -2904,10 +2904,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type                      | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ------------------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-11"></a> `params`   | `protected` | `ParamsDegreesOfFreedom2` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-11"></a> `support` | `protected` | `Interval`                | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type                      | Description    |
+| --------------------------------- | ----------- | ------------------------- | -------------- |
+| <a id="params-11"></a> `params`   | `protected` | `ParamsDegreesOfFreedom2` | **`Internal`** |
+| <a id="support-11"></a> `support` | `protected` | `Interval`                | -              |
 
 #### Methods
 
@@ -3164,11 +3164,11 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type               | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ------------------ | -------------- | --------------------- | ---------------------- |
-| <a id="lgf"></a> `lgf`            | `protected` | `number`           | -              | -                     | -                      |
-| <a id="params-12"></a> `params`   | `protected` | `ParamsShapeScale` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-12"></a> `support` | `protected` | `Interval`         | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type               | Description    |
+| --------------------------------- | ----------- | ------------------ | -------------- |
+| <a id="lgf"></a> `lgf`            | `protected` | `number`           | -              |
+| <a id="params-12"></a> `params`   | `protected` | `ParamsShapeScale` | **`Internal`** |
+| <a id="support-12"></a> `support` | `protected` | `Interval`         | -              |
 
 #### Methods
 
@@ -3425,11 +3425,11 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type       | Default value      | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ---------- | ------------------ | -------------- | --------------------- | ---------------------- |
-| <a id="logq"></a> `logq`          | `protected` | `number`   | `undefined`        | -              | -                     | -                      |
-| <a id="params-13"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-13"></a> `support` | `protected` | `Interval` | `undefined`        | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type       | Default value      | Description    |
+| --------------------------------- | ----------- | ---------- | ------------------ | -------------- |
+| <a id="logq"></a> `logq`          | `protected` | `number`   | `undefined`        | -              |
+| <a id="params-13"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | **`Internal`** |
+| <a id="support-13"></a> `support` | `protected` | `Interval` | `undefined`        | -              |
 
 #### Methods
 
@@ -3678,10 +3678,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type        | Default value | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ----------- | ------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-14"></a> `params`   | `protected` | `undefined` | `undefined`   | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-14"></a> `support` | `protected` | `Interval`  | `undefined`   | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type        | Default value | Description    |
+| --------------------------------- | ----------- | ----------- | ------------- | -------------- |
+| <a id="params-14"></a> `params`   | `protected` | `undefined` | `undefined`   | **`Internal`** |
+| <a id="support-14"></a> `support` | `protected` | `Interval`  | `undefined`   | -              |
 
 #### Methods
 
@@ -3932,11 +3932,11 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type                   | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ---------------------- | -------------- | --------------------- | ---------------------- |
-| <a id="lbc"></a> `lbc`            | `protected` | `number`               | -              | -                     | -                      |
-| <a id="params-15"></a> `params`   | `protected` | `ParamsHypergeometric` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-15"></a> `support` | `protected` | `Interval`             | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type                   | Description    |
+| --------------------------------- | ----------- | ---------------------- | -------------- |
+| <a id="lbc"></a> `lbc`            | `protected` | `number`               | -              |
+| <a id="params-15"></a> `params`   | `protected` | `ParamsHypergeometric` | **`Internal`** |
+| <a id="support-15"></a> `support` | `protected` | `Interval`             | -              |
 
 #### Methods
 
@@ -4193,10 +4193,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type                  | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | --------------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-16"></a> `params`   | `protected` | `ParamsLocationScale` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-16"></a> `support` | `protected` | `Interval`            | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type                  | Description    |
+| --------------------------------- | ----------- | --------------------- | -------------- |
+| <a id="params-16"></a> `params`   | `protected` | `ParamsLocationScale` | **`Internal`** |
+| <a id="support-16"></a> `support` | `protected` | `Interval`            | -              |
 
 #### Methods
 
@@ -4451,11 +4451,11 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type       | Default value      | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ---------- | ------------------ | -------------- | --------------------- | ---------------------- |
-| <a id="logq-1"></a> `logq`        | `protected` | `number`   | `undefined`        | -              | -                     | -                      |
-| <a id="params-17"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-17"></a> `support` | `protected` | `Interval` | `undefined`        | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type       | Default value      | Description    |
+| --------------------------------- | ----------- | ---------- | ------------------ | -------------- |
+| <a id="logq-1"></a> `logq`        | `protected` | `number`   | `undefined`        | -              |
+| <a id="params-17"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | **`Internal`** |
+| <a id="support-17"></a> `support` | `protected` | `Interval` | `undefined`        | -              |
 
 #### Methods
 
@@ -4712,10 +4712,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type                  | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | --------------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-18"></a> `params`   | `protected` | `ParamsLocationScale` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-18"></a> `support` | `protected` | `Interval`            | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type                  | Description    |
+| --------------------------------- | ----------- | --------------------- | -------------- |
+| <a id="params-18"></a> `params`   | `protected` | `ParamsLocationScale` | **`Internal`** |
+| <a id="support-18"></a> `support` | `protected` | `Interval`            | -              |
 
 #### Methods
 
@@ -4971,10 +4971,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type               | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ------------------ | -------------- | --------------------- | ---------------------- |
-| <a id="params-19"></a> `params`   | `protected` | `ParamsShapeScale` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-19"></a> `support` | `protected` | `Interval`         | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type               | Description    |
+| --------------------------------- | ----------- | ------------------ | -------------- |
+| <a id="params-19"></a> `params`   | `protected` | `ParamsShapeScale` | **`Internal`** |
+| <a id="support-19"></a> `support` | `protected` | `Interval`         | -              |
 
 #### Methods
 
@@ -5230,10 +5230,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type           | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | -------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-20"></a> `params`   | `protected` | `ParamsNormal` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-20"></a> `support` | `protected` | `Interval`     | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type           | Description    |
+| --------------------------------- | ----------- | -------------- | -------------- |
+| <a id="params-20"></a> `params`   | `protected` | `ParamsNormal` | **`Internal`** |
+| <a id="support-20"></a> `support` | `protected` | `Interval`     | -              |
 
 #### Methods
 
@@ -5489,10 +5489,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type             | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ---------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-21"></a> `params`   | `protected` | `ParamsBinomial` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-21"></a> `support` | `protected` | `Interval`       | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type             | Description    |
+| --------------------------------- | ----------- | ---------------- | -------------- |
+| <a id="params-21"></a> `params`   | `protected` | `ParamsBinomial` | **`Internal`** |
+| <a id="support-21"></a> `support` | `protected` | `Interval`       | -              |
 
 #### Methods
 
@@ -5750,10 +5750,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type           | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | -------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-22"></a> `params`   | `protected` | `ParamsNormal` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-22"></a> `support` | `protected` | `Interval`     | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type           | Description    |
+| --------------------------------- | ----------- | -------------- | -------------- |
+| <a id="params-22"></a> `params`   | `protected` | `ParamsNormal` | **`Internal`** |
+| <a id="support-22"></a> `support` | `protected` | `Interval`     | -              |
 
 #### Methods
 
@@ -6009,10 +6009,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type               | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ------------------ | -------------- | --------------------- | ---------------------- |
-| <a id="params-23"></a> `params`   | `protected` | `ParamsShapeScale` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-23"></a> `support` | `protected` | `Interval`         | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type               | Description    |
+| --------------------------------- | ----------- | ------------------ | -------------- |
+| <a id="params-23"></a> `params`   | `protected` | `ParamsShapeScale` | **`Internal`** |
+| <a id="support-23"></a> `support` | `protected` | `Interval`         | -              |
 
 #### Methods
 
@@ -6267,10 +6267,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type       | Default value | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ---------- | ------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-24"></a> `params`   | `protected` | `number`   | `rateDefault` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-24"></a> `support` | `protected` | `Interval` | `undefined`   | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type       | Default value | Description    |
+| --------------------------------- | ----------- | ---------- | ------------- | -------------- |
+| <a id="params-24"></a> `params`   | `protected` | `number`   | `rateDefault` | **`Internal`** |
+| <a id="support-24"></a> `support` | `protected` | `Interval` | `undefined`   | -              |
 
 #### Methods
 
@@ -6527,12 +6527,12 @@ x.random(10);
 
 #### Properties
 
-| Property                                   | Modifier    | Type       | Default value   | Description    | Overrides             | Inherited from         |
-| ------------------------------------------ | ----------- | ---------- | --------------- | -------------- | --------------------- | ---------------------- |
-| <a id="denom"></a> `denom`                 | `protected` | `number`   | `undefined`     | -              | -                     | -                      |
-| <a id="params-25"></a> `params`            | `protected` | `number`   | `radiusDefault` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="radiussquared"></a> `radiusSquared` | `protected` | `number`   | `undefined`     | -              | -                     | -                      |
-| <a id="support-25"></a> `support`          | `protected` | `Interval` | `undefined`     | -              | -                     | `Distribution.support` |
+| Property                                   | Modifier    | Type       | Default value   | Description    |
+| ------------------------------------------ | ----------- | ---------- | --------------- | -------------- |
+| <a id="denom"></a> `denom`                 | `protected` | `number`   | `undefined`     | -              |
+| <a id="params-25"></a> `params`            | `protected` | `number`   | `radiusDefault` | **`Internal`** |
+| <a id="radiussquared"></a> `radiusSquared` | `protected` | `number`   | `undefined`     | -              |
+| <a id="support-25"></a> `support`          | `protected` | `Interval` | `undefined`     | -              |
 
 #### Methods
 
@@ -6788,10 +6788,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type       | Default value             | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ---------- | ------------------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-26"></a> `params`   | `protected` | `number`   | `degreesOfFreedomDefault` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-26"></a> `support` | `protected` | `Interval` | `undefined`               | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type       | Default value             | Description    |
+| --------------------------------- | ----------- | ---------- | ------------------------- | -------------- |
+| <a id="params-26"></a> `params`   | `protected` | `number`   | `degreesOfFreedomDefault` | **`Internal`** |
+| <a id="support-26"></a> `support` | `protected` | `Interval` | `undefined`               | -              |
 
 #### Methods
 
@@ -7049,10 +7049,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type             | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ---------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-27"></a> `params`   | `protected` | `ParamsBoundMid` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-27"></a> `support` | `protected` | `Interval`       | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type             | Description    |
+| --------------------------------- | ----------- | ---------------- | -------------- |
+| <a id="params-27"></a> `params`   | `protected` | `ParamsBoundMid` | **`Internal`** |
+| <a id="support-27"></a> `support` | `protected` | `Interval`       | -              |
 
 #### Methods
 
@@ -7308,11 +7308,11 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type          | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ------------- | -------------- | --------------------- | ---------------------- |
-| <a id="density"></a> `density`    | `protected` | `number`      | -              | -                     | -                      |
-| <a id="params-28"></a> `params`   | `protected` | `ParamsBound` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-28"></a> `support` | `protected` | `Interval`    | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type          | Description    |
+| --------------------------------- | ----------- | ------------- | -------------- |
+| <a id="density"></a> `density`    | `protected` | `number`      | -              |
+| <a id="params-28"></a> `params`   | `protected` | `ParamsBound` | **`Internal`** |
+| <a id="support-28"></a> `support` | `protected` | `Interval`    | -              |
 
 #### Methods
 
@@ -7568,10 +7568,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type          | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ------------- | -------------- | --------------------- | ---------------------- |
-| <a id="params-29"></a> `params`   | `protected` | `ParamsBound` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-29"></a> `support` | `protected` | `Interval`    | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type          | Description    |
+| --------------------------------- | ----------- | ------------- | -------------- |
+| <a id="params-29"></a> `params`   | `protected` | `ParamsBound` | **`Internal`** |
+| <a id="support-29"></a> `support` | `protected` | `Interval`    | -              |
 
 #### Methods
 
@@ -7827,12 +7827,12 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type          | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ------------- | -------------- | --------------------- | ---------------------- |
-| <a id="alpha"></a> `alpha`        | `protected` | `number`      | -              | -                     | -                      |
-| <a id="beta-1"></a> `beta`        | `protected` | `number`      | -              | -                     | -                      |
-| <a id="params-30"></a> `params`   | `protected` | `ParamsBound` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-30"></a> `support` | `protected` | `Interval`    | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type          | Description    |
+| --------------------------------- | ----------- | ------------- | -------------- |
+| <a id="alpha"></a> `alpha`        | `protected` | `number`      | -              |
+| <a id="beta-1"></a> `beta`        | `protected` | `number`      | -              |
+| <a id="params-30"></a> `params`   | `protected` | `ParamsBound` | **`Internal`** |
+| <a id="support-30"></a> `support` | `protected` | `Interval`    | -              |
 
 #### Methods
 
@@ -8088,10 +8088,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type               | Description    | Overrides             | Inherited from         |
-| --------------------------------- | ----------- | ------------------ | -------------- | --------------------- | ---------------------- |
-| <a id="params-31"></a> `params`   | `protected` | `ParamsShapeScale` | **`Internal`** | `Distribution.params` | -                      |
-| <a id="support-31"></a> `support` | `protected` | `Interval`         | -              | -                     | `Distribution.support` |
+| Property                          | Modifier    | Type               | Description    |
+| --------------------------------- | ----------- | ------------------ | -------------- |
+| <a id="params-31"></a> `params`   | `protected` | `ParamsShapeScale` | **`Internal`** |
+| <a id="support-31"></a> `support` | `protected` | `Interval`         | -              |
 
 #### Methods
 
@@ -8310,8 +8310,8 @@ the variance
 
 #### Properties
 
-| Property                      | Type                                | Default value  | Description                                |
-| ----------------------------- | ----------------------------------- | -------------- | ------------------------------------------ |
-| <a id="eps"></a> `eps?`       | `number`                            | `1e-12`        | Epsilon, used during comparisons of floats |
-| <a id="method"></a> `method?` | `string`                            | `undefined`    | -                                          |
-| <a id="rand"></a> `rand?`     | [`RandomGenerator`](https://svt.se) | `new Random()` | An RNG                                     |
+| Property                      | Type              | Default value  | Description                                |
+| ----------------------------- | ----------------- | -------------- | ------------------------------------------ |
+| <a id="eps"></a> `eps?`       | `number`          | `1e-12`        | Epsilon, used during comparisons of floats |
+| <a id="method"></a> `method?` | `string`          | `undefined`    | -                                          |
+| <a id="rand"></a> `rand?`     | `RandomGenerator` | `new Random()` | An RNG                                     |

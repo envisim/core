@@ -43,12 +43,12 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 #### Properties
 
-| Property                               | Modifier   | Type       | Inherited from                                           |
-| -------------------------------------- | ---------- | ---------- | -------------------------------------------------------- |
-| <a id="bbox"></a> `bbox?`              | `public`   | `BBox`     | `GJ.Circle.bbox` `AbstractAreaObject.bbox`               |
-| <a id="coordinates"></a> `coordinates` | `public`   | `Position` | `GJ.Circle.coordinates` `AbstractAreaObject.coordinates` |
-| <a id="radius"></a> `radius`           | `public`   | `number`   | -                                                        |
-| <a id="type"></a> `type`               | `readonly` | `"Point"`  | `GJ.Circle.type` `AbstractAreaObject.type`               |
+| Property                               | Modifier   | Type       |
+| -------------------------------------- | ---------- | ---------- |
+| <a id="bbox"></a> `bbox?`              | `public`   | `BBox`     |
+| <a id="coordinates"></a> `coordinates` | `public`   | `Position` |
+| <a id="radius"></a> `radius`           | `public`   | `number`   |
+| <a id="type"></a> `type`               | `readonly` | `"Point"`  |
 
 #### Methods
 
@@ -1291,11 +1291,11 @@ of a line collection, and the total count of a point collection
 
 #### Properties
 
-| Property                                 | Modifier   | Type           | Inherited from                                               |
-| ---------------------------------------- | ---------- | -------------- | ------------------------------------------------------------ |
-| <a id="bbox-2"></a> `bbox?`              | `public`   | `BBox`         | `GJ.LineString.bbox` `AbstractLineObject.bbox`               |
-| <a id="coordinates-1"></a> `coordinates` | `public`   | `Position`[]   | `GJ.LineString.coordinates` `AbstractLineObject.coordinates` |
-| <a id="type-3"></a> `type`               | `readonly` | `"LineString"` | `GJ.LineString.type` `AbstractLineObject.type`               |
+| Property                                 | Modifier   | Type           |
+| ---------------------------------------- | ---------- | -------------- |
+| <a id="bbox-2"></a> `bbox?`              | `public`   | `BBox`         |
+| <a id="coordinates-1"></a> `coordinates` | `public`   | `Position`[]   |
+| <a id="type-3"></a> `type`               | `readonly` | `"LineString"` |
 
 #### Methods
 
@@ -1590,12 +1590,12 @@ MultiCircles MUST be non-overlapping.
 
 #### Properties
 
-| Property                                 | Modifier   | Type           | Inherited from                                                |
-| ---------------------------------------- | ---------- | -------------- | ------------------------------------------------------------- |
-| <a id="bbox-3"></a> `bbox?`              | `public`   | `BBox`         | `GJ.MultiCircle.bbox` `AbstractAreaObject.bbox`               |
-| <a id="coordinates-2"></a> `coordinates` | `public`   | `Position`[]   | `GJ.MultiCircle.coordinates` `AbstractAreaObject.coordinates` |
-| <a id="radius-1"></a> `radius`           | `public`   | `number`       | -                                                             |
-| <a id="type-4"></a> `type`               | `readonly` | `"MultiPoint"` | `GJ.MultiCircle.type` `AbstractAreaObject.type`               |
+| Property                                 | Modifier   | Type           |
+| ---------------------------------------- | ---------- | -------------- |
+| <a id="bbox-3"></a> `bbox?`              | `public`   | `BBox`         |
+| <a id="coordinates-2"></a> `coordinates` | `public`   | `Position`[]   |
+| <a id="radius-1"></a> `radius`           | `public`   | `number`       |
+| <a id="type-4"></a> `type`               | `readonly` | `"MultiPoint"` |
 
 #### Methods
 
@@ -1932,11 +1932,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | Modifier   | Type                | Inherited from                                                    |
-| ---------------------------------------- | ---------- | ------------------- | ----------------------------------------------------------------- |
-| <a id="bbox-4"></a> `bbox?`              | `public`   | `BBox`              | `GJ.MultiLineString.bbox` `AbstractLineObject.bbox`               |
-| <a id="coordinates-3"></a> `coordinates` | `public`   | `Position`[][]      | `GJ.MultiLineString.coordinates` `AbstractLineObject.coordinates` |
-| <a id="type-5"></a> `type`               | `readonly` | `"MultiLineString"` | `GJ.MultiLineString.type` `AbstractLineObject.type`               |
+| Property                                 | Modifier   | Type                |
+| ---------------------------------------- | ---------- | ------------------- |
+| <a id="bbox-4"></a> `bbox?`              | `public`   | `BBox`              |
+| <a id="coordinates-3"></a> `coordinates` | `public`   | `Position`[][]      |
+| <a id="type-5"></a> `type`               | `readonly` | `"MultiLineString"` |
 
 #### Methods
 
@@ -2225,11 +2225,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | Modifier   | Type           | Inherited from                                                |
-| ---------------------------------------- | ---------- | -------------- | ------------------------------------------------------------- |
-| <a id="bbox-5"></a> `bbox?`              | `public`   | `BBox`         | `GJ.MultiPoint.bbox` `AbstractPointObject.bbox`               |
-| <a id="coordinates-4"></a> `coordinates` | `public`   | `Position`[]   | `GJ.MultiPoint.coordinates` `AbstractPointObject.coordinates` |
-| <a id="type-6"></a> `type`               | `readonly` | `"MultiPoint"` | `GJ.MultiPoint.type` `AbstractPointObject.type`               |
+| Property                                 | Modifier   | Type           |
+| ---------------------------------------- | ---------- | -------------- |
+| <a id="bbox-5"></a> `bbox?`              | `public`   | `BBox`         |
+| <a id="coordinates-4"></a> `coordinates` | `public`   | `Position`[]   |
+| <a id="type-6"></a> `type`               | `readonly` | `"MultiPoint"` |
 
 #### Methods
 
@@ -2518,11 +2518,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | Modifier   | Type             | Inherited from                                                 |
-| ---------------------------------------- | ---------- | ---------------- | -------------------------------------------------------------- |
-| <a id="bbox-6"></a> `bbox?`              | `public`   | `BBox`           | `GJ.MultiPolygon.bbox` `AbstractAreaObject.bbox`               |
-| <a id="coordinates-5"></a> `coordinates` | `public`   | `Position`[][][] | `GJ.MultiPolygon.coordinates` `AbstractAreaObject.coordinates` |
-| <a id="type-7"></a> `type`               | `readonly` | `"MultiPolygon"` | `GJ.MultiPolygon.type` `AbstractAreaObject.type`               |
+| Property                                 | Modifier   | Type             |
+| ---------------------------------------- | ---------- | ---------------- |
+| <a id="bbox-6"></a> `bbox?`              | `public`   | `BBox`           |
+| <a id="coordinates-5"></a> `coordinates` | `public`   | `Position`[][][] |
+| <a id="type-7"></a> `type`               | `readonly` | `"MultiPolygon"` |
 
 #### Methods
 
@@ -2849,11 +2849,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | Modifier   | Type       | Inherited from                                           |
-| ---------------------------------------- | ---------- | ---------- | -------------------------------------------------------- |
-| <a id="bbox-7"></a> `bbox?`              | `public`   | `BBox`     | `GJ.Point.bbox` `AbstractPointObject.bbox`               |
-| <a id="coordinates-6"></a> `coordinates` | `public`   | `Position` | `GJ.Point.coordinates` `AbstractPointObject.coordinates` |
-| <a id="type-8"></a> `type`               | `readonly` | `"Point"`  | `GJ.Point.type` `AbstractPointObject.type`               |
+| Property                                 | Modifier   | Type       |
+| ---------------------------------------- | ---------- | ---------- |
+| <a id="bbox-7"></a> `bbox?`              | `public`   | `BBox`     |
+| <a id="coordinates-6"></a> `coordinates` | `public`   | `Position` |
+| <a id="type-8"></a> `type`               | `readonly` | `"Point"`  |
 
 #### Methods
 
@@ -3136,11 +3136,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | Modifier   | Type           | Inherited from                                            |
-| ---------------------------------------- | ---------- | -------------- | --------------------------------------------------------- |
-| <a id="bbox-8"></a> `bbox?`              | `public`   | `BBox`         | `GJ.Polygon.bbox` `AbstractAreaObject.bbox`               |
-| <a id="coordinates-7"></a> `coordinates` | `public`   | `Position`[][] | `GJ.Polygon.coordinates` `AbstractAreaObject.coordinates` |
-| <a id="type-9"></a> `type`               | `readonly` | `"Polygon"`    | `GJ.Polygon.type` `AbstractAreaObject.type`               |
+| Property                                 | Modifier   | Type           |
+| ---------------------------------------- | ---------- | -------------- |
+| <a id="bbox-8"></a> `bbox?`              | `public`   | `BBox`         |
+| <a id="coordinates-7"></a> `coordinates` | `public`   | `Position`[][] |
+| <a id="type-9"></a> `type`               | `readonly` | `"Polygon"`    |
 
 #### Methods
 
@@ -3808,12 +3808,12 @@ k is "\_designWeight" \| "\_distance" \| "\_parent" \| "\_randomRotation" \| "\_
 
 #### Properties
 
-| Property                     | Type            | Description                                            | Overrides           | Inherited from      |
-| ---------------------------- | --------------- | ------------------------------------------------------ | ------------------- | ------------------- |
-| <a id="id-2"></a> `id`       | `ID`            | The UUID of the Features property using this category. | -                   | `PropertyBase.id`   |
-| <a id="name"></a> `name?`    | `string`        | A human-friendly name                                  | -                   | `PropertyBase.name` |
-| <a id="type-10"></a> `type`  | `"categorical"` | -                                                      | `PropertyBase.type` | -                   |
-| <a id="values"></a> `values` | `string`[]      | An ordered array of values defined on this category    | -                   | -                   |
+| Property                     | Type            | Description                                            |
+| ---------------------------- | --------------- | ------------------------------------------------------ |
+| <a id="id-2"></a> `id`       | `ID`            | The UUID of the Features property using this category. |
+| <a id="name"></a> `name?`    | `string`        | A human-friendly name                                  |
+| <a id="type-10"></a> `type`  | `"categorical"` | -                                                      |
+| <a id="values"></a> `values` | `string`[]      | An ordered array of values defined on this category    |
 
 ---
 
@@ -3841,12 +3841,12 @@ k is "\_designWeight" \| "\_distance" \| "\_parent" \| "\_randomRotation" \| "\_
 
 #### Properties
 
-| Property                      | Type                   | Description                                            | Overrides           | Inherited from      |
-| ----------------------------- | ---------------------- | ------------------------------------------------------ | ------------------- | ------------------- |
-| <a id="id-4"></a> `id`        | `ID`                   | The UUID of the Features property using this category. | -                   | `PropertyBase.id`   |
-| <a id="name-1"></a> `name?`   | `string`               | A human-friendly name                                  | -                   | `PropertyBase.name` |
-| <a id="parent"></a> `parent?` | \[`string`, `number`\] | Holds id and index of collected categorical variable   | -                   | -                   |
-| <a id="type-11"></a> `type`   | `"numerical"`          | -                                                      | `PropertyBase.type` | -                   |
+| Property                      | Type                   | Description                                            |
+| ----------------------------- | ---------------------- | ------------------------------------------------------ |
+| <a id="id-4"></a> `id`        | `ID`                   | The UUID of the Features property using this category. |
+| <a id="name-1"></a> `name?`   | `string`               | A human-friendly name                                  |
+| <a id="parent"></a> `parent?` | \[`string`, `number`\] | Holds id and index of collected categorical variable   |
+| <a id="type-11"></a> `type`   | `"numerical"`          | -                                                      |
 
 ## Type Aliases
 

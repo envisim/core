@@ -2,9 +2,9 @@
 
 ---
 
-[@envisim/geosampling]() / select-intersects
+[@envisim/geosampling](README.md) / select-intersects
 
-# @envisim/geosampling
+# select-intersects
 
 ## Functions
 

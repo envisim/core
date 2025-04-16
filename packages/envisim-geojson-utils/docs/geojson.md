@@ -23,12 +23,12 @@
 
 #### Properties
 
-| Property                             | Type                                                                 | Inherited from                                      |
-| ------------------------------------ | -------------------------------------------------------------------- | --------------------------------------------------- |
-| <a id="bbox"></a> `bbox?`            | [`BBox`](#bbox-7)                                                    | [`GeoJsonObject`](#geojsonobject).[`bbox`](#bbox-5) |
-| <a id="geometry"></a> `geometry`     | `G`                                                                  | -                                                   |
-| <a id="properties"></a> `properties` | `null` \| [`FeatureProperties`](#featureproperties)\<`P`, `string`\> | -                                                   |
-| <a id="type"></a> `type`             | `"Feature"`                                                          | [`GeoJsonObject`](#geojsonobject).[`type`](#type-5) |
+| Property                             | Type                                                                 |
+| ------------------------------------ | -------------------------------------------------------------------- |
+| <a id="bbox"></a> `bbox?`            | [`BBox`](#bbox-7)                                                    |
+| <a id="geometry"></a> `geometry`     | `G`                                                                  |
+| <a id="properties"></a> `properties` | `null` \| [`FeatureProperties`](#featureproperties)\<`P`, `string`\> |
+| <a id="type"></a> `type`             | `"Feature"`                                                          |
 
 ---
 
@@ -46,11 +46,11 @@
 
 #### Properties
 
-| Property                         | Type                  | Inherited from                                      |
-| -------------------------------- | --------------------- | --------------------------------------------------- |
-| <a id="bbox-1"></a> `bbox?`      | [`BBox`](#bbox-7)     | [`GeoJsonObject`](#geojsonobject).[`bbox`](#bbox-5) |
-| <a id="features"></a> `features` | `F`[]                 | -                                                   |
-| <a id="type-1"></a> `type`       | `"FeatureCollection"` | [`GeoJsonObject`](#geojsonobject).[`type`](#type-5) |
+| Property                         | Type                  |
+| -------------------------------- | --------------------- |
+| <a id="bbox-1"></a> `bbox?`      | [`BBox`](#bbox-7)     |
+| <a id="features"></a> `features` | `F`[]                 |
+| <a id="type-1"></a> `type`       | `"FeatureCollection"` |
 
 ---
 
@@ -68,11 +68,11 @@
 
 #### Properties
 
-| Property                             | Type                   | Inherited from                                      |
-| ------------------------------------ | ---------------------- | --------------------------------------------------- |
-| <a id="bbox-2"></a> `bbox?`          | [`BBox`](#bbox-7)      | [`GeoJsonObject`](#geojsonobject).[`bbox`](#bbox-5) |
-| <a id="geometries"></a> `geometries` | `G`[]                  | -                                                   |
-| <a id="type-2"></a> `type`           | `"GeometryCollection"` | [`GeoJsonObject`](#geojsonobject).[`type`](#type-5) |
+| Property                             | Type                   |
+| ------------------------------------ | ---------------------- |
+| <a id="bbox-2"></a> `bbox?`          | [`BBox`](#bbox-7)      |
+| <a id="geometries"></a> `geometries` | `G`[]                  |
+| <a id="type-2"></a> `type`           | `"GeometryCollection"` |
 
 ---
 
@@ -96,11 +96,11 @@
 
 #### Properties
 
-| Property                               | Type              | Inherited from                                      |
-| -------------------------------------- | ----------------- | --------------------------------------------------- |
-| <a id="bbox-3"></a> `bbox?`            | [`BBox`](#bbox-7) | [`GeoJsonObject`](#geojsonobject).[`bbox`](#bbox-5) |
-| <a id="coordinates"></a> `coordinates` | `C`               | -                                                   |
-| <a id="type-3"></a> `type`             | `T`               | [`GeoJsonObject`](#geojsonobject).[`type`](#type-5) |
+| Property                               | Type              |
+| -------------------------------------- | ----------------- |
+| <a id="bbox-3"></a> `bbox?`            | [`BBox`](#bbox-7) |
+| <a id="coordinates"></a> `coordinates` | `C`               |
+| <a id="type-3"></a> `type`             | `T`               |
 
 ---
 
@@ -112,12 +112,12 @@
 
 #### Properties
 
-| Property                                 | Type                    | Inherited from                                            |
-| ---------------------------------------- | ----------------------- | --------------------------------------------------------- |
-| <a id="bbox-4"></a> `bbox?`              | [`BBox`](#bbox-7)       | [`BaseObject`](#baseobject).[`bbox`](#bbox-3)             |
-| <a id="coordinates-1"></a> `coordinates` | [`Position`](#position) | [`BaseObject`](#baseobject).[`coordinates`](#coordinates) |
-| <a id="radius"></a> `radius`             | `number`                | -                                                         |
-| <a id="type-4"></a> `type`               | `"Point"`               | [`BaseObject`](#baseobject).[`type`](#type-3)             |
+| Property                                 | Type                    |
+| ---------------------------------------- | ----------------------- |
+| <a id="bbox-4"></a> `bbox?`              | [`BBox`](#bbox-7)       |
+| <a id="coordinates-1"></a> `coordinates` | [`Position`](#position) |
+| <a id="radius"></a> `radius`             | `number`                |
+| <a id="type-4"></a> `type`               | `"Point"`               |
 
 ---
 
@@ -153,12 +153,12 @@
 
 #### Properties
 
-| Property                                 | Type                      | Inherited from                                            |
-| ---------------------------------------- | ------------------------- | --------------------------------------------------------- |
-| <a id="bbox-6"></a> `bbox?`              | [`BBox`](#bbox-7)         | [`BaseObject`](#baseobject).[`bbox`](#bbox-3)             |
-| <a id="coordinates-2"></a> `coordinates` | [`Position`](#position)[] | [`BaseObject`](#baseobject).[`coordinates`](#coordinates) |
-| <a id="radius-1"></a> `radius`           | `number`                  | -                                                         |
-| <a id="type-6"></a> `type`               | `"MultiPoint"`            | [`BaseObject`](#baseobject).[`type`](#type-3)             |
+| Property                                 | Type                      |
+| ---------------------------------------- | ------------------------- |
+| <a id="bbox-6"></a> `bbox?`              | [`BBox`](#bbox-7)         |
+| <a id="coordinates-2"></a> `coordinates` | [`Position`](#position)[] |
+| <a id="radius-1"></a> `radius`           | `number`                  |
+| <a id="type-6"></a> `type`               | `"MultiPoint"`            |
 
 ## Type Aliases
 
