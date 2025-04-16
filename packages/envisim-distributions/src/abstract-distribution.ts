@@ -22,8 +22,8 @@ export const randomOptionsDefault: { rand: Random; eps: number } = {
 
 /** Base class */
 export abstract class Distribution<PAR> {
-  /** @internal */
   protected abstract params: PAR;
+  /** @internal */
   protected support!: Interval;
 
   /** Sets the parameters of the distribution */
@@ -44,7 +44,7 @@ export abstract class Distribution<PAR> {
 
   /**
    * Generate random numbers from the distribution.
-   * @param n the number of observations to be generated
+   * @param n - the number of observations to be generated
    */
   random(
     n: number = 1,
@@ -68,6 +68,7 @@ export abstract class Distribution<PAR> {
   /** @returns the skewness */
   abstract skewness(): number;
 
+  /** @internal */
   protected cornishFisherExpansion(x: number): number {
     return (
       this.mean() +
@@ -75,6 +76,7 @@ export abstract class Distribution<PAR> {
     );
   }
 
+  /** @internal */
   protected quantileCF(q: number, startK: number, startCDF: number): number {
     if (startCDF === q) return startK;
 

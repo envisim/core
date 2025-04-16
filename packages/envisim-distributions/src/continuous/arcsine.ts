@@ -1,9 +1,10 @@
-import {Distribution, Interval} from '../abstract-distribution.js';
-import {HALF_PI, HALF_PI_INV} from '../math-constants.js';
-import {type ParamsBound, boundCheck, boundDefault} from '../params.js';
+import { Distribution, Interval } from "../abstract-distribution.js";
+import { HALF_PI, HALF_PI_INV } from "../math-constants.js";
+import { type ParamsBound, boundCheck, boundDefault } from "../params.js";
 
 export class Arcsine extends Distribution<ParamsBound> {
-  protected params = {...boundDefault};
+  protected params = { ...boundDefault };
+  /** @internal */
   protected range!: number;
 
   /**
@@ -16,11 +17,11 @@ export class Arcsine extends Distribution<ParamsBound> {
    */
   constructor(a: number = boundDefault.a, b: number = boundDefault.b) {
     super();
-    this.setParameters({a, b});
+    this.setParameters({ a, b });
     return this;
   }
 
-  setParameters(params = {...boundDefault}): void {
+  setParameters(params = { ...boundDefault }): void {
     boundCheck(params);
     this.support = new Interval(params.a, params.b, false, false);
     this.params.a = params.a;
@@ -51,12 +52,12 @@ export class Arcsine extends Distribution<ParamsBound> {
   }
 
   mean(): number {
-    const {a, b} = this.params;
+    const { a, b } = this.params;
     return (a + b) / 2.0;
   }
 
   variance(): number {
-    const {a, b} = this.params;
+    const { a, b } = this.params;
     return Math.pow(b - a, 2) * 0.125;
   }
 
