@@ -4,6 +4,8 @@ const config = {
   // tsconfig
   // compilerOptions
   plugin: ["typedoc-plugin-markdown"],
+  // plugin: ["@envisim/config-typedoc/missing-exports", "typedoc-plugin-markdown"],
+  // plugin: ["typedoc-plugin-missing-exports", "typedoc-plugin-markdown"],
   //
   //
   // Input Options
@@ -39,7 +41,7 @@ const config = {
   // outputs
   out: "./docs",
   // html
-  // json: "./json-doc.json",
+  json: "./json-doc.json",
   // pretty
   // emit
   // theme
@@ -159,6 +161,9 @@ const config = {
   // showConfig
   logLevel: "Warn",
   // skipErrorChecking
+  //
+  //
+  // typedoc-plugin-missing-exports
   //
   //
   // typedoc-plugin-markdown

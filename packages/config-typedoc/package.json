@@ -4,13 +4,21 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./config.js"
+    ".": "./config.js",
+    "./missing-exports": "./dist/missing-exports.js"
+  },
+  "scripts": {
+    "build": "tsc"
   },
   "dependencies": {
     "typedoc": "^0.28.2",
-    "typedoc-plugin-markdown": "^4.6.2"
+    "typedoc-plugin-markdown": "^4.6.2",
+    "typedoc-plugin-missing-exports": "^4.0.0"
   },
   "devDependencies": {
-    "@envisim/config-eslint": "workspace:*"
+    "@envisim/config-eslint": "workspace:*",
+    "@envisim/config-ts": "workspace:*",
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
   }
 }

@@ -47,11 +47,11 @@ x.cdf(0.1);
 
 | Property                       | Modifier    | Type       | Description    |
 | ------------------------------ | ----------- | ---------- | -------------- |
-| <a id="params"></a> `params`   | `protected` | `object`   | **`Internal`** |
+| <a id="params"></a> `params`   | `protected` | `object`   | -              |
 | `params.a`                     | `public`    | `number`   | Left bound     |
 | `params.b`                     | `public`    | `number`   | Right bound    |
-| <a id="range"></a> `range`     | `protected` | `number`   | -              |
-| <a id="support"></a> `support` | `protected` | `Interval` | -              |
+| <a id="range"></a> `range`     | `protected` | `number`   | **`Internal`** |
+| <a id="support"></a> `support` | `protected` | `Interval` | **`Internal`** |
 
 #### Methods
 
@@ -78,6 +78,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -164,6 +166,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -311,8 +315,8 @@ x.random(10);
 | Property                         | Modifier    | Type       | Default value            | Description    |
 | -------------------------------- | ----------- | ---------- | ------------------------ | -------------- |
 | <a id="logbase"></a> `logBase`   | `protected` | `number`   | `undefined`              | -              |
-| <a id="params-1"></a> `params`   | `protected` | `number`   | `benfordMantissaDefault` | **`Internal`** |
-| <a id="support-1"></a> `support` | `protected` | `Interval` | `undefined`              | -              |
+| <a id="params-1"></a> `params`   | `protected` | `number`   | `benfordMantissaDefault` | -              |
+| <a id="support-1"></a> `support` | `protected` | `Interval` | `undefined`              | **`Internal`** |
 
 #### Methods
 
@@ -339,6 +343,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -425,6 +431,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -567,8 +575,8 @@ x.quantile(0.5);
 
 | Property                         | Modifier    | Type       | Default value      | Description    |
 | -------------------------------- | ----------- | ---------- | ------------------ | -------------- |
-| <a id="params-2"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | **`Internal`** |
-| <a id="support-2"></a> `support` | `protected` | `Interval` | `undefined`        | -              |
+| <a id="params-2"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | -              |
+| <a id="support-2"></a> `support` | `protected` | `Interval` | `undefined`        | **`Internal`** |
 
 #### Methods
 
@@ -595,6 +603,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -681,6 +691,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -827,8 +839,8 @@ x.random(10);
 | Property                         | Modifier    | Type         | Description    |
 | -------------------------------- | ----------- | ------------ | -------------- |
 | <a id="lbf"></a> `lbf`           | `protected` | `number`     | -              |
-| <a id="params-3"></a> `params`   | `protected` | `ParamsBeta` | **`Internal`** |
-| <a id="support-3"></a> `support` | `protected` | `Interval`   | -              |
+| <a id="params-3"></a> `params`   | `protected` | `ParamsBeta` | -              |
+| <a id="support-3"></a> `support` | `protected` | `Interval`   | **`Internal`** |
 
 #### Methods
 
@@ -856,6 +868,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -943,6 +957,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -1089,8 +1105,8 @@ x.random(10);
 | Property                         | Modifier    | Type         | Description    |
 | -------------------------------- | ----------- | ------------ | -------------- |
 | <a id="lbf-1"></a> `lbf`         | `protected` | `number`     | -              |
-| <a id="params-4"></a> `params`   | `protected` | `ParamsBeta` | **`Internal`** |
-| <a id="support-4"></a> `support` | `protected` | `Interval`   | -              |
+| <a id="params-4"></a> `params`   | `protected` | `ParamsBeta` | -              |
+| <a id="support-4"></a> `support` | `protected` | `Interval`   | **`Internal`** |
 
 #### Methods
 
@@ -1118,6 +1134,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -1205,6 +1223,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -1351,8 +1371,8 @@ x.random(10);
 
 | Property                         | Modifier    | Type             | Description    |
 | -------------------------------- | ----------- | ---------------- | -------------- |
-| <a id="params-5"></a> `params`   | `protected` | `ParamsBinomial` | **`Internal`** |
-| <a id="support-5"></a> `support` | `protected` | `Interval`       | -              |
+| <a id="params-5"></a> `params`   | `protected` | `ParamsBinomial` | -              |
+| <a id="support-5"></a> `support` | `protected` | `Interval`       | **`Internal`** |
 
 #### Methods
 
@@ -1380,6 +1400,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -1467,6 +1489,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -1612,8 +1636,8 @@ x.random(10);
 
 | Property                         | Modifier    | Type                  | Description    |
 | -------------------------------- | ----------- | --------------------- | -------------- |
-| <a id="params-6"></a> `params`   | `protected` | `ParamsLocationScale` | **`Internal`** |
-| <a id="support-6"></a> `support` | `protected` | `Interval`            | -              |
+| <a id="params-6"></a> `params`   | `protected` | `ParamsLocationScale` | -              |
+| <a id="support-6"></a> `support` | `protected` | `Interval`            | **`Internal`** |
 
 #### Methods
 
@@ -1640,6 +1664,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -1726,6 +1752,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -1870,8 +1898,8 @@ x.random(10);
 
 | Property                         | Modifier    | Type       | Default value             | Description    |
 | -------------------------------- | ----------- | ---------- | ------------------------- | -------------- |
-| <a id="params-7"></a> `params`   | `protected` | `number`   | `degreesOfFreedomDefault` | **`Internal`** |
-| <a id="support-7"></a> `support` | `protected` | `Interval` | `undefined`               | -              |
+| <a id="params-7"></a> `params`   | `protected` | `number`   | `degreesOfFreedomDefault` | -              |
+| <a id="support-7"></a> `support` | `protected` | `Interval` | `undefined`               | **`Internal`** |
 
 #### Methods
 
@@ -1899,6 +1927,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -1986,6 +2016,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -2130,8 +2162,8 @@ x.random(10);
 
 | Property                         | Modifier    | Type       | Default value | Description    |
 | -------------------------------- | ----------- | ---------- | ------------- | -------------- |
-| <a id="params-8"></a> `params`   | `protected` | `number`   | `rateDefault` | **`Internal`** |
-| <a id="support-8"></a> `support` | `protected` | `Interval` | `undefined`   | -              |
+| <a id="params-8"></a> `params`   | `protected` | `number`   | `rateDefault` | -              |
+| <a id="support-8"></a> `support` | `protected` | `Interval` | `undefined`   | **`Internal`** |
 
 #### Methods
 
@@ -2158,6 +2190,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -2244,6 +2278,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -2387,8 +2423,8 @@ x.quantile(0.5);
 
 | Property                         | Modifier    | Type                  | Description    |
 | -------------------------------- | ----------- | --------------------- | -------------- |
-| <a id="params-9"></a> `params`   | `protected` | `ParamsLocationScale` | **`Internal`** |
-| <a id="support-9"></a> `support` | `protected` | `Interval`            | -              |
+| <a id="params-9"></a> `params`   | `protected` | `ParamsLocationScale` | -              |
+| <a id="support-9"></a> `support` | `protected` | `Interval`            | **`Internal`** |
 
 #### Methods
 
@@ -2415,6 +2451,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -2501,6 +2539,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -2646,8 +2686,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type           | Description    |
 | --------------------------------- | ----------- | -------------- | -------------- |
-| <a id="params-10"></a> `params`   | `protected` | `ParamsNormal` | **`Internal`** |
-| <a id="support-10"></a> `support` | `protected` | `Interval`     | -              |
+| <a id="params-10"></a> `params`   | `protected` | `ParamsNormal` | -              |
+| <a id="support-10"></a> `support` | `protected` | `Interval`     | **`Internal`** |
 
 #### Methods
 
@@ -2674,6 +2714,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -2761,6 +2803,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -2906,8 +2950,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type                      | Description    |
 | --------------------------------- | ----------- | ------------------------- | -------------- |
-| <a id="params-11"></a> `params`   | `protected` | `ParamsDegreesOfFreedom2` | **`Internal`** |
-| <a id="support-11"></a> `support` | `protected` | `Interval`                | -              |
+| <a id="params-11"></a> `params`   | `protected` | `ParamsDegreesOfFreedom2` | -              |
+| <a id="support-11"></a> `support` | `protected` | `Interval`                | **`Internal`** |
 
 #### Methods
 
@@ -2935,6 +2979,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -3021,6 +3067,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -3167,8 +3215,8 @@ x.random(10);
 | Property                          | Modifier    | Type               | Description    |
 | --------------------------------- | ----------- | ------------------ | -------------- |
 | <a id="lgf"></a> `lgf`            | `protected` | `number`           | -              |
-| <a id="params-12"></a> `params`   | `protected` | `ParamsShapeScale` | **`Internal`** |
-| <a id="support-12"></a> `support` | `protected` | `Interval`         | -              |
+| <a id="params-12"></a> `params`   | `protected` | `ParamsShapeScale` | -              |
+| <a id="support-12"></a> `support` | `protected` | `Interval`         | **`Internal`** |
 
 #### Methods
 
@@ -3196,6 +3244,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -3283,6 +3333,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -3428,8 +3480,8 @@ x.random(10);
 | Property                          | Modifier    | Type       | Default value      | Description    |
 | --------------------------------- | ----------- | ---------- | ------------------ | -------------- |
 | <a id="logq"></a> `logq`          | `protected` | `number`   | `undefined`        | -              |
-| <a id="params-13"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | **`Internal`** |
-| <a id="support-13"></a> `support` | `protected` | `Interval` | `undefined`        | -              |
+| <a id="params-13"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | -              |
+| <a id="support-13"></a> `support` | `protected` | `Interval` | `undefined`        | **`Internal`** |
 
 #### Methods
 
@@ -3456,6 +3508,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -3542,6 +3596,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -3680,8 +3736,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type        | Default value | Description    |
 | --------------------------------- | ----------- | ----------- | ------------- | -------------- |
-| <a id="params-14"></a> `params`   | `protected` | `undefined` | `undefined`   | **`Internal`** |
-| <a id="support-14"></a> `support` | `protected` | `Interval`  | `undefined`   | -              |
+| <a id="params-14"></a> `params`   | `protected` | `undefined` | `undefined`   | -              |
+| <a id="support-14"></a> `support` | `protected` | `Interval`  | `undefined`   | **`Internal`** |
 
 #### Methods
 
@@ -3708,6 +3764,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -3794,6 +3852,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -3935,8 +3995,8 @@ x.random(10);
 | Property                          | Modifier    | Type                   | Description    |
 | --------------------------------- | ----------- | ---------------------- | -------------- |
 | <a id="lbc"></a> `lbc`            | `protected` | `number`               | -              |
-| <a id="params-15"></a> `params`   | `protected` | `ParamsHypergeometric` | **`Internal`** |
-| <a id="support-15"></a> `support` | `protected` | `Interval`             | -              |
+| <a id="params-15"></a> `params`   | `protected` | `ParamsHypergeometric` | -              |
+| <a id="support-15"></a> `support` | `protected` | `Interval`             | **`Internal`** |
 
 #### Methods
 
@@ -3964,6 +4024,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -4050,6 +4112,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -4195,8 +4259,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type                  | Description    |
 | --------------------------------- | ----------- | --------------------- | -------------- |
-| <a id="params-16"></a> `params`   | `protected` | `ParamsLocationScale` | **`Internal`** |
-| <a id="support-16"></a> `support` | `protected` | `Interval`            | -              |
+| <a id="params-16"></a> `params`   | `protected` | `ParamsLocationScale` | -              |
+| <a id="support-16"></a> `support` | `protected` | `Interval`            | **`Internal`** |
 
 #### Methods
 
@@ -4223,6 +4287,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -4309,6 +4375,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -4454,8 +4522,8 @@ x.random(10);
 | Property                          | Modifier    | Type       | Default value      | Description    |
 | --------------------------------- | ----------- | ---------- | ------------------ | -------------- |
 | <a id="logq-1"></a> `logq`        | `protected` | `number`   | `undefined`        | -              |
-| <a id="params-17"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | **`Internal`** |
-| <a id="support-17"></a> `support` | `protected` | `Interval` | `undefined`        | -              |
+| <a id="params-17"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | -              |
+| <a id="support-17"></a> `support` | `protected` | `Interval` | `undefined`        | **`Internal`** |
 
 #### Methods
 
@@ -4483,6 +4551,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -4569,6 +4639,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -4714,8 +4786,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type                  | Description    |
 | --------------------------------- | ----------- | --------------------- | -------------- |
-| <a id="params-18"></a> `params`   | `protected` | `ParamsLocationScale` | **`Internal`** |
-| <a id="support-18"></a> `support` | `protected` | `Interval`            | -              |
+| <a id="params-18"></a> `params`   | `protected` | `ParamsLocationScale` | -              |
+| <a id="support-18"></a> `support` | `protected` | `Interval`            | **`Internal`** |
 
 #### Methods
 
@@ -4742,6 +4814,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -4828,6 +4902,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -4973,8 +5049,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type               | Description    |
 | --------------------------------- | ----------- | ------------------ | -------------- |
-| <a id="params-19"></a> `params`   | `protected` | `ParamsShapeScale` | **`Internal`** |
-| <a id="support-19"></a> `support` | `protected` | `Interval`         | -              |
+| <a id="params-19"></a> `params`   | `protected` | `ParamsShapeScale` | -              |
+| <a id="support-19"></a> `support` | `protected` | `Interval`         | **`Internal`** |
 
 #### Methods
 
@@ -5001,6 +5077,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -5087,6 +5165,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -5232,8 +5312,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type           | Description    |
 | --------------------------------- | ----------- | -------------- | -------------- |
-| <a id="params-20"></a> `params`   | `protected` | `ParamsNormal` | **`Internal`** |
-| <a id="support-20"></a> `support` | `protected` | `Interval`     | -              |
+| <a id="params-20"></a> `params`   | `protected` | `ParamsNormal` | -              |
+| <a id="support-20"></a> `support` | `protected` | `Interval`     | **`Internal`** |
 
 #### Methods
 
@@ -5260,6 +5340,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -5346,6 +5428,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -5491,8 +5575,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type             | Description    |
 | --------------------------------- | ----------- | ---------------- | -------------- |
-| <a id="params-21"></a> `params`   | `protected` | `ParamsBinomial` | **`Internal`** |
-| <a id="support-21"></a> `support` | `protected` | `Interval`       | -              |
+| <a id="params-21"></a> `params`   | `protected` | `ParamsBinomial` | -              |
+| <a id="support-21"></a> `support` | `protected` | `Interval`       | **`Internal`** |
 
 #### Methods
 
@@ -5520,6 +5604,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -5607,6 +5693,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -5752,8 +5840,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type           | Description    |
 | --------------------------------- | ----------- | -------------- | -------------- |
-| <a id="params-22"></a> `params`   | `protected` | `ParamsNormal` | **`Internal`** |
-| <a id="support-22"></a> `support` | `protected` | `Interval`     | -              |
+| <a id="params-22"></a> `params`   | `protected` | `ParamsNormal` | -              |
+| <a id="support-22"></a> `support` | `protected` | `Interval`     | **`Internal`** |
 
 #### Methods
 
@@ -5780,6 +5868,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -5866,6 +5956,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -6011,8 +6103,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type               | Description    |
 | --------------------------------- | ----------- | ------------------ | -------------- |
-| <a id="params-23"></a> `params`   | `protected` | `ParamsShapeScale` | **`Internal`** |
-| <a id="support-23"></a> `support` | `protected` | `Interval`         | -              |
+| <a id="params-23"></a> `params`   | `protected` | `ParamsShapeScale` | -              |
+| <a id="support-23"></a> `support` | `protected` | `Interval`         | **`Internal`** |
 
 #### Methods
 
@@ -6039,6 +6131,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -6125,6 +6219,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -6269,8 +6365,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type       | Default value | Description    |
 | --------------------------------- | ----------- | ---------- | ------------- | -------------- |
-| <a id="params-24"></a> `params`   | `protected` | `number`   | `rateDefault` | **`Internal`** |
-| <a id="support-24"></a> `support` | `protected` | `Interval` | `undefined`   | -              |
+| <a id="params-24"></a> `params`   | `protected` | `number`   | `rateDefault` | -              |
+| <a id="support-24"></a> `support` | `protected` | `Interval` | `undefined`   | **`Internal`** |
 
 #### Methods
 
@@ -6298,6 +6394,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -6385,6 +6483,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -6530,9 +6630,9 @@ x.random(10);
 | Property                                   | Modifier    | Type       | Default value   | Description    |
 | ------------------------------------------ | ----------- | ---------- | --------------- | -------------- |
 | <a id="denom"></a> `denom`                 | `protected` | `number`   | `undefined`     | -              |
-| <a id="params-25"></a> `params`            | `protected` | `number`   | `radiusDefault` | **`Internal`** |
+| <a id="params-25"></a> `params`            | `protected` | `number`   | `radiusDefault` | -              |
 | <a id="radiussquared"></a> `radiusSquared` | `protected` | `number`   | `undefined`     | -              |
-| <a id="support-25"></a> `support`          | `protected` | `Interval` | `undefined`     | -              |
+| <a id="support-25"></a> `support`          | `protected` | `Interval` | `undefined`     | **`Internal`** |
 
 #### Methods
 
@@ -6559,6 +6659,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -6646,6 +6748,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -6790,8 +6894,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type       | Default value             | Description    |
 | --------------------------------- | ----------- | ---------- | ------------------------- | -------------- |
-| <a id="params-26"></a> `params`   | `protected` | `number`   | `degreesOfFreedomDefault` | **`Internal`** |
-| <a id="support-26"></a> `support` | `protected` | `Interval` | `undefined`               | -              |
+| <a id="params-26"></a> `params`   | `protected` | `number`   | `degreesOfFreedomDefault` | -              |
+| <a id="support-26"></a> `support` | `protected` | `Interval` | `undefined`               | **`Internal`** |
 
 #### Methods
 
@@ -6819,6 +6923,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -6905,6 +7011,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -7051,8 +7159,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type             | Description    |
 | --------------------------------- | ----------- | ---------------- | -------------- |
-| <a id="params-27"></a> `params`   | `protected` | `ParamsBoundMid` | **`Internal`** |
-| <a id="support-27"></a> `support` | `protected` | `Interval`       | -              |
+| <a id="params-27"></a> `params`   | `protected` | `ParamsBoundMid` | -              |
+| <a id="support-27"></a> `support` | `protected` | `Interval`       | **`Internal`** |
 
 #### Methods
 
@@ -7079,6 +7187,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -7165,6 +7275,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -7311,8 +7423,8 @@ x.random(10);
 | Property                          | Modifier    | Type          | Description    |
 | --------------------------------- | ----------- | ------------- | -------------- |
 | <a id="density"></a> `density`    | `protected` | `number`      | -              |
-| <a id="params-28"></a> `params`   | `protected` | `ParamsBound` | **`Internal`** |
-| <a id="support-28"></a> `support` | `protected` | `Interval`    | -              |
+| <a id="params-28"></a> `params`   | `protected` | `ParamsBound` | -              |
+| <a id="support-28"></a> `support` | `protected` | `Interval`    | **`Internal`** |
 
 #### Methods
 
@@ -7339,6 +7451,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -7425,6 +7539,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -7570,8 +7686,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type          | Description    |
 | --------------------------------- | ----------- | ------------- | -------------- |
-| <a id="params-29"></a> `params`   | `protected` | `ParamsBound` | **`Internal`** |
-| <a id="support-29"></a> `support` | `protected` | `Interval`    | -              |
+| <a id="params-29"></a> `params`   | `protected` | `ParamsBound` | -              |
+| <a id="support-29"></a> `support` | `protected` | `Interval`    | **`Internal`** |
 
 #### Methods
 
@@ -7598,6 +7714,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -7684,6 +7802,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -7831,8 +7951,8 @@ x.random(10);
 | --------------------------------- | ----------- | ------------- | -------------- |
 | <a id="alpha"></a> `alpha`        | `protected` | `number`      | -              |
 | <a id="beta-1"></a> `beta`        | `protected` | `number`      | -              |
-| <a id="params-30"></a> `params`   | `protected` | `ParamsBound` | **`Internal`** |
-| <a id="support-30"></a> `support` | `protected` | `Interval`    | -              |
+| <a id="params-30"></a> `params`   | `protected` | `ParamsBound` | -              |
+| <a id="support-30"></a> `support` | `protected` | `Interval`    | **`Internal`** |
 
 #### Methods
 
@@ -7859,6 +7979,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -7945,6 +8067,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -8090,8 +8214,8 @@ x.random(10);
 
 | Property                          | Modifier    | Type               | Description    |
 | --------------------------------- | ----------- | ------------------ | -------------- |
-| <a id="params-31"></a> `params`   | `protected` | `ParamsShapeScale` | **`Internal`** |
-| <a id="support-31"></a> `support` | `protected` | `Interval`         | -              |
+| <a id="params-31"></a> `params`   | `protected` | `ParamsShapeScale` | -              |
+| <a id="support-31"></a> `support` | `protected` | `Interval`         | **`Internal`** |
 
 #### Methods
 
@@ -8118,6 +8242,8 @@ The cumulative distribution function evaluated at `x`.
 ##### cornishFisherExpansion()
 
 > `protected` **cornishFisherExpansion**(`x`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
@@ -8204,6 +8330,8 @@ The quantile function evaluated at `q`.
 ##### quantileCF()
 
 > `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
+
+**`Internal`**
 
 ###### Parameters
 
