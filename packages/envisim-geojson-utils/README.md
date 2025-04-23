@@ -53,8 +53,8 @@ isCircle(circle);
 [Geodesic segment](https://en.wikipedia.org/wiki/Geodesics_on_an_ellipsoid) operations using [`geographiclib-geodesic`](https://npmjs.com/package/geographiclib-geodesic).
 
 ```typescript
-import Geodesic from "@envisim/geojson-utils/geodesic";
-Geodesic.distance([0, 0], [1, 0]);
+import { distance } from "@envisim/geojson-utils/geodesic";
+distance([0, 0], [1, 0]);
 ```
 
 ### Platé carrée segments
@@ -62,8 +62,8 @@ Geodesic.distance([0, 0], [1, 0]);
 [Platé carrée](https://en.wikipedia.org/wiki/Equirectangular_projection) segment operations.
 
 ```typescript
-import PlateCarree from "@envisim/geojson-utils/plate-carree";
-PlateCarree.distance([0, 0], [1, 0]);
+import { distance } from "@envisim/geojson-utils/plate-carree";
+distance([0, 0], [1, 0]);
 ```
 
 ### Rhumb segments
@@ -71,6 +71,6 @@ PlateCarree.distance([0, 0], [1, 0]);
 [Rhumb](https://en.wikipedia.org/wiki/Rhumb_line) segment operations.
 
 ```typescript
-import Rhumb from "@envisim/geojson-utils/rhumb";
-Rhumb.distance([0, 0], [1, 0]);
+import { distance } from "@envisim/geojson-utils/rhumb";
+distance([0, 0], [1, 0]);
 ```
