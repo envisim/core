@@ -3,17 +3,13 @@ const config = {
   // options
   // tsconfig
   // compilerOptions
-  plugin: ["typedoc-plugin-markdown"],
-  // plugin: ["@envisim/config-typedoc/missing-exports", "typedoc-plugin-markdown"],
-  // plugin: ["typedoc-plugin-missing-exports", "typedoc-plugin-markdown"],
+  // plugin,
   //
   //
   // Input Options
   // entryPoints
   // entryPointStrategy: "resovle",
-  packageOptions: {
-    excludeExternals: true,
-  },
+  // packageOptions
   // alwaysCreateEntryPointModule: true,
   // projectDocuments
   // exclude
@@ -32,7 +28,7 @@ const config = {
   disableSources: true,
   // sourceLinkTemplate
   // gitRevision
-  gitRemote: "https://github.com/envisim/core",
+  // gitRemote
   // disableGit
   readme: "none",
   //
@@ -41,17 +37,17 @@ const config = {
   // outputs
   // out: "./docs",
   // html
-  json: "./json-doc.json",
+  json: "./temp/doc.json",
   // pretty
   // emit
   // theme
-  router: "module",
+  // router: "module",
   // router: "structure",
   // lightHighlightTheme
   // darkHighlightTheme
   // highlightLanguages
   // ignoredHighlightLanguages
-  typePrintWidth: 100,
+  // typePrintWidth: 100,
   // customCss
   // customJs
   // customFooterHtml
@@ -67,7 +63,7 @@ const config = {
   // locales
   // githubPages
   // cacheBust
-  hideGenerator: true,
+  // hideGenerator: true,
   // searchInComments
   // searchInDocuments
   // cleanOutputDir
@@ -99,35 +95,7 @@ const config = {
   // cascadedModifierTags
   // excludeTags
   // notRenderedTags
-  // externalSymbolLinkMappings: {
-  //   "@envisim/distributions": {
-  //     "*": "../../envisim-distributions/docs",
-  //   },
-  //   "@envisim/estimate": {
-  //     "*": "../../envisim-estimate/docs",
-  //   },
-  //   "@envisim/geojson": {
-  //     "*": "../../envisim-geojson/docs",
-  //   },
-  //   "@envisim/geojson-utils": {
-  //     "*": "../../envisim-geojson-utils/docs",
-  //   },
-  //   "@envisim/geosampling": {
-  //     "*": "../../envisim-geosampling/docs",
-  //   },
-  //   "@envisim/matrix": {
-  //     "*": "../../envisim-matrix/docs",
-  //   },
-  //   "@envisim/random": {
-  //     "*": "../../envisim-random/docs",
-  //   },
-  //   "@envisim/sampling": {
-  //     "*": "../../envisim-sampling/docs",
-  //   },
-  //   "@envisim/utils": {
-  //     "*": "../../envisim-utils/docs",
-  //   },
-  // },
+  // externalSymbolLinkMappings
   //
   //
   // Organization Options
@@ -137,7 +105,7 @@ const config = {
   // categoryOrder
   // groupOrder
   // sort
-  sortEntryPoints: false,
+  // sortEntryPoints: false,
   // kindSortOrder
   //
   //
@@ -161,54 +129,6 @@ const config = {
   // showConfig
   logLevel: "Warn",
   // skipErrorChecking
-  //
-  //
-  // typedoc-plugin-missing-exports
-  //
-  //
-  // typedoc-plugin-markdown
-  //
-  // File Options
-  // fileExtension
-  // entryFileName
-  // modulesFileName
-  // mergeReadme: true,
-  // flattenOutputFiles
-  // excludeScopesInPaths
-  //
-  //
-  // Display Options
-  // hidePageHeader
-  // hideBreadcrumbs
-  // hidePageTitle
-  // useCodeBlocks
-  // expandObjects
-  // expandParameters
-  // blockTagsPreserveOrder
-  indexFormat: "table",
-  parametersFormat: "table",
-  interfacePropertiesFormat: "table",
-  classPropertiesFormat: "table",
-  typeAliasPropertiesFormat: "table",
-  enumMembersFormat: "table",
-  propertyMembersFormat: "table",
-  typeDeclarationFormat: "table",
-  tableColumnSettings: {
-    hideInherited: true,
-    hideOverrides: true,
-    hideSources: true,
-  },
-  // pageTitleTemplates
-  //
-  //
-  // Utility Options
-  formatWithPrettier: true,
-  // prettierConfigFile
-  // publicPath
-  // useHTMLEncodedBrackets
-  // useHTMLAnchors
-  // anchorPrefix
-  // sanitizeComments
 };
 
 export default config;

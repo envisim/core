@@ -13,7 +13,7 @@
   "type": "module",
   "scripts": {
     "build": "turbo build --log-order=grouped --output-logs=errors-only",
-    "doc": "turbo doc --log-order=grouped",
+    "doc": "turbo doc --log-order=grouped && typedoc",
     "lint": "turbo lint --log-order=grouped --output-logs=errors-only",
     "prepare": "husky",
     "test": "turbo test --log-order=grouped --output-logs=errors-only"

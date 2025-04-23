@@ -8,11 +8,9 @@
   },
   "scripts": {},
   "dependencies": {
-    "typedoc": "^0.28.2",
-    "typedoc-plugin-markdown": "^4.6.2"
+    "typedoc": "^0.28.2"
   },
   "devDependencies": {
-    "@envisim/config-eslint": "workspace:*",
-    "@envisim/config-ts": "workspace:*"
+    "@envisim/config-eslint": "workspace:*"
   }
 }

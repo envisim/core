@@ -11,8 +11,8 @@
 | Module                          | theme_description |
 | ------------------------------- | ----------------- |
 | [](.md)                         | -                 |
-| [geojson](geojson.md)           | -                 |
-| [type-guards](type-guards.md)   | -                 |
 | [geodesic](geodesic.md)         | -                 |
+| [geojson](geojson.md)           | -                 |
 | [plate-carree](plate-carree.md) | -                 |
 | [rhumb](rhumb.md)               | -                 |
+| [type-guards](type-guards.md)   | -                 |
