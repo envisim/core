@@ -1961,7 +1961,7 @@ Geometric mean of all elements
 
 ##### histogram()
 
-> **histogram**(`bins`, `range`): `object`
+> **histogram**(`bins`, `range`): { `bins`: `number`\[]; `range`: \[`number`, `number`]; `width`: `number`; }
 
 ###### Parameters
 
@@ -1972,7 +1972,7 @@ Geometric mean of all elements
 
 ###### Returns
 
-`object`
+{ `bins`: `number`\[]; `range`: \[`number`, `number`]; `width`: `number`; }
 
 the values needed in order to construct a histogram
 

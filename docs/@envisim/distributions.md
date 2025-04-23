@@ -85,13 +85,13 @@ x.cdf(0.1);
 
 #### Properties
 
-| Property                       | Modifier    | Type       | Description    |
-| ------------------------------ | ----------- | ---------- | -------------- |
-| <a id="params"></a> `params`   | `protected` | `object`   | -              |
-| `params.a`                     | `public`    | `number`   | Left bound     |
-| `params.b`                     | `public`    | `number`   | Right bound    |
-| <a id="range"></a> `range`     | `protected` | `number`   | **`Internal`** |
-| <a id="support"></a> `support` | `protected` | `Interval` | **`Internal`** |
+| Property                       | Modifier    | Type                              | Description    |
+| ------------------------------ | ----------- | --------------------------------- | -------------- |
+| <a id="params"></a> `params`   | `protected` | { `a`: `number`; `b`: `number`; } | -              |
+| `params.a`                     | `public`    | `number`                          | Left bound     |
+| `params.b`                     | `public`    | `number`                          | Right bound    |
+| <a id="range"></a> `range`     | `protected` | `number`                          | **`Internal`** |
+| <a id="support"></a> `support` | `protected` | `Interval`                        | **`Internal`** |
 
 #### Methods
 

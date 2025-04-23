@@ -39,7 +39,7 @@
 
 ### COLLECT_ERROR_LIST
 
-> `const` **COLLECT_ERROR_LIST**: `object`
+> `const` **COLLECT_ERROR_LIST**: { `BASE_COLLECTION_MISSING`: `"collect-error-collection-is-missing"`; `LINE_EXPECTS_AREA`: `"collect-error-line-expects-area"`; `POINT_EXPECTS_AREA`: `"collect-error-point-expects-area"`; `PROPERTY_ID_COLLISION`: `"collect-error-property-is-missing"`; `PROPERTY_MISSING`: `"collect-error-property-is-missing"`; `PROPERTY_NOT_NUMERICAL`: `"collect-error-property-not-numerical"`; }
 
 #### Type declaration
 
@@ -56,7 +56,7 @@
 
 ### SAMPLE_ERROR_LIST
 
-> `const` **SAMPLE_ERROR_LIST**: `object`
+> `const` **SAMPLE_ERROR_LIST**: { `BALANCE_ON_MISSING`: `"sample-error-balance-on-do-not-exist"`; `COLLECTION_MISSING`: `"sample-error-collection-do-not-exist"`; `CUTOFF_NOT_POSITIVE`: `"sample-error-cutoff-not-positive"`; `DASH_LENGTH_NOT_POSITIVE`: `"sample-error-dash-length-not-positive"`; `EXPECTED_AREA`: `"sample-error-expected-area"`; `EXPECTED_LINE`: `"sample-error-expected-line"`; `EXPECTED_POINT`: `"sample-error-expected-point"`; `FACTOR_NOT_POSITIVE`: `"sample-error-factor"`; `HALF_WIDTH_NOT_POSITIVE`: `"sample-error-half-width-not-positive"`; `INCORRECT_PRIMITIVE`: `"sample-error-incorrect-primitive"`; `MODEL_FEATURE_NOT_AREA`: `"sample-error-expected-model-feature-area"`; `MODEL_FEATURE_NOT_LINE`: `"sample-error-expected-model-feature-line"`; `MODEL_FEATURE_NOT_POINT`: `"sample-error-expected-model-feature-point"`; `POINTS_PER_CIRCLE_NOT_POSITIVE_INTEGER`: `"sample-error-points-per-circle"`; `PROBABILITIES_FROM_MISSING`: `"sample-error-probabilities-from-do-not-exist"`; `PROBABILITIES_FROM_NOT_NUMERICAL`: `"sample-error-probabilities-from-not-numerical"`; `RATIO_NOT_POSITIVE`: `"sample-error-ratio"`; `ROTATION_OF_GRID_ERROR`: `"sample-error-rotation-of-grid-incorrect"`; `ROTATION_OF_MODEL_FEATURE_ERROR`: `"sample-error-model-feature-rotation-incorrect"`; `SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER`: `"sample-error-sample-size"`; `SEPARATION_NOT_POSITIVE`: `"sample-error-separation-not-positive"`; `SIZE_PROPERTY_MISSING`: `"sample-error-size-property-do-not-exist"`; `SIZE_PROPERTY_NOT_NUMERICAL`: `"sample-error-size-property-not-numerical"`; `SPREAD_ON_MISSING`: `"sample-error-spread-on-do-not-exist"`; `STRATIFY_MISSING`: `"sample-error-stratifying-property-do-not-exist"`; `STRATIFY_NO_VALUES`: `"sample-error-stratify-no-values"`; `STRATIFY_NOT_CATEGORICAL`: `"sample-error-stratifying-not-categorical"`; `STRATIFY_OPTIONS_LENGTH_MISMATCH`: `"sample-error-stratify-options-length-mismatch"`; }
 
 #### Type declaration
 
@@ -95,7 +95,7 @@
 
 ### SELECT_ERROR_LIST
 
-> `const` **SELECT_ERROR_LIST**: `object`
+> `const` **SELECT_ERROR_LIST**: { `BASE_COLLECTION_EXPECTED_AREA`: `"select-error-base-collection-is-not-area"`; `BASE_COLLECTION_EXPECTED_LINE`: `"select-error-base-collection-is-not-line"`; `BASE_COLLECTION_EXPECTED_POINT`: `"select-error-base-collection-is-not-point"`; `COLLECTION_MISSING`: `"select-error-collection-is-missing"`; `EXPECTED_AREA`: `"select-error-collection-is-not-area"`; `EXPECTED_LINE`: `"select-error-collection-is-not-line"`; `EXPECTED_POINT`: `"select-error-collection-is-not-point"`; }
 
 #### Type declaration
 

@@ -169,7 +169,7 @@ const config = {
   // hideBreadcrumbs
   // hidePageTitle
   // useCodeBlocks
-  // expandObjects
+  expandObjects: true,
   // expandParameters
   // blockTagsPreserveOrder
   indexFormat: "table",
@@ -192,7 +192,7 @@ const config = {
   formatWithPrettier: true,
   // prettierConfigFile
   // publicPath
-  // useHTMLEncodedBrackets
+  useHTMLEncodedBrackets: true,
   // useHTMLAnchors
   // anchorPrefix
   // sanitizeComments

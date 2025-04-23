@@ -204,7 +204,7 @@
 
 ### SampleSystematicLinesOnLines
 
-> **SampleSystematicLinesOnLines** = `object`
+> **SampleSystematicLinesOnLines** = { `dashLength`: `number`; `rand`: [`RandomGenerator`](../random.md#randomgenerator); `voidLength`: `number`; }
 
 #### Properties
 
@@ -549,7 +549,7 @@ Array of GeoJSON positions.
 
 ### sampleRelascopePoints()
 
-> **sampleRelascopePoints**<`P`>(`collection`, `options`): `object`
+> **sampleRelascopePoints**<`P`>(`collection`, `options`): { `areaRatio`: `number`; `collection`: [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `P`>; `pointSample`: [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point)>; }
 
 Selects a point sample on an area frame and collect point objects from a base
 layer using a relascope to determine inclusion. A buffer is needed for unbiased
@@ -574,7 +574,7 @@ quantities.
 
 #### Returns
 
-`object`
+{ `areaRatio`: `number`; `collection`: [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `P`>; `pointSample`: [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point)>; }
 
 an object containing the resulting sample, the relascope points and the area ratio
 

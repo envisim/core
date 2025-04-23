@@ -920,10 +920,10 @@ Transforms the categorical properties back to strings, and returns the json
 
 ###### Parameters
 
-| Parameter | Type                                                               | Default value | Description                                       |
-| --------- | ------------------------------------------------------------------ | ------------- | ------------------------------------------------- |
-| `shallow` | `boolean`                                                          | `true`        | if `true`, creates shallow copies of the features |
-| `options` | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) & `object` | `{}`          | -                                                 |
+| Parameter | Type                                                                                       | Default value | Description                                       |
+| --------- | ------------------------------------------------------------------------------------------ | ------------- | ------------------------------------------------- |
+| `shallow` | `boolean`                                                                                  | `true`        | if `true`, creates shallow copies of the features |
+| `options` | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) & { `convertCircles`: `boolean`; } | `{}`          | -                                                 |
 
 ###### Returns
 
