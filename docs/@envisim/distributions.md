@@ -62,10 +62,51 @@ The Arcsine distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value    |
-| --------- | -------- | ---------------- |
-| `a`       | `number` | `boundDefault.a` |
-| `b`       | `number` | `boundDefault.b` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`a`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`boundDefault.a`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`b`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`boundDefault.b`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -85,13 +126,128 @@ x.cdf(0.1);
 
 #### Properties
 
-| Property                       | Modifier    | Type                              | Description    |
-| ------------------------------ | ----------- | --------------------------------- | -------------- |
-| <a id="params"></a> `params`   | `protected` | { `a`: `number`; `b`: `number`; } | -              |
-| `params.a`                     | `public`    | `number`                          | Left bound     |
-| `params.b`                     | `public`    | `number`                          | Right bound    |
-| <a id="range"></a> `range`     | `protected` | `number`                          | **`Internal`** |
-| <a id="support"></a> `support` | `protected` | `Interval`                        | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+{ `a`: `number`; `b`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`params.a`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Left bound
+
+</td>
+</tr>
+<tr>
+<td>
+
+`params.b`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Right bound
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="range"></a> `range`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -103,9 +259,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -123,9 +298,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -171,9 +365,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -191,9 +404,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -211,11 +443,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -233,10 +506,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -254,11 +579,68 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter  | Type                              | Description |
-| ---------- | --------------------------------- | ----------- |
-| `params`   | { `a`: `number`; `b`: `number`; } | -           |
-| `params.a` | `number`                          | Left bound  |
-| `params.b` | `number`                          | Right bound |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+{ `a`: `number`; `b`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`params.a`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Left bound
+
+</td>
+</tr>
+<tr>
+<td>
+
+`params.b`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Right bound
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -328,9 +710,34 @@ The Benford Mantissa distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value            |
-| --------- | -------- | ------------------------ |
-| `base`    | `number` | `benfordMantissaDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`base`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`benfordMantissaDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -352,11 +759,100 @@ x.random(10);
 
 #### Properties
 
-| Property                         | Modifier    | Type       | Default value            | Description    |
-| -------------------------------- | ----------- | ---------- | ------------------------ | -------------- |
-| <a id="logbase"></a> `logBase`   | `protected` | `number`   | `undefined`              | -              |
-| <a id="params-1"></a> `params`   | `protected` | `number`   | `benfordMantissaDefault` | -              |
-| <a id="support-1"></a> `support` | `protected` | `Interval` | `undefined`              | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="logbase"></a> `logBase`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="params-1"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`benfordMantissaDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-1"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -368,9 +864,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -388,9 +903,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -436,9 +970,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -456,9 +1009,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -476,11 +1048,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -498,10 +1111,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -519,9 +1184,34 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value            |
-| --------- | -------- | ------------------------ |
-| `base`    | `number` | `benfordMantissaDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`base`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`benfordMantissaDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -591,9 +1281,34 @@ The Bernoulli distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value      |
-| --------- | -------- | ------------------ |
-| `p`       | `number` | `bernoulliDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`bernoulliDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -613,10 +1328,73 @@ x.quantile(0.5);
 
 #### Properties
 
-| Property                         | Modifier    | Type       | Default value      | Description    |
-| -------------------------------- | ----------- | ---------- | ------------------ | -------------- |
-| <a id="params-2"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | -              |
-| <a id="support-2"></a> `support` | `protected` | `Interval` | `undefined`        | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-2"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`bernoulliDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-2"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -628,9 +1406,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -648,9 +1445,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -696,9 +1512,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -716,9 +1551,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -736,11 +1590,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -758,10 +1653,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -779,9 +1726,34 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value      |
-| --------- | -------- | ------------------ |
-| `p`       | `number` | `bernoulliDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`bernoulliDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -851,10 +1823,51 @@ The Beta distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value       |
-| --------- | -------- | ------------------- |
-| `alpha`   | `number` | `betaDefault.alpha` |
-| `beta`    | `number` | `betaDefault.beta`  |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`alpha`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`betaDefault.alpha`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`beta`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`betaDefault.beta`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -876,11 +1889,84 @@ x.random(10);
 
 #### Properties
 
-| Property                         | Modifier    | Type         | Description    |
-| -------------------------------- | ----------- | ------------ | -------------- |
-| <a id="lbf"></a> `lbf`           | `protected` | `number`     | -              |
-| <a id="params-3"></a> `params`   | `protected` | `ParamsBeta` | -              |
-| <a id="support-3"></a> `support` | `protected` | `Interval`   | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="lbf"></a> `lbf`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="params-3"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsBeta`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-3"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -892,10 +1978,51 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `x`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-20`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -913,9 +2040,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -961,9 +2107,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -981,10 +2146,51 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `q`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-20`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1002,11 +2208,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1024,10 +2271,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value | Description                                |
-| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`           | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`{}`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1045,9 +2344,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type         |
-| --------- | ------------ |
-| `params`  | `ParamsBeta` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsBeta`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1117,10 +2435,51 @@ The Beta Prime distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value       |
-| --------- | -------- | ------------------- |
-| `alpha`   | `number` | `betaDefault.alpha` |
-| `beta`    | `number` | `betaDefault.beta`  |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`alpha`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`betaDefault.alpha`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`beta`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`betaDefault.beta`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1142,11 +2501,84 @@ x.random(10);
 
 #### Properties
 
-| Property                         | Modifier    | Type         | Description    |
-| -------------------------------- | ----------- | ------------ | -------------- |
-| <a id="lbf-1"></a> `lbf`         | `protected` | `number`     | -              |
-| <a id="params-4"></a> `params`   | `protected` | `ParamsBeta` | -              |
-| <a id="support-4"></a> `support` | `protected` | `Interval`   | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="lbf-1"></a> `lbf`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="params-4"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsBeta`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-4"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -1158,10 +2590,51 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `x`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-20`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1179,9 +2652,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1227,9 +2719,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1247,10 +2758,51 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `q`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-20`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1268,11 +2820,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1290,10 +2883,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value | Description                                |
-| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`           | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`{}`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1311,9 +2956,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type         |
-| --------- | ------------ |
-| `params`  | `ParamsBeta` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsBeta`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1383,10 +3047,51 @@ The Binomial distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value       |
-| --------- | -------- | ------------------- |
-| `n`       | `number` | `binomialDefault.n` |
-| `p`       | `number` | `binomialDefault.p` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`binomialDefault.n`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`p`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`binomialDefault.p`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1409,10 +3114,62 @@ x.random(10);
 
 #### Properties
 
-| Property                         | Modifier    | Type             | Description    |
-| -------------------------------- | ----------- | ---------------- | -------------- |
-| <a id="params-5"></a> `params`   | `protected` | `ParamsBinomial` | -              |
-| <a id="support-5"></a> `support` | `protected` | `Interval`       | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-5"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsBinomial`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-5"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -1424,10 +3181,51 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `x`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-20`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1445,9 +3243,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1493,9 +3310,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1513,10 +3349,51 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `q`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-20`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1534,11 +3411,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1556,10 +3474,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value | Description                                |
-| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`           | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`{}`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1577,9 +3547,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type             |
-| --------- | ---------------- |
-| `params`  | `ParamsBinomial` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsBinomial`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1649,10 +3638,51 @@ The Cauchy distribution
 
 ###### Parameters
 
-| Parameter  | Type     | Default value                   |
-| ---------- | -------- | ------------------------------- |
-| `location` | `number` | `locationScaleDefault.location` |
-| `scale`    | `number` | `locationScaleDefault.scale`    |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`location`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`locationScaleDefault.location`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`scale`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`locationScaleDefault.scale`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1674,10 +3704,62 @@ x.random(10);
 
 #### Properties
 
-| Property                         | Modifier    | Type                  | Description    |
-| -------------------------------- | ----------- | --------------------- | -------------- |
-| <a id="params-6"></a> `params`   | `protected` | `ParamsLocationScale` | -              |
-| <a id="support-6"></a> `support` | `protected` | `Interval`            | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-6"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsLocationScale`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-6"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -1689,9 +3771,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1709,9 +3810,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1757,9 +3877,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1777,9 +3916,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1797,11 +3955,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1819,10 +4018,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1840,9 +4091,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type                  |
-| --------- | --------------------- |
-| `params`  | `ParamsLocationScale` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsLocationScale`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1912,9 +4182,34 @@ The Chi-squared distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value             |
-| --------- | -------- | ------------------------- |
-| `df`      | `number` | `degreesOfFreedomDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`df`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`degreesOfFreedomDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1936,10 +4231,73 @@ x.random(10);
 
 #### Properties
 
-| Property                         | Modifier    | Type       | Default value             | Description    |
-| -------------------------------- | ----------- | ---------- | ------------------------- | -------------- |
-| <a id="params-7"></a> `params`   | `protected` | `number`   | `degreesOfFreedomDefault` | -              |
-| <a id="support-7"></a> `support` | `protected` | `Interval` | `undefined`               | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-7"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`degreesOfFreedomDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-7"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -1951,10 +4309,51 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `x`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-12`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-12`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1972,9 +4371,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2020,9 +4438,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2040,10 +4477,40 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
-| `eps`     | `1e-12`  |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`1e-12`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2061,11 +4528,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2083,10 +4591,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value | Description                                |
-| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`           | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`{}`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2104,9 +4664,34 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value             |
-| --------- | -------- | ------------------------- |
-| `df`      | `number` | `degreesOfFreedomDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`df`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`degreesOfFreedomDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2176,9 +4761,34 @@ The Exponential distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `rate`    | `number` | `rateDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`rate`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`rateDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2200,10 +4810,73 @@ x.random(10);
 
 #### Properties
 
-| Property                         | Modifier    | Type       | Default value | Description    |
-| -------------------------------- | ----------- | ---------- | ------------- | -------------- |
-| <a id="params-8"></a> `params`   | `protected` | `number`   | `rateDefault` | -              |
-| <a id="support-8"></a> `support` | `protected` | `Interval` | `undefined`   | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-8"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`rateDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-8"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -2215,9 +4888,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2235,9 +4927,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2283,9 +4994,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2303,9 +5033,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2323,11 +5072,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2345,10 +5135,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2366,9 +5208,34 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `rate`    | `number` | `rateDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`rate`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`rateDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2438,10 +5305,51 @@ The Extreme Value distribution
 
 ###### Parameters
 
-| Parameter  | Type     | Default value                   |
-| ---------- | -------- | ------------------------------- |
-| `location` | `number` | `locationScaleDefault.location` |
-| `scale`    | `number` | `locationScaleDefault.scale`    |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`location`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`locationScaleDefault.location`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`scale`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`locationScaleDefault.scale`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2461,10 +5369,62 @@ x.quantile(0.5);
 
 #### Properties
 
-| Property                         | Modifier    | Type                  | Description    |
-| -------------------------------- | ----------- | --------------------- | -------------- |
-| <a id="params-9"></a> `params`   | `protected` | `ParamsLocationScale` | -              |
-| <a id="support-9"></a> `support` | `protected` | `Interval`            | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-9"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsLocationScale`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-9"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -2476,9 +5436,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2496,9 +5475,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2544,9 +5542,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2564,9 +5581,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2584,11 +5620,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2606,10 +5683,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2627,9 +5756,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type                  |
-| --------- | --------------------- |
-| `params`  | `ParamsLocationScale` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsLocationScale`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2699,10 +5847,51 @@ The Folded-Normal distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value         |
-| --------- | -------- | --------------------- |
-| `mu`      | `number` | `normalDefault.mu`    |
-| `sigma`   | `number` | `normalDefault.sigma` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mu`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`normalDefault.mu`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`sigma`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`normalDefault.sigma`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2724,10 +5913,62 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type           | Description    |
-| --------------------------------- | ----------- | -------------- | -------------- |
-| <a id="params-10"></a> `params`   | `protected` | `ParamsNormal` | -              |
-| <a id="support-10"></a> `support` | `protected` | `Interval`     | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-10"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsNormal`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-10"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -2739,9 +5980,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2759,9 +6019,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2807,9 +6086,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2827,10 +6125,51 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `q`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-12`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-12`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2848,11 +6187,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2870,10 +6250,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value | Description                                |
-| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`           | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`{}`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2891,9 +6323,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type           |
-| --------- | -------------- |
-| `params`  | `ParamsNormal` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsNormal`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2963,10 +6414,51 @@ The F distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value             |
-| --------- | -------- | ------------------------- |
-| `df1`     | `number` | `degreesOfFreedomDefault` |
-| `df2`     | `number` | `degreesOfFreedomDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`df1`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`degreesOfFreedomDefault`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`df2`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`degreesOfFreedomDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2988,10 +6480,62 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type                      | Description    |
-| --------------------------------- | ----------- | ------------------------- | -------------- |
-| <a id="params-11"></a> `params`   | `protected` | `ParamsDegreesOfFreedom2` | -              |
-| <a id="support-11"></a> `support` | `protected` | `Interval`                | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-11"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsDegreesOfFreedom2`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-11"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -3003,10 +6547,51 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `x`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-20`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3024,9 +6609,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3072,9 +6676,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3092,9 +6715,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3112,11 +6754,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3134,10 +6817,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value | Description                                |
-| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`           | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`{}`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3155,9 +6890,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type                      |
-| --------- | ------------------------- |
-| `params`  | `ParamsDegreesOfFreedom2` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsDegreesOfFreedom2`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3227,10 +6981,51 @@ The Gamma distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value             |
-| --------- | -------- | ------------------------- |
-| `shape`   | `number` | `shapeScaleDefault.shape` |
-| `scale`   | `number` | `shapeScaleDefault.scale` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`shape`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`shapeScaleDefault.shape`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`scale`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`shapeScaleDefault.scale`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3252,11 +7047,84 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type               | Description    |
-| --------------------------------- | ----------- | ------------------ | -------------- |
-| <a id="lgf"></a> `lgf`            | `protected` | `number`           | -              |
-| <a id="params-12"></a> `params`   | `protected` | `ParamsShapeScale` | -              |
-| <a id="support-12"></a> `support` | `protected` | `Interval`         | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="lgf"></a> `lgf`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="params-12"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsShapeScale`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-12"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -3268,10 +7136,51 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `x`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-12`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-12`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3289,9 +7198,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3337,9 +7265,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3357,10 +7304,51 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `q`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-12`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-12`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3378,11 +7366,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3400,10 +7429,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value | Description                                |
-| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`           | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`{}`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3421,9 +7502,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type               |
-| --------- | ------------------ |
-| `params`  | `ParamsShapeScale` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsShapeScale`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3493,9 +7593,34 @@ The Geometric distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value      |
-| --------- | -------- | ------------------ |
-| `p`       | `number` | `bernoulliDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`bernoulliDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3517,11 +7642,100 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type       | Default value      | Description    |
-| --------------------------------- | ----------- | ---------- | ------------------ | -------------- |
-| <a id="logq"></a> `logq`          | `protected` | `number`   | `undefined`        | -              |
-| <a id="params-13"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | -              |
-| <a id="support-13"></a> `support` | `protected` | `Interval` | `undefined`        | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="logq"></a> `logq`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="params-13"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`bernoulliDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-13"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -3533,9 +7747,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3553,9 +7786,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3601,9 +7853,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3621,9 +7892,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3641,11 +7931,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3663,10 +7994,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3684,9 +8067,34 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value      |
-| --------- | -------- | ------------------ |
-| `p`       | `number` | `bernoulliDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`bernoulliDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3774,10 +8182,73 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type        | Default value | Description    |
-| --------------------------------- | ----------- | ----------- | ------------- | -------------- |
-| <a id="params-14"></a> `params`   | `protected` | `undefined` | `undefined`   | -              |
-| <a id="support-14"></a> `support` | `protected` | `Interval`  | `undefined`   | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-14"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-14"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -3789,9 +8260,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3809,9 +8299,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3857,9 +8366,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3877,9 +8405,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3897,11 +8444,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3919,10 +8507,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4006,11 +8646,68 @@ The Hypergeometric distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value             |
-| --------- | -------- | ------------------------- |
-| `N`       | `number` | `hypergeometricDefault.N` |
-| `K`       | `number` | `hypergeometricDefault.K` |
-| `n`       | `number` | `hypergeometricDefault.n` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`N`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`hypergeometricDefault.N`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`K`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`hypergeometricDefault.K`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`hypergeometricDefault.n`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4032,11 +8729,84 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type                   | Description    |
-| --------------------------------- | ----------- | ---------------------- | -------------- |
-| <a id="lbc"></a> `lbc`            | `protected` | `number`               | -              |
-| <a id="params-15"></a> `params`   | `protected` | `ParamsHypergeometric` | -              |
-| <a id="support-15"></a> `support` | `protected` | `Interval`             | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="lbc"></a> `lbc`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="params-15"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsHypergeometric`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-15"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -4048,10 +8818,51 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `x`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-12`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-12`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4069,9 +8880,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4117,9 +8947,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4137,9 +8986,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4157,11 +9025,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4179,10 +9088,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4200,9 +9161,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter           | Type                   |
-| ------------------- | ---------------------- |
-| `__namedParameters` | `ParamsHypergeometric` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+`ParamsHypergeometric`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4272,10 +9252,51 @@ The Laplace distribution
 
 ###### Parameters
 
-| Parameter  | Type     | Default value                   |
-| ---------- | -------- | ------------------------------- |
-| `location` | `number` | `locationScaleDefault.location` |
-| `scale`    | `number` | `locationScaleDefault.scale`    |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`location`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`locationScaleDefault.location`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`scale`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`locationScaleDefault.scale`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4297,10 +9318,62 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type                  | Description    |
-| --------------------------------- | ----------- | --------------------- | -------------- |
-| <a id="params-16"></a> `params`   | `protected` | `ParamsLocationScale` | -              |
-| <a id="support-16"></a> `support` | `protected` | `Interval`            | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-16"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsLocationScale`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-16"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -4312,9 +9385,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4332,9 +9424,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4380,9 +9491,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4400,9 +9530,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4420,11 +9569,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4442,10 +9632,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4463,9 +9705,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type                  |
-| --------- | --------------------- |
-| `params`  | `ParamsLocationScale` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsLocationScale`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4535,9 +9796,34 @@ The Logarithmic distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value      |
-| --------- | -------- | ------------------ |
-| `p`       | `number` | `bernoulliDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`bernoulliDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4559,11 +9845,100 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type       | Default value      | Description    |
-| --------------------------------- | ----------- | ---------- | ------------------ | -------------- |
-| <a id="logq-1"></a> `logq`        | `protected` | `number`   | `undefined`        | -              |
-| <a id="params-17"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | -              |
-| <a id="support-17"></a> `support` | `protected` | `Interval` | `undefined`        | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="logq-1"></a> `logq`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="params-17"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`bernoulliDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-17"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -4575,10 +9950,51 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `x`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-20`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4596,9 +10012,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4644,9 +10079,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4664,9 +10118,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4684,11 +10157,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4706,10 +10220,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4727,9 +10293,34 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value      |
-| --------- | -------- | ------------------ |
-| `p`       | `number` | `bernoulliDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`bernoulliDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4799,10 +10390,51 @@ The Logistic distribution
 
 ###### Parameters
 
-| Parameter  | Type     | Default value                   |
-| ---------- | -------- | ------------------------------- |
-| `location` | `number` | `locationScaleDefault.location` |
-| `scale`    | `number` | `locationScaleDefault.scale`    |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`location`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`locationScaleDefault.location`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`scale`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`locationScaleDefault.scale`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4824,10 +10456,62 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type                  | Description    |
-| --------------------------------- | ----------- | --------------------- | -------------- |
-| <a id="params-18"></a> `params`   | `protected` | `ParamsLocationScale` | -              |
-| <a id="support-18"></a> `support` | `protected` | `Interval`            | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-18"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsLocationScale`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-18"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -4839,9 +10523,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4859,9 +10562,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4907,9 +10629,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4927,9 +10668,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4947,11 +10707,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4969,10 +10770,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -4990,9 +10843,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type                  |
-| --------- | --------------------- |
-| `params`  | `ParamsLocationScale` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsLocationScale`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5062,10 +10934,51 @@ The Log-Logistic distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value             |
-| --------- | -------- | ------------------------- |
-| `scale`   | `number` | `shapeScaleDefault.scale` |
-| `shape`   | `number` | `shapeScaleDefault.shape` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`scale`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`shapeScaleDefault.scale`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shape`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`shapeScaleDefault.shape`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5087,10 +11000,62 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type               | Description    |
-| --------------------------------- | ----------- | ------------------ | -------------- |
-| <a id="params-19"></a> `params`   | `protected` | `ParamsShapeScale` | -              |
-| <a id="support-19"></a> `support` | `protected` | `Interval`         | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-19"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsShapeScale`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-19"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -5102,9 +11067,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5122,9 +11106,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5170,9 +11173,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5190,9 +11212,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5210,11 +11251,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5232,10 +11314,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5253,9 +11387,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type               |
-| --------- | ------------------ |
-| `params`  | `ParamsShapeScale` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsShapeScale`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5325,10 +11478,51 @@ The Log-Normal distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value         |
-| --------- | -------- | --------------------- |
-| `mu`      | `number` | `normalDefault.mu`    |
-| `sigma`   | `number` | `normalDefault.sigma` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mu`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`normalDefault.mu`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`sigma`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`normalDefault.sigma`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5350,10 +11544,62 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type           | Description    |
-| --------------------------------- | ----------- | -------------- | -------------- |
-| <a id="params-20"></a> `params`   | `protected` | `ParamsNormal` | -              |
-| <a id="support-20"></a> `support` | `protected` | `Interval`     | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-20"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsNormal`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-20"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -5365,9 +11611,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5385,9 +11650,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5433,9 +11717,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5453,9 +11756,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5473,11 +11795,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5495,10 +11858,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value | Description                                |
-| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`           | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`{}`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5516,9 +11931,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type           |
-| --------- | -------------- |
-| `params`  | `ParamsNormal` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsNormal`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5588,10 +12022,51 @@ The Negative Binomial distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value       |
-| --------- | -------- | ------------------- |
-| `n`       | `number` | `binomialDefault.n` |
-| `p`       | `number` | `binomialDefault.p` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`binomialDefault.n`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`p`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`binomialDefault.p`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5613,10 +12088,62 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type             | Description    |
-| --------------------------------- | ----------- | ---------------- | -------------- |
-| <a id="params-21"></a> `params`   | `protected` | `ParamsBinomial` | -              |
-| <a id="support-21"></a> `support` | `protected` | `Interval`       | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-21"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsBinomial`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-21"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -5628,10 +12155,51 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `x`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-20`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5649,9 +12217,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5697,9 +12284,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5717,10 +12323,51 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `q`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-20`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5738,11 +12385,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5760,10 +12448,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value | Description                                |
-| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`           | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`{}`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5781,9 +12521,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type             |
-| --------- | ---------------- |
-| `params`  | `ParamsBinomial` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsBinomial`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5853,10 +12612,51 @@ The Normal distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value         |
-| --------- | -------- | --------------------- |
-| `mu`      | `number` | `normalDefault.mu`    |
-| `sigma`   | `number` | `normalDefault.sigma` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mu`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`normalDefault.mu`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`sigma`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`normalDefault.sigma`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5878,10 +12678,62 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type           | Description    |
-| --------------------------------- | ----------- | -------------- | -------------- |
-| <a id="params-22"></a> `params`   | `protected` | `ParamsNormal` | -              |
-| <a id="support-22"></a> `support` | `protected` | `Interval`     | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-22"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsNormal`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-22"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -5893,9 +12745,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5913,9 +12784,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5961,9 +12851,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -5981,9 +12890,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6001,11 +12929,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6023,10 +12992,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value | Description                                |
-| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`           | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`{}`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6044,9 +13065,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type           |
-| --------- | -------------- |
-| `params`  | `ParamsNormal` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsNormal`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6116,10 +13156,51 @@ The Pareto distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value             |
-| --------- | -------- | ------------------------- |
-| `scale`   | `number` | `shapeScaleDefault.scale` |
-| `shape`   | `number` | `shapeScaleDefault.shape` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`scale`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`shapeScaleDefault.scale`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shape`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`shapeScaleDefault.shape`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6141,10 +13222,62 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type               | Description    |
-| --------------------------------- | ----------- | ------------------ | -------------- |
-| <a id="params-23"></a> `params`   | `protected` | `ParamsShapeScale` | -              |
-| <a id="support-23"></a> `support` | `protected` | `Interval`         | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-23"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsShapeScale`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-23"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -6156,9 +13289,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6176,9 +13328,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6224,9 +13395,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6244,9 +13434,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6264,11 +13473,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6286,10 +13536,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6307,9 +13609,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type               |
-| --------- | ------------------ |
-| `params`  | `ParamsShapeScale` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsShapeScale`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6379,9 +13700,34 @@ The Poisson distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `rate`    | `number` | `rateDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`rate`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`rateDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6403,10 +13749,73 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type       | Default value | Description    |
-| --------------------------------- | ----------- | ---------- | ------------- | -------------- |
-| <a id="params-24"></a> `params`   | `protected` | `number`   | `rateDefault` | -              |
-| <a id="support-24"></a> `support` | `protected` | `Interval` | `undefined`   | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-24"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`rateDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-24"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -6418,10 +13827,51 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `x`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-12`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-12`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6439,9 +13889,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6487,9 +13956,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6507,10 +13995,51 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `q`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-12`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-12`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6528,11 +14057,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6550,10 +14120,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6571,9 +14193,34 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `rate`    | `number` | `rateDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`rate`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`rateDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6643,9 +14290,34 @@ The Semicircle distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value   |
-| --------- | -------- | --------------- |
-| `radius`  | `number` | `radiusDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`radius`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`radiusDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6667,12 +14339,127 @@ x.random(10);
 
 #### Properties
 
-| Property                                   | Modifier    | Type       | Default value   | Description    |
-| ------------------------------------------ | ----------- | ---------- | --------------- | -------------- |
-| <a id="denom"></a> `denom`                 | `protected` | `number`   | `undefined`     | -              |
-| <a id="params-25"></a> `params`            | `protected` | `number`   | `radiusDefault` | -              |
-| <a id="radiussquared"></a> `radiusSquared` | `protected` | `number`   | `undefined`     | -              |
-| <a id="support-25"></a> `support`          | `protected` | `Interval` | `undefined`     | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="denom"></a> `denom`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="params-25"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`radiusDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="radiussquared"></a> `radiusSquared`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-25"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -6684,9 +14471,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6704,9 +14510,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6752,9 +14577,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6772,10 +14616,51 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `q`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-20`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6793,11 +14678,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6815,10 +14741,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value | Description                                |
-| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`           | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`{}`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6836,9 +14814,34 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value   |
-| --------- | -------- | --------------- |
-| `radius`  | `number` | `radiusDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`radius`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`radiusDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6908,9 +14911,34 @@ The Students-T distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value             |
-| --------- | -------- | ------------------------- |
-| `df`      | `number` | `degreesOfFreedomDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`df`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`degreesOfFreedomDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6932,10 +14960,73 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type       | Default value             | Description    |
-| --------------------------------- | ----------- | ---------- | ------------------------- | -------------- |
-| <a id="params-26"></a> `params`   | `protected` | `number`   | `degreesOfFreedomDefault` | -              |
-| <a id="support-26"></a> `support` | `protected` | `Interval` | `undefined`               | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-26"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`degreesOfFreedomDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-26"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -6947,10 +15038,51 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `x`       | `number` | `undefined`   |
-| `eps`     | `number` | `1e-20`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -6968,9 +15100,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7016,9 +15167,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7036,9 +15206,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7056,11 +15245,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7078,10 +15308,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7099,9 +15381,34 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value             |
-| --------- | -------- | ------------------------- |
-| `df`      | `number` | `degreesOfFreedomDefault` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`df`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`degreesOfFreedomDefault`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7171,11 +15478,68 @@ The Triangular distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value       |
-| --------- | -------- | ------------------- |
-| `a`       | `number` | `boundMidDefault.a` |
-| `b`       | `number` | `boundMidDefault.b` |
-| `mid`     | `number` | `...`               |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`a`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`boundMidDefault.a`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`b`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`boundMidDefault.b`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`mid`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`...`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7197,10 +15561,62 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type             | Description    |
-| --------------------------------- | ----------- | ---------------- | -------------- |
-| <a id="params-27"></a> `params`   | `protected` | `ParamsBoundMid` | -              |
-| <a id="support-27"></a> `support` | `protected` | `Interval`       | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-27"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsBoundMid`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-27"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -7212,9 +15628,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7232,9 +15667,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7280,9 +15734,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7300,9 +15773,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7320,11 +15812,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7342,10 +15875,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7363,9 +15948,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type             |
-| --------- | ---------------- |
-| `params`  | `ParamsBoundMid` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsBoundMid`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7435,10 +16039,51 @@ The Uniform (continuous) distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value    |
-| --------- | -------- | ---------------- |
-| `a`       | `number` | `boundDefault.a` |
-| `b`       | `number` | `boundDefault.b` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`a`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`boundDefault.a`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`b`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`boundDefault.b`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7460,11 +16105,84 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type          | Description    |
-| --------------------------------- | ----------- | ------------- | -------------- |
-| <a id="density"></a> `density`    | `protected` | `number`      | -              |
-| <a id="params-28"></a> `params`   | `protected` | `ParamsBound` | -              |
-| <a id="support-28"></a> `support` | `protected` | `Interval`    | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="density"></a> `density`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="params-28"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsBound`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-28"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -7476,9 +16194,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7496,9 +16233,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7544,9 +16300,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7564,9 +16339,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7584,11 +16378,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7606,10 +16441,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7627,9 +16514,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type          |
-| --------- | ------------- |
-| `params`  | `ParamsBound` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsBound`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7699,10 +16605,51 @@ The Uniform (discrete) distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value    |
-| --------- | -------- | ---------------- |
-| `a`       | `number` | `boundDefault.a` |
-| `b`       | `number` | `boundDefault.b` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`a`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`boundDefault.a`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`b`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`boundDefault.b`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7724,10 +16671,62 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type          | Description    |
-| --------------------------------- | ----------- | ------------- | -------------- |
-| <a id="params-29"></a> `params`   | `protected` | `ParamsBound` | -              |
-| <a id="support-29"></a> `support` | `protected` | `Interval`    | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-29"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsBound`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-29"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -7739,9 +16738,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7759,9 +16777,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7807,9 +16844,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7827,9 +16883,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7847,11 +16922,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7869,10 +16985,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7890,9 +17058,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type          |
-| --------- | ------------- |
-| `params`  | `ParamsBound` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsBound`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7962,10 +17149,51 @@ The U-Quadratic distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value    |
-| --------- | -------- | ---------------- |
-| `a`       | `number` | `boundDefault.a` |
-| `b`       | `number` | `boundDefault.b` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`a`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`boundDefault.a`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`b`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`boundDefault.b`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -7987,12 +17215,106 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type          | Description    |
-| --------------------------------- | ----------- | ------------- | -------------- |
-| <a id="alpha"></a> `alpha`        | `protected` | `number`      | -              |
-| <a id="beta-1"></a> `beta`        | `protected` | `number`      | -              |
-| <a id="params-30"></a> `params`   | `protected` | `ParamsBound` | -              |
-| <a id="support-30"></a> `support` | `protected` | `Interval`    | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="alpha"></a> `alpha`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="beta-1"></a> `beta`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="params-30"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsBound`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-30"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -8004,9 +17326,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8024,9 +17365,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8072,9 +17432,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8092,9 +17471,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8112,11 +17510,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8134,10 +17573,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8155,9 +17646,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type          |
-| --------- | ------------- |
-| `params`  | `ParamsBound` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsBound`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8227,10 +17737,51 @@ The Weibull distribution
 
 ###### Parameters
 
-| Parameter | Type     | Default value             |
-| --------- | -------- | ------------------------- |
-| `scale`   | `number` | `shapeScaleDefault.scale` |
-| `shape`   | `number` | `shapeScaleDefault.shape` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`scale`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`shapeScaleDefault.scale`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shape`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`shapeScaleDefault.shape`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8252,10 +17803,62 @@ x.random(10);
 
 #### Properties
 
-| Property                          | Modifier    | Type               | Description    |
-| --------------------------------- | ----------- | ------------------ | -------------- |
-| <a id="params-31"></a> `params`   | `protected` | `ParamsShapeScale` | -              |
-| <a id="support-31"></a> `support` | `protected` | `Interval`         | **`Internal`** |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="params-31"></a> `params`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`ParamsShapeScale`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="support-31"></a> `support`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`Interval`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -8267,9 +17870,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8287,9 +17909,28 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8335,9 +17976,28 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `x`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8355,9 +18015,28 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `q`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8375,11 +18054,52 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | Type     |
-| ---------- | -------- |
-| `q`        | `number` |
-| `startK`   | `number` |
-| `startCDF` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startK`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`startCDF`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8397,10 +18117,62 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | Type                              | Default value          | Description                                |
-| ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                    | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`randomOptionsDefault`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8418,9 +18190,28 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | Type               |
-| --------- | ------------------ |
-| `params`  | `ParamsShapeScale` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`params`
+
+</td>
+<td>
+
+`ParamsShapeScale`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -8478,8 +18269,81 @@ the variance
 
 #### Properties
 
-| Property                      | Type                                           | Default value  | Description                                |
-| ----------------------------- | ---------------------------------------------- | -------------- | ------------------------------------------ |
-| <a id="eps"></a> `eps?`       | `number`                                       | `1e-12`        | Epsilon, used during comparisons of floats |
-| <a id="method"></a> `method?` | `string`                                       | `undefined`    | -                                          |
-| <a id="rand"></a> `rand?`     | [`RandomGenerator`](random.md#randomgenerator) | `new Random()` | An RNG                                     |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="eps"></a> `eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-12`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="method"></a> `method?`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand"></a> `rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+`new Random()`
+
+</td>
+<td>
+
+An RNG
+
+</td>
+</tr>
+</tbody>
+</table>

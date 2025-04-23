@@ -39,9 +39,28 @@
 
 #### Type Parameters
 
-| Type Parameter         | Default type |
-| ---------------------- | ------------ |
-| `P` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -51,9 +70,28 @@
 
 #### Type Parameters
 
-| Type Parameter         | Default type |
-| ---------------------- | ------------ |
-| `P` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -63,9 +101,28 @@
 
 #### Type Parameters
 
-| Type Parameter         | Default type |
-| ---------------------- | ------------ |
-| `P` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -75,9 +132,28 @@
 
 #### Type Parameters
 
-| Type Parameter         | Default type |
-| ---------------------- | ------------ |
-| `P` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -87,9 +163,28 @@
 
 #### Type Parameters
 
-| Type Parameter         | Default type |
-| ---------------------- | ------------ |
-| `P` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ## Variables
 
@@ -129,17 +224,66 @@
 
 #### Type Parameters
 
-| Type Parameter                                         |
-| ------------------------------------------------------ |
-| `T` _extends_ [`PureObject`](../geojson.md#pureobject) |
-| `P` _extends_ `string`                                 |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T` _extends_ [`PureObject`](../geojson.md#pureobject)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter    | Type                                                              |
-| ------------ | ----------------------------------------------------------------- |
-| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>  |
-| `options`    | [`SampleBalancedOptions`](#samplebalancedoptions)<`NoInfer`<`P`>> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`SampleBalancedOptions`](#samplebalancedoptions)<`NoInfer`<`P`>>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -153,16 +297,59 @@
 
 #### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter | Type                                                    |
-| --------- | ------------------------------------------------------- |
-| `options` | [`SampleBalancedOptions`](#samplebalancedoptions)<`P`>  |
-| `record`  | [`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`SampleBalancedOptions`](#samplebalancedoptions)<`P`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`record`
+
+</td>
+<td>
+
+[`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -176,17 +363,66 @@
 
 #### Type Parameters
 
-| Type Parameter                                         |
-| ------------------------------------------------------ |
-| `T` _extends_ [`PureObject`](../geojson.md#pureobject) |
-| `P` _extends_ `string`                                 |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T` _extends_ [`PureObject`](../geojson.md#pureobject)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter    | Type                                                                          |
-| ------------ | ----------------------------------------------------------------------------- |
-| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>              |
-| `options`    | [`SampleDoublyBalancedOptions`](#sampledoublybalancedoptions)<`NoInfer`<`P`>> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`SampleDoublyBalancedOptions`](#sampledoublybalancedoptions)<`NoInfer`<`P`>>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -200,16 +436,59 @@
 
 #### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter | Type                                                                          |
-| --------- | ----------------------------------------------------------------------------- |
-| `options` | [`SampleDoublyBalancedOptions`](#sampledoublybalancedoptions)<`NoInfer`<`P`>> |
-| `record`  | [`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`>                       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`SampleDoublyBalancedOptions`](#sampledoublybalancedoptions)<`NoInfer`<`P`>>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`record`
+
+</td>
+<td>
+
+[`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -225,17 +504,66 @@ Select a sample from a layer using sampling methods for a finite population.
 
 #### Type Parameters
 
-| Type Parameter                                         |
-| ------------------------------------------------------ |
-| `T` _extends_ [`PureObject`](../geojson.md#pureobject) |
-| `P` _extends_ `string`                                 |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T` _extends_ [`PureObject`](../geojson.md#pureobject)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter    | Type                                                             |
-| ------------ | ---------------------------------------------------------------- |
-| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`> |
-| `options`    | [`SampleFiniteOptions`](#samplefiniteoptions)<`NoInfer`<`P`>>    |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`SampleFiniteOptions`](#samplefiniteoptions)<`NoInfer`<`P`>>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -249,16 +577,59 @@ Select a sample from a layer using sampling methods for a finite population.
 
 #### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter | Type                                                          |
-| --------- | ------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `options` | [`SampleFiniteOptions`](#samplefiniteoptions)<`NoInfer`<`P`>> | [`SampleFiniteOptionsWr`](#samplefiniteoptionswr)<`NoInfer`<`P`>> |
-| `record`  | [`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`>       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`SampleFiniteOptions`](#samplefiniteoptions)<`NoInfer`<`P`>> | [`SampleFiniteOptionsWr`](#samplefiniteoptionswr)<`NoInfer`<`P`>>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`record`
+
+</td>
+<td>
+
+[`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -274,17 +645,66 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 
 #### Type Parameters
 
-| Type Parameter                                         |
-| ------------------------------------------------------ |
-| `T` _extends_ [`PureObject`](../geojson.md#pureobject) |
-| `P` _extends_ `string`                                 |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T` _extends_ [`PureObject`](../geojson.md#pureobject)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter    | Type                                                              |
-| ------------ | ----------------------------------------------------------------- |
-| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>  |
-| `options`    | [`SampleFiniteOptionsWr`](#samplefiniteoptionswr)<`NoInfer`<`P`>> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`SampleFiniteOptionsWr`](#samplefiniteoptionswr)<`NoInfer`<`P`>>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -298,17 +718,66 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 
 #### Type Parameters
 
-| Type Parameter                                         |
-| ------------------------------------------------------ |
-| `T` _extends_ [`PureObject`](../geojson.md#pureobject) |
-| `P` _extends_ `string`                                 |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T` _extends_ [`PureObject`](../geojson.md#pureobject)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter    | Type                                                                                |
-| ------------ | ----------------------------------------------------------------------------------- |
-| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>                    |
-| `options`    | [`SampleSpatiallyBalancedOptions`](#samplespatiallybalancedoptions)<`NoInfer`<`P`>> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`SampleSpatiallyBalancedOptions`](#samplespatiallybalancedoptions)<`NoInfer`<`P`>>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -322,16 +791,59 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 
 #### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter | Type                                                                     |
-| --------- | ------------------------------------------------------------------------ |
-| `options` | [`SampleSpatiallyBalancedOptions`](#samplespatiallybalancedoptions)<`P`> |
-| `record`  | [`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`>                  |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`SampleSpatiallyBalancedOptions`](#samplespatiallybalancedoptions)<`P`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`record`
+
+</td>
+<td>
+
+[`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 

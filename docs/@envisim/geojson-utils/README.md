@@ -12,11 +12,85 @@
 
 ## Modules
 
-| Module                          | Description |
-| ------------------------------- | ----------- |
-| [](.md)                         | -           |
-| [geodesic](geodesic.md)         | -           |
-| [geojson](geojson.md)           | -           |
-| [plate-carree](plate-carree.md) | -           |
-| [rhumb](rhumb.md)               | -           |
-| [type-guards](type-guards.md)   | -           |
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+[](.md)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+[geodesic](geodesic.md)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+[geojson](geojson.md)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+[plate-carree](plate-carree.md)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+[rhumb](rhumb.md)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+[type-guards](type-guards.md)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>

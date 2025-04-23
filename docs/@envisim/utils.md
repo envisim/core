@@ -26,10 +26,29 @@
 
 #### Type Parameters
 
-| Type Parameter          |
-| ----------------------- |
-| `T`                     |
-| `S` _extends_ keyof `T` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`S` _extends_ keyof `T`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ## Functions
 
@@ -39,15 +58,47 @@
 
 #### Type Parameters
 
-| Type Parameter |
-| -------------- |
-| `T`            |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter | Type |
-| --------- | ---- |
-| `obj`     | `T`  |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`T`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -61,11 +112,68 @@
 
 #### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `x`       | `number` | `undefined`   |
-| `a`       | `number` | `0.0`         |
-| `b`       | `number` | `1.0`         |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`a`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`0.0`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`b`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1.0`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -79,11 +187,68 @@
 
 #### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `x`       | `number` | `undefined`   |
-| `a`       | `number` | `0.0`         |
-| `b`       | `number` | `1.0`         |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`a`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`0.0`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`b`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1.0`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -99,13 +264,128 @@ Transforms an array into reducedRowEchelonForm in place.
 
 #### Parameters
 
-| Parameter  | Type                   | Default value | Description           |
-| ---------- | ---------------------- | ------------- | --------------------- |
-| `mat`      | `number`\[]            | `undefined`   | A flat array          |
-| `rowCount` | `number`               | `undefined`   | The number of rows    |
-| `colCount` | `number`               | `undefined`   | The number of columns |
-| `eps`      | `number`               | `1e-9`        | -                     |
-| `mIdx`     | (`r`, `c`) => `number` | `...`         | -                     |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number`\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+A flat array
+
+</td>
+</tr>
+<tr>
+<td>
+
+`rowCount`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The number of rows
+
+</td>
+</tr>
+<tr>
+<td>
+
+`colCount`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The number of columns
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-9`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`mIdx`
+
+</td>
+<td>
+
+(`r`, `c`) => `number`
+
+</td>
+<td>
+
+`...`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -119,17 +399,71 @@ Transforms an array into reducedRowEchelonForm in place.
 
 #### Type Parameters
 
-| Type Parameter |
-| -------------- |
-| `T`            |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `arr`     | `T`\[]   |
-| `a`       | `number` |
-| `b`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`arr`
+
+</td>
+<td>
+
+`T`\[]
+
+</td>
+</tr>
+<tr>
+<td>
+
+`a`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`b`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -143,9 +477,28 @@ Transforms an array into reducedRowEchelonForm in place.
 
 #### Parameters
 
-| Parameter | Type        |
-| --------- | ----------- | ------ | -------- |
-| `err`     | `undefined` | `null` | `string` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`err`
+
+</td>
+<td>
+
+`undefined` | `null` | `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 

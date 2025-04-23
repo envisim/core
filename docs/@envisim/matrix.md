@@ -38,11 +38,84 @@
 
 ###### Parameters
 
-| Parameter | Type        | Default value | Description                                                 |
-| --------- | ----------- | ------------- | ----------------------------------------------------------- |
-| `arr`     | `number`\[] | `undefined`   | the values used to form the Matrix in column-order          |
-| `nrow`    | `number`    | `undefined`   | the number of rows of the Matrix                            |
-| `shallow` | `boolean`   | `false`       | if `true`, uses the internal arrays of `arr` as a reference |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`arr`
+
+</td>
+<td>
+
+`number`\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+the values used to form the Matrix in column-order
+
+</td>
+</tr>
+<tr>
+<td>
+
+`nrow`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+the number of rows of the Matrix
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+if `true`, uses the internal arrays of `arr` as a reference
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -54,12 +127,108 @@
 
 #### Properties
 
-| Property                         | Modifier    | Type        | Description                        |
-| -------------------------------- | ----------- | ----------- | ---------------------------------- |
-| <a id="cols"></a> `cols`         | `protected` | `number`    | **`Internal`**                     |
-| <a id="internal"></a> `internal` | `protected` | `number`\[] | **`Internal`** stored column major |
-| <a id="len"></a> `len`           | `protected` | `number`    | **`Internal`**                     |
-| <a id="rows"></a> `rows`         | `protected` | `number`    | **`Internal`**                     |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="cols"></a> `cols`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="internal"></a> `internal`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`\[]
+
+</td>
+<td>
+
+**`Internal`**
+
+stored column major
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="len"></a> `len`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rows"></a> `rows`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Accessors
 
@@ -119,9 +288,34 @@ the number of rows
 
 ###### Parameters
 
-| Parameter | Type     | Description                                    |
-| --------- | -------- | ---------------------------------------------- |
-| `index`   | `number` | if `index < 0`, `index + .length` is accessed. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+if `index < 0`, `index + .length` is accessed.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -143,9 +337,28 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter | Type                        |
-| --------- | --------------------------- |
-| `dim`     | [`MatrixDim`](#matrixdim-2) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`dim`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -165,9 +378,28 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter  | Type                                          |
-| ---------- | --------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`number`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -183,9 +415,28 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter  | Type                                          |
-| ---------- | --------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`number`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -243,9 +494,28 @@ Calculates the column minimum values
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `index`   | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -321,9 +591,28 @@ the diagonal of the matrix
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `index`   | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -343,10 +632,51 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | Type     | Description                                    |
-| --------- | -------- | ---------------------------------------------- |
-| `index`   | `number` | if `index < 0`, `index + .length` is accessed. |
-| `value`   | `number` | -                                              |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+if `index < 0`, `index + .length` is accessed.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -368,10 +698,40 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | Type                        |
-| --------- | --------------------------- |
-| `dim`     | [`MatrixDim`](#matrixdim-2) |
-| `value`   | `number`                    |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`dim`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -391,9 +751,28 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | Type         |
-| --------- | ------------ |
-| `mat`     | `BaseMatrix` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`BaseMatrix`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -411,10 +790,51 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | Type         | Default value |
-| --------- | ------------ | ------------- |
-| `mat`     | `BaseMatrix` | `undefined`   |
-| `eps`     | `number`     | `1e-9`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`BaseMatrix`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-9`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -434,9 +854,28 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | Type                                           |
-| ---------- | ---------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`boolean`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`boolean`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -452,9 +891,28 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `col`     | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`col`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -466,9 +924,28 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter | Type        |
-| --------- | ----------- | ------------------- |
-| `cols`    | `number`\[] | [`Vector`](#vector) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`cols`
+
+</td>
+<td>
+
+`number`\[] | [`Vector`](#vector)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -480,9 +957,28 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `row`     | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`row`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -494,9 +990,28 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter | Type        |
-| --------- | ----------- | ------------------- |
-| `rows`    | `number`\[] | [`Vector`](#vector) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`rows`
+
+</td>
+<td>
+
+`number`\[] | [`Vector`](#vector)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -508,10 +1023,40 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter | Type                        |
-| --------- | --------------------------- |
-| `start`   | [`MatrixDim`](#matrixdim-2) |
-| `end`     | [`MatrixDim`](#matrixdim-2) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`start`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`end`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -525,9 +1070,34 @@ a sub-matrix defined by the parameters.
 
 ###### Parameters
 
-| Parameter  | Type                                           | Description                                   |
-| ---------- | ---------------------------------------------- | --------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`boolean`> | a function used to test elements in the array |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`boolean`>
+
+</td>
+<td>
+
+a function used to test elements in the array
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -547,10 +1117,40 @@ Changes the element at matrix `index` through a callback function.
 
 ###### Parameters
 
-| Parameter  | Type                                          |
-| ---------- | --------------------------------------------- |
-| `index`    | `number`                                      |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`number`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -583,10 +1183,40 @@ mat.edRC(3, (el, in) => el + in);
 
 ###### Parameters
 
-| Parameter  | Type                          |
-| ---------- | ----------------------------- |
-| `dim`      | [`MatrixDim`](#matrixdim-2)   |
-| `callback` | `MatrixCallbackDim`<`number`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`dim`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+`MatrixCallbackDim`<`number`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -608,9 +1238,28 @@ Executes the provided function once for each element
 
 ###### Parameters
 
-| Parameter  | Type                                        |
-| ---------- | ------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`void`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`void`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -640,9 +1289,28 @@ Geometric mean of all elements
 
 ###### Parameters
 
-| Parameter | Type         |
-| --------- | ------------ |
-| `mat`     | `BaseMatrix` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`BaseMatrix`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -660,10 +1328,62 @@ Geometric mean of all elements
 
 ###### Parameters
 
-| Parameter       | Type     | Default value | Description                      |
-| --------------- | -------- | ------------- | -------------------------------- |
-| `searchElement` | `number` | `undefined`   | -                                |
-| `fromIndex`     | `number` | `0`           | the index to start the search at |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`searchElement`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`fromIndex`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`0`
+
+</td>
+<td>
+
+the index to start the search at
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -681,9 +1401,28 @@ the index of the first occurance of `searchElement`
 
 ###### Parameters
 
-| Parameter           | Type                        |
-| ------------------- | --------------------------- |
-| `__namedParameters` | [`MatrixDim`](#matrixdim-2) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -719,10 +1458,51 @@ the matrix index at `row`, `column`
 
 ###### Parameters
 
-| Parameter       | Type     | Description                      |
-| --------------- | -------- | -------------------------------- |
-| `searchElement` | `number` | -                                |
-| `fromIndex`     | `number` | the index to start the search at |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`searchElement`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`fromIndex`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+the index to start the search at
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -741,10 +1521,62 @@ backwards
 
 ###### Parameters
 
-| Parameter  | Type                                          | Default value | Description                          |
-| ---------- | --------------------------------------------- | ------------- | ------------------------------------ |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> | `undefined`   | -                                    |
-| `inPlace`  | `boolean`                                     | `false`       | performes the map in place if `true` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`number`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+performes the map in place if `true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -818,9 +1650,28 @@ Minimum value of all elements
 
 ###### Parameters
 
-| Parameter | Type         |
-| --------- | ------------ |
-| `mat`     | `BaseMatrix` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`BaseMatrix`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -860,9 +1711,28 @@ Product sum of all elements
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- | ----------- |
-| `probs`   | `number` | `number`\[] |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`probs`
+
+</td>
+<td>
+
+`number` | `number`\[]
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -897,10 +1767,51 @@ single value.
 
 ###### Parameters
 
-| Parameter  | Type                                  | Default value |
-| ---------- | ------------------------------------- | ------------- |
-| `callback` | (`prev`, `curr`, `index`) => `number` | `undefined`   |
-| `init`     | `number`                              | `0.0`         |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+(`prev`, `curr`, `index`) => `number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`init`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`0.0`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -916,9 +1827,28 @@ single value.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `index`   | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -966,10 +1896,40 @@ Standard deviation of all elements
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `start?`  | `number` |
-| `end?`    | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`start?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`end?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -989,9 +1949,28 @@ Tests if any element pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | Type                                           |
-| ---------- | ---------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`boolean`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`boolean`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1012,10 +1991,51 @@ Standardizes or normalizes the matrix
 
 ###### Parameters
 
-| Parameter   | Type      | Default value |
-| ----------- | --------- | ------------- |
-| `normalize` | `boolean` | `false`       |
-| `inPlace`   | `boolean` | `false`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`normalize`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1047,10 +2067,40 @@ Swaps the elements at the provided indexes
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `index1`  | `number` |
-| `index2`  | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index1`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`index2`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1092,10 +2142,62 @@ Variance of all elements
 
 ###### Parameters
 
-| Parameter | Type      | Default value       | Description     |
-| --------- | --------- | ------------------- | --------------- |
-| `obj`     | `unknown` | `undefined`         | -               |
-| `msg`     | `string`  | `"Expected Matrix"` | message to pass |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected Matrix"`
+
+</td>
+<td>
+
+message to pass
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1113,9 +2215,28 @@ Bind multiple matrices together by columns
 
 ###### Parameters
 
-| Parameter     | Type            |
-| ------------- | --------------- |
-| ...`matrices` | `BaseMatrix`\[] |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+...`matrices`
+
+</td>
+<td>
+
+`BaseMatrix`\[]
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1131,10 +2252,40 @@ Bind multiple matrices together by columns
 
 ###### Parameters
 
-| Parameter | Type                        |
-| --------- | --------------------------- |
-| `fill`    | `number`                    |
-| `dim`     | [`MatrixDim`](#matrixdim-2) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`fill`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`dim`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1148,9 +2299,28 @@ a new Matrix of size `dim` filled with `fill`
 
 ###### Parameters
 
-| Parameter | Type      |
-| --------- | --------- |
-| `mat`     | `unknown` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1166,10 +2336,40 @@ Performs matrix multiplication this \* mat
 
 ###### Parameters
 
-| Parameter | Type         |
-| --------- | ------------ |
-| `mat1`    | `BaseMatrix` |
-| `mat2`    | `BaseMatrix` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat1`
+
+</td>
+<td>
+
+`BaseMatrix`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`mat2`
+
+</td>
+<td>
+
+`BaseMatrix`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1183,9 +2383,28 @@ Bind multiple matrices together by rows
 
 ###### Parameters
 
-| Parameter     | Type            |
-| ------------- | --------------- |
-| ...`matrices` | `BaseMatrix`\[] |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+...`matrices`
+
+</td>
+<td>
+
+`BaseMatrix`\[]
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1205,10 +2424,62 @@ Matrix addition.
 
 ###### Parameters
 
-| Parameter | Type      | Default value | Description                                  |
-| --------- | --------- | ------------- | -------------------------------------------- | --- |
-| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
-| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | `BaseMatrix`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1226,10 +2497,62 @@ Element wise division.
 
 ###### Parameters
 
-| Parameter | Type      | Default value | Description                                  |
-| --------- | --------- | ------------- | -------------------------------------------- | --- |
-| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
-| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | `BaseMatrix`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1247,10 +2570,62 @@ Element wise remainder (%) `x % y`
 
 ###### Parameters
 
-| Parameter | Type      | Default value | Description                                  |
-| --------- | --------- | ------------- | -------------------------------------------- | --- |
-| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
-| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | `BaseMatrix`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1268,10 +2643,62 @@ Element wise multiplication.
 
 ###### Parameters
 
-| Parameter | Type      | Default value | Description                                  |
-| --------- | --------- | ------------- | -------------------------------------------- | --- |
-| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
-| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | `BaseMatrix`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1289,10 +2716,62 @@ Matrix subtraction.
 
 ###### Parameters
 
-| Parameter | Type      | Default value | Description                                  |
-| --------- | --------- | ------------- | -------------------------------------------- | --- |
-| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
-| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | `BaseMatrix`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1315,9 +2794,34 @@ Standardizes or normalizes the matrix by column
 
 ###### Parameters
 
-| Parameter   | Type      | Default value |
-| ----------- | --------- | ------------- |
-| `normalize` | `boolean` | `false`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`normalize`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1347,9 +2851,34 @@ the determinant of the matrix
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `eps`     | `number` | `1e-9`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-9`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1363,10 +2892,51 @@ the inverse of the matrix
 
 ###### Parameters
 
-| Parameter | Type      | Default value |
-| --------- | --------- | ------------- |
-| `eps`     | `number`  | `1e-9`        |
-| `inPlace` | `boolean` | `false`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-9`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1402,11 +2972,85 @@ the covariance matrix
 
 ###### Parameters
 
-| Parameter | Type      | Default value | Description                                                                                        |
-| --------- | --------- | ------------- | -------------------------------------------------------------------------------------------------- |
-| `a`       | `number`  | `undefined`   | a row index                                                                                        |
-| `b`       | `number`  | `undefined`   | a row index                                                                                        |
-| `squared` | `boolean` | `true`        | if `false`, calculates the euclidean distance, otherwise calculates the euclidean squared distance |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`a`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+a row index
+
+</td>
+</tr>
+<tr>
+<td>
+
+`b`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+a row index
+
+</td>
+</tr>
+<tr>
+<td>
+
+`squared`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+<td>
+
+if `false`, calculates the euclidean distance, otherwise
+calculates the euclidean squared distance
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1425,9 +3069,34 @@ Standardizes or normalizes the matrix by column
 
 ###### Parameters
 
-| Parameter   | Type      | Default value |
-| ----------- | --------- | ------------- |
-| `normalize` | `boolean` | `false`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`normalize`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1451,10 +3120,62 @@ a new standardized or normalized [Matrix](#matrix)
 
 ###### Parameters
 
-| Parameter | Type        | Default value       | Description                                                 |
-| --------- | ----------- | ------------------- | ----------------------------------------------------------- | -------------------------------------------------- |
-| `arr`     | `number`\[] | [`Vector`](#vector) | `undefined`                                                 | the values used to form the Vector in column-order |
-| `shallow` | `boolean`   | `false`             | if `true`, uses the internal arrays of `arr` as a reference |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`arr`
+
+</td>
+<td>
+
+`number`\[] | [`Vector`](#vector)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+the values used to form the Vector in column-order
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+if `true`, uses the internal arrays of `arr` as a reference
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1466,12 +3187,108 @@ a new standardized or normalized [Matrix](#matrix)
 
 #### Properties
 
-| Property                           | Modifier    | Type        | Description                        |
-| ---------------------------------- | ----------- | ----------- | ---------------------------------- |
-| <a id="cols-1"></a> `cols`         | `protected` | `number`    | **`Internal`**                     |
-| <a id="internal-1"></a> `internal` | `protected` | `number`\[] | **`Internal`** stored column major |
-| <a id="len-1"></a> `len`           | `protected` | `number`    | **`Internal`**                     |
-| <a id="rows-1"></a> `rows`         | `protected` | `number`    | **`Internal`**                     |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="cols-1"></a> `cols`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="internal-1"></a> `internal`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`\[]
+
+</td>
+<td>
+
+**`Internal`**
+
+stored column major
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="len-1"></a> `len`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rows-1"></a> `rows`
+
+</td>
+<td>
+
+`protected`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+**`Internal`**
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Accessors
 
@@ -1531,9 +3348,34 @@ the number of rows
 
 ###### Parameters
 
-| Parameter | Type     | Description                                    |
-| --------- | -------- | ---------------------------------------------- |
-| `index`   | `number` | if `index < 0`, `index + .length` is accessed. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+if `index < 0`, `index + .length` is accessed.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1555,9 +3397,28 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter | Type                        |
-| --------- | --------------------------- |
-| `dim`     | [`MatrixDim`](#matrixdim-2) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`dim`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1577,9 +3438,28 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter  | Type                                          |
-| ---------- | --------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`number`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1595,9 +3475,28 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter  | Type                                          |
-| ---------- | --------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`number`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1625,9 +3524,28 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `index`   | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1649,9 +3567,28 @@ the column index of the matrix `index`
 
 ###### Parameters
 
-| Parameter | Type                |
-| --------- | ------------------- |
-| `vec`     | [`Vector`](#vector) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`vec`
+
+</td>
+<td>
+
+[`Vector`](#vector)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1683,9 +3620,28 @@ the correlation between `this` and `vec`
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `index`   | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1705,10 +3661,51 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | Type     | Description                                    |
-| --------- | -------- | ---------------------------------------------- |
-| `index`   | `number` | if `index < 0`, `index + .length` is accessed. |
-| `value`   | `number` | -                                              |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+if `index < 0`, `index + .length` is accessed.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1730,10 +3727,40 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | Type                        |
-| --------- | --------------------------- |
-| `dim`     | [`MatrixDim`](#matrixdim-2) |
-| `value`   | `number`                    |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`dim`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1753,9 +3780,28 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | Type         |
-| --------- | ------------ |
-| `mat`     | `BaseMatrix` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`BaseMatrix`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1773,10 +3819,51 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | Type         | Default value |
-| --------- | ------------ | ------------- |
-| `mat`     | `BaseMatrix` | `undefined`   |
-| `eps`     | `number`     | `1e-9`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`BaseMatrix`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-9`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1796,9 +3883,28 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | Type                                           |
-| ---------- | ---------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`boolean`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`boolean`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1814,9 +3920,34 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | Type                                           | Description                                       |
-| ---------- | ---------------------------------------------- | ------------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`boolean`> | a function returning true for elements to be kept |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`boolean`>
+
+</td>
+<td>
+
+a function returning true for elements to be kept
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1830,9 +3961,34 @@ a filtered vector according to the provided callbackFn
 
 ###### Parameters
 
-| Parameter  | Type                                           | Description                                   |
-| ---------- | ---------------------------------------------- | --------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`boolean`> | a function used to test elements in the array |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`boolean`>
+
+</td>
+<td>
+
+a function used to test elements in the array
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1852,10 +4008,40 @@ Changes the element at matrix `index` through a callback function.
 
 ###### Parameters
 
-| Parameter  | Type                                          |
-| ---------- | --------------------------------------------- |
-| `index`    | `number`                                      |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`number`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1888,10 +4074,40 @@ mat.edRC(3, (el, in) => el + in);
 
 ###### Parameters
 
-| Parameter  | Type                          |
-| ---------- | ----------------------------- |
-| `dim`      | [`MatrixDim`](#matrixdim-2)   |
-| `callback` | `MatrixCallbackDim`<`number`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`dim`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+`MatrixCallbackDim`<`number`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1913,9 +4129,28 @@ Executes the provided function once for each element
 
 ###### Parameters
 
-| Parameter  | Type                                        |
-| ---------- | ------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`void`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`void`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1945,9 +4180,28 @@ Geometric mean of all elements
 
 ###### Parameters
 
-| Parameter | Type         |
-| --------- | ------------ |
-| `mat`     | `BaseMatrix` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`BaseMatrix`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1965,10 +4219,40 @@ Geometric mean of all elements
 
 ###### Parameters
 
-| Parameter | Type                  |
-| --------- | --------------------- |
-| `bins`    | `number`              |
-| `range`   | \[`number`, `number`] |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`bins`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`range`
+
+</td>
+<td>
+
+\[`number`, `number`]
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1976,11 +4260,52 @@ Geometric mean of all elements
 
 the values needed in order to construct a histogram
 
-| Name    | Type                  |
-| ------- | --------------------- |
-| `bins`  | `number`\[]           |
-| `range` | \[`number`, `number`] |
-| `width` | `number`              |
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`bins`
+
+</td>
+<td>
+
+`number`\[]
+
+</td>
+</tr>
+<tr>
+<td>
+
+`range`
+
+</td>
+<td>
+
+\[`number`, `number`]
+
+</td>
+</tr>
+<tr>
+<td>
+
+`width`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Throws
 
@@ -1992,10 +4317,62 @@ the values needed in order to construct a histogram
 
 ###### Parameters
 
-| Parameter       | Type     | Default value | Description                      |
-| --------------- | -------- | ------------- | -------------------------------- |
-| `searchElement` | `number` | `undefined`   | -                                |
-| `fromIndex`     | `number` | `0`           | the index to start the search at |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`searchElement`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`fromIndex`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`0`
+
+</td>
+<td>
+
+the index to start the search at
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2013,9 +4390,28 @@ the index of the first occurance of `searchElement`
 
 ###### Parameters
 
-| Parameter           | Type                        |
-| ------------------- | --------------------------- |
-| `__namedParameters` | [`MatrixDim`](#matrixdim-2) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2051,10 +4447,51 @@ the matrix index at `row`, `column`
 
 ###### Parameters
 
-| Parameter       | Type     | Description                      |
-| --------------- | -------- | -------------------------------- |
-| `searchElement` | `number` | -                                |
-| `fromIndex`     | `number` | the index to start the search at |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`searchElement`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`fromIndex`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+the index to start the search at
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2073,10 +4510,62 @@ backwards
 
 ###### Parameters
 
-| Parameter  | Type                                          | Default value | Description                          |
-| ---------- | --------------------------------------------- | ------------- | ------------------------------------ |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> | `undefined`   | -                                    |
-| `inPlace`  | `boolean`                                     | `false`       | performes the map in place if `true` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`number`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+performes the map in place if `true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2178,9 +4667,28 @@ Product sum of all elements
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- | ----------- |
-| `probs`   | `number` | `number`\[] |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`probs`
+
+</td>
+<td>
+
+`number` | `number`\[]
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2215,10 +4723,51 @@ single value.
 
 ###### Parameters
 
-| Parameter  | Type                                  | Default value |
-| ---------- | ------------------------------------- | ------------- |
-| `callback` | (`prev`, `curr`, `index`) => `number` | `undefined`   |
-| `init`     | `number`                              | `0.0`         |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+(`prev`, `curr`, `index`) => `number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`init`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`0.0`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2234,9 +4783,28 @@ single value.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `index`   | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2284,10 +4852,40 @@ Standard deviation of all elements
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `start?`  | `number` |
-| `end?`    | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`start?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`end?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2307,9 +4905,28 @@ Tests if any element pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | Type                                           |
-| ---------- | ---------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)<`boolean`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`boolean`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2333,9 +4950,35 @@ Sorts the elements according to `compareFn`
 
 ###### Parameters
 
-| Parameter  | Type                                              | Description                                                         |
-| ---------- | ------------------------------------------------- | ------------------------------------------------------------------- |
-| `callback` | [`MatrixCallbackCompare`](#matrixcallbackcompare) | a function that defines the sort order, being provided the elements |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallbackCompare`](#matrixcallbackcompare)
+
+</td>
+<td>
+
+a function that defines the sort order, being provided
+the elements
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2355,9 +4998,35 @@ a sorted vector
 
 ###### Parameters
 
-| Parameter  | Type                                              | Description                                                         |
-| ---------- | ------------------------------------------------- | ------------------------------------------------------------------- |
-| `callback` | [`MatrixCallbackCompare`](#matrixcallbackcompare) | a function that defines the sort order, being provided the elements |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallbackCompare`](#matrixcallbackcompare)
+
+</td>
+<td>
+
+a function that defines the sort order, being provided
+the elements
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2376,10 +5045,51 @@ Standardizes or normalizes the matrix
 
 ###### Parameters
 
-| Parameter   | Type      | Default value |
-| ----------- | --------- | ------------- |
-| `normalize` | `boolean` | `false`       |
-| `inPlace`   | `boolean` | `false`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`normalize`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2411,10 +5121,40 @@ Swaps the elements at the provided indexes
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `index1`  | `number` |
-| `index2`  | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index1`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`index2`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2458,10 +5198,62 @@ Variance of all elements
 
 ###### Parameters
 
-| Parameter | Type      | Default value       | Description     |
-| --------- | --------- | ------------------- | --------------- |
-| `obj`     | `unknown` | `undefined`         | -               |
-| `msg`     | `string`  | `"Expected Vector"` | message to pass |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected Vector"`
+
+</td>
+<td>
+
+message to pass
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2477,9 +5269,28 @@ TypeError if `obj` is not Vector
 
 ###### Parameters
 
-| Parameter | Type        |
-| --------- | ----------- | ------------------- |
-| `vec`     | `number`\[] | [`Vector`](#vector) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`vec`
+
+</td>
+<td>
+
+`number`\[] | [`Vector`](#vector)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2491,10 +5302,40 @@ TypeError if `obj` is not Vector
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `fill`    | `number` |
-| `length`  | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`fill`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`length`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2508,9 +5349,28 @@ a new Vector of size `length` filled with `fill`
 
 ###### Parameters
 
-| Parameter | Type      |
-| --------- | --------- |
-| `mat`     | `unknown` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2528,10 +5388,62 @@ Matrix addition.
 
 ###### Parameters
 
-| Parameter | Type      | Default value | Description                                  |
-| --------- | --------- | ------------- | -------------------------------------------- | --- |
-| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
-| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | `BaseMatrix`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2549,10 +5461,62 @@ Element wise division.
 
 ###### Parameters
 
-| Parameter | Type      | Default value | Description                                  |
-| --------- | --------- | ------------- | -------------------------------------------- | --- |
-| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
-| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | `BaseMatrix`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2570,10 +5534,62 @@ Element wise remainder (%) `x % y`
 
 ###### Parameters
 
-| Parameter | Type      | Default value | Description                                  |
-| --------- | --------- | ------------- | -------------------------------------------- | --- |
-| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
-| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | `BaseMatrix`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2591,10 +5607,62 @@ Element wise multiplication.
 
 ###### Parameters
 
-| Parameter | Type      | Default value | Description                                  |
-| --------- | --------- | ------------- | -------------------------------------------- | --- |
-| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
-| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | `BaseMatrix`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2612,10 +5680,62 @@ Matrix subtraction.
 
 ###### Parameters
 
-| Parameter | Type      | Default value | Description                                  |
-| --------- | --------- | ------------- | -------------------------------------------- | --- |
-| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
-| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | `BaseMatrix`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2633,10 +5753,62 @@ Matrix subtraction.
 
 ###### Parameters
 
-| Parameter | Type                                           | Default value | Description                               |
-| --------- | ---------------------------------------------- | ------------- | ----------------------------------------- |
-| `inPlace` | `boolean`                                      | `false`       | if `true`, the vector is sorted in place. |
-| `rand`    | [`RandomGenerator`](random.md#randomgenerator) | `...`         | -                                         |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+if `true`, the vector is sorted in place.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`rand`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+`...`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2652,9 +5824,28 @@ the vector with a permutated order
 
 ###### Parameters
 
-| Parameter | Type                |
-| --------- | ------------------- |
-| `vec`     | [`Vector`](#vector) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`vec`
+
+</td>
+<td>
+
+[`Vector`](#vector)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2668,10 +5859,62 @@ the unique elements of the intersect
 
 ###### Parameters
 
-| Parameter | Type                                           | Default value | Description                               |
-| --------- | ---------------------------------------------- | ------------- | ----------------------------------------- |
-| `inPlace` | `boolean`                                      | `false`       | if `true`, the vector is sorted in place. |
-| `rand`    | [`RandomGenerator`](random.md#randomgenerator) | `...`         | -                                         |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+if `true`, the vector is sorted in place.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`rand`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+`...`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2685,9 +5928,28 @@ the vector with a permutated order
 
 ###### Parameters
 
-| Parameter | Type        |
-| --------- | ----------- | ------------------- |
-| `vec`     | `number`\[] | [`Vector`](#vector) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`vec`
+
+</td>
+<td>
+
+`number`\[] | [`Vector`](#vector)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2703,9 +5965,28 @@ the unique elements of the union of `this` and `vec`
 
 ###### Parameters
 
-| Parameter | Type                |
-| --------- | ------------------- |
-| `vec`     | [`Vector`](#vector) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`vec`
+
+</td>
+<td>
+
+[`Vector`](#vector)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2735,16 +6016,59 @@ the cumulative sums of the vector elements
 
 #### Type Parameters
 
-| Type Parameter |
-| -------------- |
-| `T`            |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `element` | `number` |
-| `index`   | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`element`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -2758,10 +6082,40 @@ the cumulative sums of the vector elements
 
 #### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `a`       | `number` |
-| `b`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`a`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`b`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -2781,9 +6135,34 @@ the cumulative sums of the vector elements
 
 #### Parameters
 
-| Parameter | Type        | Description           |
-| --------- | ----------- | --------------------- |
-| `arr`     | `number`\[] | the diagonal elements |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`arr`
+
+</td>
+<td>
+
+`number`\[]
+
+</td>
+<td>
+
+the diagonal elements
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -2799,9 +6178,34 @@ a new matrix with diagonal elements set to `arr`
 
 #### Parameters
 
-| Parameter | Type     | Description            |
-| --------- | -------- | ---------------------- |
-| `nrow`    | `number` | the size of the matrix |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`nrow`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+the size of the matrix
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -2819,10 +6223,51 @@ Generates a matrix of random numbers on \[0, 1).
 
 #### Parameters
 
-| Parameter   | Type                                           | Description                         |
-| ----------- | ---------------------------------------------- | ----------------------------------- |
-| `dims`      | [`MatrixDim`](#matrixdim-2)                    | the dimensions of the random matrix |
-| `generator` | [`RandomGenerator`](random.md#randomgenerator) | an RNG.                             |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`dims`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+<td>
+
+the dimensions of the random matrix
+
+</td>
+</tr>
+<tr>
+<td>
+
+`generator`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+an RNG.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -2838,10 +6283,51 @@ Generates a vector-like of random numbers on \[0, 1).
 
 #### Parameters
 
-| Parameter | Type                                           | Description              |
-| --------- | ---------------------------------------------- | ------------------------ |
-| `length`  | `number`                                       | the length of the vector |
-| `rand`    | [`RandomGenerator`](random.md#randomgenerator) | an RNG                   |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`length`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+the length of the vector
+
+</td>
+</tr>
+<tr>
+<td>
+
+`rand`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+an RNG
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -2859,11 +6345,84 @@ Generates a vector-like of a sequence of numbers.
 
 #### Parameters
 
-| Parameter | Type     | Default value | Description                                                                |
-| --------- | -------- | ------------- | -------------------------------------------------------------------------- |
-| `from`    | `number` | `undefined`   | The starting number in the sequence.                                       |
-| `to`      | `number` | `undefined`   | A number for which the sequence will not generate beyond.                  |
-| `by`      | `number` | `1.0`         | The incrementing (or decrementing) size of the sequence. Must be positive. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`from`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The starting number in the sequence.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`to`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+A number for which the sequence will not generate beyond.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`by`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1.0`
+
+</td>
+<td>
+
+The incrementing (or decrementing) size of the sequence. Must be positive.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 

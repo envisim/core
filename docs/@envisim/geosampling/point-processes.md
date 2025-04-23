@@ -25,10 +25,40 @@ on an area collection.
 
 #### Parameters
 
-| Parameter    | Type                                                                                             |
-| ------------ | ------------------------------------------------------------------------------------------------ |
-| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)> |
-| `opts`       | `MaternClusterProcessOptions`                                                                    |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`opts`
+
+</td>
+<td>
+
+`MaternClusterProcessOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -45,10 +75,40 @@ on areas of input area collection.
 
 #### Parameters
 
-| Parameter    | Type                                                                                             |
-| ------------ | ------------------------------------------------------------------------------------------------ |
-| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)> |
-| `opts`       | `ThomasClusterProcessOptions`                                                                    |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`opts`
+
+</td>
+<td>
+
+`ThomasClusterProcessOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -66,10 +126,40 @@ uniformly on a spherical model of the earth.
 
 #### Parameters
 
-| Parameter    | Type                                                                                             |
-| ------------ | ------------------------------------------------------------------------------------------------ |
-| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)> |
-| `opts`       | `UniformBinomialPointProcessOptions`                                                             |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`opts`
+
+</td>
+<td>
+
+`UniformBinomialPointProcessOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -88,10 +178,40 @@ on a spherical model of the earth.
 
 #### Parameters
 
-| Parameter    | Type                                                                                             |
-| ------------ | ------------------------------------------------------------------------------------------------ |
-| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)> |
-| `opts`       | `UniformPoissonProcessOptions`                                                                   |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`opts`
+
+</td>
+<td>
+
+`UniformPoissonProcessOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 

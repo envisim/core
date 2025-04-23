@@ -24,19 +24,85 @@ multiple numerical properties, one for each category.
 
 #### Type Parameters
 
-| Type Parameter                                          |
-| ------------------------------------------------------- |
-| `PF` _extends_ `string`                                 |
-| `PB` _extends_ `string`                                 |
-| `GF` _extends_ [`PureObject`](../geojson.md#pureobject) |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`PF` _extends_ `string`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`PB` _extends_ `string`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`GF` _extends_ [`PureObject`](../geojson.md#pureobject)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter    | Type                                                                                                                     |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------ | ------- |
-| `frame`      | [`FeatureCollection`](../geojson.md#featurecollection)<`GF`, `PF`>                                                       |
-| `base`       | [`FeatureCollection`](../geojson.md#featurecollection)<[`RetractingObject`](../geojson.md#retractingobject)<`GF`>, `PB`> |
-| `properties` | [`PropertyRecord`](../geojson.md#propertyrecord-1)<`PB`>                                                                 | `PB`\[] |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`frame`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<`GF`, `PF`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`base`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`RetractingObject`](../geojson.md#retractingobject)<`GF`>, `PB`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`properties`
+
+</td>
+<td>
+
+[`PropertyRecord`](../geojson.md#propertyrecord-1)<`PB`> | `PB`\[]
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -58,16 +124,70 @@ using collectProperties.
 
 #### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter        | Type                                                    | Description                           |
-| ---------------- | ------------------------------------------------------- | ------------------------------------- |
-| `propertyRecord` | [`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`> | the property record to collect from.  |
-| `properties`     | `P`\[]                                                  | the ids of the properties to collect. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`propertyRecord`
+
+</td>
+<td>
+
+[`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`>
+
+</td>
+<td>
+
+the property record to collect from.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`properties`
+
+</td>
+<td>
+
+`P`\[]
+
+</td>
+<td>
+
+the ids of the properties to collect.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 

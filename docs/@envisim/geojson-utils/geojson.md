@@ -62,19 +62,101 @@
 
 #### Type Parameters
 
-| Type Parameter                                | Default type |
-| --------------------------------------------- | ------------ | ------------------------------- |
-| `G` _extends_ [`BaseGeometry`](#basegeometry) | `null`       | [`BaseGeometry`](#basegeometry) |
-| `P`                                           | `unknown`    |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`G` _extends_ [`BaseGeometry`](#basegeometry) | `null`
+
+</td>
+<td>
+
+[`BaseGeometry`](#basegeometry)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`P`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Properties
 
-| Property                             | Type              |
-| ------------------------------------ | ----------------- | -------------------------------------------------------- |
-| <a id="bbox"></a> `bbox?`            | [`BBox`](#bbox-7) |
-| <a id="geometry"></a> `geometry`     | `G`               |
-| <a id="properties"></a> `properties` | `null`            | [`FeatureProperties`](#featureproperties)<`P`, `string`> |
-| <a id="type"></a> `type`             | `"Feature"`       |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox"></a> `bbox?`
+
+</td>
+<td>
+
+[`BBox`](#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="geometry"></a> `geometry`
+
+</td>
+<td>
+
+`G`
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="properties"></a> `properties`
+
+</td>
+<td>
+
+`null` | [`FeatureProperties`](#featureproperties)<`P`, `string`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type"></a> `type`
+
+</td>
+<td>
+
+`"Feature"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -86,17 +168,77 @@
 
 #### Type Parameters
 
-| Type Parameter                              | Default type                  |
-| ------------------------------------------- | ----------------------------- |
-| `F` _extends_ [`BaseFeature`](#basefeature) | [`BaseFeature`](#basefeature) |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`F` _extends_ [`BaseFeature`](#basefeature)
+
+</td>
+<td>
+
+[`BaseFeature`](#basefeature)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Properties
 
-| Property                         | Type                  |
-| -------------------------------- | --------------------- |
-| <a id="bbox-1"></a> `bbox?`      | [`BBox`](#bbox-7)     |
-| <a id="features"></a> `features` | `F`\[]                |
-| <a id="type-1"></a> `type`       | `"FeatureCollection"` |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox-1"></a> `bbox?`
+
+</td>
+<td>
+
+[`BBox`](#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="features"></a> `features`
+
+</td>
+<td>
+
+`F`\[]
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-1"></a> `type`
+
+</td>
+<td>
+
+`"FeatureCollection"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -108,17 +250,77 @@
 
 #### Type Parameters
 
-| Type Parameter                                | Default type                    |
-| --------------------------------------------- | ------------------------------- |
-| `G` _extends_ [`BaseGeometry`](#basegeometry) | [`BaseGeometry`](#basegeometry) |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`G` _extends_ [`BaseGeometry`](#basegeometry)
+
+</td>
+<td>
+
+[`BaseGeometry`](#basegeometry)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Properties
 
-| Property                             | Type                   |
-| ------------------------------------ | ---------------------- |
-| <a id="bbox-2"></a> `bbox?`          | [`BBox`](#bbox-7)      |
-| <a id="geometries"></a> `geometries` | `G`\[]                 |
-| <a id="type-2"></a> `type`           | `"GeometryCollection"` |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox-2"></a> `bbox?`
+
+</td>
+<td>
+
+[`BBox`](#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="geometries"></a> `geometries`
+
+</td>
+<td>
+
+`G`\[]
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-2"></a> `type`
+
+</td>
+<td>
+
+`"GeometryCollection"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -135,18 +337,78 @@
 
 #### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `T` _extends_ `string` |
-| `C`                    |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T` _extends_ `string`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`C`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Properties
 
-| Property                               | Type              |
-| -------------------------------------- | ----------------- |
-| <a id="bbox-3"></a> `bbox?`            | [`BBox`](#bbox-7) |
-| <a id="coordinates"></a> `coordinates` | `C`               |
-| <a id="type-3"></a> `type`             | `T`               |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox-3"></a> `bbox?`
+
+</td>
+<td>
+
+[`BBox`](#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="coordinates"></a> `coordinates`
+
+</td>
+<td>
+
+`C`
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-3"></a> `type`
+
+</td>
+<td>
+
+`T`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -158,12 +420,64 @@
 
 #### Properties
 
-| Property                                 | Type                    |
-| ---------------------------------------- | ----------------------- |
-| <a id="bbox-4"></a> `bbox?`              | [`BBox`](#bbox-7)       |
-| <a id="coordinates-1"></a> `coordinates` | [`Position`](#position) |
-| <a id="radius"></a> `radius`             | `number`                |
-| <a id="type-4"></a> `type`               | `"Point"`               |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox-4"></a> `bbox?`
+
+</td>
+<td>
+
+[`BBox`](#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="coordinates-1"></a> `coordinates`
+
+</td>
+<td>
+
+[`Position`](#position)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="radius"></a> `radius`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-4"></a> `type`
+
+</td>
+<td>
+
+`"Point"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -178,16 +492,59 @@
 
 #### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `T` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Properties
 
-| Property                    | Type              |
-| --------------------------- | ----------------- |
-| <a id="bbox-5"></a> `bbox?` | [`BBox`](#bbox-7) |
-| <a id="type-5"></a> `type`  | `T`               |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox-5"></a> `bbox?`
+
+</td>
+<td>
+
+[`BBox`](#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-5"></a> `type`
+
+</td>
+<td>
+
+`T`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -199,12 +556,64 @@
 
 #### Properties
 
-| Property                                 | Type                       |
-| ---------------------------------------- | -------------------------- |
-| <a id="bbox-6"></a> `bbox?`              | [`BBox`](#bbox-7)          |
-| <a id="coordinates-2"></a> `coordinates` | [`Position`](#position)\[] |
-| <a id="radius-1"></a> `radius`           | `number`                   |
-| <a id="type-6"></a> `type`               | `"MultiPoint"`             |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox-6"></a> `bbox?`
+
+</td>
+<td>
+
+[`BBox`](#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="coordinates-2"></a> `coordinates`
+
+</td>
+<td>
+
+[`Position`](#position)\[]
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="radius-1"></a> `radius`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-6"></a> `type`
+
+</td>
+<td>
+
+`"MultiPoint"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ## Type Aliases
 
@@ -268,9 +677,28 @@
 
 #### Type Parameters
 
-| Type Parameter                          | Default type              |
-| --------------------------------------- | ------------------------- |
-| `G` _extends_ [`Geometry`](#geometry-1) | [`Geometry`](#geometry-1) |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`G` _extends_ [`Geometry`](#geometry-1)
+
+</td>
+<td>
+
+[`Geometry`](#geometry-1)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -280,9 +708,28 @@
 
 #### Type Parameters
 
-| Type Parameter                      | Default type          |
-| ----------------------------------- | --------------------- |
-| `F` _extends_ [`Feature`](#feature) | [`Feature`](#feature) |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`F` _extends_ [`Feature`](#feature)
+
+</td>
+<td>
+
+[`Feature`](#feature)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -292,10 +739,40 @@
 
 #### Type Parameters
 
-| Type Parameter          | Default type |
-| ----------------------- | ------------ | -------- |
-| `P`                     | `number`     | `string` |
-| `ID` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P`
+
+</td>
+<td>
+
+`number` | `string`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`ID` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -311,9 +788,22 @@
 
 #### Type Parameters
 
-| Type Parameter                                        |
-| ----------------------------------------------------- |
-| `O` _extends_ [`SingleTypeObject`](#singletypeobject) |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`O` _extends_ [`SingleTypeObject`](#singletypeobject)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 

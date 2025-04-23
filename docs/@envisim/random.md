@@ -32,9 +32,34 @@ Returns an instance of Random. TS/class implementation of Uheprng.
 
 ###### Parameters
 
-| Parameter | Type     | Description |
-| --------- | -------- | ----------- | --------------------------------- |
-| `seed?`   | `string` | `number`    | Seed for random number generator. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`seed?`
+
+</td>
+<td>
+
+`string` | `number`
+
+</td>
+<td>
+
+Seed for random number generator.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -66,9 +91,28 @@ Adds entropy to Uheprng.
 
 ###### Parameters
 
-| Parameter | Type        |
-| --------- | ----------- | ----------- |
-| ...`args` | `number`\[] | `string`\[] |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+...`args`
+
+</td>
+<td>
+
+`number`\[] | `string`\[]
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -82,9 +126,28 @@ Adds entropy to Uheprng.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `inStr`   | `string` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`inStr`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -104,9 +167,28 @@ Adds entropy to Uheprng.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `n`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -130,9 +212,28 @@ Pseudo-random (uniform) number o nthe interval `(0.0, 1.0)`
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `inStr`   | `string` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`inStr`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -154,9 +255,34 @@ Initializes state
 
 ###### Parameters
 
-| Parameter | Type     | Default value |
-| --------- | -------- | ------------- |
-| `n`       | `number` | `1`           |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -186,9 +312,28 @@ Seed the random generator
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- | -------- |
-| `seed`    | `string` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`seed`
+
+</td>
+<td>
+
+`string` | `number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -200,9 +345,28 @@ Seed the random generator
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `n`       | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -235,10 +399,51 @@ Returns an array with psudo-random standard uniform elements.
 
 #### Parameters
 
-| Parameter   | Type                                  | Description                       |
-| ----------- | ------------------------------------- | --------------------------------- |
-| `n`         | `number`                              | Length of array.                  |
-| `generator` | [`RandomGenerator`](#randomgenerator) | Seed for random number generator. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Length of array.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`generator`
+
+</td>
+<td>
+
+[`RandomGenerator`](#randomgenerator)
+
+</td>
+<td>
+
+Seed for random number generator.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -254,9 +459,28 @@ Pseudo-random (uniform) array with elements on the interval `[0.0, 1.0)`.
 
 #### Parameters
 
-| Parameter   | Type                                  |
-| ----------- | ------------------------------------- |
-| `generator` | [`RandomGenerator`](#randomgenerator) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`generator`
+
+</td>
+<td>
+
+[`RandomGenerator`](#randomgenerator)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -272,9 +496,28 @@ Pseudo-random (uniform) number on the interval `[0.0, 1.0)`
 
 #### Parameters
 
-| Parameter   | Type                                  |
-| ----------- | ------------------------------------- |
-| `generator` | [`RandomGenerator`](#randomgenerator) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`generator`
+
+</td>
+<td>
+
+[`RandomGenerator`](#randomgenerator)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -290,10 +533,51 @@ Pseudo-random (uniform) number o nthe interval `(0.0, 1.0)`
 
 #### Parameters
 
-| Parameter   | Type                                  | Default value |
-| ----------- | ------------------------------------- | ------------- |
-| `n`         | `number`                              | `1`           |
-| `generator` | [`RandomGenerator`](#randomgenerator) | `...`         |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`generator`
+
+</td>
+<td>
+
+[`RandomGenerator`](#randomgenerator)
+
+</td>
+<td>
+
+`...`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 

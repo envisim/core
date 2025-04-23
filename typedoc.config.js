@@ -1,3 +1,5 @@
+const TABLE_FORMAT = "htmlTable";
+
 const config = {
   // Configuration Options
   // options
@@ -172,14 +174,14 @@ const config = {
   expandObjects: true,
   // expandParameters
   // blockTagsPreserveOrder
-  indexFormat: "table",
-  parametersFormat: "table",
-  interfacePropertiesFormat: "table",
-  classPropertiesFormat: "table",
-  typeAliasPropertiesFormat: "table",
-  enumMembersFormat: "table",
-  propertyMembersFormat: "table",
-  typeDeclarationFormat: "table",
+  indexFormat: TABLE_FORMAT,
+  parametersFormat: TABLE_FORMAT,
+  interfacePropertiesFormat: TABLE_FORMAT,
+  classPropertiesFormat: TABLE_FORMAT,
+  typeAliasPropertiesFormat: TABLE_FORMAT,
+  enumMembersFormat: TABLE_FORMAT,
+  propertyMembersFormat: TABLE_FORMAT,
+  typeDeclarationFormat: TABLE_FORMAT,
   tableColumnSettings: {
     hideInherited: true,
     hideOverrides: true,

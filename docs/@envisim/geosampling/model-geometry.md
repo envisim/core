@@ -36,9 +36,40 @@
 
 #### Parameters
 
-| Parameter  | Type     | Default value | Description             |
-| ---------- | -------- | ------------- | ----------------------- |
-| `diameter` | `number` | `10.0`        | the diameter in meters. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`diameter`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`10.0`
+
+</td>
+<td>
+
+the diameter in meters.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -54,10 +85,62 @@ a circle model geometry.
 
 #### Parameters
 
-| Parameter  | Type                                                                 | Default value | Description                           |
-| ---------- | -------------------------------------------------------------------- | ------------- | ------------------------------------- |
-| `diameter` | `number`                                                             | `1.0`         | the diameter of the circle in meters. |
-| `options?` | [`CirclesToPolygonsOptions`](../geojson.md#circlestopolygonsoptions) | `undefined`   | -                                     |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`diameter`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1.0`
+
+</td>
+<td>
+
+the diameter of the circle in meters.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options?`
+
+</td>
+<td>
+
+[`CirclesToPolygonsOptions`](../geojson.md#circlestopolygonsoptions)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -73,9 +156,40 @@ a circle-shaped line model geometry.
 
 #### Parameters
 
-| Parameter    | Type     | Default value | Description               |
-| ------------ | -------- | ------------- | ------------------------- |
-| `sideLength` | `number` | `10.0`        | length of side in meters. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`sideLength`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`10.0`
+
+</td>
+<td>
+
+length of side in meters.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -93,10 +207,51 @@ Positions a modelGeometry at position and optionally rotates the coordinates aro
 
 #### Parameters
 
-| Parameter           | Type                                                                   | Description            |
-| ------------------- | ---------------------------------------------------------------------- | ---------------------- |
-| `position`          | [`Position`](../geojson-utils/geojson.md#position)                     | a position \[lon,lat]. |
-| `__namedParameters` | `PlaceOptions`<[`AreaObject`](../geojson-utils/geojson.md#areaobject)> | -                      |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](../geojson-utils/geojson.md#position)
+
+</td>
+<td>
+
+a position \[lon,lat].
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+`PlaceOptions`<[`AreaObject`](../geojson-utils/geojson.md#areaobject)>
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -112,10 +267,40 @@ a GeoJSON Point/Line/AreaObject.
 
 #### Parameters
 
-| Parameter           | Type                                                                   |
-| ------------------- | ---------------------------------------------------------------------- |
-| `position`          | [`Position`](../geojson-utils/geojson.md#position)                     |
-| `__namedParameters` | `PlaceOptions`<[`LineObject`](../geojson-utils/geojson.md#lineobject)> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](../geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+`PlaceOptions`<[`LineObject`](../geojson-utils/geojson.md#lineobject)>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -129,10 +314,40 @@ a GeoJSON Point/Line/AreaObject.
 
 #### Parameters
 
-| Parameter           | Type                                                                     |
-| ------------------- | ------------------------------------------------------------------------ |
-| `position`          | [`Position`](../geojson-utils/geojson.md#position)                       |
-| `__namedParameters` | `PlaceOptions`<[`PointObject`](../geojson-utils/geojson.md#pointobject)> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](../geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+`PlaceOptions`<[`PointObject`](../geojson-utils/geojson.md#pointobject)>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -160,9 +375,34 @@ Computes the radius as maximum distance from (0,0) to any point in the given geo
 
 #### Parameters
 
-| Parameter  | Type                                                               | Description                                   |
-| ---------- | ------------------------------------------------------------------ | --------------------------------------------- |
-| `geometry` | [`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject) | a GeoJSON geometry (not geometry collection). |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`geometry`
+
+</td>
+<td>
+
+[`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject)
+
+</td>
+<td>
+
+a GeoJSON geometry (not geometry collection).
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -178,10 +418,62 @@ the maximum distance from (0,0) to any point in the given geometry.
 
 #### Parameters
 
-| Parameter | Type     | Default value | Description                           |
-| --------- | -------- | ------------- | ------------------------------------- |
-| `width`   | `number` | `10.0`        | length of side west-east in meters.   |
-| `height`  | `number` | `width`       | length of side south-north in meters. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`width`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`10.0`
+
+</td>
+<td>
+
+length of side west-east in meters.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`height`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`width`
+
+</td>
+<td>
+
+length of side south-north in meters.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -197,11 +489,85 @@ a rectangular-shaped area model geometry.
 
 #### Parameters
 
-| Parameter  | Type     | Default value | Description                                                                               |
-| ---------- | -------- | ------------- | ----------------------------------------------------------------------------------------- |
-| `width`    | `number` | `10.0`        | length of side west-east in meters.                                                       |
-| `height`   | `number` | `width`       | length of side south-north in meters.                                                     |
-| `diameter` | `number` | `1.0`         | the diameter in meters. If diameter is smaller than width, diameter is replaced by width. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`width`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`10.0`
+
+</td>
+<td>
+
+length of side west-east in meters.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`height`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`width`
+
+</td>
+<td>
+
+length of side south-north in meters.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`diameter`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1.0`
+
+</td>
+<td>
+
+the diameter in meters. If diameter is smaller than width, diameter is replaced
+by width.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -217,10 +583,62 @@ a circle model geometry in a rectangular formation.
 
 #### Parameters
 
-| Parameter | Type     | Default value | Description                           |
-| --------- | -------- | ------------- | ------------------------------------- |
-| `width`   | `number` | `10.0`        | length of side west-east in meters.   |
-| `height`  | `number` | `width`       | length of side south-north in meters. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`width`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`10.0`
+
+</td>
+<td>
+
+length of side west-east in meters.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`height`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`width`
+
+</td>
+<td>
+
+length of side south-north in meters.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -236,10 +654,62 @@ a rectangular-shaped line model geometry.
 
 #### Parameters
 
-| Parameter | Type     | Default value | Description                           |
-| --------- | -------- | ------------- | ------------------------------------- |
-| `width`   | `number` | `10.0`        | length of side west-east in meters.   |
-| `height`  | `number` | `width`       | length of side south-north in meters. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`width`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`10.0`
+
+</td>
+<td>
+
+length of side west-east in meters.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`height`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`width`
+
+</td>
+<td>
+
+length of side south-north in meters.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -255,10 +725,62 @@ a point model geometry in a rectangular formation.
 
 #### Parameters
 
-| Parameter         | Type     | Default value | Description                                      |
-| ----------------- | -------- | ------------- | ------------------------------------------------ |
-| `sides`           | `number` | `3`           | the number of sides/vertices.                    |
-| `polygonDiameter` | `number` | `1.0`         | the diameter of the containing circle in meters. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`sides`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`3`
+
+</td>
+<td>
+
+the number of sides/vertices.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`polygonDiameter`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1.0`
+
+</td>
+<td>
+
+the diameter of the containing circle in meters.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -274,11 +796,85 @@ a regular polygon area model geometry.
 
 #### Parameters
 
-| Parameter         | Type     | Default value | Description                                                                                                                                                   |
-| ----------------- | -------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sides`           | `number` | `3`           | the number of sides/vertices.                                                                                                                                 |
-| `polygonDiameter` | `number` | `10.0`        | the diameter of the containing circle in meters.                                                                                                              |
-| `diameter`        | `number` | `1.0`         | the diameter of the circles in meters. If diameter is smaller than the distance between the points in the polygon, the diameter is replaced by this distance. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`sides`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`3`
+
+</td>
+<td>
+
+the number of sides/vertices.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`polygonDiameter`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`10.0`
+
+</td>
+<td>
+
+the diameter of the containing circle in meters.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`diameter`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1.0`
+
+</td>
+<td>
+
+the diameter of the circles in meters. If diameter is smaller than the distance
+between the points in the polygon, the diameter is replaced by this distance.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -294,10 +890,62 @@ a circle model geometry in a regular polygon formation.
 
 #### Parameters
 
-| Parameter         | Type     | Default value | Description                                      |
-| ----------------- | -------- | ------------- | ------------------------------------------------ |
-| `sides`           | `number` | `3`           | the number of sides/vertices.                    |
-| `polygonDiameter` | `number` | `1.0`         | the diameter of the containing circle in meters. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`sides`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`3`
+
+</td>
+<td>
+
+the number of sides/vertices.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`polygonDiameter`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1.0`
+
+</td>
+<td>
+
+the diameter of the containing circle in meters.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -313,10 +961,62 @@ a regular polygon line model geometry.
 
 #### Parameters
 
-| Parameter         | Type     | Default value | Description                                      |
-| ----------------- | -------- | ------------- | ------------------------------------------------ |
-| `sides`           | `number` | `3`           | the number of sides/vertices.                    |
-| `polygonDiameter` | `number` | `1.0`         | the diameter of the containing circle in meters. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`sides`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`3`
+
+</td>
+<td>
+
+the number of sides/vertices.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`polygonDiameter`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1.0`
+
+</td>
+<td>
+
+the diameter of the containing circle in meters.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -336,9 +1036,34 @@ type of the geometry.
 
 #### Parameters
 
-| Parameter  | Type                                                               | Description                                   |
-| ---------- | ------------------------------------------------------------------ | --------------------------------------------- |
-| `geometry` | [`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject) | a GeoJSON geometry (not geometry collection). |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`geometry`
+
+</td>
+<td>
+
+[`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject)
+
+</td>
+<td>
+
+a GeoJSON geometry (not geometry collection).
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -354,9 +1079,40 @@ the size of the geometry.
 
 #### Parameters
 
-| Parameter    | Type     | Default value | Description                       |
-| ------------ | -------- | ------------- | --------------------------------- |
-| `sideLength` | `number` | `10.0`        | the length of the line in meters. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`sideLength`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`10.0`
+
+</td>
+<td>
+
+the length of the line in meters.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 

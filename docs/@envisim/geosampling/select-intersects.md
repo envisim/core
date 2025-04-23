@@ -25,16 +25,59 @@ Select intersect of features as the new frame from base-collection.
 
 #### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter | Type                                                                                                  |
-| --------- | ----------------------------------------------------------------------------------------------------- |
-| `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>      |
-| `base`    | [`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject), `P`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`frame`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`base`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject), `P`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -48,16 +91,59 @@ Select intersect of features as the new frame from base-collection.
 
 #### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter | Type                                                                                                  |
-| --------- | ----------------------------------------------------------------------------------------------------- |
-| `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)<[`LineObject`](../geojson.md#lineobject)>      |
-| `base`    | [`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject), `P`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`frame`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`LineObject`](../geojson.md#lineobject)>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`base`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject), `P`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -71,16 +157,59 @@ Select intersect of features as the new frame from base-collection.
 
 #### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter | Type                                                                                                  |
-| --------- | ----------------------------------------------------------------------------------------------------- |
-| `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)<[`PointObject`](../geojson.md#pointobject)>    |
-| `base`    | [`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject), `P`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`frame`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`PointObject`](../geojson.md#pointobject)>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`base`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject), `P`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -94,16 +223,59 @@ Select intersect of features as the new frame from base-collection.
 
 #### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter | Type                                                                                                  |
-| --------- | ----------------------------------------------------------------------------------------------------- |
-| `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>      |
-| `base`    | [`FeatureCollection`](../geojson.md#featurecollection)<[`LineObject`](../geojson.md#lineobject), `P`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`frame`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`base`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`LineObject`](../geojson.md#lineobject), `P`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -117,16 +289,59 @@ Select intersect of features as the new frame from base-collection.
 
 #### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Parameters
 
-| Parameter | Type                                                                                                    |
-| --------- | ------------------------------------------------------------------------------------------------------- |
-| `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>        |
-| `base`    | [`FeatureCollection`](../geojson.md#featurecollection)<[`PointObject`](../geojson.md#pointobject), `P`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`frame`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`base`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`PointObject`](../geojson.md#pointobject), `P`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 

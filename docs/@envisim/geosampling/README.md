@@ -12,12 +12,97 @@
 
 ## Modules
 
-| Module                                      | Description |
-| ------------------------------------------- | ----------- |
-| [collect-properties](collect-properties.md) | -           |
-| [errors](errors.md)                         | -           |
-| [model-geometry](model-geometry.md)         | -           |
-| [point-processes](point-processes.md)       | -           |
-| [sample-continuous](sample-continuous.md)   | -           |
-| [sample-finite](sample-finite.md)           | -           |
-| [select-intersects](select-intersects.md)   | -           |
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+[collect-properties](collect-properties.md)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+[errors](errors.md)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+[model-geometry](model-geometry.md)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+[point-processes](point-processes.md)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+[sample-continuous](sample-continuous.md)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+[sample-finite](sample-finite.md)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+[select-intersects](select-intersects.md)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>

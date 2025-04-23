@@ -74,10 +74,62 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type                                                                                             | Default value | Description                                  |
-| --------- | ------------------------------------------------------------------------------------------------ | ------------- | -------------------------------------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)<[`Circle`](geojson-utils/geojson.md#circle), `"type"`> | `undefined`   | -                                            |
-| `shallow` | `boolean`                                                                                        | `true`        | if `true`, copys by reference when possible. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+[`OptionalParam`](utils.md#optionalparam)<[`Circle`](geojson-utils/geojson.md#circle), `"type"`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+<td>
+
+if `true`, copys by reference when possible.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -89,12 +141,85 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 #### Properties
 
-| Property                               | Modifier   | Type                                            |
-| -------------------------------------- | ---------- | ----------------------------------------------- |
-| <a id="bbox"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)       |
-| <a id="coordinates"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position) |
-| <a id="radius"></a> `radius`           | `public`   | `number`                                        |
-| <a id="type"></a> `type`               | `readonly` | `"Point"`                                       |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox"></a> `bbox?`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`BBox`](geojson-utils/geojson.md#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="coordinates"></a> `coordinates`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="radius"></a> `radius`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type"></a> `type`
+
+</td>
+<td>
+
+`readonly`
+
+</td>
+<td>
+
+`"Point"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -116,9 +241,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type            |
-| --------- | --------------- |
-| `options` | `BufferOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`BufferOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -142,9 +286,34 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type      | Default value |
-| --------- | --------- | ------------- |
-| `shallow` | `boolean` | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -160,9 +329,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `position` | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -214,9 +402,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `position` | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -292,9 +499,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type                                            |
-| --------- | ----------------------------------------------- |
-| `point`   | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`point`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -334,9 +560,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type                                                    |
-| --------- | ------------------------------------------------------- |
-| `options` | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`CirclesToPolygonsOptions`](#circlestopolygonsoptions)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -348,10 +593,51 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type      | Default value       |
-| --------- | --------- | ------------------- |
-| `obj`     | `unknown` | `undefined`         |
-| `msg`     | `string`  | `"Expected Circle"` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected Circle"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -363,11 +649,68 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter     | Type                                            | Default value |
-| ------------- | ----------------------------------------------- | ------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position) | `undefined`   |
-| `radius`      | `number`                                        | `undefined`   |
-| `shallow`     | `boolean`                                       | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`coordinates`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`radius`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -379,9 +722,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type      |
-| --------- | --------- |
-| `obj`     | `unknown` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -393,10 +755,40 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 #### Type Parameters
 
-| Type Parameter                            | Default type |
-| ----------------------------------------- | ------------ |
-| `T` _extends_ [`PureObject`](#pureobject) | -            |
-| `PID` _extends_ `string`                  | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T` _extends_ [`PureObject`](#pureobject)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`PID` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Implements
 
@@ -410,11 +802,68 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter    | Type                                               | Default value |
-| ------------ | -------------------------------------------------- | ------------- |
-| `geometry`   | `T`                                                | `undefined`   |
-| `properties` | [`FeatureProperties`](#featureproperties-1)<`PID`> | `undefined`   |
-| `shallow`    | `boolean`                                          | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`geometry`
+
+</td>
+<td>
+
+`T`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`properties`
+
+</td>
+<td>
+
+[`FeatureProperties`](#featureproperties-1)<`PID`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -422,11 +871,84 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 #### Properties
 
-| Property                             | Modifier   | Type                                               | Default value |
-| ------------------------------------ | ---------- | -------------------------------------------------- | ------------- |
-| <a id="geometry"></a> `geometry`     | `public`   | `T`                                                | `undefined`   |
-| <a id="properties"></a> `properties` | `public`   | [`FeatureProperties`](#featureproperties-1)<`PID`> | `undefined`   |
-| <a id="type-1"></a> `type`           | `readonly` | `"Feature"`                                        | `"Feature"`   |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="geometry"></a> `geometry`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+`T`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="properties"></a> `properties`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`FeatureProperties`](#featureproperties-1)<`PID`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-1"></a> `type`
+
+</td>
+<td>
+
+`readonly`
+
+</td>
+<td>
+
+`"Feature"`
+
+</td>
+<td>
+
+`"Feature"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -436,10 +958,40 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter  | Type                                                             |
-| ---------- | ---------------------------------------------------------------- |
-| `id`       | `PID`                                                            |
-| `callback` | (`value`) => [`FeatureProperties`](#featureproperties-1)\[`PID`] |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`id`
+
+</td>
+<td>
+
+`PID`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+(`value`) => [`FeatureProperties`](#featureproperties-1)\[`PID`]
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -459,9 +1011,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type  |
-| --------- | ----- |
-| `id`      | `PID` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`id`
+
+</td>
+<td>
+
+`PID`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -513,9 +1084,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `value`   | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -527,10 +1117,40 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type                                                |
-| --------- | --------------------------------------------------- |
-| `id`      | `PID`                                               |
-| `value`   | [`FeatureProperties`](#featureproperties-1)\[`PID`] |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`id`
+
+</td>
+<td>
+
+`PID`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+[`FeatureProperties`](#featureproperties-1)\[`PID`]
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -542,9 +1162,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `value`   | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -556,9 +1195,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `value`   | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -578,9 +1236,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `value`   | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -592,9 +1269,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `value`   | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -606,10 +1302,51 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type      | Default value     |
-| --------- | --------- | ----------------- |
-| `obj`     | `unknown` | `undefined`       |
-| `msg`     | `string`  | `"Expected area"` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected area"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -621,10 +1358,51 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type      | Default value     |
-| --------- | --------- | ----------------- |
-| `obj`     | `unknown` | `undefined`       |
-| `msg`     | `string`  | `"Expected line"` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected line"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -636,10 +1414,51 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type      | Default value      |
-| --------- | --------- | ------------------ |
-| `obj`     | `unknown` | `undefined`        |
-| `msg`     | `string`  | `"Expected point"` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected point"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -651,18 +1470,110 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Type Parameters
 
-| Type Parameter           | Default type |
-| ------------------------ | ------------ |
-| `PID` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`PID` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter     | Type                                                    | Default value                                      |
-| ------------- | ------------------------------------------------------- | -------------------------------------------------- | ----------- |
-| `geometry`    | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`                                        |
-| `properties?` | `null`                                                  | [`FeatureProperties`](#featureproperties-1)<`PID`> | `undefined` |
-| `shallow?`    | `boolean`                                               | `true`                                             |
-| `options?`    | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) | `{}`                                               |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`geometry`
+
+</td>
+<td>
+
+[`BaseGeometry`](geojson-utils/geojson.md#basegeometry)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`properties?`
+
+</td>
+<td>
+
+`null` | [`FeatureProperties`](#featureproperties-1)<`PID`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow?`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options?`
+
+</td>
+<td>
+
+[`CirclesToPolygonsOptions`](#circlestopolygonsoptions)
+
+</td>
+<td>
+
+`{}`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -674,10 +1585,51 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type                                                                                                                                                              | Default value        |
-| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | ----------- |
-| `feature` | [`OptionalParam`](utils.md#optionalparam)<[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` | `number`>, `"type"`> | `undefined` |
-| `shallow` | `boolean`                                                                                                                                                         | `true`               |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`feature`
+
+</td>
+<td>
+
+[`OptionalParam`](utils.md#optionalparam)<[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` | `number`>, `"type"`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -689,17 +1641,93 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Type Parameters
 
-| Type Parameter           | Default type |
-| ------------------------ | ------------ |
-| `PID` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`PID` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter     | Type                                                    | Default value                                      |
-| ------------- | ------------------------------------------------------- | -------------------------------------------------- | ----------- |
-| `geometry`    | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`                                        |
-| `properties?` | `null`                                                  | [`FeatureProperties`](#featureproperties-1)<`PID`> | `undefined` |
-| `shallow?`    | `boolean`                                               | `true`                                             |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`geometry`
+
+</td>
+<td>
+
+[`BaseGeometry`](geojson-utils/geojson.md#basegeometry)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`properties?`
+
+</td>
+<td>
+
+`null` | [`FeatureProperties`](#featureproperties-1)<`PID`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow?`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -711,10 +1739,51 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type                                                                                                                                                              | Default value        |
-| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | ----------- |
-| `feature` | [`OptionalParam`](utils.md#optionalparam)<[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` | `number`>, `"type"`> | `undefined` |
-| `shallow` | `boolean`                                                                                                                                                         | `true`               |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`feature`
+
+</td>
+<td>
+
+[`OptionalParam`](utils.md#optionalparam)<[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` | `number`>, `"type"`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -726,17 +1795,93 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Type Parameters
 
-| Type Parameter           | Default type |
-| ------------------------ | ------------ |
-| `PID` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`PID` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter     | Type                                                    | Default value                                      |
-| ------------- | ------------------------------------------------------- | -------------------------------------------------- | ----------- |
-| `geometry`    | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`                                        |
-| `properties?` | `null`                                                  | [`FeatureProperties`](#featureproperties-1)<`PID`> | `undefined` |
-| `shallow?`    | `boolean`                                               | `true`                                             |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`geometry`
+
+</td>
+<td>
+
+[`BaseGeometry`](geojson-utils/geojson.md#basegeometry)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`properties?`
+
+</td>
+<td>
+
+`null` | [`FeatureProperties`](#featureproperties-1)<`PID`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow?`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -748,10 +1893,51 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type                                                                                                                                                              | Default value        |
-| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | ----------- |
-| `feature` | [`OptionalParam`](utils.md#optionalparam)<[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` | `number`>, `"type"`> | `undefined` |
-| `shallow` | `boolean`                                                                                                                                                         | `true`               |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`feature`
+
+</td>
+<td>
+
+[`OptionalParam`](utils.md#optionalparam)<[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` | `number`>, `"type"`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -763,9 +1949,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type      |
-| --------- | --------- |
-| `obj`     | `unknown` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -777,9 +1982,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type      |
-| --------- | --------- |
-| `obj`     | `unknown` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -791,9 +2015,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type      |
-| --------- | --------- |
-| `obj`     | `unknown` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -805,10 +2048,40 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 #### Type Parameters
 
-| Type Parameter                            | Default type |
-| ----------------------------------------- | ------------ |
-| `T` _extends_ [`PureObject`](#pureobject) | -            |
-| `PID` _extends_ `string`                  | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T` _extends_ [`PureObject`](#pureobject)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`PID` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Implements
 
@@ -817,16 +2090,235 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 #### Properties
 
-| Property                                     | Modifier   | Type                                                                   | Default value         | Description                                                         |
-| -------------------------------------------- | ---------- | ---------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------- |
-| <a id="bbox-1"></a> `bbox?`                  | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)                              | `undefined`           | -                                                                   |
-| <a id="color"></a> `color?`                  | `public`   | \[`number`, `number`, `number`]                                        | `undefined`           | Foreign GeoJSON member, an RGB value associated with the collection |
-| <a id="features"></a> `features`             | `public`   | [`Feature`](#feature)<`T`, `PID`>\[]                                   | `[]`                  | -                                                                   |
-| <a id="id"></a> `id?`                        | `public`   | `string`                                                               | `undefined`           | Foreign GeoJSON member, the id of the collection                    |
-| <a id="primitive"></a> `primitive`           | `readonly` | [`GeometricPrimitiveUnion`](geojson-utils/.md#geometricprimitiveunion) | `undefined`           | Foreign GeoJSON member, geometric primitive of the collection       |
-| <a id="propertyrecord"></a> `propertyRecord` | `public`   | [`PropertyRecord`](#propertyrecord-1)<`PID`>                           | `undefined`           | Foreign GeoJSON member, the allowed properties of the collection    |
-| <a id="title"></a> `title?`                  | `public`   | `string`                                                               | `undefined`           | Foreign GeoJSON member, the human readable name of the collection   |
-| <a id="type-2"></a> `type`                   | `readonly` | `"FeatureCollection"`                                                  | `"FeatureCollection"` | -                                                                   |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox-1"></a> `bbox?`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`BBox`](geojson-utils/geojson.md#bbox-7)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="color"></a> `color?`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+\[`number`, `number`, `number`]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Foreign GeoJSON member, an RGB value associated with the collection
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="features"></a> `features`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`Feature`](#feature)<`T`, `PID`>\[]
+
+</td>
+<td>
+
+`[]`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="id"></a> `id?`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Foreign GeoJSON member, the id of the collection
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="primitive"></a> `primitive`
+
+</td>
+<td>
+
+`readonly`
+
+</td>
+<td>
+
+[`GeometricPrimitiveUnion`](geojson-utils/.md#geometricprimitiveunion)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Foreign GeoJSON member, geometric primitive of the collection
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="propertyrecord"></a> `propertyRecord`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`PropertyRecord`](#propertyrecord-1)<`PID`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Foreign GeoJSON member, the allowed properties of the collection
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="title"></a> `title?`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Foreign GeoJSON member, the human readable name of the collection
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-2"></a> `type`
+
+</td>
+<td>
+
+`readonly`
+
+</td>
+<td>
+
+`"FeatureCollection"`
+
+</td>
+<td>
+
+`"FeatureCollection"`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -836,10 +2328,51 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type                              | Default value |
-| --------- | --------------------------------- | ------------- |
-| `feature` | [`Feature`](#feature)<`T`, `PID`> | `undefined`   |
-| `shallow` | `boolean`                         | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`feature`
+
+</td>
+<td>
+
+[`Feature`](#feature)<`T`, `PID`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -851,11 +2384,68 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter    | Type                                               | Default value |
-| ------------ | -------------------------------------------------- | ------------- |
-| `geometry`   | `T`                                                | `undefined`   |
-| `properties` | [`FeatureProperties`](#featureproperties-1)<`PID`> | `undefined`   |
-| `shallow`    | `boolean`                                          | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`geometry`
+
+</td>
+<td>
+
+`T`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`properties`
+
+</td>
+<td>
+
+[`FeatureProperties`](#featureproperties-1)<`PID`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -867,10 +2457,51 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type                                                  | Default value |
-| --------- | ----------------------------------------------------- | ------------- |
-| `fc`      | [`FeatureCollection`](#featurecollection)<`T`, `PID`> | `undefined`   |
-| `shallow` | `boolean`                                             | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`fc`
+
+</td>
+<td>
+
+[`FeatureCollection`](#featurecollection)<`T`, `PID`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -882,9 +2513,28 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | Type            |
-| --------- | --------------- |
-| `options` | `BufferOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`BufferOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -896,9 +2546,34 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter    | Type     | Default value |
-| ------------ | -------- | ------------- |
-| `iterations` | `number` | `2`           |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`iterations`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`2`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -920,10 +2595,62 @@ Transforms the categorical properties back to strings, and returns the json
 
 ###### Parameters
 
-| Parameter | Type                                                                                       | Default value | Description                                       |
-| --------- | ------------------------------------------------------------------------------------------ | ------------- | ------------------------------------------------- |
-| `shallow` | `boolean`                                                                                  | `true`        | if `true`, creates shallow copies of the features |
-| `options` | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) & { `convertCircles`: `boolean`; } | `{}`          | -                                                 |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+<td>
+
+if `true`, creates shallow copies of the features
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`CirclesToPolygonsOptions`](#circlestopolygonsoptions) & { `convertCircles`: `boolean`; }
+
+</td>
+<td>
+
+`{}`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -935,9 +2662,34 @@ Transforms the categorical properties back to strings, and returns the json
 
 ###### Parameters
 
-| Parameter | Type      | Default value |
-| --------- | --------- | ------------- |
-| `shallow` | `boolean` | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -949,9 +2701,28 @@ Transforms the categorical properties back to strings, and returns the json
 
 ###### Parameters
 
-| Parameter | Type                                            |
-| --------- | ----------------------------------------------- |
-| `coords`  | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`coords`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -963,9 +2734,28 @@ Transforms the categorical properties back to strings, and returns the json
 
 ###### Parameters
 
-| Parameter  | Type                                                 |
-| ---------- | ---------------------------------------------------- |
-| `callback` | `ForEachCallback`<[`Feature`](#feature)<`T`, `PID`>> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+`ForEachCallback`<[`Feature`](#feature)<`T`, `PID`>>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -977,9 +2767,28 @@ Transforms the categorical properties back to strings, and returns the json
 
 ###### Parameters
 
-| Parameter  | Type                   |
-| ---------- | ---------------------- |
-| `callback` | `ForEachCallback`<`T`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+`ForEachCallback`<`T`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1018,9 +2827,28 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `index`   | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1032,9 +2860,34 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | Type      | Default value |
-| --------- | --------- | ------------- |
-| `force`   | `boolean` | `false`       |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`force`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1046,11 +2899,52 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- | -------- |
-| `id`      | `PID`    |
-| `index`   | `number` |
-| `value`   | `string` | `number` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`id`
+
+</td>
+<td>
+
+`PID`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+`string` | `number`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1070,16 +2964,70 @@ of a line collection, and the total count of a point collection
 
 ###### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter | Type                                                                        | Default value     |
-| --------- | --------------------------------------------------------------------------- | ----------------- |
-| `obj`     | [`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`> | `undefined`       |
-| `msg`     | `string`                                                                    | `"Expected area"` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+[`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected area"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1091,16 +3039,70 @@ of a line collection, and the total count of a point collection
 
 ###### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter | Type                                                                        | Default value     |
-| --------- | --------------------------------------------------------------------------- | ----------------- |
-| `obj`     | [`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`> | `undefined`       |
-| `msg`     | `string`                                                                    | `"Expected line"` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+[`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected line"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1112,16 +3114,70 @@ of a line collection, and the total count of a point collection
 
 ###### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter | Type                                                                        | Default value      |
-| --------- | --------------------------------------------------------------------------- | ------------------ |
-| `obj`     | [`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`> | `undefined`        |
-| `msg`     | `string`                                                                    | `"Expected point"` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+[`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected point"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1133,11 +3189,68 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter    | Type                                                    | Default value |
-| ------------ | ------------------------------------------------------- | ------------- |
-| `collection` | `StrippedFeatureCollectionJson`                         | `undefined`   |
-| `shallow`    | `boolean`                                               | `true`        |
-| `options`    | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) | `{}`          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+`StrippedFeatureCollectionJson`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`CirclesToPolygonsOptions`](#circlestopolygonsoptions)
+
+</td>
+<td>
+
+`{}`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1149,10 +3262,51 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter    | Type                            | Default value |
-| ------------ | ------------------------------- | ------------- |
-| `collection` | `StrippedFeatureCollectionJson` | `undefined`   |
-| `shallow`    | `boolean`                       | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+`StrippedFeatureCollectionJson`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1164,10 +3318,51 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter    | Type                            | Default value |
-| ------------ | ------------------------------- | ------------- |
-| `collection` | `StrippedFeatureCollectionJson` | `undefined`   |
-| `shallow`    | `boolean`                       | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+`StrippedFeatureCollectionJson`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1179,15 +3374,47 @@ of a line collection, and the total count of a point collection
 
 ###### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter | Type                                                                        |
-| --------- | --------------------------------------------------------------------------- |
-| `obj`     | [`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+[`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1199,15 +3426,47 @@ of a line collection, and the total count of a point collection
 
 ###### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter | Type                                                                        |
-| --------- | --------------------------------------------------------------------------- |
-| `obj`     | [`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+[`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1219,15 +3478,47 @@ of a line collection, and the total count of a point collection
 
 ###### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `P` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter | Type                                                                        |
-| --------- | --------------------------------------------------------------------------- |
-| `obj`     | [`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+[`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1239,18 +3530,105 @@ of a line collection, and the total count of a point collection
 
 ###### Type Parameters
 
-| Type Parameter                            | Default type                |
-| ----------------------------------------- | --------------------------- |
-| `F` _extends_ [`AreaObject`](#areaobject) | [`AreaObject`](#areaobject) |
-| `PID` _extends_ `string`                  | `string`                    |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`F` _extends_ [`AreaObject`](#areaobject)
+
+</td>
+<td>
+
+[`AreaObject`](#areaobject)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`PID` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter         | Type                                         | Default value |
-| ----------------- | -------------------------------------------- | ------------- |
-| `features`        | [`Feature`](#feature)<`F`, `PID`>\[]         | `[]`          |
-| `propertyRecord?` | [`PropertyRecord`](#propertyrecord-1)<`PID`> | `undefined`   |
-| `shallow?`        | `boolean`                                    | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`features`
+
+</td>
+<td>
+
+[`Feature`](#feature)<`F`, `PID`>\[]
+
+</td>
+<td>
+
+`[]`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`propertyRecord?`
+
+</td>
+<td>
+
+[`PropertyRecord`](#propertyrecord-1)<`PID`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow?`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1262,18 +3640,105 @@ of a line collection, and the total count of a point collection
 
 ###### Type Parameters
 
-| Type Parameter                            | Default type                |
-| ----------------------------------------- | --------------------------- |
-| `F` _extends_ [`LineObject`](#lineobject) | [`LineObject`](#lineobject) |
-| `PID` _extends_ `string`                  | `string`                    |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`F` _extends_ [`LineObject`](#lineobject)
+
+</td>
+<td>
+
+[`LineObject`](#lineobject)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`PID` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter         | Type                                         | Default value |
-| ----------------- | -------------------------------------------- | ------------- |
-| `features`        | [`Feature`](#feature)<`F`, `PID`>\[]         | `[]`          |
-| `propertyRecord?` | [`PropertyRecord`](#propertyrecord-1)<`PID`> | `undefined`   |
-| `shallow?`        | `boolean`                                    | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`features`
+
+</td>
+<td>
+
+[`Feature`](#feature)<`F`, `PID`>\[]
+
+</td>
+<td>
+
+`[]`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`propertyRecord?`
+
+</td>
+<td>
+
+[`PropertyRecord`](#propertyrecord-1)<`PID`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow?`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1285,18 +3750,105 @@ of a line collection, and the total count of a point collection
 
 ###### Type Parameters
 
-| Type Parameter                              | Default type                  |
-| ------------------------------------------- | ----------------------------- |
-| `F` _extends_ [`PointObject`](#pointobject) | [`PointObject`](#pointobject) |
-| `PID` _extends_ `string`                    | `string`                      |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`F` _extends_ [`PointObject`](#pointobject)
+
+</td>
+<td>
+
+[`PointObject`](#pointobject)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`PID` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter         | Type                                         | Default value |
-| ----------------- | -------------------------------------------- | ------------- |
-| `features`        | [`Feature`](#feature)<`F`, `PID`>\[]         | `[]`          |
-| `propertyRecord?` | [`PropertyRecord`](#propertyrecord-1)<`PID`> | `undefined`   |
-| `shallow?`        | `boolean`                                    | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`features`
+
+</td>
+<td>
+
+[`Feature`](#feature)<`F`, `PID`>\[]
+
+</td>
+<td>
+
+`[]`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`propertyRecord?`
+
+</td>
+<td>
+
+[`PropertyRecord`](#propertyrecord-1)<`PID`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow?`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1322,10 +3874,51 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | Type                                                                                                     | Default value |
-| --------- | -------------------------------------------------------------------------------------------------------- | ------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)<[`LineString`](geojson-utils/geojson.md#linestring), `"type"`> | `undefined`   |
-| `shallow` | `boolean`                                                                                                | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+[`OptionalParam`](utils.md#optionalparam)<[`LineString`](geojson-utils/geojson.md#linestring), `"type"`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1337,11 +3930,68 @@ of a line collection, and the total count of a point collection
 
 #### Properties
 
-| Property                                 | Modifier   | Type                                               |
-| ---------------------------------------- | ---------- | -------------------------------------------------- |
-| <a id="bbox-2"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)          |
-| <a id="coordinates-1"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position)\[] |
-| <a id="type-3"></a> `type`               | `readonly` | `"LineString"`                                     |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox-2"></a> `bbox?`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`BBox`](geojson-utils/geojson.md#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="coordinates-1"></a> `coordinates`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)\[]
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-3"></a> `type`
+
+</td>
+<td>
+
+`readonly`
+
+</td>
+<td>
+
+`"LineString"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -1351,9 +4001,28 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | Type            |
-| --------- | --------------- |
-| `options` | `BufferOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`BufferOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1365,9 +4034,34 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter    | Type     | Default value |
-| ------------ | -------- | ------------- |
-| `iterations` | `number` | `2`           |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`iterations`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`2`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1383,9 +4077,34 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | Type      | Default value |
-| --------- | --------- | ------------- |
-| `shallow` | `boolean` | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1401,9 +4120,28 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `position` | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1515,9 +4253,28 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | Type                                            |
-| --------- | ----------------------------------------------- |
-| `point`   | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`point`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1557,10 +4314,51 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | Type      | Default value           |
-| --------- | --------- | ----------------------- |
-| `obj`     | `unknown` | `undefined`             |
-| `msg`     | `string`  | `"Expected LineString"` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected LineString"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1572,10 +4370,51 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter     | Type                                               | Default value |
-| ------------- | -------------------------------------------------- | ------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position)\[] | `undefined`   |
-| `shallow`     | `boolean`                                          | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`coordinates`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1587,9 +4426,28 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | Type      |
-| --------- | --------- |
-| `obj`     | `unknown` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1621,10 +4479,62 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter | Type                                                                                                       | Default value | Description                                  |
-| --------- | ---------------------------------------------------------------------------------------------------------- | ------------- | -------------------------------------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)<[`MultiCircle`](geojson-utils/geojson.md#multicircle), `"type"`> | `undefined`   | -                                            |
-| `shallow` | `boolean`                                                                                                  | `true`        | if `true`, copys by reference when possible. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+[`OptionalParam`](utils.md#optionalparam)<[`MultiCircle`](geojson-utils/geojson.md#multicircle), `"type"`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+<td>
+
+if `true`, copys by reference when possible.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1636,12 +4546,85 @@ MultiCircles MUST be non-overlapping.
 
 #### Properties
 
-| Property                                 | Modifier   | Type                                               |
-| ---------------------------------------- | ---------- | -------------------------------------------------- |
-| <a id="bbox-3"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)          |
-| <a id="coordinates-2"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position)\[] |
-| <a id="radius-1"></a> `radius`           | `public`   | `number`                                           |
-| <a id="type-4"></a> `type`               | `readonly` | `"MultiPoint"`                                     |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox-3"></a> `bbox?`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`BBox`](geojson-utils/geojson.md#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="coordinates-2"></a> `coordinates`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)\[]
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="radius-1"></a> `radius`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-4"></a> `type`
+
+</td>
+<td>
+
+`readonly`
+
+</td>
+<td>
+
+`"MultiPoint"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -1663,9 +4646,28 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter | Type            |
-| --------- | --------------- |
-| `options` | `BufferOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`BufferOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1677,9 +4679,34 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter    | Type     | Default value |
-| ------------ | -------- | ------------- |
-| `iterations` | `number` | `2`           |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`iterations`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`2`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1695,9 +4722,34 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter | Type      | Default value |
-| --------- | --------- | ------------- |
-| `shallow` | `boolean` | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1713,9 +4765,28 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `position` | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1767,9 +4838,28 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `position` | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1845,9 +4935,28 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter | Type                                            |
-| --------- | ----------------------------------------------- |
-| `point`   | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`point`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1890,9 +4999,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type                                                    |
-| --------- | ------------------------------------------------------- |
-| `options` | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`CirclesToPolygonsOptions`](#circlestopolygonsoptions)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1904,10 +5032,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      | Default value            |
-| --------- | --------- | ------------------------ |
-| `obj`     | `unknown` | `undefined`              |
-| `msg`     | `string`  | `"Expected MultiCircle"` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected MultiCircle"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1919,11 +5088,68 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | Type                                               | Default value |
-| ------------- | -------------------------------------------------- | ------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position)\[] | `undefined`   |
-| `radius`      | `number`                                           | `undefined`   |
-| `shallow`     | `boolean`                                          | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`coordinates`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`radius`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1935,9 +5161,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      |
-| --------- | --------- |
-| `obj`     | `unknown` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1963,10 +5208,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type                                                                                                               | Default value |
-| --------- | ------------------------------------------------------------------------------------------------------------------ | ------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)<[`MultiLineString`](geojson-utils/geojson.md#multilinestring), `"type"`> | `undefined`   |
-| `shallow` | `boolean`                                                                                                          | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+[`OptionalParam`](utils.md#optionalparam)<[`MultiLineString`](geojson-utils/geojson.md#multilinestring), `"type"`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -1978,11 +5264,68 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | Modifier   | Type                                                  |
-| ---------------------------------------- | ---------- | ----------------------------------------------------- |
-| <a id="bbox-4"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)             |
-| <a id="coordinates-3"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position)\[]\[] |
-| <a id="type-5"></a> `type`               | `readonly` | `"MultiLineString"`                                   |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox-4"></a> `bbox?`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`BBox`](geojson-utils/geojson.md#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="coordinates-3"></a> `coordinates`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)\[]\[]
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-5"></a> `type`
+
+</td>
+<td>
+
+`readonly`
+
+</td>
+<td>
+
+`"MultiLineString"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -1992,9 +5335,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type            |
-| --------- | --------------- |
-| `options` | `BufferOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`BufferOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2006,9 +5368,34 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter    | Type     | Default value |
-| ------------ | -------- | ------------- |
-| `iterations` | `number` | `2`           |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`iterations`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`2`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2024,9 +5411,34 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      | Default value |
-| --------- | --------- | ------------- |
-| `shallow` | `boolean` | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2042,9 +5454,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `position` | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2156,9 +5587,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type                                            |
-| --------- | ----------------------------------------------- |
-| `point`   | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`point`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2198,10 +5648,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      | Default value                |
-| --------- | --------- | ---------------------------- |
-| `obj`     | `unknown` | `undefined`                  |
-| `msg`     | `string`  | `"Expected MultiLineString"` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected MultiLineString"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2213,10 +5704,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | Type                                                  | Default value |
-| ------------- | ----------------------------------------------------- | ------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position)\[]\[] | `undefined`   |
-| `shallow`     | `boolean`                                             | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`coordinates`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)\[]\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2228,9 +5760,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      |
-| --------- | --------- |
-| `obj`     | `unknown` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2256,10 +5807,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type                                                                                                     | Default value |
-| --------- | -------------------------------------------------------------------------------------------------------- | ------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)<[`MultiPoint`](geojson-utils/geojson.md#multipoint), `"type"`> | `undefined`   |
-| `shallow` | `boolean`                                                                                                | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+[`OptionalParam`](utils.md#optionalparam)<[`MultiPoint`](geojson-utils/geojson.md#multipoint), `"type"`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2271,11 +5863,68 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | Modifier   | Type                                               |
-| ---------------------------------------- | ---------- | -------------------------------------------------- |
-| <a id="bbox-5"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)          |
-| <a id="coordinates-4"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position)\[] |
-| <a id="type-6"></a> `type`               | `readonly` | `"MultiPoint"`                                     |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox-5"></a> `bbox?`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`BBox`](geojson-utils/geojson.md#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="coordinates-4"></a> `coordinates`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)\[]
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-6"></a> `type`
+
+</td>
+<td>
+
+`readonly`
+
+</td>
+<td>
+
+`"MultiPoint"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -2285,9 +5934,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type            |
-| --------- | --------------- |
-| `options` | `BufferOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`BufferOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2299,9 +5967,34 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter    | Type     | Default value |
-| ------------ | -------- | ------------- |
-| `iterations` | `number` | `2`           |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`iterations`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`2`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2317,9 +6010,34 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      | Default value |
-| --------- | --------- | ------------- |
-| `shallow` | `boolean` | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2347,9 +6065,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `position` | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2449,9 +6186,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type                                            |
-| --------- | ----------------------------------------------- |
-| `point`   | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`point`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2491,10 +6247,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      | Default value           |
-| --------- | --------- | ----------------------- |
-| `obj`     | `unknown` | `undefined`             |
-| `msg`     | `string`  | `"Expected MultiPoint"` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected MultiPoint"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2506,10 +6303,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | Type                                               | Default value |
-| ------------- | -------------------------------------------------- | ------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position)\[] | `undefined`   |
-| `shallow`     | `boolean`                                          | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`coordinates`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2521,9 +6359,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      |
-| --------- | --------- |
-| `obj`     | `unknown` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2549,10 +6406,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type                                                                                                         | Default value |
-| --------- | ------------------------------------------------------------------------------------------------------------ | ------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)<[`MultiPolygon`](geojson-utils/geojson.md#multipolygon), `"type"`> | `undefined`   |
-| `shallow` | `boolean`                                                                                                    | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+[`OptionalParam`](utils.md#optionalparam)<[`MultiPolygon`](geojson-utils/geojson.md#multipolygon), `"type"`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2564,11 +6462,68 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | Modifier   | Type                                                     |
-| ---------------------------------------- | ---------- | -------------------------------------------------------- |
-| <a id="bbox-6"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)                |
-| <a id="coordinates-5"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position)\[]\[]\[] |
-| <a id="type-7"></a> `type`               | `readonly` | `"MultiPolygon"`                                         |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox-6"></a> `bbox?`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`BBox`](geojson-utils/geojson.md#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="coordinates-5"></a> `coordinates`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)\[]\[]\[]
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-7"></a> `type`
+
+</td>
+<td>
+
+`readonly`
+
+</td>
+<td>
+
+`"MultiPolygon"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -2590,9 +6545,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type            |
-| --------- | --------------- |
-| `options` | `BufferOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`BufferOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2604,9 +6578,34 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter    | Type     | Default value |
-| ------------ | -------- | ------------- |
-| `iterations` | `number` | `2`           |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`iterations`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`2`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2622,9 +6621,34 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      | Default value |
-| --------- | --------- | ------------- |
-| `shallow` | `boolean` | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2640,9 +6664,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `position` | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2694,9 +6737,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `position` | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2772,9 +6834,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type                                            |
-| --------- | ----------------------------------------------- |
-| `point`   | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`point`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2822,10 +6903,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      | Default value             |
-| --------- | --------- | ------------------------- |
-| `obj`     | `unknown` | `undefined`               |
-| `msg`     | `string`  | `"Expected MultiPolygon"` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected MultiPolygon"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2837,10 +6959,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | Type                                                     | Default value |
-| ------------- | -------------------------------------------------------- | ------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position)\[]\[]\[] | `undefined`   |
-| `shallow`     | `boolean`                                                | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`coordinates`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)\[]\[]\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2852,9 +7015,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      |
-| --------- | --------- |
-| `obj`     | `unknown` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2880,10 +7062,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type                                                                                           | Default value |
-| --------- | ---------------------------------------------------------------------------------------------- | ------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)<[`Point`](geojson-utils/geojson.md#point), `"type"`> | `undefined`   |
-| `shallow` | `boolean`                                                                                      | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+[`OptionalParam`](utils.md#optionalparam)<[`Point`](geojson-utils/geojson.md#point), `"type"`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2895,11 +7118,68 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | Modifier   | Type                                            |
-| ---------------------------------------- | ---------- | ----------------------------------------------- |
-| <a id="bbox-7"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)       |
-| <a id="coordinates-6"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position) |
-| <a id="type-8"></a> `type`               | `readonly` | `"Point"`                                       |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox-7"></a> `bbox?`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`BBox`](geojson-utils/geojson.md#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="coordinates-6"></a> `coordinates`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-8"></a> `type`
+
+</td>
+<td>
+
+`readonly`
+
+</td>
+<td>
+
+`"Point"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -2909,9 +7189,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type            |
-| --------- | --------------- |
-| `options` | `BufferOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`BufferOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2935,9 +7234,34 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      | Default value |
-| --------- | --------- | ------------- |
-| `shallow` | `boolean` | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -2965,9 +7289,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `position` | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3067,9 +7410,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type                                            |
-| --------- | ----------------------------------------------- |
-| `point`   | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`point`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3109,10 +7471,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      | Default value      |
-| --------- | --------- | ------------------ |
-| `obj`     | `unknown` | `undefined`        |
-| `msg`     | `string`  | `"Expected Point"` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected Point"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3124,10 +7527,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | Type                                            | Default value |
-| ------------- | ----------------------------------------------- | ------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position) | `undefined`   |
-| `shallow`     | `boolean`                                       | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`coordinates`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3139,9 +7583,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      |
-| --------- | --------- |
-| `obj`     | `unknown` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3167,10 +7630,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type                                                                                               | Default value |
-| --------- | -------------------------------------------------------------------------------------------------- | ------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)<[`Polygon`](geojson-utils/geojson.md#polygon), `"type"`> | `undefined`   |
-| `shallow` | `boolean`                                                                                          | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+[`OptionalParam`](utils.md#optionalparam)<[`Polygon`](geojson-utils/geojson.md#polygon), `"type"`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3182,11 +7686,68 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | Modifier   | Type                                                  |
-| ---------------------------------------- | ---------- | ----------------------------------------------------- |
-| <a id="bbox-8"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)             |
-| <a id="coordinates-7"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position)\[]\[] |
-| <a id="type-9"></a> `type`               | `readonly` | `"Polygon"`                                           |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="bbox-8"></a> `bbox?`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`BBox`](geojson-utils/geojson.md#bbox-7)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="coordinates-7"></a> `coordinates`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)\[]\[]
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-9"></a> `type`
+
+</td>
+<td>
+
+`readonly`
+
+</td>
+<td>
+
+`"Polygon"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -3208,9 +7769,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type            |
-| --------- | --------------- |
-| `options` | `BufferOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`BufferOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3222,9 +7802,34 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter    | Type     | Default value |
-| ------------ | -------- | ------------- |
-| `iterations` | `number` | `2`           |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`iterations`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`2`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3240,9 +7845,34 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      | Default value |
-| --------- | --------- | ------------- |
-| `shallow` | `boolean` | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3258,9 +7888,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `position` | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3312,9 +7961,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `position` | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`position`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3390,9 +8058,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type                                            |
-| --------- | ----------------------------------------------- |
-| `point`   | [`Position`](geojson-utils/geojson.md#position) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`point`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3440,10 +8127,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      | Default value        |
-| --------- | --------- | -------------------- |
-| `obj`     | `unknown` | `undefined`          |
-| `msg`     | `string`  | `"Expected Polygon"` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`msg`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+`"Expected Polygon"`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3455,10 +8183,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | Type                                                  | Default value |
-| ------------- | ----------------------------------------------------- | ------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position)\[]\[] | `undefined`   |
-| `shallow`     | `boolean`                                             | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`coordinates`
+
+</td>
+<td>
+
+[`Position`](geojson-utils/geojson.md#position)\[]\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3470,9 +8239,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      |
-| --------- | --------- |
-| `obj`     | `unknown` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3484,9 +8272,28 @@ overlap as well.
 
 #### Type Parameters
 
-| Type Parameter           | Default type |
-| ------------------------ | ------------ |
-| `IDS` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`IDS` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Constructors
 
@@ -3496,10 +8303,51 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type                                   | Default value |
-| --------- | -------------------------------------- | ------------- |
-| `record`  | [`PropertyList`](#propertylist)<`IDS`> | `undefined`   |
-| `shallow` | `boolean`                              | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`record`
+
+</td>
+<td>
+
+[`PropertyList`](#propertylist)<`IDS`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3507,10 +8355,62 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | Modifier   | Type                                                                                                     | Default value  |
-| ---------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------- | -------------- |
-| <a id="record"></a> `record`             | `public`   | [`PropertyList`](#propertylist)<`IDS`>                                                                   | `undefined`    |
-| <a id="special_keys"></a> `SPECIAL_KEYS` | `readonly` | readonly \[`"_designWeight"`, `"_distance"`, `"_parent"`, `"_randomRotation"`, `"_measure"`, `"_count"`] | `SPECIAL_KEYS` |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Modifier</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="record"></a> `record`
+
+</td>
+<td>
+
+`public`
+
+</td>
+<td>
+
+[`PropertyList`](#propertylist)<`IDS`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="special_keys"></a> `SPECIAL_KEYS`
+
+</td>
+<td>
+
+`readonly`
+
+</td>
+<td>
+
+readonly \[`"_designWeight"`, `"_distance"`, `"_parent"`, `"_randomRotation"`, `"_measure"`, `"_count"`]
+
+</td>
+<td>
+
+`SPECIAL_KEYS`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Methods
 
@@ -3520,10 +8420,40 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter           | Type                                                               |
-| ------------------- | ------------------------------------------------------------------ |
-| `this`              | [`PropertyRecord`](#propertyrecord-1)<`string`>                    |
-| `__namedParameters` | `Partial`<[`CategoricalProperty`](#categoricalproperty)<`string`>> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`this`
+
+</td>
+<td>
+
+[`PropertyRecord`](#propertyrecord-1)<`string`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+`Partial`<[`CategoricalProperty`](#categoricalproperty)<`string`>>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3535,10 +8465,40 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter           | Type                                                           |
-| ------------------- | -------------------------------------------------------------- |
-| `this`              | [`PropertyRecord`](#propertyrecord-1)<`string`>                |
-| `__namedParameters` | `Partial`<[`NumericalProperty`](#numericalproperty)<`string`>> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`this`
+
+</td>
+<td>
+
+[`PropertyRecord`](#propertyrecord-1)<`string`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+`Partial`<[`NumericalProperty`](#numericalproperty)<`string`>>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3550,10 +8510,40 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `this`     | [`PropertyRecord`](#propertyrecord-1)<`string`> |
-| `property` | [`Property`](#property)<`string`>               |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`this`
+
+</td>
+<td>
+
+[`PropertyRecord`](#propertyrecord-1)<`string`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`property`
+
+</td>
+<td>
+
+[`Property`](#property)<`string`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3565,10 +8555,40 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `id`      | `IDS`    |
-| `value`   | `string` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`id`
+
+</td>
+<td>
+
+`IDS`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3580,10 +8600,40 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `id`      | `IDS`    |
-| `value`   | `string` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`id`
+
+</td>
+<td>
+
+`IDS`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3595,9 +8645,34 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      | Default value |
-| --------- | --------- | ------------- |
-| `shallow` | `boolean` | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3611,9 +8686,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type  |
-| --------- | ----- |
-| `id`      | `IDS` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`id`
+
+</td>
+<td>
+
+`IDS`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3625,9 +8719,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type  |
-| --------- | ----- |
-| `id?`     | `IDS` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`id?`
+
+</td>
+<td>
+
+`IDS`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3655,9 +8768,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `id?`     | `string` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`id?`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3669,9 +8801,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type  |
-| --------- | ----- |
-| `id`      | `IDS` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`id`
+
+</td>
+<td>
+
+`IDS`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3683,9 +8834,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type  |
-| --------- | ----- |
-| `id`      | `IDS` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`id`
+
+</td>
+<td>
+
+`IDS`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3697,10 +8867,40 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type                                            |
-| --------- | ----------------------------------------------- |
-| `this`    | [`PropertyRecord`](#propertyrecord-1)<`string`> |
-| `id`      | `string`                                        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`this`
+
+</td>
+<td>
+
+[`PropertyRecord`](#propertyrecord-1)<`string`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`id`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3712,15 +8912,47 @@ overlap as well.
 
 ###### Type Parameters
 
-| Type Parameter           |
-| ------------------------ |
-| `IDS` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`IDS` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter | Type                                   |
-| --------- | -------------------------------------- |
-| `record`  | [`PropertyList`](#propertylist)<`IDS`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`record`
+
+</td>
+<td>
+
+[`PropertyList`](#propertylist)<`IDS`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3732,15 +8964,53 @@ overlap as well.
 
 ###### Type Parameters
 
-| Type Parameter            | Default type |
-| ------------------------- | ------------ |
-| `IDS1` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`IDS1` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter  | Type                                                       |
-| ---------- | ---------------------------------------------------------- |
-| `feature?` | [`Feature`](#feature)<[`PureObject`](#pureobject), `IDS1`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`feature?`
+
+</td>
+<td>
+
+[`Feature`](#feature)<[`PureObject`](#pureobject), `IDS1`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3752,9 +9022,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | Type                                                                                                                      |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `feature?` | [`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `unknown`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`feature?`
+
+</td>
+<td>
+
+[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `unknown`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3766,9 +9055,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | Type   |
-| ---------- | ------ | --------------------------------- |
-| `property` | `null` | [`Property`](#property)<`string`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`property`
+
+</td>
+<td>
+
+`null` | [`Property`](#property)<`string`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3780,9 +9088,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | Type   |
-| ---------- | ------ | --------------------------------- |
-| `property` | `null` | [`Property`](#property)<`string`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`property`
+
+</td>
+<td>
+
+`null` | [`Property`](#property)<`string`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3794,9 +9121,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type      |
-| --------- | --------- |
-| `obj`     | `unknown` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`unknown`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3808,9 +9154,28 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | Type     |
-| --------- | -------- |
-| `k`       | `string` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`k`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3822,17 +9187,66 @@ k is "\_designWeight" | "\_distance" | "\_parent" | "\_randomRotation" | "\_meas
 
 ###### Type Parameters
 
-| Type Parameter            |
-| ------------------------- |
-| `IDS1` _extends_ `string` |
-| `IDS2` _extends_ `string` |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`IDS1` _extends_ `string`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`IDS2` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Parameters
 
-| Parameter | Type                                          |
-| --------- | --------------------------------------------- |
-| `record1` | [`PropertyRecord`](#propertyrecord-1)<`IDS1`> |
-| `record2` | [`PropertyRecord`](#propertyrecord-1)<`IDS2`> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`record1`
+
+</td>
+<td>
+
+[`PropertyRecord`](#propertyrecord-1)<`IDS1`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`record2`
+
+</td>
+<td>
+
+[`PropertyRecord`](#propertyrecord-1)<`IDS2`>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -3848,18 +9262,110 @@ k is "\_designWeight" | "\_distance" | "\_parent" | "\_randomRotation" | "\_meas
 
 #### Type Parameters
 
-| Type Parameter          | Default type |
-| ----------------------- | ------------ |
-| `ID` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`ID` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Properties
 
-| Property                     | Type            | Description                                            |
-| ---------------------------- | --------------- | ------------------------------------------------------ |
-| <a id="id-2"></a> `id`       | `ID`            | The UUID of the Features property using this category. |
-| <a id="name"></a> `name?`    | `string`        | A human-friendly name                                  |
-| <a id="type-10"></a> `type`  | `"categorical"` | -                                                      |
-| <a id="values"></a> `values` | `string`\[]     | An ordered array of values defined on this category    |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="id-2"></a> `id`
+
+</td>
+<td>
+
+`ID`
+
+</td>
+<td>
+
+The UUID of the Features property using this category.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="name"></a> `name?`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+A human-friendly name
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-10"></a> `type`
+
+</td>
+<td>
+
+`"categorical"`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="values"></a> `values`
+
+</td>
+<td>
+
+`string`\[]
+
+</td>
+<td>
+
+An ordered array of values defined on this category
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -3867,9 +9373,34 @@ k is "\_designWeight" | "\_distance" | "\_parent" | "\_randomRotation" | "\_meas
 
 #### Properties
 
-| Property                                        | Type     | Description                                    |
-| ----------------------------------------------- | -------- | ---------------------------------------------- |
-| <a id="pointspercircle"></a> `pointsPerCircle?` | `number` | The number of vertices to create on the circle |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="pointspercircle"></a> `pointsPerCircle?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+The number of vertices to create on the circle
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -3881,18 +9412,110 @@ k is "\_designWeight" | "\_distance" | "\_parent" | "\_randomRotation" | "\_meas
 
 #### Type Parameters
 
-| Type Parameter          | Default type |
-| ----------------------- | ------------ |
-| `ID` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`ID` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Properties
 
-| Property                      | Type                  | Description                                            |
-| ----------------------------- | --------------------- | ------------------------------------------------------ |
-| <a id="id-4"></a> `id`        | `ID`                  | The UUID of the Features property using this category. |
-| <a id="name-1"></a> `name?`   | `string`              | A human-friendly name                                  |
-| <a id="parent"></a> `parent?` | \[`string`, `number`] | Holds id and index of collected categorical variable   |
-| <a id="type-11"></a> `type`   | `"numerical"`         | -                                                      |
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="id-4"></a> `id`
+
+</td>
+<td>
+
+`ID`
+
+</td>
+<td>
+
+The UUID of the Features property using this category.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="name-1"></a> `name?`
+
+</td>
+<td>
+
+`string`
+
+</td>
+<td>
+
+A human-friendly name
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="parent"></a> `parent?`
+
+</td>
+<td>
+
+\[`string`, `number`]
+
+</td>
+<td>
+
+Holds id and index of collected categorical variable
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="type-11"></a> `type`
+
+</td>
+<td>
+
+`"numerical"`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ## Type Aliases
 
@@ -3908,9 +9531,22 @@ k is "\_designWeight" | "\_distance" | "\_parent" | "\_randomRotation" | "\_meas
 
 #### Type Parameters
 
-| Type Parameter                            |
-| ----------------------------------------- |
-| `G` _extends_ [`PureObject`](#pureobject) |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`G` _extends_ [`PureObject`](#pureobject)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -3920,9 +9556,28 @@ k is "\_designWeight" | "\_distance" | "\_parent" | "\_randomRotation" | "\_meas
 
 #### Type Parameters
 
-| Type Parameter           | Default type |
-| ------------------------ | ------------ |
-| `IDS` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`IDS` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -3932,9 +9587,22 @@ k is "\_designWeight" | "\_distance" | "\_parent" | "\_randomRotation" | "\_meas
 
 #### Type Parameters
 
-| Type Parameter                            |
-| ----------------------------------------- |
-| `G` _extends_ [`PureObject`](#pureobject) |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`G` _extends_ [`PureObject`](#pureobject)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -3950,9 +9618,22 @@ k is "\_designWeight" | "\_distance" | "\_parent" | "\_randomRotation" | "\_meas
 
 #### Type Parameters
 
-| Type Parameter                                                                       |
-| ------------------------------------------------------------------------------------ |
-| `T` _extends_ [`GeometricPrimitiveUnion`](geojson-utils/.md#geometricprimitiveunion) |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T` _extends_ [`GeometricPrimitiveUnion`](geojson-utils/.md#geometricprimitiveunion)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -3968,9 +9649,22 @@ k is "\_designWeight" | "\_distance" | "\_parent" | "\_randomRotation" | "\_meas
 
 #### Type Parameters
 
-| Type Parameter                            |
-| ----------------------------------------- | --------------------------- | ----------------------------- |
-| `T` _extends_ [`AreaObject`](#areaobject) | [`LineObject`](#lineobject) | [`PointObject`](#pointobject) |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T` _extends_ [`AreaObject`](#areaobject) | [`LineObject`](#lineobject) | [`PointObject`](#pointobject)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -3980,9 +9674,28 @@ k is "\_designWeight" | "\_distance" | "\_parent" | "\_randomRotation" | "\_meas
 
 #### Type Parameters
 
-| Type Parameter          | Default type |
-| ----------------------- | ------------ |
-| `ID` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`ID` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -3992,9 +9705,28 @@ k is "\_designWeight" | "\_distance" | "\_parent" | "\_randomRotation" | "\_meas
 
 #### Type Parameters
 
-| Type Parameter           | Default type |
-| ------------------------ | ------------ |
-| `IDS` _extends_ `string` | `string`     |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`IDS` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -4004,9 +9736,28 @@ k is "\_designWeight" | "\_distance" | "\_parent" | "\_randomRotation" | "\_meas
 
 #### Type Parameters
 
-| Type Parameter                            | Default type                |
-| ----------------------------------------- | --------------------------- | ----------------------------- | --------------------------- | --------------------------- | ----------------------------- |
-| `T` _extends_ [`AreaObject`](#areaobject) | [`LineObject`](#lineobject) | [`PointObject`](#pointobject) | [`AreaObject`](#areaobject) | [`LineObject`](#lineobject) | [`PointObject`](#pointobject) |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T` _extends_ [`AreaObject`](#areaobject) | [`LineObject`](#lineobject) | [`PointObject`](#pointobject)
+
+</td>
+<td>
+
+[`AreaObject`](#areaobject) | [`LineObject`](#lineobject) | [`PointObject`](#pointobject)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -4016,9 +9767,22 @@ k is "\_designWeight" | "\_distance" | "\_parent" | "\_randomRotation" | "\_meas
 
 #### Type Parameters
 
-| Type Parameter                            |
-| ----------------------------------------- |
-| `G` _extends_ [`PureObject`](#pureobject) |
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`G` _extends_ [`PureObject`](#pureobject)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -4039,10 +9803,40 @@ contain a multipolygon.
 
 #### Parameters
 
-| Parameter    | Type                                                                             |
-| ------------ | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `collection` | [`FeatureCollection`](#featurecollection)<[`AreaObject`](#areaobject), `string`> | [`FeatureCollection`](#featurecollection)<[`LineObject`](#lineobject), `string`> | [`FeatureCollection`](#featurecollection)<[`PointObject`](#pointobject), `string`> |
-| `options`    | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions)                          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+[`FeatureCollection`](#featurecollection)<[`AreaObject`](#areaobject), `string`> | [`FeatureCollection`](#featurecollection)<[`LineObject`](#lineobject), `string`> | [`FeatureCollection`](#featurecollection)<[`PointObject`](#pointobject), `string`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`CirclesToPolygonsOptions`](#circlestopolygonsoptions)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -4058,11 +9852,52 @@ Intersect of two areas.
 
 #### Parameters
 
-| Parameter   | Type                                                    |
-| ----------- | ------------------------------------------------------- |
-| `geometry1` | [`AreaObject`](#areaobject)                             |
-| `geometry2` | [`AreaObject`](#areaobject)                             |
-| `options`   | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`geometry1`
+
+</td>
+<td>
+
+[`AreaObject`](#areaobject)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`geometry2`
+
+</td>
+<td>
+
+[`AreaObject`](#areaobject)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`CirclesToPolygonsOptions`](#circlestopolygonsoptions)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -4080,11 +9915,52 @@ Intersect between a line and an area.
 
 #### Parameters
 
-| Parameter | Type                                                    |
-| --------- | ------------------------------------------------------- |
-| `line`    | [`LineObject`](#lineobject)                             |
-| `area`    | [`AreaObject`](#areaobject)                             |
-| `options` | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`line`
+
+</td>
+<td>
+
+[`LineObject`](#lineobject)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`area`
+
+</td>
+<td>
+
+[`AreaObject`](#areaobject)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`CirclesToPolygonsOptions`](#circlestopolygonsoptions)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -4102,10 +9978,40 @@ Intersect of two lines: the crossing-points between the lines in the two feature
 
 #### Parameters
 
-| Parameter   | Type                        |
-| ----------- | --------------------------- |
-| `geometry1` | [`LineObject`](#lineobject) |
-| `geometry2` | [`LineObject`](#lineobject) |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`geometry1`
+
+</td>
+<td>
+
+[`LineObject`](#lineobject)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`geometry2`
+
+</td>
+<td>
+
+[`LineObject`](#lineobject)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -4123,10 +10029,40 @@ Intersection of points and area.
 
 #### Parameters
 
-| Parameter | Type                          |
-| --------- | ----------------------------- |
-| `point`   | [`PointObject`](#pointobject) |
-| `area`    | [`AreaObject`](#areaobject)   |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`point`
+
+</td>
+<td>
+
+[`PointObject`](#pointobject)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`area`
+
+</td>
+<td>
+
+[`AreaObject`](#areaobject)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -4142,9 +10078,28 @@ Intersection of points and area.
 
 #### Parameters
 
-| Parameter    | Type                                                                   |
-| ------------ | ---------------------------------------------------------------------- |
-| `collection` | [`FeatureCollection`](#featurecollection)<[`AreaObject`](#areaobject)> |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+[`FeatureCollection`](#featurecollection)<[`AreaObject`](#areaobject)>
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -4158,11 +10113,68 @@ Intersection of points and area.
 
 #### Parameters
 
-| Parameter  | Type                                                    | Default value |
-| ---------- | ------------------------------------------------------- | ------------- |
-| `geometry` | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`   |
-| `shallow`  | `boolean`                                               | `true`        |
-| `options`  | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) | `{}`          |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`geometry`
+
+</td>
+<td>
+
+[`BaseGeometry`](geojson-utils/geojson.md#basegeometry)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`CirclesToPolygonsOptions`](#circlestopolygonsoptions)
+
+</td>
+<td>
+
+`{}`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -4176,10 +10188,51 @@ Intersection of points and area.
 
 #### Parameters
 
-| Parameter  | Type                                                    | Default value |
-| ---------- | ------------------------------------------------------- | ------------- |
-| `geometry` | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`   |
-| `shallow`  | `boolean`                                               | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`geometry`
+
+</td>
+<td>
+
+[`BaseGeometry`](geojson-utils/geojson.md#basegeometry)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -4193,10 +10246,51 @@ Intersection of points and area.
 
 #### Parameters
 
-| Parameter  | Type                                                    | Default value |
-| ---------- | ------------------------------------------------------- | ------------- |
-| `geometry` | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`   |
-| `shallow`  | `boolean`                                               | `true`        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`geometry`
+
+</td>
+<td>
+
+[`BaseGeometry`](geojson-utils/geojson.md#basegeometry)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`shallow`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -4210,10 +10304,51 @@ Intersection of points and area.
 
 #### Parameters
 
-| Parameter    | Type                                                                   | Description                              |
-| ------------ | ---------------------------------------------------------------------- | ---------------------------------------- |
-| `collection` | [`FeatureCollection`](#featurecollection)<[`AreaObject`](#areaobject)> | the collection to compute the union from |
-| `options`    | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions)                | -                                        |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`collection`
+
+</td>
+<td>
+
+[`FeatureCollection`](#featurecollection)<[`AreaObject`](#areaobject)>
+
+</td>
+<td>
+
+the collection to compute the union from
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`CirclesToPolygonsOptions`](#circlestopolygonsoptions)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 

@@ -25,9 +25,28 @@ defined as \[lon1 + t \* (lon2 - lon1), lat1 + t \* (lat2 - lat1)], for
 
 #### Parameters
 
-| Parameter | Type                                 |
-| --------- | ------------------------------------ |
-| `ring`    | [`Position`](geojson.md#position)\[] |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`ring`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)\[]
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -45,10 +64,51 @@ Computes the plate carrée distance between two points
 
 #### Parameters
 
-| Parameter | Type                              | Description      |
-| --------- | --------------------------------- | ---------------- |
-| `p1`      | [`Position`](geojson.md#position) | the first point  |
-| `p2`      | [`Position`](geojson.md#position) | the second point |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p1`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)
+
+</td>
+<td>
+
+the first point
+
+</td>
+</tr>
+<tr>
+<td>
+
+`p2`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)
+
+</td>
+<td>
+
+the second point
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -67,11 +127,68 @@ segment, where the segment is of type plate carrée.
 
 #### Parameters
 
-| Parameter  | Type                              | Description                |
-| ---------- | --------------------------------- | -------------------------- |
-| `p1`       | [`Position`](geojson.md#position) | start point \[lon,lat]     |
-| `p2`       | [`Position`](geojson.md#position) | end point \[lon,lat]       |
-| `fraction` | `number`                          | the fraction of the length |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p1`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)
+
+</td>
+<td>
+
+start point \[lon,lat]
+
+</td>
+</tr>
+<tr>
+<td>
+
+`p2`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)
+
+</td>
+<td>
+
+end point \[lon,lat]
+
+</td>
+</tr>
+<tr>
+<td>
+
+`fraction`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+the fraction of the length
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 

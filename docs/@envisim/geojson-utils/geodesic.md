@@ -28,9 +28,34 @@ Computes the area of a polygon ring where the segments are the shortest
 
 #### Parameters
 
-| Parameter | Type                                 | Description                    |
-| --------- | ------------------------------------ | ------------------------------ |
-| `coords`  | [`Position`](geojson.md#position)\[] | coordinates of a polygon ring. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`coords`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)\[]
+
+</td>
+<td>
+
+coordinates of a polygon ring.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -49,11 +74,68 @@ a distance and an azimuth.
 
 #### Parameters
 
-| Parameter | Type                              | Description                                      |
-| --------- | --------------------------------- | ------------------------------------------------ |
-| `point`   | [`Position`](geojson.md#position) | point coordinates \[lon,lat].                    |
-| `dist`    | `number`                          | the distance in meters.                          |
-| `azimuth` | `number`                          | azimuth (angle) clockwise from north in degrees. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`point`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)
+
+</td>
+<td>
+
+point coordinates \[lon,lat].
+
+</td>
+</tr>
+<tr>
+<td>
+
+`dist`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+the distance in meters.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`azimuth`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+azimuth (angle) clockwise from north in degrees.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -72,11 +154,68 @@ a distance and an azimuth.
 
 #### Parameters
 
-| Parameter | Type                              | Description                                      |
-| --------- | --------------------------------- | ------------------------------------------------ |
-| `point`   | [`Position`](geojson.md#position) | point coordinates \[lon,lat].                    |
-| `dist`    | `number`                          | the distance in meters.                          |
-| `azimuth` | `number`                          | azimuth (angle) clockwise from north in degrees. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`point`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)
+
+</td>
+<td>
+
+point coordinates \[lon,lat].
+
+</td>
+</tr>
+<tr>
+<td>
+
+`dist`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+the distance in meters.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`azimuth`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+azimuth (angle) clockwise from north in degrees.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -94,10 +233,51 @@ Computes the shortest distance in meters between two point coordinates.
 
 #### Parameters
 
-| Parameter | Type                              | Description                   |
-| --------- | --------------------------------- | ----------------------------- |
-| `p1`      | [`Position`](geojson.md#position) | point coordinates \[lon,lat]. |
-| `p2`      | [`Position`](geojson.md#position) | point coordinates \[lon,lat]. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p1`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)
+
+</td>
+<td>
+
+point coordinates \[lon,lat].
+
+</td>
+</tr>
+<tr>
+<td>
+
+`p2`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)
+
+</td>
+<td>
+
+point coordinates \[lon,lat].
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -117,10 +297,51 @@ The azimuth takes values in the range -180 to +180.
 
 #### Parameters
 
-| Parameter | Type                              | Description                                    |
-| --------- | --------------------------------- | ---------------------------------------------- |
-| `p1`      | [`Position`](geojson.md#position) | point coordinates \[lon,lat] for first point.  |
-| `p2`      | [`Position`](geojson.md#position) | point coordinates \[lon,lat] for second point. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p1`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)
+
+</td>
+<td>
+
+point coordinates \[lon,lat] for first point.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`p2`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)
+
+</td>
+<td>
+
+point coordinates \[lon,lat] for second point.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -140,10 +361,51 @@ The azimuth takes values in the range -180 to +180.
 
 #### Parameters
 
-| Parameter | Type                              | Description                                    |
-| --------- | --------------------------------- | ---------------------------------------------- |
-| `p1`      | [`Position`](geojson.md#position) | point coordinates \[lon,lat] for first point.  |
-| `p2`      | [`Position`](geojson.md#position) | point coordinates \[lon,lat] for second point. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p1`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)
+
+</td>
+<td>
+
+point coordinates \[lon,lat] for first point.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`p2`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)
+
+</td>
+<td>
+
+point coordinates \[lon,lat] for second point.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -162,11 +424,68 @@ an end point and the fraction of the distance.
 
 #### Parameters
 
-| Parameter  | Type                              | Description                                   |
-| ---------- | --------------------------------- | --------------------------------------------- |
-| `p1`       | [`Position`](geojson.md#position) | point coordinates \[lon,lat] for start point. |
-| `p2`       | [`Position`](geojson.md#position) | point coordinates \[lon,lat] for end point.   |
-| `fraction` | `number`                          | the fraction of distance between the points.  |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p1`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)
+
+</td>
+<td>
+
+point coordinates \[lon,lat] for start point.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`p2`
+
+</td>
+<td>
+
+[`Position`](geojson.md#position)
+
+</td>
+<td>
+
+point coordinates \[lon,lat] for end point.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`fraction`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+the fraction of distance between the points.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 

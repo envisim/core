@@ -46,10 +46,62 @@ Constructs a nearest neighbour searcher, using k-d-trees
 
 ###### Parameters
 
-| Parameter    | Type                         | Default value | Description                              |
-| ------------ | ---------------------------- | ------------- | ---------------------------------------- |
-| `dt`         | [`Matrix`](matrix.md#matrix) | `undefined`   | the data to search within.               |
-| `bucketSize` | `number`                     | `40`          | the bucket size of the k-d-tree's nodes. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`dt`
+
+</td>
+<td>
+
+[`Matrix`](matrix.md#matrix)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+the data to search within.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`bucketSize`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`40`
+
+</td>
+<td>
+
+the bucket size of the k-d-tree's nodes.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -65,9 +117,35 @@ a nearest neighbour searcher.
 
 ###### Parameters
 
-| Parameter | Type     | Description |
-| --------- | -------- | ----------- | ------------------------------------------------------------------------------ |
-| `unit`    | `number` | `number`\[] | if a number $i$, the unit is assumed to be the $i$th row in the provided data. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`unit`
+
+</td>
+<td>
+
+`number` | `number`\[]
+
+</td>
+<td>
+
+if a number $i$, the unit is assumed to be the $i$th row
+in the provided data.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -82,9 +160,35 @@ provided data.
 
 ###### Parameters
 
-| Parameter | Type     | Description |
-| --------- | -------- | ----------- | ------------------------------------------------------------------------------ |
-| `unit`    | `number` | `number`\[] | if a number $i$, the unit is assumed to be the $i$th row in the provided data. |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`unit`
+
+</td>
+<td>
+
+`number` | `number`\[]
+
+</td>
+<td>
+
+if a number $i$, the unit is assumed to be the $i$th row
+in the provided data.
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ###### Returns
 
@@ -102,9 +206,28 @@ Selects a (pips) sample without replacement using Brewers method.
 
 #### Parameters
 
-| Parameter | Type          |
-| --------- | ------------- |
-| `options` | `PipsOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`PipsOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -122,9 +245,28 @@ Selects a conditional Poisson sample using the rejective method.
 
 #### Parameters
 
-| Parameter | Type                                |
-| --------- | ----------------------------------- |
-| `options` | `FixedSizedOptions` & `PipsOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`FixedSizedOptions` & `PipsOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -146,9 +288,28 @@ Selects a balanced (pips) sample using the cube method.
 
 #### Parameters
 
-| Parameter | Type          |
-| --------- | ------------- |
-| `options` | `CubeOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`CubeOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -166,9 +327,28 @@ Calculation of inclusion probabilities from a positive auxiliary variable.
 
 #### Parameters
 
-| Parameter | Type                            |
-| --------- | ------------------------------- |
-| `options` | `InclusionProbabilitiesOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`InclusionProbabilitiesOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -186,9 +366,28 @@ Selects a Locally Correlated Poisson Sample (LCPS)
 
 #### Parameters
 
-| Parameter | Type               |
-| --------- | ------------------ |
-| `options` | `AuxiliaryOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`AuxiliaryOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -206,9 +405,28 @@ Selects a doubly balanced sample using the local cube method.
 
 #### Parameters
 
-| Parameter | Type               |
-| --------- | ------------------ |
-| `options` | `LocalCubeOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`LocalCubeOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -226,9 +444,28 @@ Selects a (pips) sample using the local pivotal method 1.
 
 #### Parameters
 
-| Parameter | Type               |
-| --------- | ------------------ | ---------------------------- |
-| `options` | `AuxiliaryOptions` | `AuxiliaryFixedSizedOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`AuxiliaryOptions` | `AuxiliaryFixedSizedOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -246,9 +483,28 @@ Selects a (pips) sample using the local pivotal method 2.
 
 #### Parameters
 
-| Parameter | Type               |
-| --------- | ------------------ | ---------------------------- |
-| `options` | `AuxiliaryOptions` | `AuxiliaryFixedSizedOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`AuxiliaryOptions` | `AuxiliaryFixedSizedOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -266,9 +522,28 @@ Selects a Pareto (pips) sample without replacement.
 
 #### Parameters
 
-| Parameter | Type          |
-| --------- | ------------- |
-| `options` | `PipsOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`PipsOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -286,9 +561,28 @@ Selects a Poisson sample.
 
 #### Parameters
 
-| Parameter | Type          |
-| --------- | ------------- |
-| `options` | `PipsOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`PipsOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -306,9 +600,28 @@ Selects a pps sample with replacement.
 
 #### Parameters
 
-| Parameter | Type                                |
-| --------- | ----------------------------------- |
-| `options` | `FixedSizedOptions` & `PipsOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`FixedSizedOptions` & `PipsOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -326,9 +639,28 @@ Selects a systematic (pips) sample with initial randomization of order of the un
 
 #### Parameters
 
-| Parameter | Type          |
-| --------- | ------------- |
-| `options` | `PipsOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`PipsOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -346,9 +678,28 @@ Selects a (pips) sample using the random pivotal method.
 
 #### Parameters
 
-| Parameter | Type          |
-| --------- | ------------- |
-| `options` | `PipsOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`PipsOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -366,9 +717,28 @@ Selects a Sampford (pips) sample using the rejective method.
 
 #### Parameters
 
-| Parameter | Type          |
-| --------- | ------------- |
-| `options` | `PipsOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`PipsOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -386,9 +756,28 @@ Selects a Spatially Correlated Poisson Sample (SCPS)
 
 #### Parameters
 
-| Parameter | Type               |
-| --------- | ------------------ |
-| `options` | `AuxiliaryOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`AuxiliaryOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -406,9 +795,28 @@ Selects a coordinated Spatially Correlated Poisson Sample (SCPSCOORD)
 
 #### Parameters
 
-| Parameter | Type                     |
-| --------- | ------------------------ |
-| `options` | `ScpsCoordinatedOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`ScpsCoordinatedOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -426,9 +834,28 @@ Selects a (pips) sample using the sequential pivotal method.
 
 #### Parameters
 
-| Parameter | Type          |
-| --------- | ------------- |
-| `options` | `PipsOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`PipsOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -446,9 +873,28 @@ Selects a simple random sampling without replacement.
 
 #### Parameters
 
-| Parameter | Type         |
-| --------- | ------------ |
-| `options` | `SrsOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`SrsOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -466,9 +912,28 @@ Selects a simple random sampling with replacement.
 
 #### Parameters
 
-| Parameter | Type         |
-| --------- | ------------ |
-| `options` | `SrsOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`SrsOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
@@ -486,9 +951,28 @@ Selects a systematic (pips) sample.
 
 #### Parameters
 
-| Parameter | Type          |
-| --------- | ------------- |
-| `options` | `PipsOptions` |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+`PipsOptions`
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Returns
 
