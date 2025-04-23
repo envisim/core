@@ -14,7 +14,7 @@
 
 #### Parameters
 
-| Parameter | theme_type                              |
+| Parameter | Type                                    |
 | --------- | --------------------------------------- |
 | `obj`     | [`BaseFeature`](geojson.md#basefeature) |
 
@@ -32,7 +32,7 @@ obj is BaseFeature\<BaseGeometry, string \| number\>
 
 #### Parameters
 
-| Parameter | theme_type                                |
+| Parameter | Type                                      |
 | --------- | ----------------------------------------- |
 | `obj`     | [`BaseGeometry`](geojson.md#basegeometry) |
 
@@ -52,11 +52,11 @@ obj is BaseFeature\<BaseGeometry, string \| number\>
 
 ##### Parameters
 
-| Parameter          | theme_type | theme_description                                                                                                                                                                                            |
-| ------------------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `obj`              | `unknown`  | -                                                                                                                                                                                                            |
-| `checkCoordinates` | `boolean`  | if `true`, checks the validity of the `coordinates` property on every geometry in the collection, otherwise only checks for the existance of the `coordinates` property on every geometry in the collection. |
-| `allowGC`          | `false`    | if `false`, disallowes the existance of `GJ.BaseGeometryCollection` as a geometry                                                                                                                            |
+| Parameter          | Type      | Description                                                                                                                                                                                                  |
+| ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `obj`              | `unknown` | -                                                                                                                                                                                                            |
+| `checkCoordinates` | `boolean` | if `true`, checks the validity of the `coordinates` property on every geometry in the collection, otherwise only checks for the existance of the `coordinates` property on every geometry in the collection. |
+| `allowGC`          | `false`   | if `false`, disallowes the existance of `GJ.BaseGeometryCollection` as a geometry                                                                                                                            |
 
 ##### Returns
 
@@ -70,11 +70,11 @@ obj is BaseFeature\<BaseGeometry, string \| number\>
 
 ##### Parameters
 
-| Parameter           | theme_type | theme_description                                                                                                                                                                                            |
-| ------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `obj`               | `unknown`  | -                                                                                                                                                                                                            |
-| `checkCoordinates?` | `boolean`  | if `true`, checks the validity of the `coordinates` property on every geometry in the collection, otherwise only checks for the existance of the `coordinates` property on every geometry in the collection. |
-| `allowGC?`          | `boolean`  | if `false`, disallowes the existance of `GJ.BaseGeometryCollection` as a geometry                                                                                                                            |
+| Parameter           | Type      | Description                                                                                                                                                                                                  |
+| ------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `obj`               | `unknown` | -                                                                                                                                                                                                            |
+| `checkCoordinates?` | `boolean` | if `true`, checks the validity of the `coordinates` property on every geometry in the collection, otherwise only checks for the existance of the `coordinates` property on every geometry in the collection. |
+| `allowGC?`          | `boolean` | if `false`, disallowes the existance of `GJ.BaseGeometryCollection` as a geometry                                                                                                                            |
 
 ##### Returns
 
@@ -92,11 +92,11 @@ obj is BaseFeature\<BaseGeometry, string \| number\>
 
 ##### Parameters
 
-| Parameter          | theme_type | theme_description                                                                                                                   |
-| ------------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `obj`              | `unknown`  | -                                                                                                                                   |
-| `checkCoordinates` | `boolean`  | checks the validity of `obj.geometry.coordinates` if `true`, otherwise just checks for the existance of `obj.geometry.coordinates`. |
-| `allowGC`          | `false`    | if `false`, disallowes the existance of `GJ.BaseGeometryCollection` on `obj.geometry`                                               |
+| Parameter          | Type      | Description                                                                                                                         |
+| ------------------ | --------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `obj`              | `unknown` | -                                                                                                                                   |
+| `checkCoordinates` | `boolean` | checks the validity of `obj.geometry.coordinates` if `true`, otherwise just checks for the existance of `obj.geometry.coordinates`. |
+| `allowGC`          | `false`   | if `false`, disallowes the existance of `GJ.BaseGeometryCollection` on `obj.geometry`                                               |
 
 ##### Returns
 
@@ -110,11 +110,11 @@ obj is BaseFeature\<BaseGeometry, string \| number\>
 
 ##### Parameters
 
-| Parameter           | theme_type | theme_description                                                                                                                   |
-| ------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `obj`               | `unknown`  | -                                                                                                                                   |
-| `checkCoordinates?` | `boolean`  | checks the validity of `obj.geometry.coordinates` if `true`, otherwise just checks for the existance of `obj.geometry.coordinates`. |
-| `allowGC?`          | `boolean`  | if `false`, disallowes the existance of `GJ.BaseGeometryCollection` on `obj.geometry`                                               |
+| Parameter           | Type      | Description                                                                                                                         |
+| ------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `obj`               | `unknown` | -                                                                                                                                   |
+| `checkCoordinates?` | `boolean` | checks the validity of `obj.geometry.coordinates` if `true`, otherwise just checks for the existance of `obj.geometry.coordinates`. |
+| `allowGC?`          | `boolean` | if `false`, disallowes the existance of `GJ.BaseGeometryCollection` on `obj.geometry`                                               |
 
 ##### Returns
 
@@ -132,11 +132,11 @@ obj is BaseFeature\<BaseGeometry, string \| number\>
 
 ##### Parameters
 
-| Parameter          | theme_type | theme_description                                                                                                                   |
-| ------------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `obj`              | `unknown`  | -                                                                                                                                   |
-| `checkCoordinates` | `boolean`  | checks the validity of the `coordinates` property if `true`, otherwise just checks for the existance of the `coordinates` property. |
-| `allowGC`          | `false`    | if `false`, disallowes the existance of `GJ.BaseGeometryCollection` on `obj`                                                        |
+| Parameter          | Type      | Description                                                                                                                         |
+| ------------------ | --------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `obj`              | `unknown` | -                                                                                                                                   |
+| `checkCoordinates` | `boolean` | checks the validity of the `coordinates` property if `true`, otherwise just checks for the existance of the `coordinates` property. |
+| `allowGC`          | `false`   | if `false`, disallowes the existance of `GJ.BaseGeometryCollection` on `obj`                                                        |
 
 ##### Returns
 
@@ -150,11 +150,11 @@ obj is BaseFeature\<BaseGeometry, string \| number\>
 
 ##### Parameters
 
-| Parameter           | theme_type | theme_description                                                                                                                   |
-| ------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `obj`               | `unknown`  | -                                                                                                                                   |
-| `checkCoordinates?` | `boolean`  | checks the validity of the `coordinates` property if `true`, otherwise just checks for the existance of the `coordinates` property. |
-| `allowGC?`          | `boolean`  | if `false`, disallowes the existance of `GJ.BaseGeometryCollection` on `obj`                                                        |
+| Parameter           | Type      | Description                                                                                                                         |
+| ------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `obj`               | `unknown` | -                                                                                                                                   |
+| `checkCoordinates?` | `boolean` | checks the validity of the `coordinates` property if `true`, otherwise just checks for the existance of the `coordinates` property. |
+| `allowGC?`          | `boolean` | if `false`, disallowes the existance of `GJ.BaseGeometryCollection` on `obj`                                                        |
 
 ##### Returns
 
@@ -170,10 +170,10 @@ obj is BaseFeature\<BaseGeometry, string \| number\>
 
 #### Parameters
 
-| Parameter             | theme_type                                        | theme_default_value |
-| --------------------- | ------------------------------------------------- | ------------------- |
-| `obj`                 | [`SingleTypeObject`](geojson.md#singletypeobject) | `undefined`         |
-| `checkPositiveRadius` | `boolean`                                         | `false`             |
+| Parameter             | Type                                              | Default value |
+| --------------------- | ------------------------------------------------- | ------------- |
+| `obj`                 | [`SingleTypeObject`](geojson.md#singletypeobject) | `undefined`   |
+| `checkPositiveRadius` | `boolean`                                         | `false`       |
 
 #### Returns
 
@@ -189,10 +189,10 @@ obj is BaseFeature\<BaseGeometry, string \| number\>
 
 #### Parameters
 
-| Parameter             | theme_type                                        | theme_default_value |
-| --------------------- | ------------------------------------------------- | ------------------- |
-| `obj`                 | [`SingleTypeObject`](geojson.md#singletypeobject) | `undefined`         |
-| `checkPositiveRadius` | `boolean`                                         | `false`             |
+| Parameter             | Type                                              | Default value |
+| --------------------- | ------------------------------------------------- | ------------- |
+| `obj`                 | [`SingleTypeObject`](geojson.md#singletypeobject) | `undefined`   |
+| `checkPositiveRadius` | `boolean`                                         | `false`       |
 
 #### Returns
 
@@ -208,7 +208,7 @@ obj is Circle \| MultiCircle
 
 #### Parameters
 
-| Parameter | theme_type                                |
+| Parameter | Type                                      |
 | --------- | ----------------------------------------- |
 | `obj`     | [`BaseGeometry`](geojson.md#basegeometry) |
 
@@ -226,10 +226,10 @@ obj is Circle \| MultiCircle
 
 #### Parameters
 
-| Parameter             | theme_type                                        | theme_default_value |
-| --------------------- | ------------------------------------------------- | ------------------- |
-| `obj`                 | [`SingleTypeObject`](geojson.md#singletypeobject) | `undefined`         |
-| `checkPositiveRadius` | `boolean`                                         | `false`             |
+| Parameter             | Type                                              | Default value |
+| --------------------- | ------------------------------------------------- | ------------- |
+| `obj`                 | [`SingleTypeObject`](geojson.md#singletypeobject) | `undefined`   |
+| `checkPositiveRadius` | `boolean`                                         | `false`       |
 
 #### Returns
 
@@ -245,7 +245,7 @@ obj is Circle \| MultiCircle
 
 #### Parameters
 
-| Parameter | theme_type                                        |
+| Parameter | Type                                              |
 | --------- | ------------------------------------------------- |
 | `obj`     | [`SingleTypeObject`](geojson.md#singletypeobject) |
 
@@ -263,7 +263,7 @@ obj is Circle \| MultiCircle
 
 #### Parameters
 
-| Parameter | theme_type                                        |
+| Parameter | Type                                              |
 | --------- | ------------------------------------------------- |
 | `obj`     | [`SingleTypeObject`](geojson.md#singletypeobject) |
 
@@ -281,7 +281,7 @@ obj is Circle \| MultiCircle
 
 #### Parameters
 
-| Parameter | theme_type                                |
+| Parameter | Type                                      |
 | --------- | ----------------------------------------- |
 | `obj`     | [`BaseGeometry`](geojson.md#basegeometry) |
 
@@ -299,7 +299,7 @@ obj is Circle \| MultiCircle
 
 #### Parameters
 
-| Parameter | theme_type                                        |
+| Parameter | Type                                              |
 | --------- | ------------------------------------------------- |
 | `obj`     | [`SingleTypeObject`](geojson.md#singletypeobject) |
 
@@ -317,10 +317,10 @@ obj is Point \| MultiPoint
 
 #### Parameters
 
-| Parameter          | theme_type | theme_default_value |
-| ------------------ | ---------- | ------------------- |
-| `obj`              | `unknown`  | `undefined`         |
-| `checkCoordinates` | `boolean`  | `false`             |
+| Parameter          | Type      | Default value |
+| ------------------ | --------- | ------------- |
+| `obj`              | `unknown` | `undefined`   |
+| `checkCoordinates` | `boolean` | `false`       |
 
 #### Returns
 
@@ -337,10 +337,10 @@ obj is Point \| MultiPoint
 
 #### Parameters
 
-| Parameter          | theme_type | theme_default_value |
-| ------------------ | ---------- | ------------------- |
-| `obj`              | `unknown`  | `undefined`         |
-| `checkCoordinates` | `boolean`  | `false`             |
+| Parameter          | Type      | Default value |
+| ------------------ | --------- | ------------- |
+| `obj`              | `unknown` | `undefined`   |
+| `checkCoordinates` | `boolean` | `false`       |
 
 #### Returns
 
@@ -356,10 +356,10 @@ obj is Point \| MultiPoint
 
 #### Parameters
 
-| Parameter          | theme_type | theme_default_value |
-| ------------------ | ---------- | ------------------- |
-| `obj`              | `unknown`  | `undefined`         |
-| `checkCoordinates` | `boolean`  | `false`             |
+| Parameter          | Type      | Default value |
+| ------------------ | --------- | ------------- |
+| `obj`              | `unknown` | `undefined`   |
+| `checkCoordinates` | `boolean` | `false`       |
 
 #### Returns
 
@@ -375,7 +375,7 @@ obj is Point \| MultiPoint
 
 #### Parameters
 
-| Parameter | theme_type                                                                                                                                                             |
+| Parameter | Type                                                                                                                                                                   |
 | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `obj`     | [`BaseFeatureCollection`](geojson.md#basefeaturecollection)\<[`BaseFeature`](geojson.md#basefeature)\<[`SingleTypeObject`](geojson.md#singletypeobject), `unknown`\>\> |
 

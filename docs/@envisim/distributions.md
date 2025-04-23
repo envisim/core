@@ -10,7 +10,7 @@
 
 ### Arcsine
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsBound`\>
 
@@ -24,10 +24,10 @@ The Arcsine distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `a`       | `number`   | `boundDefault.a`    |
-| `b`       | `number`   | `boundDefault.b`    |
+| Parameter | Type     | Default value    |
+| --------- | -------- | ---------------- |
+| `a`       | `number` | `boundDefault.a` |
+| `b`       | `number` | `boundDefault.b` |
 
 ###### Returns
 
@@ -47,13 +47,13 @@ x.cdf(0.1);
 
 #### Properties
 
-| Property                       | theme_modifier | theme_type | theme_description |
-| ------------------------------ | -------------- | ---------- | ----------------- |
-| <a id="params"></a> `params`   | `protected`    | `object`   | -                 |
-| `params.a`                     | `public`       | `number`   | Left bound        |
-| `params.b`                     | `public`       | `number`   | Right bound       |
-| <a id="range"></a> `range`     | `protected`    | `number`   | **`Internal`**    |
-| <a id="support"></a> `support` | `protected`    | `Interval` | **`Internal`**    |
+| Property                       | Modifier    | Type       | Description    |
+| ------------------------------ | ----------- | ---------- | -------------- |
+| <a id="params"></a> `params`   | `protected` | `object`   | -              |
+| `params.a`                     | `public`    | `number`   | Left bound     |
+| `params.b`                     | `public`    | `number`   | Right bound    |
+| <a id="range"></a> `range`     | `protected` | `number`   | **`Internal`** |
+| <a id="support"></a> `support` | `protected` | `Interval` | **`Internal`** |
 
 #### Methods
 
@@ -65,9 +65,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -85,9 +85,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -133,9 +133,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -153,9 +153,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -173,11 +173,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -195,7 +195,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -216,11 +216,11 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter  | theme_type                          | theme_description |
-| ---------- | ----------------------------------- | ----------------- |
-| `params`   | \{ `a`: `number`; `b`: `number`; \} | -                 |
-| `params.a` | `number`                            | Left bound        |
-| `params.b` | `number`                            | Right bound       |
+| Parameter  | Type                                | Description |
+| ---------- | ----------------------------------- | ----------- |
+| `params`   | \{ `a`: `number`; `b`: `number`; \} | -           |
+| `params.a` | `number`                            | Left bound  |
+| `params.b` | `number`                            | Right bound |
 
 ###### Returns
 
@@ -276,7 +276,7 @@ the variance
 
 ### BenfordMantissa
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsBenfordMantissa`\>
 
@@ -290,9 +290,9 @@ The Benford Mantissa distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value      |
-| --------- | ---------- | ------------------------ |
-| `base`    | `number`   | `benfordMantissaDefault` |
+| Parameter | Type     | Default value            |
+| --------- | -------- | ------------------------ |
+| `base`    | `number` | `benfordMantissaDefault` |
 
 ###### Returns
 
@@ -314,11 +314,11 @@ x.random(10);
 
 #### Properties
 
-| Property                         | theme_modifier | theme_type | theme_default_value      | theme_description |
-| -------------------------------- | -------------- | ---------- | ------------------------ | ----------------- |
-| <a id="logbase"></a> `logBase`   | `protected`    | `number`   | `undefined`              | -                 |
-| <a id="params-1"></a> `params`   | `protected`    | `number`   | `benfordMantissaDefault` | -                 |
-| <a id="support-1"></a> `support` | `protected`    | `Interval` | `undefined`              | **`Internal`**    |
+| Property                         | Modifier    | Type       | Default value            | Description    |
+| -------------------------------- | ----------- | ---------- | ------------------------ | -------------- |
+| <a id="logbase"></a> `logBase`   | `protected` | `number`   | `undefined`              | -              |
+| <a id="params-1"></a> `params`   | `protected` | `number`   | `benfordMantissaDefault` | -              |
+| <a id="support-1"></a> `support` | `protected` | `Interval` | `undefined`              | **`Internal`** |
 
 #### Methods
 
@@ -330,9 +330,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -350,9 +350,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -398,9 +398,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -418,9 +418,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -438,11 +438,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -460,7 +460,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -481,9 +481,9 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value      |
-| --------- | ---------- | ------------------------ |
-| `base`    | `number`   | `benfordMantissaDefault` |
+| Parameter | Type     | Default value            |
+| --------- | -------- | ------------------------ |
+| `base`    | `number` | `benfordMantissaDefault` |
 
 ###### Returns
 
@@ -539,7 +539,7 @@ the variance
 
 ### Bernoulli
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsBernoulli`\>
 
@@ -553,9 +553,9 @@ The Bernoulli distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `p`       | `number`   | `bernoulliDefault`  |
+| Parameter | Type     | Default value      |
+| --------- | -------- | ------------------ |
+| `p`       | `number` | `bernoulliDefault` |
 
 ###### Returns
 
@@ -575,10 +575,10 @@ x.quantile(0.5);
 
 #### Properties
 
-| Property                         | theme_modifier | theme_type | theme_default_value | theme_description |
-| -------------------------------- | -------------- | ---------- | ------------------- | ----------------- |
-| <a id="params-2"></a> `params`   | `protected`    | `number`   | `bernoulliDefault`  | -                 |
-| <a id="support-2"></a> `support` | `protected`    | `Interval` | `undefined`         | **`Internal`**    |
+| Property                         | Modifier    | Type       | Default value      | Description    |
+| -------------------------------- | ----------- | ---------- | ------------------ | -------------- |
+| <a id="params-2"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | -              |
+| <a id="support-2"></a> `support` | `protected` | `Interval` | `undefined`        | **`Internal`** |
 
 #### Methods
 
@@ -590,9 +590,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -610,9 +610,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -658,9 +658,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -678,9 +678,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -698,11 +698,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -720,7 +720,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -741,9 +741,9 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `p`       | `number`   | `bernoulliDefault`  |
+| Parameter | Type     | Default value      |
+| --------- | -------- | ------------------ |
+| `p`       | `number` | `bernoulliDefault` |
 
 ###### Returns
 
@@ -799,7 +799,7 @@ the variance
 
 ### Beta
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsBeta`\>
 
@@ -813,10 +813,10 @@ The Beta distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `alpha`   | `number`   | `betaDefault.alpha` |
-| `beta`    | `number`   | `betaDefault.beta`  |
+| Parameter | Type     | Default value       |
+| --------- | -------- | ------------------- |
+| `alpha`   | `number` | `betaDefault.alpha` |
+| `beta`    | `number` | `betaDefault.beta`  |
 
 ###### Returns
 
@@ -838,11 +838,11 @@ x.random(10);
 
 #### Properties
 
-| Property                         | theme_modifier | theme_type   | theme_description |
-| -------------------------------- | -------------- | ------------ | ----------------- |
-| <a id="lbf"></a> `lbf`           | `protected`    | `number`     | -                 |
-| <a id="params-3"></a> `params`   | `protected`    | `ParamsBeta` | -                 |
-| <a id="support-3"></a> `support` | `protected`    | `Interval`   | **`Internal`**    |
+| Property                         | Modifier    | Type         | Description    |
+| -------------------------------- | ----------- | ------------ | -------------- |
+| <a id="lbf"></a> `lbf`           | `protected` | `number`     | -              |
+| <a id="params-3"></a> `params`   | `protected` | `ParamsBeta` | -              |
+| <a id="support-3"></a> `support` | `protected` | `Interval`   | **`Internal`** |
 
 #### Methods
 
@@ -854,10 +854,10 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `x`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-20`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `x`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-20`       |
 
 ###### Returns
 
@@ -875,9 +875,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -923,9 +923,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -943,10 +943,10 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `q`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-20`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `q`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-20`       |
 
 ###### Returns
 
@@ -964,11 +964,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -986,10 +986,10 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value | theme_description                          |
-| ------------------- | --------------------------------- | ------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                 | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`                | -                                          |
+| Parameter           | Type                              | Default value | Description                                |
+| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
+| `n`                 | `number`                          | `1`           | the number of observations to be generated |
+| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
 
 ###### Returns
 
@@ -1007,7 +1007,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type   |
+| Parameter | Type         |
 | --------- | ------------ |
 | `params`  | `ParamsBeta` |
 
@@ -1065,7 +1065,7 @@ the variance
 
 ### BetaPrime
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsBeta`\>
 
@@ -1079,10 +1079,10 @@ The Beta Prime distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `alpha`   | `number`   | `betaDefault.alpha` |
-| `beta`    | `number`   | `betaDefault.beta`  |
+| Parameter | Type     | Default value       |
+| --------- | -------- | ------------------- |
+| `alpha`   | `number` | `betaDefault.alpha` |
+| `beta`    | `number` | `betaDefault.beta`  |
 
 ###### Returns
 
@@ -1104,11 +1104,11 @@ x.random(10);
 
 #### Properties
 
-| Property                         | theme_modifier | theme_type   | theme_description |
-| -------------------------------- | -------------- | ------------ | ----------------- |
-| <a id="lbf-1"></a> `lbf`         | `protected`    | `number`     | -                 |
-| <a id="params-4"></a> `params`   | `protected`    | `ParamsBeta` | -                 |
-| <a id="support-4"></a> `support` | `protected`    | `Interval`   | **`Internal`**    |
+| Property                         | Modifier    | Type         | Description    |
+| -------------------------------- | ----------- | ------------ | -------------- |
+| <a id="lbf-1"></a> `lbf`         | `protected` | `number`     | -              |
+| <a id="params-4"></a> `params`   | `protected` | `ParamsBeta` | -              |
+| <a id="support-4"></a> `support` | `protected` | `Interval`   | **`Internal`** |
 
 #### Methods
 
@@ -1120,10 +1120,10 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `x`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-20`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `x`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-20`       |
 
 ###### Returns
 
@@ -1141,9 +1141,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -1189,9 +1189,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -1209,10 +1209,10 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `q`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-20`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `q`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-20`       |
 
 ###### Returns
 
@@ -1230,11 +1230,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -1252,10 +1252,10 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value | theme_description                          |
-| ------------------- | --------------------------------- | ------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                 | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`                | -                                          |
+| Parameter           | Type                              | Default value | Description                                |
+| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
+| `n`                 | `number`                          | `1`           | the number of observations to be generated |
+| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
 
 ###### Returns
 
@@ -1273,7 +1273,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type   |
+| Parameter | Type         |
 | --------- | ------------ |
 | `params`  | `ParamsBeta` |
 
@@ -1331,7 +1331,7 @@ the variance
 
 ### Binomial
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsBinomial`\>
 
@@ -1345,10 +1345,10 @@ The Binomial distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `n`       | `number`   | `binomialDefault.n` |
-| `p`       | `number`   | `binomialDefault.p` |
+| Parameter | Type     | Default value       |
+| --------- | -------- | ------------------- |
+| `n`       | `number` | `binomialDefault.n` |
+| `p`       | `number` | `binomialDefault.p` |
 
 ###### Returns
 
@@ -1371,10 +1371,10 @@ x.random(10);
 
 #### Properties
 
-| Property                         | theme_modifier | theme_type       | theme_description |
-| -------------------------------- | -------------- | ---------------- | ----------------- |
-| <a id="params-5"></a> `params`   | `protected`    | `ParamsBinomial` | -                 |
-| <a id="support-5"></a> `support` | `protected`    | `Interval`       | **`Internal`**    |
+| Property                         | Modifier    | Type             | Description    |
+| -------------------------------- | ----------- | ---------------- | -------------- |
+| <a id="params-5"></a> `params`   | `protected` | `ParamsBinomial` | -              |
+| <a id="support-5"></a> `support` | `protected` | `Interval`       | **`Internal`** |
 
 #### Methods
 
@@ -1386,10 +1386,10 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `x`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-20`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `x`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-20`       |
 
 ###### Returns
 
@@ -1407,9 +1407,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -1455,9 +1455,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -1475,10 +1475,10 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `q`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-20`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `q`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-20`       |
 
 ###### Returns
 
@@ -1496,11 +1496,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -1518,10 +1518,10 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value | theme_description                          |
-| ------------------- | --------------------------------- | ------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                 | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`                | -                                          |
+| Parameter           | Type                              | Default value | Description                                |
+| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
+| `n`                 | `number`                          | `1`           | the number of observations to be generated |
+| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
 
 ###### Returns
 
@@ -1539,7 +1539,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type       |
+| Parameter | Type             |
 | --------- | ---------------- |
 | `params`  | `ParamsBinomial` |
 
@@ -1597,7 +1597,7 @@ the variance
 
 ### Cauchy
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsLocationScale`\>
 
@@ -1611,10 +1611,10 @@ The Cauchy distribution
 
 ###### Parameters
 
-| Parameter  | theme_type | theme_default_value             |
-| ---------- | ---------- | ------------------------------- |
-| `location` | `number`   | `locationScaleDefault.location` |
-| `scale`    | `number`   | `locationScaleDefault.scale`    |
+| Parameter  | Type     | Default value                   |
+| ---------- | -------- | ------------------------------- |
+| `location` | `number` | `locationScaleDefault.location` |
+| `scale`    | `number` | `locationScaleDefault.scale`    |
 
 ###### Returns
 
@@ -1636,10 +1636,10 @@ x.random(10);
 
 #### Properties
 
-| Property                         | theme_modifier | theme_type            | theme_description |
-| -------------------------------- | -------------- | --------------------- | ----------------- |
-| <a id="params-6"></a> `params`   | `protected`    | `ParamsLocationScale` | -                 |
-| <a id="support-6"></a> `support` | `protected`    | `Interval`            | **`Internal`**    |
+| Property                         | Modifier    | Type                  | Description    |
+| -------------------------------- | ----------- | --------------------- | -------------- |
+| <a id="params-6"></a> `params`   | `protected` | `ParamsLocationScale` | -              |
+| <a id="support-6"></a> `support` | `protected` | `Interval`            | **`Internal`** |
 
 #### Methods
 
@@ -1651,9 +1651,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -1671,9 +1671,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -1719,9 +1719,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -1739,9 +1739,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -1759,11 +1759,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -1781,7 +1781,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -1802,7 +1802,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type            |
+| Parameter | Type                  |
 | --------- | --------------------- |
 | `params`  | `ParamsLocationScale` |
 
@@ -1860,7 +1860,7 @@ the variance
 
 ### ChiSquared
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsDegreesOfFreedom`\>
 
@@ -1874,9 +1874,9 @@ The Chi-squared distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value       |
-| --------- | ---------- | ------------------------- |
-| `df`      | `number`   | `degreesOfFreedomDefault` |
+| Parameter | Type     | Default value             |
+| --------- | -------- | ------------------------- |
+| `df`      | `number` | `degreesOfFreedomDefault` |
 
 ###### Returns
 
@@ -1898,10 +1898,10 @@ x.random(10);
 
 #### Properties
 
-| Property                         | theme_modifier | theme_type | theme_default_value       | theme_description |
-| -------------------------------- | -------------- | ---------- | ------------------------- | ----------------- |
-| <a id="params-7"></a> `params`   | `protected`    | `number`   | `degreesOfFreedomDefault` | -                 |
-| <a id="support-7"></a> `support` | `protected`    | `Interval` | `undefined`               | **`Internal`**    |
+| Property                         | Modifier    | Type       | Default value             | Description    |
+| -------------------------------- | ----------- | ---------- | ------------------------- | -------------- |
+| <a id="params-7"></a> `params`   | `protected` | `number`   | `degreesOfFreedomDefault` | -              |
+| <a id="support-7"></a> `support` | `protected` | `Interval` | `undefined`               | **`Internal`** |
 
 #### Methods
 
@@ -1913,10 +1913,10 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `x`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-12`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `x`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-12`       |
 
 ###### Returns
 
@@ -1934,9 +1934,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -1982,9 +1982,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -2002,10 +2002,10 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
-| `eps`     | `1e-12`    |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
+| `eps`     | `1e-12`  |
 
 ###### Returns
 
@@ -2023,11 +2023,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -2045,10 +2045,10 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value | theme_description                          |
-| ------------------- | --------------------------------- | ------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                 | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`                | -                                          |
+| Parameter           | Type                              | Default value | Description                                |
+| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
+| `n`                 | `number`                          | `1`           | the number of observations to be generated |
+| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
 
 ###### Returns
 
@@ -2066,9 +2066,9 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value       |
-| --------- | ---------- | ------------------------- |
-| `df`      | `number`   | `degreesOfFreedomDefault` |
+| Parameter | Type     | Default value             |
+| --------- | -------- | ------------------------- |
+| `df`      | `number` | `degreesOfFreedomDefault` |
 
 ###### Returns
 
@@ -2124,7 +2124,7 @@ the variance
 
 ### Exponential
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsRate`\>
 
@@ -2138,9 +2138,9 @@ The Exponential distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `rate`    | `number`   | `rateDefault`       |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `rate`    | `number` | `rateDefault` |
 
 ###### Returns
 
@@ -2162,10 +2162,10 @@ x.random(10);
 
 #### Properties
 
-| Property                         | theme_modifier | theme_type | theme_default_value | theme_description |
-| -------------------------------- | -------------- | ---------- | ------------------- | ----------------- |
-| <a id="params-8"></a> `params`   | `protected`    | `number`   | `rateDefault`       | -                 |
-| <a id="support-8"></a> `support` | `protected`    | `Interval` | `undefined`         | **`Internal`**    |
+| Property                         | Modifier    | Type       | Default value | Description    |
+| -------------------------------- | ----------- | ---------- | ------------- | -------------- |
+| <a id="params-8"></a> `params`   | `protected` | `number`   | `rateDefault` | -              |
+| <a id="support-8"></a> `support` | `protected` | `Interval` | `undefined`   | **`Internal`** |
 
 #### Methods
 
@@ -2177,9 +2177,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -2197,9 +2197,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -2245,9 +2245,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -2265,9 +2265,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -2285,11 +2285,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -2307,7 +2307,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -2328,9 +2328,9 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `rate`    | `number`   | `rateDefault`       |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `rate`    | `number` | `rateDefault` |
 
 ###### Returns
 
@@ -2386,7 +2386,7 @@ the variance
 
 ### ExtremeValue
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsLocationScale`\>
 
@@ -2400,10 +2400,10 @@ The Extreme Value distribution
 
 ###### Parameters
 
-| Parameter  | theme_type | theme_default_value             |
-| ---------- | ---------- | ------------------------------- |
-| `location` | `number`   | `locationScaleDefault.location` |
-| `scale`    | `number`   | `locationScaleDefault.scale`    |
+| Parameter  | Type     | Default value                   |
+| ---------- | -------- | ------------------------------- |
+| `location` | `number` | `locationScaleDefault.location` |
+| `scale`    | `number` | `locationScaleDefault.scale`    |
 
 ###### Returns
 
@@ -2423,10 +2423,10 @@ x.quantile(0.5);
 
 #### Properties
 
-| Property                         | theme_modifier | theme_type            | theme_description |
-| -------------------------------- | -------------- | --------------------- | ----------------- |
-| <a id="params-9"></a> `params`   | `protected`    | `ParamsLocationScale` | -                 |
-| <a id="support-9"></a> `support` | `protected`    | `Interval`            | **`Internal`**    |
+| Property                         | Modifier    | Type                  | Description    |
+| -------------------------------- | ----------- | --------------------- | -------------- |
+| <a id="params-9"></a> `params`   | `protected` | `ParamsLocationScale` | -              |
+| <a id="support-9"></a> `support` | `protected` | `Interval`            | **`Internal`** |
 
 #### Methods
 
@@ -2438,9 +2438,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -2458,9 +2458,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -2506,9 +2506,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -2526,9 +2526,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -2546,11 +2546,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -2568,7 +2568,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -2589,7 +2589,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type            |
+| Parameter | Type                  |
 | --------- | --------------------- |
 | `params`  | `ParamsLocationScale` |
 
@@ -2647,7 +2647,7 @@ the variance
 
 ### FoldedNormal
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsNormal`\>
 
@@ -2661,10 +2661,10 @@ The Folded-Normal distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value   |
-| --------- | ---------- | --------------------- |
-| `mu`      | `number`   | `normalDefault.mu`    |
-| `sigma`   | `number`   | `normalDefault.sigma` |
+| Parameter | Type     | Default value         |
+| --------- | -------- | --------------------- |
+| `mu`      | `number` | `normalDefault.mu`    |
+| `sigma`   | `number` | `normalDefault.sigma` |
 
 ###### Returns
 
@@ -2686,10 +2686,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type     | theme_description |
-| --------------------------------- | -------------- | -------------- | ----------------- |
-| <a id="params-10"></a> `params`   | `protected`    | `ParamsNormal` | -                 |
-| <a id="support-10"></a> `support` | `protected`    | `Interval`     | **`Internal`**    |
+| Property                          | Modifier    | Type           | Description    |
+| --------------------------------- | ----------- | -------------- | -------------- |
+| <a id="params-10"></a> `params`   | `protected` | `ParamsNormal` | -              |
+| <a id="support-10"></a> `support` | `protected` | `Interval`     | **`Internal`** |
 
 #### Methods
 
@@ -2701,9 +2701,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -2721,9 +2721,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -2769,9 +2769,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -2789,10 +2789,10 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `q`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-12`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `q`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-12`       |
 
 ###### Returns
 
@@ -2810,11 +2810,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -2832,10 +2832,10 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value | theme_description                          |
-| ------------------- | --------------------------------- | ------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                 | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`                | -                                          |
+| Parameter           | Type                              | Default value | Description                                |
+| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
+| `n`                 | `number`                          | `1`           | the number of observations to be generated |
+| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
 
 ###### Returns
 
@@ -2853,7 +2853,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type     |
+| Parameter | Type           |
 | --------- | -------------- |
 | `params`  | `ParamsNormal` |
 
@@ -2911,7 +2911,7 @@ the variance
 
 ### FRatio
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsDegreesOfFreedom2`\>
 
@@ -2925,10 +2925,10 @@ The F distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value       |
-| --------- | ---------- | ------------------------- |
-| `df1`     | `number`   | `degreesOfFreedomDefault` |
-| `df2`     | `number`   | `degreesOfFreedomDefault` |
+| Parameter | Type     | Default value             |
+| --------- | -------- | ------------------------- |
+| `df1`     | `number` | `degreesOfFreedomDefault` |
+| `df2`     | `number` | `degreesOfFreedomDefault` |
 
 ###### Returns
 
@@ -2950,10 +2950,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type                | theme_description |
-| --------------------------------- | -------------- | ------------------------- | ----------------- |
-| <a id="params-11"></a> `params`   | `protected`    | `ParamsDegreesOfFreedom2` | -                 |
-| <a id="support-11"></a> `support` | `protected`    | `Interval`                | **`Internal`**    |
+| Property                          | Modifier    | Type                      | Description    |
+| --------------------------------- | ----------- | ------------------------- | -------------- |
+| <a id="params-11"></a> `params`   | `protected` | `ParamsDegreesOfFreedom2` | -              |
+| <a id="support-11"></a> `support` | `protected` | `Interval`                | **`Internal`** |
 
 #### Methods
 
@@ -2965,10 +2965,10 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `x`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-20`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `x`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-20`       |
 
 ###### Returns
 
@@ -2986,9 +2986,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -3034,9 +3034,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -3054,9 +3054,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -3074,11 +3074,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -3096,10 +3096,10 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value | theme_description                          |
-| ------------------- | --------------------------------- | ------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                 | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`                | -                                          |
+| Parameter           | Type                              | Default value | Description                                |
+| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
+| `n`                 | `number`                          | `1`           | the number of observations to be generated |
+| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
 
 ###### Returns
 
@@ -3117,7 +3117,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type                |
+| Parameter | Type                      |
 | --------- | ------------------------- |
 | `params`  | `ParamsDegreesOfFreedom2` |
 
@@ -3175,7 +3175,7 @@ the variance
 
 ### Gamma
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsShapeScale`\>
 
@@ -3189,10 +3189,10 @@ The Gamma distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value       |
-| --------- | ---------- | ------------------------- |
-| `shape`   | `number`   | `shapeScaleDefault.shape` |
-| `scale`   | `number`   | `shapeScaleDefault.scale` |
+| Parameter | Type     | Default value             |
+| --------- | -------- | ------------------------- |
+| `shape`   | `number` | `shapeScaleDefault.shape` |
+| `scale`   | `number` | `shapeScaleDefault.scale` |
 
 ###### Returns
 
@@ -3214,11 +3214,11 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type         | theme_description |
-| --------------------------------- | -------------- | ------------------ | ----------------- |
-| <a id="lgf"></a> `lgf`            | `protected`    | `number`           | -                 |
-| <a id="params-12"></a> `params`   | `protected`    | `ParamsShapeScale` | -                 |
-| <a id="support-12"></a> `support` | `protected`    | `Interval`         | **`Internal`**    |
+| Property                          | Modifier    | Type               | Description    |
+| --------------------------------- | ----------- | ------------------ | -------------- |
+| <a id="lgf"></a> `lgf`            | `protected` | `number`           | -              |
+| <a id="params-12"></a> `params`   | `protected` | `ParamsShapeScale` | -              |
+| <a id="support-12"></a> `support` | `protected` | `Interval`         | **`Internal`** |
 
 #### Methods
 
@@ -3230,10 +3230,10 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `x`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-12`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `x`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-12`       |
 
 ###### Returns
 
@@ -3251,9 +3251,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -3299,9 +3299,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -3319,10 +3319,10 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `q`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-12`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `q`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-12`       |
 
 ###### Returns
 
@@ -3340,11 +3340,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -3362,10 +3362,10 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value | theme_description                          |
-| ------------------- | --------------------------------- | ------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                 | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`                | -                                          |
+| Parameter           | Type                              | Default value | Description                                |
+| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
+| `n`                 | `number`                          | `1`           | the number of observations to be generated |
+| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
 
 ###### Returns
 
@@ -3383,7 +3383,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type         |
+| Parameter | Type               |
 | --------- | ------------------ |
 | `params`  | `ParamsShapeScale` |
 
@@ -3441,7 +3441,7 @@ the variance
 
 ### Geometric
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsBernoulli`\>
 
@@ -3455,9 +3455,9 @@ The Geometric distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `p`       | `number`   | `bernoulliDefault`  |
+| Parameter | Type     | Default value      |
+| --------- | -------- | ------------------ |
+| `p`       | `number` | `bernoulliDefault` |
 
 ###### Returns
 
@@ -3479,11 +3479,11 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type | theme_default_value | theme_description |
-| --------------------------------- | -------------- | ---------- | ------------------- | ----------------- |
-| <a id="logq"></a> `logq`          | `protected`    | `number`   | `undefined`         | -                 |
-| <a id="params-13"></a> `params`   | `protected`    | `number`   | `bernoulliDefault`  | -                 |
-| <a id="support-13"></a> `support` | `protected`    | `Interval` | `undefined`         | **`Internal`**    |
+| Property                          | Modifier    | Type       | Default value      | Description    |
+| --------------------------------- | ----------- | ---------- | ------------------ | -------------- |
+| <a id="logq"></a> `logq`          | `protected` | `number`   | `undefined`        | -              |
+| <a id="params-13"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | -              |
+| <a id="support-13"></a> `support` | `protected` | `Interval` | `undefined`        | **`Internal`** |
 
 #### Methods
 
@@ -3495,9 +3495,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -3515,9 +3515,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -3563,9 +3563,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -3583,9 +3583,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -3603,11 +3603,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -3625,7 +3625,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -3646,9 +3646,9 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `p`       | `number`   | `bernoulliDefault`  |
+| Parameter | Type     | Default value      |
+| --------- | -------- | ------------------ |
+| `p`       | `number` | `bernoulliDefault` |
 
 ###### Returns
 
@@ -3704,7 +3704,7 @@ the variance
 
 ### HyperbolicSecant
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`undefined`\>
 
@@ -3736,10 +3736,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type  | theme_default_value | theme_description |
-| --------------------------------- | -------------- | ----------- | ------------------- | ----------------- |
-| <a id="params-14"></a> `params`   | `protected`    | `undefined` | `undefined`         | -                 |
-| <a id="support-14"></a> `support` | `protected`    | `Interval`  | `undefined`         | **`Internal`**    |
+| Property                          | Modifier    | Type        | Default value | Description    |
+| --------------------------------- | ----------- | ----------- | ------------- | -------------- |
+| <a id="params-14"></a> `params`   | `protected` | `undefined` | `undefined`   | -              |
+| <a id="support-14"></a> `support` | `protected` | `Interval`  | `undefined`   | **`Internal`** |
 
 #### Methods
 
@@ -3751,9 +3751,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -3771,9 +3771,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -3819,9 +3819,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -3839,9 +3839,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -3859,11 +3859,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -3881,7 +3881,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -3954,7 +3954,7 @@ the variance
 
 ### Hypergeometric
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsHypergeometric`\>
 
@@ -3968,11 +3968,11 @@ The Hypergeometric distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value       |
-| --------- | ---------- | ------------------------- |
-| `N`       | `number`   | `hypergeometricDefault.N` |
-| `K`       | `number`   | `hypergeometricDefault.K` |
-| `n`       | `number`   | `hypergeometricDefault.n` |
+| Parameter | Type     | Default value             |
+| --------- | -------- | ------------------------- |
+| `N`       | `number` | `hypergeometricDefault.N` |
+| `K`       | `number` | `hypergeometricDefault.K` |
+| `n`       | `number` | `hypergeometricDefault.n` |
 
 ###### Returns
 
@@ -3994,11 +3994,11 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type             | theme_description |
-| --------------------------------- | -------------- | ---------------------- | ----------------- |
-| <a id="lbc"></a> `lbc`            | `protected`    | `number`               | -                 |
-| <a id="params-15"></a> `params`   | `protected`    | `ParamsHypergeometric` | -                 |
-| <a id="support-15"></a> `support` | `protected`    | `Interval`             | **`Internal`**    |
+| Property                          | Modifier    | Type                   | Description    |
+| --------------------------------- | ----------- | ---------------------- | -------------- |
+| <a id="lbc"></a> `lbc`            | `protected` | `number`               | -              |
+| <a id="params-15"></a> `params`   | `protected` | `ParamsHypergeometric` | -              |
+| <a id="support-15"></a> `support` | `protected` | `Interval`             | **`Internal`** |
 
 #### Methods
 
@@ -4010,10 +4010,10 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `x`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-12`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `x`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-12`       |
 
 ###### Returns
 
@@ -4031,9 +4031,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -4079,9 +4079,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -4099,9 +4099,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -4119,11 +4119,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -4141,7 +4141,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -4162,7 +4162,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter           | theme_type             |
+| Parameter           | Type                   |
 | ------------------- | ---------------------- |
 | `__namedParameters` | `ParamsHypergeometric` |
 
@@ -4220,7 +4220,7 @@ the variance
 
 ### Laplace
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsLocationScale`\>
 
@@ -4234,10 +4234,10 @@ The Laplace distribution
 
 ###### Parameters
 
-| Parameter  | theme_type | theme_default_value             |
-| ---------- | ---------- | ------------------------------- |
-| `location` | `number`   | `locationScaleDefault.location` |
-| `scale`    | `number`   | `locationScaleDefault.scale`    |
+| Parameter  | Type     | Default value                   |
+| ---------- | -------- | ------------------------------- |
+| `location` | `number` | `locationScaleDefault.location` |
+| `scale`    | `number` | `locationScaleDefault.scale`    |
 
 ###### Returns
 
@@ -4259,10 +4259,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type            | theme_description |
-| --------------------------------- | -------------- | --------------------- | ----------------- |
-| <a id="params-16"></a> `params`   | `protected`    | `ParamsLocationScale` | -                 |
-| <a id="support-16"></a> `support` | `protected`    | `Interval`            | **`Internal`**    |
+| Property                          | Modifier    | Type                  | Description    |
+| --------------------------------- | ----------- | --------------------- | -------------- |
+| <a id="params-16"></a> `params`   | `protected` | `ParamsLocationScale` | -              |
+| <a id="support-16"></a> `support` | `protected` | `Interval`            | **`Internal`** |
 
 #### Methods
 
@@ -4274,9 +4274,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -4294,9 +4294,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -4342,9 +4342,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -4362,9 +4362,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -4382,11 +4382,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -4404,7 +4404,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -4425,7 +4425,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type            |
+| Parameter | Type                  |
 | --------- | --------------------- |
 | `params`  | `ParamsLocationScale` |
 
@@ -4483,7 +4483,7 @@ the variance
 
 ### Logarithmic
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsBernoulli`\>
 
@@ -4497,9 +4497,9 @@ The Logarithmic distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `p`       | `number`   | `bernoulliDefault`  |
+| Parameter | Type     | Default value      |
+| --------- | -------- | ------------------ |
+| `p`       | `number` | `bernoulliDefault` |
 
 ###### Returns
 
@@ -4521,11 +4521,11 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type | theme_default_value | theme_description |
-| --------------------------------- | -------------- | ---------- | ------------------- | ----------------- |
-| <a id="logq-1"></a> `logq`        | `protected`    | `number`   | `undefined`         | -                 |
-| <a id="params-17"></a> `params`   | `protected`    | `number`   | `bernoulliDefault`  | -                 |
-| <a id="support-17"></a> `support` | `protected`    | `Interval` | `undefined`         | **`Internal`**    |
+| Property                          | Modifier    | Type       | Default value      | Description    |
+| --------------------------------- | ----------- | ---------- | ------------------ | -------------- |
+| <a id="logq-1"></a> `logq`        | `protected` | `number`   | `undefined`        | -              |
+| <a id="params-17"></a> `params`   | `protected` | `number`   | `bernoulliDefault` | -              |
+| <a id="support-17"></a> `support` | `protected` | `Interval` | `undefined`        | **`Internal`** |
 
 #### Methods
 
@@ -4537,10 +4537,10 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `x`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-20`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `x`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-20`       |
 
 ###### Returns
 
@@ -4558,9 +4558,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -4606,9 +4606,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -4626,9 +4626,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -4646,11 +4646,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -4668,7 +4668,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -4689,9 +4689,9 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `p`       | `number`   | `bernoulliDefault`  |
+| Parameter | Type     | Default value      |
+| --------- | -------- | ------------------ |
+| `p`       | `number` | `bernoulliDefault` |
 
 ###### Returns
 
@@ -4747,7 +4747,7 @@ the variance
 
 ### Logistic
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsLocationScale`\>
 
@@ -4761,10 +4761,10 @@ The Logistic distribution
 
 ###### Parameters
 
-| Parameter  | theme_type | theme_default_value             |
-| ---------- | ---------- | ------------------------------- |
-| `location` | `number`   | `locationScaleDefault.location` |
-| `scale`    | `number`   | `locationScaleDefault.scale`    |
+| Parameter  | Type     | Default value                   |
+| ---------- | -------- | ------------------------------- |
+| `location` | `number` | `locationScaleDefault.location` |
+| `scale`    | `number` | `locationScaleDefault.scale`    |
 
 ###### Returns
 
@@ -4786,10 +4786,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type            | theme_description |
-| --------------------------------- | -------------- | --------------------- | ----------------- |
-| <a id="params-18"></a> `params`   | `protected`    | `ParamsLocationScale` | -                 |
-| <a id="support-18"></a> `support` | `protected`    | `Interval`            | **`Internal`**    |
+| Property                          | Modifier    | Type                  | Description    |
+| --------------------------------- | ----------- | --------------------- | -------------- |
+| <a id="params-18"></a> `params`   | `protected` | `ParamsLocationScale` | -              |
+| <a id="support-18"></a> `support` | `protected` | `Interval`            | **`Internal`** |
 
 #### Methods
 
@@ -4801,9 +4801,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -4821,9 +4821,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -4869,9 +4869,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -4889,9 +4889,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -4909,11 +4909,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -4931,7 +4931,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -4952,7 +4952,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type            |
+| Parameter | Type                  |
 | --------- | --------------------- |
 | `params`  | `ParamsLocationScale` |
 
@@ -5010,7 +5010,7 @@ the variance
 
 ### LogLogistic
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsShapeScale`\>
 
@@ -5024,10 +5024,10 @@ The Log-Logistic distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value       |
-| --------- | ---------- | ------------------------- |
-| `scale`   | `number`   | `shapeScaleDefault.scale` |
-| `shape`   | `number`   | `shapeScaleDefault.shape` |
+| Parameter | Type     | Default value             |
+| --------- | -------- | ------------------------- |
+| `scale`   | `number` | `shapeScaleDefault.scale` |
+| `shape`   | `number` | `shapeScaleDefault.shape` |
 
 ###### Returns
 
@@ -5049,10 +5049,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type         | theme_description |
-| --------------------------------- | -------------- | ------------------ | ----------------- |
-| <a id="params-19"></a> `params`   | `protected`    | `ParamsShapeScale` | -                 |
-| <a id="support-19"></a> `support` | `protected`    | `Interval`         | **`Internal`**    |
+| Property                          | Modifier    | Type               | Description    |
+| --------------------------------- | ----------- | ------------------ | -------------- |
+| <a id="params-19"></a> `params`   | `protected` | `ParamsShapeScale` | -              |
+| <a id="support-19"></a> `support` | `protected` | `Interval`         | **`Internal`** |
 
 #### Methods
 
@@ -5064,9 +5064,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -5084,9 +5084,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -5132,9 +5132,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -5152,9 +5152,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -5172,11 +5172,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -5194,7 +5194,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -5215,7 +5215,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type         |
+| Parameter | Type               |
 | --------- | ------------------ |
 | `params`  | `ParamsShapeScale` |
 
@@ -5273,7 +5273,7 @@ the variance
 
 ### LogNormal
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsNormal`\>
 
@@ -5287,10 +5287,10 @@ The Log-Normal distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value   |
-| --------- | ---------- | --------------------- |
-| `mu`      | `number`   | `normalDefault.mu`    |
-| `sigma`   | `number`   | `normalDefault.sigma` |
+| Parameter | Type     | Default value         |
+| --------- | -------- | --------------------- |
+| `mu`      | `number` | `normalDefault.mu`    |
+| `sigma`   | `number` | `normalDefault.sigma` |
 
 ###### Returns
 
@@ -5312,10 +5312,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type     | theme_description |
-| --------------------------------- | -------------- | -------------- | ----------------- |
-| <a id="params-20"></a> `params`   | `protected`    | `ParamsNormal` | -                 |
-| <a id="support-20"></a> `support` | `protected`    | `Interval`     | **`Internal`**    |
+| Property                          | Modifier    | Type           | Description    |
+| --------------------------------- | ----------- | -------------- | -------------- |
+| <a id="params-20"></a> `params`   | `protected` | `ParamsNormal` | -              |
+| <a id="support-20"></a> `support` | `protected` | `Interval`     | **`Internal`** |
 
 #### Methods
 
@@ -5327,9 +5327,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -5347,9 +5347,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -5395,9 +5395,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -5415,9 +5415,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -5435,11 +5435,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -5457,10 +5457,10 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value | theme_description                          |
-| ------------------- | --------------------------------- | ------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                 | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`                | -                                          |
+| Parameter           | Type                              | Default value | Description                                |
+| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
+| `n`                 | `number`                          | `1`           | the number of observations to be generated |
+| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
 
 ###### Returns
 
@@ -5478,7 +5478,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type     |
+| Parameter | Type           |
 | --------- | -------------- |
 | `params`  | `ParamsNormal` |
 
@@ -5536,7 +5536,7 @@ the variance
 
 ### NegativeBinomial
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsBinomial`\>
 
@@ -5550,10 +5550,10 @@ The Negative Binomial distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `n`       | `number`   | `binomialDefault.n` |
-| `p`       | `number`   | `binomialDefault.p` |
+| Parameter | Type     | Default value       |
+| --------- | -------- | ------------------- |
+| `n`       | `number` | `binomialDefault.n` |
+| `p`       | `number` | `binomialDefault.p` |
 
 ###### Returns
 
@@ -5575,10 +5575,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type       | theme_description |
-| --------------------------------- | -------------- | ---------------- | ----------------- |
-| <a id="params-21"></a> `params`   | `protected`    | `ParamsBinomial` | -                 |
-| <a id="support-21"></a> `support` | `protected`    | `Interval`       | **`Internal`**    |
+| Property                          | Modifier    | Type             | Description    |
+| --------------------------------- | ----------- | ---------------- | -------------- |
+| <a id="params-21"></a> `params`   | `protected` | `ParamsBinomial` | -              |
+| <a id="support-21"></a> `support` | `protected` | `Interval`       | **`Internal`** |
 
 #### Methods
 
@@ -5590,10 +5590,10 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `x`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-20`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `x`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-20`       |
 
 ###### Returns
 
@@ -5611,9 +5611,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -5659,9 +5659,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -5679,10 +5679,10 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `q`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-20`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `q`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-20`       |
 
 ###### Returns
 
@@ -5700,11 +5700,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -5722,10 +5722,10 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value | theme_description                          |
-| ------------------- | --------------------------------- | ------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                 | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`                | -                                          |
+| Parameter           | Type                              | Default value | Description                                |
+| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
+| `n`                 | `number`                          | `1`           | the number of observations to be generated |
+| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
 
 ###### Returns
 
@@ -5743,7 +5743,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type       |
+| Parameter | Type             |
 | --------- | ---------------- |
 | `params`  | `ParamsBinomial` |
 
@@ -5801,7 +5801,7 @@ the variance
 
 ### Normal
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsNormal`\>
 
@@ -5815,10 +5815,10 @@ The Normal distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value   |
-| --------- | ---------- | --------------------- |
-| `mu`      | `number`   | `normalDefault.mu`    |
-| `sigma`   | `number`   | `normalDefault.sigma` |
+| Parameter | Type     | Default value         |
+| --------- | -------- | --------------------- |
+| `mu`      | `number` | `normalDefault.mu`    |
+| `sigma`   | `number` | `normalDefault.sigma` |
 
 ###### Returns
 
@@ -5840,10 +5840,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type     | theme_description |
-| --------------------------------- | -------------- | -------------- | ----------------- |
-| <a id="params-22"></a> `params`   | `protected`    | `ParamsNormal` | -                 |
-| <a id="support-22"></a> `support` | `protected`    | `Interval`     | **`Internal`**    |
+| Property                          | Modifier    | Type           | Description    |
+| --------------------------------- | ----------- | -------------- | -------------- |
+| <a id="params-22"></a> `params`   | `protected` | `ParamsNormal` | -              |
+| <a id="support-22"></a> `support` | `protected` | `Interval`     | **`Internal`** |
 
 #### Methods
 
@@ -5855,9 +5855,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -5875,9 +5875,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -5923,9 +5923,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -5943,9 +5943,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -5963,11 +5963,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -5985,10 +5985,10 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value | theme_description                          |
-| ------------------- | --------------------------------- | ------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                 | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`                | -                                          |
+| Parameter           | Type                              | Default value | Description                                |
+| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
+| `n`                 | `number`                          | `1`           | the number of observations to be generated |
+| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
 
 ###### Returns
 
@@ -6006,7 +6006,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type     |
+| Parameter | Type           |
 | --------- | -------------- |
 | `params`  | `ParamsNormal` |
 
@@ -6064,7 +6064,7 @@ the variance
 
 ### Pareto
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsShapeScale`\>
 
@@ -6078,10 +6078,10 @@ The Pareto distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value       |
-| --------- | ---------- | ------------------------- |
-| `scale`   | `number`   | `shapeScaleDefault.scale` |
-| `shape`   | `number`   | `shapeScaleDefault.shape` |
+| Parameter | Type     | Default value             |
+| --------- | -------- | ------------------------- |
+| `scale`   | `number` | `shapeScaleDefault.scale` |
+| `shape`   | `number` | `shapeScaleDefault.shape` |
 
 ###### Returns
 
@@ -6103,10 +6103,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type         | theme_description |
-| --------------------------------- | -------------- | ------------------ | ----------------- |
-| <a id="params-23"></a> `params`   | `protected`    | `ParamsShapeScale` | -                 |
-| <a id="support-23"></a> `support` | `protected`    | `Interval`         | **`Internal`**    |
+| Property                          | Modifier    | Type               | Description    |
+| --------------------------------- | ----------- | ------------------ | -------------- |
+| <a id="params-23"></a> `params`   | `protected` | `ParamsShapeScale` | -              |
+| <a id="support-23"></a> `support` | `protected` | `Interval`         | **`Internal`** |
 
 #### Methods
 
@@ -6118,9 +6118,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -6138,9 +6138,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -6186,9 +6186,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -6206,9 +6206,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -6226,11 +6226,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -6248,7 +6248,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -6269,7 +6269,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type         |
+| Parameter | Type               |
 | --------- | ------------------ |
 | `params`  | `ParamsShapeScale` |
 
@@ -6327,7 +6327,7 @@ the variance
 
 ### Poisson
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsRate`\>
 
@@ -6341,9 +6341,9 @@ The Poisson distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `rate`    | `number`   | `rateDefault`       |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `rate`    | `number` | `rateDefault` |
 
 ###### Returns
 
@@ -6365,10 +6365,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type | theme_default_value | theme_description |
-| --------------------------------- | -------------- | ---------- | ------------------- | ----------------- |
-| <a id="params-24"></a> `params`   | `protected`    | `number`   | `rateDefault`       | -                 |
-| <a id="support-24"></a> `support` | `protected`    | `Interval` | `undefined`         | **`Internal`**    |
+| Property                          | Modifier    | Type       | Default value | Description    |
+| --------------------------------- | ----------- | ---------- | ------------- | -------------- |
+| <a id="params-24"></a> `params`   | `protected` | `number`   | `rateDefault` | -              |
+| <a id="support-24"></a> `support` | `protected` | `Interval` | `undefined`   | **`Internal`** |
 
 #### Methods
 
@@ -6380,10 +6380,10 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `x`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-12`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `x`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-12`       |
 
 ###### Returns
 
@@ -6401,9 +6401,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -6449,9 +6449,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -6469,10 +6469,10 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `q`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-12`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `q`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-12`       |
 
 ###### Returns
 
@@ -6490,11 +6490,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -6512,7 +6512,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -6533,9 +6533,9 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `rate`    | `number`   | `rateDefault`       |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `rate`    | `number` | `rateDefault` |
 
 ###### Returns
 
@@ -6591,7 +6591,7 @@ the variance
 
 ### Semicircle
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsRadius`\>
 
@@ -6605,9 +6605,9 @@ The Semicircle distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `radius`  | `number`   | `radiusDefault`     |
+| Parameter | Type     | Default value   |
+| --------- | -------- | --------------- |
+| `radius`  | `number` | `radiusDefault` |
 
 ###### Returns
 
@@ -6629,12 +6629,12 @@ x.random(10);
 
 #### Properties
 
-| Property                                   | theme_modifier | theme_type | theme_default_value | theme_description |
-| ------------------------------------------ | -------------- | ---------- | ------------------- | ----------------- |
-| <a id="denom"></a> `denom`                 | `protected`    | `number`   | `undefined`         | -                 |
-| <a id="params-25"></a> `params`            | `protected`    | `number`   | `radiusDefault`     | -                 |
-| <a id="radiussquared"></a> `radiusSquared` | `protected`    | `number`   | `undefined`         | -                 |
-| <a id="support-25"></a> `support`          | `protected`    | `Interval` | `undefined`         | **`Internal`**    |
+| Property                                   | Modifier    | Type       | Default value   | Description    |
+| ------------------------------------------ | ----------- | ---------- | --------------- | -------------- |
+| <a id="denom"></a> `denom`                 | `protected` | `number`   | `undefined`     | -              |
+| <a id="params-25"></a> `params`            | `protected` | `number`   | `radiusDefault` | -              |
+| <a id="radiussquared"></a> `radiusSquared` | `protected` | `number`   | `undefined`     | -              |
+| <a id="support-25"></a> `support`          | `protected` | `Interval` | `undefined`     | **`Internal`** |
 
 #### Methods
 
@@ -6646,9 +6646,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -6666,9 +6666,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -6714,9 +6714,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -6734,10 +6734,10 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `q`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-20`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `q`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-20`       |
 
 ###### Returns
 
@@ -6755,11 +6755,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -6777,10 +6777,10 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value | theme_description                          |
-| ------------------- | --------------------------------- | ------------------- | ------------------------------------------ |
-| `n`                 | `number`                          | `1`                 | the number of observations to be generated |
-| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`                | -                                          |
+| Parameter           | Type                              | Default value | Description                                |
+| ------------------- | --------------------------------- | ------------- | ------------------------------------------ |
+| `n`                 | `number`                          | `1`           | the number of observations to be generated |
+| `__namedParameters` | [`RandomOptions`](#randomoptions) | `{}`          | -                                          |
 
 ###### Returns
 
@@ -6798,9 +6798,9 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `radius`  | `number`   | `radiusDefault`     |
+| Parameter | Type     | Default value   |
+| --------- | -------- | --------------- |
+| `radius`  | `number` | `radiusDefault` |
 
 ###### Returns
 
@@ -6856,7 +6856,7 @@ the variance
 
 ### StudentsT
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsDegreesOfFreedom`\>
 
@@ -6870,9 +6870,9 @@ The Students-T distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value       |
-| --------- | ---------- | ------------------------- |
-| `df`      | `number`   | `degreesOfFreedomDefault` |
+| Parameter | Type     | Default value             |
+| --------- | -------- | ------------------------- |
+| `df`      | `number` | `degreesOfFreedomDefault` |
 
 ###### Returns
 
@@ -6894,10 +6894,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type | theme_default_value       | theme_description |
-| --------------------------------- | -------------- | ---------- | ------------------------- | ----------------- |
-| <a id="params-26"></a> `params`   | `protected`    | `number`   | `degreesOfFreedomDefault` | -                 |
-| <a id="support-26"></a> `support` | `protected`    | `Interval` | `undefined`               | **`Internal`**    |
+| Property                          | Modifier    | Type       | Default value             | Description    |
+| --------------------------------- | ----------- | ---------- | ------------------------- | -------------- |
+| <a id="params-26"></a> `params`   | `protected` | `number`   | `degreesOfFreedomDefault` | -              |
+| <a id="support-26"></a> `support` | `protected` | `Interval` | `undefined`               | **`Internal`** |
 
 #### Methods
 
@@ -6909,10 +6909,10 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `x`       | `number`   | `undefined`         |
-| `eps`     | `number`   | `1e-20`             |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `x`       | `number` | `undefined`   |
+| `eps`     | `number` | `1e-20`       |
 
 ###### Returns
 
@@ -6930,9 +6930,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -6978,9 +6978,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -6998,9 +6998,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -7018,11 +7018,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -7040,7 +7040,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -7061,9 +7061,9 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value       |
-| --------- | ---------- | ------------------------- |
-| `df`      | `number`   | `degreesOfFreedomDefault` |
+| Parameter | Type     | Default value             |
+| --------- | -------- | ------------------------- |
+| `df`      | `number` | `degreesOfFreedomDefault` |
 
 ###### Returns
 
@@ -7119,7 +7119,7 @@ the variance
 
 ### Triangular
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsBoundMid`\>
 
@@ -7133,11 +7133,11 @@ The Triangular distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `a`       | `number`   | `boundMidDefault.a` |
-| `b`       | `number`   | `boundMidDefault.b` |
-| `mid`     | `number`   | `...`               |
+| Parameter | Type     | Default value       |
+| --------- | -------- | ------------------- |
+| `a`       | `number` | `boundMidDefault.a` |
+| `b`       | `number` | `boundMidDefault.b` |
+| `mid`     | `number` | `...`               |
 
 ###### Returns
 
@@ -7159,10 +7159,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type       | theme_description |
-| --------------------------------- | -------------- | ---------------- | ----------------- |
-| <a id="params-27"></a> `params`   | `protected`    | `ParamsBoundMid` | -                 |
-| <a id="support-27"></a> `support` | `protected`    | `Interval`       | **`Internal`**    |
+| Property                          | Modifier    | Type             | Description    |
+| --------------------------------- | ----------- | ---------------- | -------------- |
+| <a id="params-27"></a> `params`   | `protected` | `ParamsBoundMid` | -              |
+| <a id="support-27"></a> `support` | `protected` | `Interval`       | **`Internal`** |
 
 #### Methods
 
@@ -7174,9 +7174,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -7194,9 +7194,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -7242,9 +7242,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -7262,9 +7262,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -7282,11 +7282,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -7304,7 +7304,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -7325,7 +7325,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type       |
+| Parameter | Type             |
 | --------- | ---------------- |
 | `params`  | `ParamsBoundMid` |
 
@@ -7383,7 +7383,7 @@ the variance
 
 ### Uniform
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsBound`\>
 
@@ -7397,10 +7397,10 @@ The Uniform (continuous) distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `a`       | `number`   | `boundDefault.a`    |
-| `b`       | `number`   | `boundDefault.b`    |
+| Parameter | Type     | Default value    |
+| --------- | -------- | ---------------- |
+| `a`       | `number` | `boundDefault.a` |
+| `b`       | `number` | `boundDefault.b` |
 
 ###### Returns
 
@@ -7422,11 +7422,11 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type    | theme_description |
-| --------------------------------- | -------------- | ------------- | ----------------- |
-| <a id="density"></a> `density`    | `protected`    | `number`      | -                 |
-| <a id="params-28"></a> `params`   | `protected`    | `ParamsBound` | -                 |
-| <a id="support-28"></a> `support` | `protected`    | `Interval`    | **`Internal`**    |
+| Property                          | Modifier    | Type          | Description    |
+| --------------------------------- | ----------- | ------------- | -------------- |
+| <a id="density"></a> `density`    | `protected` | `number`      | -              |
+| <a id="params-28"></a> `params`   | `protected` | `ParamsBound` | -              |
+| <a id="support-28"></a> `support` | `protected` | `Interval`    | **`Internal`** |
 
 #### Methods
 
@@ -7438,9 +7438,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -7458,9 +7458,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -7506,9 +7506,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -7526,9 +7526,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -7546,11 +7546,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -7568,7 +7568,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -7589,7 +7589,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type    |
+| Parameter | Type          |
 | --------- | ------------- |
 | `params`  | `ParamsBound` |
 
@@ -7647,7 +7647,7 @@ the variance
 
 ### UniformDiscrete
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsBound`\>
 
@@ -7661,10 +7661,10 @@ The Uniform (discrete) distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `a`       | `number`   | `boundDefault.a`    |
-| `b`       | `number`   | `boundDefault.b`    |
+| Parameter | Type     | Default value    |
+| --------- | -------- | ---------------- |
+| `a`       | `number` | `boundDefault.a` |
+| `b`       | `number` | `boundDefault.b` |
 
 ###### Returns
 
@@ -7686,10 +7686,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type    | theme_description |
-| --------------------------------- | -------------- | ------------- | ----------------- |
-| <a id="params-29"></a> `params`   | `protected`    | `ParamsBound` | -                 |
-| <a id="support-29"></a> `support` | `protected`    | `Interval`    | **`Internal`**    |
+| Property                          | Modifier    | Type          | Description    |
+| --------------------------------- | ----------- | ------------- | -------------- |
+| <a id="params-29"></a> `params`   | `protected` | `ParamsBound` | -              |
+| <a id="support-29"></a> `support` | `protected` | `Interval`    | **`Internal`** |
 
 #### Methods
 
@@ -7701,9 +7701,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -7721,9 +7721,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -7769,9 +7769,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -7789,9 +7789,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -7809,11 +7809,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -7831,7 +7831,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -7852,7 +7852,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type    |
+| Parameter | Type          |
 | --------- | ------------- |
 | `params`  | `ParamsBound` |
 
@@ -7910,7 +7910,7 @@ the variance
 
 ### UQuadratic
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsBound`\>
 
@@ -7924,10 +7924,10 @@ The U-Quadratic distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `a`       | `number`   | `boundDefault.a`    |
-| `b`       | `number`   | `boundDefault.b`    |
+| Parameter | Type     | Default value    |
+| --------- | -------- | ---------------- |
+| `a`       | `number` | `boundDefault.a` |
+| `b`       | `number` | `boundDefault.b` |
 
 ###### Returns
 
@@ -7949,12 +7949,12 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type    | theme_description |
-| --------------------------------- | -------------- | ------------- | ----------------- |
-| <a id="alpha"></a> `alpha`        | `protected`    | `number`      | -                 |
-| <a id="beta-1"></a> `beta`        | `protected`    | `number`      | -                 |
-| <a id="params-30"></a> `params`   | `protected`    | `ParamsBound` | -                 |
-| <a id="support-30"></a> `support` | `protected`    | `Interval`    | **`Internal`**    |
+| Property                          | Modifier    | Type          | Description    |
+| --------------------------------- | ----------- | ------------- | -------------- |
+| <a id="alpha"></a> `alpha`        | `protected` | `number`      | -              |
+| <a id="beta-1"></a> `beta`        | `protected` | `number`      | -              |
+| <a id="params-30"></a> `params`   | `protected` | `ParamsBound` | -              |
+| <a id="support-30"></a> `support` | `protected` | `Interval`    | **`Internal`** |
 
 #### Methods
 
@@ -7966,9 +7966,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -7986,9 +7986,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -8034,9 +8034,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -8054,9 +8054,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -8074,11 +8074,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -8096,7 +8096,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -8117,7 +8117,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type    |
+| Parameter | Type          |
 | --------- | ------------- |
 | `params`  | `ParamsBound` |
 
@@ -8175,7 +8175,7 @@ the variance
 
 ### Weibull
 
-#### theme_extends
+#### Extends
 
 - `Distribution`\<`ParamsShapeScale`\>
 
@@ -8189,10 +8189,10 @@ The Weibull distribution
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value       |
-| --------- | ---------- | ------------------------- |
-| `scale`   | `number`   | `shapeScaleDefault.scale` |
-| `shape`   | `number`   | `shapeScaleDefault.shape` |
+| Parameter | Type     | Default value             |
+| --------- | -------- | ------------------------- |
+| `scale`   | `number` | `shapeScaleDefault.scale` |
+| `shape`   | `number` | `shapeScaleDefault.shape` |
 
 ###### Returns
 
@@ -8214,10 +8214,10 @@ x.random(10);
 
 #### Properties
 
-| Property                          | theme_modifier | theme_type         | theme_description |
-| --------------------------------- | -------------- | ------------------ | ----------------- |
-| <a id="params-31"></a> `params`   | `protected`    | `ParamsShapeScale` | -                 |
-| <a id="support-31"></a> `support` | `protected`    | `Interval`         | **`Internal`**    |
+| Property                          | Modifier    | Type               | Description    |
+| --------------------------------- | ----------- | ------------------ | -------------- |
+| <a id="params-31"></a> `params`   | `protected` | `ParamsShapeScale` | -              |
+| <a id="support-31"></a> `support` | `protected` | `Interval`         | **`Internal`** |
 
 #### Methods
 
@@ -8229,9 +8229,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -8249,9 +8249,9 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -8297,9 +8297,9 @@ The probability density/mass function evaluated at `x`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `x`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `x`       | `number` |
 
 ###### Returns
 
@@ -8317,9 +8317,9 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `q`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `q`       | `number` |
 
 ###### Returns
 
@@ -8337,11 +8337,11 @@ The quantile function evaluated at `q`.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `q`        | `number`   |
-| `startK`   | `number`   |
-| `startCDF` | `number`   |
+| Parameter  | Type     |
+| ---------- | -------- |
+| `q`        | `number` |
+| `startK`   | `number` |
+| `startCDF` | `number` |
 
 ###### Returns
 
@@ -8359,7 +8359,7 @@ Generate random numbers from the distribution.
 
 ###### Parameters
 
-| Parameter           | theme_type                        | theme_default_value    | theme_description                          |
+| Parameter           | Type                              | Default value          | Description                                |
 | ------------------- | --------------------------------- | ---------------------- | ------------------------------------------ |
 | `n`                 | `number`                          | `1`                    | the number of observations to be generated |
 | `__namedParameters` | [`RandomOptions`](#randomoptions) | `randomOptionsDefault` | -                                          |
@@ -8380,7 +8380,7 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter | theme_type         |
+| Parameter | Type               |
 | --------- | ------------------ |
 | `params`  | `ParamsShapeScale` |
 
@@ -8440,8 +8440,8 @@ the variance
 
 #### Properties
 
-| Property                      | theme_type                                     | theme_default_value | theme_description                          |
-| ----------------------------- | ---------------------------------------------- | ------------------- | ------------------------------------------ |
-| <a id="eps"></a> `eps?`       | `number`                                       | `1e-12`             | Epsilon, used during comparisons of floats |
-| <a id="method"></a> `method?` | `string`                                       | `undefined`         | -                                          |
-| <a id="rand"></a> `rand?`     | [`RandomGenerator`](random.md#randomgenerator) | `new Random()`      | An RNG                                     |
+| Property                      | Type                                           | Default value  | Description                                |
+| ----------------------------- | ---------------------------------------------- | -------------- | ------------------------------------------ |
+| <a id="eps"></a> `eps?`       | `number`                                       | `1e-12`        | Epsilon, used during comparisons of floats |
+| <a id="method"></a> `method?` | `string`                                       | `undefined`    | -                                          |
+| <a id="rand"></a> `rand?`     | [`RandomGenerator`](random.md#randomgenerator) | `new Random()` | An RNG                                     |

@@ -35,14 +35,13 @@ const config = {
   //
   // Output Options
   // outputs
-  // out: "./docs",
+  // out,
   // html
   json: "./temp/doc.json",
   // pretty
   // emit
   // theme
-  // router: "module",
-  // router: "structure",
+  // router
   // lightHighlightTheme
   // darkHighlightTheme
   // highlightLanguages

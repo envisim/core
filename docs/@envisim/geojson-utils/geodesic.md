@@ -17,7 +17,7 @@ Computes the area of a polygon ring where the segments are the shortest
 
 #### Parameters
 
-| Parameter | theme_type                          | theme_description              |
+| Parameter | Type                                | Description                    |
 | --------- | ----------------------------------- | ------------------------------ |
 | `coords`  | [`Position`](geojson.md#position)[] | coordinates of a polygon ring. |
 
@@ -38,7 +38,7 @@ a distance and an azimuth.
 
 #### Parameters
 
-| Parameter | theme_type                        | theme_description                                |
+| Parameter | Type                              | Description                                      |
 | --------- | --------------------------------- | ------------------------------------------------ |
 | `point`   | [`Position`](geojson.md#position) | point coordinates [lon,lat].                     |
 | `dist`    | `number`                          | the distance in meters.                          |
@@ -61,7 +61,7 @@ a distance and an azimuth.
 
 #### Parameters
 
-| Parameter | theme_type                        | theme_description                                |
+| Parameter | Type                              | Description                                      |
 | --------- | --------------------------------- | ------------------------------------------------ |
 | `point`   | [`Position`](geojson.md#position) | point coordinates [lon,lat].                     |
 | `dist`    | `number`                          | the distance in meters.                          |
@@ -83,7 +83,7 @@ Computes the shortest distance in meters between two point coordinates.
 
 #### Parameters
 
-| Parameter | theme_type                        | theme_description            |
+| Parameter | Type                              | Description                  |
 | --------- | --------------------------------- | ---------------------------- |
 | `p1`      | [`Position`](geojson.md#position) | point coordinates [lon,lat]. |
 | `p2`      | [`Position`](geojson.md#position) | point coordinates [lon,lat]. |
@@ -106,7 +106,7 @@ The azimuth takes values in the range -180 to +180.
 
 #### Parameters
 
-| Parameter | theme_type                        | theme_description                             |
+| Parameter | Type                              | Description                                   |
 | --------- | --------------------------------- | --------------------------------------------- |
 | `p1`      | [`Position`](geojson.md#position) | point coordinates [lon,lat] for first point.  |
 | `p2`      | [`Position`](geojson.md#position) | point coordinates [lon,lat] for second point. |
@@ -129,7 +129,7 @@ The azimuth takes values in the range -180 to +180.
 
 #### Parameters
 
-| Parameter | theme_type                        | theme_description                             |
+| Parameter | Type                              | Description                                   |
 | --------- | --------------------------------- | --------------------------------------------- |
 | `p1`      | [`Position`](geojson.md#position) | point coordinates [lon,lat] for first point.  |
 | `p2`      | [`Position`](geojson.md#position) | point coordinates [lon,lat] for second point. |
@@ -151,7 +151,7 @@ an end point and the fraction of the distance.
 
 #### Parameters
 
-| Parameter  | theme_type                        | theme_description                            |
+| Parameter  | Type                              | Description                                  |
 | ---------- | --------------------------------- | -------------------------------------------- |
 | `p1`       | [`Position`](geojson.md#position) | point coordinates [lon,lat] for start point. |
 | `p2`       | [`Position`](geojson.md#position) | point coordinates [lon,lat] for end point.   |

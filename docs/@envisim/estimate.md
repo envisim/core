@@ -18,7 +18,7 @@ $$ n = |S| . $$
 
 #### Parameters
 
-| Parameter    | theme_type                                 | theme_description                                 |
+| Parameter    | Type                                       | Description                                       |
 | ------------ | ------------------------------------------ | ------------------------------------------------- |
 | `y`          | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.            |
 | `expected`   | [`Vector`](matrix.md#vector) \| `number`[] | expected number of inclusions of size n, $\mu_i$. |
@@ -42,7 +42,7 @@ $$ n = |S| . $$
 
 #### Parameters
 
-| Parameter | theme_type                                 | theme_description                           |
+| Parameter | Type                                       | Description                                 |
 | --------- | ------------------------------------------ | ------------------------------------------- |
 | `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.      |
 | `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size n, $\pi_i$. |
@@ -65,7 +65,7 @@ than to any other unit.
 
 #### Parameters
 
-| Parameter | theme_type                                 | theme_description                                  |
+| Parameter | Type                                       | Description                                        |
 | --------- | ------------------------------------------ | -------------------------------------------------- |
 | `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n.                    |
 | `xm`      | [`Matrix`](matrix.md#matrix)               | auxilliary variables of size N\*p.                 |
@@ -89,7 +89,7 @@ where $\hat{Y}, \hat{X}$ are [HT-estimators](#horvitzthompson).
 
 #### Parameters
 
-| Parameter | theme_type                                 | theme_description                  |
+| Parameter | Type                                       | Description                        |
 | --------- | ------------------------------------------ | ---------------------------------- |
 | `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n.    |
 | `x`       | [`Vector`](matrix.md#vector) \| `number`[] | auxiliary variable of size n.      |
@@ -112,7 +112,7 @@ $$ \hat{Y} = \sum\_{i=1}^n \frac{y_i}{n p_i} $$
 
 #### Parameters
 
-| Parameter | theme_type                                 | theme_description                       |
+| Parameter | Type                                       | Description                             |
 | --------- | ------------------------------------------ | --------------------------------------- |
 | `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.  |
 | `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | drawing probabilities of size n, $p_i$. |
@@ -131,7 +131,7 @@ the wr estimate, $\hat{Y}$.
 
 #### Parameters
 
-| Parameter | theme_type                                 | theme_description                            |
+| Parameter | Type                                       | Description                                  |
 | --------- | ------------------------------------------ | -------------------------------------------- |
 | `sample`  | [`Vector`](matrix.md#vector) \| `number`[] | sample indices.                              |
 | `xm`      | [`Matrix`](matrix.md#matrix)               | Matrix of auxilliary variables of size N\*p. |
@@ -151,7 +151,7 @@ spatial balance based on the sum of squares balance measure.
 
 #### Parameters
 
-| Parameter | theme_type                                 | theme_description                            |
+| Parameter | Type                                       | Description                                  |
 | --------- | ------------------------------------------ | -------------------------------------------- |
 | `sample`  | [`Vector`](matrix.md#vector) \| `number`[] | sample indices.                              |
 | `xm`      | [`Matrix`](matrix.md#matrix)               | Matrix of auxilliary variables of size N\*p. |
@@ -173,7 +173,7 @@ $$ \hat{V}(\hat{Y}) = \sum*{i \in S} \sum*{j \in S} \frac{y*i y_j}{\mu_i \mu_j} 
 
 #### Parameters
 
-| Parameter    | theme_type                                 | theme_description                                                                             |
+| Parameter    | Type                                       | Description                                                                                   |
 | ------------ | ------------------------------------------ | --------------------------------------------------------------------------------------------- |
 | `y`          | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.                                                        |
 | `expected`   | [`Vector`](matrix.md#vector) \| `number`[] | expected number of inclusions of size n, $\mu_i$.                                             |
@@ -196,7 +196,7 @@ $$ \hat{V}(\hat{Y}) = \sum*{i \in S} \sum*{j \in S} \frac{y*i y_j}{\pi_i \pi_j} 
 
 #### Parameters
 
-| Parameter | theme_type                                 | theme_description                                                                       |
+| Parameter | Type                                       | Description                                                                             |
 | --------- | ------------------------------------------ | --------------------------------------------------------------------------------------- |
 | `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.                                                  |
 | `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size n, $\pi_i$.                                             |
@@ -216,7 +216,7 @@ the Horvitz-Thompson variance estimate.
 
 #### Parameters
 
-| Parameter | theme_type                                 | theme_description                           |
+| Parameter | Type                                       | Description                                 |
 | --------- | ------------------------------------------ | ------------------------------------------- |
 | `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.      |
 | `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size n, $\pi_i$. |
@@ -235,7 +235,7 @@ Deville's HT variance estimate.
 
 #### Parameters
 
-| Parameter | theme_type                                 | theme_description                           |
+| Parameter | Type                                       | Description                                 |
 | --------- | ------------------------------------------ | ------------------------------------------- |
 | `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.      |
 | `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size n, $\pi_i$. |
@@ -259,7 +259,7 @@ $$ \hat{V}(\hat{Y}) = -\frac{1}{2} \sum*{i \in S} \sum*{j \in S} (y*i / \pi_i - 
 
 #### Parameters
 
-| Parameter | theme_type                                 | theme_description                                                                       |
+| Parameter | Type                                       | Description                                                                             |
 | --------- | ------------------------------------------ | --------------------------------------------------------------------------------------- |
 | `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.                                                  |
 | `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size n, $\pi_i$.                                             |
@@ -279,7 +279,7 @@ the Horvitz-Thompson variance estimate.
 
 #### Parameters
 
-| Parameter | theme_type                                 | theme_description                           |
+| Parameter | Type                                       | Description                                 |
 | --------- | ------------------------------------------ | ------------------------------------------- |
 | `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.      |
 | `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size n, $\pi_i$. |

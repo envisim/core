@@ -14,9 +14,9 @@
 
 #### Parameters
 
-| Parameter  | theme_type | theme_default_value | theme_description       |
-| ---------- | ---------- | ------------------- | ----------------------- |
-| `diameter` | `number`   | `10.0`              | the diameter in meters. |
+| Parameter  | Type     | Default value | Description             |
+| ---------- | -------- | ------------- | ----------------------- |
+| `diameter` | `number` | `10.0`        | the diameter in meters. |
 
 #### Returns
 
@@ -32,10 +32,10 @@ a circle model geometry.
 
 #### Parameters
 
-| Parameter  | theme_type                                                           | theme_default_value | theme_description                     |
-| ---------- | -------------------------------------------------------------------- | ------------------- | ------------------------------------- |
-| `diameter` | `number`                                                             | `1.0`               | the diameter of the circle in meters. |
-| `options?` | [`CirclesToPolygonsOptions`](../geojson.md#circlestopolygonsoptions) | `undefined`         | -                                     |
+| Parameter  | Type                                                                 | Default value | Description                           |
+| ---------- | -------------------------------------------------------------------- | ------------- | ------------------------------------- |
+| `diameter` | `number`                                                             | `1.0`         | the diameter of the circle in meters. |
+| `options?` | [`CirclesToPolygonsOptions`](../geojson.md#circlestopolygonsoptions) | `undefined`   | -                                     |
 
 #### Returns
 
@@ -51,9 +51,9 @@ a circle-shaped line model geometry.
 
 #### Parameters
 
-| Parameter    | theme_type | theme_default_value | theme_description         |
-| ------------ | ---------- | ------------------- | ------------------------- |
-| `sideLength` | `number`   | `10.0`              | length of side in meters. |
+| Parameter    | Type     | Default value | Description               |
+| ------------ | -------- | ------------- | ------------------------- |
+| `sideLength` | `number` | `10.0`        | length of side in meters. |
 
 #### Returns
 
@@ -71,7 +71,7 @@ Positions a modelGeometry at position and optionally rotates the coordinates aro
 
 #### Parameters
 
-| Parameter           | theme_type                                                               | theme_description     |
+| Parameter           | Type                                                                     | Description           |
 | ------------------- | ------------------------------------------------------------------------ | --------------------- |
 | `position`          | [`Position`](../geojson-utils/geojson.md#position)                       | a position [lon,lat]. |
 | `__namedParameters` | `PlaceOptions`\<[`AreaObject`](../geojson-utils/geojson.md#areaobject)\> | -                     |
@@ -90,7 +90,7 @@ a GeoJSON Point/Line/AreaObject.
 
 #### Parameters
 
-| Parameter           | theme_type                                                               |
+| Parameter           | Type                                                                     |
 | ------------------- | ------------------------------------------------------------------------ |
 | `position`          | [`Position`](../geojson-utils/geojson.md#position)                       |
 | `__namedParameters` | `PlaceOptions`\<[`LineObject`](../geojson-utils/geojson.md#lineobject)\> |
@@ -107,7 +107,7 @@ a GeoJSON Point/Line/AreaObject.
 
 #### Parameters
 
-| Parameter           | theme_type                                                                 |
+| Parameter           | Type                                                                       |
 | ------------------- | -------------------------------------------------------------------------- |
 | `position`          | [`Position`](../geojson-utils/geojson.md#position)                         |
 | `__namedParameters` | `PlaceOptions`\<[`PointObject`](../geojson-utils/geojson.md#pointobject)\> |
@@ -138,7 +138,7 @@ Computes the radius as maximum distance from (0,0) to any point in the given geo
 
 #### Parameters
 
-| Parameter  | theme_type                                                         | theme_description                             |
+| Parameter  | Type                                                               | Description                                   |
 | ---------- | ------------------------------------------------------------------ | --------------------------------------------- |
 | `geometry` | [`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject) | a GeoJSON geometry (not geometry collection). |
 
@@ -156,10 +156,10 @@ the maximum distance from (0,0) to any point in the given geometry.
 
 #### Parameters
 
-| Parameter | theme_type | theme_default_value | theme_description                     |
-| --------- | ---------- | ------------------- | ------------------------------------- |
-| `width`   | `number`   | `10.0`              | length of side west-east in meters.   |
-| `height`  | `number`   | `width`             | length of side south-north in meters. |
+| Parameter | Type     | Default value | Description                           |
+| --------- | -------- | ------------- | ------------------------------------- |
+| `width`   | `number` | `10.0`        | length of side west-east in meters.   |
+| `height`  | `number` | `width`       | length of side south-north in meters. |
 
 #### Returns
 
@@ -175,11 +175,11 @@ a rectangular-shaped area model geometry.
 
 #### Parameters
 
-| Parameter  | theme_type | theme_default_value | theme_description                                                                         |
-| ---------- | ---------- | ------------------- | ----------------------------------------------------------------------------------------- |
-| `width`    | `number`   | `10.0`              | length of side west-east in meters.                                                       |
-| `height`   | `number`   | `width`             | length of side south-north in meters.                                                     |
-| `diameter` | `number`   | `1.0`               | the diameter in meters. If diameter is smaller than width, diameter is replaced by width. |
+| Parameter  | Type     | Default value | Description                                                                               |
+| ---------- | -------- | ------------- | ----------------------------------------------------------------------------------------- |
+| `width`    | `number` | `10.0`        | length of side west-east in meters.                                                       |
+| `height`   | `number` | `width`       | length of side south-north in meters.                                                     |
+| `diameter` | `number` | `1.0`         | the diameter in meters. If diameter is smaller than width, diameter is replaced by width. |
 
 #### Returns
 
@@ -195,10 +195,10 @@ a circle model geometry in a rectangular formation.
 
 #### Parameters
 
-| Parameter | theme_type | theme_default_value | theme_description                     |
-| --------- | ---------- | ------------------- | ------------------------------------- |
-| `width`   | `number`   | `10.0`              | length of side west-east in meters.   |
-| `height`  | `number`   | `width`             | length of side south-north in meters. |
+| Parameter | Type     | Default value | Description                           |
+| --------- | -------- | ------------- | ------------------------------------- |
+| `width`   | `number` | `10.0`        | length of side west-east in meters.   |
+| `height`  | `number` | `width`       | length of side south-north in meters. |
 
 #### Returns
 
@@ -214,10 +214,10 @@ a rectangular-shaped line model geometry.
 
 #### Parameters
 
-| Parameter | theme_type | theme_default_value | theme_description                     |
-| --------- | ---------- | ------------------- | ------------------------------------- |
-| `width`   | `number`   | `10.0`              | length of side west-east in meters.   |
-| `height`  | `number`   | `width`             | length of side south-north in meters. |
+| Parameter | Type     | Default value | Description                           |
+| --------- | -------- | ------------- | ------------------------------------- |
+| `width`   | `number` | `10.0`        | length of side west-east in meters.   |
+| `height`  | `number` | `width`       | length of side south-north in meters. |
 
 #### Returns
 
@@ -233,10 +233,10 @@ a point model geometry in a rectangular formation.
 
 #### Parameters
 
-| Parameter         | theme_type | theme_default_value | theme_description                                |
-| ----------------- | ---------- | ------------------- | ------------------------------------------------ |
-| `sides`           | `number`   | `3`                 | the number of sides/vertices.                    |
-| `polygonDiameter` | `number`   | `1.0`               | the diameter of the containing circle in meters. |
+| Parameter         | Type     | Default value | Description                                      |
+| ----------------- | -------- | ------------- | ------------------------------------------------ |
+| `sides`           | `number` | `3`           | the number of sides/vertices.                    |
+| `polygonDiameter` | `number` | `1.0`         | the diameter of the containing circle in meters. |
 
 #### Returns
 
@@ -252,11 +252,11 @@ a regular polygon area model geometry.
 
 #### Parameters
 
-| Parameter         | theme_type | theme_default_value | theme_description                                                                                                                                             |
-| ----------------- | ---------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sides`           | `number`   | `3`                 | the number of sides/vertices.                                                                                                                                 |
-| `polygonDiameter` | `number`   | `10.0`              | the diameter of the containing circle in meters.                                                                                                              |
-| `diameter`        | `number`   | `1.0`               | the diameter of the circles in meters. If diameter is smaller than the distance between the points in the polygon, the diameter is replaced by this distance. |
+| Parameter         | Type     | Default value | Description                                                                                                                                                   |
+| ----------------- | -------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sides`           | `number` | `3`           | the number of sides/vertices.                                                                                                                                 |
+| `polygonDiameter` | `number` | `10.0`        | the diameter of the containing circle in meters.                                                                                                              |
+| `diameter`        | `number` | `1.0`         | the diameter of the circles in meters. If diameter is smaller than the distance between the points in the polygon, the diameter is replaced by this distance. |
 
 #### Returns
 
@@ -272,10 +272,10 @@ a circle model geometry in a regular polygon formation.
 
 #### Parameters
 
-| Parameter         | theme_type | theme_default_value | theme_description                                |
-| ----------------- | ---------- | ------------------- | ------------------------------------------------ |
-| `sides`           | `number`   | `3`                 | the number of sides/vertices.                    |
-| `polygonDiameter` | `number`   | `1.0`               | the diameter of the containing circle in meters. |
+| Parameter         | Type     | Default value | Description                                      |
+| ----------------- | -------- | ------------- | ------------------------------------------------ |
+| `sides`           | `number` | `3`           | the number of sides/vertices.                    |
+| `polygonDiameter` | `number` | `1.0`         | the diameter of the containing circle in meters. |
 
 #### Returns
 
@@ -291,10 +291,10 @@ a regular polygon line model geometry.
 
 #### Parameters
 
-| Parameter         | theme_type | theme_default_value | theme_description                                |
-| ----------------- | ---------- | ------------------- | ------------------------------------------------ |
-| `sides`           | `number`   | `3`                 | the number of sides/vertices.                    |
-| `polygonDiameter` | `number`   | `1.0`               | the diameter of the containing circle in meters. |
+| Parameter         | Type     | Default value | Description                                      |
+| ----------------- | -------- | ------------- | ------------------------------------------------ |
+| `sides`           | `number` | `3`           | the number of sides/vertices.                    |
+| `polygonDiameter` | `number` | `1.0`         | the diameter of the containing circle in meters. |
 
 #### Returns
 
@@ -314,7 +314,7 @@ type of the geometry.
 
 #### Parameters
 
-| Parameter  | theme_type                                                         | theme_description                             |
+| Parameter  | Type                                                               | Description                                   |
 | ---------- | ------------------------------------------------------------------ | --------------------------------------------- |
 | `geometry` | [`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject) | a GeoJSON geometry (not geometry collection). |
 
@@ -332,9 +332,9 @@ the size of the geometry.
 
 #### Parameters
 
-| Parameter    | theme_type | theme_default_value | theme_description                 |
-| ------------ | ---------- | ------------------- | --------------------------------- |
-| `sideLength` | `number`   | `10.0`              | the length of the line in meters. |
+| Parameter    | Type     | Default value | Description                       |
+| ------------ | -------- | ------------- | --------------------------------- |
+| `sideLength` | `number` | `10.0`        | the length of the line in meters. |
 
 #### Returns
 

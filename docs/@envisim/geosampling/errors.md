@@ -32,7 +32,7 @@
 
 #### Type declaration
 
-| theme_name                                                     | theme_type                               | theme_default_value                      |
+| Name                                                           | Type                                     | Default value                            |
 | -------------------------------------------------------------- | ---------------------------------------- | ---------------------------------------- |
 | <a id="base_collection_missing"></a> `BASE_COLLECTION_MISSING` | `"collect-error-collection-is-missing"`  | `'collect-error-collection-is-missing'`  |
 | <a id="line_expects_area"></a> `LINE_EXPECTS_AREA`             | `"collect-error-line-expects-area"`      | `'collect-error-line-expects-area'`      |
@@ -49,7 +49,7 @@
 
 #### Type declaration
 
-| theme_name                                                                                   | theme_type                                         | theme_default_value                                |
+| Name                                                                                         | Type                                               | Default value                                      |
 | -------------------------------------------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
 | <a id="balance_on_missing"></a> `BALANCE_ON_MISSING`                                         | `"sample-error-balance-on-do-not-exist"`           | `'sample-error-balance-on-do-not-exist'`           |
 | <a id="collection_missing"></a> `COLLECTION_MISSING`                                         | `"sample-error-collection-do-not-exist"`           | `'sample-error-collection-do-not-exist'`           |
@@ -88,7 +88,7 @@
 
 #### Type declaration
 
-| theme_name                                                                   | theme_type                                    | theme_default_value                           |
+| Name                                                                         | Type                                          | Default value                                 |
 | ---------------------------------------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
 | <a id="base_collection_expected_area"></a> `BASE_COLLECTION_EXPECTED_AREA`   | `"select-error-base-collection-is-not-area"`  | `'select-error-base-collection-is-not-area'`  |
 | <a id="base_collection_expected_line"></a> `BASE_COLLECTION_EXPECTED_LINE`   | `"select-error-base-collection-is-not-line"`  | `'select-error-base-collection-is-not-line'`  |

@@ -22,7 +22,7 @@ Select intersect of features as the new frame from base-collection.
 
 #### Parameters
 
-| Parameter | theme_type                                                                                              |
+| Parameter | Type                                                                                                    |
 | --------- | ------------------------------------------------------------------------------------------------------- |
 | `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\>      |
 | `base`    | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject), `P`\> |
@@ -45,7 +45,7 @@ Select intersect of features as the new frame from base-collection.
 
 #### Parameters
 
-| Parameter | theme_type                                                                                              |
+| Parameter | Type                                                                                                    |
 | --------- | ------------------------------------------------------------------------------------------------------- |
 | `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)\<[`LineObject`](../geojson.md#lineobject)\>      |
 | `base`    | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject), `P`\> |
@@ -68,7 +68,7 @@ Select intersect of features as the new frame from base-collection.
 
 #### Parameters
 
-| Parameter | theme_type                                                                                              |
+| Parameter | Type                                                                                                    |
 | --------- | ------------------------------------------------------------------------------------------------------- |
 | `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)\<[`PointObject`](../geojson.md#pointobject)\>    |
 | `base`    | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject), `P`\> |
@@ -91,7 +91,7 @@ Select intersect of features as the new frame from base-collection.
 
 #### Parameters
 
-| Parameter | theme_type                                                                                              |
+| Parameter | Type                                                                                                    |
 | --------- | ------------------------------------------------------------------------------------------------------- |
 | `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\>      |
 | `base`    | [`FeatureCollection`](../geojson.md#featurecollection)\<[`LineObject`](../geojson.md#lineobject), `P`\> |
@@ -114,7 +114,7 @@ Select intersect of features as the new frame from base-collection.
 
 #### Parameters
 
-| Parameter | theme_type                                                                                                |
+| Parameter | Type                                                                                                      |
 | --------- | --------------------------------------------------------------------------------------------------------- |
 | `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\>        |
 | `base`    | [`FeatureCollection`](../geojson.md#featurecollection)\<[`PointObject`](../geojson.md#pointobject), `P`\> |

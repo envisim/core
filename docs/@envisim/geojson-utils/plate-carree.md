@@ -18,7 +18,7 @@ defined as [lon1 + t * (lon2 - lon1), lat1 + t * (lat2 - lat1)], for
 
 #### Parameters
 
-| Parameter | theme_type                          |
+| Parameter | Type                                |
 | --------- | ----------------------------------- |
 | `ring`    | [`Position`](geojson.md#position)[] |
 
@@ -38,10 +38,10 @@ Computes the plate carrée distance between two points
 
 #### Parameters
 
-| Parameter | theme_type                        | theme_description |
-| --------- | --------------------------------- | ----------------- |
-| `p1`      | [`Position`](geojson.md#position) | the first point   |
-| `p2`      | [`Position`](geojson.md#position) | the second point  |
+| Parameter | Type                              | Description      |
+| --------- | --------------------------------- | ---------------- |
+| `p1`      | [`Position`](geojson.md#position) | the first point  |
+| `p2`      | [`Position`](geojson.md#position) | the second point |
 
 #### Returns
 
@@ -60,7 +60,7 @@ segment, where the segment is of type plate carrée.
 
 #### Parameters
 
-| Parameter  | theme_type                        | theme_description          |
+| Parameter  | Type                              | Description                |
 | ---------- | --------------------------------- | -------------------------- |
 | `p1`       | [`Position`](geojson.md#position) | start point [lon,lat]      |
 | `p2`       | [`Position`](geojson.md#position) | end point [lon,lat]        |

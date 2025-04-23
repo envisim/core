@@ -20,10 +20,10 @@ Constructs a nearest neighbour searcher, using k-d-trees
 
 ###### Parameters
 
-| Parameter    | theme_type                   | theme_default_value | theme_description                        |
-| ------------ | ---------------------------- | ------------------- | ---------------------------------------- |
-| `dt`         | [`Matrix`](matrix.md#matrix) | `undefined`         | the data to search within.               |
-| `bucketSize` | `number`                     | `40`                | the bucket size of the k-d-tree's nodes. |
+| Parameter    | Type                         | Default value | Description                              |
+| ------------ | ---------------------------- | ------------- | ---------------------------------------- |
+| `dt`         | [`Matrix`](matrix.md#matrix) | `undefined`   | the data to search within.               |
+| `bucketSize` | `number`                     | `40`          | the bucket size of the k-d-tree's nodes. |
 
 ###### Returns
 
@@ -39,7 +39,7 @@ a nearest neighbour searcher.
 
 ###### Parameters
 
-| Parameter | theme_type             | theme_description                                                              |
+| Parameter | Type                   | Description                                                                    |
 | --------- | ---------------------- | ------------------------------------------------------------------------------ |
 | `unit`    | `number` \| `number`[] | if a number $i$, the unit is assumed to be the $i$th row in the provided data. |
 
@@ -56,7 +56,7 @@ provided data.
 
 ###### Parameters
 
-| Parameter | theme_type             | theme_description                                                              |
+| Parameter | Type                   | Description                                                                    |
 | --------- | ---------------------- | ------------------------------------------------------------------------------ |
 | `unit`    | `number` \| `number`[] | if a number $i$, the unit is assumed to be the $i$th row in the provided data. |
 
@@ -76,7 +76,7 @@ Selects a (pips) sample without replacement using Brewers method.
 
 #### Parameters
 
-| Parameter | theme_type    |
+| Parameter | Type          |
 | --------- | ------------- |
 | `options` | `PipsOptions` |
 
@@ -96,7 +96,7 @@ Selects a conditional Poisson sample using the rejective method.
 
 #### Parameters
 
-| Parameter | theme_type                          |
+| Parameter | Type                                |
 | --------- | ----------------------------------- |
 | `options` | `FixedSizedOptions` & `PipsOptions` |
 
@@ -120,7 +120,7 @@ Selects a balanced (pips) sample using the cube method.
 
 #### Parameters
 
-| Parameter | theme_type    |
+| Parameter | Type          |
 | --------- | ------------- |
 | `options` | `CubeOptions` |
 
@@ -140,7 +140,7 @@ Calculation of inclusion probabilities from a positive auxiliary variable.
 
 #### Parameters
 
-| Parameter | theme_type                      |
+| Parameter | Type                            |
 | --------- | ------------------------------- |
 | `options` | `InclusionProbabilitiesOptions` |
 
@@ -160,7 +160,7 @@ Selects a Locally Correlated Poisson Sample (LCPS)
 
 #### Parameters
 
-| Parameter | theme_type         |
+| Parameter | Type               |
 | --------- | ------------------ |
 | `options` | `AuxiliaryOptions` |
 
@@ -180,7 +180,7 @@ Selects a doubly balanced sample using the local cube method.
 
 #### Parameters
 
-| Parameter | theme_type         |
+| Parameter | Type               |
 | --------- | ------------------ |
 | `options` | `LocalCubeOptions` |
 
@@ -200,7 +200,7 @@ Selects a (pips) sample using the local pivotal method 1.
 
 #### Parameters
 
-| Parameter | theme_type                                         |
+| Parameter | Type                                               |
 | --------- | -------------------------------------------------- |
 | `options` | `AuxiliaryOptions` \| `AuxiliaryFixedSizedOptions` |
 
@@ -220,7 +220,7 @@ Selects a (pips) sample using the local pivotal method 2.
 
 #### Parameters
 
-| Parameter | theme_type                                         |
+| Parameter | Type                                               |
 | --------- | -------------------------------------------------- |
 | `options` | `AuxiliaryOptions` \| `AuxiliaryFixedSizedOptions` |
 
@@ -240,7 +240,7 @@ Selects a Pareto (pips) sample without replacement.
 
 #### Parameters
 
-| Parameter | theme_type    |
+| Parameter | Type          |
 | --------- | ------------- |
 | `options` | `PipsOptions` |
 
@@ -260,7 +260,7 @@ Selects a Poisson sample.
 
 #### Parameters
 
-| Parameter | theme_type    |
+| Parameter | Type          |
 | --------- | ------------- |
 | `options` | `PipsOptions` |
 
@@ -280,7 +280,7 @@ Selects a pps sample with replacement.
 
 #### Parameters
 
-| Parameter | theme_type                          |
+| Parameter | Type                                |
 | --------- | ----------------------------------- |
 | `options` | `FixedSizedOptions` & `PipsOptions` |
 
@@ -300,7 +300,7 @@ Selects a systematic (pips) sample with initial randomization of order of the un
 
 #### Parameters
 
-| Parameter | theme_type    |
+| Parameter | Type          |
 | --------- | ------------- |
 | `options` | `PipsOptions` |
 
@@ -320,7 +320,7 @@ Selects a (pips) sample using the random pivotal method.
 
 #### Parameters
 
-| Parameter | theme_type    |
+| Parameter | Type          |
 | --------- | ------------- |
 | `options` | `PipsOptions` |
 
@@ -340,7 +340,7 @@ Selects a Sampford (pips) sample using the rejective method.
 
 #### Parameters
 
-| Parameter | theme_type    |
+| Parameter | Type          |
 | --------- | ------------- |
 | `options` | `PipsOptions` |
 
@@ -360,7 +360,7 @@ Selects a Spatially Correlated Poisson Sample (SCPS)
 
 #### Parameters
 
-| Parameter | theme_type         |
+| Parameter | Type               |
 | --------- | ------------------ |
 | `options` | `AuxiliaryOptions` |
 
@@ -380,7 +380,7 @@ Selects a coordinated Spatially Correlated Poisson Sample (SCPSCOORD)
 
 #### Parameters
 
-| Parameter | theme_type               |
+| Parameter | Type                     |
 | --------- | ------------------------ |
 | `options` | `ScpsCoordinatedOptions` |
 
@@ -400,7 +400,7 @@ Selects a (pips) sample using the sequential pivotal method.
 
 #### Parameters
 
-| Parameter | theme_type    |
+| Parameter | Type          |
 | --------- | ------------- |
 | `options` | `PipsOptions` |
 
@@ -420,7 +420,7 @@ Selects a simple random sampling without replacement.
 
 #### Parameters
 
-| Parameter | theme_type   |
+| Parameter | Type         |
 | --------- | ------------ |
 | `options` | `SrsOptions` |
 
@@ -440,7 +440,7 @@ Selects a simple random sampling with replacement.
 
 #### Parameters
 
-| Parameter | theme_type   |
+| Parameter | Type         |
 | --------- | ------------ |
 | `options` | `SrsOptions` |
 
@@ -460,7 +460,7 @@ Selects a systematic (pips) sample.
 
 #### Parameters
 
-| Parameter | theme_type    |
+| Parameter | Type          |
 | --------- | ------------- |
 | `options` | `PipsOptions` |
 

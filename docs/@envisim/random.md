@@ -20,7 +20,7 @@ Returns an instance of Random. TS/class implementation of Uheprng.
 
 ###### Parameters
 
-| Parameter | theme_type           | theme_description                 |
+| Parameter | Type                 | Description                       |
 | --------- | -------------------- | --------------------------------- |
 | `seed?`   | `string` \| `number` | Seed for random number generator. |
 
@@ -54,7 +54,7 @@ Adds entropy to Uheprng.
 
 ###### Parameters
 
-| Parameter | theme_type               |
+| Parameter | Type                     |
 | --------- | ------------------------ |
 | ...`args` | `number`[] \| `string`[] |
 
@@ -70,9 +70,9 @@ Adds entropy to Uheprng.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `inStr`   | `string`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `inStr`   | `string` |
 
 ###### Returns
 
@@ -92,9 +92,9 @@ Adds entropy to Uheprng.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `n`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `n`       | `number` |
 
 ###### Returns
 
@@ -118,9 +118,9 @@ Pseudo-random (uniform) number o nthe interval `(0.0, 1.0)`
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `inStr`   | `string`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `inStr`   | `string` |
 
 ###### Returns
 
@@ -142,9 +142,9 @@ Initializes state
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `n`       | `number`   | `1`                 |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `n`       | `number` | `1`           |
 
 ###### Returns
 
@@ -174,7 +174,7 @@ Seed the random generator
 
 ###### Parameters
 
-| Parameter | theme_type           |
+| Parameter | Type                 |
 | --------- | -------------------- |
 | `seed`    | `string` \| `number` |
 
@@ -188,9 +188,9 @@ Seed the random generator
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `n`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `n`       | `number` |
 
 ###### Returns
 
@@ -223,7 +223,7 @@ Returns an array with psudo-random standard uniform elements.
 
 #### Parameters
 
-| Parameter   | theme_type                            | theme_description                 |
+| Parameter   | Type                                  | Description                       |
 | ----------- | ------------------------------------- | --------------------------------- |
 | `n`         | `number`                              | Length of array.                  |
 | `generator` | [`RandomGenerator`](#randomgenerator) | Seed for random number generator. |
@@ -242,7 +242,7 @@ Pseudo-random (uniform) array with elements on the interval `[0.0, 1.0)`.
 
 #### Parameters
 
-| Parameter   | theme_type                            |
+| Parameter   | Type                                  |
 | ----------- | ------------------------------------- |
 | `generator` | [`RandomGenerator`](#randomgenerator) |
 
@@ -260,7 +260,7 @@ Pseudo-random (uniform) number on the interval `[0.0, 1.0)`
 
 #### Parameters
 
-| Parameter   | theme_type                            |
+| Parameter   | Type                                  |
 | ----------- | ------------------------------------- |
 | `generator` | [`RandomGenerator`](#randomgenerator) |
 
@@ -278,10 +278,10 @@ Pseudo-random (uniform) number o nthe interval `(0.0, 1.0)`
 
 #### Parameters
 
-| Parameter   | theme_type                            | theme_default_value |
-| ----------- | ------------------------------------- | ------------------- |
-| `n`         | `number`                              | `1`                 |
-| `generator` | [`RandomGenerator`](#randomgenerator) | `...`               |
+| Parameter   | Type                                  | Default value |
+| ----------- | ------------------------------------- | ------------- |
+| `n`         | `number`                              | `1`           |
+| `generator` | [`RandomGenerator`](#randomgenerator) | `...`         |
 
 #### Returns
 

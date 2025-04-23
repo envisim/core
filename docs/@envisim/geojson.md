@@ -10,7 +10,7 @@
 
 ### Circle
 
-#### theme_extends
+#### Extends
 
 - `AbstractAreaObject`\<[`Circle`](geojson-utils/geojson.md#circle)\>
 
@@ -30,10 +30,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type                                                                                         | theme_default_value | theme_description                            |
-| --------- | -------------------------------------------------------------------------------------------------- | ------------------- | -------------------------------------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`Circle`](geojson-utils/geojson.md#circle), `"type"`\> | `undefined`         | -                                            |
-| `shallow` | `boolean`                                                                                          | `true`              | if `true`, copys by reference when possible. |
+| Parameter | Type                                                                                               | Default value | Description                                  |
+| --------- | -------------------------------------------------------------------------------------------------- | ------------- | -------------------------------------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`Circle`](geojson-utils/geojson.md#circle), `"type"`\> | `undefined`   | -                                            |
+| `shallow` | `boolean`                                                                                          | `true`        | if `true`, copys by reference when possible. |
 
 ###### Returns
 
@@ -45,12 +45,12 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 #### Properties
 
-| Property                               | theme_modifier | theme_type                                      |
-| -------------------------------------- | -------------- | ----------------------------------------------- |
-| <a id="bbox"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)       |
-| <a id="coordinates"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position) |
-| <a id="radius"></a> `radius`           | `public`       | `number`                                        |
-| <a id="type"></a> `type`               | `readonly`     | `"Point"`                                       |
+| Property                               | Modifier   | Type                                            |
+| -------------------------------------- | ---------- | ----------------------------------------------- |
+| <a id="bbox"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)       |
+| <a id="coordinates"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position) |
+| <a id="radius"></a> `radius`           | `public`   | `number`                                        |
+| <a id="type"></a> `type`               | `readonly` | `"Point"`                                       |
 
 #### Methods
 
@@ -72,7 +72,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type      |
+| Parameter | Type            |
 | --------- | --------------- |
 | `options` | `BufferOptions` |
 
@@ -98,9 +98,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `shallow` | `boolean`  | `true`              |
+| Parameter | Type      | Default value |
+| --------- | --------- | ------------- |
+| `shallow` | `boolean` | `true`        |
 
 ###### Returns
 
@@ -116,7 +116,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `position` | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -170,7 +170,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `position` | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -248,7 +248,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type                                      |
+| Parameter | Type                                            |
 | --------- | ----------------------------------------------- |
 | `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -290,7 +290,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type                                              |
+| Parameter | Type                                                    |
 | --------- | ------------------------------------------------------- |
 | `options` | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) |
 
@@ -304,10 +304,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `obj`     | `unknown`  | `undefined`         |
-| `msg`     | `string`   | `"Expected Circle"` |
+| Parameter | Type      | Default value       |
+| --------- | --------- | ------------------- |
+| `obj`     | `unknown` | `undefined`         |
+| `msg`     | `string`  | `"Expected Circle"` |
 
 ###### Returns
 
@@ -319,11 +319,11 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter     | theme_type                                      | theme_default_value |
-| ------------- | ----------------------------------------------- | ------------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position) | `undefined`         |
-| `radius`      | `number`                                        | `undefined`         |
-| `shallow`     | `boolean`                                       | `true`              |
+| Parameter     | Type                                            | Default value |
+| ------------- | ----------------------------------------------- | ------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position) | `undefined`   |
+| `radius`      | `number`                                        | `undefined`   |
+| `shallow`     | `boolean`                                       | `true`        |
 
 ###### Returns
 
@@ -335,9 +335,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `obj`     | `unknown`  |
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 ###### Returns
 
@@ -349,10 +349,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 #### Type Parameters
 
-| Type Parameter                            | theme_default_type |
-| ----------------------------------------- | ------------------ |
-| `T` _extends_ [`PureObject`](#pureobject) | -                  |
-| `PID` _extends_ `string`                  | `string`           |
+| Type Parameter                            | Default type |
+| ----------------------------------------- | ------------ |
+| `T` _extends_ [`PureObject`](#pureobject) | -            |
+| `PID` _extends_ `string`                  | `string`     |
 
 #### Implements
 
@@ -366,11 +366,11 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter    | theme_type                                           | theme_default_value |
-| ------------ | ---------------------------------------------------- | ------------------- |
-| `geometry`   | `T`                                                  | `undefined`         |
-| `properties` | [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`         |
-| `shallow`    | `boolean`                                            | `true`              |
+| Parameter    | Type                                                 | Default value |
+| ------------ | ---------------------------------------------------- | ------------- |
+| `geometry`   | `T`                                                  | `undefined`   |
+| `properties` | [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`   |
+| `shallow`    | `boolean`                                            | `true`        |
 
 ###### Returns
 
@@ -378,11 +378,11 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 #### Properties
 
-| Property                             | theme_modifier | theme_type                                           | theme_default_value |
-| ------------------------------------ | -------------- | ---------------------------------------------------- | ------------------- |
-| <a id="geometry"></a> `geometry`     | `public`       | `T`                                                  | `undefined`         |
-| <a id="properties"></a> `properties` | `public`       | [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`         |
-| <a id="type-1"></a> `type`           | `readonly`     | `"Feature"`                                          | `"Feature"`         |
+| Property                             | Modifier   | Type                                                 | Default value |
+| ------------------------------------ | ---------- | ---------------------------------------------------- | ------------- |
+| <a id="geometry"></a> `geometry`     | `public`   | `T`                                                  | `undefined`   |
+| <a id="properties"></a> `properties` | `public`   | [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`   |
+| <a id="type-1"></a> `type`           | `readonly` | `"Feature"`                                          | `"Feature"`   |
 
 #### Methods
 
@@ -392,7 +392,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter  | theme_type                                                        |
+| Parameter  | Type                                                              |
 | ---------- | ----------------------------------------------------------------- |
 | `id`       | `PID`                                                             |
 | `callback` | (`value`) => [`FeatureProperties`](#featureproperties-1)\[`PID`\] |
@@ -415,9 +415,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `id`      | `PID`      |
+| Parameter | Type  |
+| --------- | ----- |
+| `id`      | `PID` |
 
 ###### Returns
 
@@ -469,9 +469,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `value`   | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `value`   | `number` |
 
 ###### Returns
 
@@ -483,7 +483,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type                                           |
+| Parameter | Type                                                 |
 | --------- | ---------------------------------------------------- |
 | `id`      | `PID`                                                |
 | `value`   | [`FeatureProperties`](#featureproperties-1)\[`PID`\] |
@@ -498,9 +498,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `value`   | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `value`   | `number` |
 
 ###### Returns
 
@@ -512,9 +512,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `value`   | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `value`   | `number` |
 
 ###### Returns
 
@@ -534,9 +534,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `value`   | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `value`   | `number` |
 
 ###### Returns
 
@@ -548,9 +548,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `value`   | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `value`   | `number` |
 
 ###### Returns
 
@@ -562,10 +562,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `obj`     | `unknown`  | `undefined`         |
-| `msg`     | `string`   | `"Expected area"`   |
+| Parameter | Type      | Default value     |
+| --------- | --------- | ----------------- |
+| `obj`     | `unknown` | `undefined`       |
+| `msg`     | `string`  | `"Expected area"` |
 
 ###### Returns
 
@@ -577,10 +577,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `obj`     | `unknown`  | `undefined`         |
-| `msg`     | `string`   | `"Expected line"`   |
+| Parameter | Type      | Default value     |
+| --------- | --------- | ----------------- |
+| `obj`     | `unknown` | `undefined`       |
+| `msg`     | `string`  | `"Expected line"` |
 
 ###### Returns
 
@@ -592,10 +592,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `obj`     | `unknown`  | `undefined`         |
-| `msg`     | `string`   | `"Expected point"`  |
+| Parameter | Type      | Default value      |
+| --------- | --------- | ------------------ |
+| `obj`     | `unknown` | `undefined`        |
+| `msg`     | `string`  | `"Expected point"` |
 
 ###### Returns
 
@@ -607,18 +607,18 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Type Parameters
 
-| Type Parameter           | theme_default_type |
-| ------------------------ | ------------------ |
-| `PID` _extends_ `string` | `string`           |
+| Type Parameter           | Default type |
+| ------------------------ | ------------ |
+| `PID` _extends_ `string` | `string`     |
 
 ###### Parameters
 
-| Parameter     | theme_type                                                     | theme_default_value |
-| ------------- | -------------------------------------------------------------- | ------------------- |
-| `geometry`    | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry)        | `undefined`         |
-| `properties?` | `null` \| [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`         |
-| `shallow?`    | `boolean`                                                      | `true`              |
-| `options?`    | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions)        | `{}`                |
+| Parameter     | Type                                                           | Default value |
+| ------------- | -------------------------------------------------------------- | ------------- |
+| `geometry`    | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry)        | `undefined`   |
+| `properties?` | `null` \| [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`   |
+| `shallow?`    | `boolean`                                                      | `true`        |
+| `options?`    | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions)        | `{}`          |
 
 ###### Returns
 
@@ -630,10 +630,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type                                                                                                                                                                                    | theme_default_value |
-| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `feature` | [`OptionalParam`](utils.md#optionalparam)\<[`BaseFeature`](geojson-utils/geojson.md#basefeature)\<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` \| `number`\>, `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                                                                                                                                                                     | `true`              |
+| Parameter | Type                                                                                                                                                                                          | Default value |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `feature` | [`OptionalParam`](utils.md#optionalparam)\<[`BaseFeature`](geojson-utils/geojson.md#basefeature)\<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` \| `number`\>, `"type"`\> | `undefined`   |
+| `shallow` | `boolean`                                                                                                                                                                                     | `true`        |
 
 ###### Returns
 
@@ -645,17 +645,17 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Type Parameters
 
-| Type Parameter           | theme_default_type |
-| ------------------------ | ------------------ |
-| `PID` _extends_ `string` | `string`           |
+| Type Parameter           | Default type |
+| ------------------------ | ------------ |
+| `PID` _extends_ `string` | `string`     |
 
 ###### Parameters
 
-| Parameter     | theme_type                                                     | theme_default_value |
-| ------------- | -------------------------------------------------------------- | ------------------- |
-| `geometry`    | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry)        | `undefined`         |
-| `properties?` | `null` \| [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`         |
-| `shallow?`    | `boolean`                                                      | `true`              |
+| Parameter     | Type                                                           | Default value |
+| ------------- | -------------------------------------------------------------- | ------------- |
+| `geometry`    | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry)        | `undefined`   |
+| `properties?` | `null` \| [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`   |
+| `shallow?`    | `boolean`                                                      | `true`        |
 
 ###### Returns
 
@@ -667,10 +667,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type                                                                                                                                                                                    | theme_default_value |
-| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `feature` | [`OptionalParam`](utils.md#optionalparam)\<[`BaseFeature`](geojson-utils/geojson.md#basefeature)\<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` \| `number`\>, `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                                                                                                                                                                     | `true`              |
+| Parameter | Type                                                                                                                                                                                          | Default value |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `feature` | [`OptionalParam`](utils.md#optionalparam)\<[`BaseFeature`](geojson-utils/geojson.md#basefeature)\<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` \| `number`\>, `"type"`\> | `undefined`   |
+| `shallow` | `boolean`                                                                                                                                                                                     | `true`        |
 
 ###### Returns
 
@@ -682,17 +682,17 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Type Parameters
 
-| Type Parameter           | theme_default_type |
-| ------------------------ | ------------------ |
-| `PID` _extends_ `string` | `string`           |
+| Type Parameter           | Default type |
+| ------------------------ | ------------ |
+| `PID` _extends_ `string` | `string`     |
 
 ###### Parameters
 
-| Parameter     | theme_type                                                     | theme_default_value |
-| ------------- | -------------------------------------------------------------- | ------------------- |
-| `geometry`    | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry)        | `undefined`         |
-| `properties?` | `null` \| [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`         |
-| `shallow?`    | `boolean`                                                      | `true`              |
+| Parameter     | Type                                                           | Default value |
+| ------------- | -------------------------------------------------------------- | ------------- |
+| `geometry`    | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry)        | `undefined`   |
+| `properties?` | `null` \| [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`   |
+| `shallow?`    | `boolean`                                                      | `true`        |
 
 ###### Returns
 
@@ -704,10 +704,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type                                                                                                                                                                                    | theme_default_value |
-| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `feature` | [`OptionalParam`](utils.md#optionalparam)\<[`BaseFeature`](geojson-utils/geojson.md#basefeature)\<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` \| `number`\>, `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                                                                                                                                                                     | `true`              |
+| Parameter | Type                                                                                                                                                                                          | Default value |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `feature` | [`OptionalParam`](utils.md#optionalparam)\<[`BaseFeature`](geojson-utils/geojson.md#basefeature)\<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` \| `number`\>, `"type"`\> | `undefined`   |
+| `shallow` | `boolean`                                                                                                                                                                                     | `true`        |
 
 ###### Returns
 
@@ -719,9 +719,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `obj`     | `unknown`  |
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 ###### Returns
 
@@ -733,9 +733,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `obj`     | `unknown`  |
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 ###### Returns
 
@@ -747,9 +747,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `obj`     | `unknown`  |
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 ###### Returns
 
@@ -761,10 +761,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 #### Type Parameters
 
-| Type Parameter                            | theme_default_type |
-| ----------------------------------------- | ------------------ |
-| `T` _extends_ [`PureObject`](#pureobject) | -                  |
-| `PID` _extends_ `string`                  | `string`           |
+| Type Parameter                            | Default type |
+| ----------------------------------------- | ------------ |
+| `T` _extends_ [`PureObject`](#pureobject) | -            |
+| `PID` _extends_ `string`                  | `string`     |
 
 #### Implements
 
@@ -773,16 +773,16 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 #### Properties
 
-| Property                                     | theme_modifier | theme_type                                                             | theme_default_value   | theme_description                                                   |
-| -------------------------------------------- | -------------- | ---------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------- |
-| <a id="bbox-1"></a> `bbox?`                  | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)                              | `undefined`           | -                                                                   |
-| <a id="color"></a> `color?`                  | `public`       | \[`number`, `number`, `number`\]                                       | `undefined`           | Foreign GeoJSON member, an RGB value associated with the collection |
-| <a id="features"></a> `features`             | `public`       | [`Feature`](#feature)\<`T`, `PID`\>[]                                  | `[]`                  | -                                                                   |
-| <a id="id"></a> `id?`                        | `public`       | `string`                                                               | `undefined`           | Foreign GeoJSON member, the id of the collection                    |
-| <a id="primitive"></a> `primitive`           | `readonly`     | [`GeometricPrimitiveUnion`](geojson-utils/.md#geometricprimitiveunion) | `undefined`           | Foreign GeoJSON member, geometric primitive of the collection       |
-| <a id="propertyrecord"></a> `propertyRecord` | `public`       | [`PropertyRecord`](#propertyrecord-1)\<`PID`\>                         | `undefined`           | Foreign GeoJSON member, the allowed properties of the collection    |
-| <a id="title"></a> `title?`                  | `public`       | `string`                                                               | `undefined`           | Foreign GeoJSON member, the human readable name of the collection   |
-| <a id="type-2"></a> `type`                   | `readonly`     | `"FeatureCollection"`                                                  | `"FeatureCollection"` | -                                                                   |
+| Property                                     | Modifier   | Type                                                                   | Default value         | Description                                                         |
+| -------------------------------------------- | ---------- | ---------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------- |
+| <a id="bbox-1"></a> `bbox?`                  | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)                              | `undefined`           | -                                                                   |
+| <a id="color"></a> `color?`                  | `public`   | \[`number`, `number`, `number`\]                                       | `undefined`           | Foreign GeoJSON member, an RGB value associated with the collection |
+| <a id="features"></a> `features`             | `public`   | [`Feature`](#feature)\<`T`, `PID`\>[]                                  | `[]`                  | -                                                                   |
+| <a id="id"></a> `id?`                        | `public`   | `string`                                                               | `undefined`           | Foreign GeoJSON member, the id of the collection                    |
+| <a id="primitive"></a> `primitive`           | `readonly` | [`GeometricPrimitiveUnion`](geojson-utils/.md#geometricprimitiveunion) | `undefined`           | Foreign GeoJSON member, geometric primitive of the collection       |
+| <a id="propertyrecord"></a> `propertyRecord` | `public`   | [`PropertyRecord`](#propertyrecord-1)\<`PID`\>                         | `undefined`           | Foreign GeoJSON member, the allowed properties of the collection    |
+| <a id="title"></a> `title?`                  | `public`   | `string`                                                               | `undefined`           | Foreign GeoJSON member, the human readable name of the collection   |
+| <a id="type-2"></a> `type`                   | `readonly` | `"FeatureCollection"`                                                  | `"FeatureCollection"` | -                                                                   |
 
 #### Methods
 
@@ -792,10 +792,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type                          | theme_default_value |
-| --------- | ----------------------------------- | ------------------- |
-| `feature` | [`Feature`](#feature)\<`T`, `PID`\> | `undefined`         |
-| `shallow` | `boolean`                           | `true`              |
+| Parameter | Type                                | Default value |
+| --------- | ----------------------------------- | ------------- |
+| `feature` | [`Feature`](#feature)\<`T`, `PID`\> | `undefined`   |
+| `shallow` | `boolean`                           | `true`        |
 
 ###### Returns
 
@@ -807,11 +807,11 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter    | theme_type                                           | theme_default_value |
-| ------------ | ---------------------------------------------------- | ------------------- |
-| `geometry`   | `T`                                                  | `undefined`         |
-| `properties` | [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`         |
-| `shallow`    | `boolean`                                            | `true`              |
+| Parameter    | Type                                                 | Default value |
+| ------------ | ---------------------------------------------------- | ------------- |
+| `geometry`   | `T`                                                  | `undefined`   |
+| `properties` | [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`   |
+| `shallow`    | `boolean`                                            | `true`        |
 
 ###### Returns
 
@@ -823,10 +823,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type                                              | theme_default_value |
-| --------- | ------------------------------------------------------- | ------------------- |
-| `fc`      | [`FeatureCollection`](#featurecollection)\<`T`, `PID`\> | `undefined`         |
-| `shallow` | `boolean`                                               | `true`              |
+| Parameter | Type                                                    | Default value |
+| --------- | ------------------------------------------------------- | ------------- |
+| `fc`      | [`FeatureCollection`](#featurecollection)\<`T`, `PID`\> | `undefined`   |
+| `shallow` | `boolean`                                               | `true`        |
 
 ###### Returns
 
@@ -838,7 +838,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type      |
+| Parameter | Type            |
 | --------- | --------------- |
 | `options` | `BufferOptions` |
 
@@ -852,9 +852,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter    | theme_type | theme_default_value |
-| ------------ | ---------- | ------------------- |
-| `iterations` | `number`   | `2`                 |
+| Parameter    | Type     | Default value |
+| ------------ | -------- | ------------- |
+| `iterations` | `number` | `2`           |
 
 ###### Returns
 
@@ -876,10 +876,10 @@ Transforms the categorical properties back to strings, and returns the json
 
 ###### Parameters
 
-| Parameter | theme_type                                                         | theme_default_value | theme_description                                 |
-| --------- | ------------------------------------------------------------------ | ------------------- | ------------------------------------------------- |
-| `shallow` | `boolean`                                                          | `true`              | if `true`, creates shallow copies of the features |
-| `options` | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) & `object` | `{}`                | -                                                 |
+| Parameter | Type                                                               | Default value | Description                                       |
+| --------- | ------------------------------------------------------------------ | ------------- | ------------------------------------------------- |
+| `shallow` | `boolean`                                                          | `true`        | if `true`, creates shallow copies of the features |
+| `options` | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) & `object` | `{}`          | -                                                 |
 
 ###### Returns
 
@@ -891,9 +891,9 @@ Transforms the categorical properties back to strings, and returns the json
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `shallow` | `boolean`  | `true`              |
+| Parameter | Type      | Default value |
+| --------- | --------- | ------------- |
+| `shallow` | `boolean` | `true`        |
 
 ###### Returns
 
@@ -905,7 +905,7 @@ Transforms the categorical properties back to strings, and returns the json
 
 ###### Parameters
 
-| Parameter | theme_type                                      |
+| Parameter | Type                                            |
 | --------- | ----------------------------------------------- |
 | `coords`  | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -919,7 +919,7 @@ Transforms the categorical properties back to strings, and returns the json
 
 ###### Parameters
 
-| Parameter  | theme_type                                               |
+| Parameter  | Type                                                     |
 | ---------- | -------------------------------------------------------- |
 | `callback` | `ForEachCallback`\<[`Feature`](#feature)\<`T`, `PID`\>\> |
 
@@ -933,7 +933,7 @@ Transforms the categorical properties back to strings, and returns the json
 
 ###### Parameters
 
-| Parameter  | theme_type               |
+| Parameter  | Type                     |
 | ---------- | ------------------------ |
 | `callback` | `ForEachCallback`\<`T`\> |
 
@@ -974,9 +974,9 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `index`   | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `index`   | `number` |
 
 ###### Returns
 
@@ -988,9 +988,9 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `force`   | `boolean`  | `false`             |
+| Parameter | Type      | Default value |
+| --------- | --------- | ------------- |
+| `force`   | `boolean` | `false`       |
 
 ###### Returns
 
@@ -1002,7 +1002,7 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type           |
+| Parameter | Type                 |
 | --------- | -------------------- |
 | `id`      | `PID`                |
 | `index`   | `number`             |
@@ -1032,10 +1032,10 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type                                                                    | theme_default_value |
-| --------- | ----------------------------------------------------------------------------- | ------------------- |
-| `obj`     | [`FeatureCollection`](#featurecollection)\<[`PureObject`](#pureobject), `P`\> | `undefined`         |
-| `msg`     | `string`                                                                      | `"Expected area"`   |
+| Parameter | Type                                                                          | Default value     |
+| --------- | ----------------------------------------------------------------------------- | ----------------- |
+| `obj`     | [`FeatureCollection`](#featurecollection)\<[`PureObject`](#pureobject), `P`\> | `undefined`       |
+| `msg`     | `string`                                                                      | `"Expected area"` |
 
 ###### Returns
 
@@ -1053,10 +1053,10 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type                                                                    | theme_default_value |
-| --------- | ----------------------------------------------------------------------------- | ------------------- |
-| `obj`     | [`FeatureCollection`](#featurecollection)\<[`PureObject`](#pureobject), `P`\> | `undefined`         |
-| `msg`     | `string`                                                                      | `"Expected line"`   |
+| Parameter | Type                                                                          | Default value     |
+| --------- | ----------------------------------------------------------------------------- | ----------------- |
+| `obj`     | [`FeatureCollection`](#featurecollection)\<[`PureObject`](#pureobject), `P`\> | `undefined`       |
+| `msg`     | `string`                                                                      | `"Expected line"` |
 
 ###### Returns
 
@@ -1074,10 +1074,10 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type                                                                    | theme_default_value |
-| --------- | ----------------------------------------------------------------------------- | ------------------- |
-| `obj`     | [`FeatureCollection`](#featurecollection)\<[`PureObject`](#pureobject), `P`\> | `undefined`         |
-| `msg`     | `string`                                                                      | `"Expected point"`  |
+| Parameter | Type                                                                          | Default value      |
+| --------- | ----------------------------------------------------------------------------- | ------------------ |
+| `obj`     | [`FeatureCollection`](#featurecollection)\<[`PureObject`](#pureobject), `P`\> | `undefined`        |
+| `msg`     | `string`                                                                      | `"Expected point"` |
 
 ###### Returns
 
@@ -1089,11 +1089,11 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter    | theme_type                                              | theme_default_value |
-| ------------ | ------------------------------------------------------- | ------------------- |
-| `collection` | `StrippedFeatureCollectionJson`                         | `undefined`         |
-| `shallow`    | `boolean`                                               | `true`              |
-| `options`    | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) | `{}`                |
+| Parameter    | Type                                                    | Default value |
+| ------------ | ------------------------------------------------------- | ------------- |
+| `collection` | `StrippedFeatureCollectionJson`                         | `undefined`   |
+| `shallow`    | `boolean`                                               | `true`        |
+| `options`    | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) | `{}`          |
 
 ###### Returns
 
@@ -1105,10 +1105,10 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter    | theme_type                      | theme_default_value |
-| ------------ | ------------------------------- | ------------------- |
-| `collection` | `StrippedFeatureCollectionJson` | `undefined`         |
-| `shallow`    | `boolean`                       | `true`              |
+| Parameter    | Type                            | Default value |
+| ------------ | ------------------------------- | ------------- |
+| `collection` | `StrippedFeatureCollectionJson` | `undefined`   |
+| `shallow`    | `boolean`                       | `true`        |
 
 ###### Returns
 
@@ -1120,10 +1120,10 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter    | theme_type                      | theme_default_value |
-| ------------ | ------------------------------- | ------------------- |
-| `collection` | `StrippedFeatureCollectionJson` | `undefined`         |
-| `shallow`    | `boolean`                       | `true`              |
+| Parameter    | Type                            | Default value |
+| ------------ | ------------------------------- | ------------- |
+| `collection` | `StrippedFeatureCollectionJson` | `undefined`   |
+| `shallow`    | `boolean`                       | `true`        |
 
 ###### Returns
 
@@ -1141,7 +1141,7 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type                                                                    |
+| Parameter | Type                                                                          |
 | --------- | ----------------------------------------------------------------------------- |
 | `obj`     | [`FeatureCollection`](#featurecollection)\<[`PureObject`](#pureobject), `P`\> |
 
@@ -1161,7 +1161,7 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type                                                                    |
+| Parameter | Type                                                                          |
 | --------- | ----------------------------------------------------------------------------- |
 | `obj`     | [`FeatureCollection`](#featurecollection)\<[`PureObject`](#pureobject), `P`\> |
 
@@ -1181,7 +1181,7 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type                                                                    |
+| Parameter | Type                                                                          |
 | --------- | ----------------------------------------------------------------------------- |
 | `obj`     | [`FeatureCollection`](#featurecollection)\<[`PureObject`](#pureobject), `P`\> |
 
@@ -1195,18 +1195,18 @@ of a line collection, and the total count of a point collection
 
 ###### Type Parameters
 
-| Type Parameter                            | theme_default_type          |
+| Type Parameter                            | Default type                |
 | ----------------------------------------- | --------------------------- |
 | `F` _extends_ [`AreaObject`](#areaobject) | [`AreaObject`](#areaobject) |
 | `PID` _extends_ `string`                  | `string`                    |
 
 ###### Parameters
 
-| Parameter         | theme_type                                     | theme_default_value |
-| ----------------- | ---------------------------------------------- | ------------------- |
-| `features`        | [`Feature`](#feature)\<`F`, `PID`\>[]          | `[]`                |
-| `propertyRecord?` | [`PropertyRecord`](#propertyrecord-1)\<`PID`\> | `undefined`         |
-| `shallow?`        | `boolean`                                      | `true`              |
+| Parameter         | Type                                           | Default value |
+| ----------------- | ---------------------------------------------- | ------------- |
+| `features`        | [`Feature`](#feature)\<`F`, `PID`\>[]          | `[]`          |
+| `propertyRecord?` | [`PropertyRecord`](#propertyrecord-1)\<`PID`\> | `undefined`   |
+| `shallow?`        | `boolean`                                      | `true`        |
 
 ###### Returns
 
@@ -1218,18 +1218,18 @@ of a line collection, and the total count of a point collection
 
 ###### Type Parameters
 
-| Type Parameter                            | theme_default_type          |
+| Type Parameter                            | Default type                |
 | ----------------------------------------- | --------------------------- |
 | `F` _extends_ [`LineObject`](#lineobject) | [`LineObject`](#lineobject) |
 | `PID` _extends_ `string`                  | `string`                    |
 
 ###### Parameters
 
-| Parameter         | theme_type                                     | theme_default_value |
-| ----------------- | ---------------------------------------------- | ------------------- |
-| `features`        | [`Feature`](#feature)\<`F`, `PID`\>[]          | `[]`                |
-| `propertyRecord?` | [`PropertyRecord`](#propertyrecord-1)\<`PID`\> | `undefined`         |
-| `shallow?`        | `boolean`                                      | `true`              |
+| Parameter         | Type                                           | Default value |
+| ----------------- | ---------------------------------------------- | ------------- |
+| `features`        | [`Feature`](#feature)\<`F`, `PID`\>[]          | `[]`          |
+| `propertyRecord?` | [`PropertyRecord`](#propertyrecord-1)\<`PID`\> | `undefined`   |
+| `shallow?`        | `boolean`                                      | `true`        |
 
 ###### Returns
 
@@ -1241,18 +1241,18 @@ of a line collection, and the total count of a point collection
 
 ###### Type Parameters
 
-| Type Parameter                              | theme_default_type            |
+| Type Parameter                              | Default type                  |
 | ------------------------------------------- | ----------------------------- |
 | `F` _extends_ [`PointObject`](#pointobject) | [`PointObject`](#pointobject) |
 | `PID` _extends_ `string`                    | `string`                      |
 
 ###### Parameters
 
-| Parameter         | theme_type                                     | theme_default_value |
-| ----------------- | ---------------------------------------------- | ------------------- |
-| `features`        | [`Feature`](#feature)\<`F`, `PID`\>[]          | `[]`                |
-| `propertyRecord?` | [`PropertyRecord`](#propertyrecord-1)\<`PID`\> | `undefined`         |
-| `shallow?`        | `boolean`                                      | `true`              |
+| Parameter         | Type                                           | Default value |
+| ----------------- | ---------------------------------------------- | ------------- |
+| `features`        | [`Feature`](#feature)\<`F`, `PID`\>[]          | `[]`          |
+| `propertyRecord?` | [`PropertyRecord`](#propertyrecord-1)\<`PID`\> | `undefined`   |
+| `shallow?`        | `boolean`                                      | `true`        |
 
 ###### Returns
 
@@ -1262,7 +1262,7 @@ of a line collection, and the total count of a point collection
 
 ### LineString
 
-#### theme_extends
+#### Extends
 
 - `AbstractLineObject`\<[`LineString`](geojson-utils/geojson.md#linestring)\>
 
@@ -1278,10 +1278,10 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type                                                                                                 | theme_default_value |
-| --------- | ---------------------------------------------------------------------------------------------------------- | ------------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`LineString`](geojson-utils/geojson.md#linestring), `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                                                                                  | `true`              |
+| Parameter | Type                                                                                                       | Default value |
+| --------- | ---------------------------------------------------------------------------------------------------------- | ------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`LineString`](geojson-utils/geojson.md#linestring), `"type"`\> | `undefined`   |
+| `shallow` | `boolean`                                                                                                  | `true`        |
 
 ###### Returns
 
@@ -1293,11 +1293,11 @@ of a line collection, and the total count of a point collection
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type                                        |
-| ---------------------------------------- | -------------- | ------------------------------------------------- |
-| <a id="bbox-2"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)         |
-| <a id="coordinates-1"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position)[] |
-| <a id="type-3"></a> `type`               | `readonly`     | `"LineString"`                                    |
+| Property                                 | Modifier   | Type                                              |
+| ---------------------------------------- | ---------- | ------------------------------------------------- |
+| <a id="bbox-2"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)         |
+| <a id="coordinates-1"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position)[] |
+| <a id="type-3"></a> `type`               | `readonly` | `"LineString"`                                    |
 
 #### Methods
 
@@ -1307,7 +1307,7 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type      |
+| Parameter | Type            |
 | --------- | --------------- |
 | `options` | `BufferOptions` |
 
@@ -1321,9 +1321,9 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter    | theme_type | theme_default_value |
-| ------------ | ---------- | ------------------- |
-| `iterations` | `number`   | `2`                 |
+| Parameter    | Type     | Default value |
+| ------------ | -------- | ------------- |
+| `iterations` | `number` | `2`           |
 
 ###### Returns
 
@@ -1339,9 +1339,9 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `shallow` | `boolean`  | `true`              |
+| Parameter | Type      | Default value |
+| --------- | --------- | ------------- |
+| `shallow` | `boolean` | `true`        |
 
 ###### Returns
 
@@ -1357,7 +1357,7 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `position` | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -1471,7 +1471,7 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type                                      |
+| Parameter | Type                                            |
 | --------- | ----------------------------------------------- |
 | `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -1513,10 +1513,10 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value     |
-| --------- | ---------- | ----------------------- |
-| `obj`     | `unknown`  | `undefined`             |
-| `msg`     | `string`   | `"Expected LineString"` |
+| Parameter | Type      | Default value           |
+| --------- | --------- | ----------------------- |
+| `obj`     | `unknown` | `undefined`             |
+| `msg`     | `string`  | `"Expected LineString"` |
 
 ###### Returns
 
@@ -1528,10 +1528,10 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter     | theme_type                                        | theme_default_value |
-| ------------- | ------------------------------------------------- | ------------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[] | `undefined`         |
-| `shallow`     | `boolean`                                         | `true`              |
+| Parameter     | Type                                              | Default value |
+| ------------- | ------------------------------------------------- | ------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[] | `undefined`   |
+| `shallow`     | `boolean`                                         | `true`        |
 
 ###### Returns
 
@@ -1543,9 +1543,9 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `obj`     | `unknown`  |
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 ###### Returns
 
@@ -1555,7 +1555,7 @@ of a line collection, and the total count of a point collection
 
 ### MultiCircle
 
-#### theme_extends
+#### Extends
 
 - `AbstractAreaObject`\<[`MultiCircle`](geojson-utils/geojson.md#multicircle)\>
 
@@ -1577,10 +1577,10 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter | theme_type                                                                                                   | theme_default_value | theme_description                            |
-| --------- | ------------------------------------------------------------------------------------------------------------ | ------------------- | -------------------------------------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`MultiCircle`](geojson-utils/geojson.md#multicircle), `"type"`\> | `undefined`         | -                                            |
-| `shallow` | `boolean`                                                                                                    | `true`              | if `true`, copys by reference when possible. |
+| Parameter | Type                                                                                                         | Default value | Description                                  |
+| --------- | ------------------------------------------------------------------------------------------------------------ | ------------- | -------------------------------------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`MultiCircle`](geojson-utils/geojson.md#multicircle), `"type"`\> | `undefined`   | -                                            |
+| `shallow` | `boolean`                                                                                                    | `true`        | if `true`, copys by reference when possible. |
 
 ###### Returns
 
@@ -1592,12 +1592,12 @@ MultiCircles MUST be non-overlapping.
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type                                        |
-| ---------------------------------------- | -------------- | ------------------------------------------------- |
-| <a id="bbox-3"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)         |
-| <a id="coordinates-2"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position)[] |
-| <a id="radius-1"></a> `radius`           | `public`       | `number`                                          |
-| <a id="type-4"></a> `type`               | `readonly`     | `"MultiPoint"`                                    |
+| Property                                 | Modifier   | Type                                              |
+| ---------------------------------------- | ---------- | ------------------------------------------------- |
+| <a id="bbox-3"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)         |
+| <a id="coordinates-2"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position)[] |
+| <a id="radius-1"></a> `radius`           | `public`   | `number`                                          |
+| <a id="type-4"></a> `type`               | `readonly` | `"MultiPoint"`                                    |
 
 #### Methods
 
@@ -1619,7 +1619,7 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter | theme_type      |
+| Parameter | Type            |
 | --------- | --------------- |
 | `options` | `BufferOptions` |
 
@@ -1633,9 +1633,9 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter    | theme_type | theme_default_value |
-| ------------ | ---------- | ------------------- |
-| `iterations` | `number`   | `2`                 |
+| Parameter    | Type     | Default value |
+| ------------ | -------- | ------------- |
+| `iterations` | `number` | `2`           |
 
 ###### Returns
 
@@ -1651,9 +1651,9 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `shallow` | `boolean`  | `true`              |
+| Parameter | Type      | Default value |
+| --------- | --------- | ------------- |
+| `shallow` | `boolean` | `true`        |
 
 ###### Returns
 
@@ -1669,7 +1669,7 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `position` | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -1723,7 +1723,7 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `position` | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -1801,7 +1801,7 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter | theme_type                                      |
+| Parameter | Type                                            |
 | --------- | ----------------------------------------------- |
 | `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -1846,7 +1846,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                              |
+| Parameter | Type                                                    |
 | --------- | ------------------------------------------------------- |
 | `options` | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) |
 
@@ -1860,10 +1860,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value      |
-| --------- | ---------- | ------------------------ |
-| `obj`     | `unknown`  | `undefined`              |
-| `msg`     | `string`   | `"Expected MultiCircle"` |
+| Parameter | Type      | Default value            |
+| --------- | --------- | ------------------------ |
+| `obj`     | `unknown` | `undefined`              |
+| `msg`     | `string`  | `"Expected MultiCircle"` |
 
 ###### Returns
 
@@ -1875,11 +1875,11 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | theme_type                                        | theme_default_value |
-| ------------- | ------------------------------------------------- | ------------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[] | `undefined`         |
-| `radius`      | `number`                                          | `undefined`         |
-| `shallow`     | `boolean`                                         | `true`              |
+| Parameter     | Type                                              | Default value |
+| ------------- | ------------------------------------------------- | ------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[] | `undefined`   |
+| `radius`      | `number`                                          | `undefined`   |
+| `shallow`     | `boolean`                                         | `true`        |
 
 ###### Returns
 
@@ -1891,9 +1891,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `obj`     | `unknown`  |
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 ###### Returns
 
@@ -1903,7 +1903,7 @@ overlap as well.
 
 ### MultiLineString
 
-#### theme_extends
+#### Extends
 
 - `AbstractLineObject`\<[`MultiLineString`](geojson-utils/geojson.md#multilinestring)\>
 
@@ -1919,10 +1919,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                                                                                           | theme_default_value |
-| --------- | -------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`MultiLineString`](geojson-utils/geojson.md#multilinestring), `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                                                                                            | `true`              |
+| Parameter | Type                                                                                                                 | Default value |
+| --------- | -------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`MultiLineString`](geojson-utils/geojson.md#multilinestring), `"type"`\> | `undefined`   |
+| `shallow` | `boolean`                                                                                                            | `true`        |
 
 ###### Returns
 
@@ -1934,11 +1934,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type                                          |
-| ---------------------------------------- | -------------- | --------------------------------------------------- |
-| <a id="bbox-4"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)           |
-| <a id="coordinates-3"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position)[][] |
-| <a id="type-5"></a> `type`               | `readonly`     | `"MultiLineString"`                                 |
+| Property                                 | Modifier   | Type                                                |
+| ---------------------------------------- | ---------- | --------------------------------------------------- |
+| <a id="bbox-4"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)           |
+| <a id="coordinates-3"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position)[][] |
+| <a id="type-5"></a> `type`               | `readonly` | `"MultiLineString"`                                 |
 
 #### Methods
 
@@ -1948,7 +1948,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type      |
+| Parameter | Type            |
 | --------- | --------------- |
 | `options` | `BufferOptions` |
 
@@ -1962,9 +1962,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter    | theme_type | theme_default_value |
-| ------------ | ---------- | ------------------- |
-| `iterations` | `number`   | `2`                 |
+| Parameter    | Type     | Default value |
+| ------------ | -------- | ------------- |
+| `iterations` | `number` | `2`           |
 
 ###### Returns
 
@@ -1980,9 +1980,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `shallow` | `boolean`  | `true`              |
+| Parameter | Type      | Default value |
+| --------- | --------- | ------------- |
+| `shallow` | `boolean` | `true`        |
 
 ###### Returns
 
@@ -1998,7 +1998,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `position` | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -2112,7 +2112,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                      |
+| Parameter | Type                                            |
 | --------- | ----------------------------------------------- |
 | `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -2154,10 +2154,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value          |
-| --------- | ---------- | ---------------------------- |
-| `obj`     | `unknown`  | `undefined`                  |
-| `msg`     | `string`   | `"Expected MultiLineString"` |
+| Parameter | Type      | Default value                |
+| --------- | --------- | ---------------------------- |
+| `obj`     | `unknown` | `undefined`                  |
+| `msg`     | `string`  | `"Expected MultiLineString"` |
 
 ###### Returns
 
@@ -2169,10 +2169,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | theme_type                                          | theme_default_value |
-| ------------- | --------------------------------------------------- | ------------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[][] | `undefined`         |
-| `shallow`     | `boolean`                                           | `true`              |
+| Parameter     | Type                                                | Default value |
+| ------------- | --------------------------------------------------- | ------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[][] | `undefined`   |
+| `shallow`     | `boolean`                                           | `true`        |
 
 ###### Returns
 
@@ -2184,9 +2184,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `obj`     | `unknown`  |
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 ###### Returns
 
@@ -2196,7 +2196,7 @@ overlap as well.
 
 ### MultiPoint
 
-#### theme_extends
+#### Extends
 
 - `AbstractPointObject`\<[`MultiPoint`](geojson-utils/geojson.md#multipoint)\>
 
@@ -2212,10 +2212,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                                                                                 | theme_default_value |
-| --------- | ---------------------------------------------------------------------------------------------------------- | ------------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`MultiPoint`](geojson-utils/geojson.md#multipoint), `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                                                                                  | `true`              |
+| Parameter | Type                                                                                                       | Default value |
+| --------- | ---------------------------------------------------------------------------------------------------------- | ------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`MultiPoint`](geojson-utils/geojson.md#multipoint), `"type"`\> | `undefined`   |
+| `shallow` | `boolean`                                                                                                  | `true`        |
 
 ###### Returns
 
@@ -2227,11 +2227,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type                                        |
-| ---------------------------------------- | -------------- | ------------------------------------------------- |
-| <a id="bbox-5"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)         |
-| <a id="coordinates-4"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position)[] |
-| <a id="type-6"></a> `type`               | `readonly`     | `"MultiPoint"`                                    |
+| Property                                 | Modifier   | Type                                              |
+| ---------------------------------------- | ---------- | ------------------------------------------------- |
+| <a id="bbox-5"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)         |
+| <a id="coordinates-4"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position)[] |
+| <a id="type-6"></a> `type`               | `readonly` | `"MultiPoint"`                                    |
 
 #### Methods
 
@@ -2241,7 +2241,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type      |
+| Parameter | Type            |
 | --------- | --------------- |
 | `options` | `BufferOptions` |
 
@@ -2255,9 +2255,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter    | theme_type | theme_default_value |
-| ------------ | ---------- | ------------------- |
-| `iterations` | `number`   | `2`                 |
+| Parameter    | Type     | Default value |
+| ------------ | -------- | ------------- |
+| `iterations` | `number` | `2`           |
 
 ###### Returns
 
@@ -2273,9 +2273,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `shallow` | `boolean`  | `true`              |
+| Parameter | Type      | Default value |
+| --------- | --------- | ------------- |
+| `shallow` | `boolean` | `true`        |
 
 ###### Returns
 
@@ -2303,7 +2303,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `position` | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -2405,7 +2405,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                      |
+| Parameter | Type                                            |
 | --------- | ----------------------------------------------- |
 | `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -2447,10 +2447,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value     |
-| --------- | ---------- | ----------------------- |
-| `obj`     | `unknown`  | `undefined`             |
-| `msg`     | `string`   | `"Expected MultiPoint"` |
+| Parameter | Type      | Default value           |
+| --------- | --------- | ----------------------- |
+| `obj`     | `unknown` | `undefined`             |
+| `msg`     | `string`  | `"Expected MultiPoint"` |
 
 ###### Returns
 
@@ -2462,10 +2462,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | theme_type                                        | theme_default_value |
-| ------------- | ------------------------------------------------- | ------------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[] | `undefined`         |
-| `shallow`     | `boolean`                                         | `true`              |
+| Parameter     | Type                                              | Default value |
+| ------------- | ------------------------------------------------- | ------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[] | `undefined`   |
+| `shallow`     | `boolean`                                         | `true`        |
 
 ###### Returns
 
@@ -2477,9 +2477,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `obj`     | `unknown`  |
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 ###### Returns
 
@@ -2489,7 +2489,7 @@ overlap as well.
 
 ### MultiPolygon
 
-#### theme_extends
+#### Extends
 
 - `AbstractAreaObject`\<[`MultiPolygon`](geojson-utils/geojson.md#multipolygon)\>
 
@@ -2505,10 +2505,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                                                                                     | theme_default_value |
-| --------- | -------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`MultiPolygon`](geojson-utils/geojson.md#multipolygon), `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                                                                                      | `true`              |
+| Parameter | Type                                                                                                           | Default value |
+| --------- | -------------------------------------------------------------------------------------------------------------- | ------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`MultiPolygon`](geojson-utils/geojson.md#multipolygon), `"type"`\> | `undefined`   |
+| `shallow` | `boolean`                                                                                                      | `true`        |
 
 ###### Returns
 
@@ -2520,11 +2520,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type                                            |
-| ---------------------------------------- | -------------- | ----------------------------------------------------- |
-| <a id="bbox-6"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)             |
-| <a id="coordinates-5"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position)[][][] |
-| <a id="type-7"></a> `type`               | `readonly`     | `"MultiPolygon"`                                      |
+| Property                                 | Modifier   | Type                                                  |
+| ---------------------------------------- | ---------- | ----------------------------------------------------- |
+| <a id="bbox-6"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)             |
+| <a id="coordinates-5"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position)[][][] |
+| <a id="type-7"></a> `type`               | `readonly` | `"MultiPolygon"`                                      |
 
 #### Methods
 
@@ -2546,7 +2546,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type      |
+| Parameter | Type            |
 | --------- | --------------- |
 | `options` | `BufferOptions` |
 
@@ -2560,9 +2560,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter    | theme_type | theme_default_value |
-| ------------ | ---------- | ------------------- |
-| `iterations` | `number`   | `2`                 |
+| Parameter    | Type     | Default value |
+| ------------ | -------- | ------------- |
+| `iterations` | `number` | `2`           |
 
 ###### Returns
 
@@ -2578,9 +2578,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `shallow` | `boolean`  | `true`              |
+| Parameter | Type      | Default value |
+| --------- | --------- | ------------- |
+| `shallow` | `boolean` | `true`        |
 
 ###### Returns
 
@@ -2596,7 +2596,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `position` | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -2650,7 +2650,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `position` | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -2728,7 +2728,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                      |
+| Parameter | Type                                            |
 | --------- | ----------------------------------------------- |
 | `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -2778,10 +2778,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value       |
-| --------- | ---------- | ------------------------- |
-| `obj`     | `unknown`  | `undefined`               |
-| `msg`     | `string`   | `"Expected MultiPolygon"` |
+| Parameter | Type      | Default value             |
+| --------- | --------- | ------------------------- |
+| `obj`     | `unknown` | `undefined`               |
+| `msg`     | `string`  | `"Expected MultiPolygon"` |
 
 ###### Returns
 
@@ -2793,10 +2793,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | theme_type                                            | theme_default_value |
-| ------------- | ----------------------------------------------------- | ------------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[][][] | `undefined`         |
-| `shallow`     | `boolean`                                             | `true`              |
+| Parameter     | Type                                                  | Default value |
+| ------------- | ----------------------------------------------------- | ------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[][][] | `undefined`   |
+| `shallow`     | `boolean`                                             | `true`        |
 
 ###### Returns
 
@@ -2808,9 +2808,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `obj`     | `unknown`  |
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 ###### Returns
 
@@ -2820,7 +2820,7 @@ overlap as well.
 
 ### Point
 
-#### theme_extends
+#### Extends
 
 - `AbstractPointObject`\<[`Point`](geojson-utils/geojson.md#point)\>
 
@@ -2836,10 +2836,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                                                                       | theme_default_value |
-| --------- | ------------------------------------------------------------------------------------------------ | ------------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`Point`](geojson-utils/geojson.md#point), `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                                                                        | `true`              |
+| Parameter | Type                                                                                             | Default value |
+| --------- | ------------------------------------------------------------------------------------------------ | ------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`Point`](geojson-utils/geojson.md#point), `"type"`\> | `undefined`   |
+| `shallow` | `boolean`                                                                                        | `true`        |
 
 ###### Returns
 
@@ -2851,11 +2851,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type                                      |
-| ---------------------------------------- | -------------- | ----------------------------------------------- |
-| <a id="bbox-7"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)       |
-| <a id="coordinates-6"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position) |
-| <a id="type-8"></a> `type`               | `readonly`     | `"Point"`                                       |
+| Property                                 | Modifier   | Type                                            |
+| ---------------------------------------- | ---------- | ----------------------------------------------- |
+| <a id="bbox-7"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)       |
+| <a id="coordinates-6"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position) |
+| <a id="type-8"></a> `type`               | `readonly` | `"Point"`                                       |
 
 #### Methods
 
@@ -2865,7 +2865,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type      |
+| Parameter | Type            |
 | --------- | --------------- |
 | `options` | `BufferOptions` |
 
@@ -2891,9 +2891,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `shallow` | `boolean`  | `true`              |
+| Parameter | Type      | Default value |
+| --------- | --------- | ------------- |
+| `shallow` | `boolean` | `true`        |
 
 ###### Returns
 
@@ -2921,7 +2921,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `position` | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -3023,7 +3023,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                      |
+| Parameter | Type                                            |
 | --------- | ----------------------------------------------- |
 | `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -3065,10 +3065,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `obj`     | `unknown`  | `undefined`         |
-| `msg`     | `string`   | `"Expected Point"`  |
+| Parameter | Type      | Default value      |
+| --------- | --------- | ------------------ |
+| `obj`     | `unknown` | `undefined`        |
+| `msg`     | `string`  | `"Expected Point"` |
 
 ###### Returns
 
@@ -3080,10 +3080,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | theme_type                                      | theme_default_value |
-| ------------- | ----------------------------------------------- | ------------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position) | `undefined`         |
-| `shallow`     | `boolean`                                       | `true`              |
+| Parameter     | Type                                            | Default value |
+| ------------- | ----------------------------------------------- | ------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position) | `undefined`   |
+| `shallow`     | `boolean`                                       | `true`        |
 
 ###### Returns
 
@@ -3095,9 +3095,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `obj`     | `unknown`  |
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 ###### Returns
 
@@ -3107,7 +3107,7 @@ overlap as well.
 
 ### Polygon
 
-#### theme_extends
+#### Extends
 
 - `AbstractAreaObject`\<[`Polygon`](geojson-utils/geojson.md#polygon)\>
 
@@ -3123,10 +3123,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                                                                           | theme_default_value |
-| --------- | ---------------------------------------------------------------------------------------------------- | ------------------- |
-| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`Polygon`](geojson-utils/geojson.md#polygon), `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                                                                            | `true`              |
+| Parameter | Type                                                                                                 | Default value |
+| --------- | ---------------------------------------------------------------------------------------------------- | ------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`Polygon`](geojson-utils/geojson.md#polygon), `"type"`\> | `undefined`   |
+| `shallow` | `boolean`                                                                                            | `true`        |
 
 ###### Returns
 
@@ -3138,11 +3138,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type                                          |
-| ---------------------------------------- | -------------- | --------------------------------------------------- |
-| <a id="bbox-8"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)           |
-| <a id="coordinates-7"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position)[][] |
-| <a id="type-9"></a> `type`               | `readonly`     | `"Polygon"`                                         |
+| Property                                 | Modifier   | Type                                                |
+| ---------------------------------------- | ---------- | --------------------------------------------------- |
+| <a id="bbox-8"></a> `bbox?`              | `public`   | [`BBox`](geojson-utils/geojson.md#bbox-7)           |
+| <a id="coordinates-7"></a> `coordinates` | `public`   | [`Position`](geojson-utils/geojson.md#position)[][] |
+| <a id="type-9"></a> `type`               | `readonly` | `"Polygon"`                                         |
 
 #### Methods
 
@@ -3164,7 +3164,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type      |
+| Parameter | Type            |
 | --------- | --------------- |
 | `options` | `BufferOptions` |
 
@@ -3178,9 +3178,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter    | theme_type | theme_default_value |
-| ------------ | ---------- | ------------------- |
-| `iterations` | `number`   | `2`                 |
+| Parameter    | Type     | Default value |
+| ------------ | -------- | ------------- |
+| `iterations` | `number` | `2`           |
 
 ###### Returns
 
@@ -3196,9 +3196,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `shallow` | `boolean`  | `true`              |
+| Parameter | Type      | Default value |
+| --------- | --------- | ------------- |
+| `shallow` | `boolean` | `true`        |
 
 ###### Returns
 
@@ -3214,7 +3214,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `position` | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -3268,7 +3268,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `position` | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -3346,7 +3346,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                      |
+| Parameter | Type                                            |
 | --------- | ----------------------------------------------- |
 | `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
@@ -3396,10 +3396,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value  |
-| --------- | ---------- | -------------------- |
-| `obj`     | `unknown`  | `undefined`          |
-| `msg`     | `string`   | `"Expected Polygon"` |
+| Parameter | Type      | Default value        |
+| --------- | --------- | -------------------- |
+| `obj`     | `unknown` | `undefined`          |
+| `msg`     | `string`  | `"Expected Polygon"` |
 
 ###### Returns
 
@@ -3411,10 +3411,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | theme_type                                          | theme_default_value |
-| ------------- | --------------------------------------------------- | ------------------- |
-| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[][] | `undefined`         |
-| `shallow`     | `boolean`                                           | `true`              |
+| Parameter     | Type                                                | Default value |
+| ------------- | --------------------------------------------------- | ------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[][] | `undefined`   |
+| `shallow`     | `boolean`                                           | `true`        |
 
 ###### Returns
 
@@ -3426,9 +3426,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `obj`     | `unknown`  |
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 ###### Returns
 
@@ -3440,9 +3440,9 @@ overlap as well.
 
 #### Type Parameters
 
-| Type Parameter           | theme_default_type |
-| ------------------------ | ------------------ |
-| `IDS` _extends_ `string` | `string`           |
+| Type Parameter           | Default type |
+| ------------------------ | ------------ |
+| `IDS` _extends_ `string` | `string`     |
 
 #### Constructors
 
@@ -3452,10 +3452,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                               | theme_default_value |
-| --------- | ---------------------------------------- | ------------------- |
-| `record`  | [`PropertyList`](#propertylist)\<`IDS`\> | `undefined`         |
-| `shallow` | `boolean`                                | `true`              |
+| Parameter | Type                                     | Default value |
+| --------- | ---------------------------------------- | ------------- |
+| `record`  | [`PropertyList`](#propertylist)\<`IDS`\> | `undefined`   |
+| `shallow` | `boolean`                                | `true`        |
 
 ###### Returns
 
@@ -3463,10 +3463,10 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type                                                                                                | theme_default_value |
-| ---------------------------------------- | -------------- | --------------------------------------------------------------------------------------------------------- | ------------------- |
-| <a id="record"></a> `record`             | `public`       | [`PropertyList`](#propertylist)\<`IDS`\>                                                                  | `undefined`         |
-| <a id="special_keys"></a> `SPECIAL_KEYS` | `readonly`     | readonly \[`"_designWeight"`, `"_distance"`, `"_parent"`, `"_randomRotation"`, `"_measure"`, `"_count"`\] | `SPECIAL_KEYS`      |
+| Property                                 | Modifier   | Type                                                                                                      | Default value  |
+| ---------------------------------------- | ---------- | --------------------------------------------------------------------------------------------------------- | -------------- |
+| <a id="record"></a> `record`             | `public`   | [`PropertyList`](#propertylist)\<`IDS`\>                                                                  | `undefined`    |
+| <a id="special_keys"></a> `SPECIAL_KEYS` | `readonly` | readonly \[`"_designWeight"`, `"_distance"`, `"_parent"`, `"_randomRotation"`, `"_measure"`, `"_count"`\] | `SPECIAL_KEYS` |
 
 #### Methods
 
@@ -3476,7 +3476,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter           | theme_type                                                             |
+| Parameter           | Type                                                                   |
 | ------------------- | ---------------------------------------------------------------------- |
 | `this`              | [`PropertyRecord`](#propertyrecord-1)\<`string`\>                      |
 | `__namedParameters` | `Partial`\<[`CategoricalProperty`](#categoricalproperty)\<`string`\>\> |
@@ -3491,7 +3491,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter           | theme_type                                                         |
+| Parameter           | Type                                                               |
 | ------------------- | ------------------------------------------------------------------ |
 | `this`              | [`PropertyRecord`](#propertyrecord-1)\<`string`\>                  |
 | `__namedParameters` | `Partial`\<[`NumericalProperty`](#numericalproperty)\<`string`\>\> |
@@ -3506,7 +3506,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type                                        |
+| Parameter  | Type                                              |
 | ---------- | ------------------------------------------------- |
 | `this`     | [`PropertyRecord`](#propertyrecord-1)\<`string`\> |
 | `property` | [`Property`](#property)\<`string`\>               |
@@ -3521,10 +3521,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `id`      | `IDS`      |
-| `value`   | `string`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `id`      | `IDS`    |
+| `value`   | `string` |
 
 ###### Returns
 
@@ -3536,10 +3536,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `id`      | `IDS`      |
-| `value`   | `string`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `id`      | `IDS`    |
+| `value`   | `string` |
 
 ###### Returns
 
@@ -3551,9 +3551,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `shallow` | `boolean`  | `true`              |
+| Parameter | Type      | Default value |
+| --------- | --------- | ------------- |
+| `shallow` | `boolean` | `true`        |
 
 ###### Returns
 
@@ -3567,9 +3567,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `id`      | `IDS`      |
+| Parameter | Type  |
+| --------- | ----- |
+| `id`      | `IDS` |
 
 ###### Returns
 
@@ -3581,9 +3581,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `id?`     | `IDS`      |
+| Parameter | Type  |
+| --------- | ----- |
+| `id?`     | `IDS` |
 
 ###### Returns
 
@@ -3611,9 +3611,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `id?`     | `string`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `id?`     | `string` |
 
 ###### Returns
 
@@ -3625,9 +3625,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `id`      | `IDS`      |
+| Parameter | Type  |
+| --------- | ----- |
+| `id`      | `IDS` |
 
 ###### Returns
 
@@ -3639,9 +3639,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `id`      | `IDS`      |
+| Parameter | Type  |
+| --------- | ----- |
+| `id`      | `IDS` |
 
 ###### Returns
 
@@ -3653,7 +3653,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                        |
+| Parameter | Type                                              |
 | --------- | ------------------------------------------------- |
 | `this`    | [`PropertyRecord`](#propertyrecord-1)\<`string`\> |
 | `id`      | `string`                                          |
@@ -3674,7 +3674,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                               |
+| Parameter | Type                                     |
 | --------- | ---------------------------------------- |
 | `record`  | [`PropertyList`](#propertylist)\<`IDS`\> |
 
@@ -3688,13 +3688,13 @@ overlap as well.
 
 ###### Type Parameters
 
-| Type Parameter            | theme_default_type |
-| ------------------------- | ------------------ |
-| `IDS1` _extends_ `string` | `string`           |
+| Type Parameter            | Default type |
+| ------------------------- | ------------ |
+| `IDS1` _extends_ `string` | `string`     |
 
 ###### Parameters
 
-| Parameter  | theme_type                                                   |
+| Parameter  | Type                                                         |
 | ---------- | ------------------------------------------------------------ |
 | `feature?` | [`Feature`](#feature)\<[`PureObject`](#pureobject), `IDS1`\> |
 
@@ -3708,7 +3708,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type                                                                                                                  |
+| Parameter  | Type                                                                                                                        |
 | ---------- | --------------------------------------------------------------------------------------------------------------------------- |
 | `feature?` | [`BaseFeature`](geojson-utils/geojson.md#basefeature)\<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `unknown`\> |
 
@@ -3722,7 +3722,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type                                    |
+| Parameter  | Type                                          |
 | ---------- | --------------------------------------------- |
 | `property` | `null` \| [`Property`](#property)\<`string`\> |
 
@@ -3736,7 +3736,7 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type                                    |
+| Parameter  | Type                                          |
 | ---------- | --------------------------------------------- |
 | `property` | `null` \| [`Property`](#property)\<`string`\> |
 
@@ -3750,9 +3750,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `obj`     | `unknown`  |
+| Parameter | Type      |
+| --------- | --------- |
+| `obj`     | `unknown` |
 
 ###### Returns
 
@@ -3764,9 +3764,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `k`       | `string`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `k`       | `string` |
 
 ###### Returns
 
@@ -3785,7 +3785,7 @@ k is "\_designWeight" \| "\_distance" \| "\_parent" \| "\_randomRotation" \| "\_
 
 ###### Parameters
 
-| Parameter | theme_type                                      |
+| Parameter | Type                                            |
 | --------- | ----------------------------------------------- |
 | `record1` | [`PropertyRecord`](#propertyrecord-1)\<`IDS1`\> |
 | `record2` | [`PropertyRecord`](#propertyrecord-1)\<`IDS2`\> |
@@ -3798,19 +3798,19 @@ k is "\_designWeight" \| "\_distance" \| "\_parent" \| "\_randomRotation" \| "\_
 
 ### CategoricalProperty\<ID\>
 
-#### theme_extends
+#### Extends
 
 - `PropertyBase`\<`ID`\>
 
 #### Type Parameters
 
-| Type Parameter          | theme_default_type |
-| ----------------------- | ------------------ |
-| `ID` _extends_ `string` | `string`           |
+| Type Parameter          | Default type |
+| ----------------------- | ------------ |
+| `ID` _extends_ `string` | `string`     |
 
 #### Properties
 
-| Property                     | theme_type      | theme_description                                      |
+| Property                     | Type            | Description                                            |
 | ---------------------------- | --------------- | ------------------------------------------------------ |
 | <a id="id-2"></a> `id`       | `ID`            | The UUID of the Features property using this category. |
 | <a id="name"></a> `name?`    | `string`        | A human-friendly name                                  |
@@ -3823,27 +3823,27 @@ k is "\_designWeight" \| "\_distance" \| "\_parent" \| "\_randomRotation" \| "\_
 
 #### Properties
 
-| Property                                        | theme_type | theme_description                              |
-| ----------------------------------------------- | ---------- | ---------------------------------------------- |
-| <a id="pointspercircle"></a> `pointsPerCircle?` | `number`   | The number of vertices to create on the circle |
+| Property                                        | Type     | Description                                    |
+| ----------------------------------------------- | -------- | ---------------------------------------------- |
+| <a id="pointspercircle"></a> `pointsPerCircle?` | `number` | The number of vertices to create on the circle |
 
 ---
 
 ### NumericalProperty\<ID\>
 
-#### theme_extends
+#### Extends
 
 - `PropertyBase`\<`ID`\>
 
 #### Type Parameters
 
-| Type Parameter          | theme_default_type |
-| ----------------------- | ------------------ |
-| `ID` _extends_ `string` | `string`           |
+| Type Parameter          | Default type |
+| ----------------------- | ------------ |
+| `ID` _extends_ `string` | `string`     |
 
 #### Properties
 
-| Property                      | theme_type             | theme_description                                      |
+| Property                      | Type                   | Description                                            |
 | ----------------------------- | ---------------------- | ------------------------------------------------------ |
 | <a id="id-4"></a> `id`        | `ID`                   | The UUID of the Features property using this category. |
 | <a id="name-1"></a> `name?`   | `string`               | A human-friendly name                                  |
@@ -3876,9 +3876,9 @@ k is "\_designWeight" \| "\_distance" \| "\_parent" \| "\_randomRotation" \| "\_
 
 #### Type Parameters
 
-| Type Parameter           | theme_default_type |
-| ------------------------ | ------------------ |
-| `IDS` _extends_ `string` | `string`           |
+| Type Parameter           | Default type |
+| ------------------------ | ------------ |
+| `IDS` _extends_ `string` | `string`     |
 
 ---
 
@@ -3936,9 +3936,9 @@ k is "\_designWeight" \| "\_distance" \| "\_parent" \| "\_randomRotation" \| "\_
 
 #### Type Parameters
 
-| Type Parameter          | theme_default_type |
-| ----------------------- | ------------------ |
-| `ID` _extends_ `string` | `string`           |
+| Type Parameter          | Default type |
+| ----------------------- | ------------ |
+| `ID` _extends_ `string` | `string`     |
 
 ---
 
@@ -3948,9 +3948,9 @@ k is "\_designWeight" \| "\_distance" \| "\_parent" \| "\_randomRotation" \| "\_
 
 #### Type Parameters
 
-| Type Parameter           | theme_default_type |
-| ------------------------ | ------------------ |
-| `IDS` _extends_ `string` | `string`           |
+| Type Parameter           | Default type |
+| ------------------------ | ------------ |
+| `IDS` _extends_ `string` | `string`     |
 
 ---
 
@@ -3960,7 +3960,7 @@ k is "\_designWeight" \| "\_distance" \| "\_parent" \| "\_randomRotation" \| "\_
 
 #### Type Parameters
 
-| Type Parameter                                                                                            | theme_default_type                                                                          |
+| Type Parameter                                                                                            | Default type                                                                                |
 | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | `T` _extends_ [`AreaObject`](#areaobject) \| [`LineObject`](#lineobject) \| [`PointObject`](#pointobject) | [`AreaObject`](#areaobject) \| [`LineObject`](#lineobject) \| [`PointObject`](#pointobject) |
 
@@ -3995,7 +3995,7 @@ contain a multipolygon.
 
 #### Parameters
 
-| Parameter    | theme_type                                                                                                                                                                                                                                                       |
+| Parameter    | Type                                                                                                                                                                                                                                                             |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `collection` | [`FeatureCollection`](#featurecollection)\<[`AreaObject`](#areaobject), `string`\> \| [`FeatureCollection`](#featurecollection)\<[`LineObject`](#lineobject), `string`\> \| [`FeatureCollection`](#featurecollection)\<[`PointObject`](#pointobject), `string`\> |
 | `options`    | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions)                                                                                                                                                                                                          |
@@ -4014,7 +4014,7 @@ Intersect of two areas.
 
 #### Parameters
 
-| Parameter   | theme_type                                              |
+| Parameter   | Type                                                    |
 | ----------- | ------------------------------------------------------- |
 | `geometry1` | [`AreaObject`](#areaobject)                             |
 | `geometry2` | [`AreaObject`](#areaobject)                             |
@@ -4036,7 +4036,7 @@ Intersect between a line and an area.
 
 #### Parameters
 
-| Parameter | theme_type                                              |
+| Parameter | Type                                                    |
 | --------- | ------------------------------------------------------- |
 | `line`    | [`LineObject`](#lineobject)                             |
 | `area`    | [`AreaObject`](#areaobject)                             |
@@ -4058,7 +4058,7 @@ Intersect of two lines: the crossing-points between the lines in the two feature
 
 #### Parameters
 
-| Parameter   | theme_type                  |
+| Parameter   | Type                        |
 | ----------- | --------------------------- |
 | `geometry1` | [`LineObject`](#lineobject) |
 | `geometry2` | [`LineObject`](#lineobject) |
@@ -4079,7 +4079,7 @@ Intersection of points and area.
 
 #### Parameters
 
-| Parameter | theme_type                    |
+| Parameter | Type                          |
 | --------- | ----------------------------- |
 | `point`   | [`PointObject`](#pointobject) |
 | `area`    | [`AreaObject`](#areaobject)   |
@@ -4098,7 +4098,7 @@ Intersection of points and area.
 
 #### Parameters
 
-| Parameter    | theme_type                                                               |
+| Parameter    | Type                                                                     |
 | ------------ | ------------------------------------------------------------------------ |
 | `collection` | [`FeatureCollection`](#featurecollection)\<[`AreaObject`](#areaobject)\> |
 
@@ -4114,11 +4114,11 @@ Intersection of points and area.
 
 #### Parameters
 
-| Parameter  | theme_type                                              | theme_default_value |
-| ---------- | ------------------------------------------------------- | ------------------- |
-| `geometry` | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`         |
-| `shallow`  | `boolean`                                               | `true`              |
-| `options`  | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) | `{}`                |
+| Parameter  | Type                                                    | Default value |
+| ---------- | ------------------------------------------------------- | ------------- |
+| `geometry` | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`   |
+| `shallow`  | `boolean`                                               | `true`        |
+| `options`  | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) | `{}`          |
 
 #### Returns
 
@@ -4132,10 +4132,10 @@ Intersection of points and area.
 
 #### Parameters
 
-| Parameter  | theme_type                                              | theme_default_value |
-| ---------- | ------------------------------------------------------- | ------------------- |
-| `geometry` | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`         |
-| `shallow`  | `boolean`                                               | `true`              |
+| Parameter  | Type                                                    | Default value |
+| ---------- | ------------------------------------------------------- | ------------- |
+| `geometry` | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`   |
+| `shallow`  | `boolean`                                               | `true`        |
 
 #### Returns
 
@@ -4149,10 +4149,10 @@ Intersection of points and area.
 
 #### Parameters
 
-| Parameter  | theme_type                                              | theme_default_value |
-| ---------- | ------------------------------------------------------- | ------------------- |
-| `geometry` | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`         |
-| `shallow`  | `boolean`                                               | `true`              |
+| Parameter  | Type                                                    | Default value |
+| ---------- | ------------------------------------------------------- | ------------- |
+| `geometry` | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`   |
+| `shallow`  | `boolean`                                               | `true`        |
 
 #### Returns
 
@@ -4166,7 +4166,7 @@ Intersection of points and area.
 
 #### Parameters
 
-| Parameter    | theme_type                                                               | theme_description                        |
+| Parameter    | Type                                                                     | Description                              |
 | ------------ | ------------------------------------------------------------------------ | ---------------------------------------- |
 | `collection` | [`FeatureCollection`](#featurecollection)\<[`AreaObject`](#areaobject)\> | the collection to compute the union from |
 | `options`    | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions)                  | -                                        |

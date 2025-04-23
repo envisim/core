@@ -26,7 +26,7 @@ multiple numerical properties, one for each category.
 
 #### Parameters
 
-| Parameter    | theme_type                                                                                                                   |
+| Parameter    | Type                                                                                                                         |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------- |
 | `frame`      | [`FeatureCollection`](../geojson.md#featurecollection)\<`GF`, `PF`\>                                                         |
 | `base`       | [`FeatureCollection`](../geojson.md#featurecollection)\<[`RetractingObject`](../geojson.md#retractingobject)\<`GF`\>, `PB`\> |
@@ -58,7 +58,7 @@ using collectProperties.
 
 #### Parameters
 
-| Parameter        | theme_type                                                | theme_description                     |
+| Parameter        | Type                                                      | Description                           |
 | ---------------- | --------------------------------------------------------- | ------------------------------------- |
 | `propertyRecord` | [`PropertyRecord`](../geojson.md#propertyrecord-1)\<`P`\> | the property record to collect from.  |
 | `properties`     | `P`[]                                                     | the ids of the properties to collect. |

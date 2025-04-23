@@ -10,7 +10,7 @@
 
 ### Matrix
 
-#### theme_extends
+#### Extends
 
 - `BaseMatrix`
 
@@ -22,11 +22,11 @@
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value | theme_description                                           |
-| --------- | ---------- | ------------------- | ----------------------------------------------------------- |
-| `arr`     | `number`[] | `undefined`         | the values used to form the Matrix in column-order          |
-| `nrow`    | `number`   | `undefined`         | the number of rows of the Matrix                            |
-| `shallow` | `boolean`  | `false`             | if `true`, uses the internal arrays of `arr` as a reference |
+| Parameter | Type       | Default value | Description                                                 |
+| --------- | ---------- | ------------- | ----------------------------------------------------------- |
+| `arr`     | `number`[] | `undefined`   | the values used to form the Matrix in column-order          |
+| `nrow`    | `number`   | `undefined`   | the number of rows of the Matrix                            |
+| `shallow` | `boolean`  | `false`       | if `true`, uses the internal arrays of `arr` as a reference |
 
 ###### Returns
 
@@ -38,12 +38,12 @@
 
 #### Properties
 
-| Property                         | theme_modifier | theme_type | theme_description                  |
-| -------------------------------- | -------------- | ---------- | ---------------------------------- |
-| <a id="cols"></a> `cols`         | `protected`    | `number`   | **`Internal`**                     |
-| <a id="internal"></a> `internal` | `protected`    | `number`[] | **`Internal`** stored column major |
-| <a id="len"></a> `len`           | `protected`    | `number`   | **`Internal`**                     |
-| <a id="rows"></a> `rows`         | `protected`    | `number`   | **`Internal`**                     |
+| Property                         | Modifier    | Type       | Description                        |
+| -------------------------------- | ----------- | ---------- | ---------------------------------- |
+| <a id="cols"></a> `cols`         | `protected` | `number`   | **`Internal`**                     |
+| <a id="internal"></a> `internal` | `protected` | `number`[] | **`Internal`** stored column major |
+| <a id="len"></a> `len`           | `protected` | `number`   | **`Internal`**                     |
+| <a id="rows"></a> `rows`         | `protected` | `number`   | **`Internal`**                     |
 
 #### Accessors
 
@@ -103,9 +103,9 @@ the number of rows
 
 ###### Parameters
 
-| Parameter | theme_type | theme_description                              |
-| --------- | ---------- | ---------------------------------------------- |
-| `index`   | `number`   | if `index < 0`, `index + .length` is accessed. |
+| Parameter | Type     | Description                                    |
+| --------- | -------- | ---------------------------------------------- |
+| `index`   | `number` | if `index < 0`, `index + .length` is accessed. |
 
 ###### Returns
 
@@ -127,7 +127,7 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter | theme_type                  |
+| Parameter | Type                        |
 | --------- | --------------------------- |
 | `dim`     | [`MatrixDim`](#matrixdim-2) |
 
@@ -149,7 +149,7 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> |
 
@@ -167,7 +167,7 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> |
 
@@ -227,9 +227,9 @@ Calculates the column minimum values
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `index`   | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `index`   | `number` |
 
 ###### Returns
 
@@ -305,9 +305,9 @@ the diagonal of the matrix
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `index`   | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `index`   | `number` |
 
 ###### Returns
 
@@ -327,10 +327,10 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | theme_type | theme_description                              |
-| --------- | ---------- | ---------------------------------------------- |
-| `index`   | `number`   | if `index < 0`, `index + .length` is accessed. |
-| `value`   | `number`   | -                                              |
+| Parameter | Type     | Description                                    |
+| --------- | -------- | ---------------------------------------------- |
+| `index`   | `number` | if `index < 0`, `index + .length` is accessed. |
+| `value`   | `number` | -                                              |
 
 ###### Returns
 
@@ -352,7 +352,7 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | theme_type                  |
+| Parameter | Type                        |
 | --------- | --------------------------- |
 | `dim`     | [`MatrixDim`](#matrixdim-2) |
 | `value`   | `number`                    |
@@ -375,7 +375,7 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | theme_type   |
+| Parameter | Type         |
 | --------- | ------------ |
 | `mat`     | `BaseMatrix` |
 
@@ -395,10 +395,10 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | theme_type   | theme_default_value |
-| --------- | ------------ | ------------------- |
-| `mat`     | `BaseMatrix` | `undefined`         |
-| `eps`     | `number`     | `1e-9`              |
+| Parameter | Type         | Default value |
+| --------- | ------------ | ------------- |
+| `mat`     | `BaseMatrix` | `undefined`   |
+| `eps`     | `number`     | `1e-9`        |
 
 ###### Returns
 
@@ -418,7 +418,7 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | theme_type                                       |
+| Parameter  | Type                                             |
 | ---------- | ------------------------------------------------ |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`boolean`\> |
 
@@ -436,9 +436,9 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `col`     | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `col`     | `number` |
 
 ###### Returns
 
@@ -450,7 +450,7 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter | theme_type                        |
+| Parameter | Type                              |
 | --------- | --------------------------------- |
 | `cols`    | `number`[] \| [`Vector`](#vector) |
 
@@ -464,9 +464,9 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `row`     | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `row`     | `number` |
 
 ###### Returns
 
@@ -478,7 +478,7 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter | theme_type                        |
+| Parameter | Type                              |
 | --------- | --------------------------------- |
 | `rows`    | `number`[] \| [`Vector`](#vector) |
 
@@ -492,7 +492,7 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter | theme_type                  |
+| Parameter | Type                        |
 | --------- | --------------------------- |
 | `start`   | [`MatrixDim`](#matrixdim-2) |
 | `end`     | [`MatrixDim`](#matrixdim-2) |
@@ -509,7 +509,7 @@ a sub-matrix defined by the parameters.
 
 ###### Parameters
 
-| Parameter  | theme_type                                       | theme_description                             |
+| Parameter  | Type                                             | Description                                   |
 | ---------- | ------------------------------------------------ | --------------------------------------------- |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`boolean`\> | a function used to test elements in the array |
 
@@ -531,7 +531,7 @@ Changes the element at matrix `index` through a callback function.
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `index`    | `number`                                        |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> |
@@ -567,7 +567,7 @@ mat.edRC(3, (el, in) => el + in);
 
 ###### Parameters
 
-| Parameter  | theme_type                      |
+| Parameter  | Type                            |
 | ---------- | ------------------------------- |
 | `dim`      | [`MatrixDim`](#matrixdim-2)     |
 | `callback` | `MatrixCallbackDim`\<`number`\> |
@@ -592,7 +592,7 @@ Executes the provided function once for each element
 
 ###### Parameters
 
-| Parameter  | theme_type                                    |
+| Parameter  | Type                                          |
 | ---------- | --------------------------------------------- |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`void`\> |
 
@@ -624,7 +624,7 @@ Geometric mean of all elements
 
 ###### Parameters
 
-| Parameter | theme_type   |
+| Parameter | Type         |
 | --------- | ------------ |
 | `mat`     | `BaseMatrix` |
 
@@ -644,10 +644,10 @@ Geometric mean of all elements
 
 ###### Parameters
 
-| Parameter       | theme_type | theme_default_value | theme_description                |
-| --------------- | ---------- | ------------------- | -------------------------------- |
-| `searchElement` | `number`   | `undefined`         | -                                |
-| `fromIndex`     | `number`   | `0`                 | the index to start the search at |
+| Parameter       | Type     | Default value | Description                      |
+| --------------- | -------- | ------------- | -------------------------------- |
+| `searchElement` | `number` | `undefined`   | -                                |
+| `fromIndex`     | `number` | `0`           | the index to start the search at |
 
 ###### Returns
 
@@ -665,7 +665,7 @@ the index of the first occurance of `searchElement`
 
 ###### Parameters
 
-| Parameter           | theme_type                  |
+| Parameter           | Type                        |
 | ------------------- | --------------------------- |
 | `__namedParameters` | [`MatrixDim`](#matrixdim-2) |
 
@@ -703,10 +703,10 @@ the matrix index at `row`, `column`
 
 ###### Parameters
 
-| Parameter       | theme_type | theme_description                |
-| --------------- | ---------- | -------------------------------- |
-| `searchElement` | `number`   | -                                |
-| `fromIndex`     | `number`   | the index to start the search at |
+| Parameter       | Type     | Description                      |
+| --------------- | -------- | -------------------------------- |
+| `searchElement` | `number` | -                                |
+| `fromIndex`     | `number` | the index to start the search at |
 
 ###### Returns
 
@@ -725,10 +725,10 @@ backwards
 
 ###### Parameters
 
-| Parameter  | theme_type                                      | theme_default_value | theme_description                    |
-| ---------- | ----------------------------------------------- | ------------------- | ------------------------------------ |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> | `undefined`         | -                                    |
-| `inPlace`  | `boolean`                                       | `false`             | performes the map in place if `true` |
+| Parameter  | Type                                            | Default value | Description                          |
+| ---------- | ----------------------------------------------- | ------------- | ------------------------------------ |
+| `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> | `undefined`   | -                                    |
+| `inPlace`  | `boolean`                                       | `false`       | performes the map in place if `true` |
 
 ###### Returns
 
@@ -802,7 +802,7 @@ Minimum value of all elements
 
 ###### Parameters
 
-| Parameter | theme_type   |
+| Parameter | Type         |
 | --------- | ------------ |
 | `mat`     | `BaseMatrix` |
 
@@ -844,7 +844,7 @@ Product sum of all elements
 
 ###### Parameters
 
-| Parameter | theme_type             |
+| Parameter | Type                   |
 | --------- | ---------------------- |
 | `probs`   | `number` \| `number`[] |
 
@@ -881,10 +881,10 @@ single value.
 
 ###### Parameters
 
-| Parameter  | theme_type                            | theme_default_value |
-| ---------- | ------------------------------------- | ------------------- |
-| `callback` | (`prev`, `curr`, `index`) => `number` | `undefined`         |
-| `init`     | `number`                              | `0.0`               |
+| Parameter  | Type                                  | Default value |
+| ---------- | ------------------------------------- | ------------- |
+| `callback` | (`prev`, `curr`, `index`) => `number` | `undefined`   |
+| `init`     | `number`                              | `0.0`         |
 
 ###### Returns
 
@@ -900,9 +900,9 @@ single value.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `index`   | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `index`   | `number` |
 
 ###### Returns
 
@@ -950,10 +950,10 @@ Standard deviation of all elements
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `start?`  | `number`   |
-| `end?`    | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `start?`  | `number` |
+| `end?`    | `number` |
 
 ###### Returns
 
@@ -973,7 +973,7 @@ Tests if any element pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | theme_type                                       |
+| Parameter  | Type                                             |
 | ---------- | ------------------------------------------------ |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`boolean`\> |
 
@@ -996,10 +996,10 @@ Standardizes or normalizes the matrix
 
 ###### Parameters
 
-| Parameter   | theme_type | theme_default_value |
-| ----------- | ---------- | ------------------- |
-| `normalize` | `boolean`  | `false`             |
-| `inPlace`   | `boolean`  | `false`             |
+| Parameter   | Type      | Default value |
+| ----------- | --------- | ------------- |
+| `normalize` | `boolean` | `false`       |
+| `inPlace`   | `boolean` | `false`       |
 
 ###### Returns
 
@@ -1031,10 +1031,10 @@ Swaps the elements at the provided indexes
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `index1`  | `number`   |
-| `index2`  | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `index1`  | `number` |
+| `index2`  | `number` |
 
 ###### Returns
 
@@ -1076,10 +1076,10 @@ Variance of all elements
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value | theme_description |
-| --------- | ---------- | ------------------- | ----------------- |
-| `obj`     | `unknown`  | `undefined`         | -                 |
-| `msg`     | `string`   | `"Expected Matrix"` | message to pass   |
+| Parameter | Type      | Default value       | Description     |
+| --------- | --------- | ------------------- | --------------- |
+| `obj`     | `unknown` | `undefined`         | -               |
+| `msg`     | `string`  | `"Expected Matrix"` | message to pass |
 
 ###### Returns
 
@@ -1097,7 +1097,7 @@ Bind multiple matrices together by columns
 
 ###### Parameters
 
-| Parameter     | theme_type     |
+| Parameter     | Type           |
 | ------------- | -------------- |
 | ...`matrices` | `BaseMatrix`[] |
 
@@ -1115,7 +1115,7 @@ Bind multiple matrices together by columns
 
 ###### Parameters
 
-| Parameter | theme_type                  |
+| Parameter | Type                        |
 | --------- | --------------------------- |
 | `fill`    | `number`                    |
 | `dim`     | [`MatrixDim`](#matrixdim-2) |
@@ -1132,9 +1132,9 @@ a new Matrix of size `dim` filled with `fill`
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `mat`     | `unknown`  |
+| Parameter | Type      |
+| --------- | --------- |
+| `mat`     | `unknown` |
 
 ###### Returns
 
@@ -1150,7 +1150,7 @@ Performs matrix multiplication this \* mat
 
 ###### Parameters
 
-| Parameter | theme_type   |
+| Parameter | Type         |
 | --------- | ------------ |
 | `mat1`    | `BaseMatrix` |
 | `mat2`    | `BaseMatrix` |
@@ -1167,7 +1167,7 @@ Bind multiple matrices together by rows
 
 ###### Parameters
 
-| Parameter     | theme_type     |
+| Parameter     | Type           |
 | ------------- | -------------- |
 | ...`matrices` | `BaseMatrix`[] |
 
@@ -1189,10 +1189,10 @@ Matrix addition.
 
 ###### Parameters
 
-| Parameter | theme_type               | theme_default_value | theme_description                            |
-| --------- | ------------------------ | ------------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`         | -                                            |
-| `inPlace` | `boolean`                | `false`             | If `true`, performes the operation in place. |
+| Parameter | Type                     | Default value | Description                                  |
+| --------- | ------------------------ | ------------- | -------------------------------------------- |
+| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
+| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -1210,10 +1210,10 @@ Element wise division.
 
 ###### Parameters
 
-| Parameter | theme_type               | theme_default_value | theme_description                            |
-| --------- | ------------------------ | ------------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`         | -                                            |
-| `inPlace` | `boolean`                | `false`             | If `true`, performes the operation in place. |
+| Parameter | Type                     | Default value | Description                                  |
+| --------- | ------------------------ | ------------- | -------------------------------------------- |
+| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
+| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -1231,10 +1231,10 @@ Element wise remainder (%) `x % y`
 
 ###### Parameters
 
-| Parameter | theme_type               | theme_default_value | theme_description                            |
-| --------- | ------------------------ | ------------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`         | -                                            |
-| `inPlace` | `boolean`                | `false`             | If `true`, performes the operation in place. |
+| Parameter | Type                     | Default value | Description                                  |
+| --------- | ------------------------ | ------------- | -------------------------------------------- |
+| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
+| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -1252,10 +1252,10 @@ Element wise multiplication.
 
 ###### Parameters
 
-| Parameter | theme_type               | theme_default_value | theme_description                            |
-| --------- | ------------------------ | ------------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`         | -                                            |
-| `inPlace` | `boolean`                | `false`             | If `true`, performes the operation in place. |
+| Parameter | Type                     | Default value | Description                                  |
+| --------- | ------------------------ | ------------- | -------------------------------------------- |
+| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
+| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -1273,10 +1273,10 @@ Matrix subtraction.
 
 ###### Parameters
 
-| Parameter | theme_type               | theme_default_value | theme_description                            |
-| --------- | ------------------------ | ------------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`         | -                                            |
-| `inPlace` | `boolean`                | `false`             | If `true`, performes the operation in place. |
+| Parameter | Type                     | Default value | Description                                  |
+| --------- | ------------------------ | ------------- | -------------------------------------------- |
+| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
+| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -1299,9 +1299,9 @@ Standardizes or normalizes the matrix by column
 
 ###### Parameters
 
-| Parameter   | theme_type | theme_default_value |
-| ----------- | ---------- | ------------------- |
-| `normalize` | `boolean`  | `false`             |
+| Parameter   | Type      | Default value |
+| ----------- | --------- | ------------- |
+| `normalize` | `boolean` | `false`       |
 
 ###### Returns
 
@@ -1331,9 +1331,9 @@ the determinant of the matrix
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `eps`     | `number`   | `1e-9`              |
+| Parameter | Type     | Default value |
+| --------- | -------- | ------------- |
+| `eps`     | `number` | `1e-9`        |
 
 ###### Returns
 
@@ -1347,10 +1347,10 @@ the inverse of the matrix
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value |
-| --------- | ---------- | ------------------- |
-| `eps`     | `number`   | `1e-9`              |
-| `inPlace` | `boolean`  | `false`             |
+| Parameter | Type      | Default value |
+| --------- | --------- | ------------- |
+| `eps`     | `number`  | `1e-9`        |
+| `inPlace` | `boolean` | `false`       |
 
 ###### Returns
 
@@ -1386,11 +1386,11 @@ the covariance matrix
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value | theme_description                                                                                  |
-| --------- | ---------- | ------------------- | -------------------------------------------------------------------------------------------------- |
-| `a`       | `number`   | `undefined`         | a row index                                                                                        |
-| `b`       | `number`   | `undefined`         | a row index                                                                                        |
-| `squared` | `boolean`  | `true`              | if `false`, calculates the euclidean distance, otherwise calculates the euclidean squared distance |
+| Parameter | Type      | Default value | Description                                                                                        |
+| --------- | --------- | ------------- | -------------------------------------------------------------------------------------------------- |
+| `a`       | `number`  | `undefined`   | a row index                                                                                        |
+| `b`       | `number`  | `undefined`   | a row index                                                                                        |
+| `squared` | `boolean` | `true`        | if `false`, calculates the euclidean distance, otherwise calculates the euclidean squared distance |
 
 ###### Returns
 
@@ -1409,9 +1409,9 @@ Standardizes or normalizes the matrix by column
 
 ###### Parameters
 
-| Parameter   | theme_type | theme_default_value |
-| ----------- | ---------- | ------------------- |
-| `normalize` | `boolean`  | `false`             |
+| Parameter   | Type      | Default value |
+| ----------- | --------- | ------------- |
+| `normalize` | `boolean` | `false`       |
 
 ###### Returns
 
@@ -1423,7 +1423,7 @@ a new standardized or normalized [Matrix](#matrix)
 
 ### Vector
 
-#### theme_extends
+#### Extends
 
 - `BaseMatrix`
 
@@ -1435,10 +1435,10 @@ a new standardized or normalized [Matrix](#matrix)
 
 ###### Parameters
 
-| Parameter | theme_type                        | theme_default_value | theme_description                                           |
-| --------- | --------------------------------- | ------------------- | ----------------------------------------------------------- |
-| `arr`     | `number`[] \| [`Vector`](#vector) | `undefined`         | the values used to form the Vector in column-order          |
-| `shallow` | `boolean`                         | `false`             | if `true`, uses the internal arrays of `arr` as a reference |
+| Parameter | Type                              | Default value | Description                                                 |
+| --------- | --------------------------------- | ------------- | ----------------------------------------------------------- |
+| `arr`     | `number`[] \| [`Vector`](#vector) | `undefined`   | the values used to form the Vector in column-order          |
+| `shallow` | `boolean`                         | `false`       | if `true`, uses the internal arrays of `arr` as a reference |
 
 ###### Returns
 
@@ -1450,12 +1450,12 @@ a new standardized or normalized [Matrix](#matrix)
 
 #### Properties
 
-| Property                           | theme_modifier | theme_type | theme_description                  |
-| ---------------------------------- | -------------- | ---------- | ---------------------------------- |
-| <a id="cols-1"></a> `cols`         | `protected`    | `number`   | **`Internal`**                     |
-| <a id="internal-1"></a> `internal` | `protected`    | `number`[] | **`Internal`** stored column major |
-| <a id="len-1"></a> `len`           | `protected`    | `number`   | **`Internal`**                     |
-| <a id="rows-1"></a> `rows`         | `protected`    | `number`   | **`Internal`**                     |
+| Property                           | Modifier    | Type       | Description                        |
+| ---------------------------------- | ----------- | ---------- | ---------------------------------- |
+| <a id="cols-1"></a> `cols`         | `protected` | `number`   | **`Internal`**                     |
+| <a id="internal-1"></a> `internal` | `protected` | `number`[] | **`Internal`** stored column major |
+| <a id="len-1"></a> `len`           | `protected` | `number`   | **`Internal`**                     |
+| <a id="rows-1"></a> `rows`         | `protected` | `number`   | **`Internal`**                     |
 
 #### Accessors
 
@@ -1515,9 +1515,9 @@ the number of rows
 
 ###### Parameters
 
-| Parameter | theme_type | theme_description                              |
-| --------- | ---------- | ---------------------------------------------- |
-| `index`   | `number`   | if `index < 0`, `index + .length` is accessed. |
+| Parameter | Type     | Description                                    |
+| --------- | -------- | ---------------------------------------------- |
+| `index`   | `number` | if `index < 0`, `index + .length` is accessed. |
 
 ###### Returns
 
@@ -1539,7 +1539,7 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter | theme_type                  |
+| Parameter | Type                        |
 | --------- | --------------------------- |
 | `dim`     | [`MatrixDim`](#matrixdim-2) |
 
@@ -1561,7 +1561,7 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> |
 
@@ -1579,7 +1579,7 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> |
 
@@ -1609,9 +1609,9 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `index`   | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `index`   | `number` |
 
 ###### Returns
 
@@ -1633,7 +1633,7 @@ the column index of the matrix `index`
 
 ###### Parameters
 
-| Parameter | theme_type          |
+| Parameter | Type                |
 | --------- | ------------------- |
 | `vec`     | [`Vector`](#vector) |
 
@@ -1667,9 +1667,9 @@ the correlation between `this` and `vec`
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `index`   | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `index`   | `number` |
 
 ###### Returns
 
@@ -1689,10 +1689,10 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | theme_type | theme_description                              |
-| --------- | ---------- | ---------------------------------------------- |
-| `index`   | `number`   | if `index < 0`, `index + .length` is accessed. |
-| `value`   | `number`   | -                                              |
+| Parameter | Type     | Description                                    |
+| --------- | -------- | ---------------------------------------------- |
+| `index`   | `number` | if `index < 0`, `index + .length` is accessed. |
+| `value`   | `number` | -                                              |
 
 ###### Returns
 
@@ -1714,7 +1714,7 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | theme_type                  |
+| Parameter | Type                        |
 | --------- | --------------------------- |
 | `dim`     | [`MatrixDim`](#matrixdim-2) |
 | `value`   | `number`                    |
@@ -1737,7 +1737,7 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | theme_type   |
+| Parameter | Type         |
 | --------- | ------------ |
 | `mat`     | `BaseMatrix` |
 
@@ -1757,10 +1757,10 @@ Changes the element at matrix `index` to `value`
 
 ###### Parameters
 
-| Parameter | theme_type   | theme_default_value |
-| --------- | ------------ | ------------------- |
-| `mat`     | `BaseMatrix` | `undefined`         |
-| `eps`     | `number`     | `1e-9`              |
+| Parameter | Type         | Default value |
+| --------- | ------------ | ------------- |
+| `mat`     | `BaseMatrix` | `undefined`   |
+| `eps`     | `number`     | `1e-9`        |
 
 ###### Returns
 
@@ -1780,7 +1780,7 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | theme_type                                       |
+| Parameter  | Type                                             |
 | ---------- | ------------------------------------------------ |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`boolean`\> |
 
@@ -1798,7 +1798,7 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | theme_type                                       | theme_description                                 |
+| Parameter  | Type                                             | Description                                       |
 | ---------- | ------------------------------------------------ | ------------------------------------------------- |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`boolean`\> | a function returning true for elements to be kept |
 
@@ -1814,7 +1814,7 @@ a filtered vector according to the provided callbackFn
 
 ###### Parameters
 
-| Parameter  | theme_type                                       | theme_description                             |
+| Parameter  | Type                                             | Description                                   |
 | ---------- | ------------------------------------------------ | --------------------------------------------- |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`boolean`\> | a function used to test elements in the array |
 
@@ -1836,7 +1836,7 @@ Changes the element at matrix `index` through a callback function.
 
 ###### Parameters
 
-| Parameter  | theme_type                                      |
+| Parameter  | Type                                            |
 | ---------- | ----------------------------------------------- |
 | `index`    | `number`                                        |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> |
@@ -1872,7 +1872,7 @@ mat.edRC(3, (el, in) => el + in);
 
 ###### Parameters
 
-| Parameter  | theme_type                      |
+| Parameter  | Type                            |
 | ---------- | ------------------------------- |
 | `dim`      | [`MatrixDim`](#matrixdim-2)     |
 | `callback` | `MatrixCallbackDim`\<`number`\> |
@@ -1897,7 +1897,7 @@ Executes the provided function once for each element
 
 ###### Parameters
 
-| Parameter  | theme_type                                    |
+| Parameter  | Type                                          |
 | ---------- | --------------------------------------------- |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`void`\> |
 
@@ -1929,7 +1929,7 @@ Geometric mean of all elements
 
 ###### Parameters
 
-| Parameter | theme_type   |
+| Parameter | Type         |
 | --------- | ------------ |
 | `mat`     | `BaseMatrix` |
 
@@ -1949,7 +1949,7 @@ Geometric mean of all elements
 
 ###### Parameters
 
-| Parameter | theme_type             |
+| Parameter | Type                   |
 | --------- | ---------------------- |
 | `bins`    | `number`               |
 | `range`   | \[`number`, `number`\] |
@@ -1960,11 +1960,11 @@ Geometric mean of all elements
 
 the values needed in order to construct a histogram
 
-| theme_name | theme_type             |
-| ---------- | ---------------------- |
-| `bins`     | `number`[]             |
-| `range`    | \[`number`, `number`\] |
-| `width`    | `number`               |
+| Name    | Type                   |
+| ------- | ---------------------- |
+| `bins`  | `number`[]             |
+| `range` | \[`number`, `number`\] |
+| `width` | `number`               |
 
 ###### Throws
 
@@ -1976,10 +1976,10 @@ the values needed in order to construct a histogram
 
 ###### Parameters
 
-| Parameter       | theme_type | theme_default_value | theme_description                |
-| --------------- | ---------- | ------------------- | -------------------------------- |
-| `searchElement` | `number`   | `undefined`         | -                                |
-| `fromIndex`     | `number`   | `0`                 | the index to start the search at |
+| Parameter       | Type     | Default value | Description                      |
+| --------------- | -------- | ------------- | -------------------------------- |
+| `searchElement` | `number` | `undefined`   | -                                |
+| `fromIndex`     | `number` | `0`           | the index to start the search at |
 
 ###### Returns
 
@@ -1997,7 +1997,7 @@ the index of the first occurance of `searchElement`
 
 ###### Parameters
 
-| Parameter           | theme_type                  |
+| Parameter           | Type                        |
 | ------------------- | --------------------------- |
 | `__namedParameters` | [`MatrixDim`](#matrixdim-2) |
 
@@ -2035,10 +2035,10 @@ the matrix index at `row`, `column`
 
 ###### Parameters
 
-| Parameter       | theme_type | theme_description                |
-| --------------- | ---------- | -------------------------------- |
-| `searchElement` | `number`   | -                                |
-| `fromIndex`     | `number`   | the index to start the search at |
+| Parameter       | Type     | Description                      |
+| --------------- | -------- | -------------------------------- |
+| `searchElement` | `number` | -                                |
+| `fromIndex`     | `number` | the index to start the search at |
 
 ###### Returns
 
@@ -2057,10 +2057,10 @@ backwards
 
 ###### Parameters
 
-| Parameter  | theme_type                                      | theme_default_value | theme_description                    |
-| ---------- | ----------------------------------------------- | ------------------- | ------------------------------------ |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> | `undefined`         | -                                    |
-| `inPlace`  | `boolean`                                       | `false`             | performes the map in place if `true` |
+| Parameter  | Type                                            | Default value | Description                          |
+| ---------- | ----------------------------------------------- | ------------- | ------------------------------------ |
+| `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> | `undefined`   | -                                    |
+| `inPlace`  | `boolean`                                       | `false`       | performes the map in place if `true` |
 
 ###### Returns
 
@@ -2162,7 +2162,7 @@ Product sum of all elements
 
 ###### Parameters
 
-| Parameter | theme_type             |
+| Parameter | Type                   |
 | --------- | ---------------------- |
 | `probs`   | `number` \| `number`[] |
 
@@ -2199,10 +2199,10 @@ single value.
 
 ###### Parameters
 
-| Parameter  | theme_type                            | theme_default_value |
-| ---------- | ------------------------------------- | ------------------- |
-| `callback` | (`prev`, `curr`, `index`) => `number` | `undefined`         |
-| `init`     | `number`                              | `0.0`               |
+| Parameter  | Type                                  | Default value |
+| ---------- | ------------------------------------- | ------------- |
+| `callback` | (`prev`, `curr`, `index`) => `number` | `undefined`   |
+| `init`     | `number`                              | `0.0`         |
 
 ###### Returns
 
@@ -2218,9 +2218,9 @@ single value.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `index`   | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `index`   | `number` |
 
 ###### Returns
 
@@ -2268,10 +2268,10 @@ Standard deviation of all elements
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `start?`  | `number`   |
-| `end?`    | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `start?`  | `number` |
+| `end?`    | `number` |
 
 ###### Returns
 
@@ -2291,7 +2291,7 @@ Tests if any element pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | theme_type                                       |
+| Parameter  | Type                                             |
 | ---------- | ------------------------------------------------ |
 | `callback` | [`MatrixCallback`](#matrixcallback)\<`boolean`\> |
 
@@ -2317,7 +2317,7 @@ Sorts the elements according to `compareFn`
 
 ###### Parameters
 
-| Parameter  | theme_type                                        | theme_description                                                   |
+| Parameter  | Type                                              | Description                                                         |
 | ---------- | ------------------------------------------------- | ------------------------------------------------------------------- |
 | `callback` | [`MatrixCallbackCompare`](#matrixcallbackcompare) | a function that defines the sort order, being provided the elements |
 
@@ -2339,7 +2339,7 @@ a sorted vector
 
 ###### Parameters
 
-| Parameter  | theme_type                                        | theme_description                                                   |
+| Parameter  | Type                                              | Description                                                         |
 | ---------- | ------------------------------------------------- | ------------------------------------------------------------------- |
 | `callback` | [`MatrixCallbackCompare`](#matrixcallbackcompare) | a function that defines the sort order, being provided the elements |
 
@@ -2360,10 +2360,10 @@ Standardizes or normalizes the matrix
 
 ###### Parameters
 
-| Parameter   | theme_type | theme_default_value |
-| ----------- | ---------- | ------------------- |
-| `normalize` | `boolean`  | `false`             |
-| `inPlace`   | `boolean`  | `false`             |
+| Parameter   | Type      | Default value |
+| ----------- | --------- | ------------- |
+| `normalize` | `boolean` | `false`       |
+| `inPlace`   | `boolean` | `false`       |
 
 ###### Returns
 
@@ -2395,10 +2395,10 @@ Swaps the elements at the provided indexes
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `index1`  | `number`   |
-| `index2`  | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `index1`  | `number` |
+| `index2`  | `number` |
 
 ###### Returns
 
@@ -2442,10 +2442,10 @@ Variance of all elements
 
 ###### Parameters
 
-| Parameter | theme_type | theme_default_value | theme_description |
-| --------- | ---------- | ------------------- | ----------------- |
-| `obj`     | `unknown`  | `undefined`         | -                 |
-| `msg`     | `string`   | `"Expected Vector"` | message to pass   |
+| Parameter | Type      | Default value       | Description     |
+| --------- | --------- | ------------------- | --------------- |
+| `obj`     | `unknown` | `undefined`         | -               |
+| `msg`     | `string`  | `"Expected Vector"` | message to pass |
 
 ###### Returns
 
@@ -2461,7 +2461,7 @@ TypeError if `obj` is not Vector
 
 ###### Parameters
 
-| Parameter | theme_type                        |
+| Parameter | Type                              |
 | --------- | --------------------------------- |
 | `vec`     | `number`[] \| [`Vector`](#vector) |
 
@@ -2475,10 +2475,10 @@ TypeError if `obj` is not Vector
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `fill`    | `number`   |
-| `length`  | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `fill`    | `number` |
+| `length`  | `number` |
 
 ###### Returns
 
@@ -2492,9 +2492,9 @@ a new Vector of size `length` filled with `fill`
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `mat`     | `unknown`  |
+| Parameter | Type      |
+| --------- | --------- |
+| `mat`     | `unknown` |
 
 ###### Returns
 
@@ -2512,10 +2512,10 @@ Matrix addition.
 
 ###### Parameters
 
-| Parameter | theme_type               | theme_default_value | theme_description                            |
-| --------- | ------------------------ | ------------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`         | -                                            |
-| `inPlace` | `boolean`                | `false`             | If `true`, performes the operation in place. |
+| Parameter | Type                     | Default value | Description                                  |
+| --------- | ------------------------ | ------------- | -------------------------------------------- |
+| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
+| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -2533,10 +2533,10 @@ Element wise division.
 
 ###### Parameters
 
-| Parameter | theme_type               | theme_default_value | theme_description                            |
-| --------- | ------------------------ | ------------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`         | -                                            |
-| `inPlace` | `boolean`                | `false`             | If `true`, performes the operation in place. |
+| Parameter | Type                     | Default value | Description                                  |
+| --------- | ------------------------ | ------------- | -------------------------------------------- |
+| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
+| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -2554,10 +2554,10 @@ Element wise remainder (%) `x % y`
 
 ###### Parameters
 
-| Parameter | theme_type               | theme_default_value | theme_description                            |
-| --------- | ------------------------ | ------------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`         | -                                            |
-| `inPlace` | `boolean`                | `false`             | If `true`, performes the operation in place. |
+| Parameter | Type                     | Default value | Description                                  |
+| --------- | ------------------------ | ------------- | -------------------------------------------- |
+| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
+| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -2575,10 +2575,10 @@ Element wise multiplication.
 
 ###### Parameters
 
-| Parameter | theme_type               | theme_default_value | theme_description                            |
-| --------- | ------------------------ | ------------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`         | -                                            |
-| `inPlace` | `boolean`                | `false`             | If `true`, performes the operation in place. |
+| Parameter | Type                     | Default value | Description                                  |
+| --------- | ------------------------ | ------------- | -------------------------------------------- |
+| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
+| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -2596,10 +2596,10 @@ Matrix subtraction.
 
 ###### Parameters
 
-| Parameter | theme_type               | theme_default_value | theme_description                            |
-| --------- | ------------------------ | ------------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`         | -                                            |
-| `inPlace` | `boolean`                | `false`             | If `true`, performes the operation in place. |
+| Parameter | Type                     | Default value | Description                                  |
+| --------- | ------------------------ | ------------- | -------------------------------------------- |
+| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
+| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -2617,10 +2617,10 @@ Matrix subtraction.
 
 ###### Parameters
 
-| Parameter | theme_type                                     | theme_default_value | theme_description                         |
-| --------- | ---------------------------------------------- | ------------------- | ----------------------------------------- |
-| `inPlace` | `boolean`                                      | `false`             | if `true`, the vector is sorted in place. |
-| `rand`    | [`RandomGenerator`](random.md#randomgenerator) | `...`               | -                                         |
+| Parameter | Type                                           | Default value | Description                               |
+| --------- | ---------------------------------------------- | ------------- | ----------------------------------------- |
+| `inPlace` | `boolean`                                      | `false`       | if `true`, the vector is sorted in place. |
+| `rand`    | [`RandomGenerator`](random.md#randomgenerator) | `...`         | -                                         |
 
 ###### Returns
 
@@ -2636,7 +2636,7 @@ the vector with a permutated order
 
 ###### Parameters
 
-| Parameter | theme_type          |
+| Parameter | Type                |
 | --------- | ------------------- |
 | `vec`     | [`Vector`](#vector) |
 
@@ -2652,10 +2652,10 @@ the unique elements of the intersect
 
 ###### Parameters
 
-| Parameter | theme_type                                     | theme_default_value | theme_description                         |
-| --------- | ---------------------------------------------- | ------------------- | ----------------------------------------- |
-| `inPlace` | `boolean`                                      | `false`             | if `true`, the vector is sorted in place. |
-| `rand`    | [`RandomGenerator`](random.md#randomgenerator) | `...`               | -                                         |
+| Parameter | Type                                           | Default value | Description                               |
+| --------- | ---------------------------------------------- | ------------- | ----------------------------------------- |
+| `inPlace` | `boolean`                                      | `false`       | if `true`, the vector is sorted in place. |
+| `rand`    | [`RandomGenerator`](random.md#randomgenerator) | `...`         | -                                         |
 
 ###### Returns
 
@@ -2669,7 +2669,7 @@ the vector with a permutated order
 
 ###### Parameters
 
-| Parameter | theme_type                        |
+| Parameter | Type                              |
 | --------- | --------------------------------- |
 | `vec`     | `number`[] \| [`Vector`](#vector) |
 
@@ -2687,7 +2687,7 @@ the unique elements of the union of `this` and `vec`
 
 ###### Parameters
 
-| Parameter | theme_type          |
+| Parameter | Type                |
 | --------- | ------------------- |
 | `vec`     | [`Vector`](#vector) |
 
@@ -2725,10 +2725,10 @@ the cumulative sums of the vector elements
 
 #### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `element` | `number`   |
-| `index`   | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `element` | `number` |
+| `index`   | `number` |
 
 #### Returns
 
@@ -2742,10 +2742,10 @@ the cumulative sums of the vector elements
 
 #### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `a`       | `number`   |
-| `b`       | `number`   |
+| Parameter | Type     |
+| --------- | -------- |
+| `a`       | `number` |
+| `b`       | `number` |
 
 #### Returns
 
@@ -2765,7 +2765,7 @@ the cumulative sums of the vector elements
 
 #### Parameters
 
-| Parameter | theme_type | theme_description     |
+| Parameter | Type       | Description           |
 | --------- | ---------- | --------------------- |
 | `arr`     | `number`[] | the diagonal elements |
 
@@ -2783,9 +2783,9 @@ a new matrix with diagonal elements set to `arr`
 
 #### Parameters
 
-| Parameter | theme_type | theme_description      |
-| --------- | ---------- | ---------------------- |
-| `nrow`    | `number`   | the size of the matrix |
+| Parameter | Type     | Description            |
+| --------- | -------- | ---------------------- |
+| `nrow`    | `number` | the size of the matrix |
 
 #### Returns
 
@@ -2803,7 +2803,7 @@ Generates a matrix of random numbers on [0, 1).
 
 #### Parameters
 
-| Parameter   | theme_type                                     | theme_description                   |
+| Parameter   | Type                                           | Description                         |
 | ----------- | ---------------------------------------------- | ----------------------------------- |
 | `dims`      | [`MatrixDim`](#matrixdim-2)                    | the dimensions of the random matrix |
 | `generator` | [`RandomGenerator`](random.md#randomgenerator) | an RNG.                             |
@@ -2822,7 +2822,7 @@ Generates a vector-like of random numbers on [0, 1).
 
 #### Parameters
 
-| Parameter | theme_type                                     | theme_description        |
+| Parameter | Type                                           | Description              |
 | --------- | ---------------------------------------------- | ------------------------ |
 | `length`  | `number`                                       | the length of the vector |
 | `rand`    | [`RandomGenerator`](random.md#randomgenerator) | an RNG                   |
@@ -2843,11 +2843,11 @@ Generates a vector-like of a sequence of numbers.
 
 #### Parameters
 
-| Parameter | theme_type | theme_default_value | theme_description                                                          |
-| --------- | ---------- | ------------------- | -------------------------------------------------------------------------- |
-| `from`    | `number`   | `undefined`         | The starting number in the sequence.                                       |
-| `to`      | `number`   | `undefined`         | A number for which the sequence will not generate beyond.                  |
-| `by`      | `number`   | `1.0`               | The incrementing (or decrementing) size of the sequence. Must be positive. |
+| Parameter | Type     | Default value | Description                                                                |
+| --------- | -------- | ------------- | -------------------------------------------------------------------------- |
+| `from`    | `number` | `undefined`   | The starting number in the sequence.                                       |
+| `to`      | `number` | `undefined`   | A number for which the sequence will not generate beyond.                  |
+| `by`      | `number` | `1.0`         | The incrementing (or decrementing) size of the sequence. Must be positive. |
 
 #### Returns
 

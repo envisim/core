@@ -10,20 +10,20 @@
 
 ### BaseFeature\<G, P\>
 
-#### theme_extends
+#### Extends
 
 - [`GeoJsonObject`](#geojsonobject)\<`"Feature"`\>
 
 #### Type Parameters
 
-| Type Parameter                                          | theme_default_type              |
+| Type Parameter                                          | Default type                    |
 | ------------------------------------------------------- | ------------------------------- |
 | `G` _extends_ [`BaseGeometry`](#basegeometry) \| `null` | [`BaseGeometry`](#basegeometry) |
 | `P`                                                     | `unknown`                       |
 
 #### Properties
 
-| Property                             | theme_type                                                           |
+| Property                             | Type                                                                 |
 | ------------------------------------ | -------------------------------------------------------------------- |
 | <a id="bbox"></a> `bbox?`            | [`BBox`](#bbox-7)                                                    |
 | <a id="geometry"></a> `geometry`     | `G`                                                                  |
@@ -34,19 +34,19 @@
 
 ### BaseFeatureCollection\<F\>
 
-#### theme_extends
+#### Extends
 
 - [`GeoJsonObject`](#geojsonobject)\<`"FeatureCollection"`\>
 
 #### Type Parameters
 
-| Type Parameter                              | theme_default_type            |
+| Type Parameter                              | Default type                  |
 | ------------------------------------------- | ----------------------------- |
 | `F` _extends_ [`BaseFeature`](#basefeature) | [`BaseFeature`](#basefeature) |
 
 #### Properties
 
-| Property                         | theme_type            |
+| Property                         | Type                  |
 | -------------------------------- | --------------------- |
 | <a id="bbox-1"></a> `bbox?`      | [`BBox`](#bbox-7)     |
 | <a id="features"></a> `features` | `F`[]                 |
@@ -56,19 +56,19 @@
 
 ### BaseGeometryCollection\<G\>
 
-#### theme_extends
+#### Extends
 
 - [`GeoJsonObject`](#geojsonobject)\<`"GeometryCollection"`\>
 
 #### Type Parameters
 
-| Type Parameter                                | theme_default_type              |
+| Type Parameter                                | Default type                    |
 | --------------------------------------------- | ------------------------------- |
 | `G` _extends_ [`BaseGeometry`](#basegeometry) | [`BaseGeometry`](#basegeometry) |
 
 #### Properties
 
-| Property                             | theme_type             |
+| Property                             | Type                   |
 | ------------------------------------ | ---------------------- |
 | <a id="bbox-2"></a> `bbox?`          | [`BBox`](#bbox-7)      |
 | <a id="geometries"></a> `geometries` | `G`[]                  |
@@ -78,11 +78,11 @@
 
 ### BaseObject\<T, C\>
 
-#### theme_extends
+#### Extends
 
 - [`GeoJsonObject`](#geojsonobject)\<`T`\>
 
-#### theme_extended_by
+#### Extended by
 
 - [`Circle`](#circle)
 - [`MultiCircle`](#multicircle)
@@ -96,7 +96,7 @@
 
 #### Properties
 
-| Property                               | theme_type        |
+| Property                               | Type              |
 | -------------------------------------- | ----------------- |
 | <a id="bbox-3"></a> `bbox?`            | [`BBox`](#bbox-7) |
 | <a id="coordinates"></a> `coordinates` | `C`               |
@@ -106,13 +106,13 @@
 
 ### Circle
 
-#### theme_extends
+#### Extends
 
 - [`BaseObject`](#baseobject)\<`"Point"`, [`Position`](#position)\>
 
 #### Properties
 
-| Property                                 | theme_type              |
+| Property                                 | Type                    |
 | ---------------------------------------- | ----------------------- |
 | <a id="bbox-4"></a> `bbox?`              | [`BBox`](#bbox-7)       |
 | <a id="coordinates-1"></a> `coordinates` | [`Position`](#position) |
@@ -123,7 +123,7 @@
 
 ### GeoJsonObject\<T\>
 
-#### theme_extended_by
+#### Extended by
 
 - [`BaseObject`](#baseobject)
 - [`BaseGeometryCollection`](#basegeometrycollection)
@@ -138,7 +138,7 @@
 
 #### Properties
 
-| Property                    | theme_type        |
+| Property                    | Type              |
 | --------------------------- | ----------------- |
 | <a id="bbox-5"></a> `bbox?` | [`BBox`](#bbox-7) |
 | <a id="type-5"></a> `type`  | `T`               |
@@ -147,13 +147,13 @@
 
 ### MultiCircle
 
-#### theme_extends
+#### Extends
 
 - [`BaseObject`](#baseobject)\<`"MultiPoint"`, [`Position`](#position)[]\>
 
 #### Properties
 
-| Property                                 | theme_type                |
+| Property                                 | Type                      |
 | ---------------------------------------- | ------------------------- |
 | <a id="bbox-6"></a> `bbox?`              | [`BBox`](#bbox-7)         |
 | <a id="coordinates-2"></a> `coordinates` | [`Position`](#position)[] |
@@ -222,7 +222,7 @@
 
 #### Type Parameters
 
-| Type Parameter                          | theme_default_type        |
+| Type Parameter                          | Default type              |
 | --------------------------------------- | ------------------------- |
 | `G` _extends_ [`Geometry`](#geometry-1) | [`Geometry`](#geometry-1) |
 
@@ -234,7 +234,7 @@
 
 #### Type Parameters
 
-| Type Parameter                      | theme_default_type    |
+| Type Parameter                      | Default type          |
 | ----------------------------------- | --------------------- |
 | `F` _extends_ [`Feature`](#feature) | [`Feature`](#feature) |
 
@@ -246,7 +246,7 @@
 
 #### Type Parameters
 
-| Type Parameter          | theme_default_type   |
+| Type Parameter          | Default type         |
 | ----------------------- | -------------------- |
 | `P`                     | `number` \| `string` |
 | `ID` _extends_ `string` | `string`             |

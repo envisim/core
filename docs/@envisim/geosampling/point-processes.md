@@ -17,7 +17,7 @@ on an area collection.
 
 #### Parameters
 
-| Parameter    | theme_type                                                                                         |
+| Parameter    | Type                                                                                               |
 | ------------ | -------------------------------------------------------------------------------------------------- |
 | `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\> |
 | `opts`       | `MaternClusterProcessOptions`                                                                      |
@@ -37,7 +37,7 @@ on areas of input area collection.
 
 #### Parameters
 
-| Parameter    | theme_type                                                                                         |
+| Parameter    | Type                                                                                               |
 | ------------ | -------------------------------------------------------------------------------------------------- |
 | `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\> |
 | `opts`       | `ThomasClusterProcessOptions`                                                                      |
@@ -58,7 +58,7 @@ uniformly on a spherical model of the earth.
 
 #### Parameters
 
-| Parameter    | theme_type                                                                                         |
+| Parameter    | Type                                                                                               |
 | ------------ | -------------------------------------------------------------------------------------------------- |
 | `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\> |
 | `opts`       | `UniformBinomialPointProcessOptions`                                                               |
@@ -80,7 +80,7 @@ on a spherical model of the earth.
 
 #### Parameters
 
-| Parameter    | theme_type                                                                                         |
+| Parameter    | Type                                                                                               |
 | ------------ | -------------------------------------------------------------------------------------------------- |
 | `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\> |
 | `opts`       | `UniformPoissonProcessOptions`                                                                     |

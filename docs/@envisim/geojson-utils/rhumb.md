@@ -16,7 +16,7 @@ Computes the area of a rhumb polygon ring
 
 #### Parameters
 
-| Parameter | theme_type                          |
+| Parameter | Type                                |
 | --------- | ----------------------------------- |
 | `ring`    | [`Position`](geojson.md#position)[] |
 
@@ -37,7 +37,7 @@ a distance and an azimuth.
 
 #### Parameters
 
-| Parameter | theme_type                        | theme_description                                |
+| Parameter | Type                              | Description                                      |
 | --------- | --------------------------------- | ------------------------------------------------ |
 | `origin`  | [`Position`](geojson.md#position) | point coordinates [lon,lat].                     |
 | `dist`    | `number`                          | the distance in meters.                          |
@@ -59,7 +59,7 @@ Computes the distance in meters along a rhumb line between two point coordinates
 
 #### Parameters
 
-| Parameter | theme_type                        | theme_description            |
+| Parameter | Type                              | Description                  |
 | --------- | --------------------------------- | ---------------------------- |
 | `p1`      | [`Position`](geojson.md#position) | point coordinates [lon,lat]. |
 | `p2`      | [`Position`](geojson.md#position) | point coordinates [lon,lat]. |
@@ -82,7 +82,7 @@ The azimuth takes values in the range -180 to +180.
 
 #### Parameters
 
-| Parameter | theme_type                        | theme_description                             |
+| Parameter | Type                              | Description                                   |
 | --------- | --------------------------------- | --------------------------------------------- |
 | `p1`      | [`Position`](geojson.md#position) | point coordinates [lon,lat] for first point.  |
 | `p2`      | [`Position`](geojson.md#position) | point coordinates [lon,lat] for second point. |
@@ -104,7 +104,7 @@ an end point and the fraction of the distance.
 
 #### Parameters
 
-| Parameter  | theme_type                        | theme_description                            |
+| Parameter  | Type                              | Description                                  |
 | ---------- | --------------------------------- | -------------------------------------------- |
 | `p1`       | [`Position`](geojson.md#position) | point coordinates [lon,lat] for start point. |
 | `p2`       | [`Position`](geojson.md#position) | point coordinates [lon,lat] for end point.   |
@@ -128,7 +128,7 @@ defined as [lon1 + t * (lon2 - lon1), lat1 + t * (lat2 - lat1)], for
 
 #### Parameters
 
-| Parameter | theme_type                          |
+| Parameter | Type                                |
 | --------- | ----------------------------------- |
 | `ring`    | [`Position`](geojson.md#position)[] |
 
