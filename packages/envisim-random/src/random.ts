@@ -87,7 +87,7 @@ export class Random {
   }
 
   /**
-   * Returns an instance of Random. Based on Uheprng.
+   * Returns an instance of Random. TS/class implementation of Uheprng.
    * @see [grc.com/otg/uheprng.htm](https://www.grc.com/otg/uheprng.htm)
    *
    * @example
