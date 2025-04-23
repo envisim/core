@@ -32,8 +32,8 @@
 > **hansenHurwitz**(`y`, `expected`, `inclusions`): `number`
 
 Multiple count Hansen-Hurwitz estimator.
-$$ \hat{Y} = \sum\_{i \in S} \frac{y_i}{\mu_i}S_i , $$
-$$ n = |S| . $$
+$$\hat{Y} = \sum\_{i \in S} \frac{y\_i}{\mu\_i}S\_i ,$$
+$$n = |S| .$$
 
 #### Parameters
 

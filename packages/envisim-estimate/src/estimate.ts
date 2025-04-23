@@ -1,7 +1,6 @@
-import {type Matrix, Vector} from '@envisim/matrix';
-import {NearestNeighbour} from '@envisim/sampling';
-
-import {checkSampleArray} from './utils.js';
+import { type Matrix, Vector } from "@envisim/matrix";
+import { NearestNeighbour } from "@envisim/sampling";
+import { checkSampleArray } from "./utils.js";
 
 /**
  * Single count Horvitz-Thompson estimator of the total
@@ -22,8 +21,8 @@ export function horvitzThompson(y: number[] | Vector, prob: number[] | Vector): 
 
 /**
  * Multiple count Hansen-Hurwitz estimator.
- * $$ \hat\{Y\} = \sum_\{i \in S\} \frac\{y_i\}\{\mu_i\}S_i , $$
- * $$ n = |S| . $$
+ * $$\hat\{Y\} = \sum_\{i \in S\} \frac\{y_i\}\{\mu_i\}S_i ,$$
+ * $$n = |S| .$$
  * @category Estimator
  *
  * @param y - variable of interest of size n, $y_i$.
@@ -65,7 +64,7 @@ export function ratioEstimator(
   const xs = new Vector(x, false);
   const ps = new Vector(prob, true);
 
-  if (ys.nrow !== xs.nrow) throw new RangeError('y and x must have same size');
+  if (ys.nrow !== xs.nrow) throw new RangeError("y and x must have same size");
 
   return totalX * (ys.divide(ps, true).sum() / xs.divide(ps, true).sum());
 }
@@ -105,7 +104,7 @@ export function nearestNeighbourEstimator(
   checkSampleArray(sample, N);
   const n = sample.length;
 
-  if (y.length !== n) throw new RangeError('y and sample must have the same length');
+  if (y.length !== n) throw new RangeError("y and sample must have the same length");
 
   const ni = new Array<number>(n).fill(0.0);
   const nn = new NearestNeighbour(xm.extractRows(sample), 10);
