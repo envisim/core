@@ -6,6 +6,22 @@
 
 # @envisim/matrix
 
+## Contents
+
+- [Classes](#classes)
+  - [Matrix](#matrix)
+  - [Vector](#vector)
+- [Type Aliases](#type-aliases)
+  - [MatrixCallback()\<T>](#matrixcallbackt)
+  - [MatrixCallbackCompare()](#matrixcallbackcompare)
+  - [MatrixDim](#matrixdim)
+- [Functions](#functions)
+  - [diagonalMatrix()](#diagonalmatrix)
+  - [identityMatrix()](#identitymatrix)
+  - [randomMatrix()](#randommatrix)
+  - [randomVector()](#randomvector)
+  - [sequence()](#sequence)
+
 ## Classes
 
 ### Matrix
@@ -22,11 +38,11 @@
 
 ###### Parameters
 
-| Parameter | Type       | Default value | Description                                                 |
-| --------- | ---------- | ------------- | ----------------------------------------------------------- |
-| `arr`     | `number`[] | `undefined`   | the values used to form the Matrix in column-order          |
-| `nrow`    | `number`   | `undefined`   | the number of rows of the Matrix                            |
-| `shallow` | `boolean`  | `false`       | if `true`, uses the internal arrays of `arr` as a reference |
+| Parameter | Type        | Default value | Description                                                 |
+| --------- | ----------- | ------------- | ----------------------------------------------------------- |
+| `arr`     | `number`\[] | `undefined`   | the values used to form the Matrix in column-order          |
+| `nrow`    | `number`    | `undefined`   | the number of rows of the Matrix                            |
+| `shallow` | `boolean`   | `false`       | if `true`, uses the internal arrays of `arr` as a reference |
 
 ###### Returns
 
@@ -38,12 +54,12 @@
 
 #### Properties
 
-| Property                         | Modifier    | Type       | Description                        |
-| -------------------------------- | ----------- | ---------- | ---------------------------------- |
-| <a id="cols"></a> `cols`         | `protected` | `number`   | **`Internal`**                     |
-| <a id="internal"></a> `internal` | `protected` | `number`[] | **`Internal`** stored column major |
-| <a id="len"></a> `len`           | `protected` | `number`   | **`Internal`**                     |
-| <a id="rows"></a> `rows`         | `protected` | `number`   | **`Internal`**                     |
+| Property                         | Modifier    | Type        | Description                        |
+| -------------------------------- | ----------- | ----------- | ---------------------------------- |
+| <a id="cols"></a> `cols`         | `protected` | `number`    | **`Internal`**                     |
+| <a id="internal"></a> `internal` | `protected` | `number`\[] | **`Internal`** stored column major |
+| <a id="len"></a> `len`           | `protected` | `number`    | **`Internal`**                     |
+| <a id="rows"></a> `rows`         | `protected` | `number`    | **`Internal`**                     |
 
 #### Accessors
 
@@ -145,17 +161,17 @@ the element at matrix `index`
 
 ##### baseMap()
 
-> `protected` **baseMap**(`callback`): `number`[]
+> `protected` **baseMap**(`callback`): `number`\[]
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> |
+| Parameter  | Type                                          |
+| ---------- | --------------------------------------------- |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> |
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -167,9 +183,9 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> |
+| Parameter  | Type                                          |
+| ---------- | --------------------------------------------- |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> |
 
 ###### Returns
 
@@ -418,9 +434,9 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | Type                                             |
-| ---------- | ------------------------------------------------ |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`boolean`\> |
+| Parameter  | Type                                           |
+| ---------- | ---------------------------------------------- |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`boolean`> |
 
 ###### Returns
 
@@ -450,9 +466,9 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter | Type                              |
-| --------- | --------------------------------- |
-| `cols`    | `number`[] \| [`Vector`](#vector) |
+| Parameter | Type        |
+| --------- | ----------- | ------------------- |
+| `cols`    | `number`\[] | [`Vector`](#vector) |
 
 ###### Returns
 
@@ -460,7 +476,7 @@ Tests if all elements pass the test implemented by the callback fn
 
 ##### extractRow()
 
-> **extractRow**(`row`): `number`[]
+> **extractRow**(`row`): `number`\[]
 
 ###### Parameters
 
@@ -470,7 +486,7 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ##### extractRows()
 
@@ -478,9 +494,9 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter | Type                              |
-| --------- | --------------------------------- |
-| `rows`    | `number`[] \| [`Vector`](#vector) |
+| Parameter | Type        |
+| --------- | ----------- | ------------------- |
+| `rows`    | `number`\[] | [`Vector`](#vector) |
 
 ###### Returns
 
@@ -509,9 +525,9 @@ a sub-matrix defined by the parameters.
 
 ###### Parameters
 
-| Parameter  | Type                                             | Description                                   |
-| ---------- | ------------------------------------------------ | --------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`boolean`\> | a function used to test elements in the array |
+| Parameter  | Type                                           | Description                                   |
+| ---------- | ---------------------------------------------- | --------------------------------------------- |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`boolean`> | a function used to test elements in the array |
 
 ###### Returns
 
@@ -531,10 +547,10 @@ Changes the element at matrix `index` through a callback function.
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `index`    | `number`                                        |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> |
+| Parameter  | Type                                          |
+| ---------- | --------------------------------------------- |
+| `index`    | `number`                                      |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> |
 
 ###### Returns
 
@@ -567,10 +583,10 @@ mat.edRC(3, (el, in) => el + in);
 
 ###### Parameters
 
-| Parameter  | Type                            |
-| ---------- | ------------------------------- |
-| `dim`      | [`MatrixDim`](#matrixdim-2)     |
-| `callback` | `MatrixCallbackDim`\<`number`\> |
+| Parameter  | Type                          |
+| ---------- | ----------------------------- |
+| `dim`      | [`MatrixDim`](#matrixdim-2)   |
+| `callback` | `MatrixCallbackDim`<`number`> |
 
 ###### Returns
 
@@ -592,9 +608,9 @@ Executes the provided function once for each element
 
 ###### Parameters
 
-| Parameter  | Type                                          |
-| ---------- | --------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`void`\> |
+| Parameter  | Type                                        |
+| ---------- | ------------------------------------------- |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`void`> |
 
 ###### Returns
 
@@ -725,10 +741,10 @@ backwards
 
 ###### Parameters
 
-| Parameter  | Type                                            | Default value | Description                          |
-| ---------- | ----------------------------------------------- | ------------- | ------------------------------------ |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> | `undefined`   | -                                    |
-| `inPlace`  | `boolean`                                       | `false`       | performes the map in place if `true` |
+| Parameter  | Type                                          | Default value | Description                          |
+| ---------- | --------------------------------------------- | ------------- | ------------------------------------ |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> | `undefined`   | -                                    |
+| `inPlace`  | `boolean`                                     | `false`       | performes the map in place if `true` |
 
 ###### Returns
 
@@ -812,13 +828,13 @@ Minimum value of all elements
 
 ##### mode()
 
-> **mode**(): `number`[]
+> **mode**(): `number`\[]
 
 Most common value
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -840,17 +856,17 @@ Product sum of all elements
 
 ##### quantiles()
 
-> **quantiles**(`probs`): `number`[]
+> **quantiles**(`probs`): `number`\[]
 
 ###### Parameters
 
-| Parameter | Type                   |
-| --------- | ---------------------- |
-| `probs`   | `number` \| `number`[] |
+| Parameter | Type     |
+| --------- | -------- | ----------- |
+| `probs`   | `number` | `number`\[] |
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -858,13 +874,13 @@ Product sum of all elements
 
 ##### range()
 
-> **range**(): \[`number`, `number`\]
+> **range**(): \[`number`, `number`]
 
 The range (min-max) of all elements
 
 ###### Returns
 
-\[`number`, `number`\]
+\[`number`, `number`]
 
 ###### Inherited from
 
@@ -946,7 +962,7 @@ Standard deviation of all elements
 
 ##### slice()
 
-> **slice**(`start?`, `end?`): `number`[]
+> **slice**(`start?`, `end?`): `number`\[]
 
 ###### Parameters
 
@@ -957,7 +973,7 @@ Standard deviation of all elements
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 the a copy of the internal array of elements (stored column major)
 
@@ -973,9 +989,9 @@ Tests if any element pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | Type                                             |
-| ---------- | ------------------------------------------------ |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`boolean`\> |
+| Parameter  | Type                                           |
+| ---------- | ---------------------------------------------- |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`boolean`> |
 
 ###### Returns
 
@@ -1097,9 +1113,9 @@ Bind multiple matrices together by columns
 
 ###### Parameters
 
-| Parameter     | Type           |
-| ------------- | -------------- |
-| ...`matrices` | `BaseMatrix`[] |
+| Parameter     | Type            |
+| ------------- | --------------- |
+| ...`matrices` | `BaseMatrix`\[] |
 
 ###### Returns
 
@@ -1167,9 +1183,9 @@ Bind multiple matrices together by rows
 
 ###### Parameters
 
-| Parameter     | Type           |
-| ------------- | -------------- |
-| ...`matrices` | `BaseMatrix`[] |
+| Parameter     | Type            |
+| ------------- | --------------- |
+| ...`matrices` | `BaseMatrix`\[] |
 
 ###### Returns
 
@@ -1189,10 +1205,10 @@ Matrix addition.
 
 ###### Parameters
 
-| Parameter | Type                     | Default value | Description                                  |
-| --------- | ------------------------ | ------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
-| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
+| Parameter | Type      | Default value | Description                                  |
+| --------- | --------- | ------------- | -------------------------------------------- | --- |
+| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
+| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -1210,10 +1226,10 @@ Element wise division.
 
 ###### Parameters
 
-| Parameter | Type                     | Default value | Description                                  |
-| --------- | ------------------------ | ------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
-| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
+| Parameter | Type      | Default value | Description                                  |
+| --------- | --------- | ------------- | -------------------------------------------- | --- |
+| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
+| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -1231,10 +1247,10 @@ Element wise remainder (%) `x % y`
 
 ###### Parameters
 
-| Parameter | Type                     | Default value | Description                                  |
-| --------- | ------------------------ | ------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
-| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
+| Parameter | Type      | Default value | Description                                  |
+| --------- | --------- | ------------- | -------------------------------------------- | --- |
+| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
+| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -1252,10 +1268,10 @@ Element wise multiplication.
 
 ###### Parameters
 
-| Parameter | Type                     | Default value | Description                                  |
-| --------- | ------------------------ | ------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
-| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
+| Parameter | Type      | Default value | Description                                  |
+| --------- | --------- | ------------- | -------------------------------------------- | --- |
+| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
+| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -1273,10 +1289,10 @@ Matrix subtraction.
 
 ###### Parameters
 
-| Parameter | Type                     | Default value | Description                                  |
-| --------- | ------------------------ | ------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
-| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
+| Parameter | Type      | Default value | Description                                  |
+| --------- | --------- | ------------- | -------------------------------------------- | --- |
+| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
+| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -1327,7 +1343,7 @@ the determinant of the matrix
 
 ##### inverse()
 
-> **inverse**(`eps`): `null` \| [`Matrix`](#matrix)
+> **inverse**(`eps`): `null` | [`Matrix`](#matrix)
 
 ###### Parameters
 
@@ -1337,7 +1353,7 @@ the determinant of the matrix
 
 ###### Returns
 
-`null` \| [`Matrix`](#matrix)
+`null` | [`Matrix`](#matrix)
 
 the inverse of the matrix
 
@@ -1435,10 +1451,10 @@ a new standardized or normalized [Matrix](#matrix)
 
 ###### Parameters
 
-| Parameter | Type                              | Default value | Description                                                 |
-| --------- | --------------------------------- | ------------- | ----------------------------------------------------------- |
-| `arr`     | `number`[] \| [`Vector`](#vector) | `undefined`   | the values used to form the Vector in column-order          |
-| `shallow` | `boolean`                         | `false`       | if `true`, uses the internal arrays of `arr` as a reference |
+| Parameter | Type        | Default value       | Description                                                 |
+| --------- | ----------- | ------------------- | ----------------------------------------------------------- | -------------------------------------------------- |
+| `arr`     | `number`\[] | [`Vector`](#vector) | `undefined`                                                 | the values used to form the Vector in column-order |
+| `shallow` | `boolean`   | `false`             | if `true`, uses the internal arrays of `arr` as a reference |
 
 ###### Returns
 
@@ -1450,12 +1466,12 @@ a new standardized or normalized [Matrix](#matrix)
 
 #### Properties
 
-| Property                           | Modifier    | Type       | Description                        |
-| ---------------------------------- | ----------- | ---------- | ---------------------------------- |
-| <a id="cols-1"></a> `cols`         | `protected` | `number`   | **`Internal`**                     |
-| <a id="internal-1"></a> `internal` | `protected` | `number`[] | **`Internal`** stored column major |
-| <a id="len-1"></a> `len`           | `protected` | `number`   | **`Internal`**                     |
-| <a id="rows-1"></a> `rows`         | `protected` | `number`   | **`Internal`**                     |
+| Property                           | Modifier    | Type        | Description                        |
+| ---------------------------------- | ----------- | ----------- | ---------------------------------- |
+| <a id="cols-1"></a> `cols`         | `protected` | `number`    | **`Internal`**                     |
+| <a id="internal-1"></a> `internal` | `protected` | `number`\[] | **`Internal`** stored column major |
+| <a id="len-1"></a> `len`           | `protected` | `number`    | **`Internal`**                     |
+| <a id="rows-1"></a> `rows`         | `protected` | `number`    | **`Internal`**                     |
 
 #### Accessors
 
@@ -1557,17 +1573,17 @@ the element at matrix `index`
 
 ##### baseMap()
 
-> `protected` **baseMap**(`callback`): `number`[]
+> `protected` **baseMap**(`callback`): `number`\[]
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> |
+| Parameter  | Type                                          |
+| ---------- | --------------------------------------------- |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> |
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -1579,9 +1595,9 @@ the element at matrix `index`
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> |
+| Parameter  | Type                                          |
+| ---------- | --------------------------------------------- |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> |
 
 ###### Returns
 
@@ -1780,9 +1796,9 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | Type                                             |
-| ---------- | ------------------------------------------------ |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`boolean`\> |
+| Parameter  | Type                                           |
+| ---------- | ---------------------------------------------- |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`boolean`> |
 
 ###### Returns
 
@@ -1798,9 +1814,9 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | Type                                             | Description                                       |
-| ---------- | ------------------------------------------------ | ------------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`boolean`\> | a function returning true for elements to be kept |
+| Parameter  | Type                                           | Description                                       |
+| ---------- | ---------------------------------------------- | ------------------------------------------------- |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`boolean`> | a function returning true for elements to be kept |
 
 ###### Returns
 
@@ -1814,9 +1830,9 @@ a filtered vector according to the provided callbackFn
 
 ###### Parameters
 
-| Parameter  | Type                                             | Description                                   |
-| ---------- | ------------------------------------------------ | --------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`boolean`\> | a function used to test elements in the array |
+| Parameter  | Type                                           | Description                                   |
+| ---------- | ---------------------------------------------- | --------------------------------------------- |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`boolean`> | a function used to test elements in the array |
 
 ###### Returns
 
@@ -1836,10 +1852,10 @@ Changes the element at matrix `index` through a callback function.
 
 ###### Parameters
 
-| Parameter  | Type                                            |
-| ---------- | ----------------------------------------------- |
-| `index`    | `number`                                        |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> |
+| Parameter  | Type                                          |
+| ---------- | --------------------------------------------- |
+| `index`    | `number`                                      |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> |
 
 ###### Returns
 
@@ -1872,10 +1888,10 @@ mat.edRC(3, (el, in) => el + in);
 
 ###### Parameters
 
-| Parameter  | Type                            |
-| ---------- | ------------------------------- |
-| `dim`      | [`MatrixDim`](#matrixdim-2)     |
-| `callback` | `MatrixCallbackDim`\<`number`\> |
+| Parameter  | Type                          |
+| ---------- | ----------------------------- |
+| `dim`      | [`MatrixDim`](#matrixdim-2)   |
+| `callback` | `MatrixCallbackDim`<`number`> |
 
 ###### Returns
 
@@ -1897,9 +1913,9 @@ Executes the provided function once for each element
 
 ###### Parameters
 
-| Parameter  | Type                                          |
-| ---------- | --------------------------------------------- |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`void`\> |
+| Parameter  | Type                                        |
+| ---------- | ------------------------------------------- |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`void`> |
 
 ###### Returns
 
@@ -1949,10 +1965,10 @@ Geometric mean of all elements
 
 ###### Parameters
 
-| Parameter | Type                   |
-| --------- | ---------------------- |
-| `bins`    | `number`               |
-| `range`   | \[`number`, `number`\] |
+| Parameter | Type                  |
+| --------- | --------------------- |
+| `bins`    | `number`              |
+| `range`   | \[`number`, `number`] |
 
 ###### Returns
 
@@ -1960,11 +1976,11 @@ Geometric mean of all elements
 
 the values needed in order to construct a histogram
 
-| Name    | Type                   |
-| ------- | ---------------------- |
-| `bins`  | `number`[]             |
-| `range` | \[`number`, `number`\] |
-| `width` | `number`               |
+| Name    | Type                  |
+| ------- | --------------------- |
+| `bins`  | `number`\[]           |
+| `range` | \[`number`, `number`] |
+| `width` | `number`              |
 
 ###### Throws
 
@@ -2057,10 +2073,10 @@ backwards
 
 ###### Parameters
 
-| Parameter  | Type                                            | Default value | Description                          |
-| ---------- | ----------------------------------------------- | ------------- | ------------------------------------ |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`number`\> | `undefined`   | -                                    |
-| `inPlace`  | `boolean`                                       | `false`       | performes the map in place if `true` |
+| Parameter  | Type                                          | Default value | Description                          |
+| ---------- | --------------------------------------------- | ------------- | ------------------------------------ |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`number`> | `undefined`   | -                                    |
+| `inPlace`  | `boolean`                                     | `false`       | performes the map in place if `true` |
 
 ###### Returns
 
@@ -2130,13 +2146,13 @@ Minimum value of all elements
 
 ##### mode()
 
-> **mode**(): `number`[]
+> **mode**(): `number`\[]
 
 Most common value
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -2158,17 +2174,17 @@ Product sum of all elements
 
 ##### quantiles()
 
-> **quantiles**(`probs`): `number`[]
+> **quantiles**(`probs`): `number`\[]
 
 ###### Parameters
 
-| Parameter | Type                   |
-| --------- | ---------------------- |
-| `probs`   | `number` \| `number`[] |
+| Parameter | Type     |
+| --------- | -------- | ----------- |
+| `probs`   | `number` | `number`\[] |
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -2176,13 +2192,13 @@ Product sum of all elements
 
 ##### range()
 
-> **range**(): \[`number`, `number`\]
+> **range**(): \[`number`, `number`]
 
 The range (min-max) of all elements
 
 ###### Returns
 
-\[`number`, `number`\]
+\[`number`, `number`]
 
 ###### Inherited from
 
@@ -2264,7 +2280,7 @@ Standard deviation of all elements
 
 ##### slice()
 
-> **slice**(`start?`, `end?`): `number`[]
+> **slice**(`start?`, `end?`): `number`\[]
 
 ###### Parameters
 
@@ -2275,7 +2291,7 @@ Standard deviation of all elements
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 the a copy of the internal array of elements (stored column major)
 
@@ -2291,9 +2307,9 @@ Tests if any element pass the test implemented by the callback fn
 
 ###### Parameters
 
-| Parameter  | Type                                             |
-| ---------- | ------------------------------------------------ |
-| `callback` | [`MatrixCallback`](#matrixcallback)\<`boolean`\> |
+| Parameter  | Type                                           |
+| ---------- | ---------------------------------------------- |
+| `callback` | [`MatrixCallback`](#matrixcallback)<`boolean`> |
 
 ###### Returns
 
@@ -2329,7 +2345,7 @@ a sorted vector
 
 ##### sortIndex()
 
-> **sortIndex**(`callback`): `number`[]
+> **sortIndex**(`callback`): `number`\[]
 
 `callback(a, b)` return value:
 
@@ -2345,7 +2361,7 @@ a sorted vector
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 the indices that sorts the vector
 
@@ -2457,17 +2473,17 @@ TypeError if `obj` is not Vector
 
 ##### borrow()
 
-> `static` **borrow**(`vec`): `number`[]
+> `static` **borrow**(`vec`): `number`\[]
 
 ###### Parameters
 
-| Parameter | Type                              |
-| --------- | --------------------------------- |
-| `vec`     | `number`[] \| [`Vector`](#vector) |
+| Parameter | Type        |
+| --------- | ----------- | ------------------- |
+| `vec`     | `number`\[] | [`Vector`](#vector) |
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ##### create()
 
@@ -2512,10 +2528,10 @@ Matrix addition.
 
 ###### Parameters
 
-| Parameter | Type                     | Default value | Description                                  |
-| --------- | ------------------------ | ------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
-| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
+| Parameter | Type      | Default value | Description                                  |
+| --------- | --------- | ------------- | -------------------------------------------- | --- |
+| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
+| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -2533,10 +2549,10 @@ Element wise division.
 
 ###### Parameters
 
-| Parameter | Type                     | Default value | Description                                  |
-| --------- | ------------------------ | ------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
-| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
+| Parameter | Type      | Default value | Description                                  |
+| --------- | --------- | ------------- | -------------------------------------------- | --- |
+| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
+| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -2554,10 +2570,10 @@ Element wise remainder (%) `x % y`
 
 ###### Parameters
 
-| Parameter | Type                     | Default value | Description                                  |
-| --------- | ------------------------ | ------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
-| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
+| Parameter | Type      | Default value | Description                                  |
+| --------- | --------- | ------------- | -------------------------------------------- | --- |
+| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
+| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -2575,10 +2591,10 @@ Element wise multiplication.
 
 ###### Parameters
 
-| Parameter | Type                     | Default value | Description                                  |
-| --------- | ------------------------ | ------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
-| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
+| Parameter | Type      | Default value | Description                                  |
+| --------- | --------- | ------------- | -------------------------------------------- | --- |
+| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
+| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -2596,10 +2612,10 @@ Matrix subtraction.
 
 ###### Parameters
 
-| Parameter | Type                     | Default value | Description                                  |
-| --------- | ------------------------ | ------------- | -------------------------------------------- |
-| `mat`     | `number` \| `BaseMatrix` | `undefined`   | -                                            |
-| `inPlace` | `boolean`                | `false`       | If `true`, performes the operation in place. |
+| Parameter | Type      | Default value | Description                                  |
+| --------- | --------- | ------------- | -------------------------------------------- | --- |
+| `mat`     | `number`  | `BaseMatrix`  | `undefined`                                  | -   |
+| `inPlace` | `boolean` | `false`       | If `true`, performes the operation in place. |
 
 ###### Returns
 
@@ -2669,9 +2685,9 @@ the vector with a permutated order
 
 ###### Parameters
 
-| Parameter | Type                              |
-| --------- | --------------------------------- |
-| `vec`     | `number`[] \| [`Vector`](#vector) |
+| Parameter | Type        |
+| --------- | ----------- | ------------------- |
+| `vec`     | `number`\[] | [`Vector`](#vector) |
 
 ###### Returns
 
@@ -2713,9 +2729,9 @@ the cumulative sums of the vector elements
 
 ## Type Aliases
 
-### MatrixCallback()\<T\>
+### MatrixCallback()\<T>
 
-> **MatrixCallback**\<`T`\> = (`element`, `index`) => `T`
+> **MatrixCallback**<`T`> = (`element`, `index`) => `T`
 
 #### Type Parameters
 
@@ -2755,7 +2771,7 @@ the cumulative sums of the vector elements
 
 ### MatrixDim
 
-> **MatrixDim** = \[`number`, `number`\]
+> **MatrixDim** = \[`number`, `number`]
 
 ## Functions
 
@@ -2765,9 +2781,9 @@ the cumulative sums of the vector elements
 
 #### Parameters
 
-| Parameter | Type       | Description           |
-| --------- | ---------- | --------------------- |
-| `arr`     | `number`[] | the diagonal elements |
+| Parameter | Type        | Description           |
+| --------- | ----------- | --------------------- |
+| `arr`     | `number`\[] | the diagonal elements |
 
 #### Returns
 
@@ -2799,7 +2815,7 @@ a (square) identity matrix.
 
 > **randomMatrix**(`dims`, `generator`): [`Matrix`](#matrix)
 
-Generates a matrix of random numbers on [0, 1).
+Generates a matrix of random numbers on \[0, 1).
 
 #### Parameters
 
@@ -2818,7 +2834,7 @@ Generates a matrix of random numbers on [0, 1).
 
 > **randomVector**(`length`, `rand`): [`Vector`](#vector)
 
-Generates a vector-like of random numbers on [0, 1).
+Generates a vector-like of random numbers on \[0, 1).
 
 #### Parameters
 
@@ -2831,7 +2847,7 @@ Generates a vector-like of random numbers on [0, 1).
 
 [`Vector`](#vector)
 
-a vector-like of random numbers on [0, 1).
+a vector-like of random numbers on \[0, 1).
 
 ---
 

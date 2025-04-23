@@ -6,37 +6,83 @@
 
 # geojson
 
+## Contents
+
+- [Interfaces](#interfaces)
+  - [BaseFeature\<G, P>](#basefeatureg-p)
+  - [BaseFeatureCollection\<F>](#basefeaturecollectionf)
+  - [BaseGeometryCollection\<G>](#basegeometrycollectiong)
+  - [BaseObject\<T, C>](#baseobjectt-c)
+  - [Circle](#circle)
+  - [GeoJsonObject\<T>](#geojsonobjectt)
+  - [MultiCircle](#multicircle)
+- [Type Aliases](#type-aliases)
+  - [AreaFeature](#areafeature)
+  - [AreaFeatureCollection](#areafeaturecollection)
+  - [AreaGeometry](#areageometry)
+  - [AreaGeometryCollection](#areageometrycollection)
+  - [AreaObject](#areaobject)
+  - [BaseGeometry](#basegeometry)
+  - [BBox](#bbox)
+  - [BBox2](#bbox2)
+  - [BBox3](#bbox3)
+  - [Feature\<G>](#featureg)
+  - [FeatureCollection\<F>](#featurecollectionf)
+  - [FeatureProperties\<P, ID>](#featurepropertiesp-id)
+  - [Geometry](#geometry)
+  - [GeometryCollection\<O>](#geometrycollectiono)
+  - [LineFeature](#linefeature)
+  - [LineFeatureCollection](#linefeaturecollection)
+  - [LineGeometry](#linegeometry)
+  - [LineGeometryCollection](#linegeometrycollection)
+  - [LineObject](#lineobject)
+  - [LineString](#linestring)
+  - [MultiLineString](#multilinestring)
+  - [MultiPoint](#multipoint)
+  - [MultiPolygon](#multipolygon)
+  - [Point](#point)
+  - [PointFeature](#pointfeature)
+  - [PointFeatureCollection](#pointfeaturecollection)
+  - [PointGeometry](#pointgeometry)
+  - [PointGeometryCollection](#pointgeometrycollection)
+  - [PointObject](#pointobject)
+  - [Polygon](#polygon)
+  - [Position](#position)
+  - [Position2](#position2)
+  - [Position3](#position3)
+  - [SingleTypeObject](#singletypeobject)
+
 ## Interfaces
 
-### BaseFeature\<G, P\>
+### BaseFeature\<G, P>
 
 #### Extends
 
-- [`GeoJsonObject`](#geojsonobject)\<`"Feature"`\>
+- [`GeoJsonObject`](#geojsonobject)<`"Feature"`>
 
 #### Type Parameters
 
-| Type Parameter                                          | Default type                    |
-| ------------------------------------------------------- | ------------------------------- |
-| `G` _extends_ [`BaseGeometry`](#basegeometry) \| `null` | [`BaseGeometry`](#basegeometry) |
-| `P`                                                     | `unknown`                       |
+| Type Parameter                                | Default type |
+| --------------------------------------------- | ------------ | ------------------------------- |
+| `G` _extends_ [`BaseGeometry`](#basegeometry) | `null`       | [`BaseGeometry`](#basegeometry) |
+| `P`                                           | `unknown`    |
 
 #### Properties
 
-| Property                             | Type                                                                 |
-| ------------------------------------ | -------------------------------------------------------------------- |
-| <a id="bbox"></a> `bbox?`            | [`BBox`](#bbox-7)                                                    |
-| <a id="geometry"></a> `geometry`     | `G`                                                                  |
-| <a id="properties"></a> `properties` | `null` \| [`FeatureProperties`](#featureproperties)\<`P`, `string`\> |
-| <a id="type"></a> `type`             | `"Feature"`                                                          |
+| Property                             | Type              |
+| ------------------------------------ | ----------------- | -------------------------------------------------------- |
+| <a id="bbox"></a> `bbox?`            | [`BBox`](#bbox-7) |
+| <a id="geometry"></a> `geometry`     | `G`               |
+| <a id="properties"></a> `properties` | `null`            | [`FeatureProperties`](#featureproperties)<`P`, `string`> |
+| <a id="type"></a> `type`             | `"Feature"`       |
 
 ---
 
-### BaseFeatureCollection\<F\>
+### BaseFeatureCollection\<F>
 
 #### Extends
 
-- [`GeoJsonObject`](#geojsonobject)\<`"FeatureCollection"`\>
+- [`GeoJsonObject`](#geojsonobject)<`"FeatureCollection"`>
 
 #### Type Parameters
 
@@ -49,16 +95,16 @@
 | Property                         | Type                  |
 | -------------------------------- | --------------------- |
 | <a id="bbox-1"></a> `bbox?`      | [`BBox`](#bbox-7)     |
-| <a id="features"></a> `features` | `F`[]                 |
+| <a id="features"></a> `features` | `F`\[]                |
 | <a id="type-1"></a> `type`       | `"FeatureCollection"` |
 
 ---
 
-### BaseGeometryCollection\<G\>
+### BaseGeometryCollection\<G>
 
 #### Extends
 
-- [`GeoJsonObject`](#geojsonobject)\<`"GeometryCollection"`\>
+- [`GeoJsonObject`](#geojsonobject)<`"GeometryCollection"`>
 
 #### Type Parameters
 
@@ -71,16 +117,16 @@
 | Property                             | Type                   |
 | ------------------------------------ | ---------------------- |
 | <a id="bbox-2"></a> `bbox?`          | [`BBox`](#bbox-7)      |
-| <a id="geometries"></a> `geometries` | `G`[]                  |
+| <a id="geometries"></a> `geometries` | `G`\[]                 |
 | <a id="type-2"></a> `type`           | `"GeometryCollection"` |
 
 ---
 
-### BaseObject\<T, C\>
+### BaseObject\<T, C>
 
 #### Extends
 
-- [`GeoJsonObject`](#geojsonobject)\<`T`\>
+- [`GeoJsonObject`](#geojsonobject)<`T`>
 
 #### Extended by
 
@@ -108,7 +154,7 @@
 
 #### Extends
 
-- [`BaseObject`](#baseobject)\<`"Point"`, [`Position`](#position)\>
+- [`BaseObject`](#baseobject)<`"Point"`, [`Position`](#position)>
 
 #### Properties
 
@@ -121,7 +167,7 @@
 
 ---
 
-### GeoJsonObject\<T\>
+### GeoJsonObject\<T>
 
 #### Extended by
 
@@ -149,76 +195,76 @@
 
 #### Extends
 
-- [`BaseObject`](#baseobject)\<`"MultiPoint"`, [`Position`](#position)[]\>
+- [`BaseObject`](#baseobject)<`"MultiPoint"`, [`Position`](#position)\[]>
 
 #### Properties
 
-| Property                                 | Type                      |
-| ---------------------------------------- | ------------------------- |
-| <a id="bbox-6"></a> `bbox?`              | [`BBox`](#bbox-7)         |
-| <a id="coordinates-2"></a> `coordinates` | [`Position`](#position)[] |
-| <a id="radius-1"></a> `radius`           | `number`                  |
-| <a id="type-6"></a> `type`               | `"MultiPoint"`            |
+| Property                                 | Type                       |
+| ---------------------------------------- | -------------------------- |
+| <a id="bbox-6"></a> `bbox?`              | [`BBox`](#bbox-7)          |
+| <a id="coordinates-2"></a> `coordinates` | [`Position`](#position)\[] |
+| <a id="radius-1"></a> `radius`           | `number`                   |
+| <a id="type-6"></a> `type`               | `"MultiPoint"`             |
 
 ## Type Aliases
 
 ### AreaFeature
 
-> **AreaFeature** = [`Feature`](#feature)\<[`AreaGeometry`](#areageometry)\>
+> **AreaFeature** = [`Feature`](#feature)<[`AreaGeometry`](#areageometry)>
 
 ---
 
 ### AreaFeatureCollection
 
-> **AreaFeatureCollection** = [`FeatureCollection`](#featurecollection)\<[`AreaFeature`](#areafeature)\>
+> **AreaFeatureCollection** = [`FeatureCollection`](#featurecollection)<[`AreaFeature`](#areafeature)>
 
 ---
 
 ### AreaGeometry
 
-> **AreaGeometry** = [`AreaObject`](#areaobject) \| [`AreaGeometryCollection`](#areageometrycollection)
+> **AreaGeometry** = [`AreaObject`](#areaobject) | [`AreaGeometryCollection`](#areageometrycollection)
 
 ---
 
 ### AreaGeometryCollection
 
-> **AreaGeometryCollection** = [`GeometryCollection`](#geometrycollection)\<[`AreaObject`](#areaobject)\>
+> **AreaGeometryCollection** = [`GeometryCollection`](#geometrycollection)<[`AreaObject`](#areaobject)>
 
 ---
 
 ### AreaObject
 
-> **AreaObject** = [`Polygon`](#polygon) \| [`MultiPolygon`](#multipolygon) \| [`Circle`](#circle) \| [`MultiCircle`](#multicircle)
+> **AreaObject** = [`Polygon`](#polygon) | [`MultiPolygon`](#multipolygon) | [`Circle`](#circle) | [`MultiCircle`](#multicircle)
 
 ---
 
 ### BaseGeometry
 
-> **BaseGeometry** = [`SingleTypeObject`](#singletypeobject) \| [`BaseGeometryCollection`](#basegeometrycollection)
+> **BaseGeometry** = [`SingleTypeObject`](#singletypeobject) | [`BaseGeometryCollection`](#basegeometrycollection)
 
 ---
 
 ### BBox
 
-> **BBox** = [`BBox2`](#bbox2) \| [`BBox3`](#bbox3)
+> **BBox** = [`BBox2`](#bbox2) | [`BBox3`](#bbox3)
 
 ---
 
 ### BBox2
 
-> **BBox2** = \[`number`, `number`, `number`, `number`\]
+> **BBox2** = \[`number`, `number`, `number`, `number`]
 
 ---
 
 ### BBox3
 
-> **BBox3** = \[`number`, `number`, `number`, `number`, `number`, `number`\]
+> **BBox3** = \[`number`, `number`, `number`, `number`, `number`, `number`]
 
 ---
 
-### Feature\<G\>
+### Feature\<G>
 
-> **Feature**\<`G`\> = [`BaseFeature`](#basefeature)\<`G`, `number` \| `string`\>
+> **Feature**<`G`> = [`BaseFeature`](#basefeature)<`G`, `number` | `string`>
 
 #### Type Parameters
 
@@ -228,9 +274,9 @@
 
 ---
 
-### FeatureCollection\<F\>
+### FeatureCollection\<F>
 
-> **FeatureCollection**\<`F`\> = [`BaseFeatureCollection`](#basefeaturecollection)\<`F`\>
+> **FeatureCollection**<`F`> = [`BaseFeatureCollection`](#basefeaturecollection)<`F`>
 
 #### Type Parameters
 
@@ -240,28 +286,28 @@
 
 ---
 
-### FeatureProperties\<P, ID\>
+### FeatureProperties\<P, ID>
 
-> **FeatureProperties**\<`P`, `ID`\> = `Record`\<`ID`, `P`\>
+> **FeatureProperties**<`P`, `ID`> = `Record`<`ID`, `P`>
 
 #### Type Parameters
 
-| Type Parameter          | Default type         |
-| ----------------------- | -------------------- |
-| `P`                     | `number` \| `string` |
-| `ID` _extends_ `string` | `string`             |
+| Type Parameter          | Default type |
+| ----------------------- | ------------ | -------- |
+| `P`                     | `number`     | `string` |
+| `ID` _extends_ `string` | `string`     |
 
 ---
 
 ### Geometry
 
-> **Geometry** = [`PointGeometry`](#pointgeometry) \| [`LineGeometry`](#linegeometry) \| [`AreaGeometry`](#areageometry)
+> **Geometry** = [`PointGeometry`](#pointgeometry) | [`LineGeometry`](#linegeometry) | [`AreaGeometry`](#areageometry)
 
 ---
 
-### GeometryCollection\<O\>
+### GeometryCollection\<O>
 
-> **GeometryCollection**\<`O`\> = [`BaseGeometryCollection`](#basegeometrycollection)\<`O`\>
+> **GeometryCollection**<`O`> = [`BaseGeometryCollection`](#basegeometrycollection)<`O`>
 
 #### Type Parameters
 
@@ -273,118 +319,118 @@
 
 ### LineFeature
 
-> **LineFeature** = [`Feature`](#feature)\<[`LineGeometry`](#linegeometry)\>
+> **LineFeature** = [`Feature`](#feature)<[`LineGeometry`](#linegeometry)>
 
 ---
 
 ### LineFeatureCollection
 
-> **LineFeatureCollection** = [`FeatureCollection`](#featurecollection)\<[`LineFeature`](#linefeature)\>
+> **LineFeatureCollection** = [`FeatureCollection`](#featurecollection)<[`LineFeature`](#linefeature)>
 
 ---
 
 ### LineGeometry
 
-> **LineGeometry** = [`LineObject`](#lineobject) \| [`LineGeometryCollection`](#linegeometrycollection)
+> **LineGeometry** = [`LineObject`](#lineobject) | [`LineGeometryCollection`](#linegeometrycollection)
 
 ---
 
 ### LineGeometryCollection
 
-> **LineGeometryCollection** = [`GeometryCollection`](#geometrycollection)\<[`LineObject`](#lineobject)\>
+> **LineGeometryCollection** = [`GeometryCollection`](#geometrycollection)<[`LineObject`](#lineobject)>
 
 ---
 
 ### LineObject
 
-> **LineObject** = [`LineString`](#linestring) \| [`MultiLineString`](#multilinestring)
+> **LineObject** = [`LineString`](#linestring) | [`MultiLineString`](#multilinestring)
 
 ---
 
 ### LineString
 
-> **LineString** = [`BaseObject`](#baseobject)\<`"LineString"`, [`Position`](#position)[]\>
+> **LineString** = [`BaseObject`](#baseobject)<`"LineString"`, [`Position`](#position)\[]>
 
 ---
 
 ### MultiLineString
 
-> **MultiLineString** = [`BaseObject`](#baseobject)\<`"MultiLineString"`, [`Position`](#position)[][]\>
+> **MultiLineString** = [`BaseObject`](#baseobject)<`"MultiLineString"`, [`Position`](#position)\[]\[]>
 
 ---
 
 ### MultiPoint
 
-> **MultiPoint** = [`BaseObject`](#baseobject)\<`"MultiPoint"`, [`Position`](#position)[]\>
+> **MultiPoint** = [`BaseObject`](#baseobject)<`"MultiPoint"`, [`Position`](#position)\[]>
 
 ---
 
 ### MultiPolygon
 
-> **MultiPolygon** = [`BaseObject`](#baseobject)\<`"MultiPolygon"`, [`Position`](#position)[][][]\>
+> **MultiPolygon** = [`BaseObject`](#baseobject)<`"MultiPolygon"`, [`Position`](#position)\[]\[]\[]>
 
 ---
 
 ### Point
 
-> **Point** = [`BaseObject`](#baseobject)\<`"Point"`, [`Position`](#position)\>
+> **Point** = [`BaseObject`](#baseobject)<`"Point"`, [`Position`](#position)>
 
 ---
 
 ### PointFeature
 
-> **PointFeature** = [`Feature`](#feature)\<[`PointGeometry`](#pointgeometry)\>
+> **PointFeature** = [`Feature`](#feature)<[`PointGeometry`](#pointgeometry)>
 
 ---
 
 ### PointFeatureCollection
 
-> **PointFeatureCollection** = [`FeatureCollection`](#featurecollection)\<[`PointFeature`](#pointfeature)\>
+> **PointFeatureCollection** = [`FeatureCollection`](#featurecollection)<[`PointFeature`](#pointfeature)>
 
 ---
 
 ### PointGeometry
 
-> **PointGeometry** = [`PointObject`](#pointobject) \| [`PointGeometryCollection`](#pointgeometrycollection)
+> **PointGeometry** = [`PointObject`](#pointobject) | [`PointGeometryCollection`](#pointgeometrycollection)
 
 ---
 
 ### PointGeometryCollection
 
-> **PointGeometryCollection** = [`GeometryCollection`](#geometrycollection)\<[`PointObject`](#pointobject)\>
+> **PointGeometryCollection** = [`GeometryCollection`](#geometrycollection)<[`PointObject`](#pointobject)>
 
 ---
 
 ### PointObject
 
-> **PointObject** = [`Point`](#point) \| [`MultiPoint`](#multipoint)
+> **PointObject** = [`Point`](#point) | [`MultiPoint`](#multipoint)
 
 ---
 
 ### Polygon
 
-> **Polygon** = [`BaseObject`](#baseobject)\<`"Polygon"`, [`Position`](#position)[][]\>
+> **Polygon** = [`BaseObject`](#baseobject)<`"Polygon"`, [`Position`](#position)\[]\[]>
 
 ---
 
 ### Position
 
-> **Position** = [`Position2`](#position2) \| [`Position3`](#position3)
+> **Position** = [`Position2`](#position2) | [`Position3`](#position3)
 
 ---
 
 ### Position2
 
-> **Position2** = \[`number`, `number`\]
+> **Position2** = \[`number`, `number`]
 
 ---
 
 ### Position3
 
-> **Position3** = \[`number`, `number`, `number`\]
+> **Position3** = \[`number`, `number`, `number`]
 
 ---
 
 ### SingleTypeObject
 
-> **SingleTypeObject** = [`PointObject`](#pointobject) \| [`LineObject`](#lineobject) \| [`AreaObject`](#areaobject)
+> **SingleTypeObject** = [`PointObject`](#pointobject) | [`LineObject`](#lineobject) | [`AreaObject`](#areaobject)

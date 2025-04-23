@@ -6,23 +6,34 @@
 
 # errors
 
+## Contents
+
+- [Type Aliases](#type-aliases)
+  - [CollectError](#collecterror)
+  - [SampleError](#sampleerror)
+  - [SelectError](#selecterror)
+- [Variables](#variables)
+  - [COLLECT_ERROR_LIST](#collect_error_list)
+  - [SAMPLE_ERROR_LIST](#sample_error_list)
+  - [SELECT_ERROR_LIST](#select_error_list)
+
 ## Type Aliases
 
 ### CollectError
 
-> **CollectError** = `ErrorType`\<_typeof_ [`COLLECT_ERROR_LIST`](#collect_error_list)\>
+> **CollectError** = `ErrorType`<_typeof_ [`COLLECT_ERROR_LIST`](#collect_error_list)>
 
 ---
 
 ### SampleError
 
-> **SampleError** = `ErrorType`\<_typeof_ [`SAMPLE_ERROR_LIST`](#sample_error_list)\>
+> **SampleError** = `ErrorType`<_typeof_ [`SAMPLE_ERROR_LIST`](#sample_error_list)>
 
 ---
 
 ### SelectError
 
-> **SelectError** = `ErrorType`\<_typeof_ [`SELECT_ERROR_LIST`](#select_error_list)\>
+> **SelectError** = `ErrorType`<_typeof_ [`SELECT_ERROR_LIST`](#select_error_list)>
 
 ## Variables
 

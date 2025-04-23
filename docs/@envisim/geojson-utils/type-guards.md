@@ -6,11 +6,32 @@
 
 # type-guards
 
+## Contents
+
+- [Functions](#functions)
+  - [checkProperties()](#checkproperties)
+  - [isAreaGeometry()](#isareageometry)
+  - [isBaseCollection()](#isbasecollection)
+  - [isBaseFeature()](#isbasefeature)
+  - [isBaseGeometry()](#isbasegeometry)
+  - [isCircle()](#iscircle)
+  - [isCircleish()](#iscircleish)
+  - [isLineGeometry()](#islinegeometry)
+  - [isMultiCircle()](#ismulticircle)
+  - [isMultiPoint()](#ismultipoint)
+  - [isPoint()](#ispoint)
+  - [isPointGeometry()](#ispointgeometry)
+  - [isPointish()](#ispointish)
+  - [isSingleTypeCollection()](#issingletypecollection)
+  - [isSingleTypeFeature()](#issingletypefeature)
+  - [isSingleTypeGeometry()](#issingletypegeometry)
+  - [isUniformCollection()](#isuniformcollection)
+
 ## Functions
 
 ### checkProperties()
 
-> **checkProperties**(`obj`): obj is BaseFeature\<BaseGeometry, string \| number\>
+> **checkProperties**(`obj`): obj is BaseFeature\<BaseGeometry, string | number>
 
 #### Parameters
 
@@ -20,7 +41,7 @@
 
 #### Returns
 
-obj is BaseFeature\<BaseGeometry, string \| number\>
+obj is BaseFeature\<BaseGeometry, string | number>
 
 `true` if `obj.properties` is either `null` or an object with `string|number` values.
 
@@ -185,7 +206,7 @@ obj is BaseFeature\<BaseGeometry, string \| number\>
 
 ### isCircleish()
 
-> **isCircleish**(`obj`, `checkPositiveRadius`): obj is Circle \| MultiCircle
+> **isCircleish**(`obj`, `checkPositiveRadius`): obj is Circle | MultiCircle
 
 #### Parameters
 
@@ -196,7 +217,7 @@ obj is BaseFeature\<BaseGeometry, string \| number\>
 
 #### Returns
 
-obj is Circle \| MultiCircle
+obj is Circle | MultiCircle
 
 `true` if `obj` can be narrowed to `GJ.Circle | GJ.MultiCircle`.
 
@@ -295,7 +316,7 @@ obj is Circle \| MultiCircle
 
 ### isPointish()
 
-> **isPointish**(`obj`): obj is Point \| MultiPoint
+> **isPointish**(`obj`): obj is Point | MultiPoint
 
 #### Parameters
 
@@ -305,7 +326,7 @@ obj is Circle \| MultiCircle
 
 #### Returns
 
-obj is Point \| MultiPoint
+obj is Point | MultiPoint
 
 `true` if `obj` can be narrowed to `GJ.Point | GJ.MultiPoint`.
 
@@ -371,17 +392,17 @@ obj is Point \| MultiPoint
 
 ### isUniformCollection()
 
-> **isUniformCollection**(`obj`): obj is BaseFeatureCollection\<BaseFeature\<SingleTypeObject, string \| number\>\>
+> **isUniformCollection**(`obj`): obj is BaseFeatureCollection\<BaseFeature\<SingleTypeObject, string | number>>
 
 #### Parameters
 
-| Parameter | Type                                                                                                                                                                   |
-| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `obj`     | [`BaseFeatureCollection`](geojson.md#basefeaturecollection)\<[`BaseFeature`](geojson.md#basefeature)\<[`SingleTypeObject`](geojson.md#singletypeobject), `unknown`\>\> |
+| Parameter | Type                                                                                                                                                               |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `obj`     | [`BaseFeatureCollection`](geojson.md#basefeaturecollection)<[`BaseFeature`](geojson.md#basefeature)<[`SingleTypeObject`](geojson.md#singletypeobject), `unknown`>> |
 
 #### Returns
 
-obj is BaseFeatureCollection\<BaseFeature\<SingleTypeObject, string \| number\>\>
+obj is BaseFeatureCollection\<BaseFeature\<SingleTypeObject, string | number>>
 
 `true` if `obj` can be narrowed to a FeatureCollection with uniform properties, i.e. a
 FeatureCollection where every feature has exactly the same property object.

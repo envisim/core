@@ -6,11 +6,17 @@
 
 # collect-properties
 
+## Contents
+
+- [Functions](#functions)
+  - [collectProperties()](#collectproperties)
+  - [collectPropertyRecord()](#collectpropertyrecord)
+
 ## Functions
 
 ### collectProperties()
 
-> **collectProperties**\<`PF`, `PB`, `GF`\>(`frame`, `base`, `properties`): [`FeatureCollection`](../geojson.md#featurecollection)\<`GF`, `string` \| `PF`\>
+> **collectProperties**<`PF`, `PB`, `GF`>(`frame`, `base`, `properties`): [`FeatureCollection`](../geojson.md#featurecollection)<`GF`, `string` | `PF`>
 
 Collect properties to a frame layer from a base layer, given an
 array of properties to be collected. Categorical properties are collected as
@@ -26,15 +32,15 @@ multiple numerical properties, one for each category.
 
 #### Parameters
 
-| Parameter    | Type                                                                                                                         |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| `frame`      | [`FeatureCollection`](../geojson.md#featurecollection)\<`GF`, `PF`\>                                                         |
-| `base`       | [`FeatureCollection`](../geojson.md#featurecollection)\<[`RetractingObject`](../geojson.md#retractingobject)\<`GF`\>, `PB`\> |
-| `properties` | [`PropertyRecord`](../geojson.md#propertyrecord-1)\<`PB`\> \| `PB`[]                                                         |
+| Parameter    | Type                                                                                                                     |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `frame`      | [`FeatureCollection`](../geojson.md#featurecollection)<`GF`, `PF`>                                                       |
+| `base`       | [`FeatureCollection`](../geojson.md#featurecollection)<[`RetractingObject`](../geojson.md#retractingobject)<`GF`>, `PB`> |
+| `properties` | [`PropertyRecord`](../geojson.md#propertyrecord-1)<`PB`>                                                                 | `PB`\[] |
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)\<`GF`, `string` \| `PF`\>
+[`FeatureCollection`](../geojson.md#featurecollection)<`GF`, `string` | `PF`>
 
 collection
 
@@ -42,7 +48,7 @@ collection
 
 ### collectPropertyRecord()
 
-> **collectPropertyRecord**\<`P`\>(`propertyRecord`, `properties`): [`PropertyRecord`](../geojson.md#propertyrecord-1)\<`string`\>
+> **collectPropertyRecord**<`P`>(`propertyRecord`, `properties`): [`PropertyRecord`](../geojson.md#propertyrecord-1)<`string`>
 
 Derives the resulting property record of collected properties.
 This property record needs to be merged with the existing
@@ -58,13 +64,13 @@ using collectProperties.
 
 #### Parameters
 
-| Parameter        | Type                                                      | Description                           |
-| ---------------- | --------------------------------------------------------- | ------------------------------------- |
-| `propertyRecord` | [`PropertyRecord`](../geojson.md#propertyrecord-1)\<`P`\> | the property record to collect from.  |
-| `properties`     | `P`[]                                                     | the ids of the properties to collect. |
+| Parameter        | Type                                                    | Description                           |
+| ---------------- | ------------------------------------------------------- | ------------------------------------- |
+| `propertyRecord` | [`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`> | the property record to collect from.  |
+| `properties`     | `P`\[]                                                  | the ids of the properties to collect. |
 
 #### Returns
 
-[`PropertyRecord`](../geojson.md#propertyrecord-1)\<`string`\>
+[`PropertyRecord`](../geojson.md#propertyrecord-1)<`string`>
 
 the property record collected properties.

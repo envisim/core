@@ -4,6 +4,10 @@
 
 # Documentation
 
+## Contents
+
+- [Modules](#modules)
+
 ## Modules
 
 | Module                                                     | Description |

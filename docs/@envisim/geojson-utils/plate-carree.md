@@ -6,6 +6,13 @@
 
 # plate-carree
 
+## Contents
+
+- [Functions](#functions)
+  - [areaOfRing()](#areaofring)
+  - [distance()](#distance)
+  - [intermediate()](#intermediate)
+
 ## Functions
 
 ### areaOfRing()
@@ -13,14 +20,14 @@
 > **areaOfRing**(`ring`): `number`
 
 Computes the area of a polygon ring where the segments are
-defined as [lon1 + t * (lon2 - lon1), lat1 + t * (lat2 - lat1)], for
+defined as \[lon1 + t \* (lon2 - lon1), lat1 + t \* (lat2 - lat1)], for
 0 <= t <= 1.
 
 #### Parameters
 
-| Parameter | Type                                |
-| --------- | ----------------------------------- |
-| `ring`    | [`Position`](geojson.md#position)[] |
+| Parameter | Type                                 |
+| --------- | ------------------------------------ |
+| `ring`    | [`Position`](geojson.md#position)\[] |
 
 #### Returns
 
@@ -62,8 +69,8 @@ segment, where the segment is of type plate carrée.
 
 | Parameter  | Type                              | Description                |
 | ---------- | --------------------------------- | -------------------------- |
-| `p1`       | [`Position`](geojson.md#position) | start point [lon,lat]      |
-| `p2`       | [`Position`](geojson.md#position) | end point [lon,lat]        |
+| `p1`       | [`Position`](geojson.md#position) | start point \[lon,lat]     |
+| `p2`       | [`Position`](geojson.md#position) | end point \[lon,lat]       |
 | `fraction` | `number`                          | the fraction of the length |
 
 #### Returns

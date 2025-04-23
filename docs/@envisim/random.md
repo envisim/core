@@ -6,6 +6,18 @@
 
 # @envisim/random
 
+## Contents
+
+- [Classes](#classes)
+  - [Random](#random)
+- [Interfaces](#interfaces)
+  - [RandomGenerator](#randomgenerator)
+- [Functions](#functions)
+  - [randomArray()](#randomarray)
+  - [randomFloat()](#randomfloat)
+  - [randomFloatOpen()](#randomfloatopen)
+  - [randomInt()](#randomint)
+
 ## Classes
 
 ### Random
@@ -20,9 +32,9 @@ Returns an instance of Random. TS/class implementation of Uheprng.
 
 ###### Parameters
 
-| Parameter | Type                 | Description                       |
-| --------- | -------------------- | --------------------------------- |
-| `seed?`   | `string` \| `number` | Seed for random number generator. |
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- | --------------------------------- |
+| `seed?`   | `string` | `number`    | Seed for random number generator. |
 
 ###### Returns
 
@@ -54,9 +66,9 @@ Adds entropy to Uheprng.
 
 ###### Parameters
 
-| Parameter | Type                     |
-| --------- | ------------------------ |
-| ...`args` | `number`[] \| `string`[] |
+| Parameter | Type        |
+| --------- | ----------- | ----------- |
+| ...`args` | `number`\[] | `string`\[] |
 
 ###### Returns
 
@@ -88,7 +100,7 @@ Adds entropy to Uheprng.
 
 ##### floatArray()
 
-> **floatArray**(`n`): `number`[]
+> **floatArray**(`n`): `number`\[]
 
 ###### Parameters
 
@@ -98,7 +110,7 @@ Adds entropy to Uheprng.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 An array of (uniform) numbers on the interval `[0.0, 1.0)`
 
@@ -150,7 +162,7 @@ Initializes state
 
 `number`
 
-A pseudo-random integer on [0, `n`)
+A pseudo-random integer on \[0, `n`)
 
 ###### Throws
 
@@ -164,7 +176,7 @@ A pseudo-random integer on [0, `n`)
 
 `number`
 
-Pseudo-random (uniform) number on the interval [0.0, 1.0)
+Pseudo-random (uniform) number on the interval \[0.0, 1.0)
 
 ##### seed()
 
@@ -174,9 +186,9 @@ Seed the random generator
 
 ###### Parameters
 
-| Parameter | Type                 |
-| --------- | -------------------- |
-| `seed`    | `string` \| `number` |
+| Parameter | Type     |
+| --------- | -------- | -------- |
+| `seed`    | `string` | `number` |
 
 ###### Returns
 
@@ -217,7 +229,7 @@ A pseudo-random string of `n` printable characters ranging from
 
 ### randomArray()
 
-> **randomArray**(`n`, `generator`): `number`[]
+> **randomArray**(`n`, `generator`): `number`\[]
 
 Returns an array with psudo-random standard uniform elements.
 
@@ -230,7 +242,7 @@ Returns an array with psudo-random standard uniform elements.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 Pseudo-random (uniform) array with elements on the interval `[0.0, 1.0)`.
 
@@ -287,7 +299,7 @@ Pseudo-random (uniform) number o nthe interval `(0.0, 1.0)`
 
 `number`
 
-A pseudo-random integer on [0, `n`)
+A pseudo-random integer on \[0, `n`)
 
 #### Throws
 

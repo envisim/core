@@ -6,6 +6,32 @@
 
 # @envisim/sampling
 
+## Contents
+
+- [Classes](#classes)
+  - [NearestNeighbour](#nearestneighbour)
+- [Functions](#functions)
+  - [brewer()](#brewer)
+  - [conditionalPoissonSampling()](#conditionalpoissonsampling)
+  - [cube()](#cube)
+  - [inclusionProbabilities()](#inclusionprobabilities)
+  - [lcps()](#lcps)
+  - [localCube()](#localcube)
+  - [lpm1()](#lpm1)
+  - [lpm2()](#lpm2)
+  - [pareto()](#pareto)
+  - [poissonSampling()](#poissonsampling)
+  - [ppswr()](#ppswr)
+  - [randomSystematic()](#randomsystematic)
+  - [rpm()](#rpm)
+  - [sampford()](#sampford)
+  - [scps()](#scps)
+  - [scpsCoordinated()](#scpscoordinated)
+  - [spm()](#spm)
+  - [srswor()](#srswor)
+  - [srswr()](#srswr)
+  - [systematic()](#systematic)
+
 ## Classes
 
 ### NearestNeighbour
@@ -39,9 +65,9 @@ a nearest neighbour searcher.
 
 ###### Parameters
 
-| Parameter | Type                   | Description                                                                    |
-| --------- | ---------------------- | ------------------------------------------------------------------------------ |
-| `unit`    | `number` \| `number`[] | if a number $i$, the unit is assumed to be the $i$th row in the provided data. |
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- | ------------------------------------------------------------------------------ |
+| `unit`    | `number` | `number`\[] | if a number $i$, the unit is assumed to be the $i$th row in the provided data. |
 
 ###### Returns
 
@@ -52,17 +78,17 @@ provided data.
 
 ##### findNearestNeighbours()
 
-> **findNearestNeighbours**(`unit`): `number`[]
+> **findNearestNeighbours**(`unit`): `number`\[]
 
 ###### Parameters
 
-| Parameter | Type                   | Description                                                                    |
-| --------- | ---------------------- | ------------------------------------------------------------------------------ |
-| `unit`    | `number` \| `number`[] | if a number $i$, the unit is assumed to be the $i$th row in the provided data. |
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- | ------------------------------------------------------------------------------ |
+| `unit`    | `number` | `number`\[] | if a number $i$, the unit is assumed to be the $i$th row in the provided data. |
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 the nearest neighbour(s) of the unit in the provided data.
 
@@ -70,7 +96,7 @@ the nearest neighbour(s) of the unit in the provided data.
 
 ### brewer()
 
-> **brewer**(`options`): `number`[]
+> **brewer**(`options`): `number`\[]
 
 Selects a (pips) sample without replacement using Brewers method.
 
@@ -82,7 +108,7 @@ Selects a (pips) sample without replacement using Brewers method.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -90,7 +116,7 @@ sample indices.
 
 ### conditionalPoissonSampling()
 
-> **conditionalPoissonSampling**(`options`): `number`[]
+> **conditionalPoissonSampling**(`options`): `number`\[]
 
 Selects a conditional Poisson sample using the rejective method.
 
@@ -102,7 +128,7 @@ Selects a conditional Poisson sample using the rejective method.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -114,7 +140,7 @@ sample indices.
 
 ### cube()
 
-> **cube**(`options`): `number`[]
+> **cube**(`options`): `number`\[]
 
 Selects a balanced (pips) sample using the cube method.
 
@@ -126,7 +152,7 @@ Selects a balanced (pips) sample using the cube method.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -134,7 +160,7 @@ sample indices.
 
 ### inclusionProbabilities()
 
-> **inclusionProbabilities**(`options`): `number`[]
+> **inclusionProbabilities**(`options`): `number`\[]
 
 Calculation of inclusion probabilities from a positive auxiliary variable.
 
@@ -146,7 +172,7 @@ Calculation of inclusion probabilities from a positive auxiliary variable.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 Array of inclusion probabilities.
 
@@ -154,7 +180,7 @@ Array of inclusion probabilities.
 
 ### lcps()
 
-> **lcps**(`options`): `number`[]
+> **lcps**(`options`): `number`\[]
 
 Selects a Locally Correlated Poisson Sample (LCPS)
 
@@ -166,7 +192,7 @@ Selects a Locally Correlated Poisson Sample (LCPS)
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -174,7 +200,7 @@ sample indices.
 
 ### localCube()
 
-> **localCube**(`options`): `number`[]
+> **localCube**(`options`): `number`\[]
 
 Selects a doubly balanced sample using the local cube method.
 
@@ -186,7 +212,7 @@ Selects a doubly balanced sample using the local cube method.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -194,19 +220,19 @@ sample indices.
 
 ### lpm1()
 
-> **lpm1**(`options`): `number`[]
+> **lpm1**(`options`): `number`\[]
 
 Selects a (pips) sample using the local pivotal method 1.
 
 #### Parameters
 
-| Parameter | Type                                               |
-| --------- | -------------------------------------------------- |
-| `options` | `AuxiliaryOptions` \| `AuxiliaryFixedSizedOptions` |
+| Parameter | Type               |
+| --------- | ------------------ | ---------------------------- |
+| `options` | `AuxiliaryOptions` | `AuxiliaryFixedSizedOptions` |
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -214,19 +240,19 @@ sample indices.
 
 ### lpm2()
 
-> **lpm2**(`options`): `number`[]
+> **lpm2**(`options`): `number`\[]
 
 Selects a (pips) sample using the local pivotal method 2.
 
 #### Parameters
 
-| Parameter | Type                                               |
-| --------- | -------------------------------------------------- |
-| `options` | `AuxiliaryOptions` \| `AuxiliaryFixedSizedOptions` |
+| Parameter | Type               |
+| --------- | ------------------ | ---------------------------- |
+| `options` | `AuxiliaryOptions` | `AuxiliaryFixedSizedOptions` |
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -234,7 +260,7 @@ sample indices.
 
 ### pareto()
 
-> **pareto**(`options`): `number`[]
+> **pareto**(`options`): `number`\[]
 
 Selects a Pareto (pips) sample without replacement.
 
@@ -246,7 +272,7 @@ Selects a Pareto (pips) sample without replacement.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -254,7 +280,7 @@ sample indices.
 
 ### poissonSampling()
 
-> **poissonSampling**(`options`): `number`[]
+> **poissonSampling**(`options`): `number`\[]
 
 Selects a Poisson sample.
 
@@ -266,7 +292,7 @@ Selects a Poisson sample.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -274,7 +300,7 @@ sample indices.
 
 ### ppswr()
 
-> **ppswr**(`options`): `number`[]
+> **ppswr**(`options`): `number`\[]
 
 Selects a pps sample with replacement.
 
@@ -286,7 +312,7 @@ Selects a pps sample with replacement.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -294,7 +320,7 @@ sample indices.
 
 ### randomSystematic()
 
-> **randomSystematic**(`options`): `number`[]
+> **randomSystematic**(`options`): `number`\[]
 
 Selects a systematic (pips) sample with initial randomization of order of the units.
 
@@ -306,7 +332,7 @@ Selects a systematic (pips) sample with initial randomization of order of the un
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -314,7 +340,7 @@ sample indices.
 
 ### rpm()
 
-> **rpm**(`options`): `number`[]
+> **rpm**(`options`): `number`\[]
 
 Selects a (pips) sample using the random pivotal method.
 
@@ -326,7 +352,7 @@ Selects a (pips) sample using the random pivotal method.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -334,7 +360,7 @@ sample indices.
 
 ### sampford()
 
-> **sampford**(`options`): `number`[]
+> **sampford**(`options`): `number`\[]
 
 Selects a Sampford (pips) sample using the rejective method.
 
@@ -346,7 +372,7 @@ Selects a Sampford (pips) sample using the rejective method.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -354,7 +380,7 @@ sample indices.
 
 ### scps()
 
-> **scps**(`options`): `number`[]
+> **scps**(`options`): `number`\[]
 
 Selects a Spatially Correlated Poisson Sample (SCPS)
 
@@ -366,7 +392,7 @@ Selects a Spatially Correlated Poisson Sample (SCPS)
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -374,7 +400,7 @@ sample indices.
 
 ### scpsCoordinated()
 
-> **scpsCoordinated**(`options`): `number`[]
+> **scpsCoordinated**(`options`): `number`\[]
 
 Selects a coordinated Spatially Correlated Poisson Sample (SCPSCOORD)
 
@@ -386,7 +412,7 @@ Selects a coordinated Spatially Correlated Poisson Sample (SCPSCOORD)
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -394,7 +420,7 @@ sample indices.
 
 ### spm()
 
-> **spm**(`options`): `number`[]
+> **spm**(`options`): `number`\[]
 
 Selects a (pips) sample using the sequential pivotal method.
 
@@ -406,7 +432,7 @@ Selects a (pips) sample using the sequential pivotal method.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -414,7 +440,7 @@ sample indices.
 
 ### srswor()
 
-> **srswor**(`options`): `number`[]
+> **srswor**(`options`): `number`\[]
 
 Selects a simple random sampling without replacement.
 
@@ -426,7 +452,7 @@ Selects a simple random sampling without replacement.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -434,7 +460,7 @@ sample indices.
 
 ### srswr()
 
-> **srswr**(`options`): `number`[]
+> **srswr**(`options`): `number`\[]
 
 Selects a simple random sampling with replacement.
 
@@ -446,7 +472,7 @@ Selects a simple random sampling with replacement.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.
 
@@ -454,7 +480,7 @@ sample indices.
 
 ### systematic()
 
-> **systematic**(`options`): `number`[]
+> **systematic**(`options`): `number`\[]
 
 Selects a systematic (pips) sample.
 
@@ -466,6 +492,6 @@ Selects a systematic (pips) sample.
 
 #### Returns
 
-`number`[]
+`number`\[]
 
 sample indices.

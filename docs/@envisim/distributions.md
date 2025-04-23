@@ -6,13 +6,51 @@
 
 # @envisim/distributions
 
+## Contents
+
+- [Classes](#classes)
+  - [Arcsine](#arcsine)
+  - [BenfordMantissa](#benfordmantissa)
+  - [Bernoulli](#bernoulli)
+  - [Beta](#beta)
+  - [BetaPrime](#betaprime)
+  - [Binomial](#binomial)
+  - [Cauchy](#cauchy)
+  - [ChiSquared](#chisquared)
+  - [Exponential](#exponential)
+  - [ExtremeValue](#extremevalue)
+  - [FoldedNormal](#foldednormal)
+  - [FRatio](#fratio)
+  - [Gamma](#gamma)
+  - [Geometric](#geometric)
+  - [HyperbolicSecant](#hyperbolicsecant)
+  - [Hypergeometric](#hypergeometric)
+  - [Laplace](#laplace)
+  - [Logarithmic](#logarithmic)
+  - [Logistic](#logistic)
+  - [LogLogistic](#loglogistic)
+  - [LogNormal](#lognormal)
+  - [NegativeBinomial](#negativebinomial)
+  - [Normal](#normal)
+  - [Pareto](#pareto)
+  - [Poisson](#poisson)
+  - [Semicircle](#semicircle)
+  - [StudentsT](#studentst)
+  - [Triangular](#triangular)
+  - [Uniform](#uniform)
+  - [UniformDiscrete](#uniformdiscrete)
+  - [UQuadratic](#uquadratic)
+  - [Weibull](#weibull)
+- [Interfaces](#interfaces)
+  - [RandomOptions](#randomoptions)
+
 ## Classes
 
 ### Arcsine
 
 #### Extends
 
-- `Distribution`\<`ParamsBound`\>
+- `Distribution`<`ParamsBound`>
 
 #### Constructors
 
@@ -189,7 +227,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -202,7 +240,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -216,11 +254,11 @@ Sets the parameters of the distribution
 
 ###### Parameters
 
-| Parameter  | Type                                | Description |
-| ---------- | ----------------------------------- | ----------- |
-| `params`   | \{ `a`: `number`; `b`: `number`; \} | -           |
-| `params.a` | `number`                            | Left bound  |
-| `params.b` | `number`                            | Right bound |
+| Parameter  | Type                              | Description |
+| ---------- | --------------------------------- | ----------- |
+| `params`   | { `a`: `number`; `b`: `number`; } | -           |
+| `params.a` | `number`                          | Left bound  |
+| `params.b` | `number`                          | Right bound |
 
 ###### Returns
 
@@ -278,7 +316,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsBenfordMantissa`\>
+- `Distribution`<`ParamsBenfordMantissa`>
 
 #### Constructors
 
@@ -454,7 +492,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -467,7 +505,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -541,7 +579,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsBernoulli`\>
+- `Distribution`<`ParamsBernoulli`>
 
 #### Constructors
 
@@ -714,7 +752,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -727,7 +765,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -801,7 +839,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsBeta`\>
+- `Distribution`<`ParamsBeta`>
 
 #### Constructors
 
@@ -980,7 +1018,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -993,7 +1031,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -1067,7 +1105,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsBeta`\>
+- `Distribution`<`ParamsBeta`>
 
 #### Constructors
 
@@ -1246,7 +1284,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -1259,7 +1297,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -1333,7 +1371,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsBinomial`\>
+- `Distribution`<`ParamsBinomial`>
 
 #### Constructors
 
@@ -1512,7 +1550,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -1525,7 +1563,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -1599,7 +1637,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsLocationScale`\>
+- `Distribution`<`ParamsLocationScale`>
 
 #### Constructors
 
@@ -1775,7 +1813,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -1788,7 +1826,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -1862,7 +1900,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsDegreesOfFreedom`\>
+- `Distribution`<`ParamsDegreesOfFreedom`>
 
 #### Constructors
 
@@ -2039,7 +2077,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -2052,7 +2090,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -2126,7 +2164,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsRate`\>
+- `Distribution`<`ParamsRate`>
 
 #### Constructors
 
@@ -2301,7 +2339,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -2314,7 +2352,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -2388,7 +2426,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsLocationScale`\>
+- `Distribution`<`ParamsLocationScale`>
 
 #### Constructors
 
@@ -2562,7 +2600,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -2575,7 +2613,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -2649,7 +2687,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsNormal`\>
+- `Distribution`<`ParamsNormal`>
 
 #### Constructors
 
@@ -2826,7 +2864,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -2839,7 +2877,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -2913,7 +2951,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsDegreesOfFreedom2`\>
+- `Distribution`<`ParamsDegreesOfFreedom2`>
 
 #### Constructors
 
@@ -3090,7 +3128,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -3103,7 +3141,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -3177,7 +3215,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsShapeScale`\>
+- `Distribution`<`ParamsShapeScale`>
 
 #### Constructors
 
@@ -3356,7 +3394,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -3369,7 +3407,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -3443,7 +3481,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsBernoulli`\>
+- `Distribution`<`ParamsBernoulli`>
 
 #### Constructors
 
@@ -3619,7 +3657,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -3632,7 +3670,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -3706,7 +3744,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`undefined`\>
+- `Distribution`<`undefined`>
 
 #### Constructors
 
@@ -3875,7 +3913,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -3888,7 +3926,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -3956,7 +3994,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsHypergeometric`\>
+- `Distribution`<`ParamsHypergeometric`>
 
 #### Constructors
 
@@ -4135,7 +4173,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -4148,7 +4186,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -4222,7 +4260,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsLocationScale`\>
+- `Distribution`<`ParamsLocationScale`>
 
 #### Constructors
 
@@ -4398,7 +4436,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -4411,7 +4449,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -4485,7 +4523,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsBernoulli`\>
+- `Distribution`<`ParamsBernoulli`>
 
 #### Constructors
 
@@ -4662,7 +4700,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -4675,7 +4713,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -4749,7 +4787,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsLocationScale`\>
+- `Distribution`<`ParamsLocationScale`>
 
 #### Constructors
 
@@ -4925,7 +4963,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -4938,7 +4976,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -5012,7 +5050,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsShapeScale`\>
+- `Distribution`<`ParamsShapeScale`>
 
 #### Constructors
 
@@ -5188,7 +5226,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -5201,7 +5239,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -5275,7 +5313,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsNormal`\>
+- `Distribution`<`ParamsNormal`>
 
 #### Constructors
 
@@ -5451,7 +5489,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -5464,7 +5502,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -5538,7 +5576,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsBinomial`\>
+- `Distribution`<`ParamsBinomial`>
 
 #### Constructors
 
@@ -5716,7 +5754,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -5729,7 +5767,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -5803,7 +5841,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsNormal`\>
+- `Distribution`<`ParamsNormal`>
 
 #### Constructors
 
@@ -5979,7 +6017,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -5992,7 +6030,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -6066,7 +6104,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsShapeScale`\>
+- `Distribution`<`ParamsShapeScale`>
 
 #### Constructors
 
@@ -6242,7 +6280,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -6255,7 +6293,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -6329,7 +6367,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsRate`\>
+- `Distribution`<`ParamsRate`>
 
 #### Constructors
 
@@ -6506,7 +6544,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -6519,7 +6557,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -6593,7 +6631,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsRadius`\>
+- `Distribution`<`ParamsRadius`>
 
 #### Constructors
 
@@ -6771,7 +6809,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -6784,7 +6822,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -6858,7 +6896,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsDegreesOfFreedom`\>
+- `Distribution`<`ParamsDegreesOfFreedom`>
 
 #### Constructors
 
@@ -7034,7 +7072,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -7047,7 +7085,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -7121,7 +7159,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsBoundMid`\>
+- `Distribution`<`ParamsBoundMid`>
 
 #### Constructors
 
@@ -7298,7 +7336,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -7311,7 +7349,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -7385,7 +7423,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsBound`\>
+- `Distribution`<`ParamsBound`>
 
 #### Constructors
 
@@ -7562,7 +7600,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -7575,7 +7613,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -7649,7 +7687,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsBound`\>
+- `Distribution`<`ParamsBound`>
 
 #### Constructors
 
@@ -7825,7 +7863,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -7838,7 +7876,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Overrides
 
@@ -7912,7 +7950,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsBound`\>
+- `Distribution`<`ParamsBound`>
 
 #### Constructors
 
@@ -8090,7 +8128,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -8103,7 +8141,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 
@@ -8177,7 +8215,7 @@ the variance
 
 #### Extends
 
-- `Distribution`\<`ParamsShapeScale`\>
+- `Distribution`<`ParamsShapeScale`>
 
 #### Constructors
 
@@ -8353,7 +8391,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`[]
+> **random**(`n`, `__namedParameters`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -8366,7 +8404,7 @@ Generate random numbers from the distribution.
 
 ###### Returns
 
-`number`[]
+`number`\[]
 
 ###### Inherited from
 

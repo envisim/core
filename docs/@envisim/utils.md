@@ -6,11 +6,23 @@
 
 # @envisim/utils
 
+## Contents
+
+- [Type Aliases](#type-aliases)
+  - [OptionalParam\<T, S>](#optionalparamt-s)
+- [Functions](#functions)
+  - [copy()](#copy)
+  - [inClosedInterval()](#inclosedinterval)
+  - [inOpenInterval()](#inopeninterval)
+  - [reducedRowEchelonForm()](#reducedrowechelonform)
+  - [swap()](#swap)
+  - [throwRangeError()](#throwrangeerror)
+
 ## Type Aliases
 
-### OptionalParam\<T, S\>
+### OptionalParam\<T, S>
 
-> **OptionalParam**\<`T`, `S`\> = `Omit`\<`T`, `S`\> & `Partial`\<`Pick`\<`T`, `S`\>\>
+> **OptionalParam**<`T`, `S`> = `Omit`<`T`, `S`> & `Partial`<`Pick`<`T`, `S`>>
 
 #### Type Parameters
 
@@ -23,7 +35,7 @@
 
 ### copy()
 
-> **copy**\<`T`\>(`obj`): `T`
+> **copy**<`T`>(`obj`): `T`
 
 #### Type Parameters
 
@@ -89,7 +101,7 @@ Transforms an array into reducedRowEchelonForm in place.
 
 | Parameter  | Type                   | Default value | Description           |
 | ---------- | ---------------------- | ------------- | --------------------- |
-| `mat`      | `number`[]             | `undefined`   | A flat array          |
+| `mat`      | `number`\[]            | `undefined`   | A flat array          |
 | `rowCount` | `number`               | `undefined`   | The number of rows    |
 | `colCount` | `number`               | `undefined`   | The number of columns |
 | `eps`      | `number`               | `1e-9`        | -                     |
@@ -103,7 +115,7 @@ Transforms an array into reducedRowEchelonForm in place.
 
 ### swap()
 
-> **swap**\<`T`\>(`arr`, `a`, `b`): `void`
+> **swap**<`T`>(`arr`, `a`, `b`): `void`
 
 #### Type Parameters
 
@@ -115,7 +127,7 @@ Transforms an array into reducedRowEchelonForm in place.
 
 | Parameter | Type     |
 | --------- | -------- |
-| `arr`     | `T`[]    |
+| `arr`     | `T`\[]   |
 | `a`       | `number` |
 | `b`       | `number` |
 
@@ -127,14 +139,14 @@ Transforms an array into reducedRowEchelonForm in place.
 
 ### throwRangeError()
 
-> **throwRangeError**(`err`): asserts err is undefined \| null
+> **throwRangeError**(`err`): asserts err is undefined | null
 
 #### Parameters
 
-| Parameter | Type                              |
-| --------- | --------------------------------- |
-| `err`     | `undefined` \| `null` \| `string` |
+| Parameter | Type        |
+| --------- | ----------- | ------ | -------- |
+| `err`     | `undefined` | `null` | `string` |
 
 #### Returns
 
-asserts err is undefined \| null
+asserts err is undefined | null

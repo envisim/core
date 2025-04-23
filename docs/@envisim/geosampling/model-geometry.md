@@ -6,6 +6,28 @@
 
 # model-geometry
 
+## Contents
+
+- [Functions](#functions)
+  - [circleAreaGeometry()](#circleareageometry)
+  - [circleLineGeometry()](#circlelinegeometry)
+  - [ellLineGeometry()](#elllinegeometry)
+  - [placeAreaGeometry()](#placeareageometry)
+  - [placeLineGeometry()](#placelinegeometry)
+  - [placePointGeometry()](#placepointgeometry)
+  - [pointGeometry()](#pointgeometry)
+  - [radiusOfModelGeometry()](#radiusofmodelgeometry)
+  - [rectangularAreaGeometry()](#rectangularareageometry)
+  - [rectangularCircleGeometry()](#rectangularcirclegeometry)
+  - [rectangularLineGeometry()](#rectangularlinegeometry)
+  - [rectangularPointGeometry()](#rectangularpointgeometry)
+  - [regularPolygonAreaGeometry()](#regularpolygonareageometry)
+  - [regularPolygonCircleGeometry()](#regularpolygoncirclegeometry)
+  - [regularPolygonLineGeometry()](#regularpolygonlinegeometry)
+  - [regularPolygonPointGeometry()](#regularpolygonpointgeometry)
+  - [sizeOfModelGeometry()](#sizeofmodelgeometry)
+  - [straightLineGeometry()](#straightlinegeometry)
+
 ## Functions
 
 ### circleAreaGeometry()
@@ -71,10 +93,10 @@ Positions a modelGeometry at position and optionally rotates the coordinates aro
 
 #### Parameters
 
-| Parameter           | Type                                                                     | Description           |
-| ------------------- | ------------------------------------------------------------------------ | --------------------- |
-| `position`          | [`Position`](../geojson-utils/geojson.md#position)                       | a position [lon,lat]. |
-| `__namedParameters` | `PlaceOptions`\<[`AreaObject`](../geojson-utils/geojson.md#areaobject)\> | -                     |
+| Parameter           | Type                                                                   | Description            |
+| ------------------- | ---------------------------------------------------------------------- | ---------------------- |
+| `position`          | [`Position`](../geojson-utils/geojson.md#position)                     | a position \[lon,lat]. |
+| `__namedParameters` | `PlaceOptions`<[`AreaObject`](../geojson-utils/geojson.md#areaobject)> | -                      |
 
 #### Returns
 
@@ -90,10 +112,10 @@ a GeoJSON Point/Line/AreaObject.
 
 #### Parameters
 
-| Parameter           | Type                                                                     |
-| ------------------- | ------------------------------------------------------------------------ |
-| `position`          | [`Position`](../geojson-utils/geojson.md#position)                       |
-| `__namedParameters` | `PlaceOptions`\<[`LineObject`](../geojson-utils/geojson.md#lineobject)\> |
+| Parameter           | Type                                                                   |
+| ------------------- | ---------------------------------------------------------------------- |
+| `position`          | [`Position`](../geojson-utils/geojson.md#position)                     |
+| `__namedParameters` | `PlaceOptions`<[`LineObject`](../geojson-utils/geojson.md#lineobject)> |
 
 #### Returns
 
@@ -107,10 +129,10 @@ a GeoJSON Point/Line/AreaObject.
 
 #### Parameters
 
-| Parameter           | Type                                                                       |
-| ------------------- | -------------------------------------------------------------------------- |
-| `position`          | [`Position`](../geojson-utils/geojson.md#position)                         |
-| `__namedParameters` | `PlaceOptions`\<[`PointObject`](../geojson-utils/geojson.md#pointobject)\> |
+| Parameter           | Type                                                                     |
+| ------------------- | ------------------------------------------------------------------------ |
+| `position`          | [`Position`](../geojson-utils/geojson.md#position)                       |
+| `__namedParameters` | `PlaceOptions`<[`PointObject`](../geojson-utils/geojson.md#pointobject)> |
 
 #### Returns
 

@@ -6,6 +6,16 @@
 
 # rhumb
 
+## Contents
+
+- [Functions](#functions)
+  - [areaOfRing()](#areaofring)
+  - [destination()](#destination)
+  - [distance()](#distance)
+  - [forwardAzimuth()](#forwardazimuth)
+  - [intermediate()](#intermediate)
+  - [plateCarreeAreaOfRing()](#platecarreeareaofring)
+
 ## Functions
 
 ### areaOfRing()
@@ -16,9 +26,9 @@ Computes the area of a rhumb polygon ring
 
 #### Parameters
 
-| Parameter | Type                                |
-| --------- | ----------------------------------- |
-| `ring`    | [`Position`](geojson.md#position)[] |
+| Parameter | Type                                 |
+| --------- | ------------------------------------ |
+| `ring`    | [`Position`](geojson.md#position)\[] |
 
 #### Returns
 
@@ -39,7 +49,7 @@ a distance and an azimuth.
 
 | Parameter | Type                              | Description                                      |
 | --------- | --------------------------------- | ------------------------------------------------ |
-| `origin`  | [`Position`](geojson.md#position) | point coordinates [lon,lat].                     |
+| `origin`  | [`Position`](geojson.md#position) | point coordinates \[lon,lat].                    |
 | `dist`    | `number`                          | the distance in meters.                          |
 | `azimuth` | `number`                          | azimuth (angle) clockwise from north in degrees. |
 
@@ -47,7 +57,7 @@ a distance and an azimuth.
 
 [`Position2`](geojson.md#position2)
 
-the coordinates [lon,lat] of the destination point.
+the coordinates \[lon,lat] of the destination point.
 
 ---
 
@@ -59,10 +69,10 @@ Computes the distance in meters along a rhumb line between two point coordinates
 
 #### Parameters
 
-| Parameter | Type                              | Description                  |
-| --------- | --------------------------------- | ---------------------------- |
-| `p1`      | [`Position`](geojson.md#position) | point coordinates [lon,lat]. |
-| `p2`      | [`Position`](geojson.md#position) | point coordinates [lon,lat]. |
+| Parameter | Type                              | Description                   |
+| --------- | --------------------------------- | ----------------------------- |
+| `p1`      | [`Position`](geojson.md#position) | point coordinates \[lon,lat]. |
+| `p2`      | [`Position`](geojson.md#position) | point coordinates \[lon,lat]. |
 
 #### Returns
 
@@ -82,10 +92,10 @@ The azimuth takes values in the range -180 to +180.
 
 #### Parameters
 
-| Parameter | Type                              | Description                                   |
-| --------- | --------------------------------- | --------------------------------------------- |
-| `p1`      | [`Position`](geojson.md#position) | point coordinates [lon,lat] for first point.  |
-| `p2`      | [`Position`](geojson.md#position) | point coordinates [lon,lat] for second point. |
+| Parameter | Type                              | Description                                    |
+| --------- | --------------------------------- | ---------------------------------------------- |
+| `p1`      | [`Position`](geojson.md#position) | point coordinates \[lon,lat] for first point.  |
+| `p2`      | [`Position`](geojson.md#position) | point coordinates \[lon,lat] for second point. |
 
 #### Returns
 
@@ -104,17 +114,17 @@ an end point and the fraction of the distance.
 
 #### Parameters
 
-| Parameter  | Type                              | Description                                  |
-| ---------- | --------------------------------- | -------------------------------------------- |
-| `p1`       | [`Position`](geojson.md#position) | point coordinates [lon,lat] for start point. |
-| `p2`       | [`Position`](geojson.md#position) | point coordinates [lon,lat] for end point.   |
-| `fraction` | `number`                          | the fraction of distance between the points. |
+| Parameter  | Type                              | Description                                   |
+| ---------- | --------------------------------- | --------------------------------------------- |
+| `p1`       | [`Position`](geojson.md#position) | point coordinates \[lon,lat] for start point. |
+| `p2`       | [`Position`](geojson.md#position) | point coordinates \[lon,lat] for end point.   |
+| `fraction` | `number`                          | the fraction of distance between the points.  |
 
 #### Returns
 
 [`Position2`](geojson.md#position2)
 
-the coordinates [lon,lat] of the intermediate point.
+the coordinates \[lon,lat] of the intermediate point.
 
 ---
 
@@ -123,14 +133,14 @@ the coordinates [lon,lat] of the intermediate point.
 > **plateCarreeAreaOfRing**(`ring`): `number`
 
 Computes the area of a polygon ring where the segments are
-defined as [lon1 + t * (lon2 - lon1), lat1 + t * (lat2 - lat1)], for
+defined as \[lon1 + t \* (lon2 - lon1), lat1 + t \* (lat2 - lat1)], for
 0 <= t <= 1.
 
 #### Parameters
 
-| Parameter | Type                                |
-| --------- | ----------------------------------- |
-| `ring`    | [`Position`](geojson.md#position)[] |
+| Parameter | Type                                 |
+| --------- | ------------------------------------ |
+| `ring`    | [`Position`](geojson.md#position)\[] |
 
 #### Returns
 

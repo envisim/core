@@ -3,7 +3,7 @@ const config = {
   // options
   // tsconfig
   // compilerOptions
-  plugin: ["typedoc-plugin-markdown"],
+  plugin: ["typedoc-plugin-markdown", "typedoc-plugin-remark"],
   //
   //
   // Input Options
@@ -153,9 +153,6 @@ const config = {
   // skipErrorChecking
   //
   //
-  // typedoc-plugin-missing-exports
-  //
-  //
   // typedoc-plugin-markdown
   //
   // File Options
@@ -199,5 +196,13 @@ const config = {
   // useHTMLAnchors
   // anchorPrefix
   // sanitizeComments
+  //
+  //
+  // typedoc-remark-plugin
+  //
+  remarkPlugins: [
+    ["remark-insert-headings", { text: "Contents" }],
+    ["remark-toc", { maxDepth: 3 }],
+  ],
 };
 export default config;

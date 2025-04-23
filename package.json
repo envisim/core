@@ -24,9 +24,12 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.5.0",
     "prettier": "^3.5.3",
+    "remark-insert-headings": "^0.0.0",
+    "remark-toc": "^9.0.0",
     "turbo": "^2.5.0",
     "typedoc": "^0.28.2",
     "typedoc-plugin-markdown": "^4.6.2",
+    "typedoc-plugin-remark": "^2.0.0",
     "typescript": "^5.8.3",
     "typescript-language-server": "^4.3.4"
   },
