@@ -8,12 +8,12 @@
 
 ## Modules
 
-| Module                                             | theme_description |
-| -------------------------------------------------- | ----------------- |
-| [errors](errors/README.md)                         | -                 |
-| [model-geometry](model-geometry/README.md)         | -                 |
-| [sample-continuous](sample-continuous/README.md)   | -                 |
-| [sample-finite](sample-finite/README.md)           | -                 |
-| [collect-properties](collect-properties/README.md) | -                 |
-| [select-intersects](select-intersects/README.md)   | -                 |
-| [point-processes](point-processes/README.md)       | -                 |
+| Module                                      | theme_description |
+| ------------------------------------------- | ----------------- |
+| [errors](errors.md)                         | -                 |
+| [model-geometry](model-geometry.md)         | -                 |
+| [sample-continuous](sample-continuous.md)   | -                 |
+| [sample-finite](sample-finite.md)           | -                 |
+| [collect-properties](collect-properties.md) | -                 |
+| [select-intersects](select-intersects.md)   | -                 |
+| [point-processes](point-processes.md)       | -                 |

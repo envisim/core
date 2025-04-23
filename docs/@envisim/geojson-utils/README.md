@@ -8,11 +8,11 @@
 
 ## Modules
 
-| Module                                 | theme_description |
-| -------------------------------------- | ----------------- |
-| [](README.md)                          | -                 |
-| [geojson](geojson/README.md)           | -                 |
-| [type-guards](type-guards/README.md)   | -                 |
-| [geodesic](geodesic/README.md)         | -                 |
-| [plate-carree](plate-carree/README.md) | -                 |
-| [rhumb](rhumb/README.md)               | -                 |
+| Module                          | theme_description |
+| ------------------------------- | ----------------- |
+| [](.md)                         | -                 |
+| [geojson](geojson.md)           | -                 |
+| [type-guards](type-guards.md)   | -                 |
+| [geodesic](geodesic.md)         | -                 |
+| [plate-carree](plate-carree.md) | -                 |
+| [rhumb](rhumb.md)               | -                 |
