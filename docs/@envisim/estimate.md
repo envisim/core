@@ -113,8 +113,10 @@ the Hansen-Hurwitz estimate, $\hat{Y}$.
 > **horvitzThompson**(`y`, `prob`): `number`
 
 Single count Horvitz-Thompson estimator of the total
-$$ \hat{Y} = \sum\_{i \in S} \frac{y_i}{\pi_i} , $$
-$$ n = |S| . $$
+
+$$\hat{Y} = \sum\_{i \in S} \frac{y\_i}{\pi\_i} ,$$
+
+$$n = |S| .$$
 
 #### Parameters
 

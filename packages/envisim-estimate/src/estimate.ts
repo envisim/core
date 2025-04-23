@@ -4,13 +4,16 @@ import { checkSampleArray } from "./utils.js";
 
 /**
  * Single count Horvitz-Thompson estimator of the total
- * $$ \hat\{Y\} = \sum_\{i \in S\} \frac\{y_i\}\{\pi_i\} , $$
- * $$ n = |S| . $$
- * @category Estimator
+ *
+ * $$\hat\{Y\} = \sum_\{i \in S\} \frac\{y_i\}\{\pi_i\} ,$$
+ *
+ * $$n = |S| .$$
+ *
  *
  * @param y - variable of interest of size n, $y_i$.
  * @param prob - inclusion probabilities of size n, $\pi_i$.
  * @returns the Horvitz-Thompson estimate, $\hat\{Y\}$.
+ * @category Estimator
  */
 export function horvitzThompson(y: number[] | Vector, prob: number[] | Vector): number {
   const ys = new Vector(y, false);
@@ -23,12 +26,12 @@ export function horvitzThompson(y: number[] | Vector, prob: number[] | Vector): 
  * Multiple count Hansen-Hurwitz estimator.
  * $$\hat\{Y\} = \sum_\{i \in S\} \frac\{y_i\}\{\mu_i\}S_i ,$$
  * $$n = |S| .$$
- * @category Estimator
  *
  * @param y - variable of interest of size n, $y_i$.
  * @param expected - expected number of inclusions of size n, $\mu_i$.
  * @param inclusions - number of inclusions of size n, $S_i$.
  * @returns the Hansen-Hurwitz estimate, $\hat\{Y\}$.
+ * @category Estimator
  */
 export function hansenHurwitz(
   y: number[] | Vector,
