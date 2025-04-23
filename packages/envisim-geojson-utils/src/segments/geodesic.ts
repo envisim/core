@@ -1,6 +1,5 @@
 import geodesic from "geographiclib-geodesic";
 import type * as GJ from "../geojson.js";
-import type { SegmentOperations } from "./interface-segment-operations.js";
 
 const GEOD = geodesic.Geodesic.WGS84;
 const GEOD_INVERSE_DIST = geodesic.Geodesic.DISTANCE;
@@ -13,17 +12,6 @@ interface GeodesicPolygon {
   AddPoint(a0: number, a1: number): void;
   Compute(a0: boolean, a1: boolean): { area: number };
 }
-
-const Geodesic: SegmentOperations = {
-  distance,
-  destination,
-  destinationUnrolled,
-  forwardAzimuth,
-  forwardAzimuthDistance,
-  intermediate,
-  areaOfRing,
-};
-export default Geodesic;
 
 /**
  * Computes the shortest distance in meters between two point coordinates.

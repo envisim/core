@@ -1,5 +1,4 @@
 import type * as GJ from "../geojson.js";
-import type { SegmentOperations } from "./interface-segment-operations.js";
 
 // This javascript (typescript) implementation for rhumb lines is based on the
 // algorithms described in the following papers. Primarily the first two.
@@ -222,17 +221,6 @@ function inverseRhumbLine(
   }
   return res;
 }
-
-const Rhumb: Omit<SegmentOperations, "destinationUnrolled" | "forwardAzimuthDistance"> = {
-  distance,
-  destination,
-  // destinationUnrolled,
-  forwardAzimuth,
-  // forwardAzimuthDistance,
-  intermediate,
-  areaOfRing,
-};
-export default Rhumb;
 
 // See: The area of rhumb polygons
 // Results seem to match https://geographiclib.sourceforge.io/cgi-bin/RhumbSolve

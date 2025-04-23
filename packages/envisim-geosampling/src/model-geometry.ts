@@ -12,7 +12,8 @@ import {
   type PointObject,
   Polygon,
 } from "@envisim/geojson";
-import { cutAreaGeometry, cutLineGeometry, Geodesic } from "@envisim/geojson-utils";
+import { cutAreaGeometry, cutLineGeometry } from "@envisim/geojson-utils";
+import { destination, distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { isCircle, isMultiCircle } from "@envisim/geojson-utils/type-guards";
 import { type RandomGenerator } from "@envisim/random";
@@ -25,7 +26,7 @@ import { type RandomGenerator } from "@envisim/random";
 function placePoint(point: GJ.Position, position: GJ.Position, rotation: number): GJ.Position {
   const dist = Math.sqrt(point[0] * point[0] + point[1] * point[1]);
   const angle = 90.0 - (Math.atan2(point[1], point[0]) * 180.0) / Math.PI + rotation;
-  return Geodesic.destination(position, dist, angle);
+  return destination(position, dist, angle);
 }
 
 interface PlaceOptions<G extends GJ.SingleTypeObject> {
@@ -87,7 +88,7 @@ export function placeAreaGeometry(
   }
 
   // May need cut if area or line as the distance to the antimeridian is less than the radius
-  if (Geodesic.distance(position, [180, position[1]]) < opts.buffer) {
+  if (distance(position, [180, position[1]]) < opts.buffer) {
     geom = cutAreaGeometry(geom);
   }
 
@@ -119,7 +120,7 @@ export function placeLineGeometry(
   }
 
   // May need cut if area or line as the distance to the antimeridian is less than the radius
-  if (Geodesic.distance(position, [180, position[1]]) < opts.buffer) {
+  if (distance(position, [180, position[1]]) < opts.buffer) {
     geom = cutLineGeometry(geom);
   }
 

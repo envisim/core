@@ -1,4 +1,5 @@
-import { bboxFromPositions, Geodesic } from "@envisim/geojson-utils";
+import { bboxFromPositions } from "@envisim/geojson-utils";
+import { distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { type OptionalParam } from "@envisim/utils";
 import { type BufferOptions } from "../buffer/index.js";
@@ -46,7 +47,7 @@ export class MultiPoint extends AbstractPointObject<GJ.MultiPoint> implements GJ
 
   distanceToPosition(position: GJ.Position): number {
     return this.coordinates.reduce(
-      (prev, curr) => Math.min(prev, Geodesic.distance(curr, position)),
+      (prev, curr) => Math.min(prev, distance(curr, position)),
       Infinity,
     );
   }

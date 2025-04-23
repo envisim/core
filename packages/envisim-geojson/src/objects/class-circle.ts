@@ -1,4 +1,5 @@
-import { bboxFromPositions, getPositionsForCircle, Geodesic } from "@envisim/geojson-utils";
+import { bboxFromPositions, getPositionsForCircle } from "@envisim/geojson-utils";
+import { distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { type OptionalParam } from "@envisim/utils";
 import { type BufferOptions, defaultBufferOptions } from "../buffer/index.js";
@@ -54,7 +55,7 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
   }
 
   distanceToPosition(position: GJ.Position): number {
-    return Geodesic.distance(position, this.coordinates) - this.radius;
+    return distance(position, this.coordinates) - this.radius;
   }
 
   centroid(): GJ.Position {

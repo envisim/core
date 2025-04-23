@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import type * as GJ from "../../src/geojson.js";
-import Rhumb from "../../src/segments/rhumb.js";
+import { areaOfRing, destination, distance, forwardAzimuth } from "../../src/segments/rhumb.js";
 
 const ring: GJ.Position[] = [
   [12.888806360606111, 61.4879814554327],
@@ -13,14 +13,14 @@ const ring: GJ.Position[] = [
 // rhumb area of the ring according to
 // https://geographiclib.sourceforge.io/cgi-bin/Planimeter
 const area = 48909672712.3;
-const area0 = Rhumb.areaOfRing(ring);
+const area0 = areaOfRing(ring);
 
-const res = Rhumb.destination([0, 87], 1000000, 90);
+const res = destination([0, 87], 1000000, 90);
 // https://geographiclib.sourceforge.io/cgi-bin/RhumbSolve
 // [171.07008849454, 87.00000000000]
-const azi12 = Rhumb.forwardAzimuth([0, 0], [1, 1]);
+const azi12 = forwardAzimuth([0, 0], [1, 1]);
 // 45.19094926130
-const s12 = Rhumb.distance([0, 0], [1, 1]);
+const s12 = distance([0, 0], [1, 1]);
 // 156899.568453
 
 test("rhumb", () => {
