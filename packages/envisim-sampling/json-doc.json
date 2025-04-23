@@ -64,7 +64,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/matrix.d.ts",
+                      "packagePath": "src/matrix.ts",
                       "qualifiedName": "Matrix"
                     },
                     "name": "Matrix",

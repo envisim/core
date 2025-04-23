@@ -20,10 +20,10 @@ Constructs a nearest neighbour searcher, using k-d-trees
 
 ###### Parameters
 
-| Parameter    | theme_type | theme_default_value | theme_description                        |
-| ------------ | ---------- | ------------------- | ---------------------------------------- |
-| `dt`         | `Matrix`   | `undefined`         | the data to search within.               |
-| `bucketSize` | `number`   | `40`                | the bucket size of the k-d-tree's nodes. |
+| Parameter    | theme_type                   | theme_default_value | theme_description                        |
+| ------------ | ---------------------------- | ------------------- | ---------------------------------------- |
+| `dt`         | [`Matrix`](matrix.md#matrix) | `undefined`         | the data to search within.               |
+| `bucketSize` | `number`                     | `40`                | the bucket size of the k-d-tree's nodes. |
 
 ###### Returns
 

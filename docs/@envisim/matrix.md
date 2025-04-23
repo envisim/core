@@ -2617,10 +2617,10 @@ Matrix subtraction.
 
 ###### Parameters
 
-| Parameter | theme_type        | theme_default_value | theme_description                         |
-| --------- | ----------------- | ------------------- | ----------------------------------------- |
-| `inPlace` | `boolean`         | `false`             | if `true`, the vector is sorted in place. |
-| `rand`    | `RandomGenerator` | `...`               | -                                         |
+| Parameter | theme_type                                     | theme_default_value | theme_description                         |
+| --------- | ---------------------------------------------- | ------------------- | ----------------------------------------- |
+| `inPlace` | `boolean`                                      | `false`             | if `true`, the vector is sorted in place. |
+| `rand`    | [`RandomGenerator`](random.md#randomgenerator) | `...`               | -                                         |
 
 ###### Returns
 
@@ -2652,10 +2652,10 @@ the unique elements of the intersect
 
 ###### Parameters
 
-| Parameter | theme_type        | theme_default_value | theme_description                         |
-| --------- | ----------------- | ------------------- | ----------------------------------------- |
-| `inPlace` | `boolean`         | `false`             | if `true`, the vector is sorted in place. |
-| `rand`    | `RandomGenerator` | `...`               | -                                         |
+| Parameter | theme_type                                     | theme_default_value | theme_description                         |
+| --------- | ---------------------------------------------- | ------------------- | ----------------------------------------- |
+| `inPlace` | `boolean`                                      | `false`             | if `true`, the vector is sorted in place. |
+| `rand`    | [`RandomGenerator`](random.md#randomgenerator) | `...`               | -                                         |
 
 ###### Returns
 
@@ -2803,10 +2803,10 @@ Generates a matrix of random numbers on [0, 1).
 
 #### Parameters
 
-| Parameter   | theme_type                  | theme_description                   |
-| ----------- | --------------------------- | ----------------------------------- |
-| `dims`      | [`MatrixDim`](#matrixdim-2) | the dimensions of the random matrix |
-| `generator` | `RandomGenerator`           | an RNG.                             |
+| Parameter   | theme_type                                     | theme_description                   |
+| ----------- | ---------------------------------------------- | ----------------------------------- |
+| `dims`      | [`MatrixDim`](#matrixdim-2)                    | the dimensions of the random matrix |
+| `generator` | [`RandomGenerator`](random.md#randomgenerator) | an RNG.                             |
 
 #### Returns
 
@@ -2822,10 +2822,10 @@ Generates a vector-like of random numbers on [0, 1).
 
 #### Parameters
 
-| Parameter | theme_type        | theme_description        |
-| --------- | ----------------- | ------------------------ |
-| `length`  | `number`          | the length of the vector |
-| `rand`    | `RandomGenerator` | an RNG                   |
+| Parameter | theme_type                                     | theme_description        |
+| --------- | ---------------------------------------------- | ------------------------ |
+| `length`  | `number`                                       | the length of the vector |
+| `rand`    | [`RandomGenerator`](random.md#randomgenerator) | an RNG                   |
 
 #### Returns
 

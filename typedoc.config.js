@@ -6,6 +6,7 @@ const config = {
     excludeExternals: true,
   },
   gitRemote: "https://github.com/envisim/core",
+
   out: "./docs",
   router: "module",
   typePrintWidth: 100,

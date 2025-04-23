@@ -10,47 +10,47 @@
 
 ### maternClusterProcess()
 
-> **maternClusterProcess**(`collection`, `opts`): `FeatureCollection`\<`Point`, `never`\>
+> **maternClusterProcess**(`collection`, `opts`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point), `never`\>
 
 Generates points from a Matérn cluster point process
 on an area collection.
 
 #### Parameters
 
-| Parameter    | theme_type                          |
-| ------------ | ----------------------------------- |
-| `collection` | `FeatureCollection`\<`AreaObject`\> |
-| `opts`       | `MaternClusterProcessOptions`       |
+| Parameter    | theme_type                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\> |
+| `opts`       | `MaternClusterProcessOptions`                                                                      |
 
 #### Returns
 
-`FeatureCollection`\<`Point`, `never`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point), `never`\>
 
 ---
 
 ### thomasClusterProcess()
 
-> **thomasClusterProcess**(`collection`, `opts`): `FeatureCollection`\<`Point`, `never`\>
+> **thomasClusterProcess**(`collection`, `opts`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point), `never`\>
 
 Generates points from a Thomas cluster point process
 on areas of input area collection.
 
 #### Parameters
 
-| Parameter    | theme_type                          |
-| ------------ | ----------------------------------- |
-| `collection` | `FeatureCollection`\<`AreaObject`\> |
-| `opts`       | `ThomasClusterProcessOptions`       |
+| Parameter    | theme_type                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\> |
+| `opts`       | `ThomasClusterProcessOptions`                                                                      |
 
 #### Returns
 
-`FeatureCollection`\<`Point`, `never`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point), `never`\>
 
 ---
 
 ### uniformBinomialPointProcess()
 
-> **uniformBinomialPointProcess**(`collection`, `opts`): `FeatureCollection`\<`Point`, `never`\>
+> **uniformBinomialPointProcess**(`collection`, `opts`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point), `never`\>
 
 Generate points from a uniform Binomial point process
 on areas of input area collection. The points are generated
@@ -58,20 +58,20 @@ uniformly on a spherical model of the earth.
 
 #### Parameters
 
-| Parameter    | theme_type                           |
-| ------------ | ------------------------------------ |
-| `collection` | `FeatureCollection`\<`AreaObject`\>  |
-| `opts`       | `UniformBinomialPointProcessOptions` |
+| Parameter    | theme_type                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\> |
+| `opts`       | `UniformBinomialPointProcessOptions`                                                               |
 
 #### Returns
 
-`FeatureCollection`\<`Point`, `never`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point), `never`\>
 
 ---
 
 ### uniformPoissonPointProcess()
 
-> **uniformPoissonPointProcess**(`collection`, `opts`): `FeatureCollection`\<`Point`, `never`\>
+> **uniformPoissonPointProcess**(`collection`, `opts`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point), `never`\>
 
 Generates points from a uniform Poisson point process
 on areas of input collection. Given the (Poisson distributed)
@@ -80,11 +80,11 @@ on a spherical model of the earth.
 
 #### Parameters
 
-| Parameter    | theme_type                          |
-| ------------ | ----------------------------------- |
-| `collection` | `FeatureCollection`\<`AreaObject`\> |
-| `opts`       | `UniformPoissonProcessOptions`      |
+| Parameter    | theme_type                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\> |
+| `opts`       | `UniformPoissonProcessOptions`                                                                     |
 
 #### Returns
 
-`FeatureCollection`\<`Point`, `never`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point), `never`\>

@@ -830,7 +830,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Circle"
                 },
                 "name": "Circle",
@@ -899,7 +899,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/utils/circles-to-polygons.d.ts",
+                      "packagePath": "src/utils/circles-to-polygons.ts",
                       "qualifiedName": "CirclesToPolygonsOptions"
                     },
                     "name": "CirclesToPolygonsOptions",
@@ -911,7 +911,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "LineString"
                 },
                 "name": "LineString",
@@ -973,7 +973,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "LineString"
                 },
                 "name": "LineString",
@@ -1033,7 +1033,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -1058,7 +1058,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -1074,7 +1074,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/objects/index.d.ts",
+                  "packagePath": "src/objects/index.ts",
                   "qualifiedName": "AreaObject"
                 },
                 "name": "AreaObject",
@@ -1107,7 +1107,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -1132,7 +1132,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "LineObject"
                         },
                         "name": "LineObject",
@@ -1148,7 +1148,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/objects/index.d.ts",
+                  "packagePath": "src/objects/index.ts",
                   "qualifiedName": "LineObject"
                 },
                 "name": "LineObject",
@@ -1181,7 +1181,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -1206,7 +1206,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "PointObject"
                         },
                         "name": "PointObject",
@@ -1222,7 +1222,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/objects/index.d.ts",
+                  "packagePath": "src/objects/index.ts",
                   "qualifiedName": "PointObject"
                 },
                 "name": "PointObject",
@@ -1262,7 +1262,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Point"
                 },
                 "name": "Point",
@@ -1322,7 +1322,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "SingleTypeObject"
                     },
                     "name": "SingleTypeObject",
@@ -1410,7 +1410,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Polygon"
                 },
                 "name": "Polygon",
@@ -1512,7 +1512,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "MultiCircle"
                 },
                 "name": "MultiCircle",
@@ -1594,7 +1594,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "LineString"
                 },
                 "name": "LineString",
@@ -1676,7 +1676,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "MultiPoint"
                 },
                 "name": "MultiPoint",
@@ -1758,7 +1758,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Polygon"
                 },
                 "name": "Polygon",
@@ -1860,7 +1860,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "MultiCircle"
                 },
                 "name": "MultiCircle",
@@ -1942,7 +1942,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "LineString"
                 },
                 "name": "LineString",
@@ -2024,7 +2024,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "MultiPoint"
                 },
                 "name": "MultiPoint",
@@ -2084,7 +2084,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "SingleTypeObject"
                     },
                     "name": "SingleTypeObject",
@@ -2152,7 +2152,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "LineString"
                 },
                 "name": "LineString",
@@ -2307,7 +2307,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/random",
-                  "packagePath": "dist/index.d.ts",
+                  "packagePath": "src/index.ts",
                   "qualifiedName": "RandomGenerator"
                 },
                 "name": "RandomGenerator",
@@ -2484,7 +2484,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "SingleTypeObject"
                 },
                 "name": "GJ.SingleTypeObject",
@@ -2641,7 +2641,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/random",
-                  "packagePath": "dist/index.d.ts",
+                  "packagePath": "src/index.ts",
                   "qualifiedName": "RandomGenerator"
                 },
                 "name": "RandomGenerator",
@@ -2804,7 +2804,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -2812,7 +2812,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/class-point.d.ts",
+                      "packagePath": "src/objects/class-point.ts",
                       "qualifiedName": "Point"
                     },
                     "name": "Point",
@@ -2978,7 +2978,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/random",
-                  "packagePath": "dist/index.d.ts",
+                  "packagePath": "src/index.ts",
                   "qualifiedName": "RandomGenerator"
                 },
                 "name": "RandomGenerator",
@@ -3243,7 +3243,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/random",
-                  "packagePath": "dist/index.d.ts",
+                  "packagePath": "src/index.ts",
                   "qualifiedName": "RandomGenerator"
                 },
                 "name": "RandomGenerator",
@@ -3345,7 +3345,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -3353,7 +3353,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/class-point.d.ts",
+                      "packagePath": "src/objects/class-point.ts",
                       "qualifiedName": "Point"
                     },
                     "name": "Point",
@@ -3492,7 +3492,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/random",
-                  "packagePath": "dist/index.d.ts",
+                  "packagePath": "src/index.ts",
                   "qualifiedName": "RandomGenerator"
                 },
                 "name": "RandomGenerator",
@@ -3649,7 +3649,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/random",
-                  "packagePath": "dist/index.d.ts",
+                  "packagePath": "src/index.ts",
                   "qualifiedName": "RandomGenerator"
                 },
                 "name": "RandomGenerator",
@@ -3847,7 +3847,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/random",
-                  "packagePath": "dist/index.d.ts",
+                  "packagePath": "src/index.ts",
                   "qualifiedName": "RandomGenerator"
                 },
                 "name": "RandomGenerator",
@@ -4273,7 +4273,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -4281,7 +4281,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -4306,7 +4306,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -4322,7 +4322,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -4330,7 +4330,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "AreaObject"
                     },
                     "name": "AreaObject",
@@ -4375,7 +4375,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -4428,7 +4428,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -4436,7 +4436,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -4465,7 +4465,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -4473,7 +4473,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "PointObject"
                     },
                     "name": "PointObject",
@@ -4547,7 +4547,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -4555,7 +4555,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -4580,7 +4580,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "LineObject"
                         },
                         "name": "LineObject",
@@ -4596,7 +4596,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -4604,7 +4604,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "LineObject"
                     },
                     "name": "LineObject",
@@ -4649,7 +4649,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "LineObject"
                         },
                         "name": "LineObject",
@@ -4694,7 +4694,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -4702,7 +4702,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -4727,7 +4727,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "PointObject"
                         },
                         "name": "PointObject",
@@ -4743,7 +4743,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -4751,7 +4751,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "PointObject"
                     },
                     "name": "PointObject",
@@ -4796,7 +4796,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "PointObject"
                         },
                         "name": "PointObject",
@@ -4849,7 +4849,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -4857,7 +4857,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -4886,7 +4886,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -4894,7 +4894,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/class-point.d.ts",
+                      "packagePath": "src/objects/class-point.ts",
                       "qualifiedName": "Point"
                     },
                     "name": "Point",
@@ -4980,7 +4980,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -4988,7 +4988,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "LineObject"
                         },
                         "name": "LineObject",
@@ -5021,7 +5021,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -5029,7 +5029,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/class-point.d.ts",
+                      "packagePath": "src/objects/class-point.ts",
                       "qualifiedName": "Point"
                     },
                     "name": "Point",
@@ -5138,7 +5138,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "BBox"
                     },
                     "name": "BBox",
@@ -5169,7 +5169,7 @@
                   "type": "reference",
                   "target": {
                     "packageName": "@envisim/geojson-utils",
-                    "packagePath": "dist/geojson.d.ts",
+                    "packagePath": "src/geojson.ts",
                     "qualifiedName": "Position"
                   },
                   "name": "Position",
@@ -5276,7 +5276,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -5284,7 +5284,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -5348,7 +5348,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/collection/class-feature-collection.d.ts",
+                          "packagePath": "src/collection/class-feature-collection.ts",
                           "qualifiedName": "FeatureCollection"
                         },
                         "typeArguments": [
@@ -5356,7 +5356,7 @@
                             "type": "reference",
                             "target": {
                               "packageName": "@envisim/geojson",
-                              "packagePath": "dist/objects/class-point.d.ts",
+                              "packagePath": "src/objects/class-point.ts",
                               "qualifiedName": "Point"
                             },
                             "name": "Point",
@@ -5384,7 +5384,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/collection/class-feature-collection.d.ts",
+                          "packagePath": "src/collection/class-feature-collection.ts",
                           "qualifiedName": "FeatureCollection"
                         },
                         "typeArguments": [
@@ -5392,7 +5392,7 @@
                             "type": "reference",
                             "target": {
                               "packageName": "@envisim/geojson",
-                              "packagePath": "dist/objects/class-point.d.ts",
+                              "packagePath": "src/objects/class-point.ts",
                               "qualifiedName": "Point"
                             },
                             "name": "Point",
@@ -5506,7 +5506,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -5514,7 +5514,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -5543,7 +5543,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -5551,7 +5551,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "AreaObject"
                     },
                     "name": "AreaObject",
@@ -5633,7 +5633,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -5641,7 +5641,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -5670,7 +5670,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -5678,7 +5678,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/class-point.d.ts",
+                      "packagePath": "src/objects/class-point.ts",
                       "qualifiedName": "Point"
                     },
                     "name": "Point",
@@ -5760,7 +5760,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -5768,7 +5768,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -5797,7 +5797,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -5805,7 +5805,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "LineObject"
                     },
                     "name": "LineObject",
@@ -5887,7 +5887,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -5895,7 +5895,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "LineObject"
                         },
                         "name": "LineObject",
@@ -5924,7 +5924,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -5932,7 +5932,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/class-linestring.d.ts",
+                      "packagePath": "src/objects/class-linestring.ts",
                       "qualifiedName": "LineString"
                     },
                     "name": "LineString",
@@ -6626,7 +6626,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "PureObject"
                     },
                     "name": "PureObject",
@@ -6656,7 +6656,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -6718,7 +6718,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -6802,7 +6802,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/property-record.d.ts",
+                      "packagePath": "src/property-record.ts",
                       "qualifiedName": "PropertyRecord"
                     },
                     "typeArguments": [
@@ -6852,7 +6852,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "PureObject"
                     },
                     "name": "PureObject",
@@ -6882,7 +6882,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -6944,7 +6944,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -7040,7 +7040,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/property-record.d.ts",
+                      "packagePath": "src/property-record.ts",
                       "qualifiedName": "PropertyRecord"
                     },
                     "typeArguments": [
@@ -7098,7 +7098,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "PureObject"
                     },
                     "name": "PureObject",
@@ -7128,7 +7128,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -7190,7 +7190,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -7318,7 +7318,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/property-record.d.ts",
+                      "packagePath": "src/property-record.ts",
                       "qualifiedName": "PropertyRecord"
                     },
                     "typeArguments": [
@@ -7376,7 +7376,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "PureObject"
                     },
                     "name": "PureObject",
@@ -7406,7 +7406,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -7468,7 +7468,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -7517,7 +7517,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "PureObject"
                     },
                     "name": "PureObject",
@@ -7547,7 +7547,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -7609,7 +7609,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -7693,7 +7693,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/property-record.d.ts",
+                      "packagePath": "src/property-record.ts",
                       "qualifiedName": "PropertyRecord"
                     },
                     "typeArguments": [
@@ -7807,7 +7807,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "PureObject"
                     },
                     "name": "PureObject",
@@ -7826,7 +7826,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -7859,7 +7859,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -7867,7 +7867,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "RetractingObject"
                         },
                         "typeArguments": [
@@ -7907,7 +7907,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/property-record.d.ts",
+                          "packagePath": "src/property-record.ts",
                           "qualifiedName": "PropertyRecord"
                         },
                         "typeArguments": [
@@ -7940,7 +7940,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -8038,7 +8038,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/property-record.d.ts",
+                      "packagePath": "src/property-record.ts",
                       "qualifiedName": "PropertyRecord"
                     },
                     "typeArguments": [
@@ -8084,7 +8084,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/property-record.d.ts",
+                  "packagePath": "src/property-record.ts",
                   "qualifiedName": "PropertyRecord"
                 },
                 "typeArguments": [
@@ -8159,7 +8159,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -8167,7 +8167,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -8188,7 +8188,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -8196,7 +8196,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -8219,7 +8219,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -8227,7 +8227,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "AreaObject"
                     },
                     "name": "AreaObject",
@@ -8284,7 +8284,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -8292,7 +8292,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "LineObject"
                         },
                         "name": "LineObject",
@@ -8313,7 +8313,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -8321,7 +8321,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -8344,7 +8344,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -8352,7 +8352,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "LineObject"
                     },
                     "name": "LineObject",
@@ -8409,7 +8409,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -8417,7 +8417,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "PointObject"
                         },
                         "name": "PointObject",
@@ -8438,7 +8438,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -8446,7 +8446,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -8469,7 +8469,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -8477,7 +8477,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "PointObject"
                     },
                     "name": "PointObject",
@@ -8534,7 +8534,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -8542,7 +8542,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -8563,7 +8563,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -8571,7 +8571,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "LineObject"
                         },
                         "name": "LineObject",
@@ -8594,7 +8594,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -8602,7 +8602,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "LineObject"
                     },
                     "name": "LineObject",
@@ -8659,7 +8659,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -8667,7 +8667,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -8688,7 +8688,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -8696,7 +8696,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "PointObject"
                         },
                         "name": "PointObject",
@@ -8719,7 +8719,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -8727,7 +8727,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/index.d.ts",
+                      "packagePath": "src/objects/index.ts",
                       "qualifiedName": "PointObject"
                     },
                     "name": "PointObject",
@@ -8794,7 +8794,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -8802,7 +8802,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -8835,7 +8835,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -8843,7 +8843,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/class-point.d.ts",
+                      "packagePath": "src/objects/class-point.ts",
                       "qualifiedName": "Point"
                     },
                     "name": "Point",
@@ -8892,7 +8892,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -8900,7 +8900,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -8933,7 +8933,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -8941,7 +8941,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/class-point.d.ts",
+                      "packagePath": "src/objects/class-point.ts",
                       "qualifiedName": "Point"
                     },
                     "name": "Point",
@@ -8990,7 +8990,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -8998,7 +8998,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -9031,7 +9031,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -9039,7 +9039,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/class-point.d.ts",
+                      "packagePath": "src/objects/class-point.ts",
                       "qualifiedName": "Point"
                     },
                     "name": "Point",
@@ -9088,7 +9088,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/collection/class-feature-collection.d.ts",
+                      "packagePath": "src/collection/class-feature-collection.ts",
                       "qualifiedName": "FeatureCollection"
                     },
                     "typeArguments": [
@@ -9096,7 +9096,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson",
-                          "packagePath": "dist/objects/index.d.ts",
+                          "packagePath": "src/objects/index.ts",
                           "qualifiedName": "AreaObject"
                         },
                         "name": "AreaObject",
@@ -9129,7 +9129,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson",
-                  "packagePath": "dist/collection/class-feature-collection.d.ts",
+                  "packagePath": "src/collection/class-feature-collection.ts",
                   "qualifiedName": "FeatureCollection"
                 },
                 "typeArguments": [
@@ -9137,7 +9137,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson",
-                      "packagePath": "dist/objects/class-point.d.ts",
+                      "packagePath": "src/objects/class-point.ts",
                       "qualifiedName": "Point"
                     },
                     "name": "Point",
@@ -10063,7 +10063,7 @@
     },
     "179": {
       "packageName": "@envisim/geojson",
-      "packagePath": "dist/utils/circles-to-polygons.d.ts",
+      "packagePath": "src/utils/circles-to-polygons.ts",
       "qualifiedName": "CirclesToPolygonsOptions.pointsPerCircle"
     },
     "180": {
@@ -10248,7 +10248,7 @@
     },
     "216": {
       "packageName": "@envisim/geojson",
-      "packagePath": "dist/utils/circles-to-polygons.d.ts",
+      "packagePath": "src/utils/circles-to-polygons.ts",
       "qualifiedName": "CirclesToPolygonsOptions.pointsPerCircle"
     },
     "217": {
@@ -10408,7 +10408,7 @@
     },
     "248": {
       "packageName": "@envisim/geojson",
-      "packagePath": "dist/utils/circles-to-polygons.d.ts",
+      "packagePath": "src/utils/circles-to-polygons.ts",
       "qualifiedName": "CirclesToPolygonsOptions.pointsPerCircle"
     },
     "249": {
@@ -10468,7 +10468,7 @@
     },
     "260": {
       "packageName": "@envisim/geojson",
-      "packagePath": "dist/utils/circles-to-polygons.d.ts",
+      "packagePath": "src/utils/circles-to-polygons.ts",
       "qualifiedName": "CirclesToPolygonsOptions.pointsPerCircle"
     },
     "261": {
@@ -10528,7 +10528,7 @@
     },
     "272": {
       "packageName": "@envisim/geojson",
-      "packagePath": "dist/utils/circles-to-polygons.d.ts",
+      "packagePath": "src/utils/circles-to-polygons.ts",
       "qualifiedName": "CirclesToPolygonsOptions.pointsPerCircle"
     },
     "273": {
@@ -10603,7 +10603,7 @@
     },
     "287": {
       "packageName": "@envisim/geojson",
-      "packagePath": "dist/utils/circles-to-polygons.d.ts",
+      "packagePath": "src/utils/circles-to-polygons.ts",
       "qualifiedName": "CirclesToPolygonsOptions.pointsPerCircle"
     },
     "288": {

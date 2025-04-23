@@ -10,7 +10,7 @@
 
 ### circleAreaGeometry()
 
-> **circleAreaGeometry**(`diameter`): `Circle`
+> **circleAreaGeometry**(`diameter`): [`Circle`](../geojson-utils/geojson.md#circle)
 
 #### Parameters
 
@@ -20,7 +20,7 @@
 
 #### Returns
 
-`Circle`
+[`Circle`](../geojson-utils/geojson.md#circle)
 
 a circle model geometry.
 
@@ -28,18 +28,18 @@ a circle model geometry.
 
 ### circleLineGeometry()
 
-> **circleLineGeometry**(`diameter`, `options?`): `LineString`
+> **circleLineGeometry**(`diameter`, `options?`): [`LineString`](../geojson-utils/geojson.md#linestring)
 
 #### Parameters
 
-| Parameter  | theme_type                 | theme_default_value | theme_description                     |
-| ---------- | -------------------------- | ------------------- | ------------------------------------- |
-| `diameter` | `number`                   | `1.0`               | the diameter of the circle in meters. |
-| `options?` | `CirclesToPolygonsOptions` | `undefined`         | -                                     |
+| Parameter  | theme_type                                                           | theme_default_value | theme_description                     |
+| ---------- | -------------------------------------------------------------------- | ------------------- | ------------------------------------- |
+| `diameter` | `number`                                                             | `1.0`               | the diameter of the circle in meters. |
+| `options?` | [`CirclesToPolygonsOptions`](../geojson.md#circlestopolygonsoptions) | `undefined`         | -                                     |
 
 #### Returns
 
-`LineString`
+[`LineString`](../geojson-utils/geojson.md#linestring)
 
 a circle-shaped line model geometry.
 
@@ -47,7 +47,7 @@ a circle-shaped line model geometry.
 
 ### ellLineGeometry()
 
-> **ellLineGeometry**(`sideLength`): `LineString`
+> **ellLineGeometry**(`sideLength`): [`LineString`](../geojson-utils/geojson.md#linestring)
 
 #### Parameters
 
@@ -57,7 +57,7 @@ a circle-shaped line model geometry.
 
 #### Returns
 
-`LineString`
+[`LineString`](../geojson-utils/geojson.md#linestring)
 
 an ell-shaped line model geometry.
 
@@ -65,20 +65,20 @@ an ell-shaped line model geometry.
 
 ### placeAreaGeometry()
 
-> **placeAreaGeometry**(`position`, `__namedParameters`): `AreaObject`
+> **placeAreaGeometry**(`position`, `__namedParameters`): [`AreaObject`](../geojson.md#areaobject)
 
 Positions a modelGeometry at position and optionally rotates the coordinates around position.
 
 #### Parameters
 
-| Parameter           | theme_type                     | theme_description     |
-| ------------------- | ------------------------------ | --------------------- |
-| `position`          | `Position`                     | a position [lon,lat]. |
-| `__namedParameters` | `PlaceOptions`\<`AreaObject`\> | -                     |
+| Parameter           | theme_type                                                               | theme_description     |
+| ------------------- | ------------------------------------------------------------------------ | --------------------- |
+| `position`          | [`Position`](../geojson-utils/geojson.md#position)                       | a position [lon,lat]. |
+| `__namedParameters` | `PlaceOptions`\<[`AreaObject`](../geojson-utils/geojson.md#areaobject)\> | -                     |
 
 #### Returns
 
-`AreaObject`
+[`AreaObject`](../geojson.md#areaobject)
 
 a GeoJSON Point/Line/AreaObject.
 
@@ -86,45 +86,45 @@ a GeoJSON Point/Line/AreaObject.
 
 ### placeLineGeometry()
 
-> **placeLineGeometry**(`position`, `__namedParameters`): `LineObject`
+> **placeLineGeometry**(`position`, `__namedParameters`): [`LineObject`](../geojson.md#lineobject)
 
 #### Parameters
 
-| Parameter           | theme_type                     |
-| ------------------- | ------------------------------ |
-| `position`          | `Position`                     |
-| `__namedParameters` | `PlaceOptions`\<`LineObject`\> |
+| Parameter           | theme_type                                                               |
+| ------------------- | ------------------------------------------------------------------------ |
+| `position`          | [`Position`](../geojson-utils/geojson.md#position)                       |
+| `__namedParameters` | `PlaceOptions`\<[`LineObject`](../geojson-utils/geojson.md#lineobject)\> |
 
 #### Returns
 
-`LineObject`
+[`LineObject`](../geojson.md#lineobject)
 
 ---
 
 ### placePointGeometry()
 
-> **placePointGeometry**(`position`, `__namedParameters`): `PointObject`
+> **placePointGeometry**(`position`, `__namedParameters`): [`PointObject`](../geojson.md#pointobject)
 
 #### Parameters
 
-| Parameter           | theme_type                      |
-| ------------------- | ------------------------------- |
-| `position`          | `Position`                      |
-| `__namedParameters` | `PlaceOptions`\<`PointObject`\> |
+| Parameter           | theme_type                                                                 |
+| ------------------- | -------------------------------------------------------------------------- |
+| `position`          | [`Position`](../geojson-utils/geojson.md#position)                         |
+| `__namedParameters` | `PlaceOptions`\<[`PointObject`](../geojson-utils/geojson.md#pointobject)\> |
 
 #### Returns
 
-`PointObject`
+[`PointObject`](../geojson.md#pointobject)
 
 ---
 
 ### pointGeometry()
 
-> **pointGeometry**(): `Point`
+> **pointGeometry**(): [`Point`](../geojson-utils/geojson.md#point)
 
 #### Returns
 
-`Point`
+[`Point`](../geojson-utils/geojson.md#point)
 
 a single point model geometry.
 
@@ -138,9 +138,9 @@ Computes the radius as maximum distance from (0,0) to any point in the given geo
 
 #### Parameters
 
-| Parameter  | theme_type         | theme_description                             |
-| ---------- | ------------------ | --------------------------------------------- |
-| `geometry` | `SingleTypeObject` | a GeoJSON geometry (not geometry collection). |
+| Parameter  | theme_type                                                         | theme_description                             |
+| ---------- | ------------------------------------------------------------------ | --------------------------------------------- |
+| `geometry` | [`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject) | a GeoJSON geometry (not geometry collection). |
 
 #### Returns
 
@@ -152,7 +152,7 @@ the maximum distance from (0,0) to any point in the given geometry.
 
 ### rectangularAreaGeometry()
 
-> **rectangularAreaGeometry**(`width`, `height`): `Polygon`
+> **rectangularAreaGeometry**(`width`, `height`): [`Polygon`](../geojson-utils/geojson.md#polygon)
 
 #### Parameters
 
@@ -163,7 +163,7 @@ the maximum distance from (0,0) to any point in the given geometry.
 
 #### Returns
 
-`Polygon`
+[`Polygon`](../geojson-utils/geojson.md#polygon)
 
 a rectangular-shaped area model geometry.
 
@@ -171,7 +171,7 @@ a rectangular-shaped area model geometry.
 
 ### rectangularCircleGeometry()
 
-> **rectangularCircleGeometry**(`width`, `height`, `diameter`): `MultiCircle`
+> **rectangularCircleGeometry**(`width`, `height`, `diameter`): [`MultiCircle`](../geojson-utils/geojson.md#multicircle)
 
 #### Parameters
 
@@ -183,7 +183,7 @@ a rectangular-shaped area model geometry.
 
 #### Returns
 
-`MultiCircle`
+[`MultiCircle`](../geojson-utils/geojson.md#multicircle)
 
 a circle model geometry in a rectangular formation.
 
@@ -191,7 +191,7 @@ a circle model geometry in a rectangular formation.
 
 ### rectangularLineGeometry()
 
-> **rectangularLineGeometry**(`width`, `height`): `LineString`
+> **rectangularLineGeometry**(`width`, `height`): [`LineString`](../geojson-utils/geojson.md#linestring)
 
 #### Parameters
 
@@ -202,7 +202,7 @@ a circle model geometry in a rectangular formation.
 
 #### Returns
 
-`LineString`
+[`LineString`](../geojson-utils/geojson.md#linestring)
 
 a rectangular-shaped line model geometry.
 
@@ -210,7 +210,7 @@ a rectangular-shaped line model geometry.
 
 ### rectangularPointGeometry()
 
-> **rectangularPointGeometry**(`width`, `height`): `MultiPoint`
+> **rectangularPointGeometry**(`width`, `height`): [`MultiPoint`](../geojson-utils/geojson.md#multipoint)
 
 #### Parameters
 
@@ -221,7 +221,7 @@ a rectangular-shaped line model geometry.
 
 #### Returns
 
-`MultiPoint`
+[`MultiPoint`](../geojson-utils/geojson.md#multipoint)
 
 a point model geometry in a rectangular formation.
 
@@ -229,7 +229,7 @@ a point model geometry in a rectangular formation.
 
 ### regularPolygonAreaGeometry()
 
-> **regularPolygonAreaGeometry**(`sides`, `polygonDiameter`): `Polygon`
+> **regularPolygonAreaGeometry**(`sides`, `polygonDiameter`): [`Polygon`](../geojson-utils/geojson.md#polygon)
 
 #### Parameters
 
@@ -240,7 +240,7 @@ a point model geometry in a rectangular formation.
 
 #### Returns
 
-`Polygon`
+[`Polygon`](../geojson-utils/geojson.md#polygon)
 
 a regular polygon area model geometry.
 
@@ -248,7 +248,7 @@ a regular polygon area model geometry.
 
 ### regularPolygonCircleGeometry()
 
-> **regularPolygonCircleGeometry**(`sides`, `polygonDiameter`, `diameter`): `MultiCircle`
+> **regularPolygonCircleGeometry**(`sides`, `polygonDiameter`, `diameter`): [`MultiCircle`](../geojson-utils/geojson.md#multicircle)
 
 #### Parameters
 
@@ -260,7 +260,7 @@ a regular polygon area model geometry.
 
 #### Returns
 
-`MultiCircle`
+[`MultiCircle`](../geojson-utils/geojson.md#multicircle)
 
 a circle model geometry in a regular polygon formation.
 
@@ -268,7 +268,7 @@ a circle model geometry in a regular polygon formation.
 
 ### regularPolygonLineGeometry()
 
-> **regularPolygonLineGeometry**(`sides`, `polygonDiameter`): `LineString`
+> **regularPolygonLineGeometry**(`sides`, `polygonDiameter`): [`LineString`](../geojson-utils/geojson.md#linestring)
 
 #### Parameters
 
@@ -279,7 +279,7 @@ a circle model geometry in a regular polygon formation.
 
 #### Returns
 
-`LineString`
+[`LineString`](../geojson-utils/geojson.md#linestring)
 
 a regular polygon line model geometry.
 
@@ -287,7 +287,7 @@ a regular polygon line model geometry.
 
 ### regularPolygonPointGeometry()
 
-> **regularPolygonPointGeometry**(`sides`, `polygonDiameter`): `MultiPoint`
+> **regularPolygonPointGeometry**(`sides`, `polygonDiameter`): [`MultiPoint`](../geojson-utils/geojson.md#multipoint)
 
 #### Parameters
 
@@ -298,7 +298,7 @@ a regular polygon line model geometry.
 
 #### Returns
 
-`MultiPoint`
+[`MultiPoint`](../geojson-utils/geojson.md#multipoint)
 
 a point model geometry in a regular polygon formation.
 
@@ -314,9 +314,9 @@ type of the geometry.
 
 #### Parameters
 
-| Parameter  | theme_type         | theme_description                             |
-| ---------- | ------------------ | --------------------------------------------- |
-| `geometry` | `SingleTypeObject` | a GeoJSON geometry (not geometry collection). |
+| Parameter  | theme_type                                                         | theme_description                             |
+| ---------- | ------------------------------------------------------------------ | --------------------------------------------- |
+| `geometry` | [`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject) | a GeoJSON geometry (not geometry collection). |
 
 #### Returns
 
@@ -328,7 +328,7 @@ the size of the geometry.
 
 ### straightLineGeometry()
 
-> **straightLineGeometry**(`sideLength`): `LineString`
+> **straightLineGeometry**(`sideLength`): [`LineString`](../geojson-utils/geojson.md#linestring)
 
 #### Parameters
 
@@ -338,6 +338,6 @@ the size of the geometry.
 
 #### Returns
 
-`LineString`
+[`LineString`](../geojson-utils/geojson.md#linestring)
 
 a north-south straight line model geometry.

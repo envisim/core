@@ -10,7 +10,7 @@
 
 ### selectAreaintersectsArea()
 
-> **selectAreaintersectsArea**\<`P`\>(`frame`, `base`): `FeatureCollection`\<`AreaObject`, `P`\>
+> **selectAreaintersectsArea**\<`P`\>(`frame`, `base`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject), `P`\>
 
 Select intersect of features as the new frame from base-collection.
 
@@ -22,20 +22,20 @@ Select intersect of features as the new frame from base-collection.
 
 #### Parameters
 
-| Parameter | theme_type                               |
-| --------- | ---------------------------------------- |
-| `frame`   | `FeatureCollection`\<`AreaObject`\>      |
-| `base`    | `FeatureCollection`\<`AreaObject`, `P`\> |
+| Parameter | theme_type                                                                                              |
+| --------- | ------------------------------------------------------------------------------------------------------- |
+| `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\>      |
+| `base`    | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject), `P`\> |
 
 #### Returns
 
-`FeatureCollection`\<`AreaObject`, `P`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject), `P`\>
 
 ---
 
 ### selectAreaintersectsLine()
 
-> **selectAreaintersectsLine**\<`P`\>(`frame`, `base`): `FeatureCollection`\<`LineObject`, `P`\>
+> **selectAreaintersectsLine**\<`P`\>(`frame`, `base`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`LineObject`](../geojson.md#lineobject), `P`\>
 
 #### Type Parameters
 
@@ -45,20 +45,20 @@ Select intersect of features as the new frame from base-collection.
 
 #### Parameters
 
-| Parameter | theme_type                               |
-| --------- | ---------------------------------------- |
-| `frame`   | `FeatureCollection`\<`LineObject`\>      |
-| `base`    | `FeatureCollection`\<`AreaObject`, `P`\> |
+| Parameter | theme_type                                                                                              |
+| --------- | ------------------------------------------------------------------------------------------------------- |
+| `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)\<[`LineObject`](../geojson.md#lineobject)\>      |
+| `base`    | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject), `P`\> |
 
 #### Returns
 
-`FeatureCollection`\<`LineObject`, `P`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`LineObject`](../geojson.md#lineobject), `P`\>
 
 ---
 
 ### selectAreaintersectsPoint()
 
-> **selectAreaintersectsPoint**\<`P`\>(`frame`, `base`): `FeatureCollection`\<`PointObject`, `P`\>
+> **selectAreaintersectsPoint**\<`P`\>(`frame`, `base`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`PointObject`](../geojson.md#pointobject), `P`\>
 
 #### Type Parameters
 
@@ -68,20 +68,20 @@ Select intersect of features as the new frame from base-collection.
 
 #### Parameters
 
-| Parameter | theme_type                               |
-| --------- | ---------------------------------------- |
-| `frame`   | `FeatureCollection`\<`PointObject`\>     |
-| `base`    | `FeatureCollection`\<`AreaObject`, `P`\> |
+| Parameter | theme_type                                                                                              |
+| --------- | ------------------------------------------------------------------------------------------------------- |
+| `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)\<[`PointObject`](../geojson.md#pointobject)\>    |
+| `base`    | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject), `P`\> |
 
 #### Returns
 
-`FeatureCollection`\<`PointObject`, `P`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`PointObject`](../geojson.md#pointobject), `P`\>
 
 ---
 
 ### selectLineintersectsArea()
 
-> **selectLineintersectsArea**\<`P`\>(`frame`, `base`): `FeatureCollection`\<`LineObject`, `P`\>
+> **selectLineintersectsArea**\<`P`\>(`frame`, `base`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`LineObject`](../geojson.md#lineobject), `P`\>
 
 #### Type Parameters
 
@@ -91,20 +91,20 @@ Select intersect of features as the new frame from base-collection.
 
 #### Parameters
 
-| Parameter | theme_type                               |
-| --------- | ---------------------------------------- |
-| `frame`   | `FeatureCollection`\<`AreaObject`\>      |
-| `base`    | `FeatureCollection`\<`LineObject`, `P`\> |
+| Parameter | theme_type                                                                                              |
+| --------- | ------------------------------------------------------------------------------------------------------- |
+| `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\>      |
+| `base`    | [`FeatureCollection`](../geojson.md#featurecollection)\<[`LineObject`](../geojson.md#lineobject), `P`\> |
 
 #### Returns
 
-`FeatureCollection`\<`LineObject`, `P`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`LineObject`](../geojson.md#lineobject), `P`\>
 
 ---
 
 ### selectPointintersectsArea()
 
-> **selectPointintersectsArea**\<`P`\>(`frame`, `base`): `FeatureCollection`\<`PointObject`, `P`\>
+> **selectPointintersectsArea**\<`P`\>(`frame`, `base`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`PointObject`](../geojson.md#pointobject), `P`\>
 
 #### Type Parameters
 
@@ -114,11 +114,11 @@ Select intersect of features as the new frame from base-collection.
 
 #### Parameters
 
-| Parameter | theme_type                                |
-| --------- | ----------------------------------------- |
-| `frame`   | `FeatureCollection`\<`AreaObject`\>       |
-| `base`    | `FeatureCollection`\<`PointObject`, `P`\> |
+| Parameter | theme_type                                                                                                |
+| --------- | --------------------------------------------------------------------------------------------------------- |
+| `frame`   | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\>        |
+| `base`    | [`FeatureCollection`](../geojson.md#featurecollection)\<[`PointObject`](../geojson.md#pointobject), `P`\> |
 
 #### Returns
 
-`FeatureCollection`\<`PointObject`, `P`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`PointObject`](../geojson.md#pointobject), `P`\>

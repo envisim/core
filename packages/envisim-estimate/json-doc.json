@@ -69,7 +69,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -106,7 +106,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -143,7 +143,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -230,7 +230,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -267,7 +267,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -304,7 +304,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -338,7 +338,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/matrix",
-                  "packagePath": "dist/matrix.d.ts",
+                  "packagePath": "src/matrix.ts",
                   "qualifiedName": "Matrix"
                 },
                 "name": "Matrix",
@@ -416,7 +416,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -453,7 +453,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -540,7 +540,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -577,7 +577,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -611,7 +611,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/matrix",
-                  "packagePath": "dist/matrix.d.ts",
+                  "packagePath": "src/matrix.ts",
                   "qualifiedName": "Matrix"
                 },
                 "name": "Matrix",
@@ -684,7 +684,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -721,7 +721,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -803,7 +803,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -840,7 +840,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -874,7 +874,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/matrix",
-                  "packagePath": "dist/matrix.d.ts",
+                  "packagePath": "src/matrix.ts",
                   "qualifiedName": "Matrix"
                 },
                 "name": "Matrix",
@@ -952,7 +952,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -989,7 +989,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -1023,7 +1023,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/matrix",
-                  "packagePath": "dist/matrix.d.ts",
+                  "packagePath": "src/matrix.ts",
                   "qualifiedName": "Matrix"
                 },
                 "name": "Matrix",
@@ -1101,7 +1101,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -1135,7 +1135,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/matrix",
-                  "packagePath": "dist/matrix.d.ts",
+                  "packagePath": "src/matrix.ts",
                   "qualifiedName": "Matrix"
                 },
                 "name": "Matrix",
@@ -1163,7 +1163,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -1261,7 +1261,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -1298,7 +1298,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -1354,7 +1354,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -1436,7 +1436,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -1470,7 +1470,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/matrix",
-                  "packagePath": "dist/matrix.d.ts",
+                  "packagePath": "src/matrix.ts",
                   "qualifiedName": "Matrix"
                 },
                 "name": "Matrix",
@@ -1500,7 +1500,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -1582,7 +1582,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -1616,7 +1616,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/matrix",
-                  "packagePath": "dist/matrix.d.ts",
+                  "packagePath": "src/matrix.ts",
                   "qualifiedName": "Matrix"
                 },
                 "name": "Matrix",
@@ -1644,7 +1644,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -1731,7 +1731,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -1768,7 +1768,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -1850,7 +1850,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",
@@ -1887,7 +1887,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/matrix",
-                      "packagePath": "dist/vector.d.ts",
+                      "packagePath": "src/vector.ts",
                       "qualifiedName": "Vector"
                     },
                     "name": "Vector",

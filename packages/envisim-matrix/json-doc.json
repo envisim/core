@@ -9649,7 +9649,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/random",
-                      "packagePath": "dist/index.d.ts",
+                      "packagePath": "src/index.ts",
                       "qualifiedName": "RandomGenerator"
                     },
                     "name": "RandomGenerator",
@@ -10827,7 +10827,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/random",
-                  "packagePath": "dist/index.d.ts",
+                  "packagePath": "src/index.ts",
                   "qualifiedName": "RandomGenerator"
                 },
                 "name": "RandomGenerator",
@@ -10915,7 +10915,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/random",
-                  "packagePath": "dist/index.d.ts",
+                  "packagePath": "src/index.ts",
                   "qualifiedName": "RandomGenerator"
                 },
                 "name": "RandomGenerator",

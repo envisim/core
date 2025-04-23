@@ -18,11 +18,11 @@ $$ n = |S| . $$
 
 #### Parameters
 
-| Parameter    | theme_type             | theme_description                                 |
-| ------------ | ---------------------- | ------------------------------------------------- |
-| `y`          | `Vector` \| `number`[] | variable of interest of size n, $y_i$.            |
-| `expected`   | `Vector` \| `number`[] | expected number of inclusions of size n, $\mu_i$. |
-| `inclusions` | `Vector` \| `number`[] | number of inclusions of size n, $S_i$.            |
+| Parameter    | theme_type                                 | theme_description                                 |
+| ------------ | ------------------------------------------ | ------------------------------------------------- |
+| `y`          | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.            |
+| `expected`   | [`Vector`](matrix.md#vector) \| `number`[] | expected number of inclusions of size n, $\mu_i$. |
+| `inclusions` | [`Vector`](matrix.md#vector) \| `number`[] | number of inclusions of size n, $S_i$.            |
 
 #### Returns
 
@@ -42,10 +42,10 @@ $$ n = |S| . $$
 
 #### Parameters
 
-| Parameter | theme_type             | theme_description                           |
-| --------- | ---------------------- | ------------------------------------------- |
-| `y`       | `Vector` \| `number`[] | variable of interest of size n, $y_i$.      |
-| `prob`    | `Vector` \| `number`[] | inclusion probabilities of size n, $\pi_i$. |
+| Parameter | theme_type                                 | theme_description                           |
+| --------- | ------------------------------------------ | ------------------------------------------- |
+| `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.      |
+| `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size n, $\pi_i$. |
 
 #### Returns
 
@@ -65,11 +65,11 @@ than to any other unit.
 
 #### Parameters
 
-| Parameter | theme_type             | theme_description                                  |
-| --------- | ---------------------- | -------------------------------------------------- |
-| `y`       | `Vector` \| `number`[] | variable of interest of size n.                    |
-| `xm`      | `Matrix`               | auxilliary variables of size N\*p.                 |
-| `sample`  | `Vector` \| `number`[] | sample indices, in the same order as the y-values. |
+| Parameter | theme_type                                 | theme_description                                  |
+| --------- | ------------------------------------------ | -------------------------------------------------- |
+| `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n.                    |
+| `xm`      | [`Matrix`](matrix.md#matrix)               | auxilliary variables of size N\*p.                 |
+| `sample`  | [`Vector`](matrix.md#vector) \| `number`[] | sample indices, in the same order as the y-values. |
 
 #### Returns
 
@@ -89,12 +89,12 @@ where $\hat{Y}, \hat{X}$ are [HT-estimators](#horvitzthompson).
 
 #### Parameters
 
-| Parameter | theme_type             | theme_description                  |
-| --------- | ---------------------- | ---------------------------------- |
-| `y`       | `Vector` \| `number`[] | variable of interest of size n.    |
-| `x`       | `Vector` \| `number`[] | auxiliary variable of size n.      |
-| `totalX`  | `number`               | population total, $X$.             |
-| `prob`    | `Vector` \| `number`[] | inclusion probabilities of size n. |
+| Parameter | theme_type                                 | theme_description                  |
+| --------- | ------------------------------------------ | ---------------------------------- |
+| `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n.    |
+| `x`       | [`Vector`](matrix.md#vector) \| `number`[] | auxiliary variable of size n.      |
+| `totalX`  | `number`                                   | population total, $X$.             |
+| `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size n. |
 
 #### Returns
 
@@ -112,10 +112,10 @@ $$ \hat{Y} = \sum\_{i=1}^n \frac{y_i}{n p_i} $$
 
 #### Parameters
 
-| Parameter | theme_type             | theme_description                       |
-| --------- | ---------------------- | --------------------------------------- |
-| `y`       | `Vector` \| `number`[] | variable of interest of size n, $y_i$.  |
-| `prob`    | `Vector` \| `number`[] | drawing probabilities of size n, $p_i$. |
+| Parameter | theme_type                                 | theme_description                       |
+| --------- | ------------------------------------------ | --------------------------------------- |
+| `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.  |
+| `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | drawing probabilities of size n, $p_i$. |
 
 #### Returns
 
@@ -131,11 +131,11 @@ the wr estimate, $\hat{Y}$.
 
 #### Parameters
 
-| Parameter | theme_type             | theme_description                            |
-| --------- | ---------------------- | -------------------------------------------- |
-| `sample`  | `Vector` \| `number`[] | sample indices.                              |
-| `xm`      | `Matrix`               | Matrix of auxilliary variables of size N\*p. |
-| `prob?`   | `Vector` \| `number`[] | inclusion probabilities of size N.           |
+| Parameter | theme_type                                 | theme_description                            |
+| --------- | ------------------------------------------ | -------------------------------------------- |
+| `sample`  | [`Vector`](matrix.md#vector) \| `number`[] | sample indices.                              |
+| `xm`      | [`Matrix`](matrix.md#matrix)               | Matrix of auxilliary variables of size N\*p. |
+| `prob?`   | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size N.           |
 
 #### Returns
 
@@ -151,11 +151,11 @@ spatial balance based on the sum of squares balance measure.
 
 #### Parameters
 
-| Parameter | theme_type             | theme_description                            |
-| --------- | ---------------------- | -------------------------------------------- |
-| `sample`  | `Vector` \| `number`[] | sample indices.                              |
-| `xm`      | `Matrix`               | Matrix of auxilliary variables of size N\*p. |
-| `prob`    | `Vector` \| `number`[] | inclusion probabilities of size N.           |
+| Parameter | theme_type                                 | theme_description                            |
+| --------- | ------------------------------------------ | -------------------------------------------- |
+| `sample`  | [`Vector`](matrix.md#vector) \| `number`[] | sample indices.                              |
+| `xm`      | [`Matrix`](matrix.md#matrix)               | Matrix of auxilliary variables of size N\*p. |
+| `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size N.           |
 
 #### Returns
 
@@ -173,12 +173,12 @@ $$ \hat{V}(\hat{Y}) = \sum*{i \in S} \sum*{j \in S} \frac{y*i y_j}{\mu_i \mu_j} 
 
 #### Parameters
 
-| Parameter    | theme_type             | theme_description                                                                             |
-| ------------ | ---------------------- | --------------------------------------------------------------------------------------------- |
-| `y`          | `Vector` \| `number`[] | variable of interest of size n, $y_i$.                                                        |
-| `expected`   | `Vector` \| `number`[] | expected number of inclusions of size n, $\mu_i$.                                             |
-| `inclusions` | `Vector` \| `number`[] | number of inclusions of size n, $S_i$.                                                        |
-| `mu2m`       | `Matrix`               | second order expected number of inclusions of size n\*n, upper triangular matrix, $\mu_{ij}$. |
+| Parameter    | theme_type                                 | theme_description                                                                             |
+| ------------ | ------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| `y`          | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.                                                        |
+| `expected`   | [`Vector`](matrix.md#vector) \| `number`[] | expected number of inclusions of size n, $\mu_i$.                                             |
+| `inclusions` | [`Vector`](matrix.md#vector) \| `number`[] | number of inclusions of size n, $S_i$.                                                        |
+| `mu2m`       | [`Matrix`](matrix.md#matrix)               | second order expected number of inclusions of size n\*n, upper triangular matrix, $\mu_{ij}$. |
 
 #### Returns
 
@@ -196,11 +196,11 @@ $$ \hat{V}(\hat{Y}) = \sum*{i \in S} \sum*{j \in S} \frac{y*i y_j}{\pi_i \pi_j} 
 
 #### Parameters
 
-| Parameter | theme_type             | theme_description                                                                       |
-| --------- | ---------------------- | --------------------------------------------------------------------------------------- |
-| `y`       | `Vector` \| `number`[] | variable of interest of size n, $y_i$.                                                  |
-| `prob`    | `Vector` \| `number`[] | inclusion probabilities of size n, $\pi_i$.                                             |
-| `prob2m`  | `Matrix`               | second order inclusion probabilities of size n\*n, upper triangular matrix, $\pi_{ij}$. |
+| Parameter | theme_type                                 | theme_description                                                                       |
+| --------- | ------------------------------------------ | --------------------------------------------------------------------------------------- |
+| `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.                                                  |
+| `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size n, $\pi_i$.                                             |
+| `prob2m`  | [`Matrix`](matrix.md#matrix)               | second order inclusion probabilities of size n\*n, upper triangular matrix, $\pi_{ij}$. |
 
 #### Returns
 
@@ -216,10 +216,10 @@ the Horvitz-Thompson variance estimate.
 
 #### Parameters
 
-| Parameter | theme_type             | theme_description                           |
-| --------- | ---------------------- | ------------------------------------------- |
-| `y`       | `Vector` \| `number`[] | variable of interest of size n, $y_i$.      |
-| `prob`    | `Vector` \| `number`[] | inclusion probabilities of size n, $\pi_i$. |
+| Parameter | theme_type                                 | theme_description                           |
+| --------- | ------------------------------------------ | ------------------------------------------- |
+| `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.      |
+| `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size n, $\pi_i$. |
 
 #### Returns
 
@@ -235,11 +235,11 @@ Deville's HT variance estimate.
 
 #### Parameters
 
-| Parameter | theme_type             | theme_description                           |
-| --------- | ---------------------- | ------------------------------------------- |
-| `y`       | `Vector` \| `number`[] | variable of interest of size n, $y_i$.      |
-| `prob`    | `Vector` \| `number`[] | inclusion probabilities of size n, $\pi_i$. |
-| `xm`      | `Matrix`               | auxilliary variables of size n\*p.          |
+| Parameter | theme_type                                 | theme_description                           |
+| --------- | ------------------------------------------ | ------------------------------------------- |
+| `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.      |
+| `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size n, $\pi_i$. |
+| `xm`      | [`Matrix`](matrix.md#matrix)               | auxilliary variables of size n\*p.          |
 
 #### Returns
 
@@ -259,11 +259,11 @@ $$ \hat{V}(\hat{Y}) = -\frac{1}{2} \sum*{i \in S} \sum*{j \in S} (y*i / \pi_i - 
 
 #### Parameters
 
-| Parameter | theme_type             | theme_description                                                                       |
-| --------- | ---------------------- | --------------------------------------------------------------------------------------- |
-| `y`       | `Vector` \| `number`[] | variable of interest of size n, $y_i$.                                                  |
-| `prob`    | `Vector` \| `number`[] | inclusion probabilities of size n, $\pi_i$.                                             |
-| `prob2m`  | `Matrix`               | second order inclusion probabilities of size n\*n, upper triangular matrix, $\pi_{ij}$. |
+| Parameter | theme_type                                 | theme_description                                                                       |
+| --------- | ------------------------------------------ | --------------------------------------------------------------------------------------- |
+| `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.                                                  |
+| `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size n, $\pi_i$.                                             |
+| `prob2m`  | [`Matrix`](matrix.md#matrix)               | second order inclusion probabilities of size n\*n, upper triangular matrix, $\pi_{ij}$. |
 
 #### Returns
 
@@ -279,10 +279,10 @@ the Horvitz-Thompson variance estimate.
 
 #### Parameters
 
-| Parameter | theme_type             | theme_description                           |
-| --------- | ---------------------- | ------------------------------------------- |
-| `y`       | `Vector` \| `number`[] | variable of interest of size n, $y_i$.      |
-| `prob`    | `Vector` \| `number`[] | inclusion probabilities of size n, $\pi_i$. |
+| Parameter | theme_type                                 | theme_description                           |
+| --------- | ------------------------------------------ | ------------------------------------------- |
+| `y`       | [`Vector`](matrix.md#vector) \| `number`[] | variable of interest of size n, $y_i$.      |
+| `prob`    | [`Vector`](matrix.md#vector) \| `number`[] | inclusion probabilities of size n, $\pi_i$. |
 
 #### Returns
 

@@ -8440,8 +8440,8 @@ the variance
 
 #### Properties
 
-| Property                      | theme_type        | theme_default_value | theme_description                          |
-| ----------------------------- | ----------------- | ------------------- | ------------------------------------------ |
-| <a id="eps"></a> `eps?`       | `number`          | `1e-12`             | Epsilon, used during comparisons of floats |
-| <a id="method"></a> `method?` | `string`          | `undefined`         | -                                          |
-| <a id="rand"></a> `rand?`     | `RandomGenerator` | `new Random()`      | An RNG                                     |
+| Property                      | theme_type                                     | theme_default_value | theme_description                          |
+| ----------------------------- | ---------------------------------------------- | ------------------- | ------------------------------------------ |
+| <a id="eps"></a> `eps?`       | `number`                                       | `1e-12`             | Epsilon, used during comparisons of floats |
+| <a id="method"></a> `method?` | `string`                                       | `undefined`         | -                                          |
+| <a id="rand"></a> `rand?`     | [`RandomGenerator`](random.md#randomgenerator) | `new Random()`      | An RNG                                     |

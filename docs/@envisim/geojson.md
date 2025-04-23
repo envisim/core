@@ -12,11 +12,11 @@
 
 #### theme_extends
 
-- `AbstractAreaObject`\<`GJ.Circle`\>
+- `AbstractAreaObject`\<[`Circle`](geojson-utils/geojson.md#circle)\>
 
 #### Implements
 
-- `Circle`
+- [`Circle`](geojson-utils/geojson.md#circle)
 
 #### Constructors
 
@@ -30,10 +30,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type                            | theme_default_value | theme_description                            |
-| --------- | ------------------------------------- | ------------------- | -------------------------------------------- |
-| `obj`     | `OptionalParam`\<`Circle`, `"type"`\> | `undefined`         | -                                            |
-| `shallow` | `boolean`                             | `true`              | if `true`, copys by reference when possible. |
+| Parameter | theme_type                                                                                         | theme_default_value | theme_description                            |
+| --------- | -------------------------------------------------------------------------------------------------- | ------------------- | -------------------------------------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`Circle`](geojson-utils/geojson.md#circle), `"type"`\> | `undefined`         | -                                            |
+| `shallow` | `boolean`                                                                                          | `true`              | if `true`, copys by reference when possible. |
 
 ###### Returns
 
@@ -45,12 +45,12 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 #### Properties
 
-| Property                               | theme_modifier | theme_type |
-| -------------------------------------- | -------------- | ---------- |
-| <a id="bbox"></a> `bbox?`              | `public`       | `BBox`     |
-| <a id="coordinates"></a> `coordinates` | `public`       | `Position` |
-| <a id="radius"></a> `radius`           | `public`       | `number`   |
-| <a id="type"></a> `type`               | `readonly`     | `"Point"`  |
+| Property                               | theme_modifier | theme_type                                      |
+| -------------------------------------- | -------------- | ----------------------------------------------- |
+| <a id="bbox"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)       |
+| <a id="coordinates"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position) |
+| <a id="radius"></a> `radius`           | `public`       | `number`                                        |
+| <a id="type"></a> `type`               | `readonly`     | `"Point"`                                       |
 
 #### Methods
 
@@ -82,11 +82,11 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ##### centroid()
 
-> **centroid**(): `Position`
+> **centroid**(): [`Position`](geojson-utils/geojson.md#position)
 
 ###### Returns
 
-`Position`
+[`Position`](geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -116,9 +116,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `position` | `Position` |
+| Parameter  | theme_type                                      |
+| ---------- | ----------------------------------------------- |
+| `position` | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -142,11 +142,11 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ##### getBBox()
 
-> **getBBox**(): `BBox`
+> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -154,11 +154,11 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): `Position`[]
+> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)[]
 
 ###### Returns
 
-`Position`[]
+[`Position`](geojson-utils/geojson.md#position)[]
 
 ###### Overrides
 
@@ -170,9 +170,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `position` | `Position` |
+| Parameter  | theme_type                                      |
+| ---------- | ----------------------------------------------- |
+| `position` | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -248,9 +248,9 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `point`   | `Position` |
+| Parameter | theme_type                                      |
+| --------- | ----------------------------------------------- |
+| `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -262,11 +262,11 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ##### setBBox()
 
-> **setBBox**(): `BBox`
+> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -319,11 +319,11 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter     | theme_type | theme_default_value |
-| ------------- | ---------- | ------------------- |
-| `coordinates` | `Position` | `undefined`         |
-| `radius`      | `number`   | `undefined`         |
-| `shallow`     | `boolean`  | `true`              |
+| Parameter     | theme_type                                      | theme_default_value |
+| ------------- | ----------------------------------------------- | ------------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position) | `undefined`         |
+| `radius`      | `number`                                        | `undefined`         |
+| `shallow`     | `boolean`                                       | `true`              |
 
 ###### Returns
 
@@ -356,7 +356,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 #### Implements
 
-- `BaseFeature`\<`GJ.SingleTypeObject`, `number` \| `string`\>
+- [`BaseFeature`](geojson-utils/geojson.md#basefeature)\<[`SingleTypeObject`](geojson-utils/geojson.md#singletypeobject), `number` \| `string`\>
 
 #### Constructors
 
@@ -615,7 +615,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 | Parameter     | theme_type                                                     | theme_default_value |
 | ------------- | -------------------------------------------------------------- | ------------------- |
-| `geometry`    | `BaseGeometry`                                                 | `undefined`         |
+| `geometry`    | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry)        | `undefined`         |
 | `properties?` | `null` \| [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`         |
 | `shallow?`    | `boolean`                                                      | `true`              |
 | `options?`    | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions)        | `{}`                |
@@ -630,10 +630,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type                                                                         | theme_default_value |
-| --------- | ---------------------------------------------------------------------------------- | ------------------- |
-| `feature` | `OptionalParam`\<`BaseFeature`\<`BaseGeometry`, `string` \| `number`\>, `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                                                          | `true`              |
+| Parameter | theme_type                                                                                                                                                                                    | theme_default_value |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `feature` | [`OptionalParam`](utils.md#optionalparam)\<[`BaseFeature`](geojson-utils/geojson.md#basefeature)\<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` \| `number`\>, `"type"`\> | `undefined`         |
+| `shallow` | `boolean`                                                                                                                                                                                     | `true`              |
 
 ###### Returns
 
@@ -653,7 +653,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 | Parameter     | theme_type                                                     | theme_default_value |
 | ------------- | -------------------------------------------------------------- | ------------------- |
-| `geometry`    | `BaseGeometry`                                                 | `undefined`         |
+| `geometry`    | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry)        | `undefined`         |
 | `properties?` | `null` \| [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`         |
 | `shallow?`    | `boolean`                                                      | `true`              |
 
@@ -667,10 +667,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type                                                                         | theme_default_value |
-| --------- | ---------------------------------------------------------------------------------- | ------------------- |
-| `feature` | `OptionalParam`\<`BaseFeature`\<`BaseGeometry`, `string` \| `number`\>, `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                                                          | `true`              |
+| Parameter | theme_type                                                                                                                                                                                    | theme_default_value |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `feature` | [`OptionalParam`](utils.md#optionalparam)\<[`BaseFeature`](geojson-utils/geojson.md#basefeature)\<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` \| `number`\>, `"type"`\> | `undefined`         |
+| `shallow` | `boolean`                                                                                                                                                                                     | `true`              |
 
 ###### Returns
 
@@ -690,7 +690,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 | Parameter     | theme_type                                                     | theme_default_value |
 | ------------- | -------------------------------------------------------------- | ------------------- |
-| `geometry`    | `BaseGeometry`                                                 | `undefined`         |
+| `geometry`    | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry)        | `undefined`         |
 | `properties?` | `null` \| [`FeatureProperties`](#featureproperties-1)\<`PID`\> | `undefined`         |
 | `shallow?`    | `boolean`                                                      | `true`              |
 
@@ -704,10 +704,10 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Parameters
 
-| Parameter | theme_type                                                                         | theme_default_value |
-| --------- | ---------------------------------------------------------------------------------- | ------------------- |
-| `feature` | `OptionalParam`\<`BaseFeature`\<`BaseGeometry`, `string` \| `number`\>, `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                                                          | `true`              |
+| Parameter | theme_type                                                                                                                                                                                    | theme_default_value |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `feature` | [`OptionalParam`](utils.md#optionalparam)\<[`BaseFeature`](geojson-utils/geojson.md#basefeature)\<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` \| `number`\>, `"type"`\> | `undefined`         |
+| `shallow` | `boolean`                                                                                                                                                                                     | `true`              |
 
 ###### Returns
 
@@ -768,21 +768,21 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 #### Implements
 
-- `BaseFeatureCollection`\<`GJ.BaseFeature`\<`GJ.SingleTypeObject`, `number` \| `string`\>\>
+- [`BaseFeatureCollection`](geojson-utils/geojson.md#basefeaturecollection)\<[`BaseFeature`](geojson-utils/geojson.md#basefeature)\<[`SingleTypeObject`](geojson-utils/geojson.md#singletypeobject), `number` \| `string`\>\>
 - `FeatureCollectionExtras`
 
 #### Properties
 
-| Property                                     | theme_modifier | theme_type                                     | theme_default_value   | theme_description                                                   |
-| -------------------------------------------- | -------------- | ---------------------------------------------- | --------------------- | ------------------------------------------------------------------- |
-| <a id="bbox-1"></a> `bbox?`                  | `public`       | `BBox`                                         | `undefined`           | -                                                                   |
-| <a id="color"></a> `color?`                  | `public`       | \[`number`, `number`, `number`\]               | `undefined`           | Foreign GeoJSON member, an RGB value associated with the collection |
-| <a id="features"></a> `features`             | `public`       | [`Feature`](#feature)\<`T`, `PID`\>[]          | `[]`                  | -                                                                   |
-| <a id="id"></a> `id?`                        | `public`       | `string`                                       | `undefined`           | Foreign GeoJSON member, the id of the collection                    |
-| <a id="primitive"></a> `primitive`           | `readonly`     | `GeometricPrimitiveUnion`                      | `undefined`           | Foreign GeoJSON member, geometric primitive of the collection       |
-| <a id="propertyrecord"></a> `propertyRecord` | `public`       | [`PropertyRecord`](#propertyrecord-1)\<`PID`\> | `undefined`           | Foreign GeoJSON member, the allowed properties of the collection    |
-| <a id="title"></a> `title?`                  | `public`       | `string`                                       | `undefined`           | Foreign GeoJSON member, the human readable name of the collection   |
-| <a id="type-2"></a> `type`                   | `readonly`     | `"FeatureCollection"`                          | `"FeatureCollection"` | -                                                                   |
+| Property                                     | theme_modifier | theme_type                                                             | theme_default_value   | theme_description                                                   |
+| -------------------------------------------- | -------------- | ---------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------- |
+| <a id="bbox-1"></a> `bbox?`                  | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)                              | `undefined`           | -                                                                   |
+| <a id="color"></a> `color?`                  | `public`       | \[`number`, `number`, `number`\]                                       | `undefined`           | Foreign GeoJSON member, an RGB value associated with the collection |
+| <a id="features"></a> `features`             | `public`       | [`Feature`](#feature)\<`T`, `PID`\>[]                                  | `[]`                  | -                                                                   |
+| <a id="id"></a> `id?`                        | `public`       | `string`                                                               | `undefined`           | Foreign GeoJSON member, the id of the collection                    |
+| <a id="primitive"></a> `primitive`           | `readonly`     | [`GeometricPrimitiveUnion`](geojson-utils/.md#geometricprimitiveunion) | `undefined`           | Foreign GeoJSON member, geometric primitive of the collection       |
+| <a id="propertyrecord"></a> `propertyRecord` | `public`       | [`PropertyRecord`](#propertyrecord-1)\<`PID`\>                         | `undefined`           | Foreign GeoJSON member, the allowed properties of the collection    |
+| <a id="title"></a> `title?`                  | `public`       | `string`                                                               | `undefined`           | Foreign GeoJSON member, the human readable name of the collection   |
+| <a id="type-2"></a> `type`                   | `readonly`     | `"FeatureCollection"`                                                  | `"FeatureCollection"` | -                                                                   |
 
 #### Methods
 
@@ -848,7 +848,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ##### centroid()
 
-> **centroid**(`iterations`): `Position`
+> **centroid**(`iterations`): [`Position`](geojson-utils/geojson.md#position)
 
 ###### Parameters
 
@@ -858,7 +858,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 
 ###### Returns
 
-`Position`
+[`Position`](geojson-utils/geojson.md#position)
 
 ##### clearFeatures()
 
@@ -905,9 +905,9 @@ Transforms the categorical properties back to strings, and returns the json
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `coords`  | `Position` |
+| Parameter | theme_type                                      |
+| --------- | ----------------------------------------------- |
+| `coords`  | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -943,19 +943,19 @@ Transforms the categorical properties back to strings, and returns the json
 
 ##### geometricPrimitive()
 
-> **geometricPrimitive**(): `GeometricPrimitiveUnion`
+> **geometricPrimitive**(): [`GeometricPrimitiveUnion`](geojson-utils/.md#geometricprimitiveunion)
 
 ###### Returns
 
-`GeometricPrimitiveUnion`
+[`GeometricPrimitiveUnion`](geojson-utils/.md#geometricprimitiveunion)
 
 ##### getBBox()
 
-> **getBBox**(): `BBox`
+> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ##### measure()
 
@@ -984,7 +984,7 @@ of a line collection, and the total count of a point collection
 
 ##### setBBox()
 
-> **setBBox**(`force`): `BBox`
+> **setBBox**(`force`): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Parameters
 
@@ -994,7 +994,7 @@ of a line collection, and the total count of a point collection
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ##### setProperty()
 
@@ -1264,11 +1264,11 @@ of a line collection, and the total count of a point collection
 
 #### theme_extends
 
-- `AbstractLineObject`\<`GJ.LineString`\>
+- `AbstractLineObject`\<[`LineString`](geojson-utils/geojson.md#linestring)\>
 
 #### Implements
 
-- `LineString`
+- [`LineString`](geojson-utils/geojson.md#linestring)
 
 #### Constructors
 
@@ -1278,10 +1278,10 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type                                | theme_default_value |
-| --------- | ----------------------------------------- | ------------------- |
-| `obj`     | `OptionalParam`\<`LineString`, `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                 | `true`              |
+| Parameter | theme_type                                                                                                 | theme_default_value |
+| --------- | ---------------------------------------------------------------------------------------------------------- | ------------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`LineString`](geojson-utils/geojson.md#linestring), `"type"`\> | `undefined`         |
+| `shallow` | `boolean`                                                                                                  | `true`              |
 
 ###### Returns
 
@@ -1293,11 +1293,11 @@ of a line collection, and the total count of a point collection
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type     |
-| ---------------------------------------- | -------------- | -------------- |
-| <a id="bbox-2"></a> `bbox?`              | `public`       | `BBox`         |
-| <a id="coordinates-1"></a> `coordinates` | `public`       | `Position`[]   |
-| <a id="type-3"></a> `type`               | `readonly`     | `"LineString"` |
+| Property                                 | theme_modifier | theme_type                                        |
+| ---------------------------------------- | -------------- | ------------------------------------------------- |
+| <a id="bbox-2"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)         |
+| <a id="coordinates-1"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position)[] |
+| <a id="type-3"></a> `type`               | `readonly`     | `"LineString"`                                    |
 
 #### Methods
 
@@ -1317,7 +1317,7 @@ of a line collection, and the total count of a point collection
 
 ##### centroid()
 
-> **centroid**(`iterations`): `Position`
+> **centroid**(`iterations`): [`Position`](geojson-utils/geojson.md#position)
 
 ###### Parameters
 
@@ -1327,7 +1327,7 @@ of a line collection, and the total count of a point collection
 
 ###### Returns
 
-`Position`
+[`Position`](geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -1357,9 +1357,9 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `position` | `Position` |
+| Parameter  | theme_type                                      |
+| ---------- | ----------------------------------------------- |
+| `position` | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -1383,11 +1383,11 @@ of a line collection, and the total count of a point collection
 
 ##### getBBox()
 
-> **getBBox**(): `BBox`
+> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -1395,11 +1395,11 @@ of a line collection, and the total count of a point collection
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): `Position`[][]
+> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)[][]
 
 ###### Returns
 
-`Position`[][]
+[`Position`](geojson-utils/geojson.md#position)[][]
 
 ###### Overrides
 
@@ -1471,9 +1471,9 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `point`   | `Position` |
+| Parameter | theme_type                                      |
+| --------- | ----------------------------------------------- |
+| `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -1485,11 +1485,11 @@ of a line collection, and the total count of a point collection
 
 ##### setBBox()
 
-> **setBBox**(): `BBox`
+> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -1528,10 +1528,10 @@ of a line collection, and the total count of a point collection
 
 ###### Parameters
 
-| Parameter     | theme_type   | theme_default_value |
-| ------------- | ------------ | ------------------- |
-| `coordinates` | `Position`[] | `undefined`         |
-| `shallow`     | `boolean`    | `true`              |
+| Parameter     | theme_type                                        | theme_default_value |
+| ------------- | ------------------------------------------------- | ------------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[] | `undefined`         |
+| `shallow`     | `boolean`                                         | `true`              |
 
 ###### Returns
 
@@ -1557,11 +1557,11 @@ of a line collection, and the total count of a point collection
 
 #### theme_extends
 
-- `AbstractAreaObject`\<`GJ.MultiCircle`\>
+- `AbstractAreaObject`\<[`MultiCircle`](geojson-utils/geojson.md#multicircle)\>
 
 #### Implements
 
-- `MultiCircle`
+- [`MultiCircle`](geojson-utils/geojson.md#multicircle)
 
 #### Constructors
 
@@ -1577,10 +1577,10 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter | theme_type                                 | theme_default_value | theme_description                            |
-| --------- | ------------------------------------------ | ------------------- | -------------------------------------------- |
-| `obj`     | `OptionalParam`\<`MultiCircle`, `"type"`\> | `undefined`         | -                                            |
-| `shallow` | `boolean`                                  | `true`              | if `true`, copys by reference when possible. |
+| Parameter | theme_type                                                                                                   | theme_default_value | theme_description                            |
+| --------- | ------------------------------------------------------------------------------------------------------------ | ------------------- | -------------------------------------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`MultiCircle`](geojson-utils/geojson.md#multicircle), `"type"`\> | `undefined`         | -                                            |
+| `shallow` | `boolean`                                                                                                    | `true`              | if `true`, copys by reference when possible. |
 
 ###### Returns
 
@@ -1592,12 +1592,12 @@ MultiCircles MUST be non-overlapping.
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type     |
-| ---------------------------------------- | -------------- | -------------- |
-| <a id="bbox-3"></a> `bbox?`              | `public`       | `BBox`         |
-| <a id="coordinates-2"></a> `coordinates` | `public`       | `Position`[]   |
-| <a id="radius-1"></a> `radius`           | `public`       | `number`       |
-| <a id="type-4"></a> `type`               | `readonly`     | `"MultiPoint"` |
+| Property                                 | theme_modifier | theme_type                                        |
+| ---------------------------------------- | -------------- | ------------------------------------------------- |
+| <a id="bbox-3"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)         |
+| <a id="coordinates-2"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position)[] |
+| <a id="radius-1"></a> `radius`           | `public`       | `number`                                          |
+| <a id="type-4"></a> `type`               | `readonly`     | `"MultiPoint"`                                    |
 
 #### Methods
 
@@ -1629,7 +1629,7 @@ MultiCircles MUST be non-overlapping.
 
 ##### centroid()
 
-> **centroid**(`iterations`): `Position`
+> **centroid**(`iterations`): [`Position`](geojson-utils/geojson.md#position)
 
 ###### Parameters
 
@@ -1639,7 +1639,7 @@ MultiCircles MUST be non-overlapping.
 
 ###### Returns
 
-`Position`
+[`Position`](geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -1669,9 +1669,9 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `position` | `Position` |
+| Parameter  | theme_type                                      |
+| ---------- | ----------------------------------------------- |
+| `position` | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -1695,11 +1695,11 @@ MultiCircles MUST be non-overlapping.
 
 ##### getBBox()
 
-> **getBBox**(): `BBox`
+> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -1707,11 +1707,11 @@ MultiCircles MUST be non-overlapping.
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): `Position`[]
+> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)[]
 
 ###### Returns
 
-`Position`[]
+[`Position`](geojson-utils/geojson.md#position)[]
 
 ###### Overrides
 
@@ -1723,9 +1723,9 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `position` | `Position` |
+| Parameter  | theme_type                                      |
+| ---------- | ----------------------------------------------- |
+| `position` | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -1801,9 +1801,9 @@ MultiCircles MUST be non-overlapping.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `point`   | `Position` |
+| Parameter | theme_type                                      |
+| --------- | ----------------------------------------------- |
+| `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -1815,11 +1815,11 @@ MultiCircles MUST be non-overlapping.
 
 ##### setBBox()
 
-> **setBBox**(): `BBox`
+> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -1875,11 +1875,11 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | theme_type   | theme_default_value |
-| ------------- | ------------ | ------------------- |
-| `coordinates` | `Position`[] | `undefined`         |
-| `radius`      | `number`     | `undefined`         |
-| `shallow`     | `boolean`    | `true`              |
+| Parameter     | theme_type                                        | theme_default_value |
+| ------------- | ------------------------------------------------- | ------------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[] | `undefined`         |
+| `radius`      | `number`                                          | `undefined`         |
+| `shallow`     | `boolean`                                         | `true`              |
 
 ###### Returns
 
@@ -1905,11 +1905,11 @@ overlap as well.
 
 #### theme_extends
 
-- `AbstractLineObject`\<`GJ.MultiLineString`\>
+- `AbstractLineObject`\<[`MultiLineString`](geojson-utils/geojson.md#multilinestring)\>
 
 #### Implements
 
-- `MultiLineString`
+- [`MultiLineString`](geojson-utils/geojson.md#multilinestring)
 
 #### Constructors
 
@@ -1919,10 +1919,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                     | theme_default_value |
-| --------- | ---------------------------------------------- | ------------------- |
-| `obj`     | `OptionalParam`\<`MultiLineString`, `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                      | `true`              |
+| Parameter | theme_type                                                                                                           | theme_default_value |
+| --------- | -------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`MultiLineString`](geojson-utils/geojson.md#multilinestring), `"type"`\> | `undefined`         |
+| `shallow` | `boolean`                                                                                                            | `true`              |
 
 ###### Returns
 
@@ -1934,11 +1934,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type          |
-| ---------------------------------------- | -------------- | ------------------- |
-| <a id="bbox-4"></a> `bbox?`              | `public`       | `BBox`              |
-| <a id="coordinates-3"></a> `coordinates` | `public`       | `Position`[][]      |
-| <a id="type-5"></a> `type`               | `readonly`     | `"MultiLineString"` |
+| Property                                 | theme_modifier | theme_type                                          |
+| ---------------------------------------- | -------------- | --------------------------------------------------- |
+| <a id="bbox-4"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)           |
+| <a id="coordinates-3"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position)[][] |
+| <a id="type-5"></a> `type`               | `readonly`     | `"MultiLineString"`                                 |
 
 #### Methods
 
@@ -1958,7 +1958,7 @@ overlap as well.
 
 ##### centroid()
 
-> **centroid**(`iterations`): `Position`
+> **centroid**(`iterations`): [`Position`](geojson-utils/geojson.md#position)
 
 ###### Parameters
 
@@ -1968,7 +1968,7 @@ overlap as well.
 
 ###### Returns
 
-`Position`
+[`Position`](geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -1998,9 +1998,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `position` | `Position` |
+| Parameter  | theme_type                                      |
+| ---------- | ----------------------------------------------- |
+| `position` | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -2024,11 +2024,11 @@ overlap as well.
 
 ##### getBBox()
 
-> **getBBox**(): `BBox`
+> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -2036,11 +2036,11 @@ overlap as well.
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): `Position`[][]
+> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)[][]
 
 ###### Returns
 
-`Position`[][]
+[`Position`](geojson-utils/geojson.md#position)[][]
 
 ###### Overrides
 
@@ -2112,9 +2112,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `point`   | `Position` |
+| Parameter | theme_type                                      |
+| --------- | ----------------------------------------------- |
+| `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -2126,11 +2126,11 @@ overlap as well.
 
 ##### setBBox()
 
-> **setBBox**(): `BBox`
+> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -2169,10 +2169,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | theme_type     | theme_default_value |
-| ------------- | -------------- | ------------------- |
-| `coordinates` | `Position`[][] | `undefined`         |
-| `shallow`     | `boolean`      | `true`              |
+| Parameter     | theme_type                                          | theme_default_value |
+| ------------- | --------------------------------------------------- | ------------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[][] | `undefined`         |
+| `shallow`     | `boolean`                                           | `true`              |
 
 ###### Returns
 
@@ -2198,11 +2198,11 @@ overlap as well.
 
 #### theme_extends
 
-- `AbstractPointObject`\<`GJ.MultiPoint`\>
+- `AbstractPointObject`\<[`MultiPoint`](geojson-utils/geojson.md#multipoint)\>
 
 #### Implements
 
-- `MultiPoint`
+- [`MultiPoint`](geojson-utils/geojson.md#multipoint)
 
 #### Constructors
 
@@ -2212,10 +2212,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                | theme_default_value |
-| --------- | ----------------------------------------- | ------------------- |
-| `obj`     | `OptionalParam`\<`MultiPoint`, `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                 | `true`              |
+| Parameter | theme_type                                                                                                 | theme_default_value |
+| --------- | ---------------------------------------------------------------------------------------------------------- | ------------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`MultiPoint`](geojson-utils/geojson.md#multipoint), `"type"`\> | `undefined`         |
+| `shallow` | `boolean`                                                                                                  | `true`              |
 
 ###### Returns
 
@@ -2227,11 +2227,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type     |
-| ---------------------------------------- | -------------- | -------------- |
-| <a id="bbox-5"></a> `bbox?`              | `public`       | `BBox`         |
-| <a id="coordinates-4"></a> `coordinates` | `public`       | `Position`[]   |
-| <a id="type-6"></a> `type`               | `readonly`     | `"MultiPoint"` |
+| Property                                 | theme_modifier | theme_type                                        |
+| ---------------------------------------- | -------------- | ------------------------------------------------- |
+| <a id="bbox-5"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)         |
+| <a id="coordinates-4"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position)[] |
+| <a id="type-6"></a> `type`               | `readonly`     | `"MultiPoint"`                                    |
 
 #### Methods
 
@@ -2251,7 +2251,7 @@ overlap as well.
 
 ##### centroid()
 
-> **centroid**(`iterations`): `Position`
+> **centroid**(`iterations`): [`Position`](geojson-utils/geojson.md#position)
 
 ###### Parameters
 
@@ -2261,7 +2261,7 @@ overlap as well.
 
 ###### Returns
 
-`Position`
+[`Position`](geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -2303,9 +2303,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `position` | `Position` |
+| Parameter  | theme_type                                      |
+| ---------- | ----------------------------------------------- |
+| `position` | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -2329,11 +2329,11 @@ overlap as well.
 
 ##### getBBox()
 
-> **getBBox**(): `BBox`
+> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -2341,11 +2341,11 @@ overlap as well.
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): `Position`[]
+> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)[]
 
 ###### Returns
 
-`Position`[]
+[`Position`](geojson-utils/geojson.md#position)[]
 
 ###### Overrides
 
@@ -2405,9 +2405,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `point`   | `Position` |
+| Parameter | theme_type                                      |
+| --------- | ----------------------------------------------- |
+| `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -2419,11 +2419,11 @@ overlap as well.
 
 ##### setBBox()
 
-> **setBBox**(): `BBox`
+> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -2462,10 +2462,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | theme_type   | theme_default_value |
-| ------------- | ------------ | ------------------- |
-| `coordinates` | `Position`[] | `undefined`         |
-| `shallow`     | `boolean`    | `true`              |
+| Parameter     | theme_type                                        | theme_default_value |
+| ------------- | ------------------------------------------------- | ------------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[] | `undefined`         |
+| `shallow`     | `boolean`                                         | `true`              |
 
 ###### Returns
 
@@ -2491,11 +2491,11 @@ overlap as well.
 
 #### theme_extends
 
-- `AbstractAreaObject`\<`GJ.MultiPolygon`\>
+- `AbstractAreaObject`\<[`MultiPolygon`](geojson-utils/geojson.md#multipolygon)\>
 
 #### Implements
 
-- `MultiPolygon`
+- [`MultiPolygon`](geojson-utils/geojson.md#multipolygon)
 
 #### Constructors
 
@@ -2505,10 +2505,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                                  | theme_default_value |
-| --------- | ------------------------------------------- | ------------------- |
-| `obj`     | `OptionalParam`\<`MultiPolygon`, `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                                   | `true`              |
+| Parameter | theme_type                                                                                                     | theme_default_value |
+| --------- | -------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`MultiPolygon`](geojson-utils/geojson.md#multipolygon), `"type"`\> | `undefined`         |
+| `shallow` | `boolean`                                                                                                      | `true`              |
 
 ###### Returns
 
@@ -2520,11 +2520,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type       |
-| ---------------------------------------- | -------------- | ---------------- |
-| <a id="bbox-6"></a> `bbox?`              | `public`       | `BBox`           |
-| <a id="coordinates-5"></a> `coordinates` | `public`       | `Position`[][][] |
-| <a id="type-7"></a> `type`               | `readonly`     | `"MultiPolygon"` |
+| Property                                 | theme_modifier | theme_type                                            |
+| ---------------------------------------- | -------------- | ----------------------------------------------------- |
+| <a id="bbox-6"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)             |
+| <a id="coordinates-5"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position)[][][] |
+| <a id="type-7"></a> `type`               | `readonly`     | `"MultiPolygon"`                                      |
 
 #### Methods
 
@@ -2556,7 +2556,7 @@ overlap as well.
 
 ##### centroid()
 
-> **centroid**(`iterations`): `Position`
+> **centroid**(`iterations`): [`Position`](geojson-utils/geojson.md#position)
 
 ###### Parameters
 
@@ -2566,7 +2566,7 @@ overlap as well.
 
 ###### Returns
 
-`Position`
+[`Position`](geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -2596,9 +2596,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `position` | `Position` |
+| Parameter  | theme_type                                      |
+| ---------- | ----------------------------------------------- |
+| `position` | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -2622,11 +2622,11 @@ overlap as well.
 
 ##### getBBox()
 
-> **getBBox**(): `BBox`
+> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -2634,11 +2634,11 @@ overlap as well.
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): `Position`[][][]
+> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)[][][]
 
 ###### Returns
 
-`Position`[][][]
+[`Position`](geojson-utils/geojson.md#position)[][][]
 
 ###### Overrides
 
@@ -2650,9 +2650,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `position` | `Position` |
+| Parameter  | theme_type                                      |
+| ---------- | ----------------------------------------------- |
+| `position` | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -2728,9 +2728,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `point`   | `Position` |
+| Parameter | theme_type                                      |
+| --------- | ----------------------------------------------- |
+| `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -2742,11 +2742,11 @@ overlap as well.
 
 ##### setBBox()
 
-> **setBBox**(): `BBox`
+> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -2793,10 +2793,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | theme_type       | theme_default_value |
-| ------------- | ---------------- | ------------------- |
-| `coordinates` | `Position`[][][] | `undefined`         |
-| `shallow`     | `boolean`        | `true`              |
+| Parameter     | theme_type                                            | theme_default_value |
+| ------------- | ----------------------------------------------------- | ------------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[][][] | `undefined`         |
+| `shallow`     | `boolean`                                             | `true`              |
 
 ###### Returns
 
@@ -2822,11 +2822,11 @@ overlap as well.
 
 #### theme_extends
 
-- `AbstractPointObject`\<`GJ.Point`\>
+- `AbstractPointObject`\<[`Point`](geojson-utils/geojson.md#point)\>
 
 #### Implements
 
-- `Point`
+- [`Point`](geojson-utils/geojson.md#point)
 
 #### Constructors
 
@@ -2836,10 +2836,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                           | theme_default_value |
-| --------- | ------------------------------------ | ------------------- |
-| `obj`     | `OptionalParam`\<`Point`, `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                            | `true`              |
+| Parameter | theme_type                                                                                       | theme_default_value |
+| --------- | ------------------------------------------------------------------------------------------------ | ------------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`Point`](geojson-utils/geojson.md#point), `"type"`\> | `undefined`         |
+| `shallow` | `boolean`                                                                                        | `true`              |
 
 ###### Returns
 
@@ -2851,11 +2851,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type |
-| ---------------------------------------- | -------------- | ---------- |
-| <a id="bbox-7"></a> `bbox?`              | `public`       | `BBox`     |
-| <a id="coordinates-6"></a> `coordinates` | `public`       | `Position` |
-| <a id="type-8"></a> `type`               | `readonly`     | `"Point"`  |
+| Property                                 | theme_modifier | theme_type                                      |
+| ---------------------------------------- | -------------- | ----------------------------------------------- |
+| <a id="bbox-7"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)       |
+| <a id="coordinates-6"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position) |
+| <a id="type-8"></a> `type`               | `readonly`     | `"Point"`                                       |
 
 #### Methods
 
@@ -2875,11 +2875,11 @@ overlap as well.
 
 ##### centroid()
 
-> **centroid**(): `Position`
+> **centroid**(): [`Position`](geojson-utils/geojson.md#position)
 
 ###### Returns
 
-`Position`
+[`Position`](geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -2921,9 +2921,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `position` | `Position` |
+| Parameter  | theme_type                                      |
+| ---------- | ----------------------------------------------- |
+| `position` | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -2947,11 +2947,11 @@ overlap as well.
 
 ##### getBBox()
 
-> **getBBox**(): `BBox`
+> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -2959,11 +2959,11 @@ overlap as well.
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): `Position`[]
+> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)[]
 
 ###### Returns
 
-`Position`[]
+[`Position`](geojson-utils/geojson.md#position)[]
 
 ###### Overrides
 
@@ -3023,9 +3023,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `point`   | `Position` |
+| Parameter | theme_type                                      |
+| --------- | ----------------------------------------------- |
+| `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -3037,11 +3037,11 @@ overlap as well.
 
 ##### setBBox()
 
-> **setBBox**(): `BBox`
+> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -3080,10 +3080,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | theme_type | theme_default_value |
-| ------------- | ---------- | ------------------- |
-| `coordinates` | `Position` | `undefined`         |
-| `shallow`     | `boolean`  | `true`              |
+| Parameter     | theme_type                                      | theme_default_value |
+| ------------- | ----------------------------------------------- | ------------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position) | `undefined`         |
+| `shallow`     | `boolean`                                       | `true`              |
 
 ###### Returns
 
@@ -3109,11 +3109,11 @@ overlap as well.
 
 #### theme_extends
 
-- `AbstractAreaObject`\<`GJ.Polygon`\>
+- `AbstractAreaObject`\<[`Polygon`](geojson-utils/geojson.md#polygon)\>
 
 #### Implements
 
-- `Polygon`
+- [`Polygon`](geojson-utils/geojson.md#polygon)
 
 #### Constructors
 
@@ -3123,10 +3123,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type                             | theme_default_value |
-| --------- | -------------------------------------- | ------------------- |
-| `obj`     | `OptionalParam`\<`Polygon`, `"type"`\> | `undefined`         |
-| `shallow` | `boolean`                              | `true`              |
+| Parameter | theme_type                                                                                           | theme_default_value |
+| --------- | ---------------------------------------------------------------------------------------------------- | ------------------- |
+| `obj`     | [`OptionalParam`](utils.md#optionalparam)\<[`Polygon`](geojson-utils/geojson.md#polygon), `"type"`\> | `undefined`         |
+| `shallow` | `boolean`                                                                                            | `true`              |
 
 ###### Returns
 
@@ -3138,11 +3138,11 @@ overlap as well.
 
 #### Properties
 
-| Property                                 | theme_modifier | theme_type     |
-| ---------------------------------------- | -------------- | -------------- |
-| <a id="bbox-8"></a> `bbox?`              | `public`       | `BBox`         |
-| <a id="coordinates-7"></a> `coordinates` | `public`       | `Position`[][] |
-| <a id="type-9"></a> `type`               | `readonly`     | `"Polygon"`    |
+| Property                                 | theme_modifier | theme_type                                          |
+| ---------------------------------------- | -------------- | --------------------------------------------------- |
+| <a id="bbox-8"></a> `bbox?`              | `public`       | [`BBox`](geojson-utils/geojson.md#bbox-7)           |
+| <a id="coordinates-7"></a> `coordinates` | `public`       | [`Position`](geojson-utils/geojson.md#position)[][] |
+| <a id="type-9"></a> `type`               | `readonly`     | `"Polygon"`                                         |
 
 #### Methods
 
@@ -3174,7 +3174,7 @@ overlap as well.
 
 ##### centroid()
 
-> **centroid**(`iterations`): `Position`
+> **centroid**(`iterations`): [`Position`](geojson-utils/geojson.md#position)
 
 ###### Parameters
 
@@ -3184,7 +3184,7 @@ overlap as well.
 
 ###### Returns
 
-`Position`
+[`Position`](geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -3214,9 +3214,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `position` | `Position` |
+| Parameter  | theme_type                                      |
+| ---------- | ----------------------------------------------- |
+| `position` | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -3240,11 +3240,11 @@ overlap as well.
 
 ##### getBBox()
 
-> **getBBox**(): `BBox`
+> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -3252,11 +3252,11 @@ overlap as well.
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): `Position`[][][]
+> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)[][][]
 
 ###### Returns
 
-`Position`[][][]
+[`Position`](geojson-utils/geojson.md#position)[][][]
 
 ###### Overrides
 
@@ -3268,9 +3268,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type |
-| ---------- | ---------- |
-| `position` | `Position` |
+| Parameter  | theme_type                                      |
+| ---------- | ----------------------------------------------- |
+| `position` | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -3346,9 +3346,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter | theme_type |
-| --------- | ---------- |
-| `point`   | `Position` |
+| Parameter | theme_type                                      |
+| --------- | ----------------------------------------------- |
+| `point`   | [`Position`](geojson-utils/geojson.md#position) |
 
 ###### Returns
 
@@ -3360,11 +3360,11 @@ overlap as well.
 
 ##### setBBox()
 
-> **setBBox**(): `BBox`
+> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-`BBox`
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -3411,10 +3411,10 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter     | theme_type     | theme_default_value |
-| ------------- | -------------- | ------------------- |
-| `coordinates` | `Position`[][] | `undefined`         |
-| `shallow`     | `boolean`      | `true`              |
+| Parameter     | theme_type                                          | theme_default_value |
+| ------------- | --------------------------------------------------- | ------------------- |
+| `coordinates` | [`Position`](geojson-utils/geojson.md#position)[][] | `undefined`         |
+| `shallow`     | `boolean`                                           | `true`              |
 
 ###### Returns
 
@@ -3708,9 +3708,9 @@ overlap as well.
 
 ###### Parameters
 
-| Parameter  | theme_type                                 |
-| ---------- | ------------------------------------------ |
-| `feature?` | `BaseFeature`\<`BaseGeometry`, `unknown`\> |
+| Parameter  | theme_type                                                                                                                  |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `feature?` | [`BaseFeature`](geojson-utils/geojson.md#basefeature)\<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `unknown`\> |
 
 ###### Returns
 
@@ -3902,13 +3902,13 @@ k is "\_designWeight" \| "\_distance" \| "\_parent" \| "\_randomRotation" \| "\_
 
 ### ObjectOfPrimitive\<T\>
 
-> **ObjectOfPrimitive**\<`T`\> = `T` _extends_ `GeometricPrimitiveArea` ? [`AreaObject`](#areaobject) : `T` _extends_ `GeometricPrimitiveLine` ? [`LineObject`](#lineobject) : `T` _extends_ `GeometricPrimitivePoint` ? [`PointObject`](#pointobject) : `never`
+> **ObjectOfPrimitive**\<`T`\> = `T` _extends_ [`GeometricPrimitiveArea`](geojson-utils/.md#geometricprimitivearea-1) ? [`AreaObject`](#areaobject) : `T` _extends_ [`GeometricPrimitiveLine`](geojson-utils/.md#geometricprimitiveline-1) ? [`LineObject`](#lineobject) : `T` _extends_ [`GeometricPrimitivePoint`](geojson-utils/.md#geometricprimitivepoint-1) ? [`PointObject`](#pointobject) : `never`
 
 #### Type Parameters
 
-| Type Parameter                          |
-| --------------------------------------- |
-| `T` _extends_ `GeometricPrimitiveUnion` |
+| Type Parameter                                                                       |
+| ------------------------------------------------------------------------------------ |
+| `T` _extends_ [`GeometricPrimitiveUnion`](geojson-utils/.md#geometricprimitiveunion) |
 
 ---
 
@@ -3920,7 +3920,7 @@ k is "\_designWeight" \| "\_distance" \| "\_parent" \| "\_randomRotation" \| "\_
 
 ### PrimitiveOfObject\<T\>
 
-> **PrimitiveOfObject**\<`T`\> = `T` _extends_ [`AreaObject`](#areaobject) ? `GeometricPrimitiveArea` : `T` _extends_ [`LineObject`](#lineobject) ? `GeometricPrimitiveLine` : `T` _extends_ [`PointObject`](#pointobject) ? `GeometricPrimitivePoint` : `GeometricPrimitiveNone`
+> **PrimitiveOfObject**\<`T`\> = `T` _extends_ [`AreaObject`](#areaobject) ? [`GeometricPrimitiveArea`](geojson-utils/.md#geometricprimitivearea-1) : `T` _extends_ [`LineObject`](#lineobject) ? [`GeometricPrimitiveLine`](geojson-utils/.md#geometricprimitiveline-1) : `T` _extends_ [`PointObject`](#pointobject) ? [`GeometricPrimitivePoint`](geojson-utils/.md#geometricprimitivepoint-1) : [`GeometricPrimitiveNone`](geojson-utils/.md#geometricprimitivenone-1)
 
 #### Type Parameters
 
@@ -4116,7 +4116,7 @@ Intersection of points and area.
 
 | Parameter  | theme_type                                              | theme_default_value |
 | ---------- | ------------------------------------------------------- | ------------------- |
-| `geometry` | `BaseGeometry`                                          | `undefined`         |
+| `geometry` | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`         |
 | `shallow`  | `boolean`                                               | `true`              |
 | `options`  | [`CirclesToPolygonsOptions`](#circlestopolygonsoptions) | `{}`                |
 
@@ -4132,10 +4132,10 @@ Intersection of points and area.
 
 #### Parameters
 
-| Parameter  | theme_type     | theme_default_value |
-| ---------- | -------------- | ------------------- |
-| `geometry` | `BaseGeometry` | `undefined`         |
-| `shallow`  | `boolean`      | `true`              |
+| Parameter  | theme_type                                              | theme_default_value |
+| ---------- | ------------------------------------------------------- | ------------------- |
+| `geometry` | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`         |
+| `shallow`  | `boolean`                                               | `true`              |
 
 #### Returns
 
@@ -4149,10 +4149,10 @@ Intersection of points and area.
 
 #### Parameters
 
-| Parameter  | theme_type     | theme_default_value |
-| ---------- | -------------- | ------------------- |
-| `geometry` | `BaseGeometry` | `undefined`         |
-| `shallow`  | `boolean`      | `true`              |
+| Parameter  | theme_type                                              | theme_default_value |
+| ---------- | ------------------------------------------------------- | ------------------- |
+| `geometry` | [`BaseGeometry`](geojson-utils/geojson.md#basegeometry) | `undefined`         |
+| `shallow`  | `boolean`                                               | `true`              |
 
 #### Returns
 

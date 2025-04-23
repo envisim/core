@@ -91,7 +91,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/utils",
-                      "packagePath": "dist/types.d.ts",
+                      "packagePath": "src/types.ts",
                       "qualifiedName": "OptionalParam"
                     },
                     "typeArguments": [
@@ -99,7 +99,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "Circle"
                         },
                         "name": "Circle",
@@ -175,7 +175,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geojson.d.ts",
+              "packagePath": "src/geojson.ts",
               "qualifiedName": "BBox"
             },
             "name": "BBox",
@@ -204,7 +204,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geojson.d.ts",
+              "packagePath": "src/geojson.ts",
               "qualifiedName": "Position"
             },
             "name": "Position",
@@ -358,7 +358,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Position"
                 },
                 "name": "Position",
@@ -447,7 +447,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -527,7 +527,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -565,7 +565,7 @@
                   "type": "reference",
                   "target": {
                     "packageName": "@envisim/geojson-utils",
-                    "packagePath": "dist/geojson.d.ts",
+                    "packagePath": "src/geojson.ts",
                     "qualifiedName": "Position"
                   },
                   "name": "Position",
@@ -609,7 +609,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -849,7 +849,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -891,7 +891,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -1077,7 +1077,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -1190,7 +1190,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geojson.d.ts",
+                "packagePath": "src/geojson.ts",
                 "qualifiedName": "Circle"
               },
               "name": "GJ.Circle",
@@ -1207,7 +1207,7 @@
           "type": "reference",
           "target": {
             "packageName": "@envisim/geojson-utils",
-            "packagePath": "dist/geojson.d.ts",
+            "packagePath": "src/geojson.ts",
             "qualifiedName": "Circle"
           },
           "name": "Circle",
@@ -2196,7 +2196,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "BaseGeometry"
                     },
                     "name": "BaseGeometry",
@@ -2322,7 +2322,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/utils",
-                      "packagePath": "dist/types.d.ts",
+                      "packagePath": "src/types.ts",
                       "qualifiedName": "OptionalParam"
                     },
                     "typeArguments": [
@@ -2330,7 +2330,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "BaseFeature"
                         },
                         "typeArguments": [
@@ -2338,7 +2338,7 @@
                             "type": "reference",
                             "target": {
                               "packageName": "@envisim/geojson-utils",
-                              "packagePath": "dist/geojson.d.ts",
+                              "packagePath": "src/geojson.ts",
                               "qualifiedName": "BaseGeometry"
                             },
                             "name": "BaseGeometry",
@@ -2456,7 +2456,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "BaseGeometry"
                     },
                     "name": "BaseGeometry",
@@ -2565,7 +2565,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/utils",
-                      "packagePath": "dist/types.d.ts",
+                      "packagePath": "src/types.ts",
                       "qualifiedName": "OptionalParam"
                     },
                     "typeArguments": [
@@ -2573,7 +2573,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "BaseFeature"
                         },
                         "typeArguments": [
@@ -2581,7 +2581,7 @@
                             "type": "reference",
                             "target": {
                               "packageName": "@envisim/geojson-utils",
-                              "packagePath": "dist/geojson.d.ts",
+                              "packagePath": "src/geojson.ts",
                               "qualifiedName": "BaseGeometry"
                             },
                             "name": "BaseGeometry",
@@ -2699,7 +2699,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "BaseGeometry"
                     },
                     "name": "BaseGeometry",
@@ -2808,7 +2808,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/utils",
-                      "packagePath": "dist/types.d.ts",
+                      "packagePath": "src/types.ts",
                       "qualifiedName": "OptionalParam"
                     },
                     "typeArguments": [
@@ -2816,7 +2816,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "BaseFeature"
                         },
                         "typeArguments": [
@@ -2824,7 +2824,7 @@
                             "type": "reference",
                             "target": {
                               "packageName": "@envisim/geojson-utils",
-                              "packagePath": "dist/geojson.d.ts",
+                              "packagePath": "src/geojson.ts",
                               "qualifiedName": "BaseGeometry"
                             },
                             "name": "BaseGeometry",
@@ -3114,7 +3114,7 @@
           "type": "reference",
           "target": {
             "packageName": "@envisim/geojson-utils",
-            "packagePath": "dist/geojson.d.ts",
+            "packagePath": "src/geojson.ts",
             "qualifiedName": "BaseFeature"
           },
           "typeArguments": [
@@ -3122,7 +3122,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geojson.d.ts",
+                "packagePath": "src/geojson.ts",
                 "qualifiedName": "SingleTypeObject"
               },
               "name": "GJ.SingleTypeObject",
@@ -3167,7 +3167,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geojson.d.ts",
+              "packagePath": "src/geojson.ts",
               "qualifiedName": "BBox"
             },
             "name": "BBox",
@@ -3304,7 +3304,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geometric-primitive.d.ts",
+              "packagePath": "src/geometric-primitive.ts",
               "qualifiedName": "GeometricPrimitiveUnion"
             },
             "name": "GeometricPrimitiveUnion",
@@ -3696,7 +3696,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Position"
                 },
                 "name": "Position",
@@ -3939,7 +3939,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -4085,7 +4085,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geometric-primitive.d.ts",
+                  "packagePath": "src/geometric-primitive.ts",
                   "qualifiedName": "GeometricPrimitiveUnion"
                 },
                 "name": "GeometricPrimitiveUnion",
@@ -4111,7 +4111,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -4218,7 +4218,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -5566,7 +5566,7 @@
           "type": "reference",
           "target": {
             "packageName": "@envisim/geojson-utils",
-            "packagePath": "dist/geojson.d.ts",
+            "packagePath": "src/geojson.ts",
             "qualifiedName": "BaseFeatureCollection"
           },
           "typeArguments": [
@@ -5574,7 +5574,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geojson.d.ts",
+                "packagePath": "src/geojson.ts",
                 "qualifiedName": "BaseFeature"
               },
               "typeArguments": [
@@ -5582,7 +5582,7 @@
                   "type": "reference",
                   "target": {
                     "packageName": "@envisim/geojson-utils",
-                    "packagePath": "dist/geojson.d.ts",
+                    "packagePath": "src/geojson.ts",
                     "qualifiedName": "SingleTypeObject"
                   },
                   "name": "GJ.SingleTypeObject",
@@ -5654,7 +5654,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/utils",
-                      "packagePath": "dist/types.d.ts",
+                      "packagePath": "src/types.ts",
                       "qualifiedName": "OptionalParam"
                     },
                     "typeArguments": [
@@ -5662,7 +5662,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "LineString"
                         },
                         "name": "LineString",
@@ -5722,7 +5722,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geojson.d.ts",
+              "packagePath": "src/geojson.ts",
               "qualifiedName": "BBox"
             },
             "name": "BBox",
@@ -5753,7 +5753,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geojson.d.ts",
+                "packagePath": "src/geojson.ts",
                 "qualifiedName": "Position"
               },
               "name": "Position",
@@ -5882,7 +5882,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Position"
                 },
                 "name": "Position",
@@ -5971,7 +5971,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -6051,7 +6051,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -6091,7 +6091,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -6327,7 +6327,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -6369,7 +6369,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -6504,7 +6504,7 @@
                       "type": "reference",
                       "target": {
                         "packageName": "@envisim/geojson-utils",
-                        "packagePath": "dist/geojson.d.ts",
+                        "packagePath": "src/geojson.ts",
                         "qualifiedName": "Position"
                       },
                       "name": "Position",
@@ -6606,7 +6606,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geojson.d.ts",
+                "packagePath": "src/geojson.ts",
                 "qualifiedName": "LineString"
               },
               "name": "GJ.LineString",
@@ -6623,7 +6623,7 @@
           "type": "reference",
           "target": {
             "packageName": "@envisim/geojson-utils",
-            "packagePath": "dist/geojson.d.ts",
+            "packagePath": "src/geojson.ts",
             "qualifiedName": "LineString"
           },
           "name": "LineString",
@@ -6716,7 +6716,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/utils",
-                      "packagePath": "dist/types.d.ts",
+                      "packagePath": "src/types.ts",
                       "qualifiedName": "OptionalParam"
                     },
                     "typeArguments": [
@@ -6724,7 +6724,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "MultiCircle"
                         },
                         "name": "MultiCircle",
@@ -6800,7 +6800,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geojson.d.ts",
+              "packagePath": "src/geojson.ts",
               "qualifiedName": "BBox"
             },
             "name": "BBox",
@@ -6831,7 +6831,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geojson.d.ts",
+                "packagePath": "src/geojson.ts",
                 "qualifiedName": "Position"
               },
               "name": "Position",
@@ -7018,7 +7018,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Position"
                 },
                 "name": "Position",
@@ -7107,7 +7107,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -7187,7 +7187,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -7225,7 +7225,7 @@
                   "type": "reference",
                   "target": {
                     "packageName": "@envisim/geojson-utils",
-                    "packagePath": "dist/geojson.d.ts",
+                    "packagePath": "src/geojson.ts",
                     "qualifiedName": "Position"
                   },
                   "name": "Position",
@@ -7269,7 +7269,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -7509,7 +7509,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -7551,7 +7551,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -7743,7 +7743,7 @@
                       "type": "reference",
                       "target": {
                         "packageName": "@envisim/geojson-utils",
-                        "packagePath": "dist/geojson.d.ts",
+                        "packagePath": "src/geojson.ts",
                         "qualifiedName": "Position"
                       },
                       "name": "Position",
@@ -7857,7 +7857,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geojson.d.ts",
+                "packagePath": "src/geojson.ts",
                 "qualifiedName": "MultiCircle"
               },
               "name": "GJ.MultiCircle",
@@ -7874,7 +7874,7 @@
           "type": "reference",
           "target": {
             "packageName": "@envisim/geojson-utils",
-            "packagePath": "dist/geojson.d.ts",
+            "packagePath": "src/geojson.ts",
             "qualifiedName": "MultiCircle"
           },
           "name": "MultiCircle",
@@ -7913,7 +7913,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/utils",
-                      "packagePath": "dist/types.d.ts",
+                      "packagePath": "src/types.ts",
                       "qualifiedName": "OptionalParam"
                     },
                     "typeArguments": [
@@ -7921,7 +7921,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "MultiLineString"
                         },
                         "name": "MultiLineString",
@@ -7981,7 +7981,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geojson.d.ts",
+              "packagePath": "src/geojson.ts",
               "qualifiedName": "BBox"
             },
             "name": "BBox",
@@ -8014,7 +8014,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Position"
                 },
                 "name": "Position",
@@ -8144,7 +8144,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Position"
                 },
                 "name": "Position",
@@ -8233,7 +8233,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -8313,7 +8313,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -8353,7 +8353,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -8589,7 +8589,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -8631,7 +8631,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -8764,7 +8764,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "Position"
                         },
                         "name": "Position",
@@ -8867,7 +8867,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geojson.d.ts",
+                "packagePath": "src/geojson.ts",
                 "qualifiedName": "MultiLineString"
               },
               "name": "GJ.MultiLineString",
@@ -8884,7 +8884,7 @@
           "type": "reference",
           "target": {
             "packageName": "@envisim/geojson-utils",
-            "packagePath": "dist/geojson.d.ts",
+            "packagePath": "src/geojson.ts",
             "qualifiedName": "MultiLineString"
           },
           "name": "MultiLineString",
@@ -8923,7 +8923,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/utils",
-                      "packagePath": "dist/types.d.ts",
+                      "packagePath": "src/types.ts",
                       "qualifiedName": "OptionalParam"
                     },
                     "typeArguments": [
@@ -8931,7 +8931,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "MultiPoint"
                         },
                         "name": "MultiPoint",
@@ -8991,7 +8991,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geojson.d.ts",
+              "packagePath": "src/geojson.ts",
               "qualifiedName": "BBox"
             },
             "name": "BBox",
@@ -9022,7 +9022,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geojson.d.ts",
+                "packagePath": "src/geojson.ts",
                 "qualifiedName": "Position"
               },
               "name": "Position",
@@ -9163,7 +9163,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Position"
                 },
                 "name": "Position",
@@ -9286,7 +9286,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -9366,7 +9366,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -9404,7 +9404,7 @@
                   "type": "reference",
                   "target": {
                     "packageName": "@envisim/geojson-utils",
-                    "packagePath": "dist/geojson.d.ts",
+                    "packagePath": "src/geojson.ts",
                     "qualifiedName": "Position"
                   },
                   "name": "Position",
@@ -9609,7 +9609,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -9651,7 +9651,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -9782,7 +9782,7 @@
                       "type": "reference",
                       "target": {
                         "packageName": "@envisim/geojson-utils",
-                        "packagePath": "dist/geojson.d.ts",
+                        "packagePath": "src/geojson.ts",
                         "qualifiedName": "Position"
                       },
                       "name": "Position",
@@ -9884,7 +9884,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geojson.d.ts",
+                "packagePath": "src/geojson.ts",
                 "qualifiedName": "MultiPoint"
               },
               "name": "GJ.MultiPoint",
@@ -9901,7 +9901,7 @@
           "type": "reference",
           "target": {
             "packageName": "@envisim/geojson-utils",
-            "packagePath": "dist/geojson.d.ts",
+            "packagePath": "src/geojson.ts",
             "qualifiedName": "MultiPoint"
           },
           "name": "MultiPoint",
@@ -9940,7 +9940,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/utils",
-                      "packagePath": "dist/types.d.ts",
+                      "packagePath": "src/types.ts",
                       "qualifiedName": "OptionalParam"
                     },
                     "typeArguments": [
@@ -9948,7 +9948,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "MultiPolygon"
                         },
                         "name": "MultiPolygon",
@@ -10008,7 +10008,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geojson.d.ts",
+              "packagePath": "src/geojson.ts",
               "qualifiedName": "BBox"
             },
             "name": "BBox",
@@ -10043,7 +10043,7 @@
                   "type": "reference",
                   "target": {
                     "packageName": "@envisim/geojson-utils",
-                    "packagePath": "dist/geojson.d.ts",
+                    "packagePath": "src/geojson.ts",
                     "qualifiedName": "Position"
                   },
                   "name": "Position",
@@ -10204,7 +10204,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Position"
                 },
                 "name": "Position",
@@ -10293,7 +10293,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -10373,7 +10373,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -10415,7 +10415,7 @@
                       "type": "reference",
                       "target": {
                         "packageName": "@envisim/geojson-utils",
-                        "packagePath": "dist/geojson.d.ts",
+                        "packagePath": "src/geojson.ts",
                         "qualifiedName": "Position"
                       },
                       "name": "Position",
@@ -10461,7 +10461,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -10701,7 +10701,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -10743,7 +10743,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -10915,7 +10915,7 @@
                           "type": "reference",
                           "target": {
                             "packageName": "@envisim/geojson-utils",
-                            "packagePath": "dist/geojson.d.ts",
+                            "packagePath": "src/geojson.ts",
                             "qualifiedName": "Position"
                           },
                           "name": "Position",
@@ -11020,7 +11020,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geojson.d.ts",
+                "packagePath": "src/geojson.ts",
                 "qualifiedName": "MultiPolygon"
               },
               "name": "GJ.MultiPolygon",
@@ -11037,7 +11037,7 @@
           "type": "reference",
           "target": {
             "packageName": "@envisim/geojson-utils",
-            "packagePath": "dist/geojson.d.ts",
+            "packagePath": "src/geojson.ts",
             "qualifiedName": "MultiPolygon"
           },
           "name": "MultiPolygon",
@@ -11076,7 +11076,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/utils",
-                      "packagePath": "dist/types.d.ts",
+                      "packagePath": "src/types.ts",
                       "qualifiedName": "OptionalParam"
                     },
                     "typeArguments": [
@@ -11084,7 +11084,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "Point"
                         },
                         "name": "Point",
@@ -11144,7 +11144,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geojson.d.ts",
+              "packagePath": "src/geojson.ts",
               "qualifiedName": "BBox"
             },
             "name": "BBox",
@@ -11173,7 +11173,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geojson.d.ts",
+              "packagePath": "src/geojson.ts",
               "qualifiedName": "Position"
             },
             "name": "Position",
@@ -11281,7 +11281,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Position"
                 },
                 "name": "Position",
@@ -11404,7 +11404,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -11484,7 +11484,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -11522,7 +11522,7 @@
                   "type": "reference",
                   "target": {
                     "packageName": "@envisim/geojson-utils",
-                    "packagePath": "dist/geojson.d.ts",
+                    "packagePath": "src/geojson.ts",
                     "qualifiedName": "Position"
                   },
                   "name": "Position",
@@ -11727,7 +11727,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -11769,7 +11769,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -11902,7 +11902,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -12003,7 +12003,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geojson.d.ts",
+                "packagePath": "src/geojson.ts",
                 "qualifiedName": "Point"
               },
               "name": "GJ.Point",
@@ -12020,7 +12020,7 @@
           "type": "reference",
           "target": {
             "packageName": "@envisim/geojson-utils",
-            "packagePath": "dist/geojson.d.ts",
+            "packagePath": "src/geojson.ts",
             "qualifiedName": "Point"
           },
           "name": "Point",
@@ -12059,7 +12059,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/utils",
-                      "packagePath": "dist/types.d.ts",
+                      "packagePath": "src/types.ts",
                       "qualifiedName": "OptionalParam"
                     },
                     "typeArguments": [
@@ -12067,7 +12067,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "Polygon"
                         },
                         "name": "Polygon",
@@ -12127,7 +12127,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geojson.d.ts",
+              "packagePath": "src/geojson.ts",
               "qualifiedName": "BBox"
             },
             "name": "BBox",
@@ -12160,7 +12160,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Position"
                 },
                 "name": "Position",
@@ -12320,7 +12320,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "Position"
                 },
                 "name": "Position",
@@ -12409,7 +12409,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -12489,7 +12489,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -12531,7 +12531,7 @@
                       "type": "reference",
                       "target": {
                         "packageName": "@envisim/geojson-utils",
-                        "packagePath": "dist/geojson.d.ts",
+                        "packagePath": "src/geojson.ts",
                         "qualifiedName": "Position"
                       },
                       "name": "Position",
@@ -12577,7 +12577,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -12817,7 +12817,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "Position"
                     },
                     "name": "Position",
@@ -12859,7 +12859,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BBox"
                 },
                 "name": "BBox",
@@ -13018,7 +13018,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "Position"
                         },
                         "name": "Position",
@@ -13121,7 +13121,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geojson.d.ts",
+                "packagePath": "src/geojson.ts",
                 "qualifiedName": "Polygon"
               },
               "name": "GJ.Polygon",
@@ -13138,7 +13138,7 @@
           "type": "reference",
           "target": {
             "packageName": "@envisim/geojson-utils",
-            "packagePath": "dist/geojson.d.ts",
+            "packagePath": "src/geojson.ts",
             "qualifiedName": "Polygon"
           },
           "name": "Polygon",
@@ -14133,7 +14133,7 @@
                     "type": "reference",
                     "target": {
                       "packageName": "@envisim/geojson-utils",
-                      "packagePath": "dist/geojson.d.ts",
+                      "packagePath": "src/geojson.ts",
                       "qualifiedName": "BaseFeature"
                     },
                     "typeArguments": [
@@ -14141,7 +14141,7 @@
                         "type": "reference",
                         "target": {
                           "packageName": "@envisim/geojson-utils",
-                          "packagePath": "dist/geojson.d.ts",
+                          "packagePath": "src/geojson.ts",
                           "qualifiedName": "BaseGeometry"
                         },
                         "name": "BaseGeometry",
@@ -15278,7 +15278,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geometric-primitive.d.ts",
+              "packagePath": "src/geometric-primitive.ts",
               "qualifiedName": "GeometricPrimitiveUnion"
             },
             "name": "GeometricPrimitiveUnion",
@@ -15299,7 +15299,7 @@
           "type": "reference",
           "target": {
             "packageName": "@envisim/geojson-utils",
-            "packagePath": "dist/geometric-primitive.d.ts",
+            "packagePath": "src/geometric-primitive.ts",
             "qualifiedName": "GeometricPrimitiveArea"
           },
           "name": "GeometricPrimitiveArea",
@@ -15324,7 +15324,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geometric-primitive.d.ts",
+              "packagePath": "src/geometric-primitive.ts",
               "qualifiedName": "GeometricPrimitiveLine"
             },
             "name": "GeometricPrimitiveLine",
@@ -15349,7 +15349,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geometric-primitive.d.ts",
+                "packagePath": "src/geometric-primitive.ts",
                 "qualifiedName": "GeometricPrimitivePoint"
               },
               "name": "GeometricPrimitivePoint",
@@ -15450,7 +15450,7 @@
           "type": "reference",
           "target": {
             "packageName": "@envisim/geojson-utils",
-            "packagePath": "dist/geometric-primitive.d.ts",
+            "packagePath": "src/geometric-primitive.ts",
             "qualifiedName": "GeometricPrimitiveArea"
           },
           "name": "GeometricPrimitiveArea",
@@ -15475,7 +15475,7 @@
             "type": "reference",
             "target": {
               "packageName": "@envisim/geojson-utils",
-              "packagePath": "dist/geometric-primitive.d.ts",
+              "packagePath": "src/geometric-primitive.ts",
               "qualifiedName": "GeometricPrimitiveLine"
             },
             "name": "GeometricPrimitiveLine",
@@ -15500,7 +15500,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geometric-primitive.d.ts",
+                "packagePath": "src/geometric-primitive.ts",
                 "qualifiedName": "GeometricPrimitivePoint"
               },
               "name": "GeometricPrimitivePoint",
@@ -15510,7 +15510,7 @@
               "type": "reference",
               "target": {
                 "packageName": "@envisim/geojson-utils",
-                "packagePath": "dist/geometric-primitive.d.ts",
+                "packagePath": "src/geometric-primitive.ts",
                 "qualifiedName": "GeometricPrimitiveNone"
               },
               "name": "GeometricPrimitiveNone",
@@ -16479,7 +16479,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BaseGeometry"
                 },
                 "name": "BaseGeometry",
@@ -16555,7 +16555,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BaseGeometry"
                 },
                 "name": "BaseGeometry",
@@ -16617,7 +16617,7 @@
                 "type": "reference",
                 "target": {
                   "packageName": "@envisim/geojson-utils",
-                  "packagePath": "dist/geojson.d.ts",
+                  "packagePath": "src/geojson.ts",
                   "qualifiedName": "BaseGeometry"
                 },
                 "name": "BaseGeometry",

@@ -100,25 +100,25 @@
 
 ### sampleBalanced()
 
-> **sampleBalanced**\<`T`, `P`\>(`collection`, `options`): `FeatureCollection`\<`T`, `P`\>
+> **sampleBalanced**\<`T`, `P`\>(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\>
 
 #### Type Parameters
 
-| Type Parameter             |
-| -------------------------- |
-| `T` _extends_ `PureObject` |
-| `P` _extends_ `string`     |
+| Type Parameter                                         |
+| ------------------------------------------------------ |
+| `T` _extends_ [`PureObject`](../geojson.md#pureobject) |
+| `P` _extends_ `string`                                 |
 
 #### Parameters
 
 | Parameter    | theme_type                                                            |
 | ------------ | --------------------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`T`, `P`\>                                       |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\>    |
 | `options`    | [`SampleBalancedOptions`](#samplebalancedoptions)\<`NoInfer`\<`P`\>\> |
 
 #### Returns
 
-`FeatureCollection`\<`T`, `P`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\>
 
 ---
 
@@ -134,10 +134,10 @@
 
 #### Parameters
 
-| Parameter | theme_type                                               |
-| --------- | -------------------------------------------------------- |
-| `options` | [`SampleBalancedOptions`](#samplebalancedoptions)\<`P`\> |
-| `record`  | `PropertyRecord`\<`P`\>                                  |
+| Parameter | theme_type                                                |
+| --------- | --------------------------------------------------------- |
+| `options` | [`SampleBalancedOptions`](#samplebalancedoptions)\<`P`\>  |
+| `record`  | [`PropertyRecord`](../geojson.md#propertyrecord-1)\<`P`\> |
 
 #### Returns
 
@@ -147,25 +147,25 @@
 
 ### sampleDoublyBalanced()
 
-> **sampleDoublyBalanced**\<`T`, `P`\>(`collection`, `options`): `FeatureCollection`\<`T`, `P`\>
+> **sampleDoublyBalanced**\<`T`, `P`\>(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\>
 
 #### Type Parameters
 
-| Type Parameter             |
-| -------------------------- |
-| `T` _extends_ `PureObject` |
-| `P` _extends_ `string`     |
+| Type Parameter                                         |
+| ------------------------------------------------------ |
+| `T` _extends_ [`PureObject`](../geojson.md#pureobject) |
+| `P` _extends_ `string`                                 |
 
 #### Parameters
 
 | Parameter    | theme_type                                                                        |
 | ------------ | --------------------------------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`T`, `P`\>                                                   |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\>                |
 | `options`    | [`SampleDoublyBalancedOptions`](#sampledoublybalancedoptions)\<`NoInfer`\<`P`\>\> |
 
 #### Returns
 
-`FeatureCollection`\<`T`, `P`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\>
 
 ---
 
@@ -184,7 +184,7 @@
 | Parameter | theme_type                                                                        |
 | --------- | --------------------------------------------------------------------------------- |
 | `options` | [`SampleDoublyBalancedOptions`](#sampledoublybalancedoptions)\<`NoInfer`\<`P`\>\> |
-| `record`  | `PropertyRecord`\<`P`\>                                                           |
+| `record`  | [`PropertyRecord`](../geojson.md#propertyrecord-1)\<`P`\>                         |
 
 #### Returns
 
@@ -194,27 +194,27 @@
 
 ### sampleFinite()
 
-> **sampleFinite**\<`T`, `P`\>(`collection`, `options`): `FeatureCollection`\<`T`, `P`\>
+> **sampleFinite**\<`T`, `P`\>(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\>
 
 Select a sample from a layer using sampling methods for a finite population.
 
 #### Type Parameters
 
-| Type Parameter             |
-| -------------------------- |
-| `T` _extends_ `PureObject` |
-| `P` _extends_ `string`     |
+| Type Parameter                                         |
+| ------------------------------------------------------ |
+| `T` _extends_ [`PureObject`](../geojson.md#pureobject) |
+| `P` _extends_ `string`                                 |
 
 #### Parameters
 
-| Parameter    | theme_type                                                        |
-| ------------ | ----------------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`T`, `P`\>                                   |
-| `options`    | [`SampleFiniteOptions`](#samplefiniteoptions)\<`NoInfer`\<`P`\>\> |
+| Parameter    | theme_type                                                         |
+| ------------ | ------------------------------------------------------------------ |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\> |
+| `options`    | [`SampleFiniteOptions`](#samplefiniteoptions)\<`NoInfer`\<`P`\>\>  |
 
 #### Returns
 
-`FeatureCollection`\<`T`, `P`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\>
 
 ---
 
@@ -233,7 +233,7 @@ Select a sample from a layer using sampling methods for a finite population.
 | Parameter | theme_type                                                                                                                                 |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
 | `options` | [`SampleFiniteOptions`](#samplefiniteoptions)\<`NoInfer`\<`P`\>\> \| [`SampleFiniteOptionsWr`](#samplefiniteoptionswr)\<`NoInfer`\<`P`\>\> |
-| `record`  | `PropertyRecord`\<`P`\>                                                                                                                    |
+| `record`  | [`PropertyRecord`](../geojson.md#propertyrecord-1)\<`P`\>                                                                                  |
 
 #### Returns
 
@@ -243,51 +243,51 @@ Select a sample from a layer using sampling methods for a finite population.
 
 ### sampleFiniteWr()
 
-> **sampleFiniteWr**\<`T`, `P`\>(`collection`, `options`): `FeatureCollection`\<`T`, `P`\>
+> **sampleFiniteWr**\<`T`, `P`\>(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\>
 
 Select a w/o replacement sample from a layer using sampling methods for a finite population.
 
 #### Type Parameters
 
-| Type Parameter             |
-| -------------------------- |
-| `T` _extends_ `PureObject` |
-| `P` _extends_ `string`     |
+| Type Parameter                                         |
+| ------------------------------------------------------ |
+| `T` _extends_ [`PureObject`](../geojson.md#pureobject) |
+| `P` _extends_ `string`                                 |
 
 #### Parameters
 
 | Parameter    | theme_type                                                            |
 | ------------ | --------------------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`T`, `P`\>                                       |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\>    |
 | `options`    | [`SampleFiniteOptionsWr`](#samplefiniteoptionswr)\<`NoInfer`\<`P`\>\> |
 
 #### Returns
 
-`FeatureCollection`\<`T`, `P`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\>
 
 ---
 
 ### sampleSpatiallyBalanced()
 
-> **sampleSpatiallyBalanced**\<`T`, `P`\>(`collection`, `options`): `FeatureCollection`\<`T`, `P`\>
+> **sampleSpatiallyBalanced**\<`T`, `P`\>(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\>
 
 #### Type Parameters
 
-| Type Parameter             |
-| -------------------------- |
-| `T` _extends_ `PureObject` |
-| `P` _extends_ `string`     |
+| Type Parameter                                         |
+| ------------------------------------------------------ |
+| `T` _extends_ [`PureObject`](../geojson.md#pureobject) |
+| `P` _extends_ `string`                                 |
 
 #### Parameters
 
 | Parameter    | theme_type                                                                              |
 | ------------ | --------------------------------------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`T`, `P`\>                                                         |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\>                      |
 | `options`    | [`SampleSpatiallyBalancedOptions`](#samplespatiallybalancedoptions)\<`NoInfer`\<`P`\>\> |
 
 #### Returns
 
-`FeatureCollection`\<`T`, `P`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<`T`, `P`\>
 
 ---
 
@@ -306,7 +306,7 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 | Parameter | theme_type                                                                 |
 | --------- | -------------------------------------------------------------------------- |
 | `options` | [`SampleSpatiallyBalancedOptions`](#samplespatiallybalancedoptions)\<`P`\> |
-| `record`  | `PropertyRecord`\<`P`\>                                                    |
+| `record`  | [`PropertyRecord`](../geojson.md#propertyrecord-1)\<`P`\>                  |
 
 #### Returns
 

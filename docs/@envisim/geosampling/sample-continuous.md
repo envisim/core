@@ -16,22 +16,22 @@
 
 #### Type Parameters
 
-| Type Parameter                      |
-| ----------------------------------- |
-| `G` _extends_ `GJ.SingleTypeObject` |
+| Type Parameter                                                                   |
+| -------------------------------------------------------------------------------- |
+| `G` _extends_ [`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject) |
 
 #### Properties
 
-| Property                                              | theme_type                        | theme_default_value | theme_description                                                                                                                    |
-| ----------------------------------------------------- | --------------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| <a id="modelgeometry"></a> `modelGeometry`            | `G`                               | `undefined`         | A model feature of points or lines or areas to be placed on the selected points.                                                     |
-| <a id="pointselection"></a> `pointSelection?`         | `"independent"` \| `"systematic"` | `'independent'`     | -                                                                                                                                    |
-| <a id="pointspercircle"></a> `pointsPerCircle?`       | `number`                          | `undefined`         | The number of vertices to create on the circle                                                                                       |
-| <a id="rand"></a> `rand?`                             | `RandomGenerator`                 | `new Random()`      | An random number generator                                                                                                           |
-| <a id="ratio"></a> `ratio?`                           | `number`                          | `1.0`               | -                                                                                                                                    |
-| <a id="rotationofgeometry"></a> `rotationOfGeometry?` | `number` \| `"random"`            | `0.0`               | Optional rotation angle in degrees to rotate the model geometry. Random rotation is forced for line geometries -- option is ignored. |
-| <a id="rotationofgrid"></a> `rotationOfGrid?`         | `number` \| `"random"`            | `0.0`               | If true, then the grid will be rotated (systematic only)                                                                             |
-| <a id="samplesize"></a> `sampleSize`                  | `number`                          | `undefined`         | Prescribed sample size                                                                                                               |
+| Property                                              | theme_type                                        | theme_default_value | theme_description                                                                                                                    |
+| ----------------------------------------------------- | ------------------------------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| <a id="modelgeometry"></a> `modelGeometry`            | `G`                                               | `undefined`         | A model feature of points or lines or areas to be placed on the selected points.                                                     |
+| <a id="pointselection"></a> `pointSelection?`         | `"independent"` \| `"systematic"`                 | `'independent'`     | -                                                                                                                                    |
+| <a id="pointspercircle"></a> `pointsPerCircle?`       | `number`                                          | `undefined`         | The number of vertices to create on the circle                                                                                       |
+| <a id="rand"></a> `rand?`                             | [`RandomGenerator`](../random.md#randomgenerator) | `new Random()`      | An random number generator                                                                                                           |
+| <a id="ratio"></a> `ratio?`                           | `number`                                          | `1.0`               | -                                                                                                                                    |
+| <a id="rotationofgeometry"></a> `rotationOfGeometry?` | `number` \| `"random"`                            | `0.0`               | Optional rotation angle in degrees to rotate the model geometry. Random rotation is forced for line geometries -- option is ignored. |
+| <a id="rotationofgrid"></a> `rotationOfGrid?`         | `number` \| `"random"`                            | `0.0`               | If true, then the grid will be rotated (systematic only)                                                                             |
+| <a id="samplesize"></a> `sampleSize`                  | `number`                                          | `undefined`         | Prescribed sample size                                                                                                               |
 
 ---
 
@@ -43,15 +43,15 @@
 
 #### Properties
 
-| Property                                          | theme_type                        | theme_default_value | theme_description                                        |
-| ------------------------------------------------- | --------------------------------- | ------------------- | -------------------------------------------------------- |
-| <a id="buffer"></a> `buffer?`                     | `number`                          | `0.0`               | -                                                        |
-| <a id="pointselection-1"></a> `pointSelection?`   | `"independent"` \| `"systematic"` | `'independent'`     | -                                                        |
-| <a id="pointspercircle-1"></a> `pointsPerCircle?` | `number`                          | `undefined`         | The number of vertices to create on the circle           |
-| <a id="rand-1"></a> `rand?`                       | `RandomGenerator`                 | `new Random()`      | An random number generator                               |
-| <a id="ratio-1"></a> `ratio?`                     | `number`                          | `1.0`               | -                                                        |
-| <a id="rotationofgrid-1"></a> `rotationOfGrid?`   | `number` \| `"random"`            | `0.0`               | If true, then the grid will be rotated (systematic only) |
-| <a id="samplesize-1"></a> `sampleSize`            | `number`                          | `undefined`         | Prescribed sample size                                   |
+| Property                                          | theme_type                                        | theme_default_value | theme_description                                        |
+| ------------------------------------------------- | ------------------------------------------------- | ------------------- | -------------------------------------------------------- |
+| <a id="buffer"></a> `buffer?`                     | `number`                                          | `0.0`               | -                                                        |
+| <a id="pointselection-1"></a> `pointSelection?`   | `"independent"` \| `"systematic"`                 | `'independent'`     | -                                                        |
+| <a id="pointspercircle-1"></a> `pointsPerCircle?` | `number`                                          | `undefined`         | The number of vertices to create on the circle           |
+| <a id="rand-1"></a> `rand?`                       | [`RandomGenerator`](../random.md#randomgenerator) | `new Random()`      | An random number generator                               |
+| <a id="ratio-1"></a> `ratio?`                     | `number`                                          | `1.0`               | -                                                        |
+| <a id="rotationofgrid-1"></a> `rotationOfGrid?`   | `number` \| `"random"`                            | `0.0`               | If true, then the grid will be rotated (systematic only) |
+| <a id="samplesize-1"></a> `sampleSize`            | `number`                                          | `undefined`         | Prescribed sample size                                   |
 
 ---
 
@@ -69,18 +69,18 @@
 
 #### Properties
 
-| Property                                          | theme_type                          | theme_default_value | theme_description                                                                                                                                       |
-| ------------------------------------------------- | ----------------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <a id="basecollection"></a> `baseCollection`      | `FeatureCollection`\<`Point`, `P`\> | `undefined`         | The point layer to collect objects from.                                                                                                                |
-| <a id="buffer-1"></a> `buffer?`                   | `number`                            | `0.0`               | -                                                                                                                                                       |
-| <a id="factor"></a> `factor`                      | `number`                            | `undefined`         | The relascope factor to be used.                                                                                                                        |
-| <a id="pointselection-2"></a> `pointSelection?`   | `"independent"` \| `"systematic"`   | `'independent'`     | -                                                                                                                                                       |
-| <a id="pointspercircle-2"></a> `pointsPerCircle?` | `number`                            | `undefined`         | The number of vertices to create on the circle                                                                                                          |
-| <a id="rand-2"></a> `rand?`                       | `RandomGenerator`                   | `new Random()`      | An random number generator                                                                                                                              |
-| <a id="ratio-2"></a> `ratio?`                     | `number`                            | `1.0`               | -                                                                                                                                                       |
-| <a id="rotationofgrid-2"></a> `rotationOfGrid?`   | `number` \| `"random"`              | `0.0`               | If true, then the grid will be rotated (systematic only)                                                                                                |
-| <a id="samplesize-2"></a> `sampleSize`            | `number`                            | `undefined`         | Prescribed sample size                                                                                                                                  |
-| <a id="sizeproperty"></a> `sizeProperty`          | `P`                                 | `undefined`         | The sizeProperty is the id of the proberty in the baseLayer that should be used as the size property and should be in meters (e.g. diameter in meters). |
+| Property                                          | theme_type                                                                                    | theme_default_value | theme_description                                                                                                                                       |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="basecollection"></a> `baseCollection`      | [`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point), `P`\> | `undefined`         | The point layer to collect objects from.                                                                                                                |
+| <a id="buffer-1"></a> `buffer?`                   | `number`                                                                                      | `0.0`               | -                                                                                                                                                       |
+| <a id="factor"></a> `factor`                      | `number`                                                                                      | `undefined`         | The relascope factor to be used.                                                                                                                        |
+| <a id="pointselection-2"></a> `pointSelection?`   | `"independent"` \| `"systematic"`                                                             | `'independent'`     | -                                                                                                                                                       |
+| <a id="pointspercircle-2"></a> `pointsPerCircle?` | `number`                                                                                      | `undefined`         | The number of vertices to create on the circle                                                                                                          |
+| <a id="rand-2"></a> `rand?`                       | [`RandomGenerator`](../random.md#randomgenerator)                                             | `new Random()`      | An random number generator                                                                                                                              |
+| <a id="ratio-2"></a> `ratio?`                     | `number`                                                                                      | `1.0`               | -                                                                                                                                                       |
+| <a id="rotationofgrid-2"></a> `rotationOfGrid?`   | `number` \| `"random"`                                                                        | `0.0`               | If true, then the grid will be rotated (systematic only)                                                                                                |
+| <a id="samplesize-2"></a> `sampleSize`            | `number`                                                                                      | `undefined`         | Prescribed sample size                                                                                                                                  |
+| <a id="sizeproperty"></a> `sizeProperty`          | `P`                                                                                           | `undefined`         | The sizeProperty is the id of the proberty in the baseLayer that should be used as the size property and should be in meters (e.g. diameter in meters). |
 
 ---
 
@@ -92,13 +92,13 @@
 
 #### Properties
 
-| Property                                          | theme_type        | theme_default_value | theme_description                                  |
-| ------------------------------------------------- | ----------------- | ------------------- | -------------------------------------------------- |
-| <a id="halfwidth"></a> `halfWidth`                | `number`          | `undefined`         | The half-width of the belt.                        |
-| <a id="interspace"></a> `interspace`              | `number`          | `undefined`         | The distance in meters between the parallel lines. |
-| <a id="pointspercircle-3"></a> `pointsPerCircle?` | `number`          | `undefined`         | The number of vertices to create on the circle     |
-| <a id="rand-3"></a> `rand?`                       | `RandomGenerator` | `undefined`         | -                                                  |
-| <a id="rotation"></a> `rotation?`                 | `number`          | `0.0`               | Optional fixed rotation angle in degrees.          |
+| Property                                          | theme_type                                        | theme_default_value | theme_description                                  |
+| ------------------------------------------------- | ------------------------------------------------- | ------------------- | -------------------------------------------------- |
+| <a id="halfwidth"></a> `halfWidth`                | `number`                                          | `undefined`         | The half-width of the belt.                        |
+| <a id="interspace"></a> `interspace`              | `number`                                          | `undefined`         | The distance in meters between the parallel lines. |
+| <a id="pointspercircle-3"></a> `pointsPerCircle?` | `number`                                          | `undefined`         | The number of vertices to create on the circle     |
+| <a id="rand-3"></a> `rand?`                       | [`RandomGenerator`](../random.md#randomgenerator) | `undefined`         | -                                                  |
+| <a id="rotation"></a> `rotation?`                 | `number`                                          | `0.0`               | Optional fixed rotation angle in degrees.          |
 
 ---
 
@@ -110,15 +110,15 @@
 
 #### Properties
 
-| Property                                           | theme_type                     | theme_default_value | theme_description                                                                  |
-| -------------------------------------------------- | ------------------------------ | ------------------- | ---------------------------------------------------------------------------------- |
-| <a id="basecollection-1"></a> `baseCollection`     | `FeatureCollection`\<`Point`\> | `undefined`         | The point layer to collect objects from.                                           |
-| <a id="cutoff"></a> `cutoff`                       | `number`                       | `undefined`         | The cutoff distance in meters.                                                     |
-| <a id="detectionfunction"></a> `detectionFunction` | `DetectionFunction`            | `undefined`         | The detection function giving the detection probability as a function of distance. |
-| <a id="interspace-1"></a> `interspace`             | `number`                       | `undefined`         | The distance in meters between the parallel lines.                                 |
-| <a id="pointspercircle-4"></a> `pointsPerCircle?`  | `number`                       | `undefined`         | The number of vertices to create on the circle                                     |
-| <a id="rand-4"></a> `rand?`                        | `RandomGenerator`              | `undefined`         | -                                                                                  |
-| <a id="rotation-1"></a> `rotation?`                | `number`                       | `0.0`               | Optional fixed rotation angle in degrees.                                          |
+| Property                                           | theme_type                                                                               | theme_default_value | theme_description                                                                  |
+| -------------------------------------------------- | ---------------------------------------------------------------------------------------- | ------------------- | ---------------------------------------------------------------------------------- |
+| <a id="basecollection-1"></a> `baseCollection`     | [`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point)\> | `undefined`         | The point layer to collect objects from.                                           |
+| <a id="cutoff"></a> `cutoff`                       | `number`                                                                                 | `undefined`         | The cutoff distance in meters.                                                     |
+| <a id="detectionfunction"></a> `detectionFunction` | `DetectionFunction`                                                                      | `undefined`         | The detection function giving the detection probability as a function of distance. |
+| <a id="interspace-1"></a> `interspace`             | `number`                                                                                 | `undefined`         | The distance in meters between the parallel lines.                                 |
+| <a id="pointspercircle-4"></a> `pointsPerCircle?`  | `number`                                                                                 | `undefined`         | The number of vertices to create on the circle                                     |
+| <a id="rand-4"></a> `rand?`                        | [`RandomGenerator`](../random.md#randomgenerator)                                        | `undefined`         | -                                                                                  |
+| <a id="rotation-1"></a> `rotation?`                | `number`                                                                                 | `0.0`               | Optional fixed rotation angle in degrees.                                          |
 
 ---
 
@@ -130,12 +130,12 @@
 
 #### Properties
 
-| Property                                          | theme_type        | theme_default_value | theme_description                                  |
-| ------------------------------------------------- | ----------------- | ------------------- | -------------------------------------------------- |
-| <a id="interspace-2"></a> `interspace`            | `number`          | `undefined`         | The distance in meters between the parallel lines. |
-| <a id="pointspercircle-5"></a> `pointsPerCircle?` | `number`          | `undefined`         | The number of vertices to create on the circle     |
-| <a id="rand-5"></a> `rand?`                       | `RandomGenerator` | `undefined`         | -                                                  |
-| <a id="rotation-2"></a> `rotation?`               | `number`          | `0.0`               | Optional fixed rotation angle in degrees.          |
+| Property                                          | theme_type                                        | theme_default_value | theme_description                                  |
+| ------------------------------------------------- | ------------------------------------------------- | ------------------- | -------------------------------------------------- |
+| <a id="interspace-2"></a> `interspace`            | `number`                                          | `undefined`         | The distance in meters between the parallel lines. |
+| <a id="pointspercircle-5"></a> `pointsPerCircle?` | `number`                                          | `undefined`         | The number of vertices to create on the circle     |
+| <a id="rand-5"></a> `rand?`                       | [`RandomGenerator`](../random.md#randomgenerator) | `undefined`         | -                                                  |
+| <a id="rotation-2"></a> `rotation?`               | `number`                                          | `0.0`               | Optional fixed rotation angle in degrees.          |
 
 ## Type Aliases
 
@@ -163,11 +163,11 @@
 
 #### Properties
 
-| Property                             | theme_type        | theme_default_value | theme_description          |
-| ------------------------------------ | ----------------- | ------------------- | -------------------------- |
-| <a id="dashlength"></a> `dashLength` | `number`          | `undefined`         | The dash length            |
-| <a id="rand-6"></a> `rand?`          | `RandomGenerator` | `new Random()`      | An random number generator |
-| <a id="voidlength"></a> `voidLength` | `number`          | `undefined`         | The void length            |
+| Property                             | theme_type                                        | theme_default_value | theme_description          |
+| ------------------------------------ | ------------------------------------------------- | ------------------- | -------------------------- |
+| <a id="dashlength"></a> `dashLength` | `number`                                          | `undefined`         | The dash length            |
+| <a id="rand-6"></a> `rand?`          | [`RandomGenerator`](../random.md#randomgenerator) | `new Random()`      | An random number generator |
+| <a id="voidlength"></a> `voidLength` | `number`                                          | `undefined`         | The void length            |
 
 ## Functions
 
@@ -258,20 +258,20 @@ number, f integrated from a to b.
 
 ### sampleAreaFeaturesOnAreas()
 
-> **sampleAreaFeaturesOnAreas**(`collection`, `options`): `FeatureCollection`\<`AreaObject`, `never`\>
+> **sampleAreaFeaturesOnAreas**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject), `never`\>
 
 Select a sample of features/tracts on areas.
 
 #### Parameters
 
-| Parameter    | theme_type                                                                      |
-| ------------ | ------------------------------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`AreaObject`\>                                             |
-| `options`    | [`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)\<`AreaObject`\> |
+| Parameter    | theme_type                                                                                                                |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\>                        |
+| `options`    | [`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)\<[`AreaObject`](../geojson-utils/geojson.md#areaobject)\> |
 
 #### Returns
 
-`FeatureCollection`\<`AreaObject`, `never`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject), `never`\>
 
 ---
 
@@ -281,9 +281,9 @@ Select a sample of features/tracts on areas.
 
 #### Parameters
 
-| Parameter | theme_type                                                                      |
-| --------- | ------------------------------------------------------------------------------- |
-| `options` | [`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)\<`AreaObject`\> |
+| Parameter | theme_type                                                                                                                |
+| --------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `options` | [`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)\<[`AreaObject`](../geojson-utils/geojson.md#areaobject)\> |
 
 #### Returns
 
@@ -293,7 +293,7 @@ Select a sample of features/tracts on areas.
 
 ### sampleDistancePoints()
 
-> **sampleDistancePoints**(`collection`, `options`): `FeatureCollection`\<`PointObject`\>
+> **sampleDistancePoints**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`PointObject`](../geojson.md#pointobject)\>
 
 Distance sampling with points. Selects a point sample on an area layer
 and collect point objects from a base layer using a detection function
@@ -301,14 +301,14 @@ to (randomly) determine inclusion.
 
 #### Parameters
 
-| Parameter    | theme_type                                                    |
-| ------------ | ------------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`AreaObject`\>                           |
-| `options`    | [`SampleDistancePointsOptions`](#sampledistancepointsoptions) |
+| Parameter    | theme_type                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\> |
+| `options`    | [`SampleDistancePointsOptions`](#sampledistancepointsoptions)                                      |
 
 #### Returns
 
-`FeatureCollection`\<`PointObject`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`PointObject`](../geojson.md#pointobject)\>
 
 ---
 
@@ -330,18 +330,18 @@ to (randomly) determine inclusion.
 
 ### sampleLineFeaturesOnAreas()
 
-> **sampleLineFeaturesOnAreas**(`collection`, `options`): `FeatureCollection`\<`LineObject`, `never`\>
+> **sampleLineFeaturesOnAreas**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`LineObject`](../geojson.md#lineobject), `never`\>
 
 #### Parameters
 
-| Parameter    | theme_type                                                                      |
-| ------------ | ------------------------------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`AreaObject`\>                                             |
-| `options`    | [`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)\<`LineObject`\> |
+| Parameter    | theme_type                                                                                                                |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\>                        |
+| `options`    | [`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)\<[`LineObject`](../geojson-utils/geojson.md#lineobject)\> |
 
 #### Returns
 
-`FeatureCollection`\<`LineObject`, `never`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`LineObject`](../geojson.md#lineobject), `never`\>
 
 ---
 
@@ -351,9 +351,9 @@ to (randomly) determine inclusion.
 
 #### Parameters
 
-| Parameter | theme_type                                                                      |
-| --------- | ------------------------------------------------------------------------------- |
-| `options` | [`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)\<`LineObject`\> |
+| Parameter | theme_type                                                                                                                |
+| --------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `options` | [`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)\<[`LineObject`](../geojson-utils/geojson.md#lineobject)\> |
 
 #### Returns
 
@@ -363,18 +363,18 @@ to (randomly) determine inclusion.
 
 ### samplePointFeaturesOnAreas()
 
-> **samplePointFeaturesOnAreas**(`collection`, `options`): `FeatureCollection`\<`PointObject`, `never`\>
+> **samplePointFeaturesOnAreas**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`PointObject`](../geojson.md#pointobject), `never`\>
 
 #### Parameters
 
-| Parameter    | theme_type                                                                       |
-| ------------ | -------------------------------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`AreaObject`\>                                              |
-| `options`    | [`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)\<`PointObject`\> |
+| Parameter    | theme_type                                                                                                                  |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\>                          |
+| `options`    | [`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)\<[`PointObject`](../geojson-utils/geojson.md#pointobject)\> |
 
 #### Returns
 
-`FeatureCollection`\<`PointObject`, `never`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`PointObject`](../geojson.md#pointobject), `never`\>
 
 ---
 
@@ -384,9 +384,9 @@ to (randomly) determine inclusion.
 
 #### Parameters
 
-| Parameter | theme_type                                                                       |
-| --------- | -------------------------------------------------------------------------------- |
-| `options` | [`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)\<`PointObject`\> |
+| Parameter | theme_type                                                                                                                  |
+| --------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `options` | [`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)\<[`PointObject`](../geojson-utils/geojson.md#pointobject)\> |
 
 #### Returns
 
@@ -396,21 +396,21 @@ to (randomly) determine inclusion.
 
 ### samplePointsOnAreas()
 
-> **samplePointsOnAreas**(`collection`, `options`): `FeatureCollection`\<`Point`, `never`\>
+> **samplePointsOnAreas**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point), `never`\>
 
 Selects points on areas (if features have bbox, it is used in pointInPolygon
 to reject point outside bbox if buffer is zero).
 
 #### Parameters
 
-| Parameter    | theme_type                                                  |
-| ------------ | ----------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`AreaObject`\>                         |
-| `options`    | [`SamplePointsOnAreasOptions`](#samplepointsonareasoptions) |
+| Parameter    | theme_type                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\> |
+| `options`    | [`SamplePointsOnAreasOptions`](#samplepointsonareasoptions)                                        |
 
 #### Returns
 
-`FeatureCollection`\<`Point`, `never`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point), `never`\>
 
 ---
 
@@ -432,20 +432,20 @@ to reject point outside bbox if buffer is zero).
 
 ### samplePointsOnLines()
 
-> **samplePointsOnLines**(`collection`, `options`): `FeatureCollection`\<`Point`, `never`\>
+> **samplePointsOnLines**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point), `never`\>
 
 Selects points according to method and sampleSize on a line layer.
 
 #### Parameters
 
-| Parameter    | theme_type                          |
-| ------------ | ----------------------------------- |
-| `collection` | `FeatureCollection`\<`LineObject`\> |
-| `options`    | `OptionsBase`                       |
+| Parameter    | theme_type                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`LineObject`](../geojson.md#lineobject)\> |
+| `options`    | `OptionsBase`                                                                                      |
 
 #### Returns
 
-`FeatureCollection`\<`Point`, `never`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point), `never`\>
 
 ---
 
@@ -467,20 +467,20 @@ Selects points according to method and sampleSize on a line layer.
 
 ### samplePositionsInBbox()
 
-> **samplePositionsInBbox**(`box`, `options`): `Position`[]
+> **samplePositionsInBbox**(`box`, `options`): [`Position`](../geojson-utils/geojson.md#position)[]
 
 Generates uniform random positions in bounding box
 
 #### Parameters
 
-| Parameter | theme_type    | theme_description       |
-| --------- | ------------- | ----------------------- |
-| `box`     | `BBox`        | A GeoJSON bounding box. |
-| `options` | `OptionsBase` | -                       |
+| Parameter | theme_type                                   | theme_description       |
+| --------- | -------------------------------------------- | ----------------------- |
+| `box`     | [`BBox`](../geojson-utils/geojson.md#bbox-7) | A GeoJSON bounding box. |
+| `options` | `OptionsBase`                                | -                       |
 
 #### Returns
 
-`Position`[]
+[`Position`](../geojson-utils/geojson.md#position)[]
 
 Array of GeoJSON positions.
 
@@ -522,10 +522,10 @@ quantities.
 
 #### Parameters
 
-| Parameter    | theme_type                                                             |
-| ------------ | ---------------------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`AreaObject`\>                                    |
-| `options`    | [`SampleRelascopePointsOptions`](#samplerelascopepointsoptions)\<`P`\> |
+| Parameter    | theme_type                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\> |
+| `options`    | [`SampleRelascopePointsOptions`](#samplerelascopepointsoptions)\<`P`\>                             |
 
 #### Returns
 
@@ -533,11 +533,11 @@ quantities.
 
 an object containing the resulting sample, the relascope points and the area ratio
 
-| theme_name    | theme_type                          |
-| ------------- | ----------------------------------- |
-| `areaRatio`   | `number`                            |
-| `collection`  | `FeatureCollection`\<`Point`, `P`\> |
-| `pointSample` | `FeatureCollection`\<`Point`\>      |
+| theme_name    | theme_type                                                                                    |
+| ------------- | --------------------------------------------------------------------------------------------- |
+| `areaRatio`   | `number`                                                                                      |
+| `collection`  | [`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point), `P`\> |
+| `pointSample` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point)\>      |
 
 ---
 
@@ -565,20 +565,20 @@ an object containing the resulting sample, the relascope points and the area rat
 
 ### sampleSystematicBeltsOnAreas()
 
-> **sampleSystematicBeltsOnAreas**(`collection`, `options`): `FeatureCollection`\<`AreaObject`\>
+> **sampleSystematicBeltsOnAreas**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\>
 
 Selects a systematic sample of belts on areas.
 
 #### Parameters
 
-| Parameter    | theme_type                                                      |
-| ------------ | --------------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`AreaObject`\>                             |
-| `options`    | [`SampleSystematicBeltsOnAreas`](#samplesystematicbeltsonareas) |
+| Parameter    | theme_type                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\> |
+| `options`    | [`SampleSystematicBeltsOnAreas`](#samplesystematicbeltsonareas)                                    |
 
 #### Returns
 
-`FeatureCollection`\<`AreaObject`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\>
 
 ---
 
@@ -600,7 +600,7 @@ Selects a systematic sample of belts on areas.
 
 ### sampleSystematicDistanceLines()
 
-> **sampleSystematicDistanceLines**(`collection`, `options`): `FeatureCollection`\<`Point`\>
+> **sampleSystematicDistanceLines**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point)\>
 
 Distance sampling with line transects.
 Selects a line sample on an area frame and collect point objects from a base
@@ -608,14 +608,14 @@ layer using a detection function to (randomly) determine inclusion.
 
 #### Parameters
 
-| Parameter    | theme_type                                                                      |
-| ------------ | ------------------------------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`AreaObject`\>                                             |
-| `options`    | [`SampleSystematicDistanceLinesOptions`](#samplesystematicdistancelinesoptions) |
+| Parameter    | theme_type                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\> |
+| `options`    | [`SampleSystematicDistanceLinesOptions`](#samplesystematicdistancelinesoptions)                    |
 
 #### Returns
 
-`FeatureCollection`\<`Point`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`Point`](../geojson.md#point)\>
 
 ---
 
@@ -637,20 +637,20 @@ layer using a detection function to (randomly) determine inclusion.
 
 ### sampleSystematicLinesOnAreas()
 
-> **sampleSystematicLinesOnAreas**(`collection`, `options`): `FeatureCollection`\<`LineObject`\>
+> **sampleSystematicLinesOnAreas**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`LineObject`](../geojson.md#lineobject)\>
 
 Selects a sample of lines systematically over all areas.
 
 #### Parameters
 
-| Parameter    | theme_type                                                      |
-| ------------ | --------------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`AreaObject`\>                             |
-| `options`    | [`SampleSystematicLinesOnAreas`](#samplesystematiclinesonareas) |
+| Parameter    | theme_type                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`AreaObject`](../geojson.md#areaobject)\> |
+| `options`    | [`SampleSystematicLinesOnAreas`](#samplesystematiclinesonareas)                                    |
 
 #### Returns
 
-`FeatureCollection`\<`LineObject`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`LineObject`](../geojson.md#lineobject)\>
 
 ---
 
@@ -672,21 +672,21 @@ Selects a sample of lines systematically over all areas.
 
 ### sampleSystematicLinesOnLines()
 
-> **sampleSystematicLinesOnLines**(`collection`, `options`): `FeatureCollection`\<`LineString`, `never`\>
+> **sampleSystematicLinesOnLines**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)\<[`LineString`](../geojson.md#linestring), `never`\>
 
 Selects systematic line dashes along a line layer. Each LineString recieves its
 own random starting position of the dashes.
 
 #### Parameters
 
-| Parameter    | theme_type                                                      |
-| ------------ | --------------------------------------------------------------- |
-| `collection` | `FeatureCollection`\<`LineObject`\>                             |
-| `options`    | [`SampleSystematicLinesOnLines`](#samplesystematiclinesonlines) |
+| Parameter    | theme_type                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| `collection` | [`FeatureCollection`](../geojson.md#featurecollection)\<[`LineObject`](../geojson.md#lineobject)\> |
+| `options`    | [`SampleSystematicLinesOnLines`](#samplesystematiclinesonlines)                                    |
 
 #### Returns
 
-`FeatureCollection`\<`LineString`, `never`\>
+[`FeatureCollection`](../geojson.md#featurecollection)\<[`LineString`](../geojson.md#linestring), `never`\>
 
 ---
 
