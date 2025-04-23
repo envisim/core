@@ -1,0 +1,1936 @@
+{
+  "schemaVersion": "2.0",
+  "id": 0,
+  "name": "@envisim/sampling",
+  "variant": "project",
+  "kind": 1,
+  "flags": {},
+  "children": [
+    {
+      "id": 58,
+      "name": "NearestNeighbour",
+      "variant": "declaration",
+      "kind": 128,
+      "flags": {},
+      "children": [
+        {
+          "id": 59,
+          "name": "constructor",
+          "variant": "declaration",
+          "kind": 512,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 60,
+              "name": "NearestNeighbour",
+              "variant": "signature",
+              "kind": 16384,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "Constructs a nearest neighbour searcher, using k-d-trees"
+                  }
+                ],
+                "blockTags": [
+                  {
+                    "tag": "@returns",
+                    "content": [
+                      {
+                        "kind": "text",
+                        "text": "a nearest neighbour searcher."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 61,
+                  "name": "dt",
+                  "variant": "param",
+                  "kind": 32768,
+                  "flags": {},
+                  "comment": {
+                    "summary": [
+                      {
+                        "kind": "text",
+                        "text": "the data to search within."
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/matrix.d.ts",
+                      "qualifiedName": "Matrix"
+                    },
+                    "name": "Matrix",
+                    "package": "@envisim/matrix"
+                  }
+                },
+                {
+                  "id": 62,
+                  "name": "bucketSize",
+                  "variant": "param",
+                  "kind": 32768,
+                  "flags": {},
+                  "comment": {
+                    "summary": [
+                      {
+                        "kind": "text",
+                        "text": "the bucket size of the k-d-tree's nodes."
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "intrinsic",
+                    "name": "number"
+                  },
+                  "defaultValue": "40"
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "target": 58,
+                "name": "NearestNeighbour",
+                "package": "@envisim/sampling"
+              }
+            }
+          ]
+        },
+        {
+          "id": 68,
+          "name": "findNearestDistance",
+          "variant": "declaration",
+          "kind": 2048,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 69,
+              "name": "findNearestDistance",
+              "variant": "signature",
+              "kind": 4096,
+              "flags": {},
+              "comment": {
+                "summary": [],
+                "blockTags": [
+                  {
+                    "tag": "@returns",
+                    "content": [
+                      {
+                        "kind": "text",
+                        "text": "the distance to the nearest neighbour(s) of the unit in the\n  provided data."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 70,
+                  "name": "unit",
+                  "variant": "param",
+                  "kind": 32768,
+                  "flags": {},
+                  "comment": {
+                    "summary": [
+                      {
+                        "kind": "text",
+                        "text": "if a number $i$, the unit is assumed to be the $i$th row\n  in the provided data."
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "union",
+                    "types": [
+                      {
+                        "type": "intrinsic",
+                        "name": "number"
+                      },
+                      {
+                        "type": "array",
+                        "elementType": {
+                          "type": "intrinsic",
+                          "name": "number"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            }
+          ]
+        },
+        {
+          "id": 65,
+          "name": "findNearestNeighbours",
+          "variant": "declaration",
+          "kind": 2048,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 66,
+              "name": "findNearestNeighbours",
+              "variant": "signature",
+              "kind": 4096,
+              "flags": {},
+              "comment": {
+                "summary": [],
+                "blockTags": [
+                  {
+                    "tag": "@returns",
+                    "content": [
+                      {
+                        "kind": "text",
+                        "text": "the nearest neighbour(s) of the unit in the provided data."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 67,
+                  "name": "unit",
+                  "variant": "param",
+                  "kind": 32768,
+                  "flags": {},
+                  "comment": {
+                    "summary": [
+                      {
+                        "kind": "text",
+                        "text": "if a number $i$, the unit is assumed to be the $i$th row\n  in the provided data."
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "union",
+                    "types": [
+                      {
+                        "type": "intrinsic",
+                        "name": "number"
+                      },
+                      {
+                        "type": "array",
+                        "elementType": {
+                          "type": "intrinsic",
+                          "name": "number"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "type": {
+                "type": "array",
+                "elementType": {
+                  "type": "intrinsic",
+                  "name": "number"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "groups": [
+        {
+          "title": "Constructors",
+          "children": [59]
+        },
+        {
+          "title": "Methods",
+          "children": [68, 65]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "brewer",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 14,
+          "name": "brewer",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a (pips) sample without replacement using Brewers method."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 15,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/base-options/index.ts",
+                  "qualifiedName": "PipsOptions"
+                },
+                "name": "PipsOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "name": "conditionalPoissonSampling",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 32,
+          "name": "conditionalPoissonSampling",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a conditional Poisson sample using the rejective method."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              },
+              {
+                "tag": "@throws",
+                "content": [
+                  {
+                    "kind": "code",
+                    "text": "`Error`"
+                  },
+                  {
+                    "kind": "text",
+                    "text": " if a solution is not found in "
+                  },
+                  {
+                    "kind": "code",
+                    "text": "`1e5`"
+                  },
+                  {
+                    "kind": "text",
+                    "text": " iterations"
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 33,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "intersection",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/sampling",
+                      "packagePath": "src/base-options/index.ts",
+                      "qualifiedName": "FixedSizedOptions"
+                    },
+                    "name": "FixedSizedOptions",
+                    "package": "@envisim/sampling"
+                  },
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/sampling",
+                      "packagePath": "src/base-options/index.ts",
+                      "qualifiedName": "PipsOptions"
+                    },
+                    "name": "PipsOptions",
+                    "package": "@envisim/sampling"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "cube",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 2,
+          "name": "cube",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a balanced (pips) sample using the cube method."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 3,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/cube.ts",
+                  "qualifiedName": "CubeOptions"
+                },
+                "name": "CubeOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "name": "inclusionProbabilities",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 72,
+          "name": "inclusionProbabilities",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Calculation of inclusion probabilities from a positive auxiliary variable."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Array of inclusion probabilities."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 73,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/inclusion-probabilities.ts",
+                  "qualifiedName": "InclusionProbabilitiesOptions"
+                },
+                "name": "InclusionProbabilitiesOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "name": "lcps",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 38,
+          "name": "lcps",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a Locally Correlated Poisson Sample (LCPS)"
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 39,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/base-options/index.ts",
+                  "qualifiedName": "AuxiliaryOptions"
+                },
+                "name": "AuxiliaryOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "localCube",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 5,
+          "name": "localCube",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a doubly balanced sample using the local cube method."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 6,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/cube.ts",
+                  "qualifiedName": "LocalCubeOptions"
+                },
+                "name": "LocalCubeOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "name": "lpm1",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 17,
+          "name": "lpm1",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a (pips) sample using the local pivotal method 1."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 18,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/sampling",
+                      "packagePath": "src/base-options/index.ts",
+                      "qualifiedName": "AuxiliaryOptions"
+                    },
+                    "name": "AuxiliaryOptions",
+                    "package": "@envisim/sampling"
+                  },
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/sampling",
+                      "packagePath": "src/base-options/index.ts",
+                      "qualifiedName": "AuxiliaryFixedSizedOptions"
+                    },
+                    "name": "AuxiliaryFixedSizedOptions",
+                    "package": "@envisim/sampling"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "name": "lpm2",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 20,
+          "name": "lpm2",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a (pips) sample using the local pivotal method 2."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 21,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/sampling",
+                      "packagePath": "src/base-options/index.ts",
+                      "qualifiedName": "AuxiliaryOptions"
+                    },
+                    "name": "AuxiliaryOptions",
+                    "package": "@envisim/sampling"
+                  },
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/sampling",
+                      "packagePath": "src/base-options/index.ts",
+                      "qualifiedName": "AuxiliaryFixedSizedOptions"
+                    },
+                    "name": "AuxiliaryFixedSizedOptions",
+                    "package": "@envisim/sampling"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "pareto",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 11,
+          "name": "pareto",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a Pareto (pips) sample without replacement."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 12,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/base-options/index.ts",
+                  "qualifiedName": "PipsOptions"
+                },
+                "name": "PipsOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "name": "poissonSampling",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 29,
+          "name": "poissonSampling",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a Poisson sample."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 30,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/base-options/index.ts",
+                  "qualifiedName": "PipsOptions"
+                },
+                "name": "PipsOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "name": "ppswr",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 35,
+          "name": "ppswr",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a pps sample with replacement."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 36,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "intersection",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/sampling",
+                      "packagePath": "src/base-options/index.ts",
+                      "qualifiedName": "FixedSizedOptions"
+                    },
+                    "name": "FixedSizedOptions",
+                    "package": "@envisim/sampling"
+                  },
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/sampling",
+                      "packagePath": "src/base-options/index.ts",
+                      "qualifiedName": "PipsOptions"
+                    },
+                    "name": "PipsOptions",
+                    "package": "@envisim/sampling"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "name": "randomSystematic",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 56,
+          "name": "randomSystematic",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a systematic (pips) sample with initial randomization of order of the units."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 57,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/base-options/index.ts",
+                  "qualifiedName": "PipsOptions"
+                },
+                "name": "PipsOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "name": "rpm",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 23,
+          "name": "rpm",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a (pips) sample using the random pivotal method."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 24,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/base-options/index.ts",
+                  "qualifiedName": "PipsOptions"
+                },
+                "name": "PipsOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "sampford",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 8,
+          "name": "sampford",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a Sampford (pips) sample using the rejective method."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 9,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/base-options/index.ts",
+                  "qualifiedName": "PipsOptions"
+                },
+                "name": "PipsOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "name": "scps",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 41,
+          "name": "scps",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a Spatially Correlated Poisson Sample (SCPS)"
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 42,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/base-options/index.ts",
+                  "qualifiedName": "AuxiliaryOptions"
+                },
+                "name": "AuxiliaryOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "name": "scpsCoordinated",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 44,
+          "name": "scpsCoordinated",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a coordinated Spatially Correlated Poisson Sample (SCPSCOORD)"
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 45,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/scps.ts",
+                  "qualifiedName": "ScpsCoordinatedOptions"
+                },
+                "name": "ScpsCoordinatedOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "name": "spm",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 26,
+          "name": "spm",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a (pips) sample using the sequential pivotal method."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 27,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/base-options/index.ts",
+                  "qualifiedName": "PipsOptions"
+                },
+                "name": "PipsOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "name": "srswor",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 47,
+          "name": "srswor",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a simple random sampling without replacement."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 48,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/srs.ts",
+                  "qualifiedName": "SrsOptions"
+                },
+                "name": "SrsOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "name": "srswr",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 50,
+          "name": "srswr",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a simple random sampling with replacement."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 51,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/srs.ts",
+                  "qualifiedName": "SrsOptions"
+                },
+                "name": "SrsOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "name": "systematic",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 53,
+          "name": "systematic",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Selects a systematic (pips) sample."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 54,
+              "name": "options",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/sampling",
+                  "packagePath": "src/base-options/index.ts",
+                  "qualifiedName": "PipsOptions"
+                },
+                "name": "PipsOptions",
+                "package": "@envisim/sampling"
+              }
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "title": "Classes",
+      "children": [58]
+    },
+    {
+      "title": "Functions",
+      "children": [13, 31, 1, 71, 37, 4, 16, 19, 10, 28, 34, 55, 22, 7, 40, 43, 25, 46, 49, 52]
+    }
+  ],
+  "packageName": "@envisim/sampling",
+  "symbolIdMap": {
+    "0": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/index.ts",
+      "qualifiedName": ""
+    },
+    "1": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/cube.ts",
+      "qualifiedName": "cube"
+    },
+    "2": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/cube.ts",
+      "qualifiedName": "cube"
+    },
+    "3": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/cube.ts",
+      "qualifiedName": "__0"
+    },
+    "4": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/cube.ts",
+      "qualifiedName": "localCube"
+    },
+    "5": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/cube.ts",
+      "qualifiedName": "localCube"
+    },
+    "6": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/cube.ts",
+      "qualifiedName": "__0"
+    },
+    "7": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pips.ts",
+      "qualifiedName": "sampford"
+    },
+    "8": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pips.ts",
+      "qualifiedName": "sampford"
+    },
+    "9": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pips.ts",
+      "qualifiedName": "__0"
+    },
+    "10": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pips.ts",
+      "qualifiedName": "pareto"
+    },
+    "11": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pips.ts",
+      "qualifiedName": "pareto"
+    },
+    "12": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pips.ts",
+      "qualifiedName": "__0"
+    },
+    "13": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pips.ts",
+      "qualifiedName": "brewer"
+    },
+    "14": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pips.ts",
+      "qualifiedName": "brewer"
+    },
+    "15": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pips.ts",
+      "qualifiedName": "__0"
+    },
+    "16": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pivotal.ts",
+      "qualifiedName": "lpm1"
+    },
+    "17": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pivotal.ts",
+      "qualifiedName": "lpm1"
+    },
+    "18": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pivotal.ts",
+      "qualifiedName": "__0"
+    },
+    "19": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pivotal.ts",
+      "qualifiedName": "lpm2"
+    },
+    "20": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pivotal.ts",
+      "qualifiedName": "lpm2"
+    },
+    "21": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pivotal.ts",
+      "qualifiedName": "__0"
+    },
+    "22": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pivotal.ts",
+      "qualifiedName": "rpm"
+    },
+    "23": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pivotal.ts",
+      "qualifiedName": "rpm"
+    },
+    "24": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pivotal.ts",
+      "qualifiedName": "__0"
+    },
+    "25": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pivotal.ts",
+      "qualifiedName": "spm"
+    },
+    "26": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pivotal.ts",
+      "qualifiedName": "spm"
+    },
+    "27": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pivotal.ts",
+      "qualifiedName": "__0"
+    },
+    "28": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/poisson.ts",
+      "qualifiedName": "poissonSampling"
+    },
+    "29": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/poisson.ts",
+      "qualifiedName": "poissonSampling"
+    },
+    "30": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/poisson.ts",
+      "qualifiedName": "__0"
+    },
+    "31": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/poisson.ts",
+      "qualifiedName": "conditionalPoissonSampling"
+    },
+    "32": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/poisson.ts",
+      "qualifiedName": "conditionalPoissonSampling"
+    },
+    "33": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/poisson.ts",
+      "qualifiedName": "__0"
+    },
+    "34": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pps.ts",
+      "qualifiedName": "ppswr"
+    },
+    "35": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pps.ts",
+      "qualifiedName": "ppswr"
+    },
+    "36": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/pps.ts",
+      "qualifiedName": "__0"
+    },
+    "37": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/scps.ts",
+      "qualifiedName": "lcps"
+    },
+    "38": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/scps.ts",
+      "qualifiedName": "lcps"
+    },
+    "39": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/scps.ts",
+      "qualifiedName": "__0"
+    },
+    "40": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/scps.ts",
+      "qualifiedName": "scps"
+    },
+    "41": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/scps.ts",
+      "qualifiedName": "scps"
+    },
+    "42": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/scps.ts",
+      "qualifiedName": "__0"
+    },
+    "43": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/scps.ts",
+      "qualifiedName": "scpsCoordinated"
+    },
+    "44": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/scps.ts",
+      "qualifiedName": "scpsCoordinated"
+    },
+    "45": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/scps.ts",
+      "qualifiedName": "__0"
+    },
+    "46": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/srs.ts",
+      "qualifiedName": "srswor"
+    },
+    "47": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/srs.ts",
+      "qualifiedName": "srswor"
+    },
+    "48": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/srs.ts",
+      "qualifiedName": "__0"
+    },
+    "49": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/srs.ts",
+      "qualifiedName": "srswr"
+    },
+    "50": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/srs.ts",
+      "qualifiedName": "srswr"
+    },
+    "51": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/srs.ts",
+      "qualifiedName": "__0"
+    },
+    "52": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/systematic.ts",
+      "qualifiedName": "systematic"
+    },
+    "53": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/systematic.ts",
+      "qualifiedName": "systematic"
+    },
+    "54": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/systematic.ts",
+      "qualifiedName": "__0"
+    },
+    "55": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/systematic.ts",
+      "qualifiedName": "randomSystematic"
+    },
+    "56": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/systematic.ts",
+      "qualifiedName": "randomSystematic"
+    },
+    "57": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/systematic.ts",
+      "qualifiedName": "__0"
+    },
+    "58": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/util-classes/nearest-neighbour.ts",
+      "qualifiedName": "NearestNeighbour"
+    },
+    "59": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/util-classes/nearest-neighbour.ts",
+      "qualifiedName": "NearestNeighbour.__constructor"
+    },
+    "60": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/util-classes/nearest-neighbour.ts",
+      "qualifiedName": "NearestNeighbour"
+    },
+    "61": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/util-classes/nearest-neighbour.ts",
+      "qualifiedName": "dt"
+    },
+    "62": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/util-classes/nearest-neighbour.ts",
+      "qualifiedName": "bucketSize"
+    },
+    "65": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/util-classes/nearest-neighbour.ts",
+      "qualifiedName": "NearestNeighbour.findNearestNeighbours"
+    },
+    "66": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/util-classes/nearest-neighbour.ts",
+      "qualifiedName": "NearestNeighbour.findNearestNeighbours"
+    },
+    "67": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/util-classes/nearest-neighbour.ts",
+      "qualifiedName": "unit"
+    },
+    "68": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/util-classes/nearest-neighbour.ts",
+      "qualifiedName": "NearestNeighbour.findNearestDistance"
+    },
+    "69": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/util-classes/nearest-neighbour.ts",
+      "qualifiedName": "NearestNeighbour.findNearestDistance"
+    },
+    "70": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/util-classes/nearest-neighbour.ts",
+      "qualifiedName": "unit"
+    },
+    "71": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/inclusion-probabilities.ts",
+      "qualifiedName": "inclusionProbabilities"
+    },
+    "72": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/inclusion-probabilities.ts",
+      "qualifiedName": "inclusionProbabilities"
+    },
+    "73": {
+      "packageName": "@envisim/sampling",
+      "packagePath": "src/inclusion-probabilities.ts",
+      "qualifiedName": "__0"
+    }
+  },
+  "files": {
+    "entries": {
+      "1": "src/index.ts"
+    },
+    "reflections": {
+      "1": 0
+    }
+  }
+}

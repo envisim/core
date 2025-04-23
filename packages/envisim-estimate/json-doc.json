@@ -1,0 +1,2266 @@
+{
+  "schemaVersion": "2.0",
+  "id": 0,
+  "name": "@envisim/estimate",
+  "variant": "project",
+  "kind": 1,
+  "flags": {},
+  "children": [
+    {
+      "id": 1,
+      "name": "hansenHurwitz",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 2,
+          "name": "hansenHurwitz",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Multiple count Hansen-Hurwitz estimator.\n$$ \\hat{Y} = \\sum_{i \\in S} \\frac{y_i}{\\mu_i}S_i , $$\n$$ n = |S| . $$"
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@category",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Estimator"
+                  }
+                ]
+              },
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "the Hansen-Hurwitz estimate, $\\hat{Y}$."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 3,
+              "name": "y",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "variable of interest of size n, $y_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 4,
+              "name": "expected",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "expected number of inclusions of size n, $\\mu_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 5,
+              "name": "inclusions",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "number of inclusions of size n, $S_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "name": "hhVariance",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 26,
+          "name": "hhVariance",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "$$ \\hat{V}(\\hat{Y}) = \\sum_{i \\in S} \\sum_{j \\in S} \\frac{y_i y_j}{\\mu_i \\mu_j} S_i S_j \\frac{\\mu_{ij} - \\mu_i \\mu_j}{\\mu_{ij}} $$"
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@category",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Variance estimator"
+                  }
+                ]
+              },
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "the Hansen-Hurwitz variance estimate."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 27,
+              "name": "y",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "variable of interest of size n, $y_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 28,
+              "name": "expected",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "expected number of inclusions of size n, $\\mu_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 29,
+              "name": "inclusions",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "number of inclusions of size n, $S_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 30,
+              "name": "mu2m",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "second order expected number of inclusions of size n*n,\n  upper triangular matrix, $\\mu_{ij}$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/matrix",
+                  "packagePath": "dist/matrix.d.ts",
+                  "qualifiedName": "Matrix"
+                },
+                "name": "Matrix",
+                "package": "@envisim/matrix"
+              }
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "horvitzThompson",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 7,
+          "name": "horvitzThompson",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Single count Horvitz-Thompson estimator of the total\n$$ \\hat{Y} = \\sum_{i \\in S} \\frac{y_i}{\\pi_i} , $$\n$$ n = |S| . $$"
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@category",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Estimator"
+                  }
+                ]
+              },
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "the Horvitz-Thompson estimate, $\\hat{Y}$."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 8,
+              "name": "y",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "variable of interest of size n, $y_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 9,
+              "name": "prob",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "inclusion probabilities of size n, $\\pi_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "name": "htVariance",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 32,
+          "name": "htVariance",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "$$ \\hat{V}(\\hat{Y}) = \\sum_{i \\in S} \\sum_{j \\in S} \\frac{y_i y_j}{\\pi_i \\pi_j} \\frac{\\pi_{ij} - \\pi_i \\pi_j}{\\pi_{ij}} $$"
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@category",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Variance estimator"
+                  }
+                ]
+              },
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "the Horvitz-Thompson variance estimate."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 33,
+              "name": "y",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "variable of interest of size n, $y_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 34,
+              "name": "prob",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "inclusion probabilities of size n, $\\pi_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 35,
+              "name": "prob2m",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "second order inclusion probabilities of size n*n,\n  upper triangular matrix, $\\pi_{ij}$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/matrix",
+                  "packagePath": "dist/matrix.d.ts",
+                  "qualifiedName": "Matrix"
+                },
+                "name": "Matrix",
+                "package": "@envisim/matrix"
+              }
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "name": "htVarianceD",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 42,
+          "name": "htVarianceD",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [],
+            "blockTags": [
+              {
+                "tag": "@category",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Variance estimator"
+                  }
+                ]
+              },
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Deville's HT variance estimate."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 43,
+              "name": "y",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "variable of interest of size n, $y_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 44,
+              "name": "prob",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "inclusion probabilities of size n, $\\pi_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "name": "htVarianceGS",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 46,
+          "name": "htVarianceGS",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [],
+            "blockTags": [
+              {
+                "tag": "@category",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Variance estimator"
+                  }
+                ]
+              },
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "GS's HT variance estimate."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 47,
+              "name": "y",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "variable of interest of size n, $y_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 48,
+              "name": "prob",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "inclusion probabilities of size n, $\\pi_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 49,
+              "name": "xm",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "auxilliary variables of size n*p."
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/matrix",
+                  "packagePath": "dist/matrix.d.ts",
+                  "qualifiedName": "Matrix"
+                },
+                "name": "Matrix",
+                "package": "@envisim/matrix"
+              }
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "name": "htVarianceSYG",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 37,
+          "name": "htVarianceSYG",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Sen-Yates-Grundy HT-variance estimator of a fixed sample size\n\n$$ \\hat{V}(\\hat{Y}) = -\\frac{1}{2} \\sum_{i \\in S} \\sum_{j \\in S} (y_i / \\pi_i - y_j / \\pi_j)^2 \\frac{\\pi_{ij} - \\pi_i \\pi_j}{\\pi_{ij}} $$"
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@category",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Variance estimator"
+                  }
+                ]
+              },
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "the Horvitz-Thompson variance estimate."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 38,
+              "name": "y",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "variable of interest of size n, $y_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 39,
+              "name": "prob",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "inclusion probabilities of size n, $\\pi_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 40,
+              "name": "prob2m",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "second order inclusion probabilities of size n*n,\n  upper triangular matrix, $\\pi_{ij}$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/matrix",
+                  "packagePath": "dist/matrix.d.ts",
+                  "qualifiedName": "Matrix"
+                },
+                "name": "Matrix",
+                "package": "@envisim/matrix"
+              }
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "name": "nearestNeighbourEstimator",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 21,
+          "name": "nearestNeighbourEstimator",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "$$ \\hat{Y} = \\sum_{i \\in S} y_i n_i , $$\nwhere $n_i$ is the number of units in the population closer to unit $i$\nthan to any other unit."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@category",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Estimator"
+                  }
+                ]
+              },
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "the nearest neighbour estimate"
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 22,
+              "name": "y",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "variable of interest of size n."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 23,
+              "name": "xm",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "auxilliary variables of size N*p."
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/matrix",
+                  "packagePath": "dist/matrix.d.ts",
+                  "qualifiedName": "Matrix"
+                },
+                "name": "Matrix",
+                "package": "@envisim/matrix"
+              }
+            },
+            {
+              "id": 24,
+              "name": "sample",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices, in the same order as the y-values."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "ratioEstimator",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 11,
+          "name": "ratioEstimator",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Ratio estimator, where a true total $X$ is available for the population.\n$$ \\hat{T} = \\frac{ \\hat{Y} }{ \\hat{X} } X , $$\nwhere $\\hat{Y}, \\hat{X}$ are "
+              },
+              {
+                "kind": "inline-tag",
+                "tag": "@link",
+                "text": "HT-estimators",
+                "target": 6,
+                "tsLinkText": "HT-estimators"
+              },
+              {
+                "kind": "text",
+                "text": "."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@category",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Estimator"
+                  }
+                ]
+              },
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "the ratio estimate, $\\hat{T}$."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 12,
+              "name": "y",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "variable of interest of size n."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 13,
+              "name": "x",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "auxiliary variable of size n."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 14,
+              "name": "totalX",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "population total, $X$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            },
+            {
+              "id": 15,
+              "name": "prob",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "inclusion probabilities of size n."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "name": "spatialBalanceSS",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 55,
+          "name": "spatialBalanceSS",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [],
+            "blockTags": [
+              {
+                "tag": "@category",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Spatial balance measure"
+                  }
+                ]
+              },
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "spatial balance based on the sum of squares balance measure."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 56,
+              "name": "sample",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 57,
+              "name": "xm",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "Matrix of auxilliary variables of size N*p."
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/matrix",
+                  "packagePath": "dist/matrix.d.ts",
+                  "qualifiedName": "Matrix"
+                },
+                "name": "Matrix",
+                "package": "@envisim/matrix"
+              }
+            },
+            {
+              "id": 58,
+              "name": "prob",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {
+                "isOptional": true
+              },
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "inclusion probabilities of size N."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "name": "spatialBalanceVO",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 60,
+          "name": "spatialBalanceVO",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [],
+            "blockTags": [
+              {
+                "tag": "@category",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Spatial balance measure"
+                  }
+                ]
+              },
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "spatial balance based on the voronoi balance measure."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 61,
+              "name": "sample",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "sample indices."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 62,
+              "name": "xm",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "Matrix of auxilliary variables of size N*p."
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "target": {
+                  "packageName": "@envisim/matrix",
+                  "packagePath": "dist/matrix.d.ts",
+                  "qualifiedName": "Matrix"
+                },
+                "name": "Matrix",
+                "package": "@envisim/matrix"
+              }
+            },
+            {
+              "id": 63,
+              "name": "prob",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "inclusion probabilities of size N."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "name": "wrEstimator",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 17,
+          "name": "wrEstimator",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "$$ \\hat{Y} = \\sum_{i=1}^n \\frac{y_i}{n p_i} $$"
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@category",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Estimator"
+                  }
+                ]
+              },
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "the wr estimate, $\\hat{Y}$."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 18,
+              "name": "y",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "variable of interest of size n, $y_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 19,
+              "name": "prob",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "drawing probabilities of size n, $p_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "name": "wrVariance",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 51,
+          "name": "wrVariance",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [],
+            "blockTags": [
+              {
+                "tag": "@category",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Variance estimator"
+                  }
+                ]
+              },
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "the wr variance estimate."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 52,
+              "name": "y",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "variable of interest of size n, $y_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": 53,
+              "name": "prob",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "inclusion probabilities of size n, $\\pi_i$."
+                  }
+                ]
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reference",
+                    "target": {
+                      "packageName": "@envisim/matrix",
+                      "packagePath": "dist/vector.d.ts",
+                      "qualifiedName": "Vector"
+                    },
+                    "name": "Vector",
+                    "package": "@envisim/matrix"
+                  },
+                  {
+                    "type": "array",
+                    "elementType": {
+                      "type": "intrinsic",
+                      "name": "number"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "title": "Functions",
+      "children": [1, 25, 6, 31, 41, 45, 36, 20, 10, 54, 59, 16, 50]
+    }
+  ],
+  "categories": [
+    {
+      "title": "Estimator",
+      "children": [1, 6, 20, 10, 16]
+    },
+    {
+      "title": "Spatial balance measure",
+      "children": [54, 59]
+    },
+    {
+      "title": "Variance estimator",
+      "children": [25, 31, 41, 45, 36, 50]
+    }
+  ],
+  "packageName": "@envisim/estimate",
+  "symbolIdMap": {
+    "0": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/index.ts",
+      "qualifiedName": ""
+    },
+    "1": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "hansenHurwitz"
+    },
+    "2": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "hansenHurwitz"
+    },
+    "3": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "y"
+    },
+    "4": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "expected"
+    },
+    "5": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "inclusions"
+    },
+    "6": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "horvitzThompson"
+    },
+    "7": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "horvitzThompson"
+    },
+    "8": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "y"
+    },
+    "9": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "prob"
+    },
+    "10": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "ratioEstimator"
+    },
+    "11": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "ratioEstimator"
+    },
+    "12": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "y"
+    },
+    "13": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "x"
+    },
+    "14": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "totalX"
+    },
+    "15": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "prob"
+    },
+    "16": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "wrEstimator"
+    },
+    "17": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "wrEstimator"
+    },
+    "18": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "y"
+    },
+    "19": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "prob"
+    },
+    "20": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "nearestNeighbourEstimator"
+    },
+    "21": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "nearestNeighbourEstimator"
+    },
+    "22": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "y"
+    },
+    "23": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "xm"
+    },
+    "24": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/estimate.ts",
+      "qualifiedName": "sample"
+    },
+    "25": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "hhVariance"
+    },
+    "26": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "hhVariance"
+    },
+    "27": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "y"
+    },
+    "28": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "expected"
+    },
+    "29": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "inclusions"
+    },
+    "30": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "mu2m"
+    },
+    "31": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "htVariance"
+    },
+    "32": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "htVariance"
+    },
+    "33": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "y"
+    },
+    "34": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "prob"
+    },
+    "35": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "prob2m"
+    },
+    "36": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "htVarianceSYG"
+    },
+    "37": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "htVarianceSYG"
+    },
+    "38": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "y"
+    },
+    "39": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "prob"
+    },
+    "40": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "prob2m"
+    },
+    "41": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "htVarianceD"
+    },
+    "42": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "htVarianceD"
+    },
+    "43": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "y"
+    },
+    "44": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "prob"
+    },
+    "45": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "htVarianceGS"
+    },
+    "46": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "htVarianceGS"
+    },
+    "47": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "y"
+    },
+    "48": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "prob"
+    },
+    "49": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "xm"
+    },
+    "50": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "wrVariance"
+    },
+    "51": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "wrVariance"
+    },
+    "52": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "y"
+    },
+    "53": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/variance.ts",
+      "qualifiedName": "prob"
+    },
+    "54": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/balance.ts",
+      "qualifiedName": "spatialBalanceSS"
+    },
+    "55": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/balance.ts",
+      "qualifiedName": "spatialBalanceSS"
+    },
+    "56": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/balance.ts",
+      "qualifiedName": "sample"
+    },
+    "57": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/balance.ts",
+      "qualifiedName": "xm"
+    },
+    "58": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/balance.ts",
+      "qualifiedName": "prob"
+    },
+    "59": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/balance.ts",
+      "qualifiedName": "spatialBalanceVO"
+    },
+    "60": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/balance.ts",
+      "qualifiedName": "spatialBalanceVO"
+    },
+    "61": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/balance.ts",
+      "qualifiedName": "sample"
+    },
+    "62": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/balance.ts",
+      "qualifiedName": "xm"
+    },
+    "63": {
+      "packageName": "@envisim/estimate",
+      "packagePath": "src/balance.ts",
+      "qualifiedName": "prob"
+    }
+  },
+  "files": {
+    "entries": {
+      "1": "src/index.ts"
+    },
+    "reflections": {
+      "1": 0
+    }
+  }
+}

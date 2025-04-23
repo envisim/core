@@ -39,7 +39,7 @@ const config = {
   //
   // Output Options
   // outputs
-  out: "./docs",
+  // out: "./docs",
   // html
   json: "./json-doc.json",
   // pretty
@@ -142,9 +142,9 @@ const config = {
   //
   //
   // Validation Options
-  // validation: {
-  //   invalidLink: false,
-  // },
+  validation: {
+    invalidLink: false,
+  },
   // treatWarningsAsErrors
   // treatValidationWarningsAsErrors
   // intentionallyNotExported

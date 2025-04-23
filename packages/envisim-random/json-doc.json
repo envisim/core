@@ -1,0 +1,1228 @@
+{
+  "schemaVersion": "2.0",
+  "id": 0,
+  "name": "@envisim/random",
+  "variant": "project",
+  "kind": 1,
+  "flags": {},
+  "children": [
+    {
+      "id": 18,
+      "name": "Random",
+      "variant": "declaration",
+      "kind": 128,
+      "flags": {},
+      "children": [
+        {
+          "id": 19,
+          "name": "constructor",
+          "variant": "declaration",
+          "kind": 512,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 20,
+              "name": "Random",
+              "variant": "signature",
+              "kind": 16384,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "Returns an instance of Random. TS/class implementation of Uheprng."
+                  }
+                ],
+                "blockTags": [
+                  {
+                    "tag": "@see",
+                    "content": [
+                      {
+                        "kind": "text",
+                        "text": "[grc.com/otg/uheprng.htm](https://www.grc.com/otg/uheprng.htm)"
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "@example",
+                    "content": [
+                      {
+                        "kind": "code",
+                        "text": "```ts\nconst rand = new Random('selectrandom');\nconst a = rand.float();\nconst b = rand.float();\nconst c = rand.seed('selectrandom').float();\nconsole.log(a === b, a === c); // false, true\n```"
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "@returns",
+                    "content": [
+                      {
+                        "kind": "text",
+                        "text": "Uheprng"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 21,
+                  "name": "seed",
+                  "variant": "param",
+                  "kind": 32768,
+                  "flags": {
+                    "isOptional": true
+                  },
+                  "comment": {
+                    "summary": [
+                      {
+                        "kind": "text",
+                        "text": "Seed for random number generator."
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "union",
+                    "types": [
+                      {
+                        "type": "intrinsic",
+                        "name": "string"
+                      },
+                      {
+                        "type": "intrinsic",
+                        "name": "number"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "target": 18,
+                "name": "Random",
+                "package": "@envisim/random"
+              }
+            }
+          ]
+        },
+        {
+          "id": 50,
+          "name": "addEntropy",
+          "variant": "declaration",
+          "kind": 2048,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 51,
+              "name": "addEntropy",
+              "variant": "signature",
+              "kind": 4096,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "Adds entropy to Uheprng."
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 52,
+                  "name": "args",
+                  "variant": "param",
+                  "kind": 32768,
+                  "flags": {
+                    "isRest": true
+                  },
+                  "type": {
+                    "type": "union",
+                    "types": [
+                      {
+                        "type": "array",
+                        "elementType": {
+                          "type": "intrinsic",
+                          "name": "number"
+                        }
+                      },
+                      {
+                        "type": "array",
+                        "elementType": {
+                          "type": "intrinsic",
+                          "name": "string"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "this"
+              }
+            }
+          ]
+        },
+        {
+          "id": 44,
+          "name": "cleanString",
+          "variant": "declaration",
+          "kind": 2048,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 45,
+              "name": "cleanString",
+              "variant": "signature",
+              "kind": 4096,
+              "flags": {},
+              "comment": {
+                "summary": [],
+                "modifierTags": ["@internal"]
+              },
+              "parameters": [
+                {
+                  "id": 46,
+                  "name": "inStr",
+                  "variant": "param",
+                  "kind": 32768,
+                  "flags": {},
+                  "type": {
+                    "type": "intrinsic",
+                    "name": "string"
+                  }
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "string"
+              }
+            }
+          ]
+        },
+        {
+          "id": 60,
+          "name": "float",
+          "variant": "declaration",
+          "kind": 2048,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 61,
+              "name": "float",
+              "variant": "signature",
+              "kind": 4096,
+              "flags": {},
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            }
+          ]
+        },
+        {
+          "id": 62,
+          "name": "floatArray",
+          "variant": "declaration",
+          "kind": 2048,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 63,
+              "name": "floatArray",
+              "variant": "signature",
+              "kind": 4096,
+              "flags": {},
+              "comment": {
+                "summary": [],
+                "blockTags": [
+                  {
+                    "tag": "@returns",
+                    "content": [
+                      {
+                        "kind": "text",
+                        "text": "An array of (uniform) numbers on the interval "
+                      },
+                      {
+                        "kind": "code",
+                        "text": "`[0.0, 1.0)`"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 64,
+                  "name": "n",
+                  "variant": "param",
+                  "kind": 32768,
+                  "flags": {},
+                  "type": {
+                    "type": "intrinsic",
+                    "name": "number"
+                  }
+                }
+              ],
+              "type": {
+                "type": "array",
+                "elementType": {
+                  "type": "intrinsic",
+                  "name": "number"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": 65,
+          "name": "floate",
+          "variant": "declaration",
+          "kind": 2048,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 66,
+              "name": "floate",
+              "variant": "signature",
+              "kind": 4096,
+              "flags": {},
+              "comment": {
+                "summary": [],
+                "blockTags": [
+                  {
+                    "tag": "@returns",
+                    "content": [
+                      {
+                        "kind": "text",
+                        "text": "Pseudo-random (uniform) number o nthe interval "
+                      },
+                      {
+                        "kind": "code",
+                        "text": "`(0.0, 1.0)`"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            }
+          ]
+        },
+        {
+          "id": 47,
+          "name": "hashString",
+          "variant": "declaration",
+          "kind": 2048,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 48,
+              "name": "hashString",
+              "variant": "signature",
+              "kind": 4096,
+              "flags": {},
+              "parameters": [
+                {
+                  "id": 49,
+                  "name": "inStr",
+                  "variant": "param",
+                  "kind": 32768,
+                  "flags": {},
+                  "type": {
+                    "type": "intrinsic",
+                    "name": "string"
+                  }
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "this"
+              }
+            }
+          ]
+        },
+        {
+          "id": 53,
+          "name": "initState",
+          "variant": "declaration",
+          "kind": 2048,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 54,
+              "name": "initState",
+              "variant": "signature",
+              "kind": 4096,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "Initializes state"
+                  }
+                ]
+              },
+              "type": {
+                "type": "intrinsic",
+                "name": "this"
+              }
+            }
+          ]
+        },
+        {
+          "id": 35,
+          "name": "intn",
+          "variant": "declaration",
+          "kind": 2048,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 36,
+              "name": "intn",
+              "variant": "signature",
+              "kind": 4096,
+              "flags": {},
+              "comment": {
+                "summary": [],
+                "blockTags": [
+                  {
+                    "tag": "@returns",
+                    "content": [
+                      {
+                        "kind": "text",
+                        "text": "A pseudo-random integer on [0, "
+                      },
+                      {
+                        "kind": "code",
+                        "text": "`n`"
+                      },
+                      {
+                        "kind": "text",
+                        "text": ")"
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "@throws",
+                    "content": [
+                      {
+                        "kind": "code",
+                        "text": "`RangeError`"
+                      },
+                      {
+                        "kind": "text",
+                        "text": " if "
+                      },
+                      {
+                        "kind": "code",
+                        "text": "`n`"
+                      },
+                      {
+                        "kind": "text",
+                        "text": " is not at positive integer."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 37,
+                  "name": "n",
+                  "variant": "param",
+                  "kind": 32768,
+                  "flags": {},
+                  "type": {
+                    "type": "intrinsic",
+                    "name": "number"
+                  },
+                  "defaultValue": "1"
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            }
+          ]
+        },
+        {
+          "id": 58,
+          "name": "random",
+          "variant": "declaration",
+          "kind": 2048,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 59,
+              "name": "random",
+              "variant": "signature",
+              "kind": 4096,
+              "flags": {},
+              "comment": {
+                "summary": [],
+                "blockTags": [
+                  {
+                    "tag": "@returns",
+                    "content": [
+                      {
+                        "kind": "text",
+                        "text": "Pseudo-random (uniform) number on the interval [0.0, 1.0)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            }
+          ]
+        },
+        {
+          "id": 55,
+          "name": "seed",
+          "variant": "declaration",
+          "kind": 2048,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 56,
+              "name": "seed",
+              "variant": "signature",
+              "kind": 4096,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "Seed the random generator"
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 57,
+                  "name": "seed",
+                  "variant": "param",
+                  "kind": 32768,
+                  "flags": {},
+                  "type": {
+                    "type": "union",
+                    "types": [
+                      {
+                        "type": "intrinsic",
+                        "name": "string"
+                      },
+                      {
+                        "type": "intrinsic",
+                        "name": "number"
+                      }
+                    ]
+                  },
+                  "defaultValue": "..."
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "this"
+              }
+            }
+          ]
+        },
+        {
+          "id": 38,
+          "name": "str",
+          "variant": "declaration",
+          "kind": 2048,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 39,
+              "name": "str",
+              "variant": "signature",
+              "kind": 4096,
+              "flags": {},
+              "comment": {
+                "summary": [],
+                "blockTags": [
+                  {
+                    "tag": "@returns",
+                    "content": [
+                      {
+                        "kind": "text",
+                        "text": "A pseudo-random string of "
+                      },
+                      {
+                        "kind": "code",
+                        "text": "`n`"
+                      },
+                      {
+                        "kind": "text",
+                        "text": " printable characters ranging from\n  "
+                      },
+                      {
+                        "kind": "code",
+                        "text": "`chr(33)`"
+                      },
+                      {
+                        "kind": "text",
+                        "text": " to "
+                      },
+                      {
+                        "kind": "code",
+                        "text": "`chr(126)`"
+                      },
+                      {
+                        "kind": "text",
+                        "text": " inclusive."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 40,
+                  "name": "n",
+                  "variant": "param",
+                  "kind": 32768,
+                  "flags": {},
+                  "type": {
+                    "type": "intrinsic",
+                    "name": "number"
+                  }
+                }
+              ],
+              "type": {
+                "type": "intrinsic",
+                "name": "string"
+              }
+            }
+          ]
+        }
+      ],
+      "groups": [
+        {
+          "title": "Constructors",
+          "children": [19]
+        },
+        {
+          "title": "Methods",
+          "children": [50, 44, 60, 62, 65, 47, 53, 35, 58, 55, 38]
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "RandomGenerator",
+      "variant": "declaration",
+      "kind": 256,
+      "flags": {},
+      "children": [
+        {
+          "id": 16,
+          "name": "random",
+          "variant": "declaration",
+          "kind": 2048,
+          "flags": {},
+          "signatures": [
+            {
+              "id": 17,
+              "name": "random",
+              "variant": "signature",
+              "kind": 4096,
+              "flags": {},
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            }
+          ]
+        }
+      ],
+      "groups": [
+        {
+          "title": "Methods",
+          "children": [16]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "randomArray",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 8,
+          "name": "randomArray",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Returns an array with psudo-random standard uniform elements."
+              }
+            ],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Pseudo-random (uniform) array with elements on the interval "
+                  },
+                  {
+                    "kind": "code",
+                    "text": "`[0.0, 1.0)`"
+                  },
+                  {
+                    "kind": "text",
+                    "text": "."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 9,
+              "name": "n",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "Length of array."
+                  }
+                ]
+              },
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            },
+            {
+              "id": 10,
+              "name": "generator",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "Seed for random number generator."
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "target": 15,
+                "name": "RandomGenerator",
+                "package": "@envisim/random"
+              },
+              "defaultValue": "..."
+            }
+          ],
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "intrinsic",
+              "name": "number"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "randomFloat",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 2,
+          "name": "randomFloat",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Pseudo-random (uniform) number on the interval "
+                  },
+                  {
+                    "kind": "code",
+                    "text": "`[0.0, 1.0)`"
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 3,
+              "name": "generator",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": 15,
+                "name": "RandomGenerator",
+                "package": "@envisim/random"
+              },
+              "defaultValue": "..."
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "randomFloatOpen",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 5,
+          "name": "randomFloatOpen",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "Pseudo-random (uniform) number o nthe interval "
+                  },
+                  {
+                    "kind": "code",
+                    "text": "`(0.0, 1.0)`"
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 6,
+              "name": "generator",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": 15,
+                "name": "RandomGenerator",
+                "package": "@envisim/random"
+              },
+              "defaultValue": "..."
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "randomInt",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 12,
+          "name": "randomInt",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [],
+            "blockTags": [
+              {
+                "tag": "@returns",
+                "content": [
+                  {
+                    "kind": "text",
+                    "text": "A pseudo-random integer on [0, "
+                  },
+                  {
+                    "kind": "code",
+                    "text": "`n`"
+                  },
+                  {
+                    "kind": "text",
+                    "text": ")"
+                  }
+                ]
+              },
+              {
+                "tag": "@throws",
+                "content": [
+                  {
+                    "kind": "code",
+                    "text": "`RangeError`"
+                  },
+                  {
+                    "kind": "text",
+                    "text": " if "
+                  },
+                  {
+                    "kind": "code",
+                    "text": "`n`"
+                  },
+                  {
+                    "kind": "text",
+                    "text": " is not at positive integer."
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 13,
+              "name": "n",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              },
+              "defaultValue": "1"
+            },
+            {
+              "id": 14,
+              "name": "generator",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": 15,
+                "name": "RandomGenerator",
+                "package": "@envisim/random"
+              },
+              "defaultValue": "..."
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "number"
+          }
+        }
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "title": "Classes",
+      "children": [18]
+    },
+    {
+      "title": "Interfaces",
+      "children": [15]
+    },
+    {
+      "title": "Functions",
+      "children": [7, 1, 4, 11]
+    }
+  ],
+  "packageName": "@envisim/random",
+  "symbolIdMap": {
+    "0": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": ""
+    },
+    "1": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "randomFloat"
+    },
+    "2": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "randomFloat"
+    },
+    "3": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "generator"
+    },
+    "4": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "randomFloatOpen"
+    },
+    "5": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "randomFloatOpen"
+    },
+    "6": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "generator"
+    },
+    "7": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "randomArray"
+    },
+    "8": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "randomArray"
+    },
+    "9": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "n"
+    },
+    "10": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "generator"
+    },
+    "11": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "randomInt"
+    },
+    "12": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "randomInt"
+    },
+    "13": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "n"
+    },
+    "14": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "generator"
+    },
+    "15": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "RandomGenerator"
+    },
+    "16": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "RandomGenerator.random"
+    },
+    "17": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/index.ts",
+      "qualifiedName": "RandomGenerator.random"
+    },
+    "18": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random"
+    },
+    "19": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.__constructor"
+    },
+    "20": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random"
+    },
+    "21": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "seed"
+    },
+    "35": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.intn"
+    },
+    "36": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.intn"
+    },
+    "37": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "n"
+    },
+    "38": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.str"
+    },
+    "39": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.str"
+    },
+    "40": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "n"
+    },
+    "44": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.cleanString"
+    },
+    "45": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.cleanString"
+    },
+    "46": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "inStr"
+    },
+    "47": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.hashString"
+    },
+    "48": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.hashString"
+    },
+    "49": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "inStr"
+    },
+    "50": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.addEntropy"
+    },
+    "51": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.addEntropy"
+    },
+    "52": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "args"
+    },
+    "53": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.initState"
+    },
+    "54": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.initState"
+    },
+    "55": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.seed"
+    },
+    "56": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.seed"
+    },
+    "57": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "seed"
+    },
+    "58": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.random"
+    },
+    "59": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.random"
+    },
+    "60": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.float"
+    },
+    "61": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.float"
+    },
+    "62": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.floatArray"
+    },
+    "63": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.floatArray"
+    },
+    "64": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "n"
+    },
+    "65": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.floate"
+    },
+    "66": {
+      "packageName": "@envisim/random",
+      "packagePath": "src/random.ts",
+      "qualifiedName": "Random.floate"
+    }
+  },
+  "files": {
+    "entries": {
+      "1": "src/index.ts"
+    },
+    "reflections": {
+      "1": 0
+    }
+  }
+}

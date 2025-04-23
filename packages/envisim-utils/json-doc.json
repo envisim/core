@@ -1,0 +1,773 @@
+{
+  "schemaVersion": "2.0",
+  "id": 0,
+  "name": "@envisim/utils",
+  "variant": "project",
+  "kind": 1,
+  "flags": {},
+  "children": [
+    {
+      "id": 35,
+      "name": "OptionalParam",
+      "variant": "declaration",
+      "kind": 2097152,
+      "flags": {},
+      "typeParameters": [
+        {
+          "id": 36,
+          "name": "T",
+          "variant": "typeParam",
+          "kind": 131072,
+          "flags": {}
+        },
+        {
+          "id": 37,
+          "name": "S",
+          "variant": "typeParam",
+          "kind": 131072,
+          "flags": {},
+          "type": {
+            "type": "typeOperator",
+            "operator": "keyof",
+            "target": {
+              "type": "reference",
+              "target": 36,
+              "name": "T",
+              "package": "@envisim/utils",
+              "refersToTypeParameter": true
+            }
+          }
+        }
+      ],
+      "type": {
+        "type": "intersection",
+        "types": [
+          {
+            "type": "reference",
+            "target": {
+              "packageName": "typescript",
+              "packagePath": "lib/lib.es5.d.ts",
+              "qualifiedName": "Omit"
+            },
+            "typeArguments": [
+              {
+                "type": "reference",
+                "target": 36,
+                "name": "T",
+                "package": "@envisim/utils",
+                "refersToTypeParameter": true
+              },
+              {
+                "type": "reference",
+                "target": 37,
+                "name": "S",
+                "package": "@envisim/utils",
+                "refersToTypeParameter": true
+              }
+            ],
+            "name": "Omit",
+            "package": "typescript"
+          },
+          {
+            "type": "reference",
+            "target": {
+              "packageName": "typescript",
+              "packagePath": "lib/lib.es5.d.ts",
+              "qualifiedName": "Partial"
+            },
+            "typeArguments": [
+              {
+                "type": "reference",
+                "target": {
+                  "packageName": "typescript",
+                  "packagePath": "lib/lib.es5.d.ts",
+                  "qualifiedName": "Pick"
+                },
+                "typeArguments": [
+                  {
+                    "type": "reference",
+                    "target": 36,
+                    "name": "T",
+                    "package": "@envisim/utils",
+                    "refersToTypeParameter": true
+                  },
+                  {
+                    "type": "reference",
+                    "target": 37,
+                    "name": "S",
+                    "package": "@envisim/utils",
+                    "refersToTypeParameter": true
+                  }
+                ],
+                "name": "Pick",
+                "package": "typescript"
+              }
+            ],
+            "name": "Partial",
+            "package": "typescript"
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "name": "copy",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 2,
+          "name": "copy",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "typeParameters": [
+            {
+              "id": 3,
+              "name": "T",
+              "variant": "typeParam",
+              "kind": 131072,
+              "flags": {}
+            }
+          ],
+          "parameters": [
+            {
+              "id": 4,
+              "name": "obj",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reference",
+                "target": 3,
+                "name": "T",
+                "package": "@envisim/utils",
+                "refersToTypeParameter": true
+              }
+            }
+          ],
+          "type": {
+            "type": "reference",
+            "target": 3,
+            "name": "T",
+            "package": "@envisim/utils",
+            "refersToTypeParameter": true
+          }
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "name": "inClosedInterval",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 26,
+          "name": "inClosedInterval",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "parameters": [
+            {
+              "id": 27,
+              "name": "x",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            },
+            {
+              "id": 28,
+              "name": "a",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              },
+              "defaultValue": "0.0"
+            },
+            {
+              "id": 29,
+              "name": "b",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              },
+              "defaultValue": "1.0"
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "name": "inOpenInterval",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 31,
+          "name": "inOpenInterval",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "parameters": [
+            {
+              "id": 32,
+              "name": "x",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            },
+            {
+              "id": 33,
+              "name": "a",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              },
+              "defaultValue": "0.0"
+            },
+            {
+              "id": 34,
+              "name": "b",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              },
+              "defaultValue": "1.0"
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "reducedRowEchelonForm",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 6,
+          "name": "reducedRowEchelonForm",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "comment": {
+            "summary": [
+              {
+                "kind": "text",
+                "text": "Transforms an array into reducedRowEchelonForm in place."
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "id": 7,
+              "name": "mat",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "A flat array"
+                  }
+                ]
+              },
+              "type": {
+                "type": "array",
+                "elementType": {
+                  "type": "intrinsic",
+                  "name": "number"
+                }
+              }
+            },
+            {
+              "id": 8,
+              "name": "rowCount",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "The number of rows"
+                  }
+                ]
+              },
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            },
+            {
+              "id": 9,
+              "name": "colCount",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "comment": {
+                "summary": [
+                  {
+                    "kind": "text",
+                    "text": "The number of columns"
+                  }
+                ]
+              },
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            },
+            {
+              "id": 10,
+              "name": "eps",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              },
+              "defaultValue": "1e-9"
+            },
+            {
+              "id": 11,
+              "name": "mIdx",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "reflection",
+                "declaration": {
+                  "id": 12,
+                  "name": "__type",
+                  "variant": "declaration",
+                  "kind": 65536,
+                  "flags": {},
+                  "signatures": [
+                    {
+                      "id": 13,
+                      "name": "__type",
+                      "variant": "signature",
+                      "kind": 4096,
+                      "flags": {},
+                      "parameters": [
+                        {
+                          "id": 14,
+                          "name": "r",
+                          "variant": "param",
+                          "kind": 32768,
+                          "flags": {},
+                          "type": {
+                            "type": "intrinsic",
+                            "name": "number"
+                          }
+                        },
+                        {
+                          "id": 15,
+                          "name": "c",
+                          "variant": "param",
+                          "kind": 32768,
+                          "flags": {},
+                          "type": {
+                            "type": "intrinsic",
+                            "name": "number"
+                          }
+                        }
+                      ],
+                      "type": {
+                        "type": "intrinsic",
+                        "name": "number"
+                      }
+                    }
+                  ]
+                }
+              },
+              "defaultValue": "..."
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "void"
+          }
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "name": "swap",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 17,
+          "name": "swap",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "typeParameters": [
+            {
+              "id": 18,
+              "name": "T",
+              "variant": "typeParam",
+              "kind": 131072,
+              "flags": {}
+            }
+          ],
+          "parameters": [
+            {
+              "id": 19,
+              "name": "arr",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "array",
+                "elementType": {
+                  "type": "reference",
+                  "target": 18,
+                  "name": "T",
+                  "package": "@envisim/utils",
+                  "refersToTypeParameter": true
+                }
+              }
+            },
+            {
+              "id": 20,
+              "name": "a",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            },
+            {
+              "id": 21,
+              "name": "b",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "intrinsic",
+                "name": "number"
+              }
+            }
+          ],
+          "type": {
+            "type": "intrinsic",
+            "name": "void"
+          }
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "name": "throwRangeError",
+      "variant": "declaration",
+      "kind": 64,
+      "flags": {},
+      "signatures": [
+        {
+          "id": 23,
+          "name": "throwRangeError",
+          "variant": "signature",
+          "kind": 4096,
+          "flags": {},
+          "parameters": [
+            {
+              "id": 24,
+              "name": "err",
+              "variant": "param",
+              "kind": 32768,
+              "flags": {},
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "intrinsic",
+                    "name": "undefined"
+                  },
+                  {
+                    "type": "literal",
+                    "value": null
+                  },
+                  {
+                    "type": "intrinsic",
+                    "name": "string"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "predicate",
+            "name": "err",
+            "asserts": true,
+            "targetType": {
+              "type": "union",
+              "types": [
+                {
+                  "type": "intrinsic",
+                  "name": "undefined"
+                },
+                {
+                  "type": "literal",
+                  "value": null
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "title": "Type Aliases",
+      "children": [35]
+    },
+    {
+      "title": "Functions",
+      "children": [1, 25, 30, 5, 16, 22]
+    }
+  ],
+  "packageName": "@envisim/utils",
+  "symbolIdMap": {
+    "0": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/index.ts",
+      "qualifiedName": ""
+    },
+    "1": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/copy.ts",
+      "qualifiedName": "copy"
+    },
+    "2": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/copy.ts",
+      "qualifiedName": "copy"
+    },
+    "3": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/copy.ts",
+      "qualifiedName": "T"
+    },
+    "4": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/copy.ts",
+      "qualifiedName": "obj"
+    },
+    "5": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/reducedRowEchelonForm.ts",
+      "qualifiedName": "reducedRowEchelonForm"
+    },
+    "6": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/reducedRowEchelonForm.ts",
+      "qualifiedName": "reducedRowEchelonForm"
+    },
+    "7": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/reducedRowEchelonForm.ts",
+      "qualifiedName": "mat"
+    },
+    "8": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/reducedRowEchelonForm.ts",
+      "qualifiedName": "rowCount"
+    },
+    "9": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/reducedRowEchelonForm.ts",
+      "qualifiedName": "colCount"
+    },
+    "10": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/reducedRowEchelonForm.ts",
+      "qualifiedName": "eps"
+    },
+    "11": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/reducedRowEchelonForm.ts",
+      "qualifiedName": "mIdx"
+    },
+    "12": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/reducedRowEchelonForm.ts",
+      "qualifiedName": "__type"
+    },
+    "13": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/reducedRowEchelonForm.ts",
+      "qualifiedName": "__type"
+    },
+    "14": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/reducedRowEchelonForm.ts",
+      "qualifiedName": "r"
+    },
+    "15": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/reducedRowEchelonForm.ts",
+      "qualifiedName": "c"
+    },
+    "16": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/swap.ts",
+      "qualifiedName": "swap"
+    },
+    "17": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/swap.ts",
+      "qualifiedName": "swap"
+    },
+    "18": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/swap.ts",
+      "qualifiedName": "T"
+    },
+    "19": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/swap.ts",
+      "qualifiedName": "arr"
+    },
+    "20": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/swap.ts",
+      "qualifiedName": "a"
+    },
+    "21": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/swap.ts",
+      "qualifiedName": "b"
+    },
+    "22": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/throw.ts",
+      "qualifiedName": "throwRangeError"
+    },
+    "23": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/throw.ts",
+      "qualifiedName": "throwRangeError"
+    },
+    "24": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/throw.ts",
+      "qualifiedName": "err"
+    },
+    "25": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/numeric.ts",
+      "qualifiedName": "inClosedInterval"
+    },
+    "26": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/numeric.ts",
+      "qualifiedName": "inClosedInterval"
+    },
+    "27": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/numeric.ts",
+      "qualifiedName": "x"
+    },
+    "28": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/numeric.ts",
+      "qualifiedName": "a"
+    },
+    "29": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/numeric.ts",
+      "qualifiedName": "b"
+    },
+    "30": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/numeric.ts",
+      "qualifiedName": "inOpenInterval"
+    },
+    "31": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/numeric.ts",
+      "qualifiedName": "inOpenInterval"
+    },
+    "32": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/numeric.ts",
+      "qualifiedName": "x"
+    },
+    "33": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/numeric.ts",
+      "qualifiedName": "a"
+    },
+    "34": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/numeric.ts",
+      "qualifiedName": "b"
+    },
+    "35": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/types.ts",
+      "qualifiedName": "OptionalParam"
+    },
+    "36": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/types.ts",
+      "qualifiedName": "T"
+    },
+    "37": {
+      "packageName": "@envisim/utils",
+      "packagePath": "src/types.ts",
+      "qualifiedName": "S"
+    }
+  },
+  "files": {
+    "entries": {
+      "1": "src/index.ts"
+    },
+    "reflections": {
+      "1": 0
+    }
+  }
+}
