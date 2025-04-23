@@ -1,6 +1,7 @@
 import { Poisson } from "@envisim/distributions";
 import { type AreaObject, FeatureCollection, Point, Polygon } from "@envisim/geojson";
-import { Geodesic, BoundingBox } from "@envisim/geojson-utils";
+import { BoundingBox } from "@envisim/geojson-utils";
+import { destination } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { Random } from "@envisim/random";
 import { samplePositionsInBbox } from "../sample-continuous/index.js";
@@ -17,7 +18,7 @@ function randomPositionInCluster(center: GJ.Position, radius: number, rand: Rand
   const azimuth = (90 - theta * TO_DEG + 360) % 360;
   // Randomize radius (distance from center).
   const dist = radius * Math.sqrt(rand.float());
-  return Geodesic.destination(center, dist, azimuth);
+  return destination(center, dist, azimuth);
 }
 
 interface MaternClusterProcessOptions {
@@ -60,10 +61,10 @@ export function maternClusterProcess(
   // Expand box by radius of cluster, as parent points should
   // be allowed outside of area. This is to avoid edge effects.
   const dist = Math.SQRT2 * radiusOfCluster;
-  const westSouth = Geodesic.destination([box[0], box[1]], dist, 225);
-  const eastSouth = Geodesic.destination([box[2], box[1]], dist, 135);
-  const westNorth = Geodesic.destination([box[0], box[3]], dist, 315);
-  const eastNorth = Geodesic.destination([box[2], box[3]], dist, 45);
+  const westSouth = destination([box[0], box[1]], dist, 225);
+  const eastSouth = destination([box[2], box[1]], dist, 135);
+  const westNorth = destination([box[0], box[3]], dist, 315);
+  const eastNorth = destination([box[2], box[3]], dist, 45);
   // Expanded box as polygon coordinates counterclockwise.
   const expandedBoxPolygonCoords = [[westNorth, westSouth, eastSouth, eastNorth, westNorth]];
   // Expanded box as Feature.

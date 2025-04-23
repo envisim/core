@@ -1,6 +1,7 @@
 import { Feature, FeatureCollection, type LineObject, LineString } from "@envisim/geojson";
-import { PlateCarree, lengthOfLineString } from "@envisim/geojson-utils";
+import { lengthOfLineString } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
+import { distance, intermediate } from "@envisim/geojson-utils/plate-carree";
 import { Random, type RandomGenerator } from "@envisim/random";
 import { SAMPLE_ERROR_LIST, type SampleError, throwRangeError } from "./options.js";
 
@@ -83,7 +84,7 @@ export function sampleSystematicLinesOnLines(
         let dashClosed = -1;
         let distTravelled = 0;
         for (let k = 0; k < ls.length - 1; k++) {
-          const segmentLength = PlateCarree.distance(ls[k], ls[k + 1]);
+          const segmentLength = distance(ls[k], ls[k + 1]);
           const segmentStart = distTravelled;
           const segmentEnd = segmentStart + segmentLength;
 
@@ -91,13 +92,13 @@ export function sampleSystematicLinesOnLines(
             // check if start of current dash is in this segment
             if (distances[m][0] >= segmentStart && distances[m][0] <= segmentEnd) {
               const fraction = (distances[m][0] - segmentStart) / segmentLength;
-              dashLines[m] = [PlateCarree.intermediate(ls[k], ls[k + 1], fraction)];
+              dashLines[m] = [intermediate(ls[k], ls[k + 1], fraction)];
               dashOpen = m;
             }
             // check if end of current dash is in this segment
             if (distances[m][1] >= segmentStart && distances[m][1] <= segmentEnd) {
               const fraction = (distances[m][1] - segmentStart) / segmentLength;
-              dashLines[m].push(PlateCarree.intermediate(ls[k], ls[k + 1], fraction));
+              dashLines[m].push(intermediate(ls[k], ls[k + 1], fraction));
               dashClosed = m;
             }
             // if current dash is open but not closed, then add

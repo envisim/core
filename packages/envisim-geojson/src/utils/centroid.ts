@@ -1,5 +1,6 @@
-import { BoundingBox, azimuthalEquidistant, PlateCarree } from "@envisim/geojson-utils";
+import { BoundingBox, azimuthalEquidistant } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
+import { intermediate, distance, areaOfRing } from "@envisim/geojson-utils/plate-carree";
 
 // The centroid is the geographic center that minimizes the mean squared
 // distance to all the points in the feature/features.
@@ -73,8 +74,8 @@ export function centroidOfLineString(
   const count = coords.length - 1;
   for (let i = 0; i < count; i++) {
     centroids.push({
-      centroid: PlateCarree.intermediate(coords[i], coords[i + 1], 0.5),
-      weight: PlateCarree.distance(coords[i], coords[i + 1]),
+      centroid: intermediate(coords[i], coords[i + 1], 0.5),
+      weight: distance(coords[i], coords[i + 1]),
     });
   }
   return centroidFromMultipleCentroids(centroids, bbox, iterations);
@@ -112,7 +113,7 @@ function centroidOfRing(
     Cy /= 6 * A;
     center = proj.unproject([Cx, Cy]);
   }
-  return { centroid: center, weight: PlateCarree.areaOfRing(coords) };
+  return { centroid: center, weight: areaOfRing(coords) };
 }
 
 /**

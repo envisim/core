@@ -1,4 +1,5 @@
-import { bboxInBBox, Geodesic, intersectPolygons } from "@envisim/geojson-utils";
+import { bboxInBBox, intersectPolygons } from "@envisim/geojson-utils";
+import { distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { type AreaObject, Circle, MultiCircle, MultiPolygon, Polygon } from "../objects/index.js";
 import { type CirclesToPolygonsOptions } from "../utils/circles-to-polygons.js";
@@ -91,7 +92,7 @@ function intersectCircleGeometries(
 
   for (const sc of smallCircles) {
     for (const lc of largeCircles) {
-      const d = Geodesic.distance(sc, lc);
+      const d = distance(sc, lc);
       if (d <= radiusDiff) {
         // Smaller circle completely within larger
         retainedCircles.push(sc);

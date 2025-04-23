@@ -4,7 +4,7 @@ import {
   type Point,
   intersectPointAreaGeometries,
 } from "@envisim/geojson";
-import { Geodesic } from "@envisim/geojson-utils";
+import { distance } from "@envisim/geojson-utils/geodesic";
 import {
   type OptionsPointsOnAreas,
   SAMPLE_ERROR_LIST,
@@ -121,7 +121,7 @@ export function sampleRelascopePoints<P extends string>(
     const baseDw = 1.0 / (Math.PI * radius * radius);
 
     pointSample.forEach((samplePoint, samplePointIndex) => {
-      const dist = Geodesic.distance(basePointCoords, samplePoint.geometry.coordinates);
+      const dist = distance(basePointCoords, samplePoint.geometry.coordinates);
       if (dist < radius) {
         // Check if base point exists in this frame (frame could be part/stratum)
         for (let i = 0; i < collection.features.length; i++) {

@@ -1,6 +1,6 @@
 import { Feature, FeatureCollection, type LineObject, LineString, Point } from "@envisim/geojson";
-import { PlateCarree } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
+import { distance, intermediate } from "@envisim/geojson-utils/plate-carree";
 import { Random } from "@envisim/random";
 import {
   type OptionsBase,
@@ -96,14 +96,12 @@ function samplePointsOnGeometry(geometry: LineObject, track: Track, distances: n
     const lineStringCoords = geometry.coordinates;
 
     for (let i = 0; i < lineStringCoords.length - 1; i++) {
-      segmentLength = PlateCarree.distance(lineStringCoords[i], lineStringCoords[i + 1]);
+      segmentLength = distance(lineStringCoords[i], lineStringCoords[i + 1]);
 
       for (let l = track.currentIndex; l < distances.length; l++) {
         if (distances[l] < track.dt + segmentLength) {
           fraction = (distances[l] - track.dt) / segmentLength;
-          points.push(
-            PlateCarree.intermediate(lineStringCoords[i], lineStringCoords[i + 1], fraction),
-          );
+          points.push(intermediate(lineStringCoords[i], lineStringCoords[i + 1], fraction));
           track.currentIndex += 1;
         }
       }
@@ -115,12 +113,12 @@ function samplePointsOnGeometry(geometry: LineObject, track: Track, distances: n
 
     for (let i = 0; i < mlsCoords.length; i++) {
       for (let j = 0; j < mlsCoords[i].length - 1; j++) {
-        segmentLength = PlateCarree.distance(mlsCoords[i][j], mlsCoords[i][j + 1]);
+        segmentLength = distance(mlsCoords[i][j], mlsCoords[i][j + 1]);
 
         for (let l = track.currentIndex; l < distances.length; l++) {
           if (distances[l] < track.dt + segmentLength) {
             fraction = (distances[l] - track.dt) / segmentLength;
-            points.push(PlateCarree.intermediate(mlsCoords[i][j], mlsCoords[i][j + 1], fraction));
+            points.push(intermediate(mlsCoords[i][j], mlsCoords[i][j + 1], fraction));
             track.currentIndex += 1;
           }
         }

@@ -1,4 +1,5 @@
-import { Geodesic, rerollPolygons } from "@envisim/geojson-utils";
+import { rerollPolygons } from "@envisim/geojson-utils";
+import { destinationUnrolled } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 
 export interface CirclesToPolygonsOptions {
@@ -35,7 +36,7 @@ export function circlesToPolygons(
   let angle = 360.0;
 
   for (let i = 0; i < centres.length; i++) {
-    polygons[i][0][0] = Geodesic.destinationUnrolled(centres[i], transformedRadius, angle);
+    polygons[i][0][0] = destinationUnrolled(centres[i], transformedRadius, angle);
     polygons[i][0][pointsPerCircle] = [...polygons[i][0][0]];
   }
 
@@ -43,7 +44,7 @@ export function circlesToPolygons(
     angle -= delta;
 
     for (let i = 0; i < centres.length; i++) {
-      polygons[i][0][j] = Geodesic.destinationUnrolled(centres[i], transformedRadius, angle);
+      polygons[i][0][j] = destinationUnrolled(centres[i], transformedRadius, angle);
     }
   }
 

@@ -4,7 +4,8 @@ import {
   type LineObject,
   toLineObject,
 } from "@envisim/geojson";
-import { Geodesic, BoundingBox, cutLineGeometry } from "@envisim/geojson-utils";
+import { BoundingBox, cutLineGeometry } from "@envisim/geojson-utils";
+import { destination, distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { Random, type RandomGenerator } from "@envisim/random";
 import { intersectLineSampleAreaFrame } from "../utils/index.js";
@@ -47,10 +48,7 @@ export function sampleSystematicLinesOnAreas(
   const center = BoundingBox.center(box);
   const bottomLeft: GJ.Position = [box[0], box[1]];
   const topRight: GJ.Position = [box[2], box[3]];
-  const radius = Math.max(
-    Geodesic.distance(center, bottomLeft),
-    Geodesic.distance(center, topRight),
-  );
+  const radius = Math.max(distance(center, bottomLeft), distance(center, topRight));
 
   const numPointsPerLine = 20;
   const numLines = Math.ceil((2.0 * radius) / interspace);
@@ -83,5 +81,5 @@ export function sampleSystematicLinesOnAreas(
 function placePoint(point: GJ.Position, position: GJ.Position, rotation: number): GJ.Position {
   const dist = Math.sqrt(point[0] * point[0] + point[1] * point[1]);
   const angle = 90 - (Math.atan2(point[1], point[0]) * 180) / Math.PI + rotation;
-  return Geodesic.destination(position, dist, angle);
+  return destination(position, dist, angle);
 }

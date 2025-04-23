@@ -1,5 +1,4 @@
 import type * as GJ from "../geojson.js";
-import type { SegmentOperations } from "./interface-segment-operations.js";
 import { plateCarreeAreaOfRing } from "./rhumb.js";
 
 // WGS84 ellipsoid parameters
@@ -20,20 +19,6 @@ function Rp(phi: number): number {
 function Rm(phi: number): number {
   return (a * (1 - e2)) / (1 - e2 * Math.sin(phi) ** 2) ** 1.5;
 }
-
-const PlateCarree: Omit<
-  SegmentOperations,
-  "destination" | "destinationUnrolled" | "forwardAzimuth" | "forwardAzimuthDistance"
-> = {
-  distance,
-  // destination,
-  // destinationUnrolled,
-  // forwardAzimuth,
-  // forwardAzimuthDistance,
-  intermediate,
-  areaOfRing,
-};
-export default PlateCarree;
 
 /**
  * Computes the plate carrée distance between two points

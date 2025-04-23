@@ -1,9 +1,3 @@
-/**
- * @module default
- */
-
-export { Geodesic, PlateCarree, Rhumb } from "./segments/index.js";
-
 export { areaOfPolygonLonLat } from "./area.js";
 export {
   cutAreaGeometry,
