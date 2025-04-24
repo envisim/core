@@ -11,7 +11,7 @@ export interface RandomOptions {
    * Epsilon, used during comparisons of floats
    * @defaultValue `1e-12`
    */
-  eps: number;
+  eps?: number;
   method?: string;
 }
 /** @internal */
