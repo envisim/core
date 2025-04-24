@@ -20,35 +20,21 @@ import { type FeatureProperties, PropertyRecord } from "../property-record.js";
 import { centroidFromMultipleCentroids } from "../utils/centroid.js";
 import { type CirclesToPolygonsOptions } from "../utils/circles-to-polygons.js";
 
-type ForEachCallback<T> = (obj: T, index: number) => void;
-interface FeatureCollectionExtras {
-  /** Foreign GeoJSON member, geometric primitive of the collection */
-  primitive: GeometricPrimitiveUnion;
-  /** Foreign GeoJSON member, the allowed properties of the collection */
-  propertyRecord: PropertyRecord;
-  /** Foreign GeoJSON member, the id of the collection */
-  id?: string;
-  /** Foreign GeoJSON member, the human readable name of the collection */
-  title?: string;
-  /** Foreign GeoJSON member, an RGB value associated with the collection */
-  color?: [number, number, number];
-}
-interface FeatureCollectionExtrasJson {
+export type ForEachCallback<T> = (obj: T, index: number) => void;
+export interface FeatureCollectionExtrasJson {
   primitive: GeometricPrimitiveUnion;
   propertyRecord: { record: PropertyRecord["record"] };
   id?: string;
   title?: string;
   color?: [number, number, number];
 }
-type StrippedFeatureCollectionJson = OptionalParam<
+export type StrippedFeatureCollectionJson = OptionalParam<
   GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, unknown>> & FeatureCollectionExtrasJson,
   "type" | "primitive" | "propertyRecord"
 >;
 
 export class FeatureCollection<T extends PureObject, PID extends string = string>
-  implements
-    GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>>,
-    FeatureCollectionExtras
+  implements GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>>
 {
   static isArea<P extends string>(
     obj: FeatureCollection<PureObject, P>,
@@ -251,10 +237,15 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
   features: Feature<T, PID>[] = [];
   bbox?: GJ.BBox;
 
+  /** Foreign GeoJSON member, the id of the collection */
   id?: string;
+  /** Foreign GeoJSON member, the human readable name of the collection */
   title?: string;
+  /** Foreign GeoJSON member, an RGB value associated with the collection */
   color?: [number, number, number];
+  /** Foreign GeoJSON member, geometric primitive of the collection */
   readonly primitive: GeometricPrimitiveUnion;
+  /** Foreign GeoJSON member, the allowed properties of the collection */
   propertyRecord: PropertyRecord<PID>;
 
   private constructor(
