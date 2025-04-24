@@ -39,9 +39,9 @@ export function htVariance(y: number[] | Vector, prob: number[] | Vector, prob2m
  *
  * $$\hat\{V\}(\hat\{Y\}) = -\frac\{1\}\{2\} \sum_\{i \in S\} \sum_\{j \in S\} (y_i / \pi_i - y_j / \pi_j)^2 \frac\{\pi_\{ij\} - \pi_i \pi_j\}\{\pi_\{ij\}\}$$
  *
- * @param y variable of interest of size n, $y_i$.
- * @param prob inclusion probabilities of size n, $\pi_i$.
- * @param prob2m second order inclusion probabilities of size n*n,
+ * @param y - variable of interest of size n, $y_i$.
+ * @param prob - inclusion probabilities of size n, $\pi_i$.
+ * @param prob2m - second order inclusion probabilities of size n*n,
  *   upper triangular matrix, $\pi_\{ij\}$.
  * @returns the Horvitz-Thompson variance estimate.
  * @category Variance estimators
@@ -102,11 +102,11 @@ export function htVarianceD(y: number[] | Vector, prob: number[] | Vector): numb
 }
 
 /**
- * @category Variance estimator
- * @param y variable of interest of size n, $y_i$.
- * @param prob inclusion probabilities of size n, $\pi_i$.
- * @param xm auxilliary variables of size n*p.
+ * @param y - variable of interest of size n, $y_i$.
+ * @param prob - inclusion probabilities of size n, $\pi_i$.
+ * @param xm - auxilliary variables of size n*p.
  * @returns GS's HT variance estimate.
+ * @category Variance estimators
  */
 export function htVarianceGS(y: number[] | Vector, prob: number[] | Vector, xm: Matrix): number {
   const ps = new Vector(prob, true);
