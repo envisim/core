@@ -6,6 +6,7 @@
       "dependsOn": ["^build"]
     },
     "doc": {
+      "cache": false,
       "dependsOn": ["build", "^doc"]
     },
     "lint": {
