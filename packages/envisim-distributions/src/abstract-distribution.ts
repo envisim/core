@@ -25,10 +25,22 @@ export abstract class Distribution {
 
   constructor() {}
 
+  /**
+   * The probability density/mass function evaluated at `x`.
+   */
   abstract pdf(x: number, eps?: number): number;
+  /**
+   * The cumulative distribution function evaluated at `x`.
+   */
   abstract cdf(x: number, eps?: number): number;
+  /**
+   * The quantile function evaluated at `q`.
+   */
   abstract quantile(q: number, eps?: number): number;
-
+  /**
+   * Generate random numbers from the distribution.
+   * @param n the number of observations to be generated
+   */
   random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
     const u = randomArray(n, options.rand);
@@ -49,10 +61,12 @@ export abstract class Distribution {
   abstract skewness(): number;
 }
 
+/** @internal */
 export function cornishFisherExpansion(this: Distribution, x: number): number {
   return this.mean() + this.sd() * (x + (this.skewness() * (Math.pow(x, 2) - 1.0)) / 6.0);
 }
 
+/** @internal */
 export function quantileCF(
   this: Distribution,
   q: number,
