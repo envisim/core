@@ -1,14 +1,6 @@
-import {Distribution, Interval} from '../abstract-distribution.js';
-import {
-  type ParamsLocationScale,
-  locationScaleCheck,
-  locationScaleDefault,
-  locationScaleNormalize,
-} from '../params.js';
+import { LocationScale } from "../abstract-location-scale.js";
 
-export class Cauchy extends Distribution<ParamsLocationScale> {
-  protected params: ParamsLocationScale = {...locationScaleDefault};
-
+export class Cauchy extends LocationScale {
   /**
    * The Cauchy distribution
    *
@@ -19,35 +11,18 @@ export class Cauchy extends Distribution<ParamsLocationScale> {
    * x.quantile(0.1)
    * x.random(10);
    */
-  constructor(
-    location: number = locationScaleDefault.location,
-    scale: number = locationScaleDefault.scale,
-  ) {
-    super();
-    this.setParameters({location, scale});
-    return this;
-  }
-
-  setParameters(params: ParamsLocationScale = {...locationScaleDefault}): void {
-    locationScaleCheck(params);
-    this.support = new Interval(-Infinity, Infinity, true, true);
-    this.params.scale = params.scale;
-    this.params.location = params.location;
+  constructor(location?: number, scale?: number) {
+    super(location, scale);
   }
 
   pdf(x: number): number {
     const c = Math.PI * this.params.scale;
 
-    return (
-      this.support.checkPDF(x) ??
-      1.0 / (c * (1.0 + Math.pow(locationScaleNormalize(x, this.params), 2)))
-    );
+    return this.support.checkPDF(x) ?? 1.0 / (c * (1.0 + Math.pow(this.params.normalize(x), 2)));
   }
 
   cdf(x: number): number {
-    return (
-      this.support.checkCDF(x) ?? 0.5 + Math.atan(locationScaleNormalize(x, this.params)) / Math.PI
-    );
+    return this.support.checkCDF(x) ?? 0.5 + Math.atan(this.params.normalize(x)) / Math.PI;
   }
 
   quantile(q: number): number {

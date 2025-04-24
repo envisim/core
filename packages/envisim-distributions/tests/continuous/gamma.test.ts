@@ -1,9 +1,8 @@
-import {describe} from 'vitest';
+import { describe } from "vitest";
+import { Gamma } from "../../src/index.js";
+import { distributionTests, fromTo } from "../_distributions.testf.js";
 
-import {Gamma} from '../../src/index.js';
-import {distributionTests, fromTo} from '../_distributions.testf.js';
-
-describe('Gamma(3, 2)', () => {
+describe("Gamma(3, 2)", () => {
   const pdf = [
     0.0, 0.0919698602928605835061, 0.1353352832366127023178, 0.1120209038276938628975,
     0.0732625555549367285524, 0.0421121687442841743931, 0.0223087695899972272839,
@@ -31,10 +30,10 @@ describe('Gamma(3, 2)', () => {
   ];
   const x = fromTo(0, 20, 2);
 
-  distributionTests(new Gamma(3, 2), {x, pdf, cdf, quantile});
+  distributionTests(new Gamma(3, 2), { x, pdf, cdf, quantile });
 });
 
-describe('Gamma(0.5, 2)', () => {
+describe("Gamma(0.5, 2)", () => {
   const cdf = [
     0.1769367262, 0.248170366, 0.3014646417, 0.345279154, 0.3829249225, 0.4161175792, 0.4458868699,
     0.4729107431, 0.4976650456, 0.5204998778, 0.5416823059, 0.5614219739,
@@ -47,6 +46,6 @@ describe('Gamma(0.5, 2)', () => {
     cdf,
     quantile: [],
     randomArrayLength: 200000,
-    skip: {pdf: true, cdf: true, quantile: true},
+    skip: { pdf: true, cdf: true, quantile: true },
   });
 });

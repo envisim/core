@@ -1,7 +1,6 @@
-import {type RandomGenerator, randomArray} from '@envisim/random';
-
-import {type ParamsBeta} from '../params.js';
-import {pqMultiplied} from '../utils.js';
+import { type RandomGenerator, randomArray } from "@envisim/random";
+import type { BetaParams } from "../beta-utils.js";
+import { pqMultiplied } from "../utils.js";
 
 export const LOG4 = 2.0 * Math.LN2;
 export const LOG5P1 = Math.log(5.0) + 1.0;
@@ -49,7 +48,7 @@ function sakasegawaB00(n: number, a0: number, b0: number, rand: RandomGenerator)
   const c = Math.pow(t, a0 - 1.0);
   r = (c - 1.0) / (t - 1.0);
 
-  const constants: SakasegawaB00 = {a0, b0, t, s, r, p, q, c};
+  const constants: SakasegawaB00 = { a0, b0, t, s, r, p, q, c };
 
   const rv = new Array<number>(n);
   for (let i = 0; i < n; i++) rv[i] = sakasegawaB00_inner(rand, constants);
@@ -58,7 +57,7 @@ function sakasegawaB00(n: number, a0: number, b0: number, rand: RandomGenerator)
 
 function sakasegawaB00_inner(
   rand: RandomGenerator,
-  {a0, b0, t, s, r, p, q, c}: SakasegawaB00,
+  { a0, b0, t, s, r, p, q, c }: SakasegawaB00,
 ): number {
   let u1: number, u2: number, x: number;
 
@@ -86,7 +85,7 @@ function sakasegawaB00_inner(
   }
 
   // Should not happen, solution is found in average 1.36 iter.
-  console.warn('beta (sakasegawaB00) did not resolve in 1e5 iterations');
+  console.warn("beta (sakasegawaB00) did not resolve in 1e5 iterations");
   return NaN;
 }
 
@@ -118,7 +117,7 @@ function randomBetaLarge(n: number, a0: number, b0: number, rand: RandomGenerato
 
 function randomBetaLarge_inner(
   rand: RandomGenerator,
-  {a0small, alpha, beta, gamma, a, b}: RandomBetaLarge,
+  { a0small, alpha, beta, gamma, a, b }: RandomBetaLarge,
 ): number {
   let u: number, v: number, w: number, z: number;
   let r: number, s: number, t: number;
@@ -144,7 +143,7 @@ function randomBetaLarge_inner(
   }
 
   // Should not happen, solution is found in (max) average 4 iter.
-  console.warn('beta (randomBetaLarge) did not resolve in 1e5 iterations');
+  console.warn("beta (randomBetaLarge) did not resolve in 1e5 iterations");
   return NaN;
 }
 
@@ -184,7 +183,7 @@ function randomBetaSmall(n: number, a0: number, b0: number, rand: RandomGenerato
 
 function randomBetaSmall_inner(
   rand: RandomGenerator,
-  {a0small, alpha, beta, kappa1, kappa2, a, b}: RandomBetaSmall,
+  { a0small, alpha, beta, kappa1, kappa2, a, b }: RandomBetaSmall,
 ): number {
   let u1: number, u2: number, v: number, y: number, z: number;
   let w: number = 0.0;
@@ -221,7 +220,7 @@ function randomBetaSmall_inner(
   }
 
   if (runs >= 1e5) {
-    console.warn('beta (randomBetaSmall) did not resolve in 1e5 iterations');
+    console.warn("beta (randomBetaSmall) did not resolve in 1e5 iterations");
     return NaN;
   }
 
@@ -243,8 +242,8 @@ function randomBetaSmall_inner(
  * Communications of the ACM 21(4), 317-322.
  * https://doi.org/10.1145/359460.359482
  */
-export function randomBeta(n: number, params: ParamsBeta, rand: RandomGenerator): number[] {
-  const {alpha, beta} = params;
+export function randomBeta(n: number, params: BetaParams, rand: RandomGenerator): number[] {
+  const { alpha, beta } = params;
   if (alpha === 1.0 && beta === 1.0) return randomArray(n, rand);
   if (alpha === 1.0) {
     const pow = 1.0 / beta;

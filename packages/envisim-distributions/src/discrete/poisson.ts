@@ -2,16 +2,18 @@ import {
   Distribution,
   Interval,
   type RandomOptions,
-  randomOptionsDefault,
-} from '../abstract-distribution.js';
-import {stdNormalQuantile} from '../continuous/normal-utils.js';
-import {regularizedUpperGammaFunction} from '../gamma-utils.js';
-import {type ParamsRate, rateCheck, rateDefault} from '../params.js';
-import {assertPositiveInteger, logFactorial} from '../utils.js';
-import {randomPoisson} from './poisson-random.js';
+  RANDOM_OPTIONS_DEFAULT,
+  quantileCF,
+  cornishFisherExpansion,
+} from "../abstract-distribution.js";
+import { stdNormalQuantile } from "../continuous/normal-utils.js";
+import { regularizedUpperGammaFunction } from "../gamma-utils.js";
+import { RateParams } from "../params.js";
+import { assertPositiveInteger, logFactorial } from "../utils.js";
+import { randomPoisson } from "./poisson-random.js";
 
-export class Poisson extends Distribution<ParamsRate> {
-  protected params: ParamsRate = rateDefault;
+export class Poisson extends Distribution {
+  #params!: RateParams;
 
   /**
    * The Poisson distribution
@@ -23,26 +25,24 @@ export class Poisson extends Distribution<ParamsRate> {
    * x.quantile(0.5)
    * x.random(10);
    */
-  constructor(rate: number = rateDefault) {
+  constructor(rate?: number) {
     super();
-    this.setParameters(rate);
-    return this;
+    this.#params = new RateParams(rate);
+    this.support = new Interval(0, Infinity, false, true);
   }
 
-  setParameters(rate: ParamsRate = rateDefault): void {
-    rateCheck(rate);
-    this.support = new Interval(0, Infinity, false, true);
-    this.params = rate;
+  get params() {
+    return this.#params;
   }
 
   pdf(x: number): number {
-    const lrate = Math.log(this.params);
-    return this.support.checkPDFInt(x) ?? Math.exp(x * lrate - this.params - logFactorial(x));
+    const lrate = Math.log(this.params.rate);
+    return this.support.checkPDFInt(x) ?? Math.exp(x * lrate - this.params.rate - logFactorial(x));
   }
 
   cdf(x: number, eps: number = 1e-12): number {
     const xl = (x | 0) + 1;
-    return this.support.checkCDFInt(x) ?? regularizedUpperGammaFunction(xl, this.params, eps);
+    return this.support.checkCDFInt(x) ?? regularizedUpperGammaFunction(xl, this.params.rate, eps);
   }
 
   quantile(q: number, eps: number = 1e-12): number {
@@ -50,32 +50,29 @@ export class Poisson extends Distribution<ParamsRate> {
     if (check !== null) return check;
 
     const z = stdNormalQuantile(q);
-    const x = this.cornishFisherExpansion(z) | 0;
-    const cdf = regularizedUpperGammaFunction(x + 1, this.params, eps);
-    return this.quantileCF(q, x, cdf);
+    const x = cornishFisherExpansion.call(this, z) | 0;
+    const cdf = regularizedUpperGammaFunction(x + 1, this.params.rate, eps);
+    return quantileCF.call(this, q, x, cdf);
   }
 
-  override random(
-    n: number = 1,
-    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
-  ): number[] {
+  override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
-    return randomPoisson(n, this.params, rand);
+    return randomPoisson(n, this.params.rate, options.rand);
   }
 
   mean(): number {
-    return this.params;
+    return this.params.rate;
   }
 
   variance(): number {
-    return this.params;
+    return this.params.rate;
   }
 
   mode(): number {
-    return Math.ceil(this.params) - 1;
+    return Math.ceil(this.params.rate) - 1;
   }
 
   skewness(): number {
-    return Math.pow(this.params, -0.5);
+    return Math.pow(this.params.rate, -0.5);
   }
 }

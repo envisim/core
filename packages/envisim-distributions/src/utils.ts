@@ -1,9 +1,9 @@
-import {gammaFunction, logGammaFunction} from './gamma-utils.js';
-import {KFAC, LOGKFAC} from './math-constants.js';
+import { gammaFunction, logGammaFunction } from "./gamma-utils.js";
+import { KFAC, LOGKFAC } from "./math-constants.js";
 
 /** @internal */
 export function assertPositiveInteger(n: number): asserts n is number {
-  if (n < 1 || !Number.isInteger(n)) throw new RangeError('n must be a positive integer');
+  if (n < 1 || !Number.isInteger(n)) throw new RangeError("n must be a positive integer");
 }
 
 /** @deprecated */

@@ -1,41 +1,16 @@
-import {type RandomGenerator} from '@envisim/random';
-
+import { type RandomGenerator } from "@envisim/random";
 import {
   Distribution,
   Interval,
   type RandomOptions,
-  randomOptionsDefault,
-} from '../abstract-distribution.js';
-import {assertPositiveInteger, binomialCoefficient, logBinomialCoefficient} from '../utils.js';
-import {logFactorial} from '../utils.js';
+  RANDOM_OPTIONS_DEFAULT,
+} from "../abstract-distribution.js";
+import { HypergeometricParams } from "../params.js";
+import { assertPositiveInteger, binomialCoefficient, logBinomialCoefficient } from "../utils.js";
+import { logFactorial } from "../utils.js";
 
-/** @group Parameter interfaces */
-interface ParamsHypergeometric {
-  /**
-   * Population size
-   *   @defaultValue 20
-   */
-  N: number;
-  /**
-   * Size of marked population
-   * @defaultValue 5
-   */
-  K: number;
-  /**
-   * Sample size
-   * @defaultValue 10
-   */
-  n: number;
-}
-const hypergeometricDefault: ParamsHypergeometric = {
-  N: 20,
-  K: 5,
-  n: 10,
-};
-
-export class Hypergeometric extends Distribution<ParamsHypergeometric> {
-  protected params: ParamsHypergeometric = {...hypergeometricDefault};
-  protected lbc!: number;
+export class Hypergeometric extends Distribution {
+  #params!: HypergeometricParams;
 
   /**
    * The Hypergeometric distribution
@@ -47,36 +22,19 @@ export class Hypergeometric extends Distribution<ParamsHypergeometric> {
    * x.quantile(0.5)
    * x.random(10);
    */
-  constructor(
-    N: number = hypergeometricDefault.N,
-    K: number = hypergeometricDefault.K,
-    n: number = hypergeometricDefault.n,
-  ) {
+  constructor(N?: number, K?: number, n?: number) {
     super();
-    this.setParameters({N, K, n});
-    return this;
+    this.#params = new HypergeometricParams(N, K, n);
+    this.support = new Interval(
+      Math.max(0, this.#params.n + this.#params.K - this.#params.N),
+      Math.min(this.#params.n, this.#params.K),
+      false,
+      true,
+    );
   }
 
-  setParameters({N, K, n}: ParamsHypergeometric = {...hypergeometricDefault}): void {
-    if (!Number.isInteger(N)) {
-      throw new RangeError('N must be integer');
-    } else if (!Number.isInteger(K)) {
-      throw new RangeError('K must be integer');
-    } else if (!Number.isInteger(n)) {
-      throw new RangeError('n must be integer');
-    } else if (N <= 0) {
-      throw new RangeError('N must be larger than 0');
-    } else if (K < 0 || K > N) {
-      throw new RangeError('K must be in [0,N]');
-    } else if (n < 0 || n > N) {
-      throw new RangeError('n must be in [0,N]');
-    }
-
-    this.support = new Interval(Math.max(0, n + K - N), Math.min(n, K), false, false);
-    this.params.N = N;
-    this.params.K = K;
-    this.params.n = n;
-    this.lbc = logBinomialCoefficient(N, n);
+  get params() {
+    return this.#params;
   }
 
   pdf(x: number): number {
@@ -90,7 +48,7 @@ export class Hypergeometric extends Distribution<ParamsHypergeometric> {
     return Math.exp(
       logBinomialCoefficient(this.params.K, x) +
         logBinomialCoefficient(this.params.N - this.params.K, this.params.n - x) -
-        this.lbc,
+        this.params.lbc,
     );
   }
 
@@ -145,7 +103,9 @@ export class Hypergeometric extends Distribution<ParamsHypergeometric> {
     }
 
     const pdf = Math.exp(
-      logBinomialCoefficient(NK, xx0) + logBinomialCoefficient(KN, this.params.n - xx0) - this.lbc,
+      logBinomialCoefficient(NK, xx0) +
+        logBinomialCoefficient(KN, this.params.n - xx0) -
+        this.params.lbc,
     );
 
     return flip ? 1.0 - s * pdf : s * pdf;
@@ -187,13 +147,10 @@ export class Hypergeometric extends Distribution<ParamsHypergeometric> {
    * Journal of Statistical Computation and Simulation, 22(2), 127-145.
    * https://doi.org/10.1080/00949658508810839
    */
-  override random(
-    n: number = 1,
-    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
-  ): number[] {
+  override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
 
-    const rv = Array.from<number>({length: n});
+    const rv = Array.from<number>({ length: n });
     // n1 = K
     // n2 = N - K
     // n = k
@@ -211,7 +168,7 @@ export class Hypergeometric extends Distribution<ParamsHypergeometric> {
     const m = (((k + 1) * (n1 + 1)) / (n0 + 2)) | 0;
     if (m - Math.max(0, k - n2) < 10) {
       for (let i = 0; i < n; i++) {
-        rv[i] = this.quantile(rand.random());
+        rv[i] = this.quantile(options.rand.random());
       }
       return rv;
     }
@@ -256,27 +213,28 @@ export class Hypergeometric extends Distribution<ParamsHypergeometric> {
       p3,
     };
 
-    for (let i = 0; i < n; i++) rv[i] = randomHypergeometric_inner(rand, this.params, constants);
+    for (let i = 0; i < n; i++)
+      rv[i] = randomHypergeometric_inner.call(this, options.rand, constants);
     return rv;
   }
 
   mean(): number {
-    const {N, K, n} = this.params;
+    const { N, K, n } = this.params;
     return (n * K) / N;
   }
 
   variance(): number {
-    const {N, K, n} = this.params;
+    const { N, K, n } = this.params;
     return (this.mean() * (N - K) * (N - n)) / (N * (N - 1));
   }
 
   mode(): number {
-    const {N, K, n} = this.params;
+    const { N, K, n } = this.params;
     return Math.ceil(((n + 1) * (K + 1)) / (N + 2)) - 1;
   }
 
   skewness(): number {
-    const {N, K, n} = this.params;
+    const { N, K, n } = this.params;
     return (
       (((N - 2 * K) * (N - 2 * n)) / (N - 2)) * Math.sqrt((N - 1) / (n * K * (N - K) * (N - n)))
     );
@@ -299,9 +257,9 @@ interface HypergeometricRandom {
 }
 
 function randomHypergeometric_inner(
+  this: Hypergeometric,
   rand: RandomGenerator,
-  params: ParamsHypergeometric,
-  {n0, n1, n2, k, m, xl, xr, lambdal, lambdar, p1, p2, p3}: HypergeometricRandom,
+  { n0, n1, n2, k, m, xl, xr, lambdal, lambdar, p1, p2, p3 }: HypergeometricRandom,
 ): number {
   // H2PE 1
   let i: number, f: number, u: number, v: number;
@@ -393,7 +351,8 @@ function randomHypergeometric_inner(
   }
 
   // H2PE 5
-  if (params.n < n0 * 0.5) return params.K <= params.N - params.K ? y : params.n - y;
-  if (params.K <= params.N - params.K) return params.K - y;
-  return params.n - params.N + params.K + y;
+  if (this.params.n < n0 * 0.5)
+    return this.params.K <= this.params.N - this.params.K ? y : this.params.n - y;
+  if (this.params.K <= this.params.N - this.params.K) return this.params.K - y;
+  return this.params.n - this.params.N + this.params.K + y;
 }
