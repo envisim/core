@@ -7,6 +7,7 @@ type IntersectIndices = [null, null] | [number, number];
 
 /**
  * A class for calulating and keeping track of the intersection points of segments.
+ * @internal
  */
 export class IntersectList {
   /**

@@ -34,4 +34,4 @@ export {
   midpointRaw,
   normalizeLongitude,
 } from "./position.js";
-export { azimuthalEquidistant } from "./projections.js";
+export { azimuthalEquidistant, type Projection } from "./projections.js";

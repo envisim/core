@@ -21,7 +21,7 @@ const config = {
   excludeExternals: true,
   // excludeNotDocumented
   // excludeNotDocumentedKinds
-  // excludeInternal
+  excludeInternal: true,
   // excludePrivate
   // excludeProtected
   excludeReferences: true,
