@@ -9,6 +9,7 @@ import { assertPositiveInteger } from "../utils.js";
 import { randomBeta } from "./beta-random.js";
 
 export class Beta extends Distribution {
+  /** @internal */
   #params!: BetaParams;
 
   /**
@@ -27,6 +28,7 @@ export class Beta extends Distribution {
     this.support = new Interval(0.0, 1.0, false, false);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }
@@ -80,6 +82,7 @@ export class Beta extends Distribution {
 }
 
 export class BetaPrime extends Distribution {
+  /** @internal */
   #params!: BetaParams;
 
   /**
@@ -98,6 +101,7 @@ export class BetaPrime extends Distribution {
     this.support = new Interval(0.0, Infinity, false, true);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }

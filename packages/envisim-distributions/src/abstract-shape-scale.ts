@@ -27,6 +27,7 @@ export class ShapeScaleParams {
 }
 
 export abstract class ShapeScale extends Distribution {
+  /** @internal */
   #params!: ShapeScaleParams;
 
   constructor(shape?: number, scale?: number) {
@@ -35,6 +36,7 @@ export abstract class ShapeScale extends Distribution {
     this.support = new Interval(0, Infinity, true, true);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }

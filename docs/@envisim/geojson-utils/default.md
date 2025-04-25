@@ -2054,7 +2054,7 @@ provided as argument.
 </td>
 <td>
 
-A GeoJSON.Position
+the reference coordinate
 
 </td>
 </tr>
@@ -2065,7 +2065,7 @@ A GeoJSON.Position
 
 [`Projection`](#projection)
 
-- Azimuthal Equidistant projection.
+an azimuthal equidistant projection.
 
 ---
 

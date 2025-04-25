@@ -4,6 +4,7 @@ import { Interval } from "../abstract-distribution.js";
 import { BenfordMantissaParams } from "../params.js";
 
 export class BenfordMantissa extends Distribution {
+  /** @internal */
   #params!: BenfordMantissaParams;
 
   /**
@@ -22,6 +23,7 @@ export class BenfordMantissa extends Distribution {
     this.support = new Interval(1.0 / this.params.base, 1.0, false, true);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }

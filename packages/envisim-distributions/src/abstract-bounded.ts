@@ -59,6 +59,7 @@ export class BoundedMidParams extends BoundedParams {
 }
 
 export abstract class Bounded extends Distribution {
+  /** @internal */
   #params!: BoundedParams;
 
   constructor(a?: number, b?: number) {
@@ -67,12 +68,14 @@ export abstract class Bounded extends Distribution {
     this.support = new Interval(this.#params.a, this.#params.b, false, false);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }
 }
 
 export abstract class BoundedMid extends Distribution {
+  /** @internal */
   #params!: BoundedMidParams;
 
   constructor(a?: number, b?: number, mid?: number) {
@@ -81,6 +84,7 @@ export abstract class BoundedMid extends Distribution {
     this.support = new Interval(this.#params.a, this.#params.b, false, false);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }

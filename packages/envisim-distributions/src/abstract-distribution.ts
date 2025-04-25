@@ -99,7 +99,6 @@ export function quantileCF(
   return k;
 }
 
-/** @internal */
 export class Interval {
   /** Left endpoint */
   l: number = -Infinity;

@@ -1,4 +1,8 @@
-export * from './continuous/index.js';
-export * from './discrete/index.js';
+/**
+ * @module @envisim/distributions
+ */
 
-export type {RandomOptions} from './abstract-distribution.js';
+export * from "./continuous/index.js";
+export * from "./discrete/index.js";
+
+export type { RandomOptions, Interval } from "./abstract-distribution.js";

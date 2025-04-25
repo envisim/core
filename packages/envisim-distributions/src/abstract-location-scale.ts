@@ -30,6 +30,7 @@ export class LocationScaleParams {
 }
 
 export abstract class LocationScale extends Distribution {
+  /** @internal */
   #params!: LocationScaleParams;
 
   constructor(location?: number, scale?: number) {
@@ -38,6 +39,7 @@ export abstract class LocationScale extends Distribution {
     this.support = new Interval(-Infinity, Infinity, true, true);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }

@@ -8,6 +8,7 @@ import {
 import { RateParams } from "../params.js";
 
 export class Exponential extends Distribution {
+  /** @internal */
   #params!: RateParams;
 
   /**
@@ -26,6 +27,7 @@ export class Exponential extends Distribution {
     this.support = new Interval(0, Infinity, false, true);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }

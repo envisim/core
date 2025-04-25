@@ -10,6 +10,7 @@ import { assertPositiveInteger, binomialCoefficient, logBinomialCoefficient } fr
 import { logFactorial } from "../utils.js";
 
 export class Hypergeometric extends Distribution {
+  /** @internal */
   #params!: HypergeometricParams;
 
   /**
@@ -33,6 +34,7 @@ export class Hypergeometric extends Distribution {
     );
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }

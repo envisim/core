@@ -10,7 +10,9 @@ import { assertPositiveInteger } from "../utils.js";
 import { randomBeta } from "./beta-random.js";
 
 export class Semicircle extends Distribution {
+  /** @internal */
   #params!: RadiusParams;
+  /** @internal */
   #beta = new BetaParams(1.5, 1.5);
 
   /**
@@ -29,6 +31,7 @@ export class Semicircle extends Distribution {
     this.support = new Interval(-this.#params.radius, this.#params.radius, false, false);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }

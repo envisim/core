@@ -2,6 +2,7 @@ import { Distribution, Interval } from "../abstract-distribution.js";
 import { BernoulliParams } from "../params.js";
 
 export class Bernoulli extends Distribution {
+  /** @internal */
   #params!: BernoulliParams;
 
   /**
@@ -18,6 +19,7 @@ export class Bernoulli extends Distribution {
     this.support = new Interval(0, Infinity, false, true);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }

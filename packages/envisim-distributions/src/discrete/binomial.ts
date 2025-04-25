@@ -14,6 +14,7 @@ import { randomBinomial } from "./binomial-random.js";
 import { randomPoisson } from "./poisson-random.js";
 
 export class Binomial extends Distribution {
+  /** @internal */
   #params!: BinomialParams;
 
   /**
@@ -33,6 +34,7 @@ export class Binomial extends Distribution {
     this.support = new Interval(0, this.params.n, false, false);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }
@@ -94,6 +96,7 @@ export class Binomial extends Distribution {
 }
 
 export class NegativeBinomial extends Distribution {
+  /** @internal */
   #params!: BinomialParams;
 
   /**
@@ -112,6 +115,7 @@ export class NegativeBinomial extends Distribution {
     this.support = new Interval(0, Infinity, false, true);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }

@@ -25,6 +25,7 @@
   - [Geometric](#geometric)
   - [HyperbolicSecant](#hyperbolicsecant)
   - [Hypergeometric](#hypergeometric)
+  - [Interval](#interval)
   - [Laplace](#laplace)
   - [Logarithmic](#logarithmic)
   - [Logistic](#logistic)
@@ -50,13 +51,13 @@
 
 #### Extends
 
-- `Distribution`<`ParamsBound`>
+- `Bounded`
 
 #### Constructors
 
 ##### Constructor
 
-> **new Arcsine**(`a`, `b`): [`Arcsine`](#arcsine)
+> **new Arcsine**(`a?`, `b?`): [`Arcsine`](#arcsine)
 
 The Arcsine distribution
 
@@ -67,41 +68,30 @@ The Arcsine distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`a`
+`a?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`boundDefault.a`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`b`
+`b?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`boundDefault.b`
 
 </td>
 </tr>
@@ -122,7 +112,7 @@ x.cdf(0.1);
 
 ###### Overrides
 
-`Distribution<ParamsBound>.constructor`
+`Bounded.constructor`
 
 #### Properties
 
@@ -130,75 +120,19 @@ x.cdf(0.1);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-<a id="params"></a> `params`
+<a id="support"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-{ `a`: `number`; `b`: `number`; }
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-`params.a`
-
-</td>
-<td>
-
-`public`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-Left bound
-
-</td>
-</tr>
-<tr>
-<td>
-
-`params.b`
-
-</td>
-<td>
-
-`public`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-Right bound
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -244,7 +178,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`Bounded.cdf`
 
 ##### mean()
 
@@ -258,7 +192,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`Bounded.mean`
 
 ##### mode()
 
@@ -272,7 +206,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`Bounded.mode`
 
 ##### pdf()
 
@@ -311,7 +245,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`Bounded.pdf`
 
 ##### quantile()
 
@@ -350,11 +284,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`Bounded.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -395,7 +329,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -405,7 +339,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -423,86 +357,21 @@ the number of observations to be generated
 
 ###### Inherited from
 
-`Distribution.random`
+`Bounded.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-{ `a`: `number`; `b`: `number`; }
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-`params.a`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-Left bound
-
-</td>
-</tr>
-<tr>
-<td>
-
-`params.b`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-Right bound
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Bounded.sd`
 
 ##### skewness()
 
@@ -516,21 +385,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`Bounded.skewness`
 
 ##### variance()
 
@@ -544,7 +399,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`Bounded.variance`
 
 ---
 
@@ -552,13 +407,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsBenfordMantissa`>
+- `Distribution`
 
 #### Constructors
 
 ##### Constructor
 
-> **new BenfordMantissa**(`base`): [`BenfordMantissa`](#benfordmantissa)
+> **new BenfordMantissa**(`base?`): [`BenfordMantissa`](#benfordmantissa)
 
 The Benford Mantissa distribution
 
@@ -569,24 +424,18 @@ The Benford Mantissa distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`base`
+`base?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`benfordMantissaDefault`
 
 </td>
 </tr>
@@ -609,7 +458,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsBenfordMantissa>.constructor`
+`Distribution.constructor`
 
 #### Properties
 
@@ -617,53 +466,19 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-<a id="logbase"></a> `logBase`
+<a id="support-1"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="params-1"></a> `params`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`benfordMantissaDefault`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -819,7 +634,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -860,7 +675,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -870,7 +685,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -890,50 +705,19 @@ the number of observations to be generated
 
 `Distribution.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`base`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`base`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`benfordMantissaDefault`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Distribution.sd`
 
 ##### ~~skewness()~~
 
@@ -948,20 +732,6 @@ Sets the parameters of the distribution
 ###### Overrides
 
 `Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
 
 ##### variance()
 
@@ -983,13 +753,18 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsBernoulli`>
+- `Distribution`
+
+#### Extended by
+
+- [`Geometric`](#geometric)
+- [`Logarithmic`](#logarithmic)
 
 #### Constructors
 
 ##### Constructor
 
-> **new Bernoulli**(`p`): [`Bernoulli`](#bernoulli)
+> **new Bernoulli**(`p?`): [`Bernoulli`](#bernoulli)
 
 The Bernoulli distribution
 
@@ -1000,24 +775,18 @@ The Bernoulli distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`p`
+`p?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`bernoulliDefault`
 
 </td>
 </tr>
@@ -1038,7 +807,7 @@ x.quantile(0.5);
 
 ###### Overrides
 
-`Distribution<ParamsBernoulli>.constructor`
+`Distribution.constructor`
 
 #### Properties
 
@@ -1046,31 +815,19 @@ x.quantile(0.5);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-<a id="params-2"></a> `params`
+<a id="support-2"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`bernoulliDefault`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -1226,7 +983,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -1267,7 +1024,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -1277,7 +1034,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -1297,50 +1054,19 @@ the number of observations to be generated
 
 `Distribution.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`p`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`p`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`bernoulliDefault`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Distribution.sd`
 
 ##### skewness()
 
@@ -1355,20 +1081,6 @@ the skewness
 ###### Overrides
 
 `Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
 
 ##### variance()
 
@@ -1390,13 +1102,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsBeta`>
+- `Distribution`
 
 #### Constructors
 
 ##### Constructor
 
-> **new Beta**(`alpha`, `beta`): [`Beta`](#beta)
+> **new Beta**(`alpha?`, `beta?`): [`Beta`](#beta)
 
 The Beta distribution
 
@@ -1407,41 +1119,30 @@ The Beta distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`alpha`
+`alpha?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`betaDefault.alpha`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`beta`
+`beta?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`betaDefault.beta`
 
 </td>
 </tr>
@@ -1464,7 +1165,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsBeta>.constructor`
+`Distribution.constructor`
 
 #### Properties
 
@@ -1472,7 +1173,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -1480,34 +1180,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="lbf"></a> `lbf`
+<a id="support-3"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="params-3"></a> `params`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`ParamsBeta`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -1709,7 +1387,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -1750,7 +1428,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -1760,7 +1438,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`{}`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -1780,44 +1458,19 @@ the number of observations to be generated
 
 `Distribution.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsBeta`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Distribution.sd`
 
 ##### skewness()
 
@@ -1832,20 +1485,6 @@ the skewness
 ###### Overrides
 
 `Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
 
 ##### variance()
 
@@ -1867,13 +1506,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsBeta`>
+- `Distribution`
 
 #### Constructors
 
 ##### Constructor
 
-> **new BetaPrime**(`alpha`, `beta`): [`BetaPrime`](#betaprime)
+> **new BetaPrime**(`alpha?`, `beta?`): [`BetaPrime`](#betaprime)
 
 The Beta Prime distribution
 
@@ -1884,41 +1523,30 @@ The Beta Prime distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`alpha`
+`alpha?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`betaDefault.alpha`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`beta`
+`beta?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`betaDefault.beta`
 
 </td>
 </tr>
@@ -1941,7 +1569,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsBeta>.constructor`
+`Distribution.constructor`
 
 #### Properties
 
@@ -1949,7 +1577,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -1957,34 +1584,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="lbf-1"></a> `lbf`
+<a id="support-4"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="params-4"></a> `params`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`ParamsBeta`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -2186,7 +1791,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -2227,7 +1832,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -2237,7 +1842,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`{}`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -2257,44 +1862,19 @@ the number of observations to be generated
 
 `Distribution.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsBeta`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Distribution.sd`
 
 ##### skewness()
 
@@ -2309,20 +1889,6 @@ the skewness
 ###### Overrides
 
 `Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
 
 ##### variance()
 
@@ -2344,13 +1910,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsBinomial`>
+- `Distribution`
 
 #### Constructors
 
 ##### Constructor
 
-> **new Binomial**(`n`, `p`): [`Binomial`](#binomial)
+> **new Binomial**(`n?`, `p?`): [`Binomial`](#binomial)
 
 The Binomial distribution
 
@@ -2361,41 +1927,30 @@ The Binomial distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`n`
+`n?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`binomialDefault.n`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`p`
+`p?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`binomialDefault.p`
 
 </td>
 </tr>
@@ -2419,7 +1974,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsBinomial>.constructor`
+`Distribution.constructor`
 
 #### Properties
 
@@ -2427,7 +1982,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -2435,17 +1989,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="params-5"></a> `params`
+<a id="support-5"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsBinomial`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -2647,7 +2196,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -2688,7 +2237,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -2698,7 +2247,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`{}`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -2718,44 +2267,19 @@ the number of observations to be generated
 
 `Distribution.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsBinomial`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Distribution.sd`
 
 ##### skewness()
 
@@ -2770,20 +2294,6 @@ the skewness
 ###### Overrides
 
 `Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
 
 ##### variance()
 
@@ -2805,13 +2315,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsLocationScale`>
+- `LocationScale`
 
 #### Constructors
 
 ##### Constructor
 
-> **new Cauchy**(`location`, `scale`): [`Cauchy`](#cauchy)
+> **new Cauchy**(`location?`, `scale?`): [`Cauchy`](#cauchy)
 
 The Cauchy distribution
 
@@ -2822,41 +2332,30 @@ The Cauchy distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`location`
+`location?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`locationScaleDefault.location`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`scale`
+`scale?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`locationScaleDefault.scale`
 
 </td>
 </tr>
@@ -2879,7 +2378,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsLocationScale>.constructor`
+`LocationScale.constructor`
 
 #### Properties
 
@@ -2887,7 +2386,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -2895,17 +2393,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="params-6"></a> `params`
+<a id="support-6"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsLocationScale`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -2951,7 +2444,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`LocationScale.cdf`
 
 ##### mean()
 
@@ -2965,7 +2458,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`LocationScale.mean`
 
 ##### mode()
 
@@ -2979,7 +2472,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`LocationScale.mode`
 
 ##### pdf()
 
@@ -3018,7 +2511,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`LocationScale.pdf`
 
 ##### quantile()
 
@@ -3057,11 +2550,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`LocationScale.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -3102,7 +2595,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -3112,7 +2605,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -3130,46 +2623,21 @@ the number of observations to be generated
 
 ###### Inherited from
 
-`Distribution.random`
+`LocationScale.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsLocationScale`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`LocationScale.sd`
 
 ##### skewness()
 
@@ -3183,21 +2651,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`LocationScale.skewness`
 
 ##### variance()
 
@@ -3211,7 +2665,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`LocationScale.variance`
 
 ---
 
@@ -3219,13 +2673,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsDegreesOfFreedom`>
+- `Distribution`
 
 #### Constructors
 
 ##### Constructor
 
-> **new ChiSquared**(`df`): [`ChiSquared`](#chisquared)
+> **new ChiSquared**(`df?`): [`ChiSquared`](#chisquared)
 
 The Chi-squared distribution
 
@@ -3236,24 +2690,18 @@ The Chi-squared distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`df`
+`df?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`degreesOfFreedomDefault`
 
 </td>
 </tr>
@@ -3276,7 +2724,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsDegreesOfFreedom>.constructor`
+`Distribution.constructor`
 
 #### Properties
 
@@ -3284,31 +2732,19 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-<a id="params-7"></a> `params`
+<a id="support-7"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`degreesOfFreedomDefault`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -3499,7 +2935,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -3540,7 +2976,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -3550,7 +2986,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`{}`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -3570,50 +3006,19 @@ the number of observations to be generated
 
 `Distribution.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`df`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`df`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`degreesOfFreedomDefault`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Distribution.sd`
 
 ##### skewness()
 
@@ -3628,20 +3033,6 @@ the skewness
 ###### Overrides
 
 `Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
 
 ##### variance()
 
@@ -3663,13 +3054,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsRate`>
+- `Distribution`
 
 #### Constructors
 
 ##### Constructor
 
-> **new Exponential**(`rate`): [`Exponential`](#exponential)
+> **new Exponential**(`rate?`): [`Exponential`](#exponential)
 
 The Exponential distribution
 
@@ -3680,24 +3071,18 @@ The Exponential distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`rate`
+`rate?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`rateDefault`
 
 </td>
 </tr>
@@ -3720,7 +3105,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsRate>.constructor`
+`Distribution.constructor`
 
 #### Properties
 
@@ -3728,31 +3113,19 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-<a id="params-8"></a> `params`
+<a id="support-8"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`rateDefault`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -3908,7 +3281,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -3949,7 +3322,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -3959,7 +3332,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -3979,50 +3352,19 @@ the number of observations to be generated
 
 `Distribution.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`rate`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`rate`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`rateDefault`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Distribution.sd`
 
 ##### skewness()
 
@@ -4037,20 +3379,6 @@ the skewness
 ###### Overrides
 
 `Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
 
 ##### variance()
 
@@ -4072,13 +3400,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsLocationScale`>
+- `LocationScale`
 
 #### Constructors
 
 ##### Constructor
 
-> **new ExtremeValue**(`location`, `scale`): [`ExtremeValue`](#extremevalue)
+> **new ExtremeValue**(`location?`, `scale?`): [`ExtremeValue`](#extremevalue)
 
 The Extreme Value distribution
 
@@ -4089,41 +3417,30 @@ The Extreme Value distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`location`
+`location?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`locationScaleDefault.location`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`scale`
+`scale?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`locationScaleDefault.scale`
 
 </td>
 </tr>
@@ -4144,7 +3461,7 @@ x.quantile(0.5);
 
 ###### Overrides
 
-`Distribution<ParamsLocationScale>.constructor`
+`LocationScale.constructor`
 
 #### Properties
 
@@ -4152,7 +3469,6 @@ x.quantile(0.5);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -4160,17 +3476,12 @@ x.quantile(0.5);
 <tr>
 <td>
 
-<a id="params-9"></a> `params`
+<a id="support-9"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsLocationScale`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -4216,7 +3527,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`LocationScale.cdf`
 
 ##### mean()
 
@@ -4230,7 +3541,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`LocationScale.mean`
 
 ##### mode()
 
@@ -4244,7 +3555,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`LocationScale.mode`
 
 ##### pdf()
 
@@ -4283,7 +3594,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`LocationScale.pdf`
 
 ##### quantile()
 
@@ -4322,11 +3633,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`LocationScale.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -4367,7 +3678,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -4377,7 +3688,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -4395,46 +3706,21 @@ the number of observations to be generated
 
 ###### Inherited from
 
-`Distribution.random`
+`LocationScale.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsLocationScale`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`LocationScale.sd`
 
 ##### skewness()
 
@@ -4448,21 +3734,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`LocationScale.skewness`
 
 ##### variance()
 
@@ -4476,7 +3748,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`LocationScale.variance`
 
 ---
 
@@ -4484,13 +3756,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsNormal`>
+- `LocationScale`
 
 #### Constructors
 
 ##### Constructor
 
-> **new FoldedNormal**(`mu`, `sigma`): [`FoldedNormal`](#foldednormal)
+> **new FoldedNormal**(`mu?`, `sigma?`): [`FoldedNormal`](#foldednormal)
 
 The Folded-Normal distribution
 
@@ -4501,41 +3773,30 @@ The Folded-Normal distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`mu`
+`mu?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`normalDefault.mu`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`sigma`
+`sigma?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`normalDefault.sigma`
 
 </td>
 </tr>
@@ -4558,7 +3819,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsNormal>.constructor`
+`LocationScale.constructor`
 
 #### Properties
 
@@ -4566,7 +3827,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -4574,17 +3834,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="params-10"></a> `params`
+<a id="support-10"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsNormal`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -4630,7 +3885,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`LocationScale.cdf`
 
 ##### mean()
 
@@ -4644,7 +3899,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`LocationScale.mean`
 
 ##### mode()
 
@@ -4658,7 +3913,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`LocationScale.mode`
 
 ##### pdf()
 
@@ -4697,7 +3952,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`LocationScale.pdf`
 
 ##### quantile()
 
@@ -4759,11 +4014,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`LocationScale.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -4804,7 +4059,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -4814,7 +4069,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`{}`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -4832,46 +4087,21 @@ the number of observations to be generated
 
 ###### Overrides
 
-`Distribution.random`
+`LocationScale.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsNormal`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`LocationScale.sd`
 
 ##### skewness()
 
@@ -4885,21 +4115,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`LocationScale.skewness`
 
 ##### variance()
 
@@ -4913,7 +4129,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`LocationScale.variance`
 
 ---
 
@@ -4921,13 +4137,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsDegreesOfFreedom2`>
+- `Distribution`
 
 #### Constructors
 
 ##### Constructor
 
-> **new FRatio**(`df1`, `df2`): [`FRatio`](#fratio)
+> **new FRatio**(`df1?`, `df2?`): [`FRatio`](#fratio)
 
 The F distribution
 
@@ -4938,41 +4154,30 @@ The F distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`df1`
+`df1?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`degreesOfFreedomDefault`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`df2`
+`df2?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`degreesOfFreedomDefault`
 
 </td>
 </tr>
@@ -4995,7 +4200,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsDegreesOfFreedom2>.constructor`
+`Distribution.constructor`
 
 #### Properties
 
@@ -5003,7 +4208,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -5011,17 +4215,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="params-11"></a> `params`
+<a id="support-11"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsDegreesOfFreedom2`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -5200,7 +4399,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -5241,7 +4440,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -5251,7 +4450,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`{}`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -5271,44 +4470,19 @@ the number of observations to be generated
 
 `Distribution.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsDegreesOfFreedom2`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Distribution.sd`
 
 ##### skewness()
 
@@ -5323,20 +4497,6 @@ the skewness
 ###### Overrides
 
 `Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
 
 ##### variance()
 
@@ -5358,13 +4518,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsShapeScale`>
+- `ShapeScale`
 
 #### Constructors
 
 ##### Constructor
 
-> **new Gamma**(`shape`, `scale`): [`Gamma`](#gamma)
+> **new Gamma**(`shape?`, `scale?`): [`Gamma`](#gamma)
 
 The Gamma distribution
 
@@ -5375,41 +4535,30 @@ The Gamma distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`shape`
+`shape?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`shapeScaleDefault.shape`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`scale`
+`scale?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`shapeScaleDefault.scale`
 
 </td>
 </tr>
@@ -5432,7 +4581,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsShapeScale>.constructor`
+`ShapeScale.constructor`
 
 #### Properties
 
@@ -5440,7 +4589,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -5448,34 +4596,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="lgf"></a> `lgf`
+<a id="support-12"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="params-12"></a> `params`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`ParamsShapeScale`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -5544,7 +4670,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`ShapeScale.cdf`
 
 ##### mean()
 
@@ -5558,7 +4684,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`ShapeScale.mean`
 
 ##### mode()
 
@@ -5572,7 +4698,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`ShapeScale.mode`
 
 ##### pdf()
 
@@ -5611,7 +4737,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`ShapeScale.pdf`
 
 ##### quantile()
 
@@ -5673,11 +4799,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`ShapeScale.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -5718,7 +4844,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -5728,7 +4854,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`{}`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -5746,46 +4872,21 @@ the number of observations to be generated
 
 ###### Overrides
 
-`Distribution.random`
+`ShapeScale.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsShapeScale`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`ShapeScale.sd`
 
 ##### skewness()
 
@@ -5799,21 +4900,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`ShapeScale.skewness`
 
 ##### variance()
 
@@ -5827,7 +4914,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`ShapeScale.variance`
 
 ---
 
@@ -5835,13 +4922,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsBernoulli`>
+- [`Bernoulli`](#bernoulli)
 
 #### Constructors
 
 ##### Constructor
 
-> **new Geometric**(`p`): [`Geometric`](#geometric)
+> **new Geometric**(`p?`): [`Geometric`](#geometric)
 
 The Geometric distribution
 
@@ -5852,24 +4939,18 @@ The Geometric distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`p`
+`p?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`bernoulliDefault`
 
 </td>
 </tr>
@@ -5892,7 +4973,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsBernoulli>.constructor`
+[`Bernoulli`](#bernoulli).[`constructor`](#constructor-2)
 
 #### Properties
 
@@ -5900,53 +4981,19 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-<a id="logq"></a> `logq`
+<a id="support-13"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="params-13"></a> `params`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`bernoulliDefault`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -5992,7 +5039,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+[`Bernoulli`](#bernoulli).[`cdf`](#cdf-4)
 
 ##### mean()
 
@@ -6006,7 +5053,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+[`Bernoulli`](#bernoulli).[`mean`](#mean-4)
 
 ##### mode()
 
@@ -6020,7 +5067,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+[`Bernoulli`](#bernoulli).[`mode`](#mode-4)
 
 ##### pdf()
 
@@ -6059,7 +5106,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+[`Bernoulli`](#bernoulli).[`pdf`](#pdf-4)
 
 ##### quantile()
 
@@ -6098,11 +5145,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+[`Bernoulli`](#bernoulli).[`quantile`](#quantile-4)
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -6143,7 +5190,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -6153,7 +5200,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -6171,52 +5218,21 @@ the number of observations to be generated
 
 ###### Inherited from
 
-`Distribution.random`
+[`Bernoulli`](#bernoulli).[`random`](#random-4)
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`p`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`p`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`bernoulliDefault`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+[`Bernoulli`](#bernoulli).[`sd`](#sd-4)
 
 ##### skewness()
 
@@ -6230,21 +5246,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+[`Bernoulli`](#bernoulli).[`skewness`](#skewness-4)
 
 ##### variance()
 
@@ -6258,7 +5260,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+[`Bernoulli`](#bernoulli).[`variance`](#variance-4)
 
 ---
 
@@ -6266,7 +5268,7 @@ the variance
 
 #### Extends
 
-- `Distribution`<`undefined`>
+- `Distribution`
 
 #### Constructors
 
@@ -6292,7 +5294,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<undefined>.constructor`
+`Distribution.constructor`
 
 #### Properties
 
@@ -6300,31 +5302,19 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-<a id="params-14"></a> `params`
+<a id="support-14"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-`undefined`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -6480,7 +5470,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -6521,7 +5511,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -6531,7 +5521,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -6551,19 +5541,19 @@ the number of observations to be generated
 
 `Distribution.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Distribution.sd`
 
 ##### skewness()
 
@@ -6578,20 +5568,6 @@ the skewness
 ###### Overrides
 
 `Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
 
 ##### variance()
 
@@ -6613,13 +5589,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsHypergeometric`>
+- `Distribution`
 
 #### Constructors
 
 ##### Constructor
 
-> **new Hypergeometric**(`N`, `K`, `n`): [`Hypergeometric`](#hypergeometric)
+> **new Hypergeometric**(`N?`, `K?`, `n?`): [`Hypergeometric`](#hypergeometric)
 
 The Hypergeometric distribution
 
@@ -6630,58 +5606,42 @@ The Hypergeometric distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`N`
+`N?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`hypergeometricDefault.N`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`K`
+`K?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`hypergeometricDefault.K`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`n`
+`n?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`hypergeometricDefault.n`
 
 </td>
 </tr>
@@ -6704,7 +5664,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsHypergeometric>.constructor`
+`Distribution.constructor`
 
 #### Properties
 
@@ -6712,7 +5672,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -6720,34 +5679,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="lbc"></a> `lbc`
+<a id="support-15"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="params-15"></a> `params`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`ParamsHypergeometric`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -6926,7 +5863,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -6967,7 +5904,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -6977,7 +5914,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -6997,44 +5934,19 @@ the number of observations to be generated
 
 `Distribution.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`__namedParameters`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`__namedParameters`
-
-</td>
-<td>
-
-`ParamsHypergeometric`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Distribution.sd`
 
 ##### skewness()
 
@@ -7049,20 +5961,6 @@ the skewness
 ###### Overrides
 
 `Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
 
 ##### variance()
 
@@ -7080,19 +5978,13 @@ the variance
 
 ---
 
-### Laplace
-
-#### Extends
-
-- `Distribution`<`ParamsLocationScale`>
+### Interval
 
 #### Constructors
 
 ##### Constructor
 
-> **new Laplace**(`location`, `scale`): [`Laplace`](#laplace)
-
-The Laplace distribution
+> **new Interval**(`l`, `r`, `lo`, `ro`): [`Interval`](#interval)
 
 ###### Parameters
 
@@ -7108,7 +6000,7 @@ The Laplace distribution
 <tr>
 <td>
 
-`location`
+`l`
 
 </td>
 <td>
@@ -7118,14 +6010,14 @@ The Laplace distribution
 </td>
 <td>
 
-`locationScaleDefault.location`
+`undefined`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`scale`
+`r`
 
 </td>
 <td>
@@ -7135,7 +6027,566 @@ The Laplace distribution
 </td>
 <td>
 
-`locationScaleDefault.scale`
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`lo`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`ro`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+[`Interval`](#interval)
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="l"></a> `l`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`-Infinity`
+
+</td>
+<td>
+
+Left endpoint
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="lo"></a> `lo`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+<td>
+
+Left endpoint is open
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="r"></a> `r`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`Infinity`
+
+</td>
+<td>
+
+Right endpoint
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="ro"></a> `ro`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+<td>
+
+Right endpoint is open
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Methods
+
+##### checkCDF()
+
+> **checkCDF**(`x`): `null` | `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`null` | `number`
+
+##### checkCDFInt()
+
+> **checkCDFInt**(`x`): `null` | `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`null` | `number`
+
+##### checkPDF()
+
+> **checkPDF**(`x`): `null` | `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`null` | `number`
+
+##### checkPDFInt()
+
+> **checkPDFInt**(`x`): `null` | `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`null` | `number`
+
+##### checkQuantile()
+
+> **checkQuantile**(`q`): `null` | `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`null` | `number`
+
+##### isIn()
+
+> **isIn**(`x`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+##### isInInt()
+
+> **isInInt**(`x`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+##### isL()
+
+> **isL**(`x`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+##### isLInt()
+
+> **isLInt**(`x`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+##### isR()
+
+> **isR**(`x`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+##### isRInt()
+
+> **isRInt**(`x`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+---
+
+### Laplace
+
+#### Extends
+
+- `LocationScale`
+
+#### Constructors
+
+##### Constructor
+
+> **new Laplace**(`location?`, `scale?`): [`Laplace`](#laplace)
+
+The Laplace distribution
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`location?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`scale?`
+
+</td>
+<td>
+
+`number`
 
 </td>
 </tr>
@@ -7158,7 +6609,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsLocationScale>.constructor`
+`LocationScale.constructor`
 
 #### Properties
 
@@ -7166,7 +6617,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -7174,17 +6624,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="params-16"></a> `params`
+<a id="support-16"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsLocationScale`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -7230,7 +6675,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`LocationScale.cdf`
 
 ##### mean()
 
@@ -7244,7 +6689,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`LocationScale.mean`
 
 ##### mode()
 
@@ -7258,7 +6703,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`LocationScale.mode`
 
 ##### pdf()
 
@@ -7297,7 +6742,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`LocationScale.pdf`
 
 ##### quantile()
 
@@ -7336,11 +6781,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`LocationScale.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -7381,7 +6826,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -7391,7 +6836,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -7409,46 +6854,21 @@ the number of observations to be generated
 
 ###### Inherited from
 
-`Distribution.random`
+`LocationScale.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsLocationScale`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`LocationScale.sd`
 
 ##### skewness()
 
@@ -7462,21 +6882,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`LocationScale.skewness`
 
 ##### variance()
 
@@ -7490,7 +6896,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`LocationScale.variance`
 
 ---
 
@@ -7498,13 +6904,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsBernoulli`>
+- [`Bernoulli`](#bernoulli)
 
 #### Constructors
 
 ##### Constructor
 
-> **new Logarithmic**(`p`): [`Logarithmic`](#logarithmic)
+> **new Logarithmic**(`p?`): [`Logarithmic`](#logarithmic)
 
 The Logarithmic distribution
 
@@ -7515,24 +6921,18 @@ The Logarithmic distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`p`
+`p?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`bernoulliDefault`
 
 </td>
 </tr>
@@ -7555,7 +6955,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsBernoulli>.constructor`
+[`Bernoulli`](#bernoulli).[`constructor`](#constructor-2)
 
 #### Properties
 
@@ -7563,53 +6963,19 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-<a id="logq-1"></a> `logq`
+<a id="support-17"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="params-17"></a> `params`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`bernoulliDefault`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -7678,7 +7044,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+[`Bernoulli`](#bernoulli).[`cdf`](#cdf-4)
 
 ##### mean()
 
@@ -7692,7 +7058,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+[`Bernoulli`](#bernoulli).[`mean`](#mean-4)
 
 ##### mode()
 
@@ -7706,7 +7072,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+[`Bernoulli`](#bernoulli).[`mode`](#mode-4)
 
 ##### pdf()
 
@@ -7745,7 +7111,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+[`Bernoulli`](#bernoulli).[`pdf`](#pdf-4)
 
 ##### quantile()
 
@@ -7784,11 +7150,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+[`Bernoulli`](#bernoulli).[`quantile`](#quantile-4)
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -7829,7 +7195,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -7839,7 +7205,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -7857,52 +7223,21 @@ the number of observations to be generated
 
 ###### Overrides
 
-`Distribution.random`
+[`Bernoulli`](#bernoulli).[`random`](#random-4)
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`p`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`p`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`bernoulliDefault`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+[`Bernoulli`](#bernoulli).[`sd`](#sd-4)
 
 ##### skewness()
 
@@ -7916,21 +7251,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+[`Bernoulli`](#bernoulli).[`skewness`](#skewness-4)
 
 ##### variance()
 
@@ -7944,7 +7265,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+[`Bernoulli`](#bernoulli).[`variance`](#variance-4)
 
 ---
 
@@ -7952,13 +7273,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsLocationScale`>
+- `LocationScale`
 
 #### Constructors
 
 ##### Constructor
 
-> **new Logistic**(`location`, `scale`): [`Logistic`](#logistic)
+> **new Logistic**(`location?`, `scale?`): [`Logistic`](#logistic)
 
 The Logistic distribution
 
@@ -7969,41 +7290,30 @@ The Logistic distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`location`
+`location?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`locationScaleDefault.location`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`scale`
+`scale?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`locationScaleDefault.scale`
 
 </td>
 </tr>
@@ -8026,7 +7336,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsLocationScale>.constructor`
+`LocationScale.constructor`
 
 #### Properties
 
@@ -8034,7 +7344,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -8042,17 +7351,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="params-18"></a> `params`
+<a id="support-18"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsLocationScale`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -8098,7 +7402,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`LocationScale.cdf`
 
 ##### mean()
 
@@ -8112,7 +7416,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`LocationScale.mean`
 
 ##### mode()
 
@@ -8126,7 +7430,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`LocationScale.mode`
 
 ##### pdf()
 
@@ -8165,7 +7469,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`LocationScale.pdf`
 
 ##### quantile()
 
@@ -8204,11 +7508,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`LocationScale.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -8249,7 +7553,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -8259,7 +7563,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -8277,46 +7581,21 @@ the number of observations to be generated
 
 ###### Inherited from
 
-`Distribution.random`
+`LocationScale.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsLocationScale`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`LocationScale.sd`
 
 ##### skewness()
 
@@ -8330,21 +7609,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`LocationScale.skewness`
 
 ##### variance()
 
@@ -8358,7 +7623,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`LocationScale.variance`
 
 ---
 
@@ -8366,13 +7631,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsShapeScale`>
+- `ShapeScale`
 
 #### Constructors
 
 ##### Constructor
 
-> **new LogLogistic**(`scale`, `shape`): [`LogLogistic`](#loglogistic)
+> **new LogLogistic**(`shape?`, `scale?`): [`LogLogistic`](#loglogistic)
 
 The Log-Logistic distribution
 
@@ -8383,41 +7648,30 @@ The Log-Logistic distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`scale`
+`shape?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`shapeScaleDefault.scale`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`shape`
+`scale?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`shapeScaleDefault.shape`
 
 </td>
 </tr>
@@ -8440,7 +7694,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsShapeScale>.constructor`
+`ShapeScale.constructor`
 
 #### Properties
 
@@ -8448,7 +7702,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -8456,17 +7709,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="params-19"></a> `params`
+<a id="support-19"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsShapeScale`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -8512,7 +7760,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`ShapeScale.cdf`
 
 ##### mean()
 
@@ -8526,7 +7774,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`ShapeScale.mean`
 
 ##### mode()
 
@@ -8540,7 +7788,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`ShapeScale.mode`
 
 ##### pdf()
 
@@ -8579,7 +7827,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`ShapeScale.pdf`
 
 ##### quantile()
 
@@ -8618,11 +7866,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`ShapeScale.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -8663,7 +7911,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -8673,7 +7921,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -8691,46 +7939,21 @@ the number of observations to be generated
 
 ###### Inherited from
 
-`Distribution.random`
+`ShapeScale.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsShapeScale`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`ShapeScale.sd`
 
 ##### ~~skewness()~~
 
@@ -8744,21 +7967,7 @@ Sets the parameters of the distribution
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`ShapeScale.skewness`
 
 ##### variance()
 
@@ -8772,7 +7981,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`ShapeScale.variance`
 
 ---
 
@@ -8780,13 +7989,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsNormal`>
+- `LocationScale`
 
 #### Constructors
 
 ##### Constructor
 
-> **new LogNormal**(`mu`, `sigma`): [`LogNormal`](#lognormal)
+> **new LogNormal**(`mu?`, `sigma?`): [`LogNormal`](#lognormal)
 
 The Log-Normal distribution
 
@@ -8797,41 +8006,30 @@ The Log-Normal distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`mu`
+`mu?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`normalDefault.mu`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`sigma`
+`sigma?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`normalDefault.sigma`
 
 </td>
 </tr>
@@ -8854,7 +8052,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsNormal>.constructor`
+`LocationScale.constructor`
 
 #### Properties
 
@@ -8862,7 +8060,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -8870,17 +8067,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="params-20"></a> `params`
+<a id="support-20"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsNormal`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -8926,7 +8118,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`LocationScale.cdf`
 
 ##### mean()
 
@@ -8940,7 +8132,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`LocationScale.mean`
 
 ##### mode()
 
@@ -8954,7 +8146,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`LocationScale.mode`
 
 ##### pdf()
 
@@ -8993,7 +8185,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`LocationScale.pdf`
 
 ##### quantile()
 
@@ -9032,11 +8224,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`LocationScale.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -9077,7 +8269,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -9087,7 +8279,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`{}`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -9105,46 +8297,21 @@ the number of observations to be generated
 
 ###### Overrides
 
-`Distribution.random`
+`LocationScale.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsNormal`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`LocationScale.sd`
 
 ##### skewness()
 
@@ -9158,21 +8325,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`LocationScale.skewness`
 
 ##### variance()
 
@@ -9186,7 +8339,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`LocationScale.variance`
 
 ---
 
@@ -9194,13 +8347,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsBinomial`>
+- `Distribution`
 
 #### Constructors
 
 ##### Constructor
 
-> **new NegativeBinomial**(`n`, `p`): [`NegativeBinomial`](#negativebinomial)
+> **new NegativeBinomial**(`n?`, `p?`): [`NegativeBinomial`](#negativebinomial)
 
 The Negative Binomial distribution
 
@@ -9211,41 +8364,30 @@ The Negative Binomial distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`n`
+`n?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`binomialDefault.n`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`p`
+`p?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`binomialDefault.p`
 
 </td>
 </tr>
@@ -9268,7 +8410,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsBinomial>.constructor`
+`Distribution.constructor`
 
 #### Properties
 
@@ -9276,7 +8418,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -9284,17 +8425,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="params-21"></a> `params`
+<a id="support-21"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsBinomial`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -9496,7 +8632,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -9537,7 +8673,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -9547,7 +8683,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`{}`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -9567,44 +8703,19 @@ the number of observations to be generated
 
 `Distribution.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsBinomial`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Distribution.sd`
 
 ##### skewness()
 
@@ -9619,20 +8730,6 @@ the skewness
 ###### Overrides
 
 `Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
 
 ##### variance()
 
@@ -9654,13 +8751,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsNormal`>
+- `LocationScale`
 
 #### Constructors
 
 ##### Constructor
 
-> **new Normal**(`mu`, `sigma`): [`Normal`](#normal)
+> **new Normal**(`mu?`, `sigma?`): [`Normal`](#normal)
 
 The Normal distribution
 
@@ -9671,41 +8768,30 @@ The Normal distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`mu`
+`mu?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`normalDefault.mu`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`sigma`
+`sigma?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`normalDefault.sigma`
 
 </td>
 </tr>
@@ -9728,7 +8814,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsNormal>.constructor`
+`LocationScale.constructor`
 
 #### Properties
 
@@ -9736,7 +8822,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -9744,17 +8829,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="params-22"></a> `params`
+<a id="support-22"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsNormal`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -9800,7 +8880,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`LocationScale.cdf`
 
 ##### mean()
 
@@ -9814,7 +8894,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`LocationScale.mean`
 
 ##### mode()
 
@@ -9828,7 +8908,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`LocationScale.mode`
 
 ##### pdf()
 
@@ -9867,7 +8947,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`LocationScale.pdf`
 
 ##### quantile()
 
@@ -9906,11 +8986,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`LocationScale.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -9951,7 +9031,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -9961,7 +9041,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`{}`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -9979,46 +9059,21 @@ the number of observations to be generated
 
 ###### Overrides
 
-`Distribution.random`
+`LocationScale.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsNormal`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`LocationScale.sd`
 
 ##### skewness()
 
@@ -10032,21 +9087,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`LocationScale.skewness`
 
 ##### variance()
 
@@ -10060,7 +9101,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`LocationScale.variance`
 
 ---
 
@@ -10068,13 +9109,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsShapeScale`>
+- `ShapeScale`
 
 #### Constructors
 
 ##### Constructor
 
-> **new Pareto**(`scale`, `shape`): [`Pareto`](#pareto)
+> **new Pareto**(`shape?`, `scale?`): [`Pareto`](#pareto)
 
 The Pareto distribution
 
@@ -10085,41 +9126,30 @@ The Pareto distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`scale`
+`shape?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`shapeScaleDefault.scale`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`shape`
+`scale?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`shapeScaleDefault.shape`
 
 </td>
 </tr>
@@ -10142,7 +9172,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsShapeScale>.constructor`
+`ShapeScale.constructor`
 
 #### Properties
 
@@ -10150,7 +9180,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -10158,17 +9187,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="params-23"></a> `params`
+<a id="support-23"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsShapeScale`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -10214,7 +9238,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`ShapeScale.cdf`
 
 ##### mean()
 
@@ -10228,7 +9252,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`ShapeScale.mean`
 
 ##### mode()
 
@@ -10242,7 +9266,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`ShapeScale.mode`
 
 ##### pdf()
 
@@ -10281,7 +9305,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`ShapeScale.pdf`
 
 ##### quantile()
 
@@ -10320,11 +9344,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`ShapeScale.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -10365,7 +9389,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -10375,7 +9399,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -10393,46 +9417,21 @@ the number of observations to be generated
 
 ###### Inherited from
 
-`Distribution.random`
+`ShapeScale.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsShapeScale`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`ShapeScale.sd`
 
 ##### skewness()
 
@@ -10446,21 +9445,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`ShapeScale.skewness`
 
 ##### variance()
 
@@ -10474,7 +9459,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`ShapeScale.variance`
 
 ---
 
@@ -10482,13 +9467,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsRate`>
+- `Distribution`
 
 #### Constructors
 
 ##### Constructor
 
-> **new Poisson**(`rate`): [`Poisson`](#poisson)
+> **new Poisson**(`rate?`): [`Poisson`](#poisson)
 
 The Poisson distribution
 
@@ -10499,24 +9484,18 @@ The Poisson distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`rate`
+`rate?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`rateDefault`
 
 </td>
 </tr>
@@ -10539,7 +9518,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsRate>.constructor`
+`Distribution.constructor`
 
 #### Properties
 
@@ -10547,31 +9526,19 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-<a id="params-24"></a> `params`
+<a id="support-24"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`rateDefault`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -10773,7 +9740,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -10814,7 +9781,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -10824,7 +9791,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -10844,50 +9811,19 @@ the number of observations to be generated
 
 `Distribution.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`rate`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`rate`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`rateDefault`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Distribution.sd`
 
 ##### skewness()
 
@@ -10902,20 +9838,6 @@ the skewness
 ###### Overrides
 
 `Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
 
 ##### variance()
 
@@ -10937,13 +9859,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsRadius`>
+- `Distribution`
 
 #### Constructors
 
 ##### Constructor
 
-> **new Semicircle**(`radius`): [`Semicircle`](#semicircle)
+> **new Semicircle**(`radius?`): [`Semicircle`](#semicircle)
 
 The Semicircle distribution
 
@@ -10954,24 +9876,18 @@ The Semicircle distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`radius`
+`radius?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`radiusDefault`
 
 </td>
 </tr>
@@ -10994,7 +9910,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsRadius>.constructor`
+`Distribution.constructor`
 
 #### Properties
 
@@ -11002,75 +9918,19 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-<a id="denom"></a> `denom`
+<a id="support-25"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="params-25"></a> `params`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`radiusDefault`
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="radiussquared"></a> `radiusSquared`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -11249,7 +10109,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -11290,7 +10150,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -11300,7 +10160,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`{}`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -11320,50 +10180,19 @@ the number of observations to be generated
 
 `Distribution.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`radius`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`radius`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`radiusDefault`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Distribution.sd`
 
 ##### skewness()
 
@@ -11378,20 +10207,6 @@ the skewness
 ###### Overrides
 
 `Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
 
 ##### variance()
 
@@ -11413,13 +10228,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsDegreesOfFreedom`>
+- `Distribution`
 
 #### Constructors
 
 ##### Constructor
 
-> **new StudentsT**(`df`): [`StudentsT`](#studentst)
+> **new StudentsT**(`df?`): [`StudentsT`](#studentst)
 
 The Students-T distribution
 
@@ -11430,24 +10245,18 @@ The Students-T distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`df`
+`df?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`degreesOfFreedomDefault`
 
 </td>
 </tr>
@@ -11470,7 +10279,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsDegreesOfFreedom>.constructor`
+`Distribution.constructor`
 
 #### Properties
 
@@ -11478,31 +10287,19 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-<a id="params-26"></a> `params`
+<a id="support-26"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`degreesOfFreedomDefault`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -11681,7 +10478,7 @@ The quantile function evaluated at `q`.
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -11722,7 +10519,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -11732,7 +10529,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -11752,50 +10549,19 @@ the number of observations to be generated
 
 `Distribution.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`df`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`df`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`degreesOfFreedomDefault`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Distribution.sd`
 
 ##### skewness()
 
@@ -11810,20 +10576,6 @@ the skewness
 ###### Overrides
 
 `Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
 
 ##### variance()
 
@@ -11845,13 +10597,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsBoundMid`>
+- `BoundedMid`
 
 #### Constructors
 
 ##### Constructor
 
-> **new Triangular**(`a`, `b`, `mid`): [`Triangular`](#triangular)
+> **new Triangular**(`a?`, `b?`, `mid?`): [`Triangular`](#triangular)
 
 The Triangular distribution
 
@@ -11862,58 +10614,42 @@ The Triangular distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`a`
+`a?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`boundMidDefault.a`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`b`
+`b?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`boundMidDefault.b`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`mid`
+`mid?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`...`
 
 </td>
 </tr>
@@ -11936,7 +10672,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsBoundMid>.constructor`
+`BoundedMid.constructor`
 
 #### Properties
 
@@ -11944,7 +10680,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -11952,17 +10687,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="params-27"></a> `params`
+<a id="support-27"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsBoundMid`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -12008,7 +10738,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`BoundedMid.cdf`
 
 ##### mean()
 
@@ -12022,7 +10752,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`BoundedMid.mean`
 
 ##### mode()
 
@@ -12036,7 +10766,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`BoundedMid.mode`
 
 ##### pdf()
 
@@ -12075,7 +10805,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`BoundedMid.pdf`
 
 ##### quantile()
 
@@ -12114,11 +10844,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`BoundedMid.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -12159,7 +10889,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -12169,7 +10899,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -12187,46 +10917,21 @@ the number of observations to be generated
 
 ###### Inherited from
 
-`Distribution.random`
+`BoundedMid.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsBoundMid`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`BoundedMid.sd`
 
 ##### skewness()
 
@@ -12240,21 +10945,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`BoundedMid.skewness`
 
 ##### variance()
 
@@ -12268,7 +10959,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`BoundedMid.variance`
 
 ---
 
@@ -12276,13 +10967,17 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsBound`>
+- `Bounded`
+
+#### Extended by
+
+- [`UniformDiscrete`](#uniformdiscrete)
 
 #### Constructors
 
 ##### Constructor
 
-> **new Uniform**(`a`, `b`): [`Uniform`](#uniform)
+> **new Uniform**(`a?`, `b?`): [`Uniform`](#uniform)
 
 The Uniform (continuous) distribution
 
@@ -12293,41 +10988,30 @@ The Uniform (continuous) distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`a`
+`a?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`boundDefault.a`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`b`
+`b?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`boundDefault.b`
 
 </td>
 </tr>
@@ -12350,7 +11034,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsBound>.constructor`
+`Bounded.constructor`
 
 #### Properties
 
@@ -12358,7 +11042,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -12366,34 +11049,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="density"></a> `density`
+<a id="support-28"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="params-28"></a> `params`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`ParamsBound`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -12439,7 +11100,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`Bounded.cdf`
 
 ##### mean()
 
@@ -12453,7 +11114,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`Bounded.mean`
 
 ##### mode()
 
@@ -12467,7 +11128,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`Bounded.mode`
 
 ##### pdf()
 
@@ -12506,7 +11167,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`Bounded.pdf`
 
 ##### quantile()
 
@@ -12545,11 +11206,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`Bounded.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -12590,7 +11251,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -12600,7 +11261,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -12618,46 +11279,21 @@ the number of observations to be generated
 
 ###### Overrides
 
-`Distribution.random`
+`Bounded.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsBound`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Bounded.sd`
 
 ##### skewness()
 
@@ -12671,21 +11307,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`Bounded.skewness`
 
 ##### variance()
 
@@ -12699,7 +11321,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`Bounded.variance`
 
 ---
 
@@ -12707,13 +11329,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsBound`>
+- [`Uniform`](#uniform)
 
 #### Constructors
 
 ##### Constructor
 
-> **new UniformDiscrete**(`a`, `b`): [`UniformDiscrete`](#uniformdiscrete)
+> **new UniformDiscrete**(`a?`, `b?`): [`UniformDiscrete`](#uniformdiscrete)
 
 The Uniform (discrete) distribution
 
@@ -12724,41 +11346,30 @@ The Uniform (discrete) distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`a`
+`a?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`boundDefault.a`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`b`
+`b?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`boundDefault.b`
 
 </td>
 </tr>
@@ -12781,7 +11392,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsBound>.constructor`
+[`Uniform`](#uniform).[`constructor`](#constructor-29)
 
 #### Properties
 
@@ -12789,7 +11400,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -12797,17 +11407,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="params-29"></a> `params`
+<a id="support-29"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsBound`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -12853,7 +11458,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+[`Uniform`](#uniform).[`cdf`](#cdf-56)
 
 ##### mean()
 
@@ -12865,9 +11470,9 @@ the mean value
 
 `number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.mean`
+[`Uniform`](#uniform).[`mean`](#mean-56)
 
 ##### mode()
 
@@ -12879,9 +11484,9 @@ the mean value
 
 the mode
 
-###### Overrides
+###### Inherited from
 
-`Distribution.mode`
+[`Uniform`](#uniform).[`mode`](#mode-56)
 
 ##### pdf()
 
@@ -12920,7 +11525,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+[`Uniform`](#uniform).[`pdf`](#pdf-56)
 
 ##### quantile()
 
@@ -12959,11 +11564,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+[`Uniform`](#uniform).[`quantile`](#quantile-56)
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -13004,7 +11609,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -13014,7 +11619,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -13032,46 +11637,21 @@ the number of observations to be generated
 
 ###### Overrides
 
-`Distribution.random`
+[`Uniform`](#uniform).[`random`](#random-56)
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsBound`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+[`Uniform`](#uniform).[`sd`](#sd-56)
 
 ##### skewness()
 
@@ -13083,23 +11663,9 @@ Sets the parameters of the distribution
 
 the skewness
 
-###### Overrides
-
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
 ###### Inherited from
 
-`Distribution.standardDeviation`
+[`Uniform`](#uniform).[`skewness`](#skewness-56)
 
 ##### variance()
 
@@ -13113,7 +11679,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+[`Uniform`](#uniform).[`variance`](#variance-56)
 
 ---
 
@@ -13121,13 +11687,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsBound`>
+- `Bounded`
 
 #### Constructors
 
 ##### Constructor
 
-> **new UQuadratic**(`a`, `b`): [`UQuadratic`](#uquadratic)
+> **new UQuadratic**(`a?`, `b?`): [`UQuadratic`](#uquadratic)
 
 The U-Quadratic distribution
 
@@ -13138,41 +11704,30 @@ The U-Quadratic distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`a`
+`a?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`boundDefault.a`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`b`
+`b?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`boundDefault.b`
 
 </td>
 </tr>
@@ -13195,7 +11750,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsBound>.constructor`
+`Bounded.constructor`
 
 #### Properties
 
@@ -13203,7 +11758,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -13211,51 +11765,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="alpha"></a> `alpha`
+<a id="support-30"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="beta-1"></a> `beta`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="params-30"></a> `params`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`ParamsBound`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -13301,7 +11816,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`Bounded.cdf`
 
 ##### mean()
 
@@ -13315,7 +11830,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`Bounded.mean`
 
 ##### mode()
 
@@ -13329,7 +11844,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`Bounded.mode`
 
 ##### pdf()
 
@@ -13368,7 +11883,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`Bounded.pdf`
 
 ##### quantile()
 
@@ -13407,11 +11922,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`Bounded.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -13452,7 +11967,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -13462,7 +11977,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -13480,46 +11995,21 @@ the number of observations to be generated
 
 ###### Inherited from
 
-`Distribution.random`
+`Bounded.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsBound`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`Bounded.sd`
 
 ##### skewness()
 
@@ -13533,21 +12023,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`Bounded.skewness`
 
 ##### variance()
 
@@ -13561,7 +12037,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`Bounded.variance`
 
 ---
 
@@ -13569,13 +12045,13 @@ the variance
 
 #### Extends
 
-- `Distribution`<`ParamsShapeScale`>
+- `ShapeScale`
 
 #### Constructors
 
 ##### Constructor
 
-> **new Weibull**(`scale`, `shape`): [`Weibull`](#weibull)
+> **new Weibull**(`shape?`, `scale?`): [`Weibull`](#weibull)
 
 The Weibull distribution
 
@@ -13586,41 +12062,30 @@ The Weibull distribution
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`scale`
+`shape?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`shapeScaleDefault.scale`
 
 </td>
 </tr>
 <tr>
 <td>
 
-`shape`
+`scale?`
 
 </td>
 <td>
 
 `number`
-
-</td>
-<td>
-
-`shapeScaleDefault.shape`
 
 </td>
 </tr>
@@ -13643,7 +12108,7 @@ x.random(10);
 
 ###### Overrides
 
-`Distribution<ParamsShapeScale>.constructor`
+`ShapeScale.constructor`
 
 #### Properties
 
@@ -13651,7 +12116,6 @@ x.random(10);
 <thead>
 <tr>
 <th>Property</th>
-<th>Modifier</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -13659,17 +12123,12 @@ x.random(10);
 <tr>
 <td>
 
-<a id="params-31"></a> `params`
+<a id="support-31"></a> `support`
 
 </td>
 <td>
 
-`protected`
-
-</td>
-<td>
-
-`ParamsShapeScale`
+[`Interval`](#interval)
 
 </td>
 </tr>
@@ -13715,7 +12174,7 @@ The cumulative distribution function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.cdf`
+`ShapeScale.cdf`
 
 ##### mean()
 
@@ -13729,7 +12188,7 @@ the mean value
 
 ###### Overrides
 
-`Distribution.mean`
+`ShapeScale.mean`
 
 ##### mode()
 
@@ -13743,7 +12202,7 @@ the mode
 
 ###### Overrides
 
-`Distribution.mode`
+`ShapeScale.mode`
 
 ##### pdf()
 
@@ -13782,7 +12241,7 @@ The probability density/mass function evaluated at `x`.
 
 ###### Overrides
 
-`Distribution.pdf`
+`ShapeScale.pdf`
 
 ##### quantile()
 
@@ -13821,11 +12280,11 @@ The quantile function evaluated at `q`.
 
 ###### Overrides
 
-`Distribution.quantile`
+`ShapeScale.quantile`
 
 ##### random()
 
-> **random**(`n`, `__namedParameters`): `number`\[]
+> **random**(`n`, `options`): `number`\[]
 
 Generate random numbers from the distribution.
 
@@ -13866,7 +12325,7 @@ the number of observations to be generated
 <tr>
 <td>
 
-`__namedParameters`
+`options`
 
 </td>
 <td>
@@ -13876,7 +12335,7 @@ the number of observations to be generated
 </td>
 <td>
 
-`randomOptionsDefault`
+`RANDOM_OPTIONS_DEFAULT`
 
 </td>
 <td>
@@ -13894,46 +12353,21 @@ the number of observations to be generated
 
 ###### Inherited from
 
-`Distribution.random`
+`ShapeScale.random`
 
-##### setParameters()
+##### sd()
 
-> **setParameters**(`params`): `void`
+> **sd**(): `number`
 
-Sets the parameters of the distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`params`
-
-</td>
-<td>
-
-`ParamsShapeScale`
-
-</td>
-</tr>
-</tbody>
-</table>
+standard deviation
 
 ###### Returns
 
-`void`
+`number`
 
-###### Overrides
+###### Inherited from
 
-`Distribution.setParameters`
+`ShapeScale.sd`
 
 ##### skewness()
 
@@ -13947,21 +12381,7 @@ the skewness
 
 ###### Overrides
 
-`Distribution.skewness`
-
-##### standardDeviation()
-
-> **standardDeviation**(): `number`
-
-###### Returns
-
-`number`
-
-the square root of the variance
-
-###### Inherited from
-
-`Distribution.standardDeviation`
+`ShapeScale.skewness`
 
 ##### variance()
 
@@ -13975,7 +12395,7 @@ the variance
 
 ###### Overrides
 
-`Distribution.variance`
+`ShapeScale.variance`
 
 ## Interfaces
 
@@ -14040,7 +12460,7 @@ Epsilon, used during comparisons of floats
 <tr>
 <td>
 
-<a id="rand"></a> `rand?`
+<a id="rand"></a> `rand`
 
 </td>
 <td>
@@ -14055,7 +12475,7 @@ Epsilon, used during comparisons of floats
 </td>
 <td>
 
-An RNG
+A random generator
 
 </td>
 </tr>
