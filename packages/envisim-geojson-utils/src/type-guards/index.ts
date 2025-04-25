@@ -1,3 +1,6 @@
+/**
+ * @module @envisim/geojson-utils/type-guards
+ */
 export {
   isPoint,
   isMultiPoint,

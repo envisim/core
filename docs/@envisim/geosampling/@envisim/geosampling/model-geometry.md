@@ -1,10 +1,10 @@
-[**Documentation**](../../README.md)
+[**Documentation**](../../../../README.md)
 
 ---
 
-[Documentation](../../README.md) / [@envisim/geosampling](README.md) / model-geometry
+[Documentation](../../../../README.md) / [@envisim/geosampling](../../README.md) / @envisim/geosampling/model-geometry
 
-# model-geometry
+# @envisim/geosampling/model-geometry
 
 ## Contents
 
@@ -46,7 +46,7 @@
 <tr>
 <td>
 
-`G` _extends_ [`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject)
+`G` _extends_ [`SingleTypeObject`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#singletypeobject)
 
 </td>
 </tr>
@@ -106,7 +106,7 @@ Model geometry with coordinates in meters relative to (0,0)
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -139,7 +139,7 @@ Angel of rotation in degrees (from north), or `random` for random rotation
 
 ### circleAreaGeometry()
 
-> **circleAreaGeometry**(`diameter`): [`Circle`](../geojson-utils/geojson.md#circle)
+> **circleAreaGeometry**(`diameter`): [`Circle`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#circle)
 
 #### Parameters
 
@@ -180,7 +180,7 @@ the diameter in meters.
 
 #### Returns
 
-[`Circle`](../geojson-utils/geojson.md#circle)
+[`Circle`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#circle)
 
 a circle model geometry.
 
@@ -188,7 +188,7 @@ a circle model geometry.
 
 ### circleLineGeometry()
 
-> **circleLineGeometry**(`diameter`, `options?`): [`LineString`](../geojson-utils/geojson.md#linestring)
+> **circleLineGeometry**(`diameter`, `options?`): [`LineString`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#linestring)
 
 #### Parameters
 
@@ -232,7 +232,7 @@ the diameter of the circle in meters.
 </td>
 <td>
 
-[`CirclesToPolygonsOptions`](../geojson.md#circlestopolygonsoptions)
+[`CirclesToPolygonsOptions`](../../../geojson.md#circlestopolygonsoptions)
 
 </td>
 <td>
@@ -251,7 +251,7 @@ the diameter of the circle in meters.
 
 #### Returns
 
-[`LineString`](../geojson-utils/geojson.md#linestring)
+[`LineString`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#linestring)
 
 a circle-shaped line model geometry.
 
@@ -259,7 +259,7 @@ a circle-shaped line model geometry.
 
 ### ellLineGeometry()
 
-> **ellLineGeometry**(`sideLength`): [`LineString`](../geojson-utils/geojson.md#linestring)
+> **ellLineGeometry**(`sideLength`): [`LineString`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#linestring)
 
 #### Parameters
 
@@ -300,7 +300,7 @@ length of side in meters.
 
 #### Returns
 
-[`LineString`](../geojson-utils/geojson.md#linestring)
+[`LineString`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#linestring)
 
 an ell-shaped line model geometry.
 
@@ -308,7 +308,7 @@ an ell-shaped line model geometry.
 
 ### placeAreaGeometry()
 
-> **placeAreaGeometry**(`position`, `__namedParameters`): [`AreaObject`](../geojson.md#areaobject)
+> **placeAreaGeometry**(`position`, `__namedParameters`): [`AreaObject`](../../../geojson.md#areaobject)
 
 Positions a modelGeometry at position and optionally rotates the coordinates around position.
 
@@ -331,7 +331,7 @@ Positions a modelGeometry at position and optionally rotates the coordinates aro
 </td>
 <td>
 
-[`Position`](../geojson-utils/geojson.md#position)
+[`Position`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 <td>
@@ -348,7 +348,7 @@ a position \[lon,lat].
 </td>
 <td>
 
-[`PlaceOptions`](#placeoptions)<[`AreaObject`](../geojson-utils/geojson.md#areaobject)>
+[`PlaceOptions`](#placeoptions)<[`AreaObject`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#areaobject)>
 
 </td>
 <td>
@@ -362,7 +362,7 @@ a position \[lon,lat].
 
 #### Returns
 
-[`AreaObject`](../geojson.md#areaobject)
+[`AreaObject`](../../../geojson.md#areaobject)
 
 a GeoJSON Point/Line/AreaObject.
 
@@ -370,7 +370,7 @@ a GeoJSON Point/Line/AreaObject.
 
 ### placeLineGeometry()
 
-> **placeLineGeometry**(`position`, `__namedParameters`): [`LineObject`](../geojson.md#lineobject)
+> **placeLineGeometry**(`position`, `__namedParameters`): [`LineObject`](../../../geojson.md#lineobject)
 
 #### Parameters
 
@@ -390,7 +390,7 @@ a GeoJSON Point/Line/AreaObject.
 </td>
 <td>
 
-[`Position`](../geojson-utils/geojson.md#position)
+[`Position`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -402,7 +402,7 @@ a GeoJSON Point/Line/AreaObject.
 </td>
 <td>
 
-[`PlaceOptions`](#placeoptions)<[`LineObject`](../geojson-utils/geojson.md#lineobject)>
+[`PlaceOptions`](#placeoptions)<[`LineObject`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#lineobject)>
 
 </td>
 </tr>
@@ -411,13 +411,13 @@ a GeoJSON Point/Line/AreaObject.
 
 #### Returns
 
-[`LineObject`](../geojson.md#lineobject)
+[`LineObject`](../../../geojson.md#lineobject)
 
 ---
 
 ### placePointGeometry()
 
-> **placePointGeometry**(`position`, `__namedParameters`): [`PointObject`](../geojson.md#pointobject)
+> **placePointGeometry**(`position`, `__namedParameters`): [`PointObject`](../../../geojson.md#pointobject)
 
 #### Parameters
 
@@ -437,7 +437,7 @@ a GeoJSON Point/Line/AreaObject.
 </td>
 <td>
 
-[`Position`](../geojson-utils/geojson.md#position)
+[`Position`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -449,7 +449,7 @@ a GeoJSON Point/Line/AreaObject.
 </td>
 <td>
 
-[`PlaceOptions`](#placeoptions)<[`PointObject`](../geojson-utils/geojson.md#pointobject)>
+[`PlaceOptions`](#placeoptions)<[`PointObject`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#pointobject)>
 
 </td>
 </tr>
@@ -458,17 +458,17 @@ a GeoJSON Point/Line/AreaObject.
 
 #### Returns
 
-[`PointObject`](../geojson.md#pointobject)
+[`PointObject`](../../../geojson.md#pointobject)
 
 ---
 
 ### pointGeometry()
 
-> **pointGeometry**(): [`Point`](../geojson-utils/geojson.md#point)
+> **pointGeometry**(): [`Point`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#point)
 
 #### Returns
 
-[`Point`](../geojson-utils/geojson.md#point)
+[`Point`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#point)
 
 a single point model geometry.
 
@@ -499,7 +499,7 @@ Computes the radius as maximum distance from (0,0) to any point in the given geo
 </td>
 <td>
 
-[`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject)
+[`SingleTypeObject`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#singletypeobject)
 
 </td>
 <td>
@@ -521,7 +521,7 @@ the maximum distance from (0,0) to any point in the given geometry.
 
 ### rectangularAreaGeometry()
 
-> **rectangularAreaGeometry**(`width`, `height`): [`Polygon`](../geojson-utils/geojson.md#polygon)
+> **rectangularAreaGeometry**(`width`, `height`): [`Polygon`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#polygon)
 
 #### Parameters
 
@@ -584,7 +584,7 @@ length of side south-north in meters.
 
 #### Returns
 
-[`Polygon`](../geojson-utils/geojson.md#polygon)
+[`Polygon`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#polygon)
 
 a rectangular-shaped area model geometry.
 
@@ -592,7 +592,7 @@ a rectangular-shaped area model geometry.
 
 ### rectangularCircleGeometry()
 
-> **rectangularCircleGeometry**(`width`, `height`, `diameter`): [`MultiCircle`](../geojson-utils/geojson.md#multicircle)
+> **rectangularCircleGeometry**(`width`, `height`, `diameter`): [`MultiCircle`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#multicircle)
 
 #### Parameters
 
@@ -678,7 +678,7 @@ by width.
 
 #### Returns
 
-[`MultiCircle`](../geojson-utils/geojson.md#multicircle)
+[`MultiCircle`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#multicircle)
 
 a circle model geometry in a rectangular formation.
 
@@ -686,7 +686,7 @@ a circle model geometry in a rectangular formation.
 
 ### rectangularLineGeometry()
 
-> **rectangularLineGeometry**(`width`, `height`): [`LineString`](../geojson-utils/geojson.md#linestring)
+> **rectangularLineGeometry**(`width`, `height`): [`LineString`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#linestring)
 
 #### Parameters
 
@@ -749,7 +749,7 @@ length of side south-north in meters.
 
 #### Returns
 
-[`LineString`](../geojson-utils/geojson.md#linestring)
+[`LineString`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#linestring)
 
 a rectangular-shaped line model geometry.
 
@@ -757,7 +757,7 @@ a rectangular-shaped line model geometry.
 
 ### rectangularPointGeometry()
 
-> **rectangularPointGeometry**(`width`, `height`): [`MultiPoint`](../geojson-utils/geojson.md#multipoint)
+> **rectangularPointGeometry**(`width`, `height`): [`MultiPoint`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#multipoint)
 
 #### Parameters
 
@@ -820,7 +820,7 @@ length of side south-north in meters.
 
 #### Returns
 
-[`MultiPoint`](../geojson-utils/geojson.md#multipoint)
+[`MultiPoint`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#multipoint)
 
 a point model geometry in a rectangular formation.
 
@@ -828,7 +828,7 @@ a point model geometry in a rectangular formation.
 
 ### regularPolygonAreaGeometry()
 
-> **regularPolygonAreaGeometry**(`sides`, `polygonDiameter`): [`Polygon`](../geojson-utils/geojson.md#polygon)
+> **regularPolygonAreaGeometry**(`sides`, `polygonDiameter`): [`Polygon`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#polygon)
 
 #### Parameters
 
@@ -891,7 +891,7 @@ the diameter of the containing circle in meters.
 
 #### Returns
 
-[`Polygon`](../geojson-utils/geojson.md#polygon)
+[`Polygon`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#polygon)
 
 a regular polygon area model geometry.
 
@@ -899,7 +899,7 @@ a regular polygon area model geometry.
 
 ### regularPolygonCircleGeometry()
 
-> **regularPolygonCircleGeometry**(`sides`, `polygonDiameter`, `diameter`): [`MultiCircle`](../geojson-utils/geojson.md#multicircle)
+> **regularPolygonCircleGeometry**(`sides`, `polygonDiameter`, `diameter`): [`MultiCircle`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#multicircle)
 
 #### Parameters
 
@@ -985,7 +985,7 @@ between the points in the polygon, the diameter is replaced by this distance.
 
 #### Returns
 
-[`MultiCircle`](../geojson-utils/geojson.md#multicircle)
+[`MultiCircle`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#multicircle)
 
 a circle model geometry in a regular polygon formation.
 
@@ -993,7 +993,7 @@ a circle model geometry in a regular polygon formation.
 
 ### regularPolygonLineGeometry()
 
-> **regularPolygonLineGeometry**(`sides`, `polygonDiameter`): [`LineString`](../geojson-utils/geojson.md#linestring)
+> **regularPolygonLineGeometry**(`sides`, `polygonDiameter`): [`LineString`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#linestring)
 
 #### Parameters
 
@@ -1056,7 +1056,7 @@ the diameter of the containing circle in meters.
 
 #### Returns
 
-[`LineString`](../geojson-utils/geojson.md#linestring)
+[`LineString`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#linestring)
 
 a regular polygon line model geometry.
 
@@ -1064,7 +1064,7 @@ a regular polygon line model geometry.
 
 ### regularPolygonPointGeometry()
 
-> **regularPolygonPointGeometry**(`sides`, `polygonDiameter`): [`MultiPoint`](../geojson-utils/geojson.md#multipoint)
+> **regularPolygonPointGeometry**(`sides`, `polygonDiameter`): [`MultiPoint`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#multipoint)
 
 #### Parameters
 
@@ -1127,7 +1127,7 @@ the diameter of the containing circle in meters.
 
 #### Returns
 
-[`MultiPoint`](../geojson-utils/geojson.md#multipoint)
+[`MultiPoint`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#multipoint)
 
 a point model geometry in a regular polygon formation.
 
@@ -1160,7 +1160,7 @@ type of the geometry.
 </td>
 <td>
 
-[`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject)
+[`SingleTypeObject`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#singletypeobject)
 
 </td>
 <td>
@@ -1182,7 +1182,7 @@ the size of the geometry.
 
 ### straightLineGeometry()
 
-> **straightLineGeometry**(`sideLength`): [`LineString`](../geojson-utils/geojson.md#linestring)
+> **straightLineGeometry**(`sideLength`): [`LineString`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#linestring)
 
 #### Parameters
 
@@ -1223,6 +1223,6 @@ the length of the line in meters.
 
 #### Returns
 
-[`LineString`](../geojson-utils/geojson.md#linestring)
+[`LineString`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#linestring)
 
 a north-south straight line model geometry.

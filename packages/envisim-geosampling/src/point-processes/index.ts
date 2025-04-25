@@ -1,4 +1,6 @@
-// Point processes
+/**
+ * @module @envisim/geosampling/point-processes
+ */
 export {
   maternClusterProcess,
   type MaternClusterProcessOptions,

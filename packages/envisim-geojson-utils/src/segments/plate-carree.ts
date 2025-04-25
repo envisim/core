@@ -1,3 +1,6 @@
+/**
+ * @module @envisim/geojson-utils/plate-carree
+ */
 import type * as GJ from "../geojson.js";
 import { plateCarreeAreaOfRing } from "./rhumb.js";
 

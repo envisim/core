@@ -1,10 +1,10 @@
-[**Documentation**](../../README.md)
+[**Documentation**](../../../../README.md)
 
 ---
 
-[Documentation](../../README.md) / [@envisim/geojson-utils](README.md) / type-guards
+[Documentation](../../../../README.md) / [@envisim/geojson-utils](../../README.md) / @envisim/geojson-utils/type-guards
 
-# type-guards
+# @envisim/geojson-utils/type-guards
 
 ## Contents
 

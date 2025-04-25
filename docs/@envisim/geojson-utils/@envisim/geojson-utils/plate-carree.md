@@ -1,10 +1,10 @@
-[**Documentation**](../../README.md)
+[**Documentation**](../../../../README.md)
 
 ---
 
-[Documentation](../../README.md) / [@envisim/geojson-utils](README.md) / plate-carree
+[Documentation](../../../../README.md) / [@envisim/geojson-utils](../../README.md) / @envisim/geojson-utils/plate-carree
 
-# plate-carree
+# @envisim/geojson-utils/plate-carree
 
 ## Contents
 

@@ -1,3 +1,7 @@
+/**
+ * @module @envisim/geojson
+ */
+
 // Objects
 export {
   // Areas

@@ -1,3 +1,6 @@
+/**
+ * @module @envisim/geosampling/model-geometry
+ */
 import {
   type AreaObject,
   Circle,

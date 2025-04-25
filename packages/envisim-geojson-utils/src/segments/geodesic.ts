@@ -1,3 +1,6 @@
+/**
+ * @module @envisim/geojson-utils/geodesic
+ */
 import geodesic from "geographiclib-geodesic";
 import type * as GJ from "../geojson.js";
 

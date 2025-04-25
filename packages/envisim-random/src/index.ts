@@ -1,3 +1,6 @@
+/**
+ * @module @envisim/random
+ */
 import { Random } from "./random.js";
 
 export { Random };

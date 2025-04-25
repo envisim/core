@@ -1,10 +1,10 @@
-[**Documentation**](../../README.md)
+[**Documentation**](../../../../README.md)
 
 ---
 
-[Documentation](../../README.md) / [@envisim/geosampling](README.md) / point-processes
+[Documentation](../../../../README.md) / [@envisim/geosampling](../../README.md) / @envisim/geosampling/point-processes
 
-# point-processes
+# @envisim/geosampling/point-processes
 
 ## Contents
 
@@ -109,7 +109,7 @@ The radius in meters of a cluster.
 </td>
 <td>
 
-[`Random`](../random.md#random)
+[`Random`](../../../random.md#random)
 
 </td>
 <td>
@@ -194,7 +194,7 @@ The mean number of points in a cluster.
 </td>
 <td>
 
-[`Random`](../random.md#random)
+[`Random`](../../../random.md#random)
 
 </td>
 <td>
@@ -257,7 +257,7 @@ The standard deviation of distance to parent.
 </td>
 <td>
 
-[`Random`](../random.md#random)
+[`Random`](../../../random.md#random)
 
 </td>
 <td>
@@ -342,7 +342,7 @@ The intensity as mean number of points per square meters.
 </td>
 <td>
 
-[`Random`](../random.md#random)
+[`Random`](../../../random.md#random)
 
 </td>
 <td>
@@ -363,7 +363,7 @@ An RNG
 
 ### maternClusterProcess()
 
-> **maternClusterProcess**(`collection`, `opts`): [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `never`>
+> **maternClusterProcess**(`collection`, `opts`): [`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `never`>
 
 Generates points from a Matérn cluster point process
 on an area collection.
@@ -386,7 +386,7 @@ on an area collection.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -407,13 +407,13 @@ on an area collection.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `never`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `never`>
 
 ---
 
 ### thomasClusterProcess()
 
-> **thomasClusterProcess**(`collection`, `opts`): [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `never`>
+> **thomasClusterProcess**(`collection`, `opts`): [`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `never`>
 
 Generates points from a Thomas cluster point process
 on areas of input area collection.
@@ -436,7 +436,7 @@ on areas of input area collection.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -457,13 +457,13 @@ on areas of input area collection.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `never`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `never`>
 
 ---
 
 ### uniformBinomialPointProcess()
 
-> **uniformBinomialPointProcess**(`collection`, `opts`): [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `never`>
+> **uniformBinomialPointProcess**(`collection`, `opts`): [`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `never`>
 
 Generate points from a uniform Binomial point process
 on areas of input area collection. The points are generated
@@ -487,7 +487,7 @@ uniformly on a spherical model of the earth.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -508,13 +508,13 @@ uniformly on a spherical model of the earth.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `never`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `never`>
 
 ---
 
 ### uniformPoissonPointProcess()
 
-> **uniformPoissonPointProcess**(`collection`, `opts`): [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `never`>
+> **uniformPoissonPointProcess**(`collection`, `opts`): [`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `never`>
 
 Generates points from a uniform Poisson point process
 on areas of input collection. Given the (Poisson distributed)
@@ -539,7 +539,7 @@ on a spherical model of the earth.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -560,4 +560,4 @@ on a spherical model of the earth.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `never`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `never`>

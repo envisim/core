@@ -1,10 +1,10 @@
-[**Documentation**](../../README.md)
+[**Documentation**](../../../README.md)
 
 ---
 
-[Documentation](../../README.md) / [@envisim/geojson-utils](README.md) / default
+[Documentation](../../../README.md) / [@envisim/geojson-utils](../README.md) / @envisim/geojson-utils
 
-# default
+# @envisim/geojson-utils
 
 ## Contents
 
@@ -83,7 +83,7 @@
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -96,7 +96,7 @@
 
 ##### center()
 
-> `static` **center**(`bbox`): [`Position2`](geojson.md#position2)
+> `static` **center**(`bbox`): [`Position2`](geojson-utils/geojson.md#position2)
 
 Computes the parametric center (in longitude and latitude only) of a bounding box
 
@@ -119,7 +119,7 @@ Computes the parametric center (in longitude and latitude only) of a bounding bo
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 <td>
@@ -133,7 +133,7 @@ a bounding box
 
 ###### Returns
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 the center of the bounding box
 
@@ -159,7 +159,7 @@ the center of the bounding box
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -196,7 +196,7 @@ Considers the altitude only if both have it
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 <td>
@@ -213,7 +213,7 @@ Bounding box.
 </td>
 <td>
 
-[`Position`](geojson.md#position)
+[`Position`](geojson-utils/geojson.md#position)
 
 </td>
 <td>
@@ -253,7 +253,7 @@ true if point is in bbox, otherwise false.
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -286,7 +286,7 @@ true if point is in bbox, otherwise false.
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -319,7 +319,7 @@ true if point is in bbox, otherwise false.
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -352,7 +352,7 @@ true if point is in bbox, otherwise false.
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -365,7 +365,7 @@ true if point is in bbox, otherwise false.
 
 ##### max2()
 
-> `static` **max2**(`bbox`): [`Position2`](geojson.md#position2)
+> `static` **max2**(`bbox`): [`Position2`](geojson-utils/geojson.md#position2)
 
 ###### Parameters
 
@@ -385,7 +385,7 @@ true if point is in bbox, otherwise false.
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -394,7 +394,7 @@ true if point is in bbox, otherwise false.
 
 ###### Returns
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 ##### maxAltitude()
 
@@ -418,7 +418,7 @@ true if point is in bbox, otherwise false.
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -451,7 +451,7 @@ true if point is in bbox, otherwise false.
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -484,7 +484,7 @@ true if point is in bbox, otherwise false.
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -497,7 +497,7 @@ true if point is in bbox, otherwise false.
 
 ##### min2()
 
-> `static` **min2**(`bbox`): [`Position2`](geojson.md#position2)
+> `static` **min2**(`bbox`): [`Position2`](geojson-utils/geojson.md#position2)
 
 ###### Parameters
 
@@ -517,7 +517,7 @@ true if point is in bbox, otherwise false.
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -526,7 +526,7 @@ true if point is in bbox, otherwise false.
 
 ###### Returns
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 ##### minAltitude()
 
@@ -550,7 +550,7 @@ true if point is in bbox, otherwise false.
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -583,7 +583,7 @@ true if point is in bbox, otherwise false.
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -616,7 +616,7 @@ true if point is in bbox, otherwise false.
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -629,7 +629,7 @@ true if point is in bbox, otherwise false.
 
 ##### removeAltitude()
 
-> `static` **removeAltitude**(`bbox`): [`BBox2`](geojson.md#bbox2)
+> `static` **removeAltitude**(`bbox`): [`BBox2`](geojson-utils/geojson.md#bbox2)
 
 Removes altitiude from the bounding box
 
@@ -652,7 +652,7 @@ Removes altitiude from the bounding box
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 <td>
@@ -666,7 +666,7 @@ a bounding box.
 
 ###### Returns
 
-[`BBox2`](geojson.md#bbox2)
+[`BBox2`](geojson-utils/geojson.md#bbox2)
 
 a copy of the bounding box, with altitude removed (i.e. with length 4).
 
@@ -890,7 +890,7 @@ a copy of the bounding box, with altitude removed (i.e. with length 4).
 </td>
 <td>
 
-[`BaseFeatureCollection`](geojson.md#basefeaturecollection)
+[`BaseFeatureCollection`](geojson-utils/geojson.md#basefeaturecollection)
 
 </td>
 <td>
@@ -964,7 +964,7 @@ a copy of the bounding box, with altitude removed (i.e. with length 4).
 </td>
 <td>
 
-[`AreaFeature`](geojson.md#areafeature)
+[`AreaFeature`](geojson-utils/geojson.md#areafeature)
 
 </td>
 </tr>
@@ -1009,7 +1009,7 @@ a copy of the bounding box, with altitude removed (i.e. with length 4).
 </td>
 <td>
 
-[`LineFeature`](geojson.md#linefeature)
+[`LineFeature`](geojson-utils/geojson.md#linefeature)
 
 </td>
 </tr>
@@ -1054,7 +1054,7 @@ a copy of the bounding box, with altitude removed (i.e. with length 4).
 </td>
 <td>
 
-[`PointFeature`](geojson.md#pointfeature)
+[`PointFeature`](geojson-utils/geojson.md#pointfeature)
 
 </td>
 </tr>
@@ -1099,7 +1099,7 @@ a copy of the bounding box, with altitude removed (i.e. with length 4).
 </td>
 <td>
 
-[`BaseFeature`](geojson.md#basefeature)
+[`BaseFeature`](geojson-utils/geojson.md#basefeature)
 
 </td>
 </tr>
@@ -1146,7 +1146,7 @@ a copy of the bounding box, with altitude removed (i.e. with length 4).
 </td>
 <td>
 
-[`AreaGeometry`](geojson.md#areageometry)
+[`AreaGeometry`](geojson-utils/geojson.md#areageometry)
 
 </td>
 </tr>
@@ -1191,7 +1191,7 @@ a copy of the bounding box, with altitude removed (i.e. with length 4).
 </td>
 <td>
 
-[`LineGeometry`](geojson.md#linegeometry)
+[`LineGeometry`](geojson-utils/geojson.md#linegeometry)
 
 </td>
 </tr>
@@ -1236,7 +1236,7 @@ a copy of the bounding box, with altitude removed (i.e. with length 4).
 </td>
 <td>
 
-[`PointGeometry`](geojson.md#pointgeometry)
+[`PointGeometry`](geojson-utils/geojson.md#pointgeometry)
 
 </td>
 </tr>
@@ -1281,7 +1281,7 @@ a copy of the bounding box, with altitude removed (i.e. with length 4).
 </td>
 <td>
 
-[`BaseGeometry`](geojson.md#basegeometry)
+[`BaseGeometry`](geojson-utils/geojson.md#basegeometry)
 
 </td>
 </tr>
@@ -1431,7 +1431,7 @@ a copy of the bounding box, with altitude removed (i.e. with length 4).
 </td>
 <td>
 
-[`Position`](geojson.md#position)
+[`Position`](geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -1443,7 +1443,7 @@ a copy of the bounding box, with altitude removed (i.e. with length 4).
 </td>
 <td>
 
-[`Position`](geojson.md#position)
+[`Position`](geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -1472,7 +1472,7 @@ a copy of the bounding box, with altitude removed (i.e. with length 4).
 </td>
 <td>
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 </td>
 </tr>
@@ -1484,7 +1484,7 @@ a copy of the bounding box, with altitude removed (i.e. with length 4).
 </td>
 <td>
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 </td>
 </tr>
@@ -1496,7 +1496,7 @@ a copy of the bounding box, with altitude removed (i.e. with length 4).
 </td>
 <td>
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 </td>
 </tr>
@@ -1597,7 +1597,7 @@ This function uses the azimuthal equidistant projection with position as referen
 </td>
 <td>
 
-[`Position`](geojson.md#position)
+[`Position`](geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -1612,15 +1612,15 @@ the distance from the position to the segment
 
 ##### end()
 
-> **end**(): [`Position2`](geojson.md#position2)
+> **end**(): [`Position2`](geojson-utils/geojson.md#position2)
 
 ###### Returns
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 ##### intersect()
 
-> **intersect**(`seg`): `null` | [`Position2`](geojson.md#position2)
+> **intersect**(`seg`): `null` | [`Position2`](geojson-utils/geojson.md#position2)
 
 ###### Parameters
 
@@ -1649,11 +1649,11 @@ the distance from the position to the segment
 
 ###### Returns
 
-`null` | [`Position2`](geojson.md#position2)
+`null` | [`Position2`](geojson-utils/geojson.md#position2)
 
 ##### intersectByPositions()
 
-> **intersectByPositions**(`p1`, `p2`): `null` | [`Position2`](geojson.md#position2)
+> **intersectByPositions**(`p1`, `p2`): `null` | [`Position2`](geojson-utils/geojson.md#position2)
 
 ###### Parameters
 
@@ -1673,7 +1673,7 @@ the distance from the position to the segment
 </td>
 <td>
 
-[`Position`](geojson.md#position)
+[`Position`](geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -1685,7 +1685,7 @@ the distance from the position to the segment
 </td>
 <td>
 
-[`Position`](geojson.md#position)
+[`Position`](geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -1694,7 +1694,7 @@ the distance from the position to the segment
 
 ###### Returns
 
-`null` | [`Position2`](geojson.md#position2)
+`null` | [`Position2`](geojson-utils/geojson.md#position2)
 
 ##### isVector()
 
@@ -1714,11 +1714,11 @@ the distance from the position to the segment
 
 ##### leftMost()
 
-> **leftMost**(): [`Position2`](geojson.md#position2)
+> **leftMost**(): [`Position2`](geojson-utils/geojson.md#position2)
 
 ###### Returns
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 ##### parametricIntersect()
 
@@ -1778,7 +1778,7 @@ the distance from the position to the segment
 
 ##### position()
 
-> **position**(`param`): [`Position2`](geojson.md#position2)
+> **position**(`param`): [`Position2`](geojson-utils/geojson.md#position2)
 
 ###### Parameters
 
@@ -1807,7 +1807,7 @@ the distance from the position to the segment
 
 ###### Returns
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 ##### rightDistanceOfPoint()
 
@@ -1843,7 +1843,7 @@ determining point-in-polygon.
 </td>
 <td>
 
-[`Position`](geojson.md#position)
+[`Position`](geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -1858,19 +1858,19 @@ determining point-in-polygon.
 
 ##### rightMost()
 
-> **rightMost**(): [`Position2`](geojson.md#position2)
+> **rightMost**(): [`Position2`](geojson-utils/geojson.md#position2)
 
 ###### Returns
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 ##### start()
 
-> **start**(): [`Position2`](geojson.md#position2)
+> **start**(): [`Position2`](geojson-utils/geojson.md#position2)
 
 ###### Returns
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 ##### checkParameter()
 
@@ -1927,7 +1927,7 @@ determining point-in-polygon.
 </td>
 <td>
 
-(`coord`) => [`Position2`](geojson.md#position2)
+(`coord`) => [`Position2`](geojson-utils/geojson.md#position2)
 
 </td>
 </tr>
@@ -1939,7 +1939,7 @@ determining point-in-polygon.
 </td>
 <td>
 
-(`coord`) => [`Position2`](geojson.md#position2)
+(`coord`) => [`Position2`](geojson-utils/geojson.md#position2)
 
 </td>
 </tr>
@@ -2003,7 +2003,7 @@ Computes the plate carrée area of a Polygon (not MultiPolygon)
 </td>
 <td>
 
-[`Position`](geojson.md#position)\[]\[]
+[`Position`](geojson-utils/geojson.md#position)\[]\[]
 
 </td>
 <td>
@@ -2049,7 +2049,7 @@ provided as argument.
 </td>
 <td>
 
-[`Position`](geojson.md#position)
+[`Position`](geojson-utils/geojson.md#position)
 
 </td>
 <td>
@@ -2073,7 +2073,7 @@ an azimuthal equidistant projection.
 
 #### Call Signature
 
-> **bboxFromPositions**(`positions`): [`BBox2`](geojson.md#bbox2)
+> **bboxFromPositions**(`positions`): [`BBox2`](geojson-utils/geojson.md#bbox2)
 
 ##### Parameters
 
@@ -2094,7 +2094,7 @@ an azimuthal equidistant projection.
 </td>
 <td>
 
-[`Position2`](geojson.md#position2)\[]
+[`Position2`](geojson-utils/geojson.md#position2)\[]
 
 </td>
 <td>
@@ -2108,7 +2108,7 @@ an array of positions
 
 ##### Returns
 
-[`BBox2`](geojson.md#bbox2)
+[`BBox2`](geojson-utils/geojson.md#bbox2)
 
 the bounding box around the array of positions
 
@@ -2118,7 +2118,7 @@ Error when positions.length === 0
 
 #### Call Signature
 
-> **bboxFromPositions**(`positions`): [`BBox3`](geojson.md#bbox3)
+> **bboxFromPositions**(`positions`): [`BBox3`](geojson-utils/geojson.md#bbox3)
 
 ##### Parameters
 
@@ -2139,7 +2139,7 @@ Error when positions.length === 0
 </td>
 <td>
 
-[`Position3`](geojson.md#position3)\[]
+[`Position3`](geojson-utils/geojson.md#position3)\[]
 
 </td>
 <td>
@@ -2153,7 +2153,7 @@ an array of positions
 
 ##### Returns
 
-[`BBox3`](geojson.md#bbox3)
+[`BBox3`](geojson-utils/geojson.md#bbox3)
 
 the bounding box around the array of positions
 
@@ -2163,7 +2163,7 @@ Error when positions.length === 0
 
 #### Call Signature
 
-> **bboxFromPositions**(`positions`): [`BBox`](geojson.md#bbox-7)
+> **bboxFromPositions**(`positions`): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ##### Parameters
 
@@ -2184,7 +2184,7 @@ Error when positions.length === 0
 </td>
 <td>
 
-[`Position`](geojson.md#position)\[]
+[`Position`](geojson-utils/geojson.md#position)\[]
 
 </td>
 <td>
@@ -2198,7 +2198,7 @@ an array of positions
 
 ##### Returns
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 the bounding box around the array of positions
 
@@ -2212,7 +2212,7 @@ Error when positions.length === 0
 
 #### Call Signature
 
-> **bboxFromPositionsUnwrapped**(`positions`): [`BBox2`](geojson.md#bbox2)
+> **bboxFromPositionsUnwrapped**(`positions`): [`BBox2`](geojson-utils/geojson.md#bbox2)
 
 ##### Parameters
 
@@ -2232,7 +2232,7 @@ Error when positions.length === 0
 </td>
 <td>
 
-[`Position2`](geojson.md#position2)\[]
+[`Position2`](geojson-utils/geojson.md#position2)\[]
 
 </td>
 </tr>
@@ -2241,11 +2241,11 @@ Error when positions.length === 0
 
 ##### Returns
 
-[`BBox2`](geojson.md#bbox2)
+[`BBox2`](geojson-utils/geojson.md#bbox2)
 
 #### Call Signature
 
-> **bboxFromPositionsUnwrapped**(`positions`): [`BBox3`](geojson.md#bbox3)
+> **bboxFromPositionsUnwrapped**(`positions`): [`BBox3`](geojson-utils/geojson.md#bbox3)
 
 ##### Parameters
 
@@ -2265,7 +2265,7 @@ Error when positions.length === 0
 </td>
 <td>
 
-[`Position3`](geojson.md#position3)\[]
+[`Position3`](geojson-utils/geojson.md#position3)\[]
 
 </td>
 </tr>
@@ -2274,11 +2274,11 @@ Error when positions.length === 0
 
 ##### Returns
 
-[`BBox3`](geojson.md#bbox3)
+[`BBox3`](geojson-utils/geojson.md#bbox3)
 
 #### Call Signature
 
-> **bboxFromPositionsUnwrapped**(`positions`): [`BBox`](geojson.md#bbox-7)
+> **bboxFromPositionsUnwrapped**(`positions`): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ##### Parameters
 
@@ -2298,7 +2298,7 @@ Error when positions.length === 0
 </td>
 <td>
 
-[`Position`](geojson.md#position)\[]
+[`Position`](geojson-utils/geojson.md#position)\[]
 
 </td>
 </tr>
@@ -2307,7 +2307,7 @@ Error when positions.length === 0
 
 ##### Returns
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 ---
 
@@ -2336,7 +2336,7 @@ Checks if two bounding boxes overlap.
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 <td>
@@ -2353,7 +2353,7 @@ The first bounding box.
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 </td>
 <td>
@@ -2389,7 +2389,7 @@ The second bounding box.
 <tr>
 <td>
 
-`T` _extends_ [`Position`](geojson.md#position) | [`Position`](geojson.md#position)\[] | [`Position`](geojson.md#position)\[] | [`Position`](geojson.md#position)\[]\[] | [`Position`](geojson.md#position)\[]\[] | [`Position`](geojson.md#position)\[]\[]\[] | [`Position`](geojson.md#position)\[]
+`T` _extends_ [`Position`](geojson-utils/geojson.md#position) | [`Position`](geojson-utils/geojson.md#position)\[] | [`Position`](geojson-utils/geojson.md#position)\[] | [`Position`](geojson-utils/geojson.md#position)\[]\[] | [`Position`](geojson-utils/geojson.md#position)\[]\[] | [`Position`](geojson-utils/geojson.md#position)\[]\[]\[] | [`Position`](geojson-utils/geojson.md#position)\[]
 
 </td>
 </tr>
@@ -2431,7 +2431,7 @@ The second bounding box.
 
 #### Call Signature
 
-> **cutAreaGeometry**(`g`): [`Circle`](geojson.md#circle)
+> **cutAreaGeometry**(`g`): [`Circle`](geojson-utils/geojson.md#circle)
 
 Cuts an AreaGeometry on the antimeridian
 
@@ -2454,7 +2454,7 @@ Cuts an AreaGeometry on the antimeridian
 </td>
 <td>
 
-[`Circle`](geojson.md#circle)
+[`Circle`](geojson-utils/geojson.md#circle)
 
 </td>
 <td>
@@ -2468,13 +2468,13 @@ the AreaGeometry to cut
 
 ##### Returns
 
-[`Circle`](geojson.md#circle)
+[`Circle`](geojson-utils/geojson.md#circle)
 
 the cut AreaGeometry
 
 #### Call Signature
 
-> **cutAreaGeometry**(`g`): [`MultiCircle`](geojson.md#multicircle)
+> **cutAreaGeometry**(`g`): [`MultiCircle`](geojson-utils/geojson.md#multicircle)
 
 Cuts an AreaGeometry on the antimeridian
 
@@ -2497,7 +2497,7 @@ Cuts an AreaGeometry on the antimeridian
 </td>
 <td>
 
-[`MultiCircle`](geojson.md#multicircle)
+[`MultiCircle`](geojson-utils/geojson.md#multicircle)
 
 </td>
 <td>
@@ -2511,13 +2511,13 @@ the AreaGeometry to cut
 
 ##### Returns
 
-[`MultiCircle`](geojson.md#multicircle)
+[`MultiCircle`](geojson-utils/geojson.md#multicircle)
 
 the cut AreaGeometry
 
 #### Call Signature
 
-> **cutAreaGeometry**(`g`): [`Polygon`](geojson.md#polygon) | [`MultiPolygon`](geojson.md#multipolygon)
+> **cutAreaGeometry**(`g`): [`Polygon`](geojson-utils/geojson.md#polygon) | [`MultiPolygon`](geojson-utils/geojson.md#multipolygon)
 
 Cuts an AreaGeometry on the antimeridian
 
@@ -2540,7 +2540,7 @@ Cuts an AreaGeometry on the antimeridian
 </td>
 <td>
 
-[`Polygon`](geojson.md#polygon) | [`MultiPolygon`](geojson.md#multipolygon)
+[`Polygon`](geojson-utils/geojson.md#polygon) | [`MultiPolygon`](geojson-utils/geojson.md#multipolygon)
 
 </td>
 <td>
@@ -2554,7 +2554,7 @@ the AreaGeometry to cut
 
 ##### Returns
 
-[`Polygon`](geojson.md#polygon) | [`MultiPolygon`](geojson.md#multipolygon)
+[`Polygon`](geojson-utils/geojson.md#polygon) | [`MultiPolygon`](geojson-utils/geojson.md#multipolygon)
 
 the cut AreaGeometry
 
@@ -2562,7 +2562,7 @@ the cut AreaGeometry
 
 ### cutLineGeometry()
 
-> **cutLineGeometry**(`g`): [`LineObject`](geojson.md#lineobject)
+> **cutLineGeometry**(`g`): [`LineObject`](geojson-utils/geojson.md#lineobject)
 
 Cuts a LineGeometry on the antimeridian
 
@@ -2585,7 +2585,7 @@ Cuts a LineGeometry on the antimeridian
 </td>
 <td>
 
-[`LineObject`](geojson.md#lineobject)
+[`LineObject`](geojson-utils/geojson.md#lineobject)
 
 </td>
 <td>
@@ -2599,7 +2599,7 @@ the LineGeometry to cut
 
 #### Returns
 
-[`LineObject`](geojson.md#lineobject)
+[`LineObject`](geojson-utils/geojson.md#lineobject)
 
 the cut LineGeometry
 
@@ -2607,7 +2607,7 @@ the cut LineGeometry
 
 ### getPositionsForCircle()
 
-> **getPositionsForCircle**(`point`, `radius`): [`Position`](geojson.md#position)\[]
+> **getPositionsForCircle**(`point`, `radius`): [`Position`](geojson-utils/geojson.md#position)\[]
 
 Computes positions needed to find bounding box of a PointCircle.
 
@@ -2630,7 +2630,7 @@ Computes positions needed to find bounding box of a PointCircle.
 </td>
 <td>
 
-[`Position`](geojson.md#position)
+[`Position`](geojson-utils/geojson.md#position)
 
 </td>
 <td>
@@ -2661,7 +2661,7 @@ The radius in meters.
 
 #### Returns
 
-[`Position`](geojson.md#position)\[]
+[`Position`](geojson-utils/geojson.md#position)\[]
 
 - An array with four positions \[top,right,bottom,left].
 
@@ -2669,7 +2669,7 @@ The radius in meters.
 
 ### intersectPolygons()
 
-> **intersectPolygons**(`polygons1`, `polygons2`): [`Position2`](geojson.md#position2)\[]\[]\[]
+> **intersectPolygons**(`polygons1`, `polygons2`): [`Position2`](geojson-utils/geojson.md#position2)\[]\[]\[]
 
 Assumes that `polygons` consists of two sets of non-overlapping polygon(s).
 
@@ -2691,7 +2691,7 @@ Assumes that `polygons` consists of two sets of non-overlapping polygon(s).
 </td>
 <td>
 
-[`Position`](geojson.md#position)\[]\[]\[]
+[`Position`](geojson-utils/geojson.md#position)\[]\[]\[]
 
 </td>
 </tr>
@@ -2703,7 +2703,7 @@ Assumes that `polygons` consists of two sets of non-overlapping polygon(s).
 </td>
 <td>
 
-[`Position`](geojson.md#position)\[]\[]\[]
+[`Position`](geojson-utils/geojson.md#position)\[]\[]\[]
 
 </td>
 </tr>
@@ -2712,7 +2712,7 @@ Assumes that `polygons` consists of two sets of non-overlapping polygon(s).
 
 #### Returns
 
-[`Position2`](geojson.md#position2)\[]\[]\[]
+[`Position2`](geojson-utils/geojson.md#position2)\[]\[]\[]
 
 the intersect of these two sets.
 
@@ -2744,7 +2744,7 @@ of type plate carrée.
 </td>
 <td>
 
-[`Position`](geojson.md#position)\[]
+[`Position`](geojson-utils/geojson.md#position)\[]
 
 </td>
 <td>
@@ -2952,7 +2952,7 @@ the distance in normalized longitudes on range \[a, b]
 
 ### midpoint()
 
-> **midpoint**(`p1`, `p2`): [`Position2`](geojson.md#position2)
+> **midpoint**(`p1`, `p2`): [`Position2`](geojson-utils/geojson.md#position2)
 
 #### Parameters
 
@@ -2972,7 +2972,7 @@ the distance in normalized longitudes on range \[a, b]
 </td>
 <td>
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 </td>
 </tr>
@@ -2984,7 +2984,7 @@ the distance in normalized longitudes on range \[a, b]
 </td>
 <td>
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 </td>
 </tr>
@@ -2993,13 +2993,13 @@ the distance in normalized longitudes on range \[a, b]
 
 #### Returns
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 ---
 
 ### midpointRaw()
 
-> **midpointRaw**(`p1`, `p2`): [`Position2`](geojson.md#position2)
+> **midpointRaw**(`p1`, `p2`): [`Position2`](geojson-utils/geojson.md#position2)
 
 #### Parameters
 
@@ -3019,7 +3019,7 @@ the distance in normalized longitudes on range \[a, b]
 </td>
 <td>
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 </td>
 </tr>
@@ -3031,7 +3031,7 @@ the distance in normalized longitudes on range \[a, b]
 </td>
 <td>
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 </td>
 </tr>
@@ -3040,13 +3040,13 @@ the distance in normalized longitudes on range \[a, b]
 
 #### Returns
 
-[`Position2`](geojson.md#position2)
+[`Position2`](geojson-utils/geojson.md#position2)
 
 ---
 
 ### moveCoordsAroundEarth()
 
-> **moveCoordsAroundEarth**(`coords`): [`Position`](geojson.md#position)\[]
+> **moveCoordsAroundEarth**(`coords`): [`Position`](geojson-utils/geojson.md#position)\[]
 
 Moves rings that starts on the west side of the meridian (-180 -- 0) to the positive counterpart (180--360)
 
@@ -3068,7 +3068,7 @@ Moves rings that starts on the west side of the meridian (-180 -- 0) to the posi
 </td>
 <td>
 
-[`Position`](geojson.md#position)\[]
+[`Position`](geojson-utils/geojson.md#position)\[]
 
 </td>
 </tr>
@@ -3077,7 +3077,7 @@ Moves rings that starts on the west side of the meridian (-180 -- 0) to the posi
 
 #### Returns
 
-[`Position`](geojson.md#position)\[]
+[`Position`](geojson-utils/geojson.md#position)\[]
 
 ---
 
@@ -3178,7 +3178,7 @@ Note: Not for Polygon.
 </td>
 <td>
 
-[`Position`](geojson.md#position)
+[`Position`](geojson-utils/geojson.md#position)
 
 </td>
 <td>
@@ -3195,7 +3195,7 @@ Coordinates \[lon,lat] of a point.
 </td>
 <td>
 
-[`Position`](geojson.md#position)\[]\[]\[]
+[`Position`](geojson-utils/geojson.md#position)\[]\[]\[]
 
 </td>
 <td>
@@ -3241,7 +3241,7 @@ Note: Not for MultiPolygon.
 </td>
 <td>
 
-[`Position`](geojson.md#position)
+[`Position`](geojson-utils/geojson.md#position)
 
 </td>
 <td>
@@ -3258,7 +3258,7 @@ Coordinates \[lon,lat] of a point.
 </td>
 <td>
 
-[`Position`](geojson.md#position)\[]\[]
+[`Position`](geojson-utils/geojson.md#position)\[]\[]
 
 </td>
 <td>
@@ -3280,7 +3280,7 @@ Coordinates of a Polygon, not MultiPolygon.
 
 ### rerollPolygons()
 
-> **rerollPolygons**(`polygons`): [`Position2`](geojson.md#position2)\[]\[]\[]
+> **rerollPolygons**(`polygons`): [`Position2`](geojson-utils/geojson.md#position2)\[]\[]\[]
 
 An unrolled polygon is a polygon which may exist outside the boundaries of normal earth
 (-180, 180), as if the earth(s) was unrolled on a sheet of paper.
@@ -3311,7 +3311,7 @@ earth, (180, 540), but that the following polygons may exist:
 </td>
 <td>
 
-[`Position2`](geojson.md#position2)\[]\[]\[]
+[`Position2`](geojson-utils/geojson.md#position2)\[]\[]\[]
 
 </td>
 </tr>
@@ -3320,7 +3320,7 @@ earth, (180, 540), but that the following polygons may exist:
 
 #### Returns
 
-[`Position2`](geojson.md#position2)\[]\[]\[]
+[`Position2`](geojson-utils/geojson.md#position2)\[]\[]\[]
 
 ---
 
@@ -3346,7 +3346,7 @@ earth, (180, 540), but that the following polygons may exist:
 </td>
 <td>
 
-[`Position`](geojson.md#position)\[]
+[`Position`](geojson-utils/geojson.md#position)\[]
 
 </td>
 </tr>
@@ -3361,7 +3361,7 @@ earth, (180, 540), but that the following polygons may exist:
 
 ### segmentsToPolygon()
 
-> **segmentsToPolygon**(`segments`): [`Position2`](geojson.md#position2)\[]
+> **segmentsToPolygon**(`segments`): [`Position2`](geojson-utils/geojson.md#position2)\[]
 
 #### Parameters
 
@@ -3390,13 +3390,13 @@ earth, (180, 540), but that the following polygons may exist:
 
 #### Returns
 
-[`Position2`](geojson.md#position2)\[]
+[`Position2`](geojson-utils/geojson.md#position2)\[]
 
 ---
 
 ### unionOfBBoxes()
 
-> **unionOfBBoxes**(`bboxes`): [`BBox`](geojson.md#bbox-7)
+> **unionOfBBoxes**(`bboxes`): [`BBox`](geojson-utils/geojson.md#bbox-7)
 
 #### Parameters
 
@@ -3417,7 +3417,7 @@ earth, (180, 540), but that the following polygons may exist:
 </td>
 <td>
 
-[`BBox`](geojson.md#bbox-7)\[]
+[`BBox`](geojson-utils/geojson.md#bbox-7)\[]
 
 </td>
 <td>
@@ -3431,7 +3431,7 @@ an array of bboxes
 
 #### Returns
 
-[`BBox`](geojson.md#bbox-7)
+[`BBox`](geojson-utils/geojson.md#bbox-7)
 
 the bounding box around the array of bboxes
 

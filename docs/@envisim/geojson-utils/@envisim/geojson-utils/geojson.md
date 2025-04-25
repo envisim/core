@@ -1,10 +1,10 @@
-[**Documentation**](../../README.md)
+[**Documentation**](../../../../README.md)
 
 ---
 
-[Documentation](../../README.md) / [@envisim/geojson-utils](README.md) / geojson
+[Documentation](../../../../README.md) / [@envisim/geojson-utils](../../README.md) / @envisim/geojson-utils/geojson
 
-# geojson
+# @envisim/geojson-utils/geojson
 
 ## Contents
 

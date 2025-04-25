@@ -23,7 +23,7 @@
 <tr>
 <td>
 
-[collect-properties](collect-properties.md)
+[@envisim/geosampling/collect-properties](@envisim/geosampling/collect-properties.md)
 
 </td>
 <td>
@@ -35,7 +35,7 @@
 <tr>
 <td>
 
-[errors](errors.md)
+[@envisim/geosampling/errors](@envisim/geosampling/errors.md)
 
 </td>
 <td>
@@ -47,7 +47,7 @@
 <tr>
 <td>
 
-[model-geometry](model-geometry.md)
+[@envisim/geosampling/model-geometry](@envisim/geosampling/model-geometry.md)
 
 </td>
 <td>
@@ -59,7 +59,7 @@
 <tr>
 <td>
 
-[point-processes](point-processes.md)
+[@envisim/geosampling/point-processes](@envisim/geosampling/point-processes.md)
 
 </td>
 <td>
@@ -71,7 +71,7 @@
 <tr>
 <td>
 
-[sample-continuous](sample-continuous.md)
+[@envisim/geosampling/sample-continuous](@envisim/geosampling/sample-continuous.md)
 
 </td>
 <td>
@@ -83,7 +83,7 @@
 <tr>
 <td>
 
-[sample-finite](sample-finite.md)
+[@envisim/geosampling/sample-finite](@envisim/geosampling/sample-finite.md)
 
 </td>
 <td>
@@ -95,7 +95,7 @@
 <tr>
 <td>
 
-[select-intersects](select-intersects.md)
+[@envisim/geosampling/select-intersects](@envisim/geosampling/select-intersects.md)
 
 </td>
 <td>

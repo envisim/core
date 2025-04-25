@@ -1,3 +1,6 @@
+/**
+ * @module @envisim/geojson-utils/rhumb
+ */
 import type * as GJ from "../geojson.js";
 
 // This javascript (typescript) implementation for rhumb lines is based on the

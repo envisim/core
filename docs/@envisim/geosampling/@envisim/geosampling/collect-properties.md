@@ -1,10 +1,10 @@
-[**Documentation**](../../README.md)
+[**Documentation**](../../../../README.md)
 
 ---
 
-[Documentation](../../README.md) / [@envisim/geosampling](README.md) / collect-properties
+[Documentation](../../../../README.md) / [@envisim/geosampling](../../README.md) / @envisim/geosampling/collect-properties
 
-# collect-properties
+# @envisim/geosampling/collect-properties
 
 ## Contents
 
@@ -16,7 +16,7 @@
 
 ### collectProperties()
 
-> **collectProperties**<`PF`, `PB`, `GF`>(`frame`, `base`, `properties`): [`FeatureCollection`](../geojson.md#featurecollection)<`GF`, `string` | `PF`>
+> **collectProperties**<`PF`, `PB`, `GF`>(`frame`, `base`, `properties`): [`FeatureCollection`](../../../geojson.md#featurecollection)<`GF`, `string` | `PF`>
 
 Collect properties to a frame layer from a base layer, given an
 array of properties to be collected. Categorical properties are collected as
@@ -48,7 +48,7 @@ multiple numerical properties, one for each category.
 <tr>
 <td>
 
-`GF` _extends_ [`PureObject`](../geojson.md#pureobject)
+`GF` _extends_ [`PureObject`](../../../geojson.md#pureobject)
 
 </td>
 </tr>
@@ -73,7 +73,7 @@ multiple numerical properties, one for each category.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<`GF`, `PF`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<`GF`, `PF`>
 
 </td>
 </tr>
@@ -85,7 +85,7 @@ multiple numerical properties, one for each category.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`RetractingObject`](../geojson.md#retractingobject)<`GF`>, `PB`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`RetractingObject`](../../../geojson.md#retractingobject)<`GF`>, `PB`>
 
 </td>
 </tr>
@@ -97,7 +97,7 @@ multiple numerical properties, one for each category.
 </td>
 <td>
 
-[`PropertyRecord`](../geojson.md#propertyrecord-1)<`PB`> | `PB`\[]
+[`PropertyRecord`](../../../geojson.md#propertyrecord-1)<`PB`> | `PB`\[]
 
 </td>
 </tr>
@@ -106,7 +106,7 @@ multiple numerical properties, one for each category.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<`GF`, `string` | `PF`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<`GF`, `string` | `PF`>
 
 collection
 
@@ -114,7 +114,7 @@ collection
 
 ### collectPropertyRecord()
 
-> **collectPropertyRecord**<`P`>(`propertyRecord`, `properties`): [`PropertyRecord`](../geojson.md#propertyrecord-1)<`string`>
+> **collectPropertyRecord**<`P`>(`propertyRecord`, `properties`): [`PropertyRecord`](../../../geojson.md#propertyrecord-1)<`string`>
 
 Derives the resulting property record of collected properties.
 This property record needs to be merged with the existing
@@ -160,7 +160,7 @@ using collectProperties.
 </td>
 <td>
 
-[`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`>
+[`PropertyRecord`](../../../geojson.md#propertyrecord-1)<`P`>
 
 </td>
 <td>
@@ -191,6 +191,6 @@ the ids of the properties to collect.
 
 #### Returns
 
-[`PropertyRecord`](../geojson.md#propertyrecord-1)<`string`>
+[`PropertyRecord`](../../../geojson.md#propertyrecord-1)<`string`>
 
 the property record collected properties.

@@ -1,3 +1,6 @@
+/**
+ * @module @envisim/geojson-utils/geojson
+ */
 // BASICS
 // Position
 export type Position2 = [number, number];

@@ -1,10 +1,10 @@
-[**Documentation**](../../README.md)
+[**Documentation**](../../../../README.md)
 
 ---
 
-[Documentation](../../README.md) / [@envisim/geosampling](README.md) / errors
+[Documentation](../../../../README.md) / [@envisim/geosampling](../../README.md) / @envisim/geosampling/errors
 
-# errors
+# @envisim/geosampling/errors
 
 ## Contents
 

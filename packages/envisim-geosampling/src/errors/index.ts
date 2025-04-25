@@ -1,5 +1,5 @@
 /**
- * @module errors
+ * @module @envisim/geosampling/errors
  */
 
 export { type CollectError, COLLECT_ERROR_LIST } from "./collect-error.js";

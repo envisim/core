@@ -27,7 +27,7 @@ const config = {
   excludeReferences: true,
   // excludeCategories
   // maxTypeConversionDepth
-  // name
+  name: "Documentation",
   // includeVersion
   disableSources: true,
   // sourceLinkTemplate

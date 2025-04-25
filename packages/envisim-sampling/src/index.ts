@@ -1,4 +1,6 @@
-// Exports
+/**
+ * @module @envisim/sampling
+ */
 export { cube, localCube, type CubeOptions, type LocalCubeOptions } from "./cube.js";
 export { sampford, pareto, brewer } from "./pips.js";
 export { lpm1, lpm2, rpm, spm } from "./pivotal.js";

@@ -63,11 +63,11 @@
 
 #### Extends
 
-- `AbstractAreaObject`<[`Circle`](geojson-utils/geojson.md#circle)>
+- `AbstractAreaObject`<[`Circle`](geojson-utils/@envisim/geojson-utils/geojson.md#circle)>
 
 #### Implements
 
-- [`Circle`](geojson-utils/geojson.md#circle)
+- [`Circle`](geojson-utils/@envisim/geojson-utils/geojson.md#circle)
 
 #### Constructors
 
@@ -99,7 +99,7 @@ a [Polygon](#polygon) through the [Circle.toPolygon](#topolygon).
 </td>
 <td>
 
-[`OptionalParam`](utils.md#optionalparam)<[`Circle`](geojson-utils/geojson.md#circle), `"type"`>
+[`OptionalParam`](utils.md#optionalparam)<[`Circle`](geojson-utils/@envisim/geojson-utils/geojson.md#circle), `"type"`>
 
 </td>
 <td>
@@ -170,7 +170,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -187,7 +187,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -277,11 +277,11 @@ if `true`, copys by reference when possible.
 
 ##### centroid()
 
-> **centroid**(): [`Position`](geojson-utils/geojson.md#position)
+> **centroid**(): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -352,7 +352,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -381,11 +381,11 @@ if `true`, copys by reference when possible.
 
 ##### getBBox()
 
-> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **getBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -393,11 +393,11 @@ if `true`, copys by reference when possible.
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)\[]
+> **getCoordinateArray**(): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 ###### Overrides
 
@@ -425,7 +425,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -522,7 +522,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -539,11 +539,11 @@ if `true`, copys by reference when possible.
 
 ##### setBBox()
 
-> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **setBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -673,7 +673,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 <td>
@@ -799,7 +799,7 @@ if `true`, copys by reference when possible.
 
 #### Implements
 
-- [`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`SingleTypeObject`](geojson-utils/geojson.md#singletypeobject), `number` | `string`>
+- [`BaseFeature`](geojson-utils/@envisim/geojson-utils/geojson.md#basefeature)<[`SingleTypeObject`](geojson-utils/@envisim/geojson-utils/geojson.md#singletypeobject), `number` | `string`>
 
 #### Constructors
 
@@ -1519,7 +1519,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`BaseGeometry`](geojson-utils/geojson.md#basegeometry)
+[`BaseGeometry`](geojson-utils/@envisim/geojson-utils/geojson.md#basegeometry)
 
 </td>
 <td>
@@ -1609,7 +1609,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`OptionalParam`](utils.md#optionalparam)<[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` | `number`>, `"type"`>
+[`OptionalParam`](utils.md#optionalparam)<[`BaseFeature`](geojson-utils/@envisim/geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/@envisim/geojson-utils/geojson.md#basegeometry), `string` | `number`>, `"type"`>
 
 </td>
 <td>
@@ -1690,7 +1690,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`BaseGeometry`](geojson-utils/geojson.md#basegeometry)
+[`BaseGeometry`](geojson-utils/@envisim/geojson-utils/geojson.md#basegeometry)
 
 </td>
 <td>
@@ -1763,7 +1763,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`OptionalParam`](utils.md#optionalparam)<[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` | `number`>, `"type"`>
+[`OptionalParam`](utils.md#optionalparam)<[`BaseFeature`](geojson-utils/@envisim/geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/@envisim/geojson-utils/geojson.md#basegeometry), `string` | `number`>, `"type"`>
 
 </td>
 <td>
@@ -1844,7 +1844,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`BaseGeometry`](geojson-utils/geojson.md#basegeometry)
+[`BaseGeometry`](geojson-utils/@envisim/geojson-utils/geojson.md#basegeometry)
 
 </td>
 <td>
@@ -1917,7 +1917,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`OptionalParam`](utils.md#optionalparam)<[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `string` | `number`>, `"type"`>
+[`OptionalParam`](utils.md#optionalparam)<[`BaseFeature`](geojson-utils/@envisim/geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/@envisim/geojson-utils/geojson.md#basegeometry), `string` | `number`>, `"type"`>
 
 </td>
 <td>
@@ -2092,7 +2092,7 @@ if `true`, copys by reference when possible.
 
 #### Implements
 
-- [`BaseFeatureCollection`](geojson-utils/geojson.md#basefeaturecollection)<[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`SingleTypeObject`](geojson-utils/geojson.md#singletypeobject), `number` | `string`>>
+- [`BaseFeatureCollection`](geojson-utils/@envisim/geojson-utils/geojson.md#basefeaturecollection)<[`BaseFeature`](geojson-utils/@envisim/geojson-utils/geojson.md#basefeature)<[`SingleTypeObject`](geojson-utils/@envisim/geojson-utils/geojson.md#singletypeobject), `number` | `string`>>
 
 #### Properties
 
@@ -2120,7 +2120,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 </td>
 <td>
@@ -2228,7 +2228,7 @@ Foreign GeoJSON member, the id of the collection
 </td>
 <td>
 
-[`GeometricPrimitiveUnion`](geojson-utils/default.md#geometricprimitiveunion)
+[`GeometricPrimitiveUnion`](geojson-utils/@envisim/geojson-utils.md#geometricprimitiveunion)
 
 </td>
 <td>
@@ -2548,7 +2548,7 @@ Foreign GeoJSON member, the human readable name of the collection
 
 ##### centroid()
 
-> **centroid**(`iterations`): [`Position`](geojson-utils/geojson.md#position)
+> **centroid**(`iterations`): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Parameters
 
@@ -2583,7 +2583,7 @@ Foreign GeoJSON member, the human readable name of the collection
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ##### clearFeatures()
 
@@ -2723,7 +2723,7 @@ if `true`, creates shallow copies of the features
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -2802,19 +2802,19 @@ if `true`, creates shallow copies of the features
 
 ##### geometricPrimitive()
 
-> **geometricPrimitive**(): [`GeometricPrimitiveUnion`](geojson-utils/default.md#geometricprimitiveunion)
+> **geometricPrimitive**(): [`GeometricPrimitiveUnion`](geojson-utils/@envisim/geojson-utils.md#geometricprimitiveunion)
 
 ###### Returns
 
-[`GeometricPrimitiveUnion`](geojson-utils/default.md#geometricprimitiveunion)
+[`GeometricPrimitiveUnion`](geojson-utils/@envisim/geojson-utils.md#geometricprimitiveunion)
 
 ##### getBBox()
 
-> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **getBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ##### measure()
 
@@ -2862,7 +2862,7 @@ of a line collection, and the total count of a point collection
 
 ##### setBBox()
 
-> **setBBox**(`force`): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **setBBox**(`force`): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Parameters
 
@@ -2897,7 +2897,7 @@ of a line collection, and the total count of a point collection
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ##### setProperty()
 
@@ -3866,11 +3866,11 @@ of a line collection, and the total count of a point collection
 
 #### Extends
 
-- `AbstractLineObject`<[`LineString`](geojson-utils/geojson.md#linestring)>
+- `AbstractLineObject`<[`LineString`](geojson-utils/@envisim/geojson-utils/geojson.md#linestring)>
 
 #### Implements
 
-- [`LineString`](geojson-utils/geojson.md#linestring)
+- [`LineString`](geojson-utils/@envisim/geojson-utils/geojson.md#linestring)
 
 #### Constructors
 
@@ -3897,7 +3897,7 @@ of a line collection, and the total count of a point collection
 </td>
 <td>
 
-[`OptionalParam`](utils.md#optionalparam)<[`LineString`](geojson-utils/geojson.md#linestring), `"type"`>
+[`OptionalParam`](utils.md#optionalparam)<[`LineString`](geojson-utils/@envisim/geojson-utils/geojson.md#linestring), `"type"`>
 
 </td>
 <td>
@@ -3958,7 +3958,7 @@ of a line collection, and the total count of a point collection
 </td>
 <td>
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -3975,7 +3975,7 @@ of a line collection, and the total count of a point collection
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 </td>
 </tr>
@@ -4036,7 +4036,7 @@ of a line collection, and the total count of a point collection
 
 ##### centroid()
 
-> **centroid**(`iterations`): [`Position`](geojson-utils/geojson.md#position)
+> **centroid**(`iterations`): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Parameters
 
@@ -4071,7 +4071,7 @@ of a line collection, and the total count of a point collection
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -4142,7 +4142,7 @@ of a line collection, and the total count of a point collection
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -4171,11 +4171,11 @@ of a line collection, and the total count of a point collection
 
 ##### getBBox()
 
-> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **getBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -4183,11 +4183,11 @@ of a line collection, and the total count of a point collection
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)\[]\[]
+> **getCoordinateArray**(): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]\[]
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)\[]\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]\[]
 
 ###### Overrides
 
@@ -4275,7 +4275,7 @@ of a line collection, and the total count of a point collection
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -4292,11 +4292,11 @@ of a line collection, and the total count of a point collection
 
 ##### setBBox()
 
-> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **setBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -4393,7 +4393,7 @@ of a line collection, and the total count of a point collection
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 </td>
 <td>
@@ -4465,11 +4465,11 @@ of a line collection, and the total count of a point collection
 
 #### Extends
 
-- `AbstractAreaObject`<[`MultiCircle`](geojson-utils/geojson.md#multicircle)>
+- `AbstractAreaObject`<[`MultiCircle`](geojson-utils/@envisim/geojson-utils/geojson.md#multicircle)>
 
 #### Implements
 
-- [`MultiCircle`](geojson-utils/geojson.md#multicircle)
+- [`MultiCircle`](geojson-utils/@envisim/geojson-utils/geojson.md#multicircle)
 
 #### Constructors
 
@@ -4503,7 +4503,7 @@ MultiCircles MUST be non-overlapping.
 </td>
 <td>
 
-[`OptionalParam`](utils.md#optionalparam)<[`MultiCircle`](geojson-utils/geojson.md#multicircle), `"type"`>
+[`OptionalParam`](utils.md#optionalparam)<[`MultiCircle`](geojson-utils/@envisim/geojson-utils/geojson.md#multicircle), `"type"`>
 
 </td>
 <td>
@@ -4574,7 +4574,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -4591,7 +4591,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 </td>
 </tr>
@@ -4681,7 +4681,7 @@ if `true`, copys by reference when possible.
 
 ##### centroid()
 
-> **centroid**(`iterations`): [`Position`](geojson-utils/geojson.md#position)
+> **centroid**(`iterations`): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Parameters
 
@@ -4716,7 +4716,7 @@ if `true`, copys by reference when possible.
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -4787,7 +4787,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -4816,11 +4816,11 @@ if `true`, copys by reference when possible.
 
 ##### getBBox()
 
-> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **getBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -4828,11 +4828,11 @@ if `true`, copys by reference when possible.
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)\[]
+> **getCoordinateArray**(): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 ###### Overrides
 
@@ -4860,7 +4860,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -4957,7 +4957,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -4974,11 +4974,11 @@ if `true`, copys by reference when possible.
 
 ##### setBBox()
 
-> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **setBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -5111,7 +5111,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 </td>
 <td>
@@ -5200,11 +5200,11 @@ overlap as well.
 
 #### Extends
 
-- `AbstractLineObject`<[`MultiLineString`](geojson-utils/geojson.md#multilinestring)>
+- `AbstractLineObject`<[`MultiLineString`](geojson-utils/@envisim/geojson-utils/geojson.md#multilinestring)>
 
 #### Implements
 
-- [`MultiLineString`](geojson-utils/geojson.md#multilinestring)
+- [`MultiLineString`](geojson-utils/@envisim/geojson-utils/geojson.md#multilinestring)
 
 #### Constructors
 
@@ -5231,7 +5231,7 @@ overlap as well.
 </td>
 <td>
 
-[`OptionalParam`](utils.md#optionalparam)<[`MultiLineString`](geojson-utils/geojson.md#multilinestring), `"type"`>
+[`OptionalParam`](utils.md#optionalparam)<[`MultiLineString`](geojson-utils/@envisim/geojson-utils/geojson.md#multilinestring), `"type"`>
 
 </td>
 <td>
@@ -5292,7 +5292,7 @@ overlap as well.
 </td>
 <td>
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -5309,7 +5309,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)\[]\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]\[]
 
 </td>
 </tr>
@@ -5370,7 +5370,7 @@ overlap as well.
 
 ##### centroid()
 
-> **centroid**(`iterations`): [`Position`](geojson-utils/geojson.md#position)
+> **centroid**(`iterations`): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Parameters
 
@@ -5405,7 +5405,7 @@ overlap as well.
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -5476,7 +5476,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -5505,11 +5505,11 @@ overlap as well.
 
 ##### getBBox()
 
-> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **getBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -5517,11 +5517,11 @@ overlap as well.
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)\[]\[]
+> **getCoordinateArray**(): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]\[]
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)\[]\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]\[]
 
 ###### Overrides
 
@@ -5609,7 +5609,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -5626,11 +5626,11 @@ overlap as well.
 
 ##### setBBox()
 
-> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **setBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -5727,7 +5727,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)\[]\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]\[]
 
 </td>
 <td>
@@ -5799,11 +5799,11 @@ overlap as well.
 
 #### Extends
 
-- `AbstractPointObject`<[`MultiPoint`](geojson-utils/geojson.md#multipoint)>
+- `AbstractPointObject`<[`MultiPoint`](geojson-utils/@envisim/geojson-utils/geojson.md#multipoint)>
 
 #### Implements
 
-- [`MultiPoint`](geojson-utils/geojson.md#multipoint)
+- [`MultiPoint`](geojson-utils/@envisim/geojson-utils/geojson.md#multipoint)
 
 #### Constructors
 
@@ -5830,7 +5830,7 @@ overlap as well.
 </td>
 <td>
 
-[`OptionalParam`](utils.md#optionalparam)<[`MultiPoint`](geojson-utils/geojson.md#multipoint), `"type"`>
+[`OptionalParam`](utils.md#optionalparam)<[`MultiPoint`](geojson-utils/@envisim/geojson-utils/geojson.md#multipoint), `"type"`>
 
 </td>
 <td>
@@ -5891,7 +5891,7 @@ overlap as well.
 </td>
 <td>
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -5908,7 +5908,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 </td>
 </tr>
@@ -5969,7 +5969,7 @@ overlap as well.
 
 ##### centroid()
 
-> **centroid**(`iterations`): [`Position`](geojson-utils/geojson.md#position)
+> **centroid**(`iterations`): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Parameters
 
@@ -6004,7 +6004,7 @@ overlap as well.
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -6087,7 +6087,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -6116,11 +6116,11 @@ overlap as well.
 
 ##### getBBox()
 
-> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **getBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -6128,11 +6128,11 @@ overlap as well.
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)\[]
+> **getCoordinateArray**(): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 ###### Overrides
 
@@ -6208,7 +6208,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -6225,11 +6225,11 @@ overlap as well.
 
 ##### setBBox()
 
-> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **setBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -6326,7 +6326,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 </td>
 <td>
@@ -6398,11 +6398,11 @@ overlap as well.
 
 #### Extends
 
-- `AbstractAreaObject`<[`MultiPolygon`](geojson-utils/geojson.md#multipolygon)>
+- `AbstractAreaObject`<[`MultiPolygon`](geojson-utils/@envisim/geojson-utils/geojson.md#multipolygon)>
 
 #### Implements
 
-- [`MultiPolygon`](geojson-utils/geojson.md#multipolygon)
+- [`MultiPolygon`](geojson-utils/@envisim/geojson-utils/geojson.md#multipolygon)
 
 #### Constructors
 
@@ -6429,7 +6429,7 @@ overlap as well.
 </td>
 <td>
 
-[`OptionalParam`](utils.md#optionalparam)<[`MultiPolygon`](geojson-utils/geojson.md#multipolygon), `"type"`>
+[`OptionalParam`](utils.md#optionalparam)<[`MultiPolygon`](geojson-utils/@envisim/geojson-utils/geojson.md#multipolygon), `"type"`>
 
 </td>
 <td>
@@ -6490,7 +6490,7 @@ overlap as well.
 </td>
 <td>
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -6507,7 +6507,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)\[]\[]\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]\[]\[]
 
 </td>
 </tr>
@@ -6580,7 +6580,7 @@ overlap as well.
 
 ##### centroid()
 
-> **centroid**(`iterations`): [`Position`](geojson-utils/geojson.md#position)
+> **centroid**(`iterations`): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Parameters
 
@@ -6615,7 +6615,7 @@ overlap as well.
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -6686,7 +6686,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -6715,11 +6715,11 @@ overlap as well.
 
 ##### getBBox()
 
-> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **getBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -6727,11 +6727,11 @@ overlap as well.
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)\[]\[]\[]
+> **getCoordinateArray**(): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]\[]\[]
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)\[]\[]\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]\[]\[]
 
 ###### Overrides
 
@@ -6759,7 +6759,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -6856,7 +6856,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -6873,11 +6873,11 @@ overlap as well.
 
 ##### setBBox()
 
-> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **setBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -6982,7 +6982,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)\[]\[]\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]\[]\[]
 
 </td>
 <td>
@@ -7054,11 +7054,11 @@ overlap as well.
 
 #### Extends
 
-- `AbstractPointObject`<[`Point`](geojson-utils/geojson.md#point)>
+- `AbstractPointObject`<[`Point`](geojson-utils/@envisim/geojson-utils/geojson.md#point)>
 
 #### Implements
 
-- [`Point`](geojson-utils/geojson.md#point)
+- [`Point`](geojson-utils/@envisim/geojson-utils/geojson.md#point)
 
 #### Constructors
 
@@ -7085,7 +7085,7 @@ overlap as well.
 </td>
 <td>
 
-[`OptionalParam`](utils.md#optionalparam)<[`Point`](geojson-utils/geojson.md#point), `"type"`>
+[`OptionalParam`](utils.md#optionalparam)<[`Point`](geojson-utils/@envisim/geojson-utils/geojson.md#point), `"type"`>
 
 </td>
 <td>
@@ -7146,7 +7146,7 @@ overlap as well.
 </td>
 <td>
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -7163,7 +7163,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -7224,11 +7224,11 @@ overlap as well.
 
 ##### centroid()
 
-> **centroid**(): [`Position`](geojson-utils/geojson.md#position)
+> **centroid**(): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -7311,7 +7311,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -7340,11 +7340,11 @@ overlap as well.
 
 ##### getBBox()
 
-> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **getBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -7352,11 +7352,11 @@ overlap as well.
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)\[]
+> **getCoordinateArray**(): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 ###### Overrides
 
@@ -7432,7 +7432,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -7449,11 +7449,11 @@ overlap as well.
 
 ##### setBBox()
 
-> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **setBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -7550,7 +7550,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 <td>
@@ -7622,11 +7622,11 @@ overlap as well.
 
 #### Extends
 
-- `AbstractAreaObject`<[`Polygon`](geojson-utils/geojson.md#polygon)>
+- `AbstractAreaObject`<[`Polygon`](geojson-utils/@envisim/geojson-utils/geojson.md#polygon)>
 
 #### Implements
 
-- [`Polygon`](geojson-utils/geojson.md#polygon)
+- [`Polygon`](geojson-utils/@envisim/geojson-utils/geojson.md#polygon)
 
 #### Constructors
 
@@ -7653,7 +7653,7 @@ overlap as well.
 </td>
 <td>
 
-[`OptionalParam`](utils.md#optionalparam)<[`Polygon`](geojson-utils/geojson.md#polygon), `"type"`>
+[`OptionalParam`](utils.md#optionalparam)<[`Polygon`](geojson-utils/@envisim/geojson-utils/geojson.md#polygon), `"type"`>
 
 </td>
 <td>
@@ -7714,7 +7714,7 @@ overlap as well.
 </td>
 <td>
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 </td>
 </tr>
@@ -7731,7 +7731,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)\[]\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]\[]
 
 </td>
 </tr>
@@ -7804,7 +7804,7 @@ overlap as well.
 
 ##### centroid()
 
-> **centroid**(`iterations`): [`Position`](geojson-utils/geojson.md#position)
+> **centroid**(`iterations`): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Parameters
 
@@ -7839,7 +7839,7 @@ overlap as well.
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 ###### Overrides
 
@@ -7910,7 +7910,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -7939,11 +7939,11 @@ overlap as well.
 
 ##### getBBox()
 
-> **getBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **getBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Inherited from
 
@@ -7951,11 +7951,11 @@ overlap as well.
 
 ##### getCoordinateArray()
 
-> **getCoordinateArray**(): [`Position`](geojson-utils/geojson.md#position)\[]\[]\[]
+> **getCoordinateArray**(): [`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]\[]\[]
 
 ###### Returns
 
-[`Position`](geojson-utils/geojson.md#position)\[]\[]\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]\[]\[]
 
 ###### Overrides
 
@@ -7983,7 +7983,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -8080,7 +8080,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)
 
 </td>
 </tr>
@@ -8097,11 +8097,11 @@ overlap as well.
 
 ##### setBBox()
 
-> **setBBox**(): [`BBox`](geojson-utils/geojson.md#bbox-7)
+> **setBBox**(): [`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Returns
 
-[`BBox`](geojson-utils/geojson.md#bbox-7)
+[`BBox`](geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 ###### Overrides
 
@@ -8206,7 +8206,7 @@ overlap as well.
 </td>
 <td>
 
-[`Position`](geojson-utils/geojson.md#position)\[]\[]
+[`Position`](geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]\[]
 
 </td>
 <td>
@@ -9044,7 +9044,7 @@ readonly \[`"_designWeight"`, `"_distance"`, `"_parent"`, `"_randomRotation"`, `
 </td>
 <td>
 
-[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `unknown`>
+[`BaseFeature`](geojson-utils/@envisim/geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/@envisim/geojson-utils/geojson.md#basegeometry), `unknown`>
 
 </td>
 </tr>
@@ -9508,7 +9508,7 @@ The number of vertices to create on the circle
 </td>
 <td>
 
-[`GeometricPrimitiveUnion`](geojson-utils/default.md#geometricprimitiveunion)
+[`GeometricPrimitiveUnion`](geojson-utils/@envisim/geojson-utils.md#geometricprimitiveunion)
 
 </td>
 </tr>
@@ -9829,7 +9829,7 @@ Holds id and index of collected categorical variable
 
 ### ObjectOfPrimitive\<T>
 
-> **ObjectOfPrimitive**<`T`> = `T` _extends_ [`GeometricPrimitiveArea`](geojson-utils/default.md#geometricprimitivearea-1) ? [`AreaObject`](#areaobject) : `T` _extends_ [`GeometricPrimitiveLine`](geojson-utils/default.md#geometricprimitiveline-1) ? [`LineObject`](#lineobject) : `T` _extends_ [`GeometricPrimitivePoint`](geojson-utils/default.md#geometricprimitivepoint-1) ? [`PointObject`](#pointobject) : `never`
+> **ObjectOfPrimitive**<`T`> = `T` _extends_ [`GeometricPrimitiveArea`](geojson-utils/@envisim/geojson-utils.md#geometricprimitivearea-1) ? [`AreaObject`](#areaobject) : `T` _extends_ [`GeometricPrimitiveLine`](geojson-utils/@envisim/geojson-utils.md#geometricprimitiveline-1) ? [`LineObject`](#lineobject) : `T` _extends_ [`GeometricPrimitivePoint`](geojson-utils/@envisim/geojson-utils.md#geometricprimitivepoint-1) ? [`PointObject`](#pointobject) : `never`
 
 #### Type Parameters
 
@@ -9843,7 +9843,7 @@ Holds id and index of collected categorical variable
 <tr>
 <td>
 
-`T` _extends_ [`GeometricPrimitiveUnion`](geojson-utils/default.md#geometricprimitiveunion)
+`T` _extends_ [`GeometricPrimitiveUnion`](geojson-utils/@envisim/geojson-utils.md#geometricprimitiveunion)
 
 </td>
 </tr>
@@ -9860,7 +9860,7 @@ Holds id and index of collected categorical variable
 
 ### PrimitiveOfObject\<T>
 
-> **PrimitiveOfObject**<`T`> = `T` _extends_ [`AreaObject`](#areaobject) ? [`GeometricPrimitiveArea`](geojson-utils/default.md#geometricprimitivearea-1) : `T` _extends_ [`LineObject`](#lineobject) ? [`GeometricPrimitiveLine`](geojson-utils/default.md#geometricprimitiveline-1) : `T` _extends_ [`PointObject`](#pointobject) ? [`GeometricPrimitivePoint`](geojson-utils/default.md#geometricprimitivepoint-1) : [`GeometricPrimitiveNone`](geojson-utils/default.md#geometricprimitivenone-1)
+> **PrimitiveOfObject**<`T`> = `T` _extends_ [`AreaObject`](#areaobject) ? [`GeometricPrimitiveArea`](geojson-utils/@envisim/geojson-utils.md#geometricprimitivearea-1) : `T` _extends_ [`LineObject`](#lineobject) ? [`GeometricPrimitiveLine`](geojson-utils/@envisim/geojson-utils.md#geometricprimitiveline-1) : `T` _extends_ [`PointObject`](#pointobject) ? [`GeometricPrimitivePoint`](geojson-utils/@envisim/geojson-utils.md#geometricprimitivepoint-1) : [`GeometricPrimitiveNone`](geojson-utils/@envisim/geojson-utils.md#geometricprimitivenone-1)
 
 #### Type Parameters
 
@@ -10017,7 +10017,7 @@ Record of special properties
 
 ### StrippedFeatureCollectionJson
 
-> **StrippedFeatureCollectionJson** = [`OptionalParam`](utils.md#optionalparam)<[`BaseFeatureCollection`](geojson-utils/geojson.md#basefeaturecollection)<[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `unknown`>> & [`FeatureCollectionExtrasJson`](#featurecollectionextrasjson), `"type"` | `"primitive"` | `"propertyRecord"`>
+> **StrippedFeatureCollectionJson** = [`OptionalParam`](utils.md#optionalparam)<[`BaseFeatureCollection`](geojson-utils/@envisim/geojson-utils/geojson.md#basefeaturecollection)<[`BaseFeature`](geojson-utils/@envisim/geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/@envisim/geojson-utils/geojson.md#basegeometry), `unknown`>> & [`FeatureCollectionExtrasJson`](#featurecollectionextrasjson), `"type"` | `"primitive"` | `"propertyRecord"`>
 
 ## Variables
 
@@ -10367,7 +10367,7 @@ Intersection of points and area.
 </td>
 <td>
 
-[`BaseGeometry`](geojson-utils/geojson.md#basegeometry)
+[`BaseGeometry`](geojson-utils/@envisim/geojson-utils/geojson.md#basegeometry)
 
 </td>
 <td>
@@ -10442,7 +10442,7 @@ Intersection of points and area.
 </td>
 <td>
 
-[`BaseGeometry`](geojson-utils/geojson.md#basegeometry)
+[`BaseGeometry`](geojson-utils/@envisim/geojson-utils/geojson.md#basegeometry)
 
 </td>
 <td>
@@ -10500,7 +10500,7 @@ Intersection of points and area.
 </td>
 <td>
 
-[`BaseGeometry`](geojson-utils/geojson.md#basegeometry)
+[`BaseGeometry`](geojson-utils/@envisim/geojson-utils/geojson.md#basegeometry)
 
 </td>
 <td>

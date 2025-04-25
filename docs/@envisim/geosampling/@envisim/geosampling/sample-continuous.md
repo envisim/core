@@ -1,10 +1,10 @@
-[**Documentation**](../../README.md)
+[**Documentation**](../../../../README.md)
 
 ---
 
-[Documentation](../../README.md) / [@envisim/geosampling](README.md) / sample-continuous
+[Documentation](../../../../README.md) / [@envisim/geosampling](../../README.md) / @envisim/geosampling/sample-continuous
 
-# sample-continuous
+# @envisim/geosampling/sample-continuous
 
 ## Contents
 
@@ -77,7 +77,7 @@
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point)>
 
 </td>
 <td>
@@ -188,7 +188,7 @@ The number of vertices to create on the circle
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -291,7 +291,7 @@ Prescribed sample size
 <tr>
 <td>
 
-`G` _extends_ [`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject)
+`G` _extends_ [`SingleTypeObject`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#singletypeobject)
 
 </td>
 </tr>
@@ -384,7 +384,7 @@ The number of vertices to create on the circle
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -584,7 +584,7 @@ The number of vertices to create on the circle
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -713,7 +713,7 @@ Prescribed sample size
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -798,7 +798,7 @@ Prescribed sample size
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -884,7 +884,7 @@ Prescribed sample size
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `P`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `P`>
 
 </td>
 <td>
@@ -994,7 +994,7 @@ The number of vertices to create on the circle
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -1194,7 +1194,7 @@ The number of vertices to create on the circle
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -1261,7 +1261,7 @@ Optional fixed rotation angle in degrees.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point)>
 
 </td>
 <td>
@@ -1372,7 +1372,7 @@ The number of vertices to create on the circle
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -1483,7 +1483,7 @@ The number of vertices to create on the circle
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -1568,7 +1568,7 @@ The dash length
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -1967,7 +1967,7 @@ number, f integrated from a to b.
 
 ### sampleAreaFeaturesOnAreas()
 
-> **sampleAreaFeaturesOnAreas**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject), `never`>
+> **sampleAreaFeaturesOnAreas**(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject), `never`>
 
 Select a sample of features/tracts on areas.
 
@@ -1989,7 +1989,7 @@ Select a sample of features/tracts on areas.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -2001,7 +2001,7 @@ Select a sample of features/tracts on areas.
 </td>
 <td>
 
-[`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)<[`AreaObject`](../geojson-utils/geojson.md#areaobject)>
+[`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)<[`AreaObject`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -2010,7 +2010,7 @@ Select a sample of features/tracts on areas.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject), `never`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject), `never`>
 
 ---
 
@@ -2036,7 +2036,7 @@ Select a sample of features/tracts on areas.
 </td>
 <td>
 
-[`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)<[`AreaObject`](../geojson-utils/geojson.md#areaobject)>
+[`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)<[`AreaObject`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -2051,7 +2051,7 @@ Select a sample of features/tracts on areas.
 
 ### sampleDistancePoints()
 
-> **sampleDistancePoints**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<[`PointObject`](../geojson.md#pointobject)>
+> **sampleDistancePoints**(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<[`PointObject`](../../../geojson.md#pointobject)>
 
 Distance sampling with points. Selects a point sample on an area layer
 and collect point objects from a base layer using a detection function
@@ -2075,7 +2075,7 @@ to (randomly) determine inclusion.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -2096,7 +2096,7 @@ to (randomly) determine inclusion.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`PointObject`](../geojson.md#pointobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`PointObject`](../../../geojson.md#pointobject)>
 
 ---
 
@@ -2137,7 +2137,7 @@ to (randomly) determine inclusion.
 
 ### sampleLineFeaturesOnAreas()
 
-> **sampleLineFeaturesOnAreas**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<[`LineObject`](../geojson.md#lineobject), `never`>
+> **sampleLineFeaturesOnAreas**(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<[`LineObject`](../../../geojson.md#lineobject), `never`>
 
 #### Parameters
 
@@ -2157,7 +2157,7 @@ to (randomly) determine inclusion.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -2169,7 +2169,7 @@ to (randomly) determine inclusion.
 </td>
 <td>
 
-[`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)<[`LineObject`](../geojson-utils/geojson.md#lineobject)>
+[`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)<[`LineObject`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#lineobject)>
 
 </td>
 </tr>
@@ -2178,7 +2178,7 @@ to (randomly) determine inclusion.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`LineObject`](../geojson.md#lineobject), `never`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`LineObject`](../../../geojson.md#lineobject), `never`>
 
 ---
 
@@ -2204,7 +2204,7 @@ to (randomly) determine inclusion.
 </td>
 <td>
 
-[`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)<[`LineObject`](../geojson-utils/geojson.md#lineobject)>
+[`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)<[`LineObject`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#lineobject)>
 
 </td>
 </tr>
@@ -2219,7 +2219,7 @@ to (randomly) determine inclusion.
 
 ### samplePointFeaturesOnAreas()
 
-> **samplePointFeaturesOnAreas**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<[`PointObject`](../geojson.md#pointobject), `never`>
+> **samplePointFeaturesOnAreas**(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<[`PointObject`](../../../geojson.md#pointobject), `never`>
 
 #### Parameters
 
@@ -2239,7 +2239,7 @@ to (randomly) determine inclusion.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -2251,7 +2251,7 @@ to (randomly) determine inclusion.
 </td>
 <td>
 
-[`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)<[`PointObject`](../geojson-utils/geojson.md#pointobject)>
+[`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)<[`PointObject`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#pointobject)>
 
 </td>
 </tr>
@@ -2260,7 +2260,7 @@ to (randomly) determine inclusion.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`PointObject`](../geojson.md#pointobject), `never`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`PointObject`](../../../geojson.md#pointobject), `never`>
 
 ---
 
@@ -2286,7 +2286,7 @@ to (randomly) determine inclusion.
 </td>
 <td>
 
-[`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)<[`PointObject`](../geojson-utils/geojson.md#pointobject)>
+[`SampleFeaturesOnAreasOptions`](#samplefeaturesonareasoptions)<[`PointObject`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#pointobject)>
 
 </td>
 </tr>
@@ -2301,7 +2301,7 @@ to (randomly) determine inclusion.
 
 ### samplePointsOnAreas()
 
-> **samplePointsOnAreas**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `never`>
+> **samplePointsOnAreas**(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `never`>
 
 Selects points on areas (if features have bbox, it is used in pointInPolygon
 to reject point outside bbox if buffer is zero).
@@ -2324,7 +2324,7 @@ to reject point outside bbox if buffer is zero).
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -2345,7 +2345,7 @@ to reject point outside bbox if buffer is zero).
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `never`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `never`>
 
 ---
 
@@ -2386,7 +2386,7 @@ to reject point outside bbox if buffer is zero).
 
 ### samplePointsOnLines()
 
-> **samplePointsOnLines**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `never`>
+> **samplePointsOnLines**(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `never`>
 
 Selects points according to method and sampleSize on a line layer.
 
@@ -2409,7 +2409,7 @@ Selects points according to method and sampleSize on a line layer.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`LineObject`](../geojson.md#lineobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`LineObject`](../../../geojson.md#lineobject)>
 
 </td>
 <td>
@@ -2426,7 +2426,7 @@ Selects points according to method and sampleSize on a line layer.
 </td>
 <td>
 
-{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../random.md#randomgenerator); `sampleSize`: `number`; }
+{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../../../random.md#randomgenerator); `sampleSize`: `number`; }
 
 </td>
 <td>
@@ -2458,7 +2458,7 @@ Selects points according to method and sampleSize on a line layer.
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -2489,7 +2489,7 @@ Prescribed sample size
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `never`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `never`>
 
 ---
 
@@ -2516,7 +2516,7 @@ Prescribed sample size
 </td>
 <td>
 
-{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../random.md#randomgenerator); `sampleSize`: `number`; }
+{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../../../random.md#randomgenerator); `sampleSize`: `number`; }
 
 </td>
 <td>
@@ -2548,7 +2548,7 @@ Prescribed sample size
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -2585,7 +2585,7 @@ Prescribed sample size
 
 ### samplePositionsInBbox()
 
-> **samplePositionsInBbox**(`box`, `options`): [`Position`](../geojson-utils/geojson.md#position)\[]
+> **samplePositionsInBbox**(`box`, `options`): [`Position`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 Generates uniform random positions in bounding box
 
@@ -2608,7 +2608,7 @@ Generates uniform random positions in bounding box
 </td>
 <td>
 
-[`BBox`](../geojson-utils/geojson.md#bbox-7)
+[`BBox`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#bbox-7)
 
 </td>
 <td>
@@ -2625,7 +2625,7 @@ A GeoJSON bounding box.
 </td>
 <td>
 
-{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../random.md#randomgenerator); `sampleSize`: `number`; }
+{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../../../random.md#randomgenerator); `sampleSize`: `number`; }
 
 </td>
 <td>
@@ -2657,7 +2657,7 @@ A GeoJSON bounding box.
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -2688,7 +2688,7 @@ Prescribed sample size
 
 #### Returns
 
-[`Position`](../geojson-utils/geojson.md#position)\[]
+[`Position`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#position)\[]
 
 Array of GeoJSON positions.
 
@@ -2717,7 +2717,7 @@ Array of GeoJSON positions.
 </td>
 <td>
 
-{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../random.md#randomgenerator); `sampleSize`: `number`; }
+{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../../../random.md#randomgenerator); `sampleSize`: `number`; }
 
 </td>
 <td>
@@ -2749,7 +2749,7 @@ Array of GeoJSON positions.
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -2786,7 +2786,7 @@ Prescribed sample size
 
 ### sampleRelascopePoints()
 
-> **sampleRelascopePoints**<`P`>(`collection`, `options`): { `areaRatio`: `number`; `collection`: [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `P`>; `pointSample`: [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point)>; }
+> **sampleRelascopePoints**<`P`>(`collection`, `options`): { `areaRatio`: `number`; `collection`: [`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `P`>; `pointSample`: [`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point)>; }
 
 Selects a point sample on an area frame and collect point objects from a base
 layer using a relascope to determine inclusion. A buffer is needed for unbiased
@@ -2833,7 +2833,7 @@ quantities.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -2854,7 +2854,7 @@ quantities.
 
 #### Returns
 
-{ `areaRatio`: `number`; `collection`: [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `P`>; `pointSample`: [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point)>; }
+{ `areaRatio`: `number`; `collection`: [`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `P`>; `pointSample`: [`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point)>; }
 
 an object containing the resulting sample, the relascope points and the area ratio
 
@@ -2886,7 +2886,7 @@ an object containing the resulting sample, the relascope points and the area rat
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `P`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point), `P`>
 
 </td>
 </tr>
@@ -2898,7 +2898,7 @@ an object containing the resulting sample, the relascope points and the area rat
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point)>
 
 </td>
 </tr>
@@ -2963,7 +2963,7 @@ an object containing the resulting sample, the relascope points and the area rat
 
 ### sampleSystematicBeltsOnAreas()
 
-> **sampleSystematicBeltsOnAreas**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+> **sampleSystematicBeltsOnAreas**(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 Selects a systematic sample of belts on areas.
 
@@ -2985,7 +2985,7 @@ Selects a systematic sample of belts on areas.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -3006,7 +3006,7 @@ Selects a systematic sample of belts on areas.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 ---
 
@@ -3047,7 +3047,7 @@ Selects a systematic sample of belts on areas.
 
 ### sampleSystematicDistanceLines()
 
-> **sampleSystematicDistanceLines**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point)>
+> **sampleSystematicDistanceLines**(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point)>
 
 Distance sampling with line transects.
 Selects a line sample on an area frame and collect point objects from a base
@@ -3071,7 +3071,7 @@ layer using a detection function to (randomly) determine inclusion.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -3092,7 +3092,7 @@ layer using a detection function to (randomly) determine inclusion.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`Point`](../../../geojson.md#point)>
 
 ---
 
@@ -3133,7 +3133,7 @@ layer using a detection function to (randomly) determine inclusion.
 
 ### sampleSystematicLinesOnAreas()
 
-> **sampleSystematicLinesOnAreas**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<[`LineObject`](../geojson.md#lineobject)>
+> **sampleSystematicLinesOnAreas**(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<[`LineObject`](../../../geojson.md#lineobject)>
 
 Selects a sample of lines systematically over all areas.
 
@@ -3155,7 +3155,7 @@ Selects a sample of lines systematically over all areas.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`AreaObject`](../geojson.md#areaobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`AreaObject`](../../../geojson.md#areaobject)>
 
 </td>
 </tr>
@@ -3176,7 +3176,7 @@ Selects a sample of lines systematically over all areas.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`LineObject`](../geojson.md#lineobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`LineObject`](../../../geojson.md#lineobject)>
 
 ---
 
@@ -3217,7 +3217,7 @@ Selects a sample of lines systematically over all areas.
 
 ### sampleSystematicLinesOnLines()
 
-> **sampleSystematicLinesOnLines**(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<[`LineString`](../geojson.md#linestring), `never`>
+> **sampleSystematicLinesOnLines**(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<[`LineString`](../../../geojson.md#linestring), `never`>
 
 Selects systematic line dashes along a line layer. Each LineString recieves its
 own random starting position of the dashes.
@@ -3240,7 +3240,7 @@ own random starting position of the dashes.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`LineObject`](../geojson.md#lineobject)>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`LineObject`](../../../geojson.md#lineobject)>
 
 </td>
 </tr>
@@ -3261,7 +3261,7 @@ own random starting position of the dashes.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<[`LineString`](../geojson.md#linestring), `never`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<[`LineString`](../../../geojson.md#linestring), `never`>
 
 ---
 

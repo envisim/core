@@ -1,5 +1,5 @@
 /**
- * @module default
+ * @module @envisim/geojson-utils
  */
 
 export { areaOfPolygonLonLat } from "./area.js";

@@ -23,7 +23,7 @@
 <tr>
 <td>
 
-[default](default.md)
+[@envisim/geojson-utils](@envisim/geojson-utils.md)
 
 </td>
 <td>
@@ -35,7 +35,7 @@
 <tr>
 <td>
 
-[geodesic](geodesic.md)
+[@envisim/geojson-utils/geodesic](@envisim/geojson-utils/geodesic.md)
 
 </td>
 <td>
@@ -47,7 +47,7 @@
 <tr>
 <td>
 
-[geojson](geojson.md)
+[@envisim/geojson-utils/geojson](@envisim/geojson-utils/geojson.md)
 
 </td>
 <td>
@@ -59,7 +59,7 @@
 <tr>
 <td>
 
-[plate-carree](plate-carree.md)
+[@envisim/geojson-utils/plate-carree](@envisim/geojson-utils/plate-carree.md)
 
 </td>
 <td>
@@ -71,7 +71,7 @@
 <tr>
 <td>
 
-[rhumb](rhumb.md)
+[@envisim/geojson-utils/rhumb](@envisim/geojson-utils/rhumb.md)
 
 </td>
 <td>
@@ -83,7 +83,7 @@
 <tr>
 <td>
 
-[type-guards](type-guards.md)
+[@envisim/geojson-utils/type-guards](@envisim/geojson-utils/type-guards.md)
 
 </td>
 <td>

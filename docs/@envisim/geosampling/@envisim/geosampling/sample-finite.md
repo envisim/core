@@ -1,10 +1,10 @@
-[**Documentation**](../../README.md)
+[**Documentation**](../../../../README.md)
 
 ---
 
-[Documentation](../../README.md) / [@envisim/geosampling](README.md) / sample-finite
+[Documentation](../../../../README.md) / [@envisim/geosampling](../../README.md) / @envisim/geosampling/sample-finite
 
-# sample-finite
+# @envisim/geosampling/sample-finite
 
 ## Contents
 
@@ -148,7 +148,7 @@ The id of the numerical property to use to compute probabilities.
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -304,7 +304,7 @@ The id of the numerical property to use to compute probabilities.
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -483,7 +483,7 @@ The id of the numerical property to use to compute probabilities.
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -616,7 +616,7 @@ The id of the numerical property to use to compute probabilities.
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -749,7 +749,7 @@ The id of the numerical property to use to compute probabilities.
 </td>
 <td>
 
-[`RandomGenerator`](../random.md#randomgenerator)
+[`RandomGenerator`](../../../random.md#randomgenerator)
 
 </td>
 <td>
@@ -868,7 +868,7 @@ This apply to lpm1, lpm2, scps, localCube.
 
 ### sampleBalanced()
 
-> **sampleBalanced**<`T`, `P`>(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+> **sampleBalanced**<`T`, `P`>(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 #### Type Parameters
 
@@ -882,7 +882,7 @@ This apply to lpm1, lpm2, scps, localCube.
 <tr>
 <td>
 
-`T` _extends_ [`PureObject`](../geojson.md#pureobject)
+`T` _extends_ [`PureObject`](../../../geojson.md#pureobject)
 
 </td>
 </tr>
@@ -914,7 +914,7 @@ This apply to lpm1, lpm2, scps, localCube.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 </td>
 </tr>
@@ -935,7 +935,7 @@ This apply to lpm1, lpm2, scps, localCube.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 ---
 
@@ -992,7 +992,7 @@ This apply to lpm1, lpm2, scps, localCube.
 </td>
 <td>
 
-[`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`>
+[`PropertyRecord`](../../../geojson.md#propertyrecord-1)<`P`>
 
 </td>
 </tr>
@@ -1007,7 +1007,7 @@ This apply to lpm1, lpm2, scps, localCube.
 
 ### sampleDoublyBalanced()
 
-> **sampleDoublyBalanced**<`T`, `P`>(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+> **sampleDoublyBalanced**<`T`, `P`>(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 #### Type Parameters
 
@@ -1021,7 +1021,7 @@ This apply to lpm1, lpm2, scps, localCube.
 <tr>
 <td>
 
-`T` _extends_ [`PureObject`](../geojson.md#pureobject)
+`T` _extends_ [`PureObject`](../../../geojson.md#pureobject)
 
 </td>
 </tr>
@@ -1053,7 +1053,7 @@ This apply to lpm1, lpm2, scps, localCube.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 </td>
 </tr>
@@ -1074,7 +1074,7 @@ This apply to lpm1, lpm2, scps, localCube.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 ---
 
@@ -1131,7 +1131,7 @@ This apply to lpm1, lpm2, scps, localCube.
 </td>
 <td>
 
-[`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`>
+[`PropertyRecord`](../../../geojson.md#propertyrecord-1)<`P`>
 
 </td>
 </tr>
@@ -1146,7 +1146,7 @@ This apply to lpm1, lpm2, scps, localCube.
 
 ### sampleFinite()
 
-> **sampleFinite**<`T`, `P`>(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+> **sampleFinite**<`T`, `P`>(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 Select a sample from a layer using sampling methods for a finite population.
 
@@ -1162,7 +1162,7 @@ Select a sample from a layer using sampling methods for a finite population.
 <tr>
 <td>
 
-`T` _extends_ [`PureObject`](../geojson.md#pureobject)
+`T` _extends_ [`PureObject`](../../../geojson.md#pureobject)
 
 </td>
 </tr>
@@ -1194,7 +1194,7 @@ Select a sample from a layer using sampling methods for a finite population.
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 </td>
 </tr>
@@ -1215,7 +1215,7 @@ Select a sample from a layer using sampling methods for a finite population.
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 ---
 
@@ -1272,7 +1272,7 @@ Select a sample from a layer using sampling methods for a finite population.
 </td>
 <td>
 
-[`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`>
+[`PropertyRecord`](../../../geojson.md#propertyrecord-1)<`P`>
 
 </td>
 </tr>
@@ -1287,7 +1287,7 @@ Select a sample from a layer using sampling methods for a finite population.
 
 ### sampleFiniteWr()
 
-> **sampleFiniteWr**<`T`, `P`>(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+> **sampleFiniteWr**<`T`, `P`>(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 Select a w/o replacement sample from a layer using sampling methods for a finite population.
 
@@ -1303,7 +1303,7 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 <tr>
 <td>
 
-`T` _extends_ [`PureObject`](../geojson.md#pureobject)
+`T` _extends_ [`PureObject`](../../../geojson.md#pureobject)
 
 </td>
 </tr>
@@ -1335,7 +1335,7 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 </td>
 </tr>
@@ -1356,13 +1356,13 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 ---
 
 ### sampleSpatiallyBalanced()
 
-> **sampleSpatiallyBalanced**<`T`, `P`>(`collection`, `options`): [`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+> **sampleSpatiallyBalanced**<`T`, `P`>(`collection`, `options`): [`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 #### Type Parameters
 
@@ -1376,7 +1376,7 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 <tr>
 <td>
 
-`T` _extends_ [`PureObject`](../geojson.md#pureobject)
+`T` _extends_ [`PureObject`](../../../geojson.md#pureobject)
 
 </td>
 </tr>
@@ -1408,7 +1408,7 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 </td>
 <td>
 
-[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 </td>
 </tr>
@@ -1429,7 +1429,7 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 
 #### Returns
 
-[`FeatureCollection`](../geojson.md#featurecollection)<`T`, `P`>
+[`FeatureCollection`](../../../geojson.md#featurecollection)<`T`, `P`>
 
 ---
 
@@ -1486,7 +1486,7 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 </td>
 <td>
 
-[`PropertyRecord`](../geojson.md#propertyrecord-1)<`P`>
+[`PropertyRecord`](../../../geojson.md#propertyrecord-1)<`P`>
 
 </td>
 </tr>
