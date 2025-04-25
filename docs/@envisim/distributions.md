@@ -9,12 +9,12 @@
 ## Contents
 
 - [Classes](#classes)
+  - [Interval](#interval)
+- [Continuous distributions](#continuous-distributions)
   - [Arcsine](#arcsine)
   - [BenfordMantissa](#benfordmantissa)
-  - [Bernoulli](#bernoulli)
   - [Beta](#beta)
   - [BetaPrime](#betaprime)
-  - [Binomial](#binomial)
   - [Cauchy](#cauchy)
   - [ChiSquared](#chisquared)
   - [Exponential](#exponential)
@@ -22,30 +22,596 @@
   - [FoldedNormal](#foldednormal)
   - [FRatio](#fratio)
   - [Gamma](#gamma)
-  - [Geometric](#geometric)
   - [HyperbolicSecant](#hyperbolicsecant)
-  - [Hypergeometric](#hypergeometric)
-  - [Interval](#interval)
   - [Laplace](#laplace)
-  - [Logarithmic](#logarithmic)
   - [Logistic](#logistic)
   - [LogLogistic](#loglogistic)
   - [LogNormal](#lognormal)
-  - [NegativeBinomial](#negativebinomial)
   - [Normal](#normal)
   - [Pareto](#pareto)
-  - [Poisson](#poisson)
   - [Semicircle](#semicircle)
   - [StudentsT](#studentst)
   - [Triangular](#triangular)
   - [Uniform](#uniform)
-  - [UniformDiscrete](#uniformdiscrete)
   - [UQuadratic](#uquadratic)
   - [Weibull](#weibull)
+- [Discrete distributions](#discrete-distributions)
+  - [Bernoulli](#bernoulli)
+  - [Binomial](#binomial)
+  - [Geometric](#geometric)
+  - [Hypergeometric](#hypergeometric)
+  - [Logarithmic](#logarithmic)
+  - [NegativeBinomial](#negativebinomial)
+  - [Poisson](#poisson)
+  - [UniformDiscrete](#uniformdiscrete)
 - [Interfaces](#interfaces)
   - [RandomOptions](#randomoptions)
 
 ## Classes
+
+### Interval
+
+#### Constructors
+
+##### Constructor
+
+> **new Interval**(`l`, `r`, `lo`, `ro`): [`Interval`](#interval)
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`l`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`r`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`lo`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`ro`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+[`Interval`](#interval)
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="l"></a> `l`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`-Infinity`
+
+</td>
+<td>
+
+Left endpoint
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="lo"></a> `lo`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+<td>
+
+Left endpoint is open
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="r"></a> `r`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`Infinity`
+
+</td>
+<td>
+
+Right endpoint
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="ro"></a> `ro`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`true`
+
+</td>
+<td>
+
+Right endpoint is open
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Methods
+
+##### checkCDF()
+
+> **checkCDF**(`x`): `null` | `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`null` | `number`
+
+##### checkCDFInt()
+
+> **checkCDFInt**(`x`): `null` | `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`null` | `number`
+
+##### checkPDF()
+
+> **checkPDF**(`x`): `null` | `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`null` | `number`
+
+##### checkPDFInt()
+
+> **checkPDFInt**(`x`): `null` | `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`null` | `number`
+
+##### checkQuantile()
+
+> **checkQuantile**(`q`): `null` | `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`null` | `number`
+
+##### isIn()
+
+> **isIn**(`x`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+##### isInInt()
+
+> **isInInt**(`x`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+##### isL()
+
+> **isL**(`x`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+##### isLInt()
+
+> **isLInt**(`x`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+##### isR()
+
+> **isR**(`x`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+##### isRInt()
+
+> **isRInt**(`x`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+## Continuous distributions
 
 ### Arcsine
 
@@ -749,355 +1315,6 @@ the variance
 
 ---
 
-### Bernoulli
-
-#### Extends
-
-- `Distribution`
-
-#### Extended by
-
-- [`Geometric`](#geometric)
-- [`Logarithmic`](#logarithmic)
-
-#### Constructors
-
-##### Constructor
-
-> **new Bernoulli**(`p?`): [`Bernoulli`](#bernoulli)
-
-The Bernoulli distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`p?`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-[`Bernoulli`](#bernoulli)
-
-###### Example
-
-```ts
-const x = new Bernoulli(0.9);
-x.pdf(1);
-x.quantile(0.5);
-```
-
-###### Overrides
-
-`Distribution.constructor`
-
-#### Properties
-
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-<a id="support-2"></a> `support`
-
-</td>
-<td>
-
-[`Interval`](#interval)
-
-</td>
-</tr>
-</tbody>
-</table>
-
-#### Methods
-
-##### cdf()
-
-> **cdf**(`x`): `number`
-
-The cumulative distribution function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.cdf`
-
-##### mean()
-
-> **mean**(): `number`
-
-the mean value
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.mean`
-
-##### mode()
-
-> **mode**(): `number`
-
-###### Returns
-
-`number`
-
-the mode
-
-###### Overrides
-
-`Distribution.mode`
-
-##### pdf()
-
-> **pdf**(`x`): `number`
-
-The probability density/mass function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.pdf`
-
-##### quantile()
-
-> **quantile**(`q`): `number`
-
-The quantile function evaluated at `q`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.quantile`
-
-##### random()
-
-> **random**(`n`, `options`): `number`\[]
-
-Generate random numbers from the distribution.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`n`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1`
-
-</td>
-<td>
-
-the number of observations to be generated
-
-</td>
-</tr>
-<tr>
-<td>
-
-`options`
-
-</td>
-<td>
-
-[`RandomOptions`](#randomoptions)
-
-</td>
-<td>
-
-`RANDOM_OPTIONS_DEFAULT`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`\[]
-
-###### Inherited from
-
-`Distribution.random`
-
-##### sd()
-
-> **sd**(): `number`
-
-standard deviation
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.sd`
-
-##### skewness()
-
-> **skewness**(): `number`
-
-###### Returns
-
-`number`
-
-the skewness
-
-###### Overrides
-
-`Distribution.skewness`
-
-##### variance()
-
-> **variance**(): `number`
-
-the variance
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.variance`
-
----
-
 ### Beta
 
 #### Extends
@@ -1585,411 +1802,6 @@ x.random(10);
 <td>
 
 <a id="support-4"></a> `support`
-
-</td>
-<td>
-
-[`Interval`](#interval)
-
-</td>
-</tr>
-</tbody>
-</table>
-
-#### Methods
-
-##### cdf()
-
-> **cdf**(`x`, `eps`): `number`
-
-The cumulative distribution function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`eps`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1e-20`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.cdf`
-
-##### mean()
-
-> **mean**(): `number`
-
-the mean value
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.mean`
-
-##### mode()
-
-> **mode**(): `number`
-
-###### Returns
-
-`number`
-
-the mode
-
-###### Overrides
-
-`Distribution.mode`
-
-##### pdf()
-
-> **pdf**(`x`): `number`
-
-The probability density/mass function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.pdf`
-
-##### quantile()
-
-> **quantile**(`q`, `eps`): `number`
-
-The quantile function evaluated at `q`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`eps`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1e-20`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.quantile`
-
-##### random()
-
-> **random**(`n`, `options`): `number`\[]
-
-Generate random numbers from the distribution.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`n`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1`
-
-</td>
-<td>
-
-the number of observations to be generated
-
-</td>
-</tr>
-<tr>
-<td>
-
-`options`
-
-</td>
-<td>
-
-[`RandomOptions`](#randomoptions)
-
-</td>
-<td>
-
-`RANDOM_OPTIONS_DEFAULT`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`\[]
-
-###### Overrides
-
-`Distribution.random`
-
-##### sd()
-
-> **sd**(): `number`
-
-standard deviation
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.sd`
-
-##### skewness()
-
-> **skewness**(): `number`
-
-###### Returns
-
-`number`
-
-the skewness
-
-###### Overrides
-
-`Distribution.skewness`
-
-##### variance()
-
-> **variance**(): `number`
-
-the variance
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.variance`
-
----
-
-### Binomial
-
-#### Extends
-
-- `Distribution`
-
-#### Constructors
-
-##### Constructor
-
-> **new Binomial**(`n?`, `p?`): [`Binomial`](#binomial)
-
-The Binomial distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`n?`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`p?`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-[`Binomial`](#binomial)
-
-###### Example
-
-```ts
-const params = { n: 10, p: 0.5 };
-const x = new Binomial(10, 0.5);
-x.pdf(5);
-x.cdf(5);
-x.quantile(0.5);
-x.random(10);
-```
-
-###### Overrides
-
-`Distribution.constructor`
-
-#### Properties
-
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-<a id="support-5"></a> `support`
 
 </td>
 <td>
@@ -4918,352 +4730,6 @@ the variance
 
 ---
 
-### Geometric
-
-#### Extends
-
-- [`Bernoulli`](#bernoulli)
-
-#### Constructors
-
-##### Constructor
-
-> **new Geometric**(`p?`): [`Geometric`](#geometric)
-
-The Geometric distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`p?`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-[`Geometric`](#geometric)
-
-###### Example
-
-```ts
-const x = new Geometric(0.8);
-x.pdf(1);
-x.cdf(1);
-x.quantile(0.5);
-x.random(10);
-```
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`constructor`](#constructor-2)
-
-#### Properties
-
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-<a id="support-13"></a> `support`
-
-</td>
-<td>
-
-[`Interval`](#interval)
-
-</td>
-</tr>
-</tbody>
-</table>
-
-#### Methods
-
-##### cdf()
-
-> **cdf**(`x`): `number`
-
-The cumulative distribution function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`cdf`](#cdf-4)
-
-##### mean()
-
-> **mean**(): `number`
-
-the mean value
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`mean`](#mean-4)
-
-##### mode()
-
-> **mode**(): `number`
-
-###### Returns
-
-`number`
-
-the mode
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`mode`](#mode-4)
-
-##### pdf()
-
-> **pdf**(`x`): `number`
-
-The probability density/mass function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`pdf`](#pdf-4)
-
-##### quantile()
-
-> **quantile**(`q`): `number`
-
-The quantile function evaluated at `q`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`quantile`](#quantile-4)
-
-##### random()
-
-> **random**(`n`, `options`): `number`\[]
-
-Generate random numbers from the distribution.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`n`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1`
-
-</td>
-<td>
-
-the number of observations to be generated
-
-</td>
-</tr>
-<tr>
-<td>
-
-`options`
-
-</td>
-<td>
-
-[`RandomOptions`](#randomoptions)
-
-</td>
-<td>
-
-`RANDOM_OPTIONS_DEFAULT`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`\[]
-
-###### Inherited from
-
-[`Bernoulli`](#bernoulli).[`random`](#random-4)
-
-##### sd()
-
-> **sd**(): `number`
-
-standard deviation
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-[`Bernoulli`](#bernoulli).[`sd`](#sd-4)
-
-##### skewness()
-
-> **skewness**(): `number`
-
-###### Returns
-
-`number`
-
-the skewness
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`skewness`](#skewness-4)
-
-##### variance()
-
-> **variance**(): `number`
-
-the variance
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`variance`](#variance-4)
-
----
-
 ### HyperbolicSecant
 
 #### Extends
@@ -5582,963 +5048,6 @@ the variance
 ###### Overrides
 
 `Distribution.variance`
-
----
-
-### Hypergeometric
-
-#### Extends
-
-- `Distribution`
-
-#### Constructors
-
-##### Constructor
-
-> **new Hypergeometric**(`N?`, `K?`, `n?`): [`Hypergeometric`](#hypergeometric)
-
-The Hypergeometric distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`N?`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`K?`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`n?`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-[`Hypergeometric`](#hypergeometric)
-
-###### Example
-
-```ts
-const x = new Hypergeometric(10, 5, 2);
-x.pdf(1);
-x.cdf(2);
-x.quantile(0.5);
-x.random(10);
-```
-
-###### Overrides
-
-`Distribution.constructor`
-
-#### Properties
-
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-<a id="support-15"></a> `support`
-
-</td>
-<td>
-
-[`Interval`](#interval)
-
-</td>
-</tr>
-</tbody>
-</table>
-
-#### Methods
-
-##### cdf()
-
-> **cdf**(`x`, `eps`): `number`
-
-The cumulative distribution function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`eps`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1e-12`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.cdf`
-
-##### mean()
-
-> **mean**(): `number`
-
-the mean value
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.mean`
-
-##### mode()
-
-> **mode**(): `number`
-
-###### Returns
-
-`number`
-
-the mode
-
-###### Overrides
-
-`Distribution.mode`
-
-##### pdf()
-
-> **pdf**(`x`): `number`
-
-The probability density/mass function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.pdf`
-
-##### quantile()
-
-> **quantile**(`q`): `number`
-
-The quantile function evaluated at `q`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.quantile`
-
-##### random()
-
-> **random**(`n`, `options`): `number`\[]
-
-Generate random numbers from the distribution.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`n`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1`
-
-</td>
-<td>
-
-the number of observations to be generated
-
-</td>
-</tr>
-<tr>
-<td>
-
-`options`
-
-</td>
-<td>
-
-[`RandomOptions`](#randomoptions)
-
-</td>
-<td>
-
-`RANDOM_OPTIONS_DEFAULT`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`\[]
-
-###### Overrides
-
-`Distribution.random`
-
-##### sd()
-
-> **sd**(): `number`
-
-standard deviation
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.sd`
-
-##### skewness()
-
-> **skewness**(): `number`
-
-###### Returns
-
-`number`
-
-the skewness
-
-###### Overrides
-
-`Distribution.skewness`
-
-##### variance()
-
-> **variance**(): `number`
-
-the variance
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.variance`
-
----
-
-### Interval
-
-#### Constructors
-
-##### Constructor
-
-> **new Interval**(`l`, `r`, `lo`, `ro`): [`Interval`](#interval)
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`l`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`r`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`lo`
-
-</td>
-<td>
-
-`boolean`
-
-</td>
-<td>
-
-`true`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`ro`
-
-</td>
-<td>
-
-`boolean`
-
-</td>
-<td>
-
-`true`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-[`Interval`](#interval)
-
-#### Properties
-
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-<th>Default value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-<a id="l"></a> `l`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`-Infinity`
-
-</td>
-<td>
-
-Left endpoint
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="lo"></a> `lo`
-
-</td>
-<td>
-
-`boolean`
-
-</td>
-<td>
-
-`true`
-
-</td>
-<td>
-
-Left endpoint is open
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="r"></a> `r`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`Infinity`
-
-</td>
-<td>
-
-Right endpoint
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="ro"></a> `ro`
-
-</td>
-<td>
-
-`boolean`
-
-</td>
-<td>
-
-`true`
-
-</td>
-<td>
-
-Right endpoint is open
-
-</td>
-</tr>
-</tbody>
-</table>
-
-#### Methods
-
-##### checkCDF()
-
-> **checkCDF**(`x`): `null` | `number`
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`null` | `number`
-
-##### checkCDFInt()
-
-> **checkCDFInt**(`x`): `null` | `number`
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`null` | `number`
-
-##### checkPDF()
-
-> **checkPDF**(`x`): `null` | `number`
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`null` | `number`
-
-##### checkPDFInt()
-
-> **checkPDFInt**(`x`): `null` | `number`
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`null` | `number`
-
-##### checkQuantile()
-
-> **checkQuantile**(`q`): `null` | `number`
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`null` | `number`
-
-##### isIn()
-
-> **isIn**(`x`): `boolean`
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`boolean`
-
-##### isInInt()
-
-> **isInInt**(`x`): `boolean`
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`boolean`
-
-##### isL()
-
-> **isL**(`x`): `boolean`
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`boolean`
-
-##### isLInt()
-
-> **isLInt**(`x`): `boolean`
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`boolean`
-
-##### isR()
-
-> **isR**(`x`): `boolean`
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`boolean`
-
-##### isRInt()
-
-> **isRInt**(`x`): `boolean`
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`boolean`
 
 ---
 
@@ -6897,375 +5406,6 @@ the variance
 ###### Overrides
 
 `LocationScale.variance`
-
----
-
-### Logarithmic
-
-#### Extends
-
-- [`Bernoulli`](#bernoulli)
-
-#### Constructors
-
-##### Constructor
-
-> **new Logarithmic**(`p?`): [`Logarithmic`](#logarithmic)
-
-The Logarithmic distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`p?`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-[`Logarithmic`](#logarithmic)
-
-###### Example
-
-```ts
-const x = new Logarithmic(0.3);
-x.pdf(4);
-x.cdf(4);
-x.quantile(0.5);
-x.random(10);
-```
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`constructor`](#constructor-2)
-
-#### Properties
-
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-<a id="support-17"></a> `support`
-
-</td>
-<td>
-
-[`Interval`](#interval)
-
-</td>
-</tr>
-</tbody>
-</table>
-
-#### Methods
-
-##### cdf()
-
-> **cdf**(`x`, `eps`): `number`
-
-The cumulative distribution function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`eps`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1e-20`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`cdf`](#cdf-4)
-
-##### mean()
-
-> **mean**(): `number`
-
-the mean value
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`mean`](#mean-4)
-
-##### mode()
-
-> **mode**(): `number`
-
-###### Returns
-
-`number`
-
-the mode
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`mode`](#mode-4)
-
-##### pdf()
-
-> **pdf**(`x`): `number`
-
-The probability density/mass function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`pdf`](#pdf-4)
-
-##### quantile()
-
-> **quantile**(`q`): `number`
-
-The quantile function evaluated at `q`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`quantile`](#quantile-4)
-
-##### random()
-
-> **random**(`n`, `options`): `number`\[]
-
-Generate random numbers from the distribution.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`n`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1`
-
-</td>
-<td>
-
-the number of observations to be generated
-
-</td>
-</tr>
-<tr>
-<td>
-
-`options`
-
-</td>
-<td>
-
-[`RandomOptions`](#randomoptions)
-
-</td>
-<td>
-
-`RANDOM_OPTIONS_DEFAULT`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`\[]
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`random`](#random-4)
-
-##### sd()
-
-> **sd**(): `number`
-
-standard deviation
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-[`Bernoulli`](#bernoulli).[`sd`](#sd-4)
-
-##### skewness()
-
-> **skewness**(): `number`
-
-###### Returns
-
-`number`
-
-the skewness
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`skewness`](#skewness-4)
-
-##### variance()
-
-> **variance**(): `number`
-
-the variance
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-[`Bernoulli`](#bernoulli).[`variance`](#variance-4)
 
 ---
 
@@ -8343,410 +6483,6 @@ the variance
 
 ---
 
-### NegativeBinomial
-
-#### Extends
-
-- `Distribution`
-
-#### Constructors
-
-##### Constructor
-
-> **new NegativeBinomial**(`n?`, `p?`): [`NegativeBinomial`](#negativebinomial)
-
-The Negative Binomial distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`n?`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`p?`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-[`NegativeBinomial`](#negativebinomial)
-
-###### Example
-
-```ts
-const x = new NegativeBinomial(10, 0.5);
-x.pdf(5);
-x.cdf(5);
-x.quantile(0.5);
-x.random(10);
-```
-
-###### Overrides
-
-`Distribution.constructor`
-
-#### Properties
-
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-<a id="support-21"></a> `support`
-
-</td>
-<td>
-
-[`Interval`](#interval)
-
-</td>
-</tr>
-</tbody>
-</table>
-
-#### Methods
-
-##### cdf()
-
-> **cdf**(`x`, `eps`): `number`
-
-The cumulative distribution function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`eps`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1e-20`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.cdf`
-
-##### mean()
-
-> **mean**(): `number`
-
-the mean value
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.mean`
-
-##### mode()
-
-> **mode**(): `number`
-
-###### Returns
-
-`number`
-
-the mode
-
-###### Overrides
-
-`Distribution.mode`
-
-##### pdf()
-
-> **pdf**(`x`): `number`
-
-The probability density/mass function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.pdf`
-
-##### quantile()
-
-> **quantile**(`q`, `eps`): `number`
-
-The quantile function evaluated at `q`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`eps`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1e-20`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.quantile`
-
-##### random()
-
-> **random**(`n`, `options`): `number`\[]
-
-Generate random numbers from the distribution.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`n`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1`
-
-</td>
-<td>
-
-the number of observations to be generated
-
-</td>
-</tr>
-<tr>
-<td>
-
-`options`
-
-</td>
-<td>
-
-[`RandomOptions`](#randomoptions)
-
-</td>
-<td>
-
-`RANDOM_OPTIONS_DEFAULT`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`\[]
-
-###### Overrides
-
-`Distribution.random`
-
-##### sd()
-
-> **sd**(): `number`
-
-standard deviation
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.sd`
-
-##### skewness()
-
-> **skewness**(): `number`
-
-###### Returns
-
-`number`
-
-the skewness
-
-###### Overrides
-
-`Distribution.skewness`
-
-##### variance()
-
-> **variance**(): `number`
-
-the variance
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.variance`
-
----
-
 ### Normal
 
 #### Extends
@@ -9460,398 +7196,6 @@ the variance
 ###### Overrides
 
 `ShapeScale.variance`
-
----
-
-### Poisson
-
-#### Extends
-
-- `Distribution`
-
-#### Constructors
-
-##### Constructor
-
-> **new Poisson**(`rate?`): [`Poisson`](#poisson)
-
-The Poisson distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`rate?`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-[`Poisson`](#poisson)
-
-###### Example
-
-```ts
-const x = new Poisson(1);
-x.pdf(2);
-x.cdf(2);
-x.quantile(0.5);
-x.random(10);
-```
-
-###### Overrides
-
-`Distribution.constructor`
-
-#### Properties
-
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-<a id="support-24"></a> `support`
-
-</td>
-<td>
-
-[`Interval`](#interval)
-
-</td>
-</tr>
-</tbody>
-</table>
-
-#### Methods
-
-##### cdf()
-
-> **cdf**(`x`, `eps`): `number`
-
-The cumulative distribution function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`eps`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1e-12`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.cdf`
-
-##### mean()
-
-> **mean**(): `number`
-
-the mean value
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.mean`
-
-##### mode()
-
-> **mode**(): `number`
-
-###### Returns
-
-`number`
-
-the mode
-
-###### Overrides
-
-`Distribution.mode`
-
-##### pdf()
-
-> **pdf**(`x`): `number`
-
-The probability density/mass function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.pdf`
-
-##### quantile()
-
-> **quantile**(`q`, `eps`): `number`
-
-The quantile function evaluated at `q`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`eps`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1e-12`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.quantile`
-
-##### random()
-
-> **random**(`n`, `options`): `number`\[]
-
-Generate random numbers from the distribution.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`n`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1`
-
-</td>
-<td>
-
-the number of observations to be generated
-
-</td>
-</tr>
-<tr>
-<td>
-
-`options`
-
-</td>
-<td>
-
-[`RandomOptions`](#randomoptions)
-
-</td>
-<td>
-
-`RANDOM_OPTIONS_DEFAULT`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`\[]
-
-###### Overrides
-
-`Distribution.random`
-
-##### sd()
-
-> **sd**(): `number`
-
-standard deviation
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.sd`
-
-##### skewness()
-
-> **skewness**(): `number`
-
-###### Returns
-
-`number`
-
-the skewness
-
-###### Overrides
-
-`Distribution.skewness`
-
-##### variance()
-
-> **variance**(): `number`
-
-the variance
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-`Distribution.variance`
 
 ---
 
@@ -11325,364 +8669,6 @@ the variance
 
 ---
 
-### UniformDiscrete
-
-#### Extends
-
-- [`Uniform`](#uniform)
-
-#### Constructors
-
-##### Constructor
-
-> **new UniformDiscrete**(`a?`, `b?`): [`UniformDiscrete`](#uniformdiscrete)
-
-The Uniform (discrete) distribution
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`a?`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`b?`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-[`UniformDiscrete`](#uniformdiscrete)
-
-###### Example
-
-```ts
-const x = new UniformDiscrete(0, 10);
-x.pdf(4);
-x.cdf(5);
-x.quantile(0.5);
-x.random(10);
-```
-
-###### Overrides
-
-[`Uniform`](#uniform).[`constructor`](#constructor-29)
-
-#### Properties
-
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-<a id="support-29"></a> `support`
-
-</td>
-<td>
-
-[`Interval`](#interval)
-
-</td>
-</tr>
-</tbody>
-</table>
-
-#### Methods
-
-##### cdf()
-
-> **cdf**(`x`): `number`
-
-The cumulative distribution function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-[`Uniform`](#uniform).[`cdf`](#cdf-56)
-
-##### mean()
-
-> **mean**(): `number`
-
-the mean value
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-[`Uniform`](#uniform).[`mean`](#mean-56)
-
-##### mode()
-
-> **mode**(): `number`
-
-###### Returns
-
-`number`
-
-the mode
-
-###### Inherited from
-
-[`Uniform`](#uniform).[`mode`](#mode-56)
-
-##### pdf()
-
-> **pdf**(`x`): `number`
-
-The probability density/mass function evaluated at `x`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-[`Uniform`](#uniform).[`pdf`](#pdf-56)
-
-##### quantile()
-
-> **quantile**(`q`): `number`
-
-The quantile function evaluated at `q`.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-[`Uniform`](#uniform).[`quantile`](#quantile-56)
-
-##### random()
-
-> **random**(`n`, `options`): `number`\[]
-
-Generate random numbers from the distribution.
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`n`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`1`
-
-</td>
-<td>
-
-the number of observations to be generated
-
-</td>
-</tr>
-<tr>
-<td>
-
-`options`
-
-</td>
-<td>
-
-[`RandomOptions`](#randomoptions)
-
-</td>
-<td>
-
-`RANDOM_OPTIONS_DEFAULT`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`\[]
-
-###### Overrides
-
-[`Uniform`](#uniform).[`random`](#random-56)
-
-##### sd()
-
-> **sd**(): `number`
-
-standard deviation
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-[`Uniform`](#uniform).[`sd`](#sd-56)
-
-##### skewness()
-
-> **skewness**(): `number`
-
-###### Returns
-
-`number`
-
-the skewness
-
-###### Inherited from
-
-[`Uniform`](#uniform).[`skewness`](#skewness-56)
-
-##### variance()
-
-> **variance**(): `number`
-
-the variance
-
-###### Returns
-
-`number`
-
-###### Overrides
-
-[`Uniform`](#uniform).[`variance`](#variance-56)
-
----
-
 ### UQuadratic
 
 #### Extends
@@ -12396,6 +9382,3022 @@ the variance
 ###### Overrides
 
 `ShapeScale.variance`
+
+## Discrete distributions
+
+### Bernoulli
+
+#### Extends
+
+- `Distribution`
+
+#### Extended by
+
+- [`Geometric`](#geometric)
+- [`Logarithmic`](#logarithmic)
+
+#### Constructors
+
+##### Constructor
+
+> **new Bernoulli**(`p?`): [`Bernoulli`](#bernoulli)
+
+The Bernoulli distribution
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+[`Bernoulli`](#bernoulli)
+
+###### Example
+
+```ts
+const x = new Bernoulli(0.9);
+x.pdf(1);
+x.quantile(0.5);
+```
+
+###### Overrides
+
+`Distribution.constructor`
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="support-2"></a> `support`
+
+</td>
+<td>
+
+[`Interval`](#interval)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Methods
+
+##### cdf()
+
+> **cdf**(`x`): `number`
+
+The cumulative distribution function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.cdf`
+
+##### mean()
+
+> **mean**(): `number`
+
+the mean value
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.mean`
+
+##### mode()
+
+> **mode**(): `number`
+
+###### Returns
+
+`number`
+
+the mode
+
+###### Overrides
+
+`Distribution.mode`
+
+##### pdf()
+
+> **pdf**(`x`): `number`
+
+The probability density/mass function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.pdf`
+
+##### quantile()
+
+> **quantile**(`q`): `number`
+
+The quantile function evaluated at `q`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.quantile`
+
+##### random()
+
+> **random**(`n`, `options`): `number`\[]
+
+Generate random numbers from the distribution.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`RANDOM_OPTIONS_DEFAULT`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`\[]
+
+###### Inherited from
+
+`Distribution.random`
+
+##### sd()
+
+> **sd**(): `number`
+
+standard deviation
+
+###### Returns
+
+`number`
+
+###### Inherited from
+
+`Distribution.sd`
+
+##### skewness()
+
+> **skewness**(): `number`
+
+###### Returns
+
+`number`
+
+the skewness
+
+###### Overrides
+
+`Distribution.skewness`
+
+##### variance()
+
+> **variance**(): `number`
+
+the variance
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.variance`
+
+---
+
+### Binomial
+
+#### Extends
+
+- `Distribution`
+
+#### Constructors
+
+##### Constructor
+
+> **new Binomial**(`n?`, `p?`): [`Binomial`](#binomial)
+
+The Binomial distribution
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`p?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+[`Binomial`](#binomial)
+
+###### Example
+
+```ts
+const params = { n: 10, p: 0.5 };
+const x = new Binomial(10, 0.5);
+x.pdf(5);
+x.cdf(5);
+x.quantile(0.5);
+x.random(10);
+```
+
+###### Overrides
+
+`Distribution.constructor`
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="support-5"></a> `support`
+
+</td>
+<td>
+
+[`Interval`](#interval)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Methods
+
+##### cdf()
+
+> **cdf**(`x`, `eps`): `number`
+
+The cumulative distribution function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.cdf`
+
+##### mean()
+
+> **mean**(): `number`
+
+the mean value
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.mean`
+
+##### mode()
+
+> **mode**(): `number`
+
+###### Returns
+
+`number`
+
+the mode
+
+###### Overrides
+
+`Distribution.mode`
+
+##### pdf()
+
+> **pdf**(`x`): `number`
+
+The probability density/mass function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.pdf`
+
+##### quantile()
+
+> **quantile**(`q`, `eps`): `number`
+
+The quantile function evaluated at `q`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.quantile`
+
+##### random()
+
+> **random**(`n`, `options`): `number`\[]
+
+Generate random numbers from the distribution.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`RANDOM_OPTIONS_DEFAULT`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`\[]
+
+###### Overrides
+
+`Distribution.random`
+
+##### sd()
+
+> **sd**(): `number`
+
+standard deviation
+
+###### Returns
+
+`number`
+
+###### Inherited from
+
+`Distribution.sd`
+
+##### skewness()
+
+> **skewness**(): `number`
+
+###### Returns
+
+`number`
+
+the skewness
+
+###### Overrides
+
+`Distribution.skewness`
+
+##### variance()
+
+> **variance**(): `number`
+
+the variance
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.variance`
+
+---
+
+### Geometric
+
+#### Extends
+
+- [`Bernoulli`](#bernoulli)
+
+#### Constructors
+
+##### Constructor
+
+> **new Geometric**(`p?`): [`Geometric`](#geometric)
+
+The Geometric distribution
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+[`Geometric`](#geometric)
+
+###### Example
+
+```ts
+const x = new Geometric(0.8);
+x.pdf(1);
+x.cdf(1);
+x.quantile(0.5);
+x.random(10);
+```
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`constructor`](#constructor-2)
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="support-13"></a> `support`
+
+</td>
+<td>
+
+[`Interval`](#interval)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Methods
+
+##### cdf()
+
+> **cdf**(`x`): `number`
+
+The cumulative distribution function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`cdf`](#cdf-4)
+
+##### mean()
+
+> **mean**(): `number`
+
+the mean value
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`mean`](#mean-4)
+
+##### mode()
+
+> **mode**(): `number`
+
+###### Returns
+
+`number`
+
+the mode
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`mode`](#mode-4)
+
+##### pdf()
+
+> **pdf**(`x`): `number`
+
+The probability density/mass function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`pdf`](#pdf-4)
+
+##### quantile()
+
+> **quantile**(`q`): `number`
+
+The quantile function evaluated at `q`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`quantile`](#quantile-4)
+
+##### random()
+
+> **random**(`n`, `options`): `number`\[]
+
+Generate random numbers from the distribution.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`RANDOM_OPTIONS_DEFAULT`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`\[]
+
+###### Inherited from
+
+[`Bernoulli`](#bernoulli).[`random`](#random-4)
+
+##### sd()
+
+> **sd**(): `number`
+
+standard deviation
+
+###### Returns
+
+`number`
+
+###### Inherited from
+
+[`Bernoulli`](#bernoulli).[`sd`](#sd-4)
+
+##### skewness()
+
+> **skewness**(): `number`
+
+###### Returns
+
+`number`
+
+the skewness
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`skewness`](#skewness-4)
+
+##### variance()
+
+> **variance**(): `number`
+
+the variance
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`variance`](#variance-4)
+
+---
+
+### Hypergeometric
+
+#### Extends
+
+- `Distribution`
+
+#### Constructors
+
+##### Constructor
+
+> **new Hypergeometric**(`N?`, `K?`, `n?`): [`Hypergeometric`](#hypergeometric)
+
+The Hypergeometric distribution
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`N?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`K?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`n?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+[`Hypergeometric`](#hypergeometric)
+
+###### Example
+
+```ts
+const x = new Hypergeometric(10, 5, 2);
+x.pdf(1);
+x.cdf(2);
+x.quantile(0.5);
+x.random(10);
+```
+
+###### Overrides
+
+`Distribution.constructor`
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="support-15"></a> `support`
+
+</td>
+<td>
+
+[`Interval`](#interval)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Methods
+
+##### cdf()
+
+> **cdf**(`x`, `eps`): `number`
+
+The cumulative distribution function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-12`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.cdf`
+
+##### mean()
+
+> **mean**(): `number`
+
+the mean value
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.mean`
+
+##### mode()
+
+> **mode**(): `number`
+
+###### Returns
+
+`number`
+
+the mode
+
+###### Overrides
+
+`Distribution.mode`
+
+##### pdf()
+
+> **pdf**(`x`): `number`
+
+The probability density/mass function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.pdf`
+
+##### quantile()
+
+> **quantile**(`q`): `number`
+
+The quantile function evaluated at `q`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.quantile`
+
+##### random()
+
+> **random**(`n`, `options`): `number`\[]
+
+Generate random numbers from the distribution.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`RANDOM_OPTIONS_DEFAULT`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`\[]
+
+###### Overrides
+
+`Distribution.random`
+
+##### sd()
+
+> **sd**(): `number`
+
+standard deviation
+
+###### Returns
+
+`number`
+
+###### Inherited from
+
+`Distribution.sd`
+
+##### skewness()
+
+> **skewness**(): `number`
+
+###### Returns
+
+`number`
+
+the skewness
+
+###### Overrides
+
+`Distribution.skewness`
+
+##### variance()
+
+> **variance**(): `number`
+
+the variance
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.variance`
+
+---
+
+### Logarithmic
+
+#### Extends
+
+- [`Bernoulli`](#bernoulli)
+
+#### Constructors
+
+##### Constructor
+
+> **new Logarithmic**(`p?`): [`Logarithmic`](#logarithmic)
+
+The Logarithmic distribution
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`p?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+[`Logarithmic`](#logarithmic)
+
+###### Example
+
+```ts
+const x = new Logarithmic(0.3);
+x.pdf(4);
+x.cdf(4);
+x.quantile(0.5);
+x.random(10);
+```
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`constructor`](#constructor-2)
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="support-17"></a> `support`
+
+</td>
+<td>
+
+[`Interval`](#interval)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Methods
+
+##### cdf()
+
+> **cdf**(`x`, `eps`): `number`
+
+The cumulative distribution function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`cdf`](#cdf-4)
+
+##### mean()
+
+> **mean**(): `number`
+
+the mean value
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`mean`](#mean-4)
+
+##### mode()
+
+> **mode**(): `number`
+
+###### Returns
+
+`number`
+
+the mode
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`mode`](#mode-4)
+
+##### pdf()
+
+> **pdf**(`x`): `number`
+
+The probability density/mass function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`pdf`](#pdf-4)
+
+##### quantile()
+
+> **quantile**(`q`): `number`
+
+The quantile function evaluated at `q`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`quantile`](#quantile-4)
+
+##### random()
+
+> **random**(`n`, `options`): `number`\[]
+
+Generate random numbers from the distribution.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`RANDOM_OPTIONS_DEFAULT`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`\[]
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`random`](#random-4)
+
+##### sd()
+
+> **sd**(): `number`
+
+standard deviation
+
+###### Returns
+
+`number`
+
+###### Inherited from
+
+[`Bernoulli`](#bernoulli).[`sd`](#sd-4)
+
+##### skewness()
+
+> **skewness**(): `number`
+
+###### Returns
+
+`number`
+
+the skewness
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`skewness`](#skewness-4)
+
+##### variance()
+
+> **variance**(): `number`
+
+the variance
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+[`Bernoulli`](#bernoulli).[`variance`](#variance-4)
+
+---
+
+### NegativeBinomial
+
+#### Extends
+
+- `Distribution`
+
+#### Constructors
+
+##### Constructor
+
+> **new NegativeBinomial**(`n?`, `p?`): [`NegativeBinomial`](#negativebinomial)
+
+The Negative Binomial distribution
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`p?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+[`NegativeBinomial`](#negativebinomial)
+
+###### Example
+
+```ts
+const x = new NegativeBinomial(10, 0.5);
+x.pdf(5);
+x.cdf(5);
+x.quantile(0.5);
+x.random(10);
+```
+
+###### Overrides
+
+`Distribution.constructor`
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="support-21"></a> `support`
+
+</td>
+<td>
+
+[`Interval`](#interval)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Methods
+
+##### cdf()
+
+> **cdf**(`x`, `eps`): `number`
+
+The cumulative distribution function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.cdf`
+
+##### mean()
+
+> **mean**(): `number`
+
+the mean value
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.mean`
+
+##### mode()
+
+> **mode**(): `number`
+
+###### Returns
+
+`number`
+
+the mode
+
+###### Overrides
+
+`Distribution.mode`
+
+##### pdf()
+
+> **pdf**(`x`): `number`
+
+The probability density/mass function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.pdf`
+
+##### quantile()
+
+> **quantile**(`q`, `eps`): `number`
+
+The quantile function evaluated at `q`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-20`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.quantile`
+
+##### random()
+
+> **random**(`n`, `options`): `number`\[]
+
+Generate random numbers from the distribution.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`RANDOM_OPTIONS_DEFAULT`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`\[]
+
+###### Overrides
+
+`Distribution.random`
+
+##### sd()
+
+> **sd**(): `number`
+
+standard deviation
+
+###### Returns
+
+`number`
+
+###### Inherited from
+
+`Distribution.sd`
+
+##### skewness()
+
+> **skewness**(): `number`
+
+###### Returns
+
+`number`
+
+the skewness
+
+###### Overrides
+
+`Distribution.skewness`
+
+##### variance()
+
+> **variance**(): `number`
+
+the variance
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.variance`
+
+---
+
+### Poisson
+
+#### Extends
+
+- `Distribution`
+
+#### Constructors
+
+##### Constructor
+
+> **new Poisson**(`rate?`): [`Poisson`](#poisson)
+
+The Poisson distribution
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`rate?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+[`Poisson`](#poisson)
+
+###### Example
+
+```ts
+const x = new Poisson(1);
+x.pdf(2);
+x.cdf(2);
+x.quantile(0.5);
+x.random(10);
+```
+
+###### Overrides
+
+`Distribution.constructor`
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="support-24"></a> `support`
+
+</td>
+<td>
+
+[`Interval`](#interval)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Methods
+
+##### cdf()
+
+> **cdf**(`x`, `eps`): `number`
+
+The cumulative distribution function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-12`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.cdf`
+
+##### mean()
+
+> **mean**(): `number`
+
+the mean value
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.mean`
+
+##### mode()
+
+> **mode**(): `number`
+
+###### Returns
+
+`number`
+
+the mode
+
+###### Overrides
+
+`Distribution.mode`
+
+##### pdf()
+
+> **pdf**(`x`): `number`
+
+The probability density/mass function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.pdf`
+
+##### quantile()
+
+> **quantile**(`q`, `eps`): `number`
+
+The quantile function evaluated at `q`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-12`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.quantile`
+
+##### random()
+
+> **random**(`n`, `options`): `number`\[]
+
+Generate random numbers from the distribution.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`RANDOM_OPTIONS_DEFAULT`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`\[]
+
+###### Overrides
+
+`Distribution.random`
+
+##### sd()
+
+> **sd**(): `number`
+
+standard deviation
+
+###### Returns
+
+`number`
+
+###### Inherited from
+
+`Distribution.sd`
+
+##### skewness()
+
+> **skewness**(): `number`
+
+###### Returns
+
+`number`
+
+the skewness
+
+###### Overrides
+
+`Distribution.skewness`
+
+##### variance()
+
+> **variance**(): `number`
+
+the variance
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+`Distribution.variance`
+
+---
+
+### UniformDiscrete
+
+#### Extends
+
+- [`Uniform`](#uniform)
+
+#### Constructors
+
+##### Constructor
+
+> **new UniformDiscrete**(`a?`, `b?`): [`UniformDiscrete`](#uniformdiscrete)
+
+The Uniform (discrete) distribution
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`a?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`b?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+[`UniformDiscrete`](#uniformdiscrete)
+
+###### Example
+
+```ts
+const x = new UniformDiscrete(0, 10);
+x.pdf(4);
+x.cdf(5);
+x.quantile(0.5);
+x.random(10);
+```
+
+###### Overrides
+
+[`Uniform`](#uniform).[`constructor`](#constructor-29)
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="support-29"></a> `support`
+
+</td>
+<td>
+
+[`Interval`](#interval)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Methods
+
+##### cdf()
+
+> **cdf**(`x`): `number`
+
+The cumulative distribution function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+[`Uniform`](#uniform).[`cdf`](#cdf-56)
+
+##### mean()
+
+> **mean**(): `number`
+
+the mean value
+
+###### Returns
+
+`number`
+
+###### Inherited from
+
+[`Uniform`](#uniform).[`mean`](#mean-56)
+
+##### mode()
+
+> **mode**(): `number`
+
+###### Returns
+
+`number`
+
+the mode
+
+###### Inherited from
+
+[`Uniform`](#uniform).[`mode`](#mode-56)
+
+##### pdf()
+
+> **pdf**(`x`): `number`
+
+The probability density/mass function evaluated at `x`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+[`Uniform`](#uniform).[`pdf`](#pdf-56)
+
+##### quantile()
+
+> **quantile**(`q`): `number`
+
+The quantile function evaluated at `q`.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`q`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+[`Uniform`](#uniform).[`quantile`](#quantile-56)
+
+##### random()
+
+> **random**(`n`, `options`): `number`\[]
+
+Generate random numbers from the distribution.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1`
+
+</td>
+<td>
+
+the number of observations to be generated
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options`
+
+</td>
+<td>
+
+[`RandomOptions`](#randomoptions)
+
+</td>
+<td>
+
+`RANDOM_OPTIONS_DEFAULT`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`\[]
+
+###### Overrides
+
+[`Uniform`](#uniform).[`random`](#random-56)
+
+##### sd()
+
+> **sd**(): `number`
+
+standard deviation
+
+###### Returns
+
+`number`
+
+###### Inherited from
+
+[`Uniform`](#uniform).[`sd`](#sd-56)
+
+##### skewness()
+
+> **skewness**(): `number`
+
+###### Returns
+
+`number`
+
+the skewness
+
+###### Inherited from
+
+[`Uniform`](#uniform).[`skewness`](#skewness-56)
+
+##### variance()
+
+> **variance**(): `number`
+
+the variance
+
+###### Returns
+
+`number`
+
+###### Overrides
+
+[`Uniform`](#uniform).[`variance`](#variance-56)
 
 ## Interfaces
 

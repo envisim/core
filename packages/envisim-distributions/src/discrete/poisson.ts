@@ -12,6 +12,9 @@ import { RateParams } from "../params.js";
 import { assertPositiveInteger, logFactorial } from "../utils.js";
 import { randomPoisson } from "./poisson-random.js";
 
+/**
+ * @category Discrete distributions
+ */
 export class Poisson extends Distribution {
   /** @internal */
   #params!: RateParams;

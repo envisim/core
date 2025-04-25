@@ -30,6 +30,9 @@ function randomNormalBoxMuller(
   return s;
 }
 
+/**
+ * @category Continuous distributions
+ */
 export class Normal extends LocationScale {
   /**
    * The Normal distribution
@@ -93,6 +96,9 @@ export class Normal extends LocationScale {
   }
 }
 
+/**
+ * @category Continuous distributions
+ */
 export class LogNormal extends LocationScale {
   /**
    * The Log-Normal distribution
@@ -164,6 +170,9 @@ export class LogNormal extends LocationScale {
   }
 }
 
+/**
+ * @category Continuous distributions
+ */
 export class FoldedNormal extends LocationScale {
   /**
    * The Folded-Normal distribution

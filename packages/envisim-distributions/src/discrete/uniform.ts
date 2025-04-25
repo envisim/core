@@ -3,6 +3,9 @@ import { type RandomOptions, RANDOM_OPTIONS_DEFAULT } from "../abstract-distribu
 import { Uniform } from "../continuous/uniform.js";
 import { assertPositiveInteger } from "../utils.js";
 
+/**
+ * @category Discrete distributions
+ */
 export class UniformDiscrete extends Uniform {
   /**
    * The Uniform (discrete) distribution

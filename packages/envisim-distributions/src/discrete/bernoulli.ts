@@ -1,6 +1,9 @@
 import { Distribution, Interval } from "../abstract-distribution.js";
 import { BernoulliParams } from "../params.js";
 
+/**
+ * @category Discrete distributions
+ */
 export class Bernoulli extends Distribution {
   /** @internal */
   #params!: BernoulliParams;

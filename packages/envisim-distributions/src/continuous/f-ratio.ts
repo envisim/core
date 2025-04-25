@@ -9,6 +9,9 @@ import { DegreesOfFreedomParams } from "../params.js";
 import { assertPositiveInteger } from "../utils.js";
 import { randomBeta } from "./beta-random.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class FRatio extends Distribution {
   /** @internal */
   #params!: [DegreesOfFreedomParams, DegreesOfFreedomParams];

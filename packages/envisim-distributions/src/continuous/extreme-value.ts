@@ -4,6 +4,9 @@ import { EULERSCONSTANT } from "../math-constants.js";
 /* eslint-disable-next-line no-loss-of-precision */
 export const RIEMANN_ZETA_FUN_3 = 1.202056903159594285399;
 
+/**
+ * @category Continuous distributions
+ */
 export class ExtremeValue extends LocationScale {
   /**
    * The Extreme Value distribution

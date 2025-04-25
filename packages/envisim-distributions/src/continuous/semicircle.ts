@@ -9,6 +9,9 @@ import { RadiusParams } from "../params.js";
 import { assertPositiveInteger } from "../utils.js";
 import { randomBeta } from "./beta-random.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class Semicircle extends Distribution {
   /** @internal */
   #params!: RadiusParams;

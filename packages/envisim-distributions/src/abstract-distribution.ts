@@ -1,6 +1,9 @@
 import { Random, type RandomGenerator, randomArray } from "@envisim/random";
 import { assertPositiveInteger } from "./utils.js";
 
+/**
+ * @category Interfaces
+ */
 export interface RandomOptions {
   /**
    * A random generator
@@ -99,6 +102,9 @@ export function quantileCF(
   return k;
 }
 
+/**
+ * @category Classes
+ */
 export class Interval {
   /** Left endpoint */
   l: number = -Infinity;

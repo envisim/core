@@ -4,6 +4,9 @@ import { BoundedMid } from "../abstract-bounded.js";
 import { type RandomOptions, RANDOM_OPTIONS_DEFAULT } from "../abstract-distribution.js";
 import { assertPositiveInteger } from "../utils.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class Uniform extends Bounded {
   /**
    * The Uniform (continuous) distribution
@@ -56,6 +59,9 @@ export class Uniform extends Bounded {
   }
 }
 
+/**
+ * @category Continuous distributions
+ */
 export class Triangular extends BoundedMid {
   /**
    * The Triangular distribution

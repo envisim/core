@@ -2,6 +2,9 @@ import { Distribution, Interval } from "../abstract-distribution.js";
 import { HALF_PI } from "../math-constants.js";
 import { sech } from "../utils.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class HyperbolicSecant extends Distribution {
   /**
    * The Hyperbolic Secant distribution

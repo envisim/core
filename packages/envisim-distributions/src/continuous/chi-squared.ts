@@ -10,6 +10,9 @@ import { assertPositiveInteger } from "../utils.js";
 import { gammaQuantile } from "./gamma-quantile.js";
 import { randomShapeGamma } from "./gamma-random.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class ChiSquared extends Distribution {
   /** @internal */
   #params!: DegreesOfFreedomParams;

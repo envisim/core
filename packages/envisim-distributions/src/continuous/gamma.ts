@@ -5,7 +5,11 @@ import { assertPositiveInteger } from "../utils.js";
 import { gammaQuantile } from "./gamma-quantile.js";
 import { randomShapeGamma } from "./gamma-random.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class Gamma extends ShapeScale {
+  /** @internal */
   #lgf!: number;
 
   /**

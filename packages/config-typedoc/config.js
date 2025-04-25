@@ -53,7 +53,7 @@ const config = {
   // customFooterHtmlDisableWrapper
   // markdownItOptions
   // markdownItLoader
-  // basePath
+  // basePath: "../../",
   // cname
   // favicon
   // sourceLinkExternal

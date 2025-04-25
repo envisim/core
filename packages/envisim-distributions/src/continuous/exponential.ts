@@ -7,6 +7,9 @@ import {
 } from "../abstract-distribution.js";
 import { RateParams } from "../params.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class Exponential extends Distribution {
   /** @internal */
   #params!: RateParams;

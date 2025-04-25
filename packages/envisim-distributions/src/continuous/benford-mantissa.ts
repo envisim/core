@@ -3,6 +3,9 @@ import { Distribution } from "../abstract-distribution.js";
 import { Interval } from "../abstract-distribution.js";
 import { BenfordMantissaParams } from "../params.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class BenfordMantissa extends Distribution {
   /** @internal */
   #params!: BenfordMantissaParams;

@@ -8,6 +8,9 @@ import { BetaParams } from "../params.js";
 import { assertPositiveInteger } from "../utils.js";
 import { randomBeta } from "./beta-random.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class Beta extends Distribution {
   /** @internal */
   #params!: BetaParams;
@@ -81,6 +84,9 @@ export class Beta extends Distribution {
   }
 }
 
+/**
+ * @category Continuous distributions
+ */
 export class BetaPrime extends Distribution {
   /** @internal */
   #params!: BetaParams;

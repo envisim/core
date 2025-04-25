@@ -2,6 +2,9 @@ import { Interval } from "../abstract-distribution.js";
 import { LocationScale } from "../abstract-location-scale.js";
 import { ShapeScale } from "../abstract-shape-scale.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class Logistic extends LocationScale {
   /**
    * The Logistic distribution
@@ -53,6 +56,9 @@ export class Logistic extends LocationScale {
   }
 }
 
+/**
+ * @category Continuous distributions
+ */
 export class LogLogistic extends ShapeScale {
   /**
    * The Log-Logistic distribution

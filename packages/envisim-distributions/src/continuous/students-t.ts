@@ -12,6 +12,9 @@ import { assertPositiveInteger } from "../utils.js";
 import { randomShapeGamma } from "./gamma-random.js";
 import { stdNormalQuantile } from "./normal-utils.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class StudentsT extends Distribution {
   /** @internal */
   #params!: DegreesOfFreedomParams;
