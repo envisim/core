@@ -9,11 +9,13 @@
 ## Contents
 
 - [Classes](#classes)
+  - [`abstract` BaseMatrix](#abstract-basematrix)
   - [Matrix](#matrix)
   - [Vector](#vector)
 - [Type Aliases](#type-aliases)
   - [MatrixCallback()\<T>](#matrixcallbackt)
   - [MatrixCallbackCompare()](#matrixcallbackcompare)
+  - [MatrixCallbackDim()\<T>](#matrixcallbackdimt)
   - [MatrixDim](#matrixdim)
 - [Functions](#functions)
   - [diagonalMatrix()](#diagonalmatrix)
@@ -24,11 +26,1826 @@
 
 ## Classes
 
+### `abstract` BaseMatrix
+
+#### Extended by
+
+- [`Matrix`](#matrix)
+- [`Vector`](#vector)
+
+#### Constructors
+
+##### Constructor
+
+> **new BaseMatrix**(`arr`, `__namedParameters`): [`BaseMatrix`](#basematrix)
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`arr`
+
+</td>
+<td>
+
+`number`\[]
+
+</td>
+</tr>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+[`BaseMatrix`](#basematrix)
+
+#### Accessors
+
+##### length
+
+###### Get Signature
+
+> **get** **length**(): `number`
+
+###### Returns
+
+`number`
+
+the number of elements
+
+##### ncol
+
+###### Get Signature
+
+> **get** **ncol**(): `number`
+
+###### Returns
+
+`number`
+
+the number of columns
+
+##### nrow
+
+###### Get Signature
+
+> **get** **nrow**(): `number`
+
+###### Returns
+
+`number`
+
+the number of rows
+
+#### Methods
+
+##### at()
+
+> **at**(`index`): `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+if `index < 0`, `index + .length` is accessed.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+the element at matrix `index`
+
+###### Throws
+
+`RangeError` if `index` is not in range
+
+##### atDim()
+
+> **atDim**(`dim`): `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`dim`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### See
+
+[BaseMatrix.at](#at)
+
+##### baseMap()
+
+> `protected` **baseMap**(`callback`): `number`\[]
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`number`>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`\[]
+
+##### baseMapInPlace()
+
+> `protected` **baseMapInPlace**(`callback`): `this`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`number`>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`this`
+
+##### clone()
+
+> `abstract` **clone**(): `this`
+
+###### Returns
+
+`this`
+
+##### colOfIndex()
+
+> **colOfIndex**(`index`): `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+the column index of the matrix `index`
+
+###### Throws
+
+`RangeError` if `index` is not in range
+
+##### dim()
+
+> **dim**(): [`MatrixDim`](#matrixdim-2)
+
+###### Returns
+
+[`MatrixDim`](#matrixdim-2)
+
+`[this.nrow, this.ncol]`
+
+##### dimOfIndex()
+
+> **dimOfIndex**(`index`): [`MatrixDim`](#matrixdim-2)
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+[`MatrixDim`](#matrixdim-2)
+
+an array `[row, column]`
+
+##### ed()
+
+> **ed**(`index`, `value`): `number`
+
+Changes the element at matrix `index` to `value`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+if `index < 0`, `index + .length` is accessed.
+
+</td>
+</tr>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+`value`
+
+###### Throws
+
+`RangeError` if `index` is not in range
+
+##### edDim()
+
+> **edDim**(`dim`, `value`): `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`dim`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`value`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### See
+
+[BaseMatrix.ed](#ed)
+
+##### equals()
+
+> **equals**(`mat`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+[`BaseMatrix`](#basematrix)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+`true` if `this` is equal to `mat`
+
+##### equalsApprox()
+
+> **equalsApprox**(`mat`, `eps`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+[`BaseMatrix`](#basematrix)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`eps`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-9`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+`true` if `this` is approximately equal to `mat`
+
+##### every()
+
+> **every**(`callback`): `boolean`
+
+Tests if all elements pass the test implemented by the callback fn
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`boolean`>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+##### findIndex()
+
+> **findIndex**(`callback`): `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`boolean`>
+
+</td>
+<td>
+
+a function used to test elements in the array
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+the index of the first element passing the test in `callback`
+
+##### fn()
+
+> **fn**(`index`, `callback`): `number`
+
+Changes the element at matrix `index` through a callback function.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`number`>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+the result of `callback`
+
+###### Example
+
+```ts
+const mat = new Matrix(0, 2, 2);
+// [ 0, 0,
+//   0, 0 ]
+mat.edRC(3, (el, in) => el + in);
+// [ 0, 0,
+//   0, 3 ]
+```
+
+###### Throws
+
+`RangeError` if `index` is not in range
+
+##### fnDim()
+
+> **fnDim**(`dim`, `callback`): `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`dim`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallbackDim`](#matrixcallbackdim)<`number`>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+###### See
+
+[BaseMatrix.fn](#fn)
+
+##### forEach()
+
+> **forEach**(`callback`): `void`
+
+Executes the provided function once for each element
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`void`>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`void`
+
+##### geometricMean()
+
+> **geometricMean**(): `number`
+
+Geometric mean of all elements
+
+###### Returns
+
+`number`
+
+##### hasSizeOf()
+
+> **hasSizeOf**(`mat`): `boolean`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+[`BaseMatrix`](#basematrix)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+`true` if the dimensions matches `mat`
+
+##### indexOf()
+
+> **indexOf**(`searchElement`, `fromIndex`): `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`searchElement`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`fromIndex`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`0`
+
+</td>
+<td>
+
+the index to start the search at
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+the index of the first occurance of `searchElement`
+
+##### indexOfDim()
+
+> **indexOfDim**(`__namedParameters`): `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`__namedParameters`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+the matrix index at `row`, `column`
+
+###### Throws
+
+`RangeError` if `row` or `column` is not in range
+
+##### isSquare()
+
+> **isSquare**(): `boolean`
+
+###### Returns
+
+`boolean`
+
+`true` if the matrix is a square
+
+##### lastIndexOf()
+
+> **lastIndexOf**(`searchElement`, `fromIndex`): `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`searchElement`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`fromIndex`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+the index to start the search at
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+the index of the first occurance of `searchElement`, searching
+backwards
+
+##### map()
+
+> `abstract` **map**(`callback`, `inPlace`): `this`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`number`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`this`
+
+##### max()
+
+> **max**(): `number`
+
+Maximum value of all elements
+
+###### Returns
+
+`number`
+
+##### mean()
+
+> **mean**(): `number`
+
+Mean of all elements
+
+###### Returns
+
+`number`
+
+##### median()
+
+> **median**(): `number`
+
+Median of all elements
+
+###### Returns
+
+`number`
+
+##### min()
+
+> **min**(): `number`
+
+Minimum value of all elements
+
+###### Returns
+
+`number`
+
+##### mode()
+
+> **mode**(): `number`\[]
+
+Most common value
+
+###### Returns
+
+`number`\[]
+
+##### prodSum()
+
+> **prodSum**(): `number`
+
+Product sum of all elements
+
+###### Returns
+
+`number`
+
+##### quantiles()
+
+> **quantiles**(`probs`): `number`\[]
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`probs`
+
+</td>
+<td>
+
+`number` | `number`\[]
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`\[]
+
+##### range()
+
+> **range**(): \[`number`, `number`]
+
+The range (min-max) of all elements
+
+###### Returns
+
+\[`number`, `number`]
+
+##### reduce()
+
+> **reduce**(`callback`, `init`): `number`
+
+Executes a user-supplied "reducer" callback function on each element, in
+order, passing in the return value from the calculation on the preceding
+element. The final result of running the reducer across all elements is a
+single value.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+(`prev`, `curr`, `index`) => `number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`init`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`0.0`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+##### rowOfIndex()
+
+> **rowOfIndex**(`index`): `number`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`
+
+the row index of the matrix `index`
+
+###### Throws
+
+`RangeError` if `index` is not in range
+
+##### sd()
+
+> **sd**(): `number`
+
+Standard deviation of all elements
+
+###### Returns
+
+`number`
+
+##### skewness()
+
+> **skewness**(): `number`
+
+###### Returns
+
+`number`
+
+##### slice()
+
+> **slice**(`start?`, `end?`): `number`\[]
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`start?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`end?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`number`\[]
+
+the a copy of the internal array of elements (stored column major)
+
+##### some()
+
+> **some**(`callback`): `boolean`
+
+Tests if any element pass the test implemented by the callback fn
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`callback`
+
+</td>
+<td>
+
+[`MatrixCallback`](#matrixcallback)<`boolean`>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`boolean`
+
+##### standardize()
+
+> **standardize**(`normalize`, `inPlace`): `this`
+
+Standardizes or normalizes the matrix
+
+- if `normalize` is `true`: normalizes the values by `(x-min)/(max-min)`
+- otherwise: standardizes the values by `(x - mu)/sigma`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`normalize`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`this`
+
+##### sum()
+
+> **sum**(): `number`
+
+Sum of all elements
+
+###### Returns
+
+`number`
+
+##### swap()
+
+> **swap**(`index1`, `index2`): `void`
+
+Swaps the elements at the provided indexes
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`index1`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`index2`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`void`
+
+###### Throws
+
+`RangeError` if `index` is not in range
+
+##### variance()
+
+> **variance**(): `number`
+
+Variance of all elements
+
+###### Returns
+
+`number`
+
+#### Basic operators
+
+##### add()
+
+> **add**(`mat`, `inPlace`): `this`
+
+Matrix addition.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | [`BaseMatrix`](#basematrix)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`this`
+
+##### divide()
+
+> **divide**(`mat`, `inPlace`): `this`
+
+Element wise division.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | [`BaseMatrix`](#basematrix)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`this`
+
+##### mod()
+
+> **mod**(`mat`, `inPlace`): `this`
+
+Element wise remainder (%) `x % y`
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | [`BaseMatrix`](#basematrix)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`this`
+
+##### multiply()
+
+> **multiply**(`mat`, `inPlace`): `this`
+
+Element wise multiplication.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | [`BaseMatrix`](#basematrix)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`this`
+
+##### subtract()
+
+> **subtract**(`mat`, `inPlace`): `this`
+
+Matrix subtraction.
+
+###### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`mat`
+
+</td>
+<td>
+
+`number` | [`BaseMatrix`](#basematrix)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`inPlace`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`false`
+
+</td>
+<td>
+
+If `true`, performes the operation in place.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+###### Returns
+
+`this`
+
+---
+
 ### Matrix
 
 #### Extends
 
-- `BaseMatrix`
+- [`BaseMatrix`](#basematrix)
 
 #### Constructors
 
@@ -123,7 +1940,7 @@ if `true`, uses the internal arrays of `arr` as a reference
 
 ###### Overrides
 
-`BaseMatrix.constructor`
+[`BaseMatrix`](#basematrix).[`constructor`](#constructor)
 
 #### Accessors
 
@@ -141,7 +1958,7 @@ the number of elements
 
 ###### Inherited from
 
-`BaseMatrix.length`
+[`BaseMatrix`](#basematrix).[`length`](#length)
 
 ##### ncol
 
@@ -157,7 +1974,7 @@ the number of columns
 
 ###### Inherited from
 
-`BaseMatrix.ncol`
+[`BaseMatrix`](#basematrix).[`ncol`](#ncol)
 
 ##### nrow
 
@@ -173,7 +1990,7 @@ the number of rows
 
 ###### Inherited from
 
-`BaseMatrix.nrow`
+[`BaseMatrix`](#basematrix).[`nrow`](#nrow)
 
 #### Methods
 
@@ -224,7 +2041,7 @@ the element at matrix `index`
 
 ###### Inherited from
 
-`BaseMatrix.at`
+[`BaseMatrix`](#basematrix).[`at`](#at)
 
 ##### atDim()
 
@@ -265,7 +2082,7 @@ the element at matrix `index`
 
 ###### Inherited from
 
-`BaseMatrix.atDim`
+[`BaseMatrix`](#basematrix).[`atDim`](#atdim)
 
 ##### baseMap()
 
@@ -302,7 +2119,7 @@ the element at matrix `index`
 
 ###### Inherited from
 
-`BaseMatrix.baseMap`
+[`BaseMatrix`](#basematrix).[`baseMap`](#basemap)
 
 ##### baseMapInPlace()
 
@@ -339,7 +2156,7 @@ the element at matrix `index`
 
 ###### Inherited from
 
-`BaseMatrix.baseMapInPlace`
+[`BaseMatrix`](#basematrix).[`baseMapInPlace`](#basemapinplace)
 
 ##### clone()
 
@@ -351,7 +2168,7 @@ the element at matrix `index`
 
 ###### Overrides
 
-`BaseMatrix.clone`
+[`BaseMatrix`](#basematrix).[`clone`](#clone)
 
 ##### colMaxs()
 
@@ -424,7 +2241,7 @@ the column index of the matrix `index`
 
 ###### Inherited from
 
-`BaseMatrix.colOfIndex`
+[`BaseMatrix`](#basematrix).[`colOfIndex`](#colofindex)
 
 ##### colSds()
 
@@ -478,7 +2295,7 @@ the diagonal of the matrix
 
 ###### Inherited from
 
-`BaseMatrix.dim`
+[`BaseMatrix`](#basematrix).[`dim`](#dim)
 
 ##### dimOfIndex()
 
@@ -517,7 +2334,7 @@ an array `[row, column]`
 
 ###### Inherited from
 
-`BaseMatrix.dimOfIndex`
+[`BaseMatrix`](#basematrix).[`dimOfIndex`](#dimofindex)
 
 ##### ed()
 
@@ -585,7 +2402,7 @@ if `index < 0`, `index + .length` is accessed.
 
 ###### Inherited from
 
-`BaseMatrix.ed`
+[`BaseMatrix`](#basematrix).[`ed`](#ed)
 
 ##### edDim()
 
@@ -638,7 +2455,7 @@ if `index < 0`, `index + .length` is accessed.
 
 ###### Inherited from
 
-`BaseMatrix.edDim`
+[`BaseMatrix`](#basematrix).[`edDim`](#eddim)
 
 ##### equals()
 
@@ -662,7 +2479,7 @@ if `index < 0`, `index + .length` is accessed.
 </td>
 <td>
 
-`BaseMatrix`
+[`BaseMatrix`](#basematrix)
 
 </td>
 </tr>
@@ -677,7 +2494,7 @@ if `index < 0`, `index + .length` is accessed.
 
 ###### Inherited from
 
-`BaseMatrix.equals`
+[`BaseMatrix`](#basematrix).[`equals`](#equals)
 
 ##### equalsApprox()
 
@@ -702,7 +2519,7 @@ if `index < 0`, `index + .length` is accessed.
 </td>
 <td>
 
-`BaseMatrix`
+[`BaseMatrix`](#basematrix)
 
 </td>
 <td>
@@ -739,7 +2556,7 @@ if `index < 0`, `index + .length` is accessed.
 
 ###### Inherited from
 
-`BaseMatrix.equalsApprox`
+[`BaseMatrix`](#basematrix).[`equalsApprox`](#equalsapprox)
 
 ##### every()
 
@@ -778,7 +2595,7 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Inherited from
 
-`BaseMatrix.every`
+[`BaseMatrix`](#basematrix).[`every`](#every)
 
 ##### extractColumn()
 
@@ -1002,7 +2819,7 @@ the index of the first element passing the test in `callback`
 
 ###### Inherited from
 
-`BaseMatrix.findIndex`
+[`BaseMatrix`](#basematrix).[`findIndex`](#findindex)
 
 ##### fn()
 
@@ -1070,7 +2887,7 @@ mat.edRC(3, (el, in) => el + in);
 
 ###### Inherited from
 
-`BaseMatrix.fn`
+[`BaseMatrix`](#basematrix).[`fn`](#fn)
 
 ##### fnDim()
 
@@ -1106,7 +2923,7 @@ mat.edRC(3, (el, in) => el + in);
 </td>
 <td>
 
-`MatrixCallbackDim`<`number`>
+[`MatrixCallbackDim`](#matrixcallbackdim)<`number`>
 
 </td>
 </tr>
@@ -1123,7 +2940,7 @@ mat.edRC(3, (el, in) => el + in);
 
 ###### Inherited from
 
-`BaseMatrix.fnDim`
+[`BaseMatrix`](#basematrix).[`fnDim`](#fndim)
 
 ##### forEach()
 
@@ -1162,7 +2979,7 @@ Executes the provided function once for each element
 
 ###### Inherited from
 
-`BaseMatrix.forEach`
+[`BaseMatrix`](#basematrix).[`forEach`](#foreach)
 
 ##### geometricMean()
 
@@ -1176,7 +2993,7 @@ Geometric mean of all elements
 
 ###### Inherited from
 
-`BaseMatrix.geometricMean`
+[`BaseMatrix`](#basematrix).[`geometricMean`](#geometricmean)
 
 ##### hasSizeOf()
 
@@ -1200,7 +3017,7 @@ Geometric mean of all elements
 </td>
 <td>
 
-`BaseMatrix`
+[`BaseMatrix`](#basematrix)
 
 </td>
 </tr>
@@ -1215,7 +3032,7 @@ Geometric mean of all elements
 
 ###### Inherited from
 
-`BaseMatrix.hasSizeOf`
+[`BaseMatrix`](#basematrix).[`hasSizeOf`](#hassizeof)
 
 ##### indexOf()
 
@@ -1288,7 +3105,7 @@ the index of the first occurance of `searchElement`
 
 ###### Inherited from
 
-`BaseMatrix.indexOf`
+[`BaseMatrix`](#basematrix).[`indexOf`](#indexof)
 
 ##### indexOfDim()
 
@@ -1331,7 +3148,7 @@ the matrix index at `row`, `column`
 
 ###### Inherited from
 
-`BaseMatrix.indexOfDim`
+[`BaseMatrix`](#basematrix).[`indexOfDim`](#indexofdim)
 
 ##### isSquare()
 
@@ -1345,7 +3162,7 @@ the matrix index at `row`, `column`
 
 ###### Inherited from
 
-`BaseMatrix.isSquare`
+[`BaseMatrix`](#basematrix).[`isSquare`](#issquare)
 
 ##### lastIndexOf()
 
@@ -1408,7 +3225,7 @@ backwards
 
 ###### Inherited from
 
-`BaseMatrix.lastIndexOf`
+[`BaseMatrix`](#basematrix).[`lastIndexOf`](#lastindexof)
 
 ##### map()
 
@@ -1481,7 +3298,7 @@ a copy, where each element has been mapped by the callback fn.
 
 ###### Overrides
 
-`BaseMatrix.map`
+[`BaseMatrix`](#basematrix).[`map`](#map)
 
 ##### max()
 
@@ -1495,7 +3312,7 @@ Maximum value of all elements
 
 ###### Inherited from
 
-`BaseMatrix.max`
+[`BaseMatrix`](#basematrix).[`max`](#max)
 
 ##### mean()
 
@@ -1509,7 +3326,7 @@ Mean of all elements
 
 ###### Inherited from
 
-`BaseMatrix.mean`
+[`BaseMatrix`](#basematrix).[`mean`](#mean)
 
 ##### median()
 
@@ -1523,7 +3340,7 @@ Median of all elements
 
 ###### Inherited from
 
-`BaseMatrix.median`
+[`BaseMatrix`](#basematrix).[`median`](#median)
 
 ##### min()
 
@@ -1537,7 +3354,7 @@ Minimum value of all elements
 
 ###### Inherited from
 
-`BaseMatrix.min`
+[`BaseMatrix`](#basematrix).[`min`](#min)
 
 ##### mmult()
 
@@ -1561,7 +3378,7 @@ Minimum value of all elements
 </td>
 <td>
 
-`BaseMatrix`
+[`BaseMatrix`](#basematrix)
 
 </td>
 </tr>
@@ -1584,7 +3401,7 @@ Most common value
 
 ###### Inherited from
 
-`BaseMatrix.mode`
+[`BaseMatrix`](#basematrix).[`mode`](#mode)
 
 ##### prodSum()
 
@@ -1598,7 +3415,7 @@ Product sum of all elements
 
 ###### Inherited from
 
-`BaseMatrix.prodSum`
+[`BaseMatrix`](#basematrix).[`prodSum`](#prodsum)
 
 ##### quantiles()
 
@@ -1635,7 +3452,7 @@ Product sum of all elements
 
 ###### Inherited from
 
-`BaseMatrix.quantiles`
+[`BaseMatrix`](#basematrix).[`quantiles`](#quantiles)
 
 ##### range()
 
@@ -1649,7 +3466,7 @@ The range (min-max) of all elements
 
 ###### Inherited from
 
-`BaseMatrix.range`
+[`BaseMatrix`](#basematrix).[`range`](#range)
 
 ##### reduce()
 
@@ -1714,7 +3531,7 @@ single value.
 
 ###### Inherited from
 
-`BaseMatrix.reduce`
+[`BaseMatrix`](#basematrix).[`reduce`](#reduce)
 
 ##### rowOfIndex()
 
@@ -1757,7 +3574,7 @@ the row index of the matrix `index`
 
 ###### Inherited from
 
-`BaseMatrix.rowOfIndex`
+[`BaseMatrix`](#basematrix).[`rowOfIndex`](#rowofindex)
 
 ##### sd()
 
@@ -1771,7 +3588,7 @@ Standard deviation of all elements
 
 ###### Inherited from
 
-`BaseMatrix.sd`
+[`BaseMatrix`](#basematrix).[`sd`](#sd)
 
 ##### skewness()
 
@@ -1783,7 +3600,7 @@ Standard deviation of all elements
 
 ###### Inherited from
 
-`BaseMatrix.skewness`
+[`BaseMatrix`](#basematrix).[`skewness`](#skewness)
 
 ##### slice()
 
@@ -1834,7 +3651,7 @@ the a copy of the internal array of elements (stored column major)
 
 ###### Inherited from
 
-`BaseMatrix.slice`
+[`BaseMatrix`](#basematrix).[`slice`](#slice)
 
 ##### some()
 
@@ -1873,7 +3690,7 @@ Tests if any element pass the test implemented by the callback fn
 
 ###### Inherited from
 
-`BaseMatrix.some`
+[`BaseMatrix`](#basematrix).[`some`](#some)
 
 ##### standardize()
 
@@ -1938,7 +3755,7 @@ Standardizes or normalizes the matrix
 
 ###### Inherited from
 
-`BaseMatrix.standardize`
+[`BaseMatrix`](#basematrix).[`standardize`](#standardize)
 
 ##### sum()
 
@@ -1952,7 +3769,7 @@ Sum of all elements
 
 ###### Inherited from
 
-`BaseMatrix.sum`
+[`BaseMatrix`](#basematrix).[`sum`](#sum)
 
 ##### swap()
 
@@ -2007,7 +3824,7 @@ Swaps the elements at the provided indexes
 
 ###### Inherited from
 
-`BaseMatrix.swap`
+[`BaseMatrix`](#basematrix).[`swap`](#swap)
 
 ##### transpose()
 
@@ -2029,7 +3846,7 @@ Variance of all elements
 
 ###### Inherited from
 
-`BaseMatrix.variance`
+[`BaseMatrix`](#basematrix).[`variance`](#variance)
 
 ##### assert()
 
@@ -2126,7 +3943,7 @@ Bind multiple matrices together by columns
 </td>
 <td>
 
-`BaseMatrix`\[]
+[`BaseMatrix`](#basematrix)\[]
 
 </td>
 </tr>
@@ -2247,7 +4064,7 @@ Performs matrix multiplication this \* mat
 </td>
 <td>
 
-`BaseMatrix`
+[`BaseMatrix`](#basematrix)
 
 </td>
 </tr>
@@ -2259,7 +4076,7 @@ Performs matrix multiplication this \* mat
 </td>
 <td>
 
-`BaseMatrix`
+[`BaseMatrix`](#basematrix)
 
 </td>
 </tr>
@@ -2294,7 +4111,7 @@ Bind multiple matrices together by rows
 </td>
 <td>
 
-`BaseMatrix`\[]
+[`BaseMatrix`](#basematrix)\[]
 
 </td>
 </tr>
@@ -2337,7 +4154,7 @@ Matrix addition.
 </td>
 <td>
 
-`number` | `BaseMatrix`
+`number` | [`BaseMatrix`](#basematrix)
 
 </td>
 <td>
@@ -2382,7 +4199,7 @@ If `true`, performes the operation in place.
 
 ###### Inherited from
 
-`BaseMatrix.add`
+[`BaseMatrix`](#basematrix).[`add`](#add)
 
 ##### divide()
 
@@ -2410,7 +4227,7 @@ Element wise division.
 </td>
 <td>
 
-`number` | `BaseMatrix`
+`number` | [`BaseMatrix`](#basematrix)
 
 </td>
 <td>
@@ -2455,7 +4272,7 @@ If `true`, performes the operation in place.
 
 ###### Inherited from
 
-`BaseMatrix.divide`
+[`BaseMatrix`](#basematrix).[`divide`](#divide)
 
 ##### mod()
 
@@ -2483,7 +4300,7 @@ Element wise remainder (%) `x % y`
 </td>
 <td>
 
-`number` | `BaseMatrix`
+`number` | [`BaseMatrix`](#basematrix)
 
 </td>
 <td>
@@ -2528,7 +4345,7 @@ If `true`, performes the operation in place.
 
 ###### Inherited from
 
-`BaseMatrix.mod`
+[`BaseMatrix`](#basematrix).[`mod`](#mod)
 
 ##### multiply()
 
@@ -2556,7 +4373,7 @@ Element wise multiplication.
 </td>
 <td>
 
-`number` | `BaseMatrix`
+`number` | [`BaseMatrix`](#basematrix)
 
 </td>
 <td>
@@ -2601,7 +4418,7 @@ If `true`, performes the operation in place.
 
 ###### Inherited from
 
-`BaseMatrix.multiply`
+[`BaseMatrix`](#basematrix).[`multiply`](#multiply)
 
 ##### subtract()
 
@@ -2629,7 +4446,7 @@ Matrix subtraction.
 </td>
 <td>
 
-`number` | `BaseMatrix`
+`number` | [`BaseMatrix`](#basematrix)
 
 </td>
 <td>
@@ -2674,7 +4491,7 @@ If `true`, performes the operation in place.
 
 ###### Inherited from
 
-`BaseMatrix.subtract`
+[`BaseMatrix`](#basematrix).[`subtract`](#subtract)
 
 #### Column operations
 
@@ -3005,7 +4822,7 @@ a new standardized or normalized [Matrix](#matrix)
 
 #### Extends
 
-- `BaseMatrix`
+- [`BaseMatrix`](#basematrix)
 
 #### Constructors
 
@@ -3078,7 +4895,7 @@ if `true`, uses the internal arrays of `arr` as a reference
 
 ###### Overrides
 
-`BaseMatrix.constructor`
+[`BaseMatrix`](#basematrix).[`constructor`](#constructor)
 
 #### Accessors
 
@@ -3096,7 +4913,7 @@ the number of elements
 
 ###### Inherited from
 
-`BaseMatrix.length`
+[`BaseMatrix`](#basematrix).[`length`](#length)
 
 ##### ncol
 
@@ -3112,7 +4929,7 @@ the number of columns
 
 ###### Inherited from
 
-`BaseMatrix.ncol`
+[`BaseMatrix`](#basematrix).[`ncol`](#ncol)
 
 ##### nrow
 
@@ -3128,7 +4945,7 @@ the number of rows
 
 ###### Inherited from
 
-`BaseMatrix.nrow`
+[`BaseMatrix`](#basematrix).[`nrow`](#nrow)
 
 #### Methods
 
@@ -3179,7 +4996,7 @@ the element at matrix `index`
 
 ###### Inherited from
 
-`BaseMatrix.at`
+[`BaseMatrix`](#basematrix).[`at`](#at)
 
 ##### atDim()
 
@@ -3220,7 +5037,7 @@ the element at matrix `index`
 
 ###### Inherited from
 
-`BaseMatrix.atDim`
+[`BaseMatrix`](#basematrix).[`atDim`](#atdim)
 
 ##### baseMap()
 
@@ -3257,7 +5074,7 @@ the element at matrix `index`
 
 ###### Inherited from
 
-`BaseMatrix.baseMap`
+[`BaseMatrix`](#basematrix).[`baseMap`](#basemap)
 
 ##### baseMapInPlace()
 
@@ -3294,7 +5111,7 @@ the element at matrix `index`
 
 ###### Inherited from
 
-`BaseMatrix.baseMapInPlace`
+[`BaseMatrix`](#basematrix).[`baseMapInPlace`](#basemapinplace)
 
 ##### clone()
 
@@ -3306,7 +5123,7 @@ the element at matrix `index`
 
 ###### Overrides
 
-`BaseMatrix.clone`
+[`BaseMatrix`](#basematrix).[`clone`](#clone)
 
 ##### colOfIndex()
 
@@ -3349,7 +5166,7 @@ the column index of the matrix `index`
 
 ###### Inherited from
 
-`BaseMatrix.colOfIndex`
+[`BaseMatrix`](#basematrix).[`colOfIndex`](#colofindex)
 
 ##### correlation()
 
@@ -3402,7 +5219,7 @@ the correlation between `this` and `vec`
 
 ###### Inherited from
 
-`BaseMatrix.dim`
+[`BaseMatrix`](#basematrix).[`dim`](#dim)
 
 ##### dimOfIndex()
 
@@ -3441,7 +5258,7 @@ an array `[row, column]`
 
 ###### Inherited from
 
-`BaseMatrix.dimOfIndex`
+[`BaseMatrix`](#basematrix).[`dimOfIndex`](#dimofindex)
 
 ##### ed()
 
@@ -3509,7 +5326,7 @@ if `index < 0`, `index + .length` is accessed.
 
 ###### Inherited from
 
-`BaseMatrix.ed`
+[`BaseMatrix`](#basematrix).[`ed`](#ed)
 
 ##### edDim()
 
@@ -3562,7 +5379,7 @@ if `index < 0`, `index + .length` is accessed.
 
 ###### Inherited from
 
-`BaseMatrix.edDim`
+[`BaseMatrix`](#basematrix).[`edDim`](#eddim)
 
 ##### equals()
 
@@ -3586,7 +5403,7 @@ if `index < 0`, `index + .length` is accessed.
 </td>
 <td>
 
-`BaseMatrix`
+[`BaseMatrix`](#basematrix)
 
 </td>
 </tr>
@@ -3601,7 +5418,7 @@ if `index < 0`, `index + .length` is accessed.
 
 ###### Inherited from
 
-`BaseMatrix.equals`
+[`BaseMatrix`](#basematrix).[`equals`](#equals)
 
 ##### equalsApprox()
 
@@ -3626,7 +5443,7 @@ if `index < 0`, `index + .length` is accessed.
 </td>
 <td>
 
-`BaseMatrix`
+[`BaseMatrix`](#basematrix)
 
 </td>
 <td>
@@ -3663,7 +5480,7 @@ if `index < 0`, `index + .length` is accessed.
 
 ###### Inherited from
 
-`BaseMatrix.equalsApprox`
+[`BaseMatrix`](#basematrix).[`equalsApprox`](#equalsapprox)
 
 ##### every()
 
@@ -3702,7 +5519,7 @@ Tests if all elements pass the test implemented by the callback fn
 
 ###### Inherited from
 
-`BaseMatrix.every`
+[`BaseMatrix`](#basematrix).[`every`](#every)
 
 ##### filter()
 
@@ -3788,7 +5605,7 @@ the index of the first element passing the test in `callback`
 
 ###### Inherited from
 
-`BaseMatrix.findIndex`
+[`BaseMatrix`](#basematrix).[`findIndex`](#findindex)
 
 ##### fn()
 
@@ -3856,7 +5673,7 @@ mat.edRC(3, (el, in) => el + in);
 
 ###### Inherited from
 
-`BaseMatrix.fn`
+[`BaseMatrix`](#basematrix).[`fn`](#fn)
 
 ##### fnDim()
 
@@ -3892,7 +5709,7 @@ mat.edRC(3, (el, in) => el + in);
 </td>
 <td>
 
-`MatrixCallbackDim`<`number`>
+[`MatrixCallbackDim`](#matrixcallbackdim)<`number`>
 
 </td>
 </tr>
@@ -3909,7 +5726,7 @@ mat.edRC(3, (el, in) => el + in);
 
 ###### Inherited from
 
-`BaseMatrix.fnDim`
+[`BaseMatrix`](#basematrix).[`fnDim`](#fndim)
 
 ##### forEach()
 
@@ -3948,7 +5765,7 @@ Executes the provided function once for each element
 
 ###### Inherited from
 
-`BaseMatrix.forEach`
+[`BaseMatrix`](#basematrix).[`forEach`](#foreach)
 
 ##### geometricMean()
 
@@ -3962,7 +5779,7 @@ Geometric mean of all elements
 
 ###### Inherited from
 
-`BaseMatrix.geometricMean`
+[`BaseMatrix`](#basematrix).[`geometricMean`](#geometricmean)
 
 ##### hasSizeOf()
 
@@ -3986,7 +5803,7 @@ Geometric mean of all elements
 </td>
 <td>
 
-`BaseMatrix`
+[`BaseMatrix`](#basematrix)
 
 </td>
 </tr>
@@ -4001,7 +5818,7 @@ Geometric mean of all elements
 
 ###### Inherited from
 
-`BaseMatrix.hasSizeOf`
+[`BaseMatrix`](#basematrix).[`hasSizeOf`](#hassizeof)
 
 ##### histogram()
 
@@ -4172,7 +5989,7 @@ the index of the first occurance of `searchElement`
 
 ###### Inherited from
 
-`BaseMatrix.indexOf`
+[`BaseMatrix`](#basematrix).[`indexOf`](#indexof)
 
 ##### indexOfDim()
 
@@ -4215,7 +6032,7 @@ the matrix index at `row`, `column`
 
 ###### Inherited from
 
-`BaseMatrix.indexOfDim`
+[`BaseMatrix`](#basematrix).[`indexOfDim`](#indexofdim)
 
 ##### isSquare()
 
@@ -4229,7 +6046,7 @@ the matrix index at `row`, `column`
 
 ###### Inherited from
 
-`BaseMatrix.isSquare`
+[`BaseMatrix`](#basematrix).[`isSquare`](#issquare)
 
 ##### lastIndexOf()
 
@@ -4292,7 +6109,7 @@ backwards
 
 ###### Inherited from
 
-`BaseMatrix.lastIndexOf`
+[`BaseMatrix`](#basematrix).[`lastIndexOf`](#lastindexof)
 
 ##### map()
 
@@ -4365,7 +6182,7 @@ a copy, where each element has been mapped by the callback fn.
 
 ###### Overrides
 
-`BaseMatrix.map`
+[`BaseMatrix`](#basematrix).[`map`](#map)
 
 ##### max()
 
@@ -4379,7 +6196,7 @@ Maximum value of all elements
 
 ###### Inherited from
 
-`BaseMatrix.max`
+[`BaseMatrix`](#basematrix).[`max`](#max)
 
 ##### mean()
 
@@ -4393,7 +6210,7 @@ Mean of all elements
 
 ###### Inherited from
 
-`BaseMatrix.mean`
+[`BaseMatrix`](#basematrix).[`mean`](#mean)
 
 ##### median()
 
@@ -4407,7 +6224,7 @@ Median of all elements
 
 ###### Inherited from
 
-`BaseMatrix.median`
+[`BaseMatrix`](#basematrix).[`median`](#median)
 
 ##### min()
 
@@ -4421,7 +6238,7 @@ Minimum value of all elements
 
 ###### Inherited from
 
-`BaseMatrix.min`
+[`BaseMatrix`](#basematrix).[`min`](#min)
 
 ##### mode()
 
@@ -4435,7 +6252,7 @@ Most common value
 
 ###### Inherited from
 
-`BaseMatrix.mode`
+[`BaseMatrix`](#basematrix).[`mode`](#mode)
 
 ##### prodSum()
 
@@ -4449,7 +6266,7 @@ Product sum of all elements
 
 ###### Inherited from
 
-`BaseMatrix.prodSum`
+[`BaseMatrix`](#basematrix).[`prodSum`](#prodsum)
 
 ##### quantiles()
 
@@ -4486,7 +6303,7 @@ Product sum of all elements
 
 ###### Inherited from
 
-`BaseMatrix.quantiles`
+[`BaseMatrix`](#basematrix).[`quantiles`](#quantiles)
 
 ##### range()
 
@@ -4500,7 +6317,7 @@ The range (min-max) of all elements
 
 ###### Inherited from
 
-`BaseMatrix.range`
+[`BaseMatrix`](#basematrix).[`range`](#range)
 
 ##### reduce()
 
@@ -4565,7 +6382,7 @@ single value.
 
 ###### Inherited from
 
-`BaseMatrix.reduce`
+[`BaseMatrix`](#basematrix).[`reduce`](#reduce)
 
 ##### rowOfIndex()
 
@@ -4608,7 +6425,7 @@ the row index of the matrix `index`
 
 ###### Inherited from
 
-`BaseMatrix.rowOfIndex`
+[`BaseMatrix`](#basematrix).[`rowOfIndex`](#rowofindex)
 
 ##### sd()
 
@@ -4622,7 +6439,7 @@ Standard deviation of all elements
 
 ###### Inherited from
 
-`BaseMatrix.sd`
+[`BaseMatrix`](#basematrix).[`sd`](#sd)
 
 ##### skewness()
 
@@ -4634,7 +6451,7 @@ Standard deviation of all elements
 
 ###### Inherited from
 
-`BaseMatrix.skewness`
+[`BaseMatrix`](#basematrix).[`skewness`](#skewness)
 
 ##### slice()
 
@@ -4685,7 +6502,7 @@ the a copy of the internal array of elements (stored column major)
 
 ###### Inherited from
 
-`BaseMatrix.slice`
+[`BaseMatrix`](#basematrix).[`slice`](#slice)
 
 ##### some()
 
@@ -4724,7 +6541,7 @@ Tests if any element pass the test implemented by the callback fn
 
 ###### Inherited from
 
-`BaseMatrix.some`
+[`BaseMatrix`](#basematrix).[`some`](#some)
 
 ##### sort()
 
@@ -4887,7 +6704,7 @@ Standardizes or normalizes the matrix
 
 ###### Inherited from
 
-`BaseMatrix.standardize`
+[`BaseMatrix`](#basematrix).[`standardize`](#standardize)
 
 ##### sum()
 
@@ -4901,7 +6718,7 @@ Sum of all elements
 
 ###### Inherited from
 
-`BaseMatrix.sum`
+[`BaseMatrix`](#basematrix).[`sum`](#sum)
 
 ##### swap()
 
@@ -4956,7 +6773,7 @@ Swaps the elements at the provided indexes
 
 ###### Inherited from
 
-`BaseMatrix.swap`
+[`BaseMatrix`](#basematrix).[`swap`](#swap)
 
 ##### unique()
 
@@ -4980,7 +6797,7 @@ Variance of all elements
 
 ###### Inherited from
 
-`BaseMatrix.variance`
+[`BaseMatrix`](#basematrix).[`variance`](#variance)
 
 ##### assert()
 
@@ -5196,7 +7013,7 @@ Matrix addition.
 </td>
 <td>
 
-`number` | `BaseMatrix`
+`number` | [`BaseMatrix`](#basematrix)
 
 </td>
 <td>
@@ -5241,7 +7058,7 @@ If `true`, performes the operation in place.
 
 ###### Inherited from
 
-`BaseMatrix.add`
+[`BaseMatrix`](#basematrix).[`add`](#add)
 
 ##### divide()
 
@@ -5269,7 +7086,7 @@ Element wise division.
 </td>
 <td>
 
-`number` | `BaseMatrix`
+`number` | [`BaseMatrix`](#basematrix)
 
 </td>
 <td>
@@ -5314,7 +7131,7 @@ If `true`, performes the operation in place.
 
 ###### Inherited from
 
-`BaseMatrix.divide`
+[`BaseMatrix`](#basematrix).[`divide`](#divide)
 
 ##### mod()
 
@@ -5342,7 +7159,7 @@ Element wise remainder (%) `x % y`
 </td>
 <td>
 
-`number` | `BaseMatrix`
+`number` | [`BaseMatrix`](#basematrix)
 
 </td>
 <td>
@@ -5387,7 +7204,7 @@ If `true`, performes the operation in place.
 
 ###### Inherited from
 
-`BaseMatrix.mod`
+[`BaseMatrix`](#basematrix).[`mod`](#mod)
 
 ##### multiply()
 
@@ -5415,7 +7232,7 @@ Element wise multiplication.
 </td>
 <td>
 
-`number` | `BaseMatrix`
+`number` | [`BaseMatrix`](#basematrix)
 
 </td>
 <td>
@@ -5460,7 +7277,7 @@ If `true`, performes the operation in place.
 
 ###### Inherited from
 
-`BaseMatrix.multiply`
+[`BaseMatrix`](#basematrix).[`multiply`](#multiply)
 
 ##### subtract()
 
@@ -5488,7 +7305,7 @@ Matrix subtraction.
 </td>
 <td>
 
-`number` | `BaseMatrix`
+`number` | [`BaseMatrix`](#basematrix)
 
 </td>
 <td>
@@ -5533,7 +7350,7 @@ If `true`, performes the operation in place.
 
 ###### Inherited from
 
-`BaseMatrix.subtract`
+[`BaseMatrix`](#basematrix).[`subtract`](#subtract)
 
 #### Copy methods
 
@@ -5910,6 +7727,84 @@ the cumulative sums of the vector elements
 #### Returns
 
 `number`
+
+---
+
+### MatrixCallbackDim()\<T>
+
+> **MatrixCallbackDim**<`T`> = (`element`, `index`, `dim`) => `T`
+
+#### Type Parameters
+
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`element`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`dim`
+
+</td>
+<td>
+
+[`MatrixDim`](#matrixdim-2)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Returns
+
+`T`
 
 ---
 
