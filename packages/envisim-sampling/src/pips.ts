@@ -6,7 +6,7 @@ import { discrete } from "./pps.js";
 /**
  * Selects a Sampford (pips) sample using the rejective method.
  *
- * @param options
+ * @param options -
  * @returns sample indices.
  */
 export function sampford({ probabilities, rand = BASE_OPTIONS.rand }: PipsOptions): number[] {
@@ -48,7 +48,7 @@ export function sampford({ probabilities, rand = BASE_OPTIONS.rand }: PipsOption
 /**
  * Selects a Pareto (pips) sample without replacement.
  *
- * @param options
+ * @param options -
  * @returns sample indices.
  */
 export function pareto({

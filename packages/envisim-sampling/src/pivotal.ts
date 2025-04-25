@@ -18,7 +18,7 @@ function vectorToArrayOfLength(p: Vector | number[], size: number): number[] {
 /**
  * Selects a (pips) sample using the local pivotal method 1.
  *
- * @param options
+ * @param options -
  * @returns sample indices.
  */
 export function lpm1({
@@ -40,7 +40,7 @@ export function lpm1({
 /**
  * Selects a (pips) sample using the local pivotal method 2.
  *
- * @param options
+ * @param options -
  * @returns sample indices.
  */
 export function lpm2({
@@ -65,7 +65,7 @@ export function lpm2({
  * @param prob - inclusion probabilities of size N,
  *   or a number `n` indicating equal inclusion probabilities `n / N`.
  * @param xm - matrix of auxilliary variables of size N*p.
- * @param options
+ * @param options -
  * @returns sample indices.
  */
 export function lpm1s({
@@ -87,7 +87,7 @@ export function lpm1s({
 /**
  * Selects a (pips) sample using the random pivotal method.
  *
- * @param options
+ * @param options -
  * @returns sample indices.
  */
 export function rpm({
@@ -107,7 +107,7 @@ export function rpm({
 /**
  * Selects a (pips) sample using the sequential pivotal method.
  *
- * @param options
+ * @param options -
  * @returns sample indices.
  */
 export function spm({

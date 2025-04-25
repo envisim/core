@@ -1,7 +1,7 @@
 import { Vector } from "@envisim/matrix";
 import { BASE_OPTIONS, type FixedSizedOptions } from "./base-options/index.js";
 
-interface InclusionProbabilitiesOptions extends FixedSizedOptions {
+export interface InclusionProbabilitiesOptions extends FixedSizedOptions {
   /**
    * positive numbers (sizes)
    */
