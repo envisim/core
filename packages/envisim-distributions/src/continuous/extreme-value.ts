@@ -1,18 +1,10 @@
-import {Distribution, Interval} from '../abstract-distribution.js';
-import {EULERSCONSTANT} from '../math-constants.js';
-import {
-  type ParamsLocationScale,
-  locationScaleCheck,
-  locationScaleDefault,
-  locationScaleNormalize,
-} from '../params.js';
+import { LocationScale } from "../abstract-location-scale.js";
+import { EULERSCONSTANT } from "../math-constants.js";
 
 /* eslint-disable-next-line no-loss-of-precision */
 export const RIEMANN_ZETA_FUN_3 = 1.202056903159594285399;
 
-export class ExtremeValue extends Distribution<ParamsLocationScale> {
-  protected params: ParamsLocationScale = {...locationScaleDefault};
-
+export class ExtremeValue extends LocationScale {
   /**
    * The Extreme Value distribution
    *
@@ -21,29 +13,17 @@ export class ExtremeValue extends Distribution<ParamsLocationScale> {
    * x.pdf(1);
    * x.quantile(0.5)
    */
-  constructor(
-    location: number = locationScaleDefault.location,
-    scale: number = locationScaleDefault.scale,
-  ) {
-    super();
-    this.setParameters({location, scale});
-    return this;
-  }
-
-  setParameters(params: ParamsLocationScale = {...locationScaleDefault}): void {
-    locationScaleCheck(params);
-    this.support = new Interval(-Infinity, Infinity, true, true);
-    this.params.scale = params.scale;
-    this.params.location = params.location;
+  constructor(location?: number, scale?: number) {
+    super(location, scale);
   }
 
   pdf(x: number): number {
-    const exp = Math.exp(-locationScaleNormalize(x, this.params));
+    const exp = Math.exp(-this.params.normalize(x));
     return this.support.checkPDF(x) ?? (exp * Math.exp(-exp)) / this.params.scale;
   }
 
   cdf(x: number): number {
-    return this.support.checkCDF(x) ?? Math.exp(-Math.exp(-locationScaleNormalize(x, this.params)));
+    return this.support.checkCDF(x) ?? Math.exp(-Math.exp(-this.params.normalize(x)));
   }
 
   quantile(q: number): number {
@@ -54,12 +34,12 @@ export class ExtremeValue extends Distribution<ParamsLocationScale> {
   }
 
   mean(): number {
-    const {location, scale} = this.params;
+    const { location, scale } = this.params;
     return location + scale * EULERSCONSTANT;
   }
 
   variance(): number {
-    const {scale} = this.params;
+    const { scale } = this.params;
     return Math.pow(scale * Math.PI, 2) / 6.0;
   }
 

@@ -1,10 +1,8 @@
-import {Distribution, Interval} from '../abstract-distribution.js';
-import {HALF_PI} from '../math-constants.js';
-import {sech} from '../utils.js';
+import { Distribution, Interval } from "../abstract-distribution.js";
+import { HALF_PI } from "../math-constants.js";
+import { sech } from "../utils.js";
 
-export class HyperbolicSecant extends Distribution<undefined> {
-  protected params = undefined;
-
+export class HyperbolicSecant extends Distribution {
   /**
    * The Hyperbolic Secant distribution
    *
@@ -17,11 +15,6 @@ export class HyperbolicSecant extends Distribution<undefined> {
    */
   constructor() {
     super();
-    this.setParameters();
-    return this;
-  }
-
-  setParameters(): void {
     this.support = new Interval(-Infinity, Infinity, true, true);
   }
 

@@ -1,18 +1,12 @@
-import {
-  Distribution,
-  Interval,
-  type RandomOptions,
-  randomOptionsDefault,
-} from '../abstract-distribution.js';
-import {logGammaFunction, regularizedLowerGammaFunction} from '../gamma-utils.js';
-import {type ParamsShapeScale, shapeScaleCheck, shapeScaleDefault} from '../params.js';
-import {assertPositiveInteger} from '../utils.js';
-import {gammaQuantile} from './gamma-quantile.js';
-import {randomShapeGamma} from './gamma-random.js';
+import { type RandomOptions, RANDOM_OPTIONS_DEFAULT } from "../abstract-distribution.js";
+import { ShapeScale } from "../abstract-shape-scale.js";
+import { logGammaFunction, regularizedLowerGammaFunction } from "../gamma-utils.js";
+import { assertPositiveInteger } from "../utils.js";
+import { gammaQuantile } from "./gamma-quantile.js";
+import { randomShapeGamma } from "./gamma-random.js";
 
-export class Gamma extends Distribution<ParamsShapeScale> {
-  protected params: ParamsShapeScale = {...shapeScaleDefault};
-  protected lgf!: number;
+export class Gamma extends ShapeScale {
+  #lgf!: number;
 
   /**
    * The Gamma distribution
@@ -24,23 +18,14 @@ export class Gamma extends Distribution<ParamsShapeScale> {
    * x.quantile(0.5)
    * x.random(10);
    */
-  constructor(shape: number = shapeScaleDefault.shape, scale: number = shapeScaleDefault.scale) {
-    super();
-    this.setParameters({shape, scale});
-    return this;
-  }
-
-  setParameters(params: ParamsShapeScale = {...shapeScaleDefault}): void {
-    shapeScaleCheck(params);
-    this.support = new Interval(0, Infinity, true, true);
-    this.params.shape = params.shape;
-    this.params.scale = params.scale;
-    this.lgf = logGammaFunction(params.shape);
+  constructor(shape?: number, scale?: number) {
+    super(shape, scale);
+    this.#lgf = logGammaFunction(this.params.shape);
   }
 
   pdf(x: number): number {
     const scale = this.params.scale;
-    const c = this.lgf + this.params.shape * Math.log(scale);
+    const c = this.#lgf + this.params.shape * Math.log(scale);
     const shape = this.params.shape - 1.0;
 
     return this.support.checkPDF(x) ?? Math.exp(shape * Math.log(x) - x / scale - c);
@@ -49,31 +34,31 @@ export class Gamma extends Distribution<ParamsShapeScale> {
   cdf(x: number, eps: number = 1e-12): number {
     return (
       this.support.checkCDF(x) ??
-      regularizedLowerGammaFunction(this.params.shape, x / this.params.scale, eps, this.lgf)
+      regularizedLowerGammaFunction(this.params.shape, x / this.params.scale, eps, this.#lgf)
     );
   }
 
   quantile(q: number, eps: number = 1e-12): number {
-    return this.support.checkQuantile(q) ?? gammaQuantile(q, this.params, eps, this.lgf);
+    return this.support.checkQuantile(q) ?? gammaQuantile.call(this.params, q, eps, this.#lgf);
   }
 
-  override random(n: number = 1, {rand = randomOptionsDefault.rand}: RandomOptions = {}): number[] {
+  override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
-    return randomShapeGamma(n, this.params.shape, rand, this.params.scale);
+    return randomShapeGamma(n, this.params.shape, options.rand, this.params.scale);
   }
 
   mean(): number {
-    const {shape, scale} = this.params;
+    const { shape, scale } = this.params;
     return shape * scale;
   }
 
   variance(): number {
-    const {shape, scale} = this.params;
+    const { shape, scale } = this.params;
     return shape * Math.pow(scale, 2);
   }
 
   mode(): number {
-    const {shape, scale} = this.params;
+    const { shape, scale } = this.params;
     if (shape < 1.0) return 0.0;
     return (shape - 1.0) * scale;
   }

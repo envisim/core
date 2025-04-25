@@ -1,17 +1,8 @@
-import {Distribution, Interval} from '../abstract-distribution.js';
-import {
-  type ParamsLocationScale,
-  type ParamsShapeScale,
-  locationScaleCheck,
-  locationScaleDefault,
-  locationScaleNormalize,
-  shapeScaleCheck,
-  shapeScaleDefault,
-} from '../params.js';
+import { Interval } from "../abstract-distribution.js";
+import { LocationScale } from "../abstract-location-scale.js";
+import { ShapeScale } from "../abstract-shape-scale.js";
 
-export class Logistic extends Distribution<ParamsLocationScale> {
-  protected params: ParamsLocationScale = {...locationScaleDefault};
-
+export class Logistic extends LocationScale {
   /**
    * The Logistic distribution
    *
@@ -22,33 +13,19 @@ export class Logistic extends Distribution<ParamsLocationScale> {
    * x.quantile(0.5)
    * x.random(10);
    */
-  constructor(
-    location: number = locationScaleDefault.location,
-    scale: number = locationScaleDefault.scale,
-  ) {
-    super();
-    this.setParameters({location, scale});
-    return this;
-  }
-
-  setParameters(params: ParamsLocationScale = {...locationScaleDefault}): void {
-    locationScaleCheck(params);
-    this.support = new Interval(-Infinity, Infinity, true, true);
-    this.params.scale = params.scale;
-    this.params.location = params.location;
+  constructor(location?: number, scale?: number) {
+    super(location, scale);
   }
 
   pdf(x: number): number {
     const check = this.support.checkPDF(x);
     if (check !== null) return check;
-    const exp = Math.exp(-locationScaleNormalize(x, this.params));
+    const exp = Math.exp(-this.params.normalize(x));
     return exp / (this.params.scale * Math.pow(exp + 1.0, 2));
   }
 
   cdf(x: number): number {
-    return (
-      this.support.checkCDF(x) ?? 1.0 / (1.0 + Math.exp(-locationScaleNormalize(x, this.params)))
-    );
+    return this.support.checkCDF(x) ?? 1.0 / (1.0 + Math.exp(-this.params.normalize(x)));
   }
 
   quantile(q: number): number {
@@ -63,7 +40,7 @@ export class Logistic extends Distribution<ParamsLocationScale> {
   }
 
   variance(): number {
-    const {scale} = this.params;
+    const { scale } = this.params;
     return Math.pow(scale * Math.PI, 2) / 3.0;
   }
 
@@ -76,9 +53,7 @@ export class Logistic extends Distribution<ParamsLocationScale> {
   }
 }
 
-export class LogLogistic extends Distribution<ParamsShapeScale> {
-  protected params: ParamsShapeScale = {...shapeScaleDefault};
-
+export class LogLogistic extends ShapeScale {
   /**
    * The Log-Logistic distribution
    *
@@ -89,17 +64,9 @@ export class LogLogistic extends Distribution<ParamsShapeScale> {
    * x.quantile([0.1, 0.5])
    * x.random(10);
    */
-  constructor(scale: number = shapeScaleDefault.scale, shape: number = shapeScaleDefault.shape) {
-    super();
-    this.setParameters({scale, shape});
-    return this;
-  }
-
-  setParameters(params: ParamsShapeScale = {...shapeScaleDefault}): void {
-    shapeScaleCheck(params);
+  constructor(shape?: number, scale?: number) {
+    super(shape, scale);
     this.support = new Interval(0.0, Infinity, false, true);
-    this.params.scale = params.scale;
-    this.params.shape = params.shape;
   }
 
   pdf(x: number): number {
@@ -124,14 +91,14 @@ export class LogLogistic extends Distribution<ParamsShapeScale> {
   }
 
   mean(): number {
-    const {scale, shape} = this.params;
+    const { scale, shape } = this.params;
     if (shape <= 1) return NaN;
     const frac = Math.PI / shape;
     return (scale * frac) / Math.sin(frac);
   }
 
   variance(): number {
-    const {scale, shape} = this.params;
+    const { scale, shape } = this.params;
     if (shape <= 2) return NaN;
     const frac = Math.PI / shape;
     return (
@@ -140,7 +107,7 @@ export class LogLogistic extends Distribution<ParamsShapeScale> {
   }
 
   mode(): number {
-    const {scale, shape} = this.params;
+    const { scale, shape } = this.params;
     if (shape <= 1.0) return 0.0;
     return scale * Math.pow((shape - 1) / (shape + 1), 1 / shape);
   }

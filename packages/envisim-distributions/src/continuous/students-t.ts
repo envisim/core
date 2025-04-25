@@ -1,24 +1,20 @@
-import {randomArray} from '@envisim/random';
-
+import { randomArray } from "@envisim/random";
 import {
   Distribution,
   Interval,
   type RandomOptions,
-  randomOptionsDefault,
-} from '../abstract-distribution.js';
-import {logBetaFunction, regularizedBetaFunction} from '../beta-utils.js';
-import {HALF_PI} from '../math-constants.js';
-import {
-  type ParamsDegreesOfFreedom,
-  degreesOfFreedomCheck,
-  degreesOfFreedomDefault,
-} from '../params.js';
-import {assertPositiveInteger} from '../utils.js';
-import {randomShapeGamma} from './gamma-random.js';
-import {stdNormalQuantile} from './normal-utils.js';
+  RANDOM_OPTIONS_DEFAULT,
+} from "../abstract-distribution.js";
+import { BetaParams } from "../beta-utils.js";
+import { HALF_PI } from "../math-constants.js";
+import { DegreesOfFreedomParams } from "../params.js";
+import { assertPositiveInteger } from "../utils.js";
+import { randomShapeGamma } from "./gamma-random.js";
+import { stdNormalQuantile } from "./normal-utils.js";
 
-export class StudentsT extends Distribution<ParamsDegreesOfFreedom> {
-  protected params: ParamsDegreesOfFreedom = degreesOfFreedomDefault;
+export class StudentsT extends Distribution {
+  #params!: DegreesOfFreedomParams;
+  #beta!: BetaParams;
 
   /**
    * The Students-T distribution
@@ -30,45 +26,43 @@ export class StudentsT extends Distribution<ParamsDegreesOfFreedom> {
    * x.quantile(0.5)
    * x.random(10);
    */
-  constructor(df: number = degreesOfFreedomDefault) {
+  constructor(df?: number) {
     super();
-    this.setParameters(df);
-    return this;
+    this.#params = new DegreesOfFreedomParams(df);
+    this.#beta = new BetaParams(this.#params.df * 0.5, 0.5);
+    this.support = new Interval(-Infinity, Infinity, true, true);
   }
 
-  setParameters(df: ParamsDegreesOfFreedom = degreesOfFreedomDefault): void {
-    degreesOfFreedomCheck(df);
-    this.support = new Interval(-Infinity, Infinity, true, true);
-    this.params = df;
+  get params() {
+    return this.#params;
   }
 
   pdf(x: number): number {
-    if (this.params === 1) {
+    if (this.params.df === 1) {
       // Cauchy(0, 1)
       return this.support.checkPDF(x) ?? 1.0 / (Math.PI * (1.0 + Math.pow(x, 2)));
     }
 
-    const halfDf = this.params * 0.5;
-    const c = -0.5 * Math.log(this.params) - logBetaFunction({alpha: 0.5, beta: halfDf});
+    const halfDf = this.params.df * 0.5;
+    const c = -0.5 * Math.log(this.params.df) - this.#beta.logBetaFunction();
     const df = halfDf + 0.5;
 
-    return this.support.checkPDF(x) ?? Math.exp(c - df * Math.log1p(Math.pow(x, 2) / this.params));
+    return (
+      this.support.checkPDF(x) ?? Math.exp(c - df * Math.log1p(Math.pow(x, 2) / this.params.df))
+    );
   }
 
   cdf(x: number, eps: number = 1e-20): number {
-    if (this.params === 1) {
+    if (this.params.df === 1) {
       // Cauchy(0, 1)
       return this.support.checkCDF(x) ?? 0.5 + Math.atan(x) / Math.PI;
     }
 
-    const betaParams = {alpha: this.params * 0.5, beta: 0.5};
-    const logBeta = logBetaFunction(betaParams);
-
     const check = this.support.checkCDF(x);
     if (check !== null) return check;
     if (x === 0.0) return 0.5;
-    const xt = this.params / (this.params + Math.pow(x, 2));
-    const f = regularizedBetaFunction(xt, betaParams, eps, logBeta) * 0.5;
+    const xt = this.params.df / (this.params.df + Math.pow(x, 2));
+    const f = this.#beta.regularizedBetaFunction(xt, eps) * 0.5;
     return x < 0 ? f : 1.0 - f;
   }
 
@@ -81,7 +75,7 @@ export class StudentsT extends Distribution<ParamsDegreesOfFreedom> {
   quantile(q: number): number {
     const check = this.support.checkQuantile(q);
     if (check !== null) return check;
-    const df = this.params;
+    const { df } = this.params;
 
     if (q === 0.5) {
       return 0.0;
@@ -136,18 +130,15 @@ export class StudentsT extends Distribution<ParamsDegreesOfFreedom> {
     return q < 0.5 ? -ret : ret;
   }
 
-  override random(
-    n: number = 1,
-    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
-  ): number[] {
+  override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
 
     // Normal(0, 1)
-    const x1 = randomArray(n, rand).map((u) => stdNormalQuantile(u));
+    const x1 = randomArray(n, options.rand).map((u) => stdNormalQuantile(u));
     // Chi2(df)
-    const x2 = randomShapeGamma(n, this.params * 0.5, rand, 2.0);
+    const x2 = randomShapeGamma(n, this.params.df * 0.5, options.rand, 2.0);
 
-    return x1.map((e, i) => e / Math.sqrt(x2[i] / this.params));
+    return x1.map((e, i) => e / Math.sqrt(x2[i] / this.params.df));
   }
 
   mean(): number {
@@ -155,7 +146,7 @@ export class StudentsT extends Distribution<ParamsDegreesOfFreedom> {
   }
 
   variance(): number {
-    const df = this.params;
+    const { df } = this.params;
     if (df <= 1) return NaN;
     if (df <= 2) return Infinity;
     return df / (df - 2);
@@ -166,7 +157,7 @@ export class StudentsT extends Distribution<ParamsDegreesOfFreedom> {
   }
 
   skewness(): number {
-    const df = this.params;
+    const { df } = this.params;
     if (df <= 3) return NaN;
     return 0.0;
   }

@@ -1,13 +1,12 @@
-import {Random, type RandomGenerator, randomArray} from '@envisim/random';
-
-import {assertPositiveInteger} from './utils.js';
+import { Random, type RandomGenerator, randomArray } from "@envisim/random";
+import { assertPositiveInteger } from "./utils.js";
 
 export interface RandomOptions {
   /**
-   * An instance of {@link random.Random}
+   * A random generator
    * @defaultValue `new Random()`
    */
-  rand?: RandomGenerator;
+  rand: RandomGenerator;
   /**
    * Epsilon, used during comparisons of floats
    * @defaultValue `1e-12`
@@ -16,19 +15,15 @@ export interface RandomOptions {
   method?: string;
 }
 /** @internal */
-export const randomOptionsDefault: {rand: Random; eps: number} = {
+export const RANDOM_OPTIONS_DEFAULT: RandomOptions = {
   rand: new Random(),
   eps: 1e-12,
-};
+} as const;
 
-/** Base class */
-export abstract class Distribution<PAR> {
-  /** @internal */
-  protected abstract params: PAR;
-  protected support!: Interval;
+export abstract class Distribution {
+  support!: Interval;
 
-  /** Sets the parameters of the distribution */
-  abstract setParameters(params: PAR): void;
+  constructor() {}
 
   /**
    * The probability density/mass function evaluated at `x`.
@@ -42,17 +37,13 @@ export abstract class Distribution<PAR> {
    * The quantile function evaluated at `q`.
    */
   abstract quantile(q: number, eps?: number): number;
-
   /**
    * Generate random numbers from the distribution.
    * @param n the number of observations to be generated
    */
-  random(
-    n: number = 1,
-    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
-  ): number[] {
+  random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
-    const u = randomArray(n, rand);
+    const u = randomArray(n, options.rand);
     return u.map((v) => this.quantile(v));
   }
 
@@ -60,83 +51,53 @@ export abstract class Distribution<PAR> {
   abstract mean(): number;
   /** the variance */
   abstract variance(): number;
-  /** @returns the square root of the variance */
-  standardDeviation(): number {
+  /** standard deviation */
+  sd(): number {
     return Math.sqrt(this.variance());
   }
   /** @returns the mode */
   abstract mode(): number;
   /** @returns the skewness */
   abstract skewness(): number;
-
-  protected cornishFisherExpansion(x: number): number {
-    return (
-      this.mean() +
-      this.standardDeviation() * (x + (this.skewness() * (Math.pow(x, 2) - 1.0)) / 6.0)
-    );
-  }
-
-  protected quantileCF(q: number, startK: number, startCDF: number): number {
-    if (startCDF === q) return startK;
-
-    let cdf = startCDF;
-    let k = startK;
-    let run = 0;
-    if (cdf > q) {
-      while (run++ <= 1e5) {
-        cdf -= this.pdf(k);
-        // cdf -= pmf(k - 1);
-        if (cdf === q) return k - 1;
-        if (cdf < q || !this.support.isL(k)) return k;
-        k--;
-      }
-    } else {
-      while (run++ <= 1e5) {
-        cdf += this.pdf(k + 1);
-        if (cdf >= q) return k + 1;
-        if (!this.support.isR(k)) return k;
-        k++;
-      }
-    }
-
-    console.warn('quantile not found in 1e5 iterations');
-    return k;
-  }
 }
 
 /** @internal */
-export const quantileCF = (
-  quantile: number,
-  pmf: (n: number) => number,
+export function cornishFisherExpansion(this: Distribution, x: number): number {
+  return this.mean() + this.sd() * (x + (this.skewness() * (Math.pow(x, 2) - 1.0)) / 6.0);
+}
+
+/** @internal */
+export function quantileCF(
+  this: Distribution,
+  q: number,
   startK: number,
   startCDF: number,
-  support: Interval,
-): number => {
-  if (startCDF === quantile) return startK;
+): number {
+  if (startCDF === q) return startK;
 
   let cdf = startCDF;
   let k = startK;
   let run = 0;
-  if (cdf > quantile) {
+  if (cdf > q) {
     while (run++ <= 1e5) {
-      cdf -= pmf(k);
+      cdf -= this.pdf(k);
       // cdf -= pmf(k - 1);
-      if (cdf === quantile) return k - 1;
-      if (cdf < quantile || !support.isL(k)) return k;
+      if (cdf === q) return k - 1;
+      if (cdf < q || !this.support.isL(k)) return k;
       k--;
     }
   } else {
     while (run++ <= 1e5) {
-      cdf += pmf(k + 1);
-      if (cdf >= quantile) return k + 1;
-      if (!support.isR(k)) return k;
+      cdf += this.pdf(k + 1);
+      if (cdf >= q) return k + 1;
+      if (!this.support.isR(k)) return k;
       k++;
     }
   }
 
-  console.warn('quantile not found in 1e5 iterations');
+  console.warn("quantile not found in 1e5 iterations");
   return k;
-};
+}
 
 /** @internal */
 export class Interval {
@@ -150,7 +111,7 @@ export class Interval {
   ro: boolean = true;
 
   constructor(l: number, r: number, lo: boolean = true, ro: boolean = true) {
-    if (l > r) throw new RangeError('l must not be larger than r');
+    if (l > r) throw new RangeError("l must not be larger than r");
     this.l = l;
     this.r = r;
     this.lo = Number.isFinite(l) ? lo : true;

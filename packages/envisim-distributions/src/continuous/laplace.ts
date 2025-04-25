@@ -1,14 +1,6 @@
-import {Distribution, Interval} from '../abstract-distribution.js';
-import {
-  type ParamsLocationScale,
-  locationScaleCheck,
-  locationScaleDefault,
-  locationScaleNormalize,
-} from '../params.js';
+import { LocationScale } from "../abstract-location-scale.js";
 
-export class Laplace extends Distribution<ParamsLocationScale> {
-  protected params: ParamsLocationScale = {...locationScaleDefault};
-
+export class Laplace extends LocationScale {
   /**
    * The Laplace distribution
    *
@@ -19,33 +11,21 @@ export class Laplace extends Distribution<ParamsLocationScale> {
    * x.quantile(0.5)
    * x.random(10);
    */
-  constructor(
-    location: number = locationScaleDefault.location,
-    scale: number = locationScaleDefault.scale,
-  ) {
-    super();
-    this.setParameters({location, scale});
-    return this;
-  }
-
-  setParameters(params: ParamsLocationScale = {...locationScaleDefault}): void {
-    locationScaleCheck(params);
-    this.support = new Interval(-Infinity, Infinity, true, true);
-    this.params.scale = params.scale;
-    this.params.location = params.location;
+  constructor(location?: number, scale?: number) {
+    super(location, scale);
   }
 
   pdf(x: number): number {
     return (
       this.support.checkPDF(x) ??
-      (Math.exp(-Math.abs(locationScaleNormalize(x, this.params))) * 0.5) / this.params.scale
+      (Math.exp(-Math.abs(this.params.normalize(x))) * 0.5) / this.params.scale
     );
   }
 
   cdf(x: number): number {
     const check = this.support.checkCDF(x);
     if (check !== null) return check;
-    const z = locationScaleNormalize(x, this.params);
+    const z = this.params.normalize(x);
     if (x <= this.params.location) return Math.exp(z) * 0.5;
     return 1 - Math.exp(-z) * 0.5;
   }

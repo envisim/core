@@ -1,25 +1,10 @@
-import {randomArray} from '@envisim/random';
+import { randomArray } from "@envisim/random";
+import { Bounded } from "../abstract-bounded.js";
+import { BoundedMid } from "../abstract-bounded.js";
+import { type RandomOptions, RANDOM_OPTIONS_DEFAULT } from "../abstract-distribution.js";
+import { assertPositiveInteger } from "../utils.js";
 
-import {
-  Distribution,
-  Interval,
-  type RandomOptions,
-  randomOptionsDefault,
-} from '../abstract-distribution.js';
-import {
-  type ParamsBound,
-  type ParamsBoundMid,
-  boundCheck,
-  boundDefault,
-  boundMidCheck,
-  boundMidDefault,
-} from '../params.js';
-import {assertPositiveInteger} from '../utils.js';
-
-export class Uniform extends Distribution<ParamsBound> {
-  protected params: ParamsBound = {...boundDefault};
-  protected density!: number;
-
+export class Uniform extends Bounded {
   /**
    * The Uniform (continuous) distribution
    *
@@ -30,48 +15,35 @@ export class Uniform extends Distribution<ParamsBound> {
    * x.quantile(0.5)
    * x.random(10);
    */
-  constructor(a: number = boundDefault.a, b: number = boundDefault.b) {
-    super();
-    this.setParameters({a, b});
-    return this;
-  }
-
-  setParameters(params: ParamsBound = {...boundDefault}): void {
-    boundCheck(params);
-    this.support = new Interval(params.a, params.b, false, false);
-    this.params.a = params.a;
-    this.params.b = params.b;
-    this.density = 1.0 / (params.b - params.a);
+  constructor(a?: number, b?: number) {
+    super(a, b);
   }
 
   pdf(x: number): number {
-    return this.support.checkPDF(x) ?? this.density;
+    return this.support.checkPDF(x) ?? 1.0 / this.params.width;
   }
 
   cdf(x: number): number {
-    return this.support.checkCDF(x) ?? (x - this.params.a) * this.density;
+    return this.support.checkCDF(x) ?? (x - this.params.a) / this.params.width;
   }
 
   quantile(q: number): number {
-    return this.support.checkQuantile(q) ?? this.params.a + q * (this.params.b - this.params.a);
+    return this.support.checkQuantile(q) ?? this.params.a + q * this.params.width;
   }
 
-  override random(
-    n: number = 1,
-    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
-  ): number[] {
+  override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
-    const width = this.params.b - this.params.a;
-    return randomArray(n, rand).map((e) => this.params.a + width * e);
+    const width = this.params.width;
+    return randomArray(n, options.rand).map((e) => this.params.a + width * e);
   }
 
   mean(): number {
-    const {a, b} = this.params;
+    const { a, b } = this.params;
     return (a + b) / 2.0;
   }
 
   variance(): number {
-    const {a, b} = this.params;
+    const { a, b } = this.params;
     return Math.pow(b - a, 2) / 12.0;
   }
 
@@ -84,9 +56,7 @@ export class Uniform extends Distribution<ParamsBound> {
   }
 }
 
-export class Triangular extends Distribution<ParamsBoundMid> {
-  protected params: ParamsBoundMid = {...boundMidDefault};
-
+export class Triangular extends BoundedMid {
   /**
    * The Triangular distribution
    *
@@ -97,31 +67,17 @@ export class Triangular extends Distribution<ParamsBoundMid> {
    * x.quantile(0.1);
    * x.random(10);
    */
-  constructor(
-    a: number = boundMidDefault.a,
-    b: number = boundMidDefault.b,
-    mid: number = (a + b) * 0.5,
-  ) {
-    super();
-    this.setParameters({a, b, mid});
-    return this;
-  }
-
-  setParameters(params: ParamsBoundMid = {...boundMidDefault}): void {
-    boundMidCheck(params);
-    this.support = new Interval(params.a, params.b, false, false);
-    this.params.a = params.a;
-    this.params.b = params.b;
-    this.params.mid = params.mid;
+  constructor(a?: number, b?: number, mid?: number) {
+    super(a, b, mid);
   }
 
   pdf(x: number): number {
     const check = this.support.checkPDF(x);
     if (check !== null) return check;
 
-    const c1 = 2.0 / (this.params.b - this.params.a);
-    const c2 = c1 / (this.params.mid - this.params.a);
-    const c3 = c1 / (this.params.b - this.params.mid);
+    const c1 = 2.0 / this.params.width;
+    const c2 = c1 / this.params.awidth;
+    const c3 = c1 / this.params.bwidth;
 
     if (x === this.params.mid) return c1;
     if (x < this.params.mid) return c2 * (x - this.params.a);
@@ -132,9 +88,8 @@ export class Triangular extends Distribution<ParamsBoundMid> {
     const check = this.support.checkCDF(x);
     if (check !== null) return check;
 
-    const width = this.params.b - this.params.a;
-    const c1 = 1.0 / ((this.params.mid - this.params.a) * width);
-    const c2 = 1.0 / ((this.params.b - this.params.mid) * width);
+    const c1 = 1.0 / (this.params.awidth * this.params.width);
+    const c2 = 1.0 / (this.params.bwidth * this.params.width);
 
     if (x <= this.params.mid) return Math.pow(x - this.params.a, 2) * c1;
     return 1.0 - Math.pow(this.params.b - x, 2) * c2;
@@ -144,23 +99,22 @@ export class Triangular extends Distribution<ParamsBoundMid> {
     const check = this.support.checkQuantile(q);
     if (check !== null) return check;
 
-    const c1 = this.params.b - this.params.a;
-    const c2 = this.params.mid - this.params.a;
+    const c1 = this.params.width;
+    const c2 = this.params.awidth;
     const c3 = c1 * c2;
-    const c4 = c1 * (this.params.b - this.params.mid);
+    const c4 = c1 * this.params.bwidth;
 
     if (c2 > 0.0 && q * c1 <= c2) return this.params.a + Math.sqrt(q * c3);
     return this.params.b - Math.sqrt((1.0 - q) * c4);
   }
 
   mean(): number {
-    const {a, b, mid} = this.params;
+    const { a, b, mid } = this.params;
     return (a + b + mid) / 3.0;
   }
 
   variance(): number {
-    const {a, b} = this.params;
-    return Math.pow(b - a, 2) / 12.0;
+    return Math.pow(this.params.width, 2) / 12.0;
   }
 
   mode(): number {
@@ -168,7 +122,7 @@ export class Triangular extends Distribution<ParamsBoundMid> {
   }
 
   skewness(): number {
-    const {a, b, mid} = this.params;
+    const { a, b, mid } = this.params;
     return (
       (Math.SQRT2 * (a + b - 2.0 * mid) * (2.0 * a - b - mid) * (a - 2.0 * b + mid)) /
       (5.0 * Math.pow(a * a + b * b + mid * mid - a * b - a * mid - b * mid, 1.5))
