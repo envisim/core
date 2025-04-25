@@ -1,5 +1,6 @@
-import { type ErrorType } from "./utils.js";
-
+/**
+ * @enum
+ */
 export const COLLECT_ERROR_LIST = {
   // collect general
   LINE_EXPECTS_AREA: "collect-error-line-expects-area",
@@ -12,8 +13,4 @@ export const COLLECT_ERROR_LIST = {
   PROPERTY_NOT_NUMERICAL: "collect-error-property-not-numerical",
 } as const;
 
-/**
- * @inlineType ErrorType
- * @useDeclaredType
- */
-export type CollectError = ErrorType<typeof COLLECT_ERROR_LIST>;
+export type CollectError = (typeof COLLECT_ERROR_LIST)[keyof typeof COLLECT_ERROR_LIST] | null;

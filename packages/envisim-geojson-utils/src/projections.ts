@@ -10,23 +10,15 @@ const TO_DEG = 180 / Math.PI;
 const TO_RAD = Math.PI / 180;
 
 /**
- * @expand
- * @useDeclaredType
+ * @inline
  */
 type NestedPosition = GJ.Position | NestedPosition[];
-
 /**
- * @expand
+ * @inline
  */
 type ProjectionFunction = (coord: GJ.Position) => GJ.Position2;
 export interface Projection {
-  /**
-   * @inlineType ProjectionFunction
-   */
   project: ProjectionFunction;
-  /**
-   * @inlineType ProjectionFunction
-   */
   unproject: ProjectionFunction;
 }
 
@@ -35,7 +27,6 @@ export interface Projection {
  * @param coords -
  * @param proj -
  * @returns
- * @inlineType ProjectionFunction
  */
 export function projectCoords<T extends NestedPosition>(coords: T, proj: ProjectionFunction): T {
   if (Array.isArray(coords[0])) {
@@ -49,8 +40,8 @@ export function projectCoords<T extends NestedPosition>(coords: T, proj: Project
 /**
  * Azimuthal Equidistant projection based on the reference coordinate
  * provided as argument.
- * @param refCoord - A GeoJSON.Position
- * @returns - Azimuthal Equidistant projection.
+ * @param refCoord - the reference coordinate
+ * @returns an azimuthal equidistant projection.
  */
 export function azimuthalEquidistant(refCoord: GJ.Position): Projection {
   return {

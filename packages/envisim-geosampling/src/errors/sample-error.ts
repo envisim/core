@@ -1,5 +1,6 @@
-import { type ErrorType } from "./utils.js";
-
+/**
+ * @enum
+ */
 export const SAMPLE_ERROR_LIST = {
   // incorrect collection
   EXPECTED_AREA: "sample-error-expected-area",
@@ -42,8 +43,4 @@ export const SAMPLE_ERROR_LIST = {
   ROTATION_OF_MODEL_FEATURE_ERROR: "sample-error-model-feature-rotation-incorrect",
 } as const;
 
-/**
- * @inlineType ErrorType
- * @useDeclaredType
- */
-export type SampleError = ErrorType<typeof SAMPLE_ERROR_LIST>;
+export type SampleError = (typeof SAMPLE_ERROR_LIST)[keyof typeof SAMPLE_ERROR_LIST] | null;

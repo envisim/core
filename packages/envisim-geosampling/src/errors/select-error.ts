@@ -1,5 +1,6 @@
-import { type ErrorType } from "./utils.js";
-
+/**
+ * @enum
+ */
 export const SELECT_ERROR_LIST = {
   // select general
   EXPECTED_AREA: "select-error-collection-is-not-area",
@@ -11,8 +12,4 @@ export const SELECT_ERROR_LIST = {
   BASE_COLLECTION_EXPECTED_POINT: "select-error-base-collection-is-not-point",
 } as const;
 
-/**
- * @inlineType ErrorType
- * @useDeclaredType
- */
-export type SelectError = ErrorType<typeof SELECT_ERROR_LIST>;
+export type SelectError = (typeof SELECT_ERROR_LIST)[keyof typeof SELECT_ERROR_LIST] | null;
