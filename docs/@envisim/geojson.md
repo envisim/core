@@ -21,13 +21,16 @@
   - [Polygon](#polygon)
   - [PropertyRecord\<IDS>](#propertyrecordids)
 - [Interfaces](#interfaces)
+  - [BufferOptions](#bufferoptions)
   - [CategoricalProperty\<ID>](#categoricalpropertyid)
   - [CirclesToPolygonsOptions](#circlestopolygonsoptions)
+  - [FeatureCollectionExtrasJson](#featurecollectionextrasjson)
   - [NumericalProperty\<ID>](#numericalpropertyid)
 - [Type Aliases](#type-aliases)
   - [AreaObject](#areaobject)
   - [DecreasingObject\<G>](#decreasingobjectg)
   - [FeatureProperties\<IDS>](#featurepropertiesids)
+  - [ForEachCallback()\<T>](#foreachcallbackt)
   - [IncreasingObject\<G>](#increasingobjectg)
   - [LineObject](#lineobject)
   - [ObjectOfPrimitive\<T>](#objectofprimitivet)
@@ -37,7 +40,11 @@
   - [PropertyList\<IDS>](#propertylistids)
   - [PureObject\<T>](#pureobjectt)
   - [RetractingObject\<G>](#retractingobjectg)
+  - [SpecialFeatureProperties](#specialfeatureproperties)
   - [SpecialPropertyNames](#specialpropertynames)
+  - [StrippedFeatureCollectionJson](#strippedfeaturecollectionjson)
+- [Variables](#variables)
+  - [SPECIAL_KEYS](#special_keys)
 - [Functions](#functions)
   - [convexHull()](#convexhull)
   - [intersectAreaAreaGeometries()](#intersectareaareageometries)
@@ -257,7 +264,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-`BufferOptions`
+[`BufferOptions`](#bufferoptions)
 
 </td>
 </tr>
@@ -2086,7 +2093,6 @@ if `true`, copys by reference when possible.
 #### Implements
 
 - [`BaseFeatureCollection`](geojson-utils/geojson.md#basefeaturecollection)<[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`SingleTypeObject`](geojson-utils/geojson.md#singletypeobject), `number` | `string`>>
-- `FeatureCollectionExtras`
 
 #### Properties
 
@@ -2529,7 +2535,7 @@ Foreign GeoJSON member, the human readable name of the collection
 </td>
 <td>
 
-`BufferOptions`
+[`BufferOptions`](#bufferoptions)
 
 </td>
 </tr>
@@ -2750,7 +2756,7 @@ if `true`, creates shallow copies of the features
 </td>
 <td>
 
-`ForEachCallback`<[`Feature`](#feature)<`T`, `PID`>>
+[`ForEachCallback`](#foreachcallback)<[`Feature`](#feature)<`T`, `PID`>>
 
 </td>
 </tr>
@@ -2783,7 +2789,7 @@ if `true`, creates shallow copies of the features
 </td>
 <td>
 
-`ForEachCallback`<`T`>
+[`ForEachCallback`](#foreachcallback)<`T`>
 
 </td>
 </tr>
@@ -3206,7 +3212,7 @@ of a line collection, and the total count of a point collection
 </td>
 <td>
 
-`StrippedFeatureCollectionJson`
+[`StrippedFeatureCollectionJson`](#strippedfeaturecollectionjson)
 
 </td>
 <td>
@@ -3279,7 +3285,7 @@ of a line collection, and the total count of a point collection
 </td>
 <td>
 
-`StrippedFeatureCollectionJson`
+[`StrippedFeatureCollectionJson`](#strippedfeaturecollectionjson)
 
 </td>
 <td>
@@ -3335,7 +3341,7 @@ of a line collection, and the total count of a point collection
 </td>
 <td>
 
-`StrippedFeatureCollectionJson`
+[`StrippedFeatureCollectionJson`](#strippedfeaturecollectionjson)
 
 </td>
 <td>
@@ -4017,7 +4023,7 @@ of a line collection, and the total count of a point collection
 </td>
 <td>
 
-`BufferOptions`
+[`BufferOptions`](#bufferoptions)
 
 </td>
 </tr>
@@ -4662,7 +4668,7 @@ if `true`, copys by reference when possible.
 </td>
 <td>
 
-`BufferOptions`
+[`BufferOptions`](#bufferoptions)
 
 </td>
 </tr>
@@ -5351,7 +5357,7 @@ overlap as well.
 </td>
 <td>
 
-`BufferOptions`
+[`BufferOptions`](#bufferoptions)
 
 </td>
 </tr>
@@ -5950,7 +5956,7 @@ overlap as well.
 </td>
 <td>
 
-`BufferOptions`
+[`BufferOptions`](#bufferoptions)
 
 </td>
 </tr>
@@ -6561,7 +6567,7 @@ overlap as well.
 </td>
 <td>
 
-`BufferOptions`
+[`BufferOptions`](#bufferoptions)
 
 </td>
 </tr>
@@ -7205,7 +7211,7 @@ overlap as well.
 </td>
 <td>
 
-`BufferOptions`
+[`BufferOptions`](#bufferoptions)
 
 </td>
 </tr>
@@ -7785,7 +7791,7 @@ overlap as well.
 </td>
 <td>
 
-`BufferOptions`
+[`BufferOptions`](#bufferoptions)
 
 </td>
 </tr>
@@ -9254,6 +9260,60 @@ k is "\_designWeight" | "\_distance" | "\_parent" | "\_randomRotation" | "\_meas
 
 ## Interfaces
 
+### BufferOptions
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="distance"></a> `distance?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+The radius/distance to buffer in meters.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="steps"></a> `steps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+How to connect segments: A step of 1 (or undefined) will connect segments by straight
+lines. Any other positive step will connect segments by a (semi)-circle, with `steps` segments
+per quadrant.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+---
+
 ### CategoricalProperty\<ID>
 
 #### Extends
@@ -9404,6 +9464,95 @@ The number of vertices to create on the circle
 
 ---
 
+### FeatureCollectionExtrasJson
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="color-1"></a> `color?`
+
+</td>
+<td>
+
+\[`number`, `number`, `number`]
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="id-3"></a> `id?`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="primitive-1"></a> `primitive`
+
+</td>
+<td>
+
+[`GeometricPrimitiveUnion`](geojson-utils/.md#geometricprimitiveunion)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="propertyrecord-2"></a> `propertyRecord`
+
+</td>
+<td>
+
+{ `record`: [`PropertyList`](#propertylist)<`string`>; }
+
+</td>
+</tr>
+<tr>
+<td>
+
+`propertyRecord.record`
+
+</td>
+<td>
+
+[`PropertyList`](#propertylist)<`string`>
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="title-1"></a> `title?`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+---
+
 ### NumericalProperty\<ID>
 
 #### Extends
@@ -9449,7 +9598,7 @@ The number of vertices to create on the circle
 <tr>
 <td>
 
-<a id="id-4"></a> `id`
+<a id="id-5"></a> `id`
 
 </td>
 <td>
@@ -9552,7 +9701,7 @@ Holds id and index of collected categorical variable
 
 ### FeatureProperties\<IDS>
 
-> **FeatureProperties**<`IDS`> = `SpecialFeatureProperties` & `Record`<`IDS`, `number` | `string`>
+> **FeatureProperties**<`IDS`> = [`SpecialFeatureProperties`](#specialfeatureproperties) & `Record`<`IDS`, `number` | `string`>
 
 #### Type Parameters
 
@@ -9578,6 +9727,72 @@ Holds id and index of collected categorical variable
 </tr>
 </tbody>
 </table>
+
+---
+
+### ForEachCallback()\<T>
+
+> **ForEachCallback**<`T`> = (`obj`, `index`) => `void`
+
+#### Type Parameters
+
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`T`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`obj`
+
+</td>
+<td>
+
+`T`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`index`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Returns
+
+`void`
 
 ---
 
@@ -9786,9 +10001,31 @@ Holds id and index of collected categorical variable
 
 ---
 
+### SpecialFeatureProperties
+
+> **SpecialFeatureProperties** = `Partial`<`Record`<[`SpecialPropertyNames`](#specialpropertynames), `number`>>
+
+Record of special properties
+
+---
+
 ### SpecialPropertyNames
 
-> **SpecialPropertyNames** = _typeof_ `SPECIAL_KEYS`\[`number`]
+> **SpecialPropertyNames** = _typeof_ [`SPECIAL_KEYS`](#special_keys-1)\[`number`]
+
+---
+
+### StrippedFeatureCollectionJson
+
+> **StrippedFeatureCollectionJson** = [`OptionalParam`](utils.md#optionalparam)<[`BaseFeatureCollection`](geojson-utils/geojson.md#basefeaturecollection)<[`BaseFeature`](geojson-utils/geojson.md#basefeature)<[`BaseGeometry`](geojson-utils/geojson.md#basegeometry), `unknown`>> & [`FeatureCollectionExtrasJson`](#featurecollectionextrasjson), `"type"` | `"primitive"` | `"propertyRecord"`>
+
+## Variables
+
+### SPECIAL_KEYS
+
+> `const` **SPECIAL_KEYS**: readonly \[`"_designWeight"`, `"_distance"`, `"_parent"`, `"_randomRotation"`, `"_measure"`, `"_count"`]
+
+Special keys (reserved names) of properties
 
 ## Functions
 

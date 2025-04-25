@@ -21,19 +21,19 @@
 
 ### CollectError
 
-> **CollectError** = `ErrorType`<_typeof_ [`COLLECT_ERROR_LIST`](#collect_error_list)>
+> **CollectError** = [`CollectError`](#collecterror)
 
 ---
 
 ### SampleError
 
-> **SampleError** = `ErrorType`<_typeof_ [`SAMPLE_ERROR_LIST`](#sample_error_list)>
+> **SampleError** = [`SampleError`](#sampleerror)
 
 ---
 
 ### SelectError
 
-> **SelectError** = `ErrorType`<_typeof_ [`SELECT_ERROR_LIST`](#select_error_list)>
+> **SelectError** = [`SelectError`](#selecterror)
 
 ## Variables
 
@@ -65,7 +65,7 @@
 </td>
 <td>
 
-`'collect-error-collection-is-missing'`
+`"collect-error-collection-is-missing"`
 
 </td>
 </tr>
@@ -82,7 +82,7 @@
 </td>
 <td>
 
-`'collect-error-line-expects-area'`
+`"collect-error-line-expects-area"`
 
 </td>
 </tr>
@@ -99,7 +99,7 @@
 </td>
 <td>
 
-`'collect-error-point-expects-area'`
+`"collect-error-point-expects-area"`
 
 </td>
 </tr>
@@ -116,7 +116,7 @@
 </td>
 <td>
 
-`'collect-error-property-is-missing'`
+`"collect-error-property-is-missing"`
 
 </td>
 </tr>
@@ -133,7 +133,7 @@
 </td>
 <td>
 
-`'collect-error-property-is-missing'`
+`"collect-error-property-is-missing"`
 
 </td>
 </tr>
@@ -150,7 +150,7 @@
 </td>
 <td>
 
-`'collect-error-property-not-numerical'`
+`"collect-error-property-not-numerical"`
 
 </td>
 </tr>
@@ -187,7 +187,7 @@
 </td>
 <td>
 
-`'sample-error-balance-on-do-not-exist'`
+`"sample-error-balance-on-do-not-exist"`
 
 </td>
 </tr>
@@ -204,7 +204,7 @@
 </td>
 <td>
 
-`'sample-error-collection-do-not-exist'`
+`"sample-error-collection-do-not-exist"`
 
 </td>
 </tr>
@@ -221,7 +221,7 @@
 </td>
 <td>
 
-`'sample-error-cutoff-not-positive'`
+`"sample-error-cutoff-not-positive"`
 
 </td>
 </tr>
@@ -238,7 +238,7 @@
 </td>
 <td>
 
-`'sample-error-dash-length-not-positive'`
+`"sample-error-dash-length-not-positive"`
 
 </td>
 </tr>
@@ -255,7 +255,7 @@
 </td>
 <td>
 
-`'sample-error-expected-area'`
+`"sample-error-expected-area"`
 
 </td>
 </tr>
@@ -272,7 +272,7 @@
 </td>
 <td>
 
-`'sample-error-expected-line'`
+`"sample-error-expected-line"`
 
 </td>
 </tr>
@@ -289,7 +289,7 @@
 </td>
 <td>
 
-`'sample-error-expected-point'`
+`"sample-error-expected-point"`
 
 </td>
 </tr>
@@ -306,7 +306,7 @@
 </td>
 <td>
 
-`'sample-error-factor'`
+`"sample-error-factor"`
 
 </td>
 </tr>
@@ -323,7 +323,7 @@
 </td>
 <td>
 
-`'sample-error-half-width-not-positive'`
+`"sample-error-half-width-not-positive"`
 
 </td>
 </tr>
@@ -340,7 +340,7 @@
 </td>
 <td>
 
-`'sample-error-incorrect-primitive'`
+`"sample-error-incorrect-primitive"`
 
 </td>
 </tr>
@@ -357,7 +357,7 @@
 </td>
 <td>
 
-`'sample-error-expected-model-feature-area'`
+`"sample-error-expected-model-feature-area"`
 
 </td>
 </tr>
@@ -374,7 +374,7 @@
 </td>
 <td>
 
-`'sample-error-expected-model-feature-line'`
+`"sample-error-expected-model-feature-line"`
 
 </td>
 </tr>
@@ -391,7 +391,7 @@
 </td>
 <td>
 
-`'sample-error-expected-model-feature-point'`
+`"sample-error-expected-model-feature-point"`
 
 </td>
 </tr>
@@ -408,7 +408,7 @@
 </td>
 <td>
 
-`'sample-error-points-per-circle'`
+`"sample-error-points-per-circle"`
 
 </td>
 </tr>
@@ -425,7 +425,7 @@
 </td>
 <td>
 
-`'sample-error-probabilities-from-do-not-exist'`
+`"sample-error-probabilities-from-do-not-exist"`
 
 </td>
 </tr>
@@ -442,7 +442,7 @@
 </td>
 <td>
 
-`'sample-error-probabilities-from-not-numerical'`
+`"sample-error-probabilities-from-not-numerical"`
 
 </td>
 </tr>
@@ -459,7 +459,7 @@
 </td>
 <td>
 
-`'sample-error-ratio'`
+`"sample-error-ratio"`
 
 </td>
 </tr>
@@ -476,7 +476,7 @@
 </td>
 <td>
 
-`'sample-error-rotation-of-grid-incorrect'`
+`"sample-error-rotation-of-grid-incorrect"`
 
 </td>
 </tr>
@@ -493,7 +493,7 @@
 </td>
 <td>
 
-`'sample-error-model-feature-rotation-incorrect'`
+`"sample-error-model-feature-rotation-incorrect"`
 
 </td>
 </tr>
@@ -510,7 +510,7 @@
 </td>
 <td>
 
-`'sample-error-sample-size'`
+`"sample-error-sample-size"`
 
 </td>
 </tr>
@@ -527,7 +527,7 @@
 </td>
 <td>
 
-`'sample-error-separation-not-positive'`
+`"sample-error-separation-not-positive"`
 
 </td>
 </tr>
@@ -544,7 +544,7 @@
 </td>
 <td>
 
-`'sample-error-size-property-do-not-exist'`
+`"sample-error-size-property-do-not-exist"`
 
 </td>
 </tr>
@@ -561,7 +561,7 @@
 </td>
 <td>
 
-`'sample-error-size-property-not-numerical'`
+`"sample-error-size-property-not-numerical"`
 
 </td>
 </tr>
@@ -578,7 +578,7 @@
 </td>
 <td>
 
-`'sample-error-spread-on-do-not-exist'`
+`"sample-error-spread-on-do-not-exist"`
 
 </td>
 </tr>
@@ -595,7 +595,7 @@
 </td>
 <td>
 
-`'sample-error-stratifying-property-do-not-exist'`
+`"sample-error-stratifying-property-do-not-exist"`
 
 </td>
 </tr>
@@ -612,7 +612,7 @@
 </td>
 <td>
 
-`'sample-error-stratify-no-values'`
+`"sample-error-stratify-no-values"`
 
 </td>
 </tr>
@@ -629,7 +629,7 @@
 </td>
 <td>
 
-`'sample-error-stratifying-not-categorical'`
+`"sample-error-stratifying-not-categorical"`
 
 </td>
 </tr>
@@ -646,7 +646,7 @@
 </td>
 <td>
 
-`'sample-error-stratify-options-length-mismatch'`
+`"sample-error-stratify-options-length-mismatch"`
 
 </td>
 </tr>
@@ -683,7 +683,7 @@
 </td>
 <td>
 
-`'select-error-base-collection-is-not-area'`
+`"select-error-base-collection-is-not-area"`
 
 </td>
 </tr>
@@ -700,7 +700,7 @@
 </td>
 <td>
 
-`'select-error-base-collection-is-not-line'`
+`"select-error-base-collection-is-not-line"`
 
 </td>
 </tr>
@@ -717,7 +717,7 @@
 </td>
 <td>
 
-`'select-error-base-collection-is-not-point'`
+`"select-error-base-collection-is-not-point"`
 
 </td>
 </tr>
@@ -734,7 +734,7 @@
 </td>
 <td>
 
-`'select-error-collection-is-missing'`
+`"select-error-collection-is-missing"`
 
 </td>
 </tr>
@@ -751,7 +751,7 @@
 </td>
 <td>
 
-`'select-error-collection-is-not-area'`
+`"select-error-collection-is-not-area"`
 
 </td>
 </tr>
@@ -768,7 +768,7 @@
 </td>
 <td>
 
-`'select-error-collection-is-not-line'`
+`"select-error-collection-is-not-line"`
 
 </td>
 </tr>
@@ -785,7 +785,7 @@
 </td>
 <td>
 
-`'select-error-collection-is-not-point'`
+`"select-error-collection-is-not-point"`
 
 </td>
 </tr>

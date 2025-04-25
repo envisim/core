@@ -8,16 +8,16 @@
 
 ## Contents
 
-- [Estimator](#estimator)
+- [Estimators](#estimators)
   - [hansenHurwitz()](#hansenhurwitz)
   - [horvitzThompson()](#horvitzthompson)
   - [nearestNeighbourEstimator()](#nearestneighbourestimator)
   - [ratioEstimator()](#ratioestimator)
   - [wrEstimator()](#wrestimator)
-- [Spatial balance measure](#spatial-balance-measure)
+- [Spatial balance measures](#spatial-balance-measures)
   - [spatialBalanceSS()](#spatialbalancess)
   - [spatialBalanceVO()](#spatialbalancevo)
-- [Variance estimator](#variance-estimator)
+- [Variance estimators](#variance-estimators)
   - [hhVariance()](#hhvariance)
   - [htVariance()](#htvariance)
   - [htVarianceD()](#htvarianced)
@@ -25,14 +25,16 @@
   - [htVarianceSYG()](#htvariancesyg)
   - [wrVariance()](#wrvariance)
 
-## Estimator
+## Estimators
 
 ### hansenHurwitz()
 
 > **hansenHurwitz**(`y`, `expected`, `inclusions`): `number`
 
 Multiple count Hansen-Hurwitz estimator.
+
 $$\hat{Y} = \sum\_{i \in S} \frac{y\_i}{\mu\_i}S\_i ,$$
+
 $$n = |S| .$$
 
 #### Parameters
@@ -178,7 +180,8 @@ the Horvitz-Thompson estimate, $\hat{Y}$.
 
 > **nearestNeighbourEstimator**(`y`, `xm`, `sample`): `number`
 
-$$ \hat{Y} = \sum\_{i \in S} y_i n_i , $$
+$$\hat{Y} = \sum\_{i \in S} y\_i n\_i ,$$
+
 where $n\_i$ is the number of units in the population closer to unit $i$
 than to any other unit.
 
@@ -260,7 +263,9 @@ the nearest neighbour estimate
 > **ratioEstimator**(`y`, `x`, `totalX`, `prob`): `number`
 
 Ratio estimator, where a true total $X$ is available for the population.
-$$ \hat{T} = \frac{ \hat{Y} }{ \hat{X} } X , $$
+
+$$\hat{T} = \frac{ \hat{Y} }{ \hat{X} } X ,$$
+
 where $\hat{Y}, \hat{X}$ are [HT-estimators](#horvitzthompson).
 
 #### Parameters
@@ -357,7 +362,7 @@ the ratio estimate, $\hat{T}$.
 
 > **wrEstimator**(`y`, `prob`): `number`
 
-$$ \hat{Y} = \sum\_{i=1}^n \frac{y_i}{n p_i} $$
+$$\hat{Y} = \sum\_{i=1}^n \frac{y\_i}{n p\_i}$$
 
 #### Parameters
 
@@ -413,7 +418,7 @@ drawing probabilities of size n, $p\_i$.
 
 the wr estimate, $\hat{Y}$.
 
-## Spatial balance measure
+## Spatial balance measures
 
 ### spatialBalanceSS()
 
@@ -567,13 +572,13 @@ inclusion probabilities of size N.
 
 spatial balance based on the voronoi balance measure.
 
-## Variance estimator
+## Variance estimators
 
 ### hhVariance()
 
 > **hhVariance**(`y`, `expected`, `inclusions`, `mu2m`): `number`
 
-$$ \hat{V}(\hat{Y}) = \sum\_{i \in S} \sum\_{j \in S} \frac{y_i y_j}{\mu_i \mu_j} S_i S_j \frac{\mu\_{ij} - \mu_i \mu_j}{\mu\_{ij}} $$
+$$\hat{V}(\hat{Y}) = \sum\_{i \in S} \sum\_{j \in S} \frac{y\_i y\_j}{\mu\_i \mu\_j} S\_i S\_j \frac{\mu\_{ij} - \mu\_i \mu\_j}{\mu\_{ij}}$$
 
 #### Parameters
 
@@ -670,7 +675,7 @@ the Hansen-Hurwitz variance estimate.
 
 > **htVariance**(`y`, `prob`, `prob2m`): `number`
 
-$$ \hat{V}(\hat{Y}) = \sum\_{i \in S} \sum\_{j \in S} \frac{y_i y_j}{\pi_i \pi_j} \frac{\pi\_{ij} - \pi_i \pi_j}{\pi\_{ij}} $$
+$$\hat{V}(\hat{Y}) = \sum\_{i \in S} \sum\_{j \in S} \frac{y\_i y\_j}{\pi\_i \pi\_j} \frac{\pi\_{ij} - \pi\_i \pi\_j}{\pi\_{ij}}$$
 
 #### Parameters
 
@@ -889,7 +894,7 @@ GS's HT variance estimate.
 
 Sen-Yates-Grundy HT-variance estimator of a fixed sample size
 
-$$ \hat{V}(\hat{Y}) = -\frac{1}{2} \sum\_{i \in S} \sum\_{j \in S} (y_i / \pi_i - y_j / \pi_j)^2 \frac{\pi\_{ij} - \pi_i \pi_j}{\pi\_{ij}} $$
+$$\hat{V}(\hat{Y}) = -\frac{1}{2} \sum\_{i \in S} \sum\_{j \in S} (y\_i / \pi\_i - y\_j / \pi\_j)^2 \frac{\pi\_{ij} - \pi\_i \pi\_j}{\pi\_{ij}}$$
 
 #### Parameters
 

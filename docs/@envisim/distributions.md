@@ -202,50 +202,6 @@ Right bound
 
 </td>
 </tr>
-<tr>
-<td>
-
-<a id="range"></a> `range`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-**`Internal`**
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
-
-</td>
-</tr>
 </tbody>
 </table>
 
@@ -289,45 +245,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -434,69 +351,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -766,7 +620,6 @@ x.random(10);
 <th>Modifier</th>
 <th>Type</th>
 <th>Default value</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -791,11 +644,6 @@ x.random(10);
 `undefined`
 
 </td>
-<td>
-
-‐
-
-</td>
 </tr>
 <tr>
 <td>
@@ -816,38 +664,6 @@ x.random(10);
 <td>
 
 `benfordMantissaDefault`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-1"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -894,45 +710,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -1039,69 +816,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -1335,7 +1049,6 @@ x.quantile(0.5);
 <th>Modifier</th>
 <th>Type</th>
 <th>Default value</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -1358,38 +1071,6 @@ x.quantile(0.5);
 <td>
 
 `bernoulliDefault`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-2"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -1436,45 +1117,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -1581,69 +1223,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -1895,7 +1474,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -1915,11 +1493,6 @@ x.random(10);
 `number`
 
 </td>
-<td>
-
-‐
-
-</td>
 </tr>
 <tr>
 <td>
@@ -1935,33 +1508,6 @@ x.random(10);
 <td>
 
 `ParamsBeta`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-3"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -2031,45 +1577,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -2199,69 +1706,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -2507,7 +1951,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -2527,11 +1970,6 @@ x.random(10);
 `number`
 
 </td>
-<td>
-
-‐
-
-</td>
 </tr>
 <tr>
 <td>
@@ -2547,33 +1985,6 @@ x.random(10);
 <td>
 
 `ParamsBeta`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-4"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -2643,45 +2054,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -2811,69 +2183,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -3120,7 +2429,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -3138,33 +2446,6 @@ x.random(10);
 <td>
 
 `ParamsBinomial`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-5"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -3234,45 +2515,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -3402,69 +2644,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -3710,7 +2889,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -3728,33 +2906,6 @@ x.random(10);
 <td>
 
 `ParamsLocationScale`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-6"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -3801,45 +2952,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -3946,69 +3058,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -4238,7 +3287,6 @@ x.random(10);
 <th>Modifier</th>
 <th>Type</th>
 <th>Default value</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -4261,38 +3309,6 @@ x.random(10);
 <td>
 
 `degreesOfFreedomDefault`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-7"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -4362,45 +3378,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -4519,69 +3496,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -4817,7 +3731,6 @@ x.random(10);
 <th>Modifier</th>
 <th>Type</th>
 <th>Default value</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -4840,38 +3753,6 @@ x.random(10);
 <td>
 
 `rateDefault`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-8"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -4918,45 +3799,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -5063,69 +3905,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -5375,7 +4154,6 @@ x.quantile(0.5);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -5393,33 +4171,6 @@ x.quantile(0.5);
 <td>
 
 `ParamsLocationScale`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-9"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -5466,45 +4217,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -5611,69 +4323,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -5919,7 +4568,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -5937,33 +4585,6 @@ x.random(10);
 <td>
 
 `ParamsNormal`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-10"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -6010,45 +4631,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -6178,69 +4760,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -6486,7 +5005,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -6504,33 +5022,6 @@ x.random(10);
 <td>
 
 `ParamsDegreesOfFreedom2`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-11"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -6600,45 +5091,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -6745,69 +5197,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -7053,7 +5442,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -7073,11 +5461,6 @@ x.random(10);
 `number`
 
 </td>
-<td>
-
-‐
-
-</td>
 </tr>
 <tr>
 <td>
@@ -7093,33 +5476,6 @@ x.random(10);
 <td>
 
 `ParamsShapeScale`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-12"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -7189,45 +5545,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -7357,69 +5674,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -7649,7 +5903,6 @@ x.random(10);
 <th>Modifier</th>
 <th>Type</th>
 <th>Default value</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -7674,11 +5927,6 @@ x.random(10);
 `undefined`
 
 </td>
-<td>
-
-‐
-
-</td>
 </tr>
 <tr>
 <td>
@@ -7699,38 +5947,6 @@ x.random(10);
 <td>
 
 `bernoulliDefault`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-13"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -7777,45 +5993,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -7922,69 +6099,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -8189,7 +6303,6 @@ x.random(10);
 <th>Modifier</th>
 <th>Type</th>
 <th>Default value</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -8212,38 +6325,6 @@ x.random(10);
 <td>
 
 `undefined`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-14"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -8290,45 +6371,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -8435,69 +6477,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -8735,7 +6714,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -8755,11 +6733,6 @@ x.random(10);
 `number`
 
 </td>
-<td>
-
-‐
-
-</td>
 </tr>
 <tr>
 <td>
@@ -8775,33 +6748,6 @@ x.random(10);
 <td>
 
 `ParamsHypergeometric`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-15"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -8871,45 +6817,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -9016,69 +6923,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -9324,7 +7168,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -9342,33 +7185,6 @@ x.random(10);
 <td>
 
 `ParamsLocationScale`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-16"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -9415,45 +7231,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -9560,69 +7337,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -9852,7 +7566,6 @@ x.random(10);
 <th>Modifier</th>
 <th>Type</th>
 <th>Default value</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -9877,11 +7590,6 @@ x.random(10);
 `undefined`
 
 </td>
-<td>
-
-‐
-
-</td>
 </tr>
 <tr>
 <td>
@@ -9902,38 +7610,6 @@ x.random(10);
 <td>
 
 `bernoulliDefault`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-17"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -10003,45 +7679,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -10148,69 +7785,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -10462,7 +8036,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -10480,33 +8053,6 @@ x.random(10);
 <td>
 
 `ParamsLocationScale`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-18"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -10553,45 +8099,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -10698,69 +8205,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -11006,7 +8450,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -11024,33 +8467,6 @@ x.random(10);
 <td>
 
 `ParamsShapeScale`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-19"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -11097,45 +8513,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -11242,69 +8619,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -11550,7 +8864,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -11568,33 +8881,6 @@ x.random(10);
 <td>
 
 `ParamsNormal`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-20"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -11641,45 +8927,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -11786,69 +9033,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -12094,7 +9278,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -12112,33 +9295,6 @@ x.random(10);
 <td>
 
 `ParamsBinomial`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-21"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -12208,45 +9364,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -12376,69 +9493,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -12684,7 +9738,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -12702,33 +9755,6 @@ x.random(10);
 <td>
 
 `ParamsNormal`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-22"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -12775,45 +9801,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -12920,69 +9907,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -13228,7 +10152,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -13246,33 +10169,6 @@ x.random(10);
 <td>
 
 `ParamsShapeScale`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-23"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -13319,45 +10215,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -13464,69 +10321,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -13756,7 +10550,6 @@ x.random(10);
 <th>Modifier</th>
 <th>Type</th>
 <th>Default value</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -13779,38 +10572,6 @@ x.random(10);
 <td>
 
 `rateDefault`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-24"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -13880,45 +10641,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -14048,69 +10770,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -14346,7 +11005,6 @@ x.random(10);
 <th>Modifier</th>
 <th>Type</th>
 <th>Default value</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -14371,11 +11029,6 @@ x.random(10);
 `undefined`
 
 </td>
-<td>
-
-‐
-
-</td>
 </tr>
 <tr>
 <td>
@@ -14398,11 +11051,6 @@ x.random(10);
 `radiusDefault`
 
 </td>
-<td>
-
-‐
-
-</td>
 </tr>
 <tr>
 <td>
@@ -14423,38 +11071,6 @@ x.random(10);
 <td>
 
 `undefined`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-25"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -14501,45 +11117,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -14669,69 +11246,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -14967,7 +11481,6 @@ x.random(10);
 <th>Modifier</th>
 <th>Type</th>
 <th>Default value</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -14990,38 +11503,6 @@ x.random(10);
 <td>
 
 `degreesOfFreedomDefault`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-26"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -15091,45 +11572,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -15236,69 +11678,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -15567,7 +11946,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -15585,33 +11963,6 @@ x.random(10);
 <td>
 
 `ParamsBoundMid`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-27"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -15658,45 +12009,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -15803,69 +12115,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -16111,7 +12360,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -16131,11 +12379,6 @@ x.random(10);
 `number`
 
 </td>
-<td>
-
-‐
-
-</td>
 </tr>
 <tr>
 <td>
@@ -16151,33 +12394,6 @@ x.random(10);
 <td>
 
 `ParamsBound`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-28"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -16224,45 +12440,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -16369,69 +12546,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -16677,7 +12791,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -16695,33 +12808,6 @@ x.random(10);
 <td>
 
 `ParamsBound`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-29"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -16768,45 +12854,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -16913,69 +12960,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -17221,7 +13205,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -17241,11 +13224,6 @@ x.random(10);
 `number`
 
 </td>
-<td>
-
-‐
-
-</td>
 </tr>
 <tr>
 <td>
@@ -17263,11 +13241,6 @@ x.random(10);
 `number`
 
 </td>
-<td>
-
-‐
-
-</td>
 </tr>
 <tr>
 <td>
@@ -17283,33 +13256,6 @@ x.random(10);
 <td>
 
 `ParamsBound`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-30"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -17356,45 +13302,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -17501,69 +13408,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 
@@ -17809,7 +13653,6 @@ x.random(10);
 <th>Property</th>
 <th>Modifier</th>
 <th>Type</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -17827,33 +13670,6 @@ x.random(10);
 <td>
 
 `ParamsShapeScale`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="support-31"></a> `support`
-
-</td>
-<td>
-
-`protected`
-
-</td>
-<td>
-
-`Interval`
-
-</td>
-<td>
-
-**`Internal`**
 
 </td>
 </tr>
@@ -17900,45 +13716,6 @@ The cumulative distribution function evaluated at `x`.
 ###### Overrides
 
 `Distribution.cdf`
-
-##### cornishFisherExpansion()
-
-> `protected` **cornishFisherExpansion**(`x`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`x`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.cornishFisherExpansion`
 
 ##### mean()
 
@@ -18045,69 +13822,6 @@ The quantile function evaluated at `q`.
 ###### Overrides
 
 `Distribution.quantile`
-
-##### quantileCF()
-
-> `protected` **quantileCF**(`q`, `startK`, `startCDF`): `number`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`q`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startK`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`startCDF`
-
-</td>
-<td>
-
-`number`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`number`
-
-###### Inherited from
-
-`Distribution.quantileCF`
 
 ##### random()
 

@@ -1136,7 +1136,7 @@ Optional fixed rotation angle in degrees.
 
 ### SampleDistancePointsOptions
 
-> **SampleDistancePointsOptions** = `OptionsPointsOnAreas` & `OptionsDistancePoints`
+> **SampleDistancePointsOptions** = [`SampleDistancePointsOptions`](#sampledistancepointsoptions)
 
 ---
 

@@ -118,41 +118,6 @@ Adds entropy to Uheprng.
 
 `this`
 
-##### cleanString()
-
-> **cleanString**(`inStr`): `string`
-
-**`Internal`**
-
-###### Parameters
-
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`inStr`
-
-</td>
-<td>
-
-`string`
-
-</td>
-</tr>
-</tbody>
-</table>
-
-###### Returns
-
-`string`
-
 ##### float()
 
 > **float**(): `number`
