@@ -37,7 +37,7 @@ export function cube({
 /**
  * @interface
  */
-type LocalCubeOptions = CubeOptions & AuxiliaryOptions;
+export type LocalCubeOptions = CubeOptions & AuxiliaryOptions;
 
 /**
  * Selects a doubly balanced sample using the local cube method.

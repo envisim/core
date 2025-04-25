@@ -10,6 +10,12 @@
 
 - [Classes](#classes)
   - [NearestNeighbour](#nearestneighbour)
+- [Interfaces](#interfaces)
+  - [CubeOptions](#cubeoptions)
+  - [InclusionProbabilitiesOptions](#inclusionprobabilitiesoptions)
+  - [LocalCubeOptions](#localcubeoptions)
+  - [ScpsCoordinatedOptions](#scpscoordinatedoptions)
+  - [SrsOptions](#srsoptions)
 - [Functions](#functions)
   - [brewer()](#brewer)
   - [conditionalPoissonSampling()](#conditionalpoissonsampling)
@@ -196,6 +202,711 @@ in the provided data.
 
 the nearest neighbour(s) of the unit in the provided data.
 
+## Interfaces
+
+### CubeOptions
+
+#### Extends
+
+- `PipsOptions`
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="balancing"></a> `balancing`
+
+</td>
+<td>
+
+[`Matrix`](matrix.md#matrix)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Matrix of balancing auxiliary variables
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="eps"></a> `eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-9`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="probabilities"></a> `probabilities`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Inclusion probabilities of size N
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand"></a> `rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+`new Random()`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="treebucketsize"></a> `treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`40`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
+
+</td>
+</tr>
+</tbody>
+</table>
+
+---
+
+### InclusionProbabilitiesOptions
+
+#### Extends
+
+- `FixedSizedOptions`
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="auxiliary"></a> `auxiliary`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+positive numbers (sizes)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="eps-1"></a> `eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-9`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="n"></a> `n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Sample size
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand-1"></a> `rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+`new Random()`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="treebucketsize-1"></a> `treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`40`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
+
+</td>
+</tr>
+</tbody>
+</table>
+
+---
+
+### LocalCubeOptions
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="auxiliaries"></a> `auxiliaries`
+
+</td>
+<td>
+
+[`Matrix`](matrix.md#matrix)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Matrix of auxiliary variables
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="balancing-1"></a> `balancing`
+
+</td>
+<td>
+
+[`Matrix`](matrix.md#matrix)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Matrix of balancing auxiliary variables
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="eps-2"></a> `eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-9`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="probabilities-1"></a> `probabilities`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Inclusion probabilities of size N
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand-2"></a> `rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+`new Random()`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="treebucketsize-2"></a> `treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`40`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
+
+</td>
+</tr>
+</tbody>
+</table>
+
+---
+
+### ScpsCoordinatedOptions
+
+#### Extends
+
+- `AuxiliaryOptions`
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="auxiliaries-1"></a> `auxiliaries`
+
+</td>
+<td>
+
+[`Matrix`](matrix.md#matrix)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Matrix of auxiliary variables
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="eps-3"></a> `eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-9`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="probabilities-2"></a> `probabilities`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Inclusion probabilities of size N
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand-3"></a> `rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+`new Random()`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="random"></a> `random`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Array of random values of size N
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="treebucketsize-3"></a> `treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`40`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
+
+</td>
+</tr>
+</tbody>
+</table>
+
+---
+
+### SrsOptions
+
+#### Extends
+
+- `FixedSizedOptions`
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="eps-4"></a> `eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1e-9`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="n-1"></a> `n`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Sample size
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="n-2"></a> `N`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Population size
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand-4"></a> `rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+`new Random()`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="treebucketsize-4"></a> `treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`40`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ## Functions
 
 ### brewer()
@@ -211,6 +922,7 @@ Selects a (pips) sample without replacement using Brewers method.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -222,7 +934,78 @@ Selects a (pips) sample without replacement using Brewers method.
 </td>
 <td>
 
-`PipsOptions`
+{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.probabilities`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+Inclusion probabilities of size N
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
 
 </td>
 </tr>
@@ -261,7 +1044,7 @@ Selects a conditional Poisson sample using the rejective method.
 </td>
 <td>
 
-`FixedSizedOptions` & `PipsOptions`
+{ `eps`: `number`; `n`: `number`; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; } & { `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
 
 </td>
 </tr>
@@ -304,7 +1087,7 @@ Selects a balanced (pips) sample using the cube method.
 </td>
 <td>
 
-`CubeOptions`
+[`CubeOptions`](#cubeoptions)
 
 </td>
 </tr>
@@ -343,7 +1126,7 @@ Calculation of inclusion probabilities from a positive auxiliary variable.
 </td>
 <td>
 
-`InclusionProbabilitiesOptions`
+[`InclusionProbabilitiesOptions`](#inclusionprobabilitiesoptions)
 
 </td>
 </tr>
@@ -371,6 +1154,7 @@ Selects a Locally Correlated Poisson Sample (LCPS)
 <tr>
 <th>Parameter</th>
 <th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -382,7 +1166,95 @@ Selects a Locally Correlated Poisson Sample (LCPS)
 </td>
 <td>
 
-`AuxiliaryOptions`
+{ `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.auxiliaries`
+
+</td>
+<td>
+
+[`Matrix`](matrix.md#matrix)
+
+</td>
+<td>
+
+Matrix of auxiliary variables
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.probabilities`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+Inclusion probabilities of size N
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
 
 </td>
 </tr>
@@ -421,7 +1293,7 @@ Selects a doubly balanced sample using the local cube method.
 </td>
 <td>
 
-`LocalCubeOptions`
+[`LocalCubeOptions`](#localcubeoptions)
 
 </td>
 </tr>
@@ -460,7 +1332,7 @@ Selects a (pips) sample using the local pivotal method 1.
 </td>
 <td>
 
-`AuxiliaryOptions` | `AuxiliaryFixedSizedOptions`
+{ `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; } | { `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps`: `number`; `n`: `number`; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
 
 </td>
 </tr>
@@ -499,7 +1371,7 @@ Selects a (pips) sample using the local pivotal method 2.
 </td>
 <td>
 
-`AuxiliaryOptions` | `AuxiliaryFixedSizedOptions`
+{ `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; } | { `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps`: `number`; `n`: `number`; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
 
 </td>
 </tr>
@@ -527,6 +1399,7 @@ Selects a Pareto (pips) sample without replacement.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -538,7 +1411,78 @@ Selects a Pareto (pips) sample without replacement.
 </td>
 <td>
 
-`PipsOptions`
+{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.probabilities`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+Inclusion probabilities of size N
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
 
 </td>
 </tr>
@@ -566,6 +1510,7 @@ Selects a Poisson sample.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -577,7 +1522,78 @@ Selects a Poisson sample.
 </td>
 <td>
 
-`PipsOptions`
+{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.probabilities`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+Inclusion probabilities of size N
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
 
 </td>
 </tr>
@@ -616,7 +1632,7 @@ Selects a pps sample with replacement.
 </td>
 <td>
 
-`FixedSizedOptions` & `PipsOptions`
+{ `eps`: `number`; `n`: `number`; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; } & { `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
 
 </td>
 </tr>
@@ -644,6 +1660,7 @@ Selects a systematic (pips) sample with initial randomization of order of the un
 <tr>
 <th>Parameter</th>
 <th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -655,7 +1672,78 @@ Selects a systematic (pips) sample with initial randomization of order of the un
 </td>
 <td>
 
-`PipsOptions`
+{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.probabilities`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+Inclusion probabilities of size N
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
 
 </td>
 </tr>
@@ -683,6 +1771,7 @@ Selects a (pips) sample using the random pivotal method.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -694,7 +1783,78 @@ Selects a (pips) sample using the random pivotal method.
 </td>
 <td>
 
-`PipsOptions`
+{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.probabilities`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+Inclusion probabilities of size N
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
 
 </td>
 </tr>
@@ -722,6 +1882,7 @@ Selects a Sampford (pips) sample using the rejective method.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -733,7 +1894,78 @@ Selects a Sampford (pips) sample using the rejective method.
 </td>
 <td>
 
-`PipsOptions`
+{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.probabilities`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+Inclusion probabilities of size N
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
 
 </td>
 </tr>
@@ -761,6 +1993,7 @@ Selects a Spatially Correlated Poisson Sample (SCPS)
 <tr>
 <th>Parameter</th>
 <th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -772,7 +2005,95 @@ Selects a Spatially Correlated Poisson Sample (SCPS)
 </td>
 <td>
 
-`AuxiliaryOptions`
+{ `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.auxiliaries`
+
+</td>
+<td>
+
+[`Matrix`](matrix.md#matrix)
+
+</td>
+<td>
+
+Matrix of auxiliary variables
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.probabilities`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+Inclusion probabilities of size N
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
 
 </td>
 </tr>
@@ -811,7 +2132,7 @@ Selects a coordinated Spatially Correlated Poisson Sample (SCPSCOORD)
 </td>
 <td>
 
-`ScpsCoordinatedOptions`
+[`ScpsCoordinatedOptions`](#scpscoordinatedoptions)
 
 </td>
 </tr>
@@ -839,6 +2160,7 @@ Selects a (pips) sample using the sequential pivotal method.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -850,7 +2172,78 @@ Selects a (pips) sample using the sequential pivotal method.
 </td>
 <td>
 
-`PipsOptions`
+{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.probabilities`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+Inclusion probabilities of size N
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
 
 </td>
 </tr>
@@ -889,7 +2282,7 @@ Selects a simple random sampling without replacement.
 </td>
 <td>
 
-`SrsOptions`
+[`SrsOptions`](#srsoptions)
 
 </td>
 </tr>
@@ -928,7 +2321,7 @@ Selects a simple random sampling with replacement.
 </td>
 <td>
 
-`SrsOptions`
+[`SrsOptions`](#srsoptions)
 
 </td>
 </tr>
@@ -956,6 +2349,7 @@ Selects a systematic (pips) sample.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -967,7 +2361,78 @@ Selects a systematic (pips) sample.
 </td>
 <td>
 
-`PipsOptions`
+{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.eps?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Epsilon, used during comparisons of floats
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.probabilities`
+
+</td>
+<td>
+
+[`Vector`](matrix.md#vector) | `number`\[]
+
+</td>
+<td>
+
+Inclusion probabilities of size N
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](random.md#randomgenerator)
+
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.treeBucketSize?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+The bucket size to use when building k-d-trees
 
 </td>
 </tr>

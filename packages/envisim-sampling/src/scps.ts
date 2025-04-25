@@ -5,7 +5,7 @@ import { CorrelatedPoisson } from "./sampling-classes/index.js";
 /**
  * Selects a Spatially Correlated Poisson Sample (SCPS)
  *
- * @param options
+ * @param options -
  * @returns sample indices.
  */
 export function scps({
@@ -36,7 +36,7 @@ export function scps({
   return cps.sample;
 }
 
-interface ScpsCoordinatedOptions extends AuxiliaryOptions {
+export interface ScpsCoordinatedOptions extends AuxiliaryOptions {
   /**
    * Array of random values of size N
    */
@@ -46,7 +46,7 @@ interface ScpsCoordinatedOptions extends AuxiliaryOptions {
 /**
  * Selects a coordinated Spatially Correlated Poisson Sample (SCPSCOORD)
  *
- * @param options
+ * @param options -
  * @returns sample indices.
  */
 export function scpsCoordinated({
@@ -85,7 +85,7 @@ export function scpsCoordinated({
 /**
  * Selects a Locally Correlated Poisson Sample (LCPS)
  *
- * @param options
+ * @param options -
  * @returns sample indices.
  */
 export function lcps({
