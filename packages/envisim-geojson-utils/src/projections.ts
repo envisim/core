@@ -17,7 +17,6 @@ type NestedPosition = GJ.Position | NestedPosition[];
 
 /**
  * @expand
- * @useDeclaredType
  */
 type ProjectionFunction = (coord: GJ.Position) => GJ.Position2;
 export interface Projection {

@@ -1,5 +1,5 @@
 /**
- * @module geojson-utils
+ * @module default
  */
 
 export { areaOfPolygonLonLat } from "./area.js";

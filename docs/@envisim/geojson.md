@@ -2228,7 +2228,7 @@ Foreign GeoJSON member, the id of the collection
 </td>
 <td>
 
-[`GeometricPrimitiveUnion`](geojson-utils/geojson-utils.md#geometricprimitiveunion)
+[`GeometricPrimitiveUnion`](geojson-utils/default.md#geometricprimitiveunion)
 
 </td>
 <td>
@@ -2802,11 +2802,11 @@ if `true`, creates shallow copies of the features
 
 ##### geometricPrimitive()
 
-> **geometricPrimitive**(): [`GeometricPrimitiveUnion`](geojson-utils/geojson-utils.md#geometricprimitiveunion)
+> **geometricPrimitive**(): [`GeometricPrimitiveUnion`](geojson-utils/default.md#geometricprimitiveunion)
 
 ###### Returns
 
-[`GeometricPrimitiveUnion`](geojson-utils/geojson-utils.md#geometricprimitiveunion)
+[`GeometricPrimitiveUnion`](geojson-utils/default.md#geometricprimitiveunion)
 
 ##### getBBox()
 
@@ -9508,7 +9508,7 @@ The number of vertices to create on the circle
 </td>
 <td>
 
-[`GeometricPrimitiveUnion`](geojson-utils/geojson-utils.md#geometricprimitiveunion)
+[`GeometricPrimitiveUnion`](geojson-utils/default.md#geometricprimitiveunion)
 
 </td>
 </tr>
@@ -9829,7 +9829,7 @@ Holds id and index of collected categorical variable
 
 ### ObjectOfPrimitive\<T>
 
-> **ObjectOfPrimitive**<`T`> = `T` _extends_ [`GeometricPrimitiveArea`](geojson-utils/geojson-utils.md#geometricprimitivearea-1) ? [`AreaObject`](#areaobject) : `T` _extends_ [`GeometricPrimitiveLine`](geojson-utils/geojson-utils.md#geometricprimitiveline-1) ? [`LineObject`](#lineobject) : `T` _extends_ [`GeometricPrimitivePoint`](geojson-utils/geojson-utils.md#geometricprimitivepoint-1) ? [`PointObject`](#pointobject) : `never`
+> **ObjectOfPrimitive**<`T`> = `T` _extends_ [`GeometricPrimitiveArea`](geojson-utils/default.md#geometricprimitivearea-1) ? [`AreaObject`](#areaobject) : `T` _extends_ [`GeometricPrimitiveLine`](geojson-utils/default.md#geometricprimitiveline-1) ? [`LineObject`](#lineobject) : `T` _extends_ [`GeometricPrimitivePoint`](geojson-utils/default.md#geometricprimitivepoint-1) ? [`PointObject`](#pointobject) : `never`
 
 #### Type Parameters
 
@@ -9843,7 +9843,7 @@ Holds id and index of collected categorical variable
 <tr>
 <td>
 
-`T` _extends_ [`GeometricPrimitiveUnion`](geojson-utils/geojson-utils.md#geometricprimitiveunion)
+`T` _extends_ [`GeometricPrimitiveUnion`](geojson-utils/default.md#geometricprimitiveunion)
 
 </td>
 </tr>
@@ -9860,7 +9860,7 @@ Holds id and index of collected categorical variable
 
 ### PrimitiveOfObject\<T>
 
-> **PrimitiveOfObject**<`T`> = `T` _extends_ [`AreaObject`](#areaobject) ? [`GeometricPrimitiveArea`](geojson-utils/geojson-utils.md#geometricprimitivearea-1) : `T` _extends_ [`LineObject`](#lineobject) ? [`GeometricPrimitiveLine`](geojson-utils/geojson-utils.md#geometricprimitiveline-1) : `T` _extends_ [`PointObject`](#pointobject) ? [`GeometricPrimitivePoint`](geojson-utils/geojson-utils.md#geometricprimitivepoint-1) : [`GeometricPrimitiveNone`](geojson-utils/geojson-utils.md#geometricprimitivenone-1)
+> **PrimitiveOfObject**<`T`> = `T` _extends_ [`AreaObject`](#areaobject) ? [`GeometricPrimitiveArea`](geojson-utils/default.md#geometricprimitivearea-1) : `T` _extends_ [`LineObject`](#lineobject) ? [`GeometricPrimitiveLine`](geojson-utils/default.md#geometricprimitiveline-1) : `T` _extends_ [`PointObject`](#pointobject) ? [`GeometricPrimitivePoint`](geojson-utils/default.md#geometricprimitivepoint-1) : [`GeometricPrimitiveNone`](geojson-utils/default.md#geometricprimitivenone-1)
 
 #### Type Parameters
 

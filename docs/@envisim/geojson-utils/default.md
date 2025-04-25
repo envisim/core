@@ -2,9 +2,9 @@
 
 ---
 
-[Documentation](../../README.md) / [@envisim/geojson-utils](README.md) / geojson-utils
+[Documentation](../../README.md) / [@envisim/geojson-utils](README.md) / default
 
-# geojson-utils
+# default
 
 ## Contents
 

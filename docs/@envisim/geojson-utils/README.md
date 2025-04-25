@@ -23,6 +23,18 @@
 <tr>
 <td>
 
+[default](default.md)
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
 [geodesic](geodesic.md)
 
 </td>
@@ -36,18 +48,6 @@
 <td>
 
 [geojson](geojson.md)
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-[geojson-utils](geojson-utils.md)
 
 </td>
 <td>
