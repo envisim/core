@@ -19,9 +19,7 @@ import {
 import { samplePointsOnAreas } from "./points-on-areas.js";
 
 /**
- * @inlineType OptionsPointsOnAreas
- * @inlineType OptionsDistancePoints
- * @useDeclaredType
+ * @interface
  */
 export type SampleDistancePointsOptions = OptionsPointsOnAreas & OptionsDistancePoints;
 

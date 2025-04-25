@@ -6,6 +6,10 @@ import { type DetectionFunction } from "./distance-utils.js";
 
 export { SAMPLE_ERROR_LIST, type SampleError, throwRangeError };
 
+/**
+ * @inline
+ * @expand
+ */
 export interface OptionsBase {
   /**
    * An random number generator
@@ -45,6 +49,10 @@ export function optionsCircleConversionCheck({
   return null;
 }
 
+/**
+ * @inline
+ * @expand
+ */
 export interface OptionsPointsOnAreas extends OptionsBase, OptionsCircleConversion {
   /**
    * @defaultValue `1.0`
@@ -72,6 +80,9 @@ export function optionsPointsOnAreasCheck({
   return optionsBaseCheck(options) || optionsCircleConversionCheck(options);
 }
 
+/**
+ * @inline
+ */
 export interface OptionsParallelLines {
   /**
    * The distance in meters between the parallel lines.
@@ -92,6 +103,9 @@ export function optionsParallelLinesCheck({ interspace }: OptionsParallelLines):
   return null;
 }
 
+/**
+ * @inline
+ */
 export interface OptionsDistancePoints {
   /**
    * The point layer to collect objects from.

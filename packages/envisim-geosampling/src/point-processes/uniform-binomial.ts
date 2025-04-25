@@ -2,7 +2,7 @@ import { type AreaObject, type FeatureCollection, type Point } from "@envisim/ge
 import { Random } from "@envisim/random";
 import { samplePointsOnAreas } from "../sample-continuous/index.js";
 
-interface UniformBinomialPointProcessOptions {
+export interface UniformBinomialPointProcessOptions {
   /**
    * The number of points to generate.
    */

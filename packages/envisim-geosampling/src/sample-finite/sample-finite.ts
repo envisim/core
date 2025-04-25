@@ -32,10 +32,16 @@ export const SAMPLE_FINITE_METHODS_WOR = [
   "pareto",
   "brewer",
 ] as const;
+/**
+ * @interface
+ */
 export type SampleFiniteOptions<P extends string = string> = OptionsBase<
   P,
   (typeof SAMPLE_FINITE_METHODS_WOR)[number]
 >;
+/**
+ * @interface
+ */
 export type SampleFiniteOptionsWr<P extends string = string> = OptionsBase<
   P,
   (typeof SAMPLE_FINITE_METHODS_WR)[number]

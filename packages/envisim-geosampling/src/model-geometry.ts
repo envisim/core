@@ -29,7 +29,7 @@ function placePoint(point: GJ.Position, position: GJ.Position, rotation: number)
   return destination(position, dist, angle);
 }
 
-interface PlaceOptions<G extends GJ.SingleTypeObject> {
+export interface PlaceOptions<G extends GJ.SingleTypeObject> {
   /** Model geometry with coordinates in meters relative to (0,0) */
   modelGeometry: G;
   /** Angel of rotation in degrees (from north), or `random` for random rotation */

@@ -9,6 +9,9 @@ import {
   throwRangeError,
 } from "./options.js";
 
+/**
+ * @interface
+ */
 export type SamplePointsOnLinesOptions = OptionsBase;
 
 export function samplePointsOnLinesCheck(options: SamplePointsOnLinesOptions): SampleError {

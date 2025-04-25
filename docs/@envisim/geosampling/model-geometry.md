@@ -8,6 +8,8 @@
 
 ## Contents
 
+- [Interfaces](#interfaces)
+  - [PlaceOptions\<G>](#placeoptionsg)
 - [Functions](#functions)
   - [circleAreaGeometry()](#circleareageometry)
   - [circleLineGeometry()](#circlelinegeometry)
@@ -27,6 +29,111 @@
   - [regularPolygonPointGeometry()](#regularpolygonpointgeometry)
   - [sizeOfModelGeometry()](#sizeofmodelgeometry)
   - [straightLineGeometry()](#straightlinegeometry)
+
+## Interfaces
+
+### PlaceOptions\<G>
+
+#### Type Parameters
+
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`G` _extends_ [`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="buffer"></a> `buffer`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Buffer
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="modelgeometry"></a> `modelGeometry`
+
+</td>
+<td>
+
+`G`
+
+</td>
+<td>
+
+Model geometry with coordinates in meters relative to (0,0)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand"></a> `rand`
+
+</td>
+<td>
+
+[`RandomGenerator`](../random.md#randomgenerator)
+
+</td>
+<td>
+
+Optional RNG
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rotationofgeometry"></a> `rotationOfGeometry`
+
+</td>
+<td>
+
+`number` | `"random"`
+
+</td>
+<td>
+
+Angel of rotation in degrees (from north), or `random` for random rotation
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ## Functions
 
@@ -241,7 +348,7 @@ a position \[lon,lat].
 </td>
 <td>
 
-`PlaceOptions`<[`AreaObject`](../geojson-utils/geojson.md#areaobject)>
+[`PlaceOptions`](#placeoptions)<[`AreaObject`](../geojson-utils/geojson.md#areaobject)>
 
 </td>
 <td>
@@ -295,7 +402,7 @@ a GeoJSON Point/Line/AreaObject.
 </td>
 <td>
 
-`PlaceOptions`<[`LineObject`](../geojson-utils/geojson.md#lineobject)>
+[`PlaceOptions`](#placeoptions)<[`LineObject`](../geojson-utils/geojson.md#lineobject)>
 
 </td>
 </tr>
@@ -342,7 +449,7 @@ a GeoJSON Point/Line/AreaObject.
 </td>
 <td>
 
-`PlaceOptions`<[`PointObject`](../geojson-utils/geojson.md#pointobject)>
+[`PlaceOptions`](#placeoptions)<[`PointObject`](../geojson-utils/geojson.md#pointobject)>
 
 </td>
 </tr>

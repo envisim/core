@@ -9,17 +9,19 @@
 ## Contents
 
 - [Interfaces](#interfaces)
+  - [SampleDistancePointsOptions](#sampledistancepointsoptions)
   - [SampleFeaturesOnAreasOptions\<G>](#samplefeaturesonareasoptionsg)
   - [SamplePointsOnAreasOptions](#samplepointsonareasoptions)
+  - [SamplePointsOnLinesOptions](#samplepointsonlinesoptions)
+  - [SamplePositionsInBbox](#samplepositionsinbbox)
   - [SampleRelascopePointsOptions\<P>](#samplerelascopepointsoptionsp)
   - [SampleSystematicBeltsOnAreas](#samplesystematicbeltsonareas)
   - [SampleSystematicDistanceLinesOptions](#samplesystematicdistancelinesoptions)
   - [SampleSystematicLinesOnAreas](#samplesystematiclinesonareas)
-- [Type Aliases](#type-aliases)
-  - [SampleDistancePointsOptions](#sampledistancepointsoptions)
-  - [SamplePointsOnLinesOptions](#samplepointsonlinesoptions)
-  - [SamplePositionsInBbox](#samplepositionsinbbox)
   - [SampleSystematicLinesOnLines](#samplesystematiclinesonlines)
+- [Type Aliases](#type-aliases)
+  - [DetectionFunction()](#detectionfunction)
+  - [IntegrateFunction()](#integratefunction)
 - [Functions](#functions)
   - [effectiveHalfWidth()](#effectivehalfwidth)
   - [effectiveRadius()](#effectiveradius)
@@ -53,30 +55,7 @@
 
 ## Interfaces
 
-### SampleFeaturesOnAreasOptions\<G>
-
-#### Extends
-
-- `OptionsPointsOnAreas`
-
-#### Type Parameters
-
-<table>
-<thead>
-<tr>
-<th>Type Parameter</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`G` _extends_ [`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject)
-
-</td>
-</tr>
-</tbody>
-</table>
+### SampleDistancePointsOptions
 
 #### Properties
 
@@ -93,12 +72,12 @@
 <tr>
 <td>
 
-<a id="modelgeometry"></a> `modelGeometry`
+<a id="basecollection"></a> `baseCollection`
 
 </td>
 <td>
 
-`G`
+[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point)>
 
 </td>
 <td>
@@ -108,7 +87,52 @@
 </td>
 <td>
 
-A model feature of points or lines or areas to be placed on the selected points.
+The point layer to collect objects from.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="cutoff"></a> `cutoff`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The cutoff distance in meters.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="detectionfunction"></a> `detectionFunction`
+
+</td>
+<td>
+
+[`DetectionFunction`](#detectionfunction-2)
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The detection function giving the detection probability as a
+function of distance.
 
 </td>
 </tr>
@@ -203,29 +227,6 @@ An random number generator
 <tr>
 <td>
 
-<a id="rotationofgeometry"></a> `rotationOfGeometry?`
-
-</td>
-<td>
-
-`number` | `"random"`
-
-</td>
-<td>
-
-`0.0`
-
-</td>
-<td>
-
-Optional rotation angle in degrees to rotate the model geometry.
-Random rotation is forced for line geometries -- option is ignored.
-
-</td>
-</tr>
-<tr>
-<td>
-
 <a id="rotationofgrid"></a> `rotationOfGrid?`
 
 </td>
@@ -272,11 +273,30 @@ Prescribed sample size
 
 ---
 
-### SamplePointsOnAreasOptions
+### SampleFeaturesOnAreasOptions\<G>
 
 #### Extends
 
 - `OptionsPointsOnAreas`
+
+#### Type Parameters
+
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`G` _extends_ [`SingleTypeObject`](../geojson-utils/geojson.md#singletypeobject)
+
+</td>
+</tr>
+</tbody>
+</table>
 
 #### Properties
 
@@ -293,22 +313,22 @@ Prescribed sample size
 <tr>
 <td>
 
-<a id="buffer"></a> `buffer?`
+<a id="modelgeometry"></a> `modelGeometry`
 
 </td>
 <td>
 
-`number`
+`G`
 
 </td>
 <td>
 
-`0.0`
+`undefined`
 
 </td>
 <td>
 
-‐
+A model feature of points or lines or areas to be placed on the selected points.
 
 </td>
 </tr>
@@ -403,6 +423,29 @@ An random number generator
 <tr>
 <td>
 
+<a id="rotationofgeometry"></a> `rotationOfGeometry?`
+
+</td>
+<td>
+
+`number` | `"random"`
+
+</td>
+<td>
+
+`0.0`
+
+</td>
+<td>
+
+Optional rotation angle in degrees to rotate the model geometry.
+Random rotation is forced for line geometries -- option is ignored.
+
+</td>
+</tr>
+<tr>
+<td>
+
 <a id="rotationofgrid-1"></a> `rotationOfGrid?`
 
 </td>
@@ -449,30 +492,11 @@ Prescribed sample size
 
 ---
 
-### SampleRelascopePointsOptions\<P>
+### SamplePointsOnAreasOptions
 
 #### Extends
 
 - `OptionsPointsOnAreas`
-
-#### Type Parameters
-
-<table>
-<thead>
-<tr>
-<th>Type Parameter</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-`P` _extends_ `string`
-
-</td>
-</tr>
-</tbody>
-</table>
 
 #### Properties
 
@@ -489,29 +513,7 @@ Prescribed sample size
 <tr>
 <td>
 
-<a id="basecollection"></a> `baseCollection`
-
-</td>
-<td>
-
-[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `P`>
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-The point layer to collect objects from.
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="buffer-1"></a> `buffer?`
+<a id="buffer"></a> `buffer?`
 
 </td>
 <td>
@@ -527,28 +529,6 @@ The point layer to collect objects from.
 <td>
 
 ‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-<a id="factor"></a> `factor`
-
-</td>
-<td>
-
-`number`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-The relascope factor to be used.
 
 </td>
 </tr>
@@ -684,6 +664,416 @@ Prescribed sample size
 
 </td>
 </tr>
+</tbody>
+</table>
+
+---
+
+### SamplePointsOnLinesOptions
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="pointselection-3"></a> `pointSelection?`
+
+</td>
+<td>
+
+`"independent"` | `"systematic"`
+
+</td>
+<td>
+
+`'independent'`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand-3"></a> `rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](../random.md#randomgenerator)
+
+</td>
+<td>
+
+`new Random()`
+
+</td>
+<td>
+
+An random number generator
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="samplesize-3"></a> `sampleSize`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Prescribed sample size
+
+</td>
+</tr>
+</tbody>
+</table>
+
+---
+
+### SamplePositionsInBbox
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="pointselection-4"></a> `pointSelection?`
+
+</td>
+<td>
+
+`"independent"` | `"systematic"`
+
+</td>
+<td>
+
+`'independent'`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand-4"></a> `rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](../random.md#randomgenerator)
+
+</td>
+<td>
+
+`new Random()`
+
+</td>
+<td>
+
+An random number generator
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="samplesize-4"></a> `sampleSize`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Prescribed sample size
+
+</td>
+</tr>
+</tbody>
+</table>
+
+---
+
+### SampleRelascopePointsOptions\<P>
+
+#### Extends
+
+- `OptionsPointsOnAreas`
+
+#### Type Parameters
+
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="basecollection-1"></a> `baseCollection`
+
+</td>
+<td>
+
+[`FeatureCollection`](../geojson.md#featurecollection)<[`Point`](../geojson.md#point), `P`>
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The point layer to collect objects from.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="buffer-1"></a> `buffer?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`0.0`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="factor"></a> `factor`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The relascope factor to be used.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="pointselection-5"></a> `pointSelection?`
+
+</td>
+<td>
+
+`"independent"` | `"systematic"`
+
+</td>
+<td>
+
+`'independent'`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="pointspercircle-3"></a> `pointsPerCircle?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The number of vertices to create on the circle
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand-5"></a> `rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](../random.md#randomgenerator)
+
+</td>
+<td>
+
+`new Random()`
+
+</td>
+<td>
+
+An random number generator
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="ratio-3"></a> `ratio?`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`1.0`
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rotationofgrid-3"></a> `rotationOfGrid?`
+
+</td>
+<td>
+
+`number` | `"random"`
+
+</td>
+<td>
+
+`0.0`
+
+</td>
+<td>
+
+If true, then the grid will be rotated (systematic only)
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="samplesize-5"></a> `sampleSize`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Prescribed sample size
+
+</td>
+</tr>
 <tr>
 <td>
 
@@ -777,7 +1167,7 @@ The distance in meters between the parallel lines.
 <tr>
 <td>
 
-<a id="pointspercircle-3"></a> `pointsPerCircle?`
+<a id="pointspercircle-4"></a> `pointsPerCircle?`
 
 </td>
 <td>
@@ -799,7 +1189,7 @@ The number of vertices to create on the circle
 <tr>
 <td>
 
-<a id="rand-3"></a> `rand?`
+<a id="rand-6"></a> `rand?`
 
 </td>
 <td>
@@ -866,7 +1256,7 @@ Optional fixed rotation angle in degrees.
 <tr>
 <td>
 
-<a id="basecollection-1"></a> `baseCollection`
+<a id="basecollection-2"></a> `baseCollection`
 
 </td>
 <td>
@@ -888,7 +1278,7 @@ The point layer to collect objects from.
 <tr>
 <td>
 
-<a id="cutoff"></a> `cutoff`
+<a id="cutoff-1"></a> `cutoff`
 
 </td>
 <td>
@@ -910,12 +1300,12 @@ The cutoff distance in meters.
 <tr>
 <td>
 
-<a id="detectionfunction"></a> `detectionFunction`
+<a id="detectionfunction-1"></a> `detectionFunction`
 
 </td>
 <td>
 
-`DetectionFunction`
+[`DetectionFunction`](#detectionfunction-2)
 
 </td>
 <td>
@@ -955,7 +1345,7 @@ The distance in meters between the parallel lines.
 <tr>
 <td>
 
-<a id="pointspercircle-4"></a> `pointsPerCircle?`
+<a id="pointspercircle-5"></a> `pointsPerCircle?`
 
 </td>
 <td>
@@ -977,7 +1367,7 @@ The number of vertices to create on the circle
 <tr>
 <td>
 
-<a id="rand-4"></a> `rand?`
+<a id="rand-7"></a> `rand?`
 
 </td>
 <td>
@@ -1066,7 +1456,7 @@ The distance in meters between the parallel lines.
 <tr>
 <td>
 
-<a id="pointspercircle-5"></a> `pointsPerCircle?`
+<a id="pointspercircle-6"></a> `pointsPerCircle?`
 
 </td>
 <td>
@@ -1088,7 +1478,7 @@ The number of vertices to create on the circle
 <tr>
 <td>
 
-<a id="rand-5"></a> `rand?`
+<a id="rand-8"></a> `rand?`
 
 </td>
 <td>
@@ -1132,29 +1522,9 @@ Optional fixed rotation angle in degrees.
 </tbody>
 </table>
 
-## Type Aliases
-
-### SampleDistancePointsOptions
-
-> **SampleDistancePointsOptions** = [`SampleDistancePointsOptions`](#sampledistancepointsoptions)
-
----
-
-### SamplePointsOnLinesOptions
-
-> **SamplePointsOnLinesOptions** = `OptionsBase`
-
----
-
-### SamplePositionsInBbox
-
-> **SamplePositionsInBbox** = `OptionsBase`
-
 ---
 
 ### SampleSystematicLinesOnLines
-
-> **SampleSystematicLinesOnLines** = { `dashLength`: `number`; `rand`: [`RandomGenerator`](../random.md#randomgenerator); `voidLength`: `number`; }
 
 #### Properties
 
@@ -1193,7 +1563,7 @@ The dash length
 <tr>
 <td>
 
-<a id="rand-6"></a> `rand?`
+<a id="rand-9"></a> `rand?`
 
 </td>
 <td>
@@ -1237,6 +1607,76 @@ The void length
 </tbody>
 </table>
 
+## Type Aliases
+
+### DetectionFunction()
+
+> **DetectionFunction** = (`dist`) => `number`
+
+#### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`dist`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Returns
+
+`number`
+
+---
+
+### IntegrateFunction()
+
+> **IntegrateFunction** = (`x`) => `number`
+
+#### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`x`
+
+</td>
+<td>
+
+`number`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Returns
+
+`number`
+
 ## Functions
 
 ### effectiveHalfWidth()
@@ -1264,7 +1704,7 @@ Computes the effective half width for distance sampling along a line.
 </td>
 <td>
 
-`DetectionFunction`
+[`DetectionFunction`](#detectionfunction-2)
 
 </td>
 <td>
@@ -1326,7 +1766,7 @@ Computes the effective radius for distance sampling with points.
 </td>
 <td>
 
-`DetectionFunction`
+[`DetectionFunction`](#detectionfunction-2)
 
 </td>
 <td>
@@ -1365,7 +1805,7 @@ the effective radius in meters.
 
 ### halfNormalDetectionFunction()
 
-> **halfNormalDetectionFunction**(`sigma`): `DetectionFunction`
+> **halfNormalDetectionFunction**(`sigma`): [`DetectionFunction`](#detectionfunction-2)
 
 Returns a half normal detection function on \[0, Infinity).
 
@@ -1402,7 +1842,7 @@ the sigma parameter.
 
 #### Returns
 
-`DetectionFunction`
+[`DetectionFunction`](#detectionfunction-2)
 
 the half normal detection function.
 
@@ -1434,7 +1874,7 @@ Integrate a function f from a to b.
 </td>
 <td>
 
-`IntegrateFunction`
+[`IntegrateFunction`](#integratefunction)
 
 </td>
 <td>
@@ -1957,6 +2397,7 @@ Selects points according to method and sampleSize on a line layer.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -1971,6 +2412,11 @@ Selects points according to method and sampleSize on a line layer.
 [`FeatureCollection`](../geojson.md#featurecollection)<[`LineObject`](../geojson.md#lineobject)>
 
 </td>
+<td>
+
+‐
+
+</td>
 </tr>
 <tr>
 <td>
@@ -1980,7 +2426,61 @@ Selects points according to method and sampleSize on a line layer.
 </td>
 <td>
 
-`OptionsBase`
+{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../random.md#randomgenerator); `sampleSize`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.pointSelection?`
+
+</td>
+<td>
+
+`"independent"` | `"systematic"`
+
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](../random.md#randomgenerator)
+
+</td>
+<td>
+
+An random number generator
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.sampleSize`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Prescribed sample size
 
 </td>
 </tr>
@@ -2004,6 +2504,7 @@ Selects points according to method and sampleSize on a line layer.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -2015,7 +2516,61 @@ Selects points according to method and sampleSize on a line layer.
 </td>
 <td>
 
-`OptionsBase`
+{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../random.md#randomgenerator); `sampleSize`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.pointSelection?`
+
+</td>
+<td>
+
+`"independent"` | `"systematic"`
+
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](../random.md#randomgenerator)
+
+</td>
+<td>
+
+An random number generator
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.sampleSize`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Prescribed sample size
 
 </td>
 </tr>
@@ -2070,12 +2625,61 @@ A GeoJSON bounding box.
 </td>
 <td>
 
-`OptionsBase`
+{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../random.md#randomgenerator); `sampleSize`: `number`; }
 
 </td>
 <td>
 
 ‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.pointSelection?`
+
+</td>
+<td>
+
+`"independent"` | `"systematic"`
+
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](../random.md#randomgenerator)
+
+</td>
+<td>
+
+An random number generator
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.sampleSize`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Prescribed sample size
 
 </td>
 </tr>
@@ -2101,6 +2705,7 @@ Array of GeoJSON positions.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -2112,7 +2717,61 @@ Array of GeoJSON positions.
 </td>
 <td>
 
-`OptionsBase`
+{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../random.md#randomgenerator); `sampleSize`: `number`; }
+
+</td>
+<td>
+
+‐
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.pointSelection?`
+
+</td>
+<td>
+
+`"independent"` | `"systematic"`
+
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](../random.md#randomgenerator)
+
+</td>
+<td>
+
+An random number generator
+
+</td>
+</tr>
+<tr>
+<td>
+
+`options.sampleSize`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+Prescribed sample size
 
 </td>
 </tr>
@@ -2643,13 +3302,13 @@ own random starting position of the dashes.
 
 ### uniformDetectionFunction()
 
-> **uniformDetectionFunction**(): `DetectionFunction`
+> **uniformDetectionFunction**(): [`DetectionFunction`](#detectionfunction-2)
 
 Returns a uniform detection function on \[0, Infinity), i.e. the
 detection probability is 1 if distance >= 0 and 0 otherwise.
 
 #### Returns
 
-`DetectionFunction`
+[`DetectionFunction`](#detectionfunction-2)
 
 the uniform detection function.

@@ -58,6 +58,8 @@ export {
   effectiveHalfWidth,
   uniformDetectionFunction,
   halfNormalDetectionFunction,
+  type DetectionFunction,
+  type IntegrateFunction,
 } from "./distance-utils.js";
 
 // Points in bbox

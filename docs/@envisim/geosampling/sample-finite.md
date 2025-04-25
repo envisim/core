@@ -8,7 +8,7 @@
 
 ## Contents
 
-- [Type Aliases](#type-aliases)
+- [Interfaces](#interfaces)
   - [SampleBalancedOptions\<P>](#samplebalancedoptionsp)
   - [SampleDoublyBalancedOptions\<P>](#sampledoublybalancedoptionsp)
   - [SampleFiniteOptions\<P>](#samplefiniteoptionsp)
@@ -31,11 +31,9 @@
   - [sampleSpatiallyBalanced()](#samplespatiallybalanced)
   - [sampleSpatiallyBalancedCheck()](#samplespatiallybalancedcheck)
 
-## Type Aliases
+## Interfaces
 
 ### SampleBalancedOptions\<P>
-
-> **SampleBalancedOptions**<`P`> = `OptionsBase`<`P`, _typeof_ [`SAMPLE_BALANCED_METHODS`](#sample_balanced_methods)\[`number`]> & `OptionsBalanced`<`P`>
 
 #### Type Parameters
 
@@ -56,6 +54,133 @@
 <td>
 
 `string`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="balanceon"></a> `balanceOn`
+
+</td>
+<td>
+
+`P`\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+An array of id's of properties to use to balance the sample.
+This apply to cube and localCube.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="method"></a> `method`
+
+</td>
+<td>
+
+`"cube"`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Method name
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="probabilities"></a> `probabilities?`
+
+</td>
+<td>
+
+`P`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The id of the numerical property to use to compute probabilities.
+'\_measure' calculates probabilities from measure.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand"></a> `rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](../random.md#randomgenerator)
+
+</td>
+<td>
+
+`new Random()`
+
+</td>
+<td>
+
+An RNG
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="samplesize"></a> `sampleSize`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The sample size to use. Should be non-negative integer.
 
 </td>
 </tr>
@@ -66,8 +191,6 @@
 
 ### SampleDoublyBalancedOptions\<P>
 
-> **SampleDoublyBalancedOptions**<`P`> = `OptionsBase`<`P`, _typeof_ [`SAMPLE_DOUBLY_BALANCED_METHODS`](#sample_doubly_balanced_methods)\[`number`]> & `OptionsBalanced`<`P`> & `OptionsSpatiallyBalanced`<`P`>
-
 #### Type Parameters
 
 <table>
@@ -87,6 +210,179 @@
 <td>
 
 `string`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="balanceon-1"></a> `balanceOn`
+
+</td>
+<td>
+
+`P`\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+An array of id's of properties to use to balance the sample.
+This apply to cube and localCube.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="method-1"></a> `method`
+
+</td>
+<td>
+
+`"local-cube"`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Method name
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="probabilities-1"></a> `probabilities?`
+
+</td>
+<td>
+
+`P`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The id of the numerical property to use to compute probabilities.
+'\_measure' calculates probabilities from measure.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand-1"></a> `rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](../random.md#randomgenerator)
+
+</td>
+<td>
+
+`new Random()`
+
+</td>
+<td>
+
+An RNG
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="samplesize-1"></a> `sampleSize`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The sample size to use. Should be non-negative integer.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="spreadgeo"></a> `spreadGeo`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Optional spread using geographical coordinates.
+This apply to lpm1, lpm2, scps, localCube.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="spreadon"></a> `spreadOn`
+
+</td>
+<td>
+
+`P`\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+An array of id's of properties to use to spread the sample.
+This apply to lpm1, lpm2, scps, localCube.
 
 </td>
 </tr>
@@ -97,8 +393,6 @@
 
 ### SampleFiniteOptions\<P>
 
-> **SampleFiniteOptions**<`P`> = `OptionsBase`<`P`, _typeof_ [`SAMPLE_FINITE_METHODS_WOR`](#sample_finite_methods_wor)\[`number`]>
-
 #### Type Parameters
 
 <table>
@@ -118,6 +412,110 @@
 <td>
 
 `string`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="method-2"></a> `method`
+
+</td>
+<td>
+
+`"systematic"` | `"srs"` | `"systematic-random"` | `"poisson-sampling"` | `"rpm"` | `"spm"` | `"sampford"` | `"pareto"` | `"brewer"`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Method name
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="probabilities-2"></a> `probabilities?`
+
+</td>
+<td>
+
+`P`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The id of the numerical property to use to compute probabilities.
+'\_measure' calculates probabilities from measure.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand-2"></a> `rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](../random.md#randomgenerator)
+
+</td>
+<td>
+
+`new Random()`
+
+</td>
+<td>
+
+An RNG
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="samplesize-2"></a> `sampleSize`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The sample size to use. Should be non-negative integer.
 
 </td>
 </tr>
@@ -128,7 +526,138 @@
 
 ### SampleFiniteOptionsWr\<P>
 
-> **SampleFiniteOptionsWr**<`P`> = `OptionsBase`<`P`, _typeof_ [`SAMPLE_FINITE_METHODS_WR`](#sample_finite_methods_wr)\[`number`]>
+#### Type Parameters
+
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+<th>Default type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`P` _extends_ `string`
+
+</td>
+<td>
+
+`string`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Properties
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+<a id="method-3"></a> `method`
+
+</td>
+<td>
+
+`"srs-wr"` | `"pps-wr"`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Method name
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="probabilities-3"></a> `probabilities?`
+
+</td>
+<td>
+
+`P`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The id of the numerical property to use to compute probabilities.
+'\_measure' calculates probabilities from measure.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand-3"></a> `rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](../random.md#randomgenerator)
+
+</td>
+<td>
+
+`new Random()`
+
+</td>
+<td>
+
+An RNG
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="samplesize-3"></a> `sampleSize`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The sample size to use. Should be non-negative integer.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+---
+
+### SampleSpatiallyBalancedOptions\<P>
 
 #### Type Parameters
 
@@ -155,31 +684,150 @@
 </tbody>
 </table>
 
----
-
-### SampleSpatiallyBalancedOptions\<P>
-
-> **SampleSpatiallyBalancedOptions**<`P`> = `OptionsBase`<`P`, _typeof_ [`SAMPLE_SPATIALLY_BALANCED_METHODS`](#sample_spatially_balanced_methods)\[`number`]> & `OptionsSpatiallyBalanced`<`P`>
-
-#### Type Parameters
+#### Properties
 
 <table>
 <thead>
 <tr>
-<th>Type Parameter</th>
-<th>Default type</th>
+<th>Property</th>
+<th>Type</th>
+<th>Default value</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>
 
-`P` _extends_ `string`
+<a id="method-4"></a> `method`
 
 </td>
 <td>
 
-`string`
+`"lpm1"` | `"lpm2"` | `"scps"`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Method name
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="probabilities-4"></a> `probabilities?`
+
+</td>
+<td>
+
+`P`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The id of the numerical property to use to compute probabilities.
+'\_measure' calculates probabilities from measure.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="rand-4"></a> `rand?`
+
+</td>
+<td>
+
+[`RandomGenerator`](../random.md#randomgenerator)
+
+</td>
+<td>
+
+`new Random()`
+
+</td>
+<td>
+
+An RNG
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="samplesize-4"></a> `sampleSize`
+
+</td>
+<td>
+
+`number`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+The sample size to use. Should be non-negative integer.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="spreadgeo-1"></a> `spreadGeo`
+
+</td>
+<td>
+
+`boolean`
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+Optional spread using geographical coordinates.
+This apply to lpm1, lpm2, scps, localCube.
+
+</td>
+</tr>
+<tr>
+<td>
+
+<a id="spreadon-1"></a> `spreadOn`
+
+</td>
+<td>
+
+`P`\[]
+
+</td>
+<td>
+
+`undefined`
+
+</td>
+<td>
+
+An array of id's of properties to use to spread the sample.
+This apply to lpm1, lpm2, scps, localCube.
 
 </td>
 </tr>

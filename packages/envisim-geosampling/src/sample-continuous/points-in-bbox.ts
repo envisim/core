@@ -11,6 +11,9 @@ import {
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;
 
+/**
+ * @interface
+ */
 export type SamplePositionsInBbox = OptionsBase;
 
 export function samplePositionsInBboxCheck(options: SamplePositionsInBbox): SampleError {

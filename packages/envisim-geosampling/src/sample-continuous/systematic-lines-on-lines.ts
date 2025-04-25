@@ -5,7 +5,7 @@ import { distance, intermediate } from "@envisim/geojson-utils/plate-carree";
 import { Random, type RandomGenerator } from "@envisim/random";
 import { SAMPLE_ERROR_LIST, type SampleError, throwRangeError } from "./options.js";
 
-export type SampleSystematicLinesOnLines = {
+export interface SampleSystematicLinesOnLines {
   /**
    * An random number generator
    * @defaultValue `new Random()`
@@ -19,7 +19,7 @@ export type SampleSystematicLinesOnLines = {
    * The void length
    */
   voidLength: number;
-};
+}
 
 export function sampleSystematicLinesOnLinesCheck(
   options: SampleSystematicLinesOnLines,

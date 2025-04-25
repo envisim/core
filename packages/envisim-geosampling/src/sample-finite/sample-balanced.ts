@@ -15,6 +15,9 @@ import {
 } from "./utils.js";
 
 export const SAMPLE_BALANCED_METHODS = ["cube"] as const;
+/**
+ * @interface
+ */
 export type SampleBalancedOptions<P extends string = string> = OptionsBase<
   P,
   (typeof SAMPLE_BALANCED_METHODS)[number]

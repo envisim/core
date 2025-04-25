@@ -5,6 +5,10 @@ import { SAMPLE_ERROR_LIST, type SampleError } from "../errors/index.js";
 
 export { SAMPLE_ERROR_LIST, type SampleError, throwRangeError };
 
+/**
+ * @inline
+ * @expand
+ */
 export interface OptionsBase<P extends string = string, M extends string = string> {
   /**
    * An RNG
@@ -52,6 +56,10 @@ export function optionsBaseCheck<P extends string, M extends string>(
   return null;
 }
 
+/**
+ * @inline
+ * @expand
+ */
 export interface OptionsBalanced<P extends string = string> {
   /**
    * An array of id's of properties to use to balance the sample.
@@ -73,6 +81,10 @@ export function optionsBalancedCheck<P extends string>(
   return null;
 }
 
+/**
+ * @inline
+ * @expand
+ */
 export interface OptionsSpatiallyBalanced<P extends string = string> {
   /**
    * An array of id's of properties to use to spread the sample.

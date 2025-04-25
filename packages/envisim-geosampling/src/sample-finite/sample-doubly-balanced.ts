@@ -18,6 +18,9 @@ import {
 } from "./utils.js";
 
 export const SAMPLE_DOUBLY_BALANCED_METHODS = ["local-cube"] as const;
+/**
+ * @interface
+ */
 export type SampleDoublyBalancedOptions<P extends string = string> = OptionsBase<
   P,
   (typeof SAMPLE_DOUBLY_BALANCED_METHODS)[number]
