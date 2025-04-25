@@ -1,20 +1,17 @@
-import {type RandomGenerator} from '@envisim/random';
-
+import { type RandomGenerator } from "@envisim/random";
 import {
-  Distribution,
   Interval,
   type RandomOptions,
-  randomOptionsDefault,
-} from '../abstract-distribution.js';
-import {betaContinuedFraction} from '../beta-utils.js';
-import {stdNormalQuantile} from '../continuous/normal-utils.js';
-import {type ParamsBernoulli, bernoulliCheck, bernoulliDefault} from '../params.js';
-import {assertPositiveInteger} from '../utils.js';
+  RANDOM_OPTIONS_DEFAULT,
+  cornishFisherExpansion,
+  quantileCF,
+} from "../abstract-distribution.js";
+import { stdNormalQuantile } from "../continuous/normal-utils.js";
+import { BetaParams } from "../params.js";
+import { assertPositiveInteger } from "../utils.js";
+import { Bernoulli } from "./bernoulli.js";
 
-export class Logarithmic extends Distribution<ParamsBernoulli> {
-  protected params: ParamsBernoulli = bernoulliDefault;
-  protected logq!: number;
-
+export class Logarithmic extends Bernoulli {
   /**
    * The Logarithmic distribution
    *
@@ -25,78 +22,65 @@ export class Logarithmic extends Distribution<ParamsBernoulli> {
    * x.quantile(0.5)
    * x.random(10);
    */
-  constructor(p: number = bernoulliDefault) {
-    super();
-    this.setParameters(p);
-    return this;
-  }
-
-  setParameters(p: ParamsBernoulli = bernoulliDefault): void {
-    bernoulliCheck(p);
+  constructor(p?: number) {
+    super(p);
     this.support = new Interval(1, Infinity, false, true);
-    this.params = p;
-    this.logq = Math.log(1.0 - p);
   }
 
-  pdf(x: number): number {
-    return this.support.checkPDFInt(x) ?? -Math.pow(this.params, x) / (x * this.logq);
+  override pdf(x: number): number {
+    return this.support.checkPDFInt(x) ?? -Math.pow(this.params.p, x) / (x * this.params.logq);
   }
 
-  cdf(x: number, eps: number = 1e-20): number {
-    const c = Math.log(this.params);
+  override cdf(x: number, eps: number = 1e-20): number {
+    const c = Math.log(this.params.p);
     const xl = (x | 0) + 1;
 
     return (
       this.support.checkCDFInt(x) ??
       1.0 +
-        ((betaContinuedFraction(this.params, {alpha: xl, beta: 0}, eps) / this.logq) *
+        ((new BetaParams(xl, 0).betaContinuedFraction(this.params.p, eps) / this.params.logq) *
           Math.exp(xl * c)) /
           xl
     );
   }
 
-  quantile(q: number): number {
+  override quantile(q: number): number {
     const check = this.support.checkQuantile(q);
     if (check !== null) return check;
 
     const z = stdNormalQuantile(q);
-    const x = Math.max(this.cornishFisherExpansion(z) | 0, 1);
-    return this.quantileCF(q, x, this.cdf(x));
+    const x = Math.max(cornishFisherExpansion.call(this, z) | 0, 1);
+    return quantileCF.call(this, q, x, this.cdf(x));
   }
 
-  override random(
-    n: number = 1,
-    {rand = randomOptionsDefault.rand}: RandomOptions = randomOptionsDefault,
-  ): number[] {
+  override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
-    const s = Array.from<number>({length: n});
+    const s = Array.from<number>({ length: n });
     for (let i = 0; i < n; i++) {
-      s[i] = randomLogarithmic(this.params, rand);
+      s[i] = randomLogarithmic(this.params.p, options.rand);
     }
     return s;
   }
 
-  mean(): number {
-    const p = this.params;
-    return -p / ((1 - p) * Math.log(1 - p));
+  override mean(): number {
+    const { p, q, logq } = this.params;
+    return -p / (q * logq);
   }
 
-  variance(): number {
-    const p = this.params;
-    const lnp = Math.log(1 - p);
-    return (-p * (p + lnp)) / Math.pow((1 - p) * lnp, 2);
+  override variance(): number {
+    const { p, q, logq } = this.params;
+    return (-p * (p + logq)) / Math.pow(q * logq, 2);
   }
 
-  mode(): number {
+  override mode(): number {
     return 1;
   }
 
-  skewness(): number {
-    const p = this.params;
-    const lnp = Math.log(1 - p);
-    const plnp = p + lnp;
+  override skewness(): number {
+    const { p, logq } = this.params;
+    const plnp = p + logq;
     return (
-      (2 * Math.pow(p, 2) + 3 * p * lnp + (1 + p) * Math.pow(lnp, 2)) /
+      (2 * Math.pow(p, 2) + 3 * p * logq + (1 + p) * Math.pow(logq, 2)) /
       (plnp * Math.sqrt(-p * plnp))
     );
 

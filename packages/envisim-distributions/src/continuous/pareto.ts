@@ -1,9 +1,7 @@
-import {Distribution, Interval} from '../abstract-distribution.js';
-import {type ParamsShapeScale, shapeScaleCheck, shapeScaleDefault} from '../params.js';
+import { Interval } from "../abstract-distribution.js";
+import { ShapeScale } from "../abstract-shape-scale.js";
 
-export class Pareto extends Distribution<ParamsShapeScale> {
-  protected params: ParamsShapeScale = {...shapeScaleDefault};
-
+export class Pareto extends ShapeScale {
   /**
    * The Pareto distribution
    *
@@ -14,17 +12,9 @@ export class Pareto extends Distribution<ParamsShapeScale> {
    * x.quantile(0.5)
    * x.random(10);
    */
-  constructor(scale: number = shapeScaleDefault.scale, shape: number = shapeScaleDefault.shape) {
-    super();
-    this.setParameters({scale, shape});
-    return this;
-  }
-
-  setParameters(params: ParamsShapeScale = {...shapeScaleDefault}): void {
-    shapeScaleCheck(params);
-    this.support = new Interval(params.scale, Infinity, false, true);
-    this.params.scale = params.scale;
-    this.params.shape = params.shape;
+  constructor(shape?: number, scale?: number) {
+    super(shape, scale);
+    this.support = new Interval(this.params.scale, Infinity, false, true);
   }
 
   pdf(x: number): number {
@@ -43,13 +33,13 @@ export class Pareto extends Distribution<ParamsShapeScale> {
   }
 
   mean(): number {
-    const {scale, shape} = this.params;
+    const { scale, shape } = this.params;
     if (shape <= 1.0) return Infinity;
     return (shape / (shape - 1.0)) * scale;
   }
 
   variance(): number {
-    const {scale, shape} = this.params;
+    const { scale, shape } = this.params;
     if (shape <= 2.0) return Infinity;
     return (Math.pow(scale / (shape - 1.0), 2) * shape) / (shape - 2.0);
   }
@@ -59,7 +49,7 @@ export class Pareto extends Distribution<ParamsShapeScale> {
   }
 
   skewness(): number {
-    const {shape} = this.params;
+    const { shape } = this.params;
     if (shape <= 3.0) return NaN;
     return ((2.0 * (1.0 + shape)) / (shape - 3.0)) * Math.sqrt((shape - 2.0) / shape);
   }

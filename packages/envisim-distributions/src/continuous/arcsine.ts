@@ -1,12 +1,7 @@
-import { Distribution, Interval } from "../abstract-distribution.js";
+import { Bounded } from "../abstract-bounded.js";
 import { HALF_PI, HALF_PI_INV } from "../math-constants.js";
-import { type ParamsBound, boundCheck, boundDefault } from "../params.js";
 
-export class Arcsine extends Distribution<ParamsBound> {
-  protected params = { ...boundDefault };
-  /** @internal */
-  protected range!: number;
-
+export class Arcsine extends Bounded {
   /**
    * The Arcsine distribution
    *
@@ -15,18 +10,8 @@ export class Arcsine extends Distribution<ParamsBound> {
    * x.pdf(0.1);
    * x.cdf(0.1);
    */
-  constructor(a: number = boundDefault.a, b: number = boundDefault.b) {
-    super();
-    this.setParameters({ a, b });
-    return this;
-  }
-
-  setParameters(params = { ...boundDefault }): void {
-    boundCheck(params);
-    this.support = new Interval(params.a, params.b, false, false);
-    this.params.a = params.a;
-    this.params.b = params.b;
-    this.range = params.b - params.a;
+  constructor(a?: number, b?: number) {
+    super(a, b);
   }
 
   pdf(x: number): number {
@@ -40,14 +25,14 @@ export class Arcsine extends Distribution<ParamsBound> {
   cdf(x: number): number {
     return (
       this.support.checkCDF(x) ??
-      HALF_PI_INV * Math.asin(Math.sqrt((x - this.params.a) / this.range))
+      HALF_PI_INV * Math.asin(Math.sqrt((x - this.params.a) / this.params.width))
     );
   }
 
   quantile(q: number): number {
     return (
       this.support.checkQuantile(q) ??
-      Math.pow(Math.sin(q * HALF_PI), 2) * this.range + this.params.a
+      Math.pow(Math.sin(q * HALF_PI), 2) * this.params.width + this.params.a
     );
   }
 

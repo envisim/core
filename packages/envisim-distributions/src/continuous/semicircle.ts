@@ -2,26 +2,16 @@ import {
   Distribution,
   Interval,
   type RandomOptions,
-  randomOptionsDefault,
-} from '../abstract-distribution.js';
-import {inverseRegularizedBetaFunction} from '../beta-utils.js';
-import {assertPositiveInteger} from '../utils.js';
-import {randomBeta} from './beta-random.js';
+  RANDOM_OPTIONS_DEFAULT,
+} from "../abstract-distribution.js";
+import { BetaParams } from "../beta-utils.js";
+import { RadiusParams } from "../params.js";
+import { assertPositiveInteger } from "../utils.js";
+import { randomBeta } from "./beta-random.js";
 
-/** @group Parameter interfaces */
-type ParamsRadius = number;
-const radiusDefault: ParamsRadius = 1.0;
-/** @ignore */
-function radiusCheck(radius: ParamsRadius): asserts radius is ParamsRadius {
-  if (radius <= 0.0) {
-    throw new RangeError('rate must be larger than 0');
-  }
-}
-
-export class Semicircle extends Distribution<ParamsRadius> {
-  protected params: ParamsRadius = radiusDefault;
-  protected radiusSquared!: number;
-  protected denom!: number;
+export class Semicircle extends Distribution {
+  #params!: RadiusParams;
+  #beta = new BetaParams(1.5, 1.5);
 
   /**
    * The Semicircle distribution
@@ -33,46 +23,43 @@ export class Semicircle extends Distribution<ParamsRadius> {
    * x.quantile(0.5)
    * x.random(10);
    */
-  constructor(radius: number = radiusDefault) {
+  constructor(radius?: number) {
     super();
-    this.setParameters(radius);
-    return this;
+    this.#params = new RadiusParams(radius);
+    this.support = new Interval(-this.#params.radius, this.#params.radius, false, false);
   }
 
-  setParameters(radius: ParamsRadius = radiusDefault): void {
-    radiusCheck(radius);
-    this.support = new Interval(-radius, radius, false, false);
-    this.params = radius;
-    this.radiusSquared = Math.pow(radius, 2);
-    this.denom = 1.0 / (Math.PI * this.radiusSquared);
+  get params() {
+    return this.#params;
   }
 
   pdf(x: number): number {
-    return (
-      this.support.checkPDF(x) ?? Math.sqrt(this.radiusSquared - Math.pow(x, 2)) * this.denom * 2.0
-    );
+    const { radiusSquared, denom } = this.params;
+    return this.support.checkPDF(x) ?? Math.sqrt(radiusSquared - Math.pow(x, 2)) * denom * 2.0;
   }
 
   cdf(x: number): number {
+    const { radius, radiusSquared, denom } = this.params;
     return (
       this.support.checkCDF(x) ??
-      0.5 +
-        x * Math.sqrt(this.radiusSquared - Math.pow(x, 2)) * this.denom +
-        Math.asin(x / this.params) / Math.PI
+      0.5 + x * Math.sqrt(radiusSquared - Math.pow(x, 2)) * denom + Math.asin(x / radius) / Math.PI
     );
   }
 
   quantile(q: number, eps: number = 1e-20): number {
+    const { radius } = this.params;
     return (
       this.support.checkQuantile(q) ??
-      (inverseRegularizedBetaFunction(q, {alpha: 1.5, beta: 1.5}, eps) - 0.5) * 2.0 * this.params
+      (this.#beta.inverseRegularizedBetaFunction(q, eps) - 0.5) * 2.0 * radius
     );
   }
 
-  override random(n: number = 1, {rand = randomOptionsDefault.rand}: RandomOptions = {}): number[] {
+  override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
-    const c = this.params * 2.0;
-    return randomBeta(n, {alpha: 1.5, beta: 1.5}, rand).map((e) => c * (e - 0.5));
+
+    const { radius } = this.params;
+    const c = radius * 2.0;
+    return randomBeta(n, this.#beta, options.rand).map((e) => c * (e - 0.5));
   }
 
   mean(): number {
@@ -80,7 +67,8 @@ export class Semicircle extends Distribution<ParamsRadius> {
   }
 
   variance(): number {
-    return Math.pow(this.params * 0.5, 2);
+    const { radiusSquared } = this.params;
+    return radiusSquared * 0.25;
   }
 
   mode(): number {

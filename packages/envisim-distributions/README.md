@@ -12,6 +12,12 @@ npm install @envisim/distributions @envisim/random
 
 ## Usage
 
+Package exposes the following entry points:
+
+- [`@envisim/distributions`](#default-entry-point)
+
+### Default entry point
+
 Import the desired distribution class and instantiate it with its specific parameters. You can then use its methods to evaluate the probability density/mass function (pdf), cumulative distribution function (cdf), quantile function, or generate random samples.
 
 ```typescript
@@ -41,37 +47,3 @@ normalDist.random(3);
 const seededRand = new Random(12345); // Seeded generator
 normalDist.random(3, { rand: seededRand });
 ```
-
-## Available Distributions
-
-### Continuous Distributions
-
-- Arcsine
-- BenfordMantissa
-- Beta
-- Cauchy
-- ChiSquared
-- Exponential
-- ExtremeValue (Gumbel)
-- FRatio
-- Gamma
-- HyperbolicSecant
-- Laplace
-- Logistic
-- Normal (Gaussian)
-- Pareto
-- Semicircle
-- StudentsT
-- UQuadratic
-- Uniform
-- Weibull
-
-### Discrete Distributions
-
-- Bernoulli
-- Binomial
-- Geometric
-- Hypergeometric
-- Logarithmic
-- Poisson
-- UniformDiscrete

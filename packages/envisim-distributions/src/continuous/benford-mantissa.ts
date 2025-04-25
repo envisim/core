@@ -1,12 +1,10 @@
-import {Distribution, Interval} from '../abstract-distribution.js';
-
 /** @group Parameter interfaces */
-type ParamsBenfordMantissa = number;
-const benfordMantissaDefault: ParamsBenfordMantissa = 10;
+import { Distribution } from "../abstract-distribution.js";
+import { Interval } from "../abstract-distribution.js";
+import { BenfordMantissaParams } from "../params.js";
 
-export class BenfordMantissa extends Distribution<ParamsBenfordMantissa> {
-  protected params: ParamsBenfordMantissa = benfordMantissaDefault;
-  protected logBase!: number;
+export class BenfordMantissa extends Distribution {
+  #params!: BenfordMantissaParams;
 
   /**
    * The Benford Mantissa distribution
@@ -18,45 +16,44 @@ export class BenfordMantissa extends Distribution<ParamsBenfordMantissa> {
    * x.quantile(0.1)
    * x.random(10);
    */
-  constructor(base: number = benfordMantissaDefault) {
+  constructor(base?: number) {
     super();
-    this.setParameters(base);
-    return this;
+    this.#params = new BenfordMantissaParams(base);
+    this.support = new Interval(1.0 / this.params.base, 1.0, false, true);
   }
 
-  setParameters(base: ParamsBenfordMantissa = benfordMantissaDefault): void {
-    if (base <= 1.0) throw new RangeError('base must be larger than 1');
-    this.support = new Interval(1.0 / base, 1.0, false, true);
-    this.params = base;
-    this.logBase = Math.log(base);
+  get params() {
+    return this.#params;
   }
 
   pdf(x: number): number {
-    return this.support.checkPDF(x) ?? 1.0 / (x * this.logBase);
+    const { logBase } = this.params;
+    return this.support.checkPDF(x) ?? 1.0 / (x * logBase);
   }
 
   cdf(x: number): number {
-    return this.support.checkCDF(x) ?? 1 + Math.log(x) / this.logBase;
+    const { logBase } = this.params;
+    return this.support.checkCDF(x) ?? 1 + Math.log(x) / logBase;
   }
 
   quantile(q: number): number {
-    return this.support.checkQuantile(q) ?? Math.pow(this.params, q - 1.0);
+    const { base } = this.params;
+    return this.support.checkQuantile(q) ?? Math.pow(base, q - 1.0);
   }
 
   mean(): number {
-    const base = this.params;
+    const { base } = this.params;
     return (base - 1) / (base * Math.log(base));
   }
 
   variance(): number {
-    const base = this.params;
-    const logb = Math.log(base);
-    return ((base - 1) / (Math.pow(base, 2) * logb)) * (0.5 + base / 2 - (base - 1) / logb);
+    const { base, logBase } = this.params;
+    return ((base - 1) / (Math.pow(base, 2) * logBase)) * (0.5 + base / 2 - (base - 1) / logBase);
   }
 
   mode(): number {
-    const base = this.params;
-    return base / Math.log(base);
+    const { base, logBase } = this.params;
+    return base / Math.log(logBase);
   }
 
   /** @deprecated */

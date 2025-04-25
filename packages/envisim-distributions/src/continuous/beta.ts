@@ -2,20 +2,14 @@ import {
   Distribution,
   Interval,
   type RandomOptions,
-  randomOptionsDefault,
-} from '../abstract-distribution.js';
-import {
-  inverseRegularizedBetaFunction,
-  logBetaFunction,
-  regularizedBetaFunction,
-} from '../beta-utils.js';
-import {type ParamsBeta, betaDefault} from '../params.js';
-import {assertPositiveInteger} from '../utils.js';
-import {randomBeta} from './beta-random.js';
+  RANDOM_OPTIONS_DEFAULT,
+} from "../abstract-distribution.js";
+import { BetaParams } from "../params.js";
+import { assertPositiveInteger } from "../utils.js";
+import { randomBeta } from "./beta-random.js";
 
-export class Beta extends Distribution<ParamsBeta> {
-  protected params: ParamsBeta = {...betaDefault};
-  protected lbf!: number;
+export class Beta extends Distribution {
+  #params!: BetaParams;
 
   /**
    * The Beta distribution
@@ -27,19 +21,14 @@ export class Beta extends Distribution<ParamsBeta> {
    * x.quantile(0.1)
    * x.random(10);
    */
-  constructor(alpha: number = betaDefault.alpha, beta: number = betaDefault.beta) {
+  constructor(alpha?: number, beta?: number) {
     super();
-    this.setParameters({alpha, beta});
-    return this;
+    this.#params = new BetaParams(alpha, beta);
+    this.support = new Interval(0.0, 1.0, false, false);
   }
 
-  setParameters(params: ParamsBeta = {...betaDefault}): void {
-    if (params.alpha <= 0.0) throw new RangeError('alpha must be larger than 0');
-    if (params.beta <= 0.0) throw new RangeError('beta must be larger than 0');
-    this.support = new Interval(0.0, 1.0, false, false);
-    this.params.alpha = params.alpha;
-    this.params.beta = params.beta;
-    this.lbf = logBetaFunction(params);
+  get params() {
+    return this.#params;
   }
 
   pdf(x: number): number {
@@ -48,53 +37,50 @@ export class Beta extends Distribution<ParamsBeta> {
 
     return (
       this.support.checkPDF(x) ??
-      Math.exp(alpha * Math.log(x) + beta * Math.log(1.0 - x) - this.lbf)
+      Math.exp(alpha * Math.log(x) + beta * Math.log(1.0 - x) - this.params.logBetaFunction())
     );
   }
 
   cdf(x: number, eps: number = 1e-20): number {
-    return this.support.checkCDF(x) ?? regularizedBetaFunction(x, this.params, eps, this.lbf);
+    return this.support.checkCDF(x) ?? this.params.regularizedBetaFunction(x, eps);
   }
 
   quantile(q: number, eps: number = 1e-20): number {
-    return (
-      this.support.checkQuantile(q) ?? inverseRegularizedBetaFunction(q, this.params, eps, this.lbf)
-    );
+    return this.support.checkQuantile(q) ?? this.params.inverseRegularizedBetaFunction(q, eps);
   }
 
-  override random(n: number = 1, {rand = randomOptionsDefault.rand}: RandomOptions = {}): number[] {
+  override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
-    return randomBeta(n, this.params, rand);
+    return randomBeta(n, this.params, options.rand);
   }
 
   mean(): number {
-    const {alpha, beta} = this.params;
+    const { alpha, beta } = this.params;
     return alpha / (alpha + beta);
   }
 
   variance(): number {
-    const {alpha, beta} = this.params;
+    const { alpha, beta } = this.params;
     return (alpha * beta) / (Math.pow(alpha + beta, 2) * (alpha + beta + 1));
   }
 
   mode(): number {
-    const {alpha, beta} = this.params;
+    const { alpha, beta } = this.params;
     if (alpha <= 1.0) return 0.0;
     if (alpha > 1.0 && beta <= 1.0) return 1.0;
     return (alpha - 1) / (alpha + beta - 2);
   }
 
   skewness(): number {
-    const {alpha, beta} = this.params;
+    const { alpha, beta } = this.params;
     return (
       ((2 * (beta - alpha)) / (alpha + beta + 2)) * Math.sqrt((alpha + beta + 1) / (alpha * beta))
     );
   }
 }
 
-export class BetaPrime extends Distribution<ParamsBeta> {
-  protected params: ParamsBeta = {...betaDefault};
-  protected lbf!: number;
+export class BetaPrime extends Distribution {
+  #params!: BetaParams;
 
   /**
    * The Beta Prime distribution
@@ -106,19 +92,14 @@ export class BetaPrime extends Distribution<ParamsBeta> {
    * x.quantile(0.1)
    * x.random(10);
    */
-  constructor(alpha: number = betaDefault.alpha, beta: number = betaDefault.beta) {
+  constructor(alpha?: number, beta?: number) {
     super();
-    this.setParameters({alpha, beta});
-    return this;
+    this.#params = new BetaParams(alpha, beta);
+    this.support = new Interval(0.0, Infinity, false, true);
   }
 
-  setParameters(params: ParamsBeta = {...betaDefault}): void {
-    if (params.alpha <= 0) throw new RangeError('alpha must be larger than 0');
-    if (params.beta <= 0) throw new RangeError('beta must be larger than 0');
-    this.support = new Interval(0, Infinity, false, true);
-    this.params.alpha = params.alpha;
-    this.params.beta = params.beta;
-    this.lbf = logBetaFunction(params);
+  get params() {
+    return this.#params;
   }
 
   pdf(x: number): number {
@@ -128,49 +109,48 @@ export class BetaPrime extends Distribution<ParamsBeta> {
     const beta = this.params.alpha + this.params.beta;
     const alpha = this.params.alpha - 1.0;
 
-    if (x === 0.0) return alpha === 0.0 ? Math.exp(-beta * Math.log1p(x) - this.lbf) : 0.0;
+    if (x === 0.0)
+      return alpha === 0.0 ? Math.exp(-beta * Math.log1p(x) - this.params.logBetaFunction()) : 0.0;
 
-    return Math.exp(alpha * Math.log(x) - beta * Math.log1p(x) - this.lbf);
+    return Math.exp(alpha * Math.log(x) - beta * Math.log1p(x) - this.params.logBetaFunction());
   }
 
   cdf(x: number, eps: number = 1e-20): number {
-    return (
-      this.support.checkCDF(x) ?? regularizedBetaFunction(x / (1 + x), this.params, eps, this.lbf)
-    );
+    return this.support.checkCDF(x) ?? this.params.regularizedBetaFunction(x / (1 + x), eps);
   }
 
   quantile(q: number, eps: number = 1e-20): number {
     const check = this.support.checkQuantile(q);
     if (check !== null) return check;
-    const inv = inverseRegularizedBetaFunction(q, this.params, eps, this.lbf);
+    const inv = this.params.inverseRegularizedBetaFunction(q, eps);
     return inv / (1.0 - inv);
   }
 
-  override random(n: number = 1, {rand = randomOptionsDefault.rand}: RandomOptions = {}): number[] {
+  override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
-    return randomBeta(n, this.params, rand).map((v) => v / (1.0 - v));
+    return randomBeta(n, this.params, options.rand).map((v) => v / (1.0 - v));
   }
 
   mean(): number {
-    const {alpha, beta} = this.params;
+    const { alpha, beta } = this.params;
     if (beta <= 1) return Infinity;
     return alpha / (beta - 1);
   }
 
   variance(): number {
-    const {alpha, beta} = this.params;
+    const { alpha, beta } = this.params;
     if (beta <= 2) return Infinity;
     return (alpha * (alpha + beta - 1)) / ((beta - 2) * Math.pow(beta - 1, 2));
   }
 
   mode(): number {
-    const {alpha, beta} = this.params;
+    const { alpha, beta } = this.params;
     if (alpha < 1.0) return 0.0;
     return (alpha - 1) / (beta + 1);
   }
 
   skewness(): number {
-    const {alpha, beta} = this.params;
+    const { alpha, beta } = this.params;
     if (beta <= 3) return Infinity;
     return (
       ((2 * (2 * alpha + beta - 1)) / (beta - 3)) *

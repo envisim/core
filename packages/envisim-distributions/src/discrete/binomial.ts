@@ -2,18 +2,19 @@ import {
   Distribution,
   Interval,
   type RandomOptions,
-  randomOptionsDefault,
-} from '../abstract-distribution.js';
-import {regularizedBetaFunction} from '../beta-utils.js';
-import {randomShapeGamma} from '../continuous/gamma-random.js';
-import {stdNormalQuantile} from '../continuous/normal-utils.js';
-import {type ParamsBinomial, binomialCheck, binomialDefault} from '../params.js';
-import {assertPositiveInteger, logBinomialCoefficient} from '../utils.js';
-import {randomBinomial} from './binomial-random.js';
-import {randomPoisson} from './poisson-random.js';
+  RANDOM_OPTIONS_DEFAULT,
+  cornishFisherExpansion,
+  quantileCF,
+} from "../abstract-distribution.js";
+import { randomShapeGamma } from "../continuous/gamma-random.js";
+import { stdNormalQuantile } from "../continuous/normal-utils.js";
+import { BetaParams, BinomialParams } from "../params.js";
+import { assertPositiveInteger, logBinomialCoefficient } from "../utils.js";
+import { randomBinomial } from "./binomial-random.js";
+import { randomPoisson } from "./poisson-random.js";
 
-export class Binomial extends Distribution<ParamsBinomial> {
-  protected params: ParamsBinomial = {...binomialDefault};
+export class Binomial extends Distribution {
+  #params!: BinomialParams;
 
   /**
    * The Binomial distribution
@@ -26,22 +27,19 @@ export class Binomial extends Distribution<ParamsBinomial> {
    * x.quantile(0.5)
    * x.random(10);
    */
-  constructor(n: number = binomialDefault.n, p: number = binomialDefault.p) {
+  constructor(n?: number, p?: number) {
     super();
-    this.setParameters({n, p});
-    return this;
+    this.#params = new BinomialParams(n, p);
+    this.support = new Interval(0, this.params.n, false, false);
   }
 
-  setParameters(params: ParamsBinomial = {...binomialDefault}): void {
-    binomialCheck(params);
-    this.support = new Interval(0, params.n, false, false);
-    this.params.n = params.n;
-    this.params.p = params.p;
+  get params() {
+    return this.#params;
   }
 
   pdf(x: number): number {
     const p = Math.log(this.params.p);
-    const q = Math.log(1.0 - this.params.p);
+    const q = this.params.logq;
 
     return (
       this.support.checkPDFInt(x) ??
@@ -50,12 +48,10 @@ export class Binomial extends Distribution<ParamsBinomial> {
   }
 
   cdf(x: number, eps: number = 1e-20): number {
-    const q = 1.0 - this.params.p;
-
     const xl = x | 0;
     return (
       this.support.checkCDFInt(x) ??
-      regularizedBetaFunction(q, {alpha: this.params.n - xl, beta: xl + 1}, eps)
+      new BetaParams(this.params.n - xl, xl + 1).regularizedBetaFunction(this.params.q, eps)
     );
   }
 
@@ -64,19 +60,18 @@ export class Binomial extends Distribution<ParamsBinomial> {
     if (check !== null) return check;
 
     const z = stdNormalQuantile(q);
-    const x = this.cornishFisherExpansion(z) | 0;
-    const cdf = regularizedBetaFunction(
-      1.0 - this.params.p,
-      {alpha: this.params.n - x, beta: x + 1},
+    const x = cornishFisherExpansion.call(this, z) | 0;
+    const cdf = new BetaParams(this.params.n - x, x + 1).regularizedBetaFunction(
+      this.params.q,
       eps,
     );
 
-    return this.quantileCF(q, x, cdf);
+    return quantileCF.call(this, q, x, cdf);
   }
 
-  override random(n: number = 1, {rand = randomOptionsDefault.rand}: RandomOptions = {}): number[] {
+  override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
-    return randomBinomial(n, this.params.n, this.params.p, rand);
+    return randomBinomial(n, this.params.n, this.params.p, options.rand);
   }
 
   mean(): number {
@@ -84,8 +79,8 @@ export class Binomial extends Distribution<ParamsBinomial> {
   }
 
   variance(): number {
-    const {n, p} = this.params;
-    return n * p * (1.0 - p);
+    const { n, p, q } = this.params;
+    return n * p * q;
   }
 
   mode(): number {
@@ -93,14 +88,13 @@ export class Binomial extends Distribution<ParamsBinomial> {
   }
 
   skewness(): number {
-    const {p} = this.params;
-    const q = 1.0 - p;
-    return (q - p) / Math.sqrt(this.params.n * p * q);
+    const { n, p, q } = this.params;
+    return (q - p) / Math.sqrt(n * p * q);
   }
 }
 
-export class NegativeBinomial extends Distribution<ParamsBinomial> {
-  protected params: ParamsBinomial = {...binomialDefault};
+export class NegativeBinomial extends Distribution {
+  #params!: BinomialParams;
 
   /**
    * The Negative Binomial distribution
@@ -112,22 +106,19 @@ export class NegativeBinomial extends Distribution<ParamsBinomial> {
    * x.quantile(0.5)
    * x.random(10);
    */
-  constructor(n: number = binomialDefault.n, p: number = binomialDefault.p) {
+  constructor(n?: number, p?: number) {
     super();
-    this.setParameters({n, p});
-    return this;
+    this.#params = new BinomialParams(n, p);
+    this.support = new Interval(0, Infinity, false, true);
   }
 
-  setParameters(params: ParamsBinomial = {...binomialDefault}): void {
-    binomialCheck(params);
-    this.support = new Interval(0, Infinity, false, true);
-    this.params.n = params.n;
-    this.params.p = params.p;
+  get params() {
+    return this.#params;
   }
 
   pdf(x: number): number {
     const p = Math.log(this.params.p);
-    const q = Math.log(1.0 - this.params.p);
+    const q = this.params.logq;
 
     return (
       this.support.checkPDFInt(x) ??
@@ -138,7 +129,7 @@ export class NegativeBinomial extends Distribution<ParamsBinomial> {
   cdf(x: number, eps: number = 1e-20): number {
     return (
       this.support.checkCDFInt(x) ??
-      1.0 - regularizedBetaFunction(this.params.p, {alpha: (x | 0) + 1, beta: this.params.n}, eps)
+      1.0 - new BetaParams((x | 0) + 1, this.params.n).regularizedBetaFunction(this.params.p, eps)
     );
   }
 
@@ -147,39 +138,39 @@ export class NegativeBinomial extends Distribution<ParamsBinomial> {
     if (check !== null) return check;
 
     const z = stdNormalQuantile(q);
-    const x = this.cornishFisherExpansion(z) | 0;
+    const x = cornishFisherExpansion.call(this, z) | 0;
     const cdf =
-      1.0 - regularizedBetaFunction(this.params.p, {alpha: x + 1, beta: this.params.n}, eps);
+      1.0 - new BetaParams(x + 1, this.params.n).regularizedBetaFunction(this.params.p, eps);
 
-    return this.quantileCF(q, x, cdf);
+    return quantileCF.call(this, q, x, cdf);
   }
 
-  override random(n: number = 1, {rand = randomOptionsDefault.rand}: RandomOptions = {}): number[] {
+  override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
 
-    const c = this.params.p / (1.0 - this.params.p);
-    const s = randomShapeGamma(n, this.params.n, rand, c);
-    return s.map((e) => randomPoisson(1, e, rand)[0]);
+    const c = this.params.p / this.params.q;
+    const s = randomShapeGamma(n, this.params.n, options.rand, c);
+    return s.map((e) => randomPoisson(1, e, options.rand)[0]);
   }
 
   mean(): number {
-    const {n, p} = this.params;
-    return (n * p) / (1 - p);
+    const { n, p, q } = this.params;
+    return (n * p) / q;
   }
 
   variance(): number {
-    const {n, p} = this.params;
-    return (n * p) / Math.pow(1 - p, 2);
+    const { n, p, q } = this.params;
+    return (n * p) / Math.pow(q, 2);
   }
 
   mode(): number {
-    const {n, p} = this.params;
+    const { n, p, q } = this.params;
     if (n === 1) return 0;
-    return Math.floor(((n - 1) * p) / (1 - p));
+    return Math.floor(((n - 1) * p) / q);
   }
 
   skewness(): number {
-    const {n, p} = this.params;
+    const { n, p } = this.params;
     return (1 + p) / Math.sqrt(n * p);
   }
 }

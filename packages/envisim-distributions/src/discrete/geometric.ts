@@ -1,10 +1,7 @@
-import {Distribution, Interval} from '../abstract-distribution.js';
-import {type ParamsBernoulli, bernoulliCheck, bernoulliDefault} from '../params.js';
+import { Interval } from "../abstract-distribution.js";
+import { Bernoulli } from "./bernoulli.js";
 
-export class Geometric extends Distribution<ParamsBernoulli> {
-  protected params: ParamsBernoulli = bernoulliDefault;
-  protected logq!: number;
-
+export class Geometric extends Bernoulli {
   /**
    * The Geometric distribution
    *
@@ -15,44 +12,36 @@ export class Geometric extends Distribution<ParamsBernoulli> {
    * x.quantile(0.5)
    * x.random(10);
    */
-  constructor(p: number = bernoulliDefault) {
-    super();
-    this.setParameters(p);
-    return this;
-  }
-
-  setParameters(p: ParamsBernoulli = bernoulliDefault): void {
-    bernoulliCheck(p);
+  constructor(p?: number) {
+    super(p);
     this.support = new Interval(1, Infinity, false, true);
-    this.params = p;
-    this.logq = Math.log(1.0 - p);
   }
 
-  pdf(x: number): number {
-    return this.support.checkPDFInt(x) ?? Math.exp((x - 1) * this.logq) * this.params;
+  override pdf(x: number): number {
+    return this.support.checkPDFInt(x) ?? Math.exp((x - 1) * this.params.logq) * this.params.p;
   }
 
-  cdf(x: number): number {
-    return this.support.checkCDFInt(x) ?? 1.0 - Math.exp((x | 0) * this.logq);
+  override cdf(x: number): number {
+    return this.support.checkCDFInt(x) ?? 1.0 - Math.exp((x | 0) * this.params.logq);
   }
 
-  quantile(q: number): number {
-    return this.support.checkQuantile(q) ?? Math.ceil(Math.log(1.0 - q) / this.logq);
+  override quantile(q: number): number {
+    return this.support.checkQuantile(q) ?? Math.ceil(Math.log(1.0 - q) / this.params.logq);
   }
 
-  mean(): number {
-    return 1.0 / this.params;
+  override mean(): number {
+    return 1.0 / this.params.p;
   }
 
-  variance(): number {
-    return (1.0 - this.params) / Math.pow(this.params, 2);
+  override variance(): number {
+    return this.params.q / Math.pow(this.params.p, 2);
   }
 
-  mode(): number {
+  override mode(): number {
     return 1.0;
   }
 
-  skewness(): number {
-    return (2.0 - this.params) / Math.sqrt(1.0 - this.params);
+  override skewness(): number {
+    return (1.0 + this.params.q) / Math.sqrt(this.params.q);
   }
 }

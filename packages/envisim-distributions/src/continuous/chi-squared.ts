@@ -2,20 +2,17 @@ import {
   Distribution,
   Interval,
   type RandomOptions,
-  randomOptionsDefault,
-} from '../abstract-distribution.js';
-import {logGammaFunction, regularizedLowerGammaFunction} from '../gamma-utils.js';
-import {
-  type ParamsDegreesOfFreedom,
-  degreesOfFreedomCheck,
-  degreesOfFreedomDefault,
-} from '../params.js';
-import {assertPositiveInteger} from '../utils.js';
-import {gammaQuantile} from './gamma-quantile.js';
-import {randomShapeGamma} from './gamma-random.js';
+  RANDOM_OPTIONS_DEFAULT,
+} from "../abstract-distribution.js";
+import { logGammaFunction, regularizedLowerGammaFunction } from "../gamma-utils.js";
+import { DegreesOfFreedomParams, ShapeScaleParams } from "../params.js";
+import { assertPositiveInteger } from "../utils.js";
+import { gammaQuantile } from "./gamma-quantile.js";
+import { randomShapeGamma } from "./gamma-random.js";
 
-export class ChiSquared extends Distribution<ParamsDegreesOfFreedom> {
-  protected params: ParamsDegreesOfFreedom = degreesOfFreedomDefault;
+export class ChiSquared extends Distribution {
+  #params!: DegreesOfFreedomParams;
+  #gamma!: ShapeScaleParams;
 
   /**
    * The Chi-squared distribution
@@ -27,56 +24,54 @@ export class ChiSquared extends Distribution<ParamsDegreesOfFreedom> {
    * x.quantile(0.5)
    * x.random(10);
    */
-  constructor(df: number = degreesOfFreedomDefault) {
+  constructor(df?: number) {
     super();
-    this.setParameters(df);
-    return this;
+    this.#params = new DegreesOfFreedomParams(df);
+    this.#gamma = new ShapeScaleParams(this.#params.df * 0.5, 2.0);
+    this.support = new Interval(0, Infinity, this.#params.df === 1, true);
   }
 
-  setParameters(df: ParamsDegreesOfFreedom = degreesOfFreedomDefault): void {
-    degreesOfFreedomCheck(df);
-    this.support = new Interval(0, Infinity, df === 1, true);
-    this.params = df;
+  get params() {
+    return this.#params;
   }
 
   pdf(x: number): number {
-    const dfHalf = this.params * 0.5;
+    const dfHalf = this.params.df * 0.5;
     const c = dfHalf * Math.LN2 + logGammaFunction(dfHalf);
     return this.support.checkPDF(x) ?? Math.exp((dfHalf - 1.0) * Math.log(x) - x * 0.5 - c);
   }
 
   cdf(x: number, eps: number = 1e-12): number {
-    const dfHalf = this.params * 0.5;
+    const dfHalf = this.params.df * 0.5;
     return this.support.checkCDF(x) ?? regularizedLowerGammaFunction(dfHalf, x * 0.5, eps);
   }
 
   quantile(q: number, eps: 1e-12): number {
-    const dfHalf = this.params * 0.5;
+    const dfHalf = this.params.df * 0.5;
     return (
       this.support.checkQuantile(q) ??
-      gammaQuantile(q, {shape: dfHalf, scale: 2.0}, eps, logGammaFunction(dfHalf))
+      gammaQuantile.call(this.#gamma, q, eps, logGammaFunction(dfHalf))
     );
   }
 
-  override random(n: number = 1, {rand = randomOptionsDefault.rand}: RandomOptions = {}): number[] {
+  override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
-    const dfHalf = this.params * 0.5;
-    return randomShapeGamma(n, dfHalf, rand, 2.0);
+    return randomShapeGamma(n, this.#gamma.shape, options.rand, this.#gamma.scale);
   }
 
   mean(): number {
-    return this.params;
+    return this.params.df;
   }
 
   variance(): number {
-    return this.params * 2;
+    return this.params.df * 2;
   }
 
   mode(): number {
-    return Math.max(this.params - 2, 0.0);
+    return Math.max(this.params.df - 2, 0.0);
   }
 
   skewness(): number {
-    return Math.sqrt(8 / this.params);
+    return Math.sqrt(8 / this.params.df);
   }
 }

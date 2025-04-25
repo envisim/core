@@ -1,9 +1,8 @@
-import {describe} from 'vitest';
+import { describe } from "vitest";
+import { Weibull } from "../../src/index.js";
+import { distributionTests, fromTo } from "../_distributions.testf.js";
 
-import {Weibull} from '../../src/index.js';
-import {distributionTests, fromTo} from '../_distributions.testf.js';
-
-describe('Weibull(1, 1)', () => {
+describe("Weibull(1, 1)", () => {
   const pdf = [
     1.0, 0.778800783071404878477, 0.606530659712633424263, 0.472366552741014689154,
     0.367879441171442334024, 0.286504796860190091845, 0.223130160148429818046,
@@ -31,10 +30,10 @@ describe('Weibull(1, 1)', () => {
   ];
   const x = fromTo(0, 3.01, 0.25);
 
-  distributionTests(new Weibull(1.0, 1.0), {x, pdf, cdf, quantile});
+  distributionTests(new Weibull(1.0, 1.0), { x, pdf, cdf, quantile });
 });
 
-describe('Weibull(1, 0.5)', () => {
+describe("Weibull(0.5, 1)", () => {
   const pdf = [
     Infinity,
     0.486172730625805293858,
@@ -71,10 +70,10 @@ describe('Weibull(1, 0.5)', () => {
   ];
   const x = fromTo(0, 4.01, 1.0 / 3.0);
 
-  distributionTests(new Weibull(1.0, 0.5), {x, pdf, cdf, quantile});
+  distributionTests(new Weibull(0.5, 1.0), { x, pdf, cdf, quantile });
 });
 
-describe('Weibull(1, 2)', () => {
+describe("Weibull(2, 1)", () => {
   const pdf = [
     0.0, 0.384315775660929281887, 0.681715031172969165851, 0.837211591285237255455,
     0.843667878468877696641, 0.735758882342884668049, 0.568626620837092255911,
@@ -102,5 +101,5 @@ describe('Weibull(1, 2)', () => {
   ];
   const x = fromTo(0, 2.01, 0.2);
 
-  distributionTests(new Weibull(1.0, 2.0), {x, pdf, cdf, quantile});
+  distributionTests(new Weibull(2.0, 1.0), { x, pdf, cdf, quantile });
 });
