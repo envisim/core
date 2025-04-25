@@ -1,3 +1,7 @@
+/**
+ * @module geojson-utils
+ */
+
 export { areaOfPolygonLonLat } from "./area.js";
 export {
   cutAreaGeometry,
