@@ -1,6 +1,9 @@
 import { Interval } from "../abstract-distribution.js";
 import { ShapeScale } from "../abstract-shape-scale.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class Pareto extends ShapeScale {
   /**
    * The Pareto distribution

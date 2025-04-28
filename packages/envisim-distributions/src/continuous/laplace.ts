@@ -1,5 +1,8 @@
 import { LocationScale } from "../abstract-location-scale.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class Laplace extends LocationScale {
   /**
    * The Laplace distribution

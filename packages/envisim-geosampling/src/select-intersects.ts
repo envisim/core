@@ -1,3 +1,6 @@
+/**
+ * @module @envisim/geosampling/select-intersects
+ */
 import {
   type AreaObject,
   Feature,

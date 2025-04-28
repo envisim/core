@@ -1,6 +1,9 @@
 import { Random, type RandomGenerator, randomArray } from "@envisim/random";
 import { assertPositiveInteger } from "./utils.js";
 
+/**
+ * @category Interfaces
+ */
 export interface RandomOptions {
   /**
    * A random generator
@@ -39,7 +42,7 @@ export abstract class Distribution {
   abstract quantile(q: number, eps?: number): number;
   /**
    * Generate random numbers from the distribution.
-   * @param n the number of observations to be generated
+   * @param n - the number of observations to be generated
    */
   random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     assertPositiveInteger(n);
@@ -99,7 +102,9 @@ export function quantileCF(
   return k;
 }
 
-/** @internal */
+/**
+ * @category Classes
+ */
 export class Interval {
   /** Left endpoint */
   l: number = -Infinity;

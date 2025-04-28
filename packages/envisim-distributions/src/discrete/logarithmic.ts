@@ -11,6 +11,9 @@ import { BetaParams } from "../params.js";
 import { assertPositiveInteger } from "../utils.js";
 import { Bernoulli } from "./bernoulli.js";
 
+/**
+ * @category Discrete distributions
+ */
 export class Logarithmic extends Bernoulli {
   /**
    * The Logarithmic distribution

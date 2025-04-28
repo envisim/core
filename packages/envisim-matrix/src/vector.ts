@@ -164,7 +164,7 @@ export class Vector extends BaseMatrix {
   }
 
   /**
-   * @returns the cumulative sum of the {@link TVectorLike}
+   * @returns the cumulative sums of the vector elements
    * @group Statistics
    */
   cumulativeSum(): Vector {
@@ -245,8 +245,8 @@ export class Vector extends BaseMatrix {
 /**
  * Generates a vector-like of random numbers on [0, 1).
  *
- * @param length the length of the vector
- * @param seed a seed used in the random number generator.
+ * @param length - the length of the vector
+ * @param rand - an RNG
  * @returns a vector-like of random numbers on [0, 1).
  */
 export function randomVector(length: number, rand: RandomGenerator = new Random()): Vector {
@@ -262,9 +262,9 @@ export function randomVector(length: number, rand: RandomGenerator = new Random(
  * const seq2 = ColumnVector.createSequence(0, 1.9, 0.5);
  * // seq2 is a ColumnVector with elements [0.0, 0.5, 1.0, 1.5]
  *
- * @param from The starting number in the sequence.
- * @param to A number for which the sequence will not generate beyond.
- * @param by The incrementing (or decrementing) size of the sequence. Must be positive.
+ * @param from - The starting number in the sequence.
+ * @param to - A number for which the sequence will not generate beyond.
+ * @param by - The incrementing (or decrementing) size of the sequence. Must be positive.
  * @returns A vector of size needed to reach `to`, however not going over it.
  */
 export function sequence(from: number, to: number, by: number = 1.0): Vector {

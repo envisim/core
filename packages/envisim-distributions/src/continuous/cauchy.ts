@@ -1,5 +1,8 @@
 import { LocationScale } from "../abstract-location-scale.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class Cauchy extends LocationScale {
   /**
    * The Cauchy distribution

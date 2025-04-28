@@ -18,6 +18,9 @@ import {
 } from "./options.js";
 import { samplePointsOnAreas } from "./points-on-areas.js";
 
+/**
+ * @interface
+ */
 export type SampleDistancePointsOptions = OptionsPointsOnAreas & OptionsDistancePoints;
 
 export function sampleDistancePointsCheck(options: SampleDistancePointsOptions): SampleError {
@@ -29,9 +32,8 @@ export function sampleDistancePointsCheck(options: SampleDistancePointsOptions):
  * and collect point objects from a base layer using a detection function
  * to (randomly) determine inclusion.
  *
- * @param collection
- * @param opts
-
+ * @param collection -
+ * @param options -
  */
 export function sampleDistancePoints(
   collection: FeatureCollection<AreaObject>,

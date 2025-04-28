@@ -25,7 +25,7 @@ function randomPositionInCluster(center: GJ.Position, sigma: number, rand: Rando
   return destination(center, dist, azimuth);
 }
 
-interface ThomasClusterProcessOptions {
+export interface ThomasClusterProcessOptions {
   /**
    * The mean number of parent points per square meters.
    */
@@ -39,7 +39,7 @@ interface ThomasClusterProcessOptions {
    */
   sigmaOfCluster: number;
   /**
-   * An instance of {@link random.Random}
+   * An RNG
    * @defaultValue `new Random()`
    */
   rand?: Random;

@@ -9,7 +9,11 @@ import { HypergeometricParams } from "../params.js";
 import { assertPositiveInteger, binomialCoefficient, logBinomialCoefficient } from "../utils.js";
 import { logFactorial } from "../utils.js";
 
+/**
+ * @category Discrete distributions
+ */
 export class Hypergeometric extends Distribution {
+  /** @internal */
   #params!: HypergeometricParams;
 
   /**
@@ -33,6 +37,7 @@ export class Hypergeometric extends Distribution {
     );
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }

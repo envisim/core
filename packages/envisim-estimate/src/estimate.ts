@@ -1,17 +1,19 @@
-import {type Matrix, Vector} from '@envisim/matrix';
-import {NearestNeighbour} from '@envisim/sampling';
-
-import {checkSampleArray} from './utils.js';
+import { type Matrix, Vector } from "@envisim/matrix";
+import { NearestNeighbour } from "@envisim/sampling";
+import { checkSampleArray } from "./utils.js";
 
 /**
  * Single count Horvitz-Thompson estimator of the total
- * $$ \hat\{Y\} = \sum_\{i \in S\} \frac\{y_i\}\{\pi_i\} , $$
- * $$ n = |S| . $$
- * @category Estimator
+ *
+ * $$\hat\{Y\} = \sum_\{i \in S\} \frac\{y_i\}\{\pi_i\} ,$$
+ *
+ * $$n = |S| .$$
+ *
  *
  * @param y - variable of interest of size n, $y_i$.
  * @param prob - inclusion probabilities of size n, $\pi_i$.
  * @returns the Horvitz-Thompson estimate, $\hat\{Y\}$.
+ * @category Estimators
  */
 export function horvitzThompson(y: number[] | Vector, prob: number[] | Vector): number {
   const ys = new Vector(y, false);
@@ -22,14 +24,16 @@ export function horvitzThompson(y: number[] | Vector, prob: number[] | Vector): 
 
 /**
  * Multiple count Hansen-Hurwitz estimator.
- * $$ \hat\{Y\} = \sum_\{i \in S\} \frac\{y_i\}\{\mu_i\}S_i , $$
- * $$ n = |S| . $$
- * @category Estimator
+ *
+ * $$\hat\{Y\} = \sum_\{i \in S\} \frac\{y_i\}\{\mu_i\}S_i ,$$
+ *
+ * $$n = |S| .$$
  *
  * @param y - variable of interest of size n, $y_i$.
  * @param expected - expected number of inclusions of size n, $\mu_i$.
  * @param inclusions - number of inclusions of size n, $S_i$.
  * @returns the Hansen-Hurwitz estimate, $\hat\{Y\}$.
+ * @category Estimators
  */
 export function hansenHurwitz(
   y: number[] | Vector,
@@ -45,15 +49,17 @@ export function hansenHurwitz(
 
 /**
  * Ratio estimator, where a true total $X$ is available for the population.
- * $$ \hat\{T\} = \frac\{ \hat\{Y\} \}\{ \hat\{X\} \} X , $$
+ *
+ * $$\hat\{T\} = \frac\{ \hat\{Y\} \}\{ \hat\{X\} \} X ,$$
+ *
  * where $\hat\{Y\}, \hat\{X\}$ are {@link horvitzThompson | HT-estimators}.
- * @category Estimator
  *
  * @param y - variable of interest of size n.
  * @param x - auxiliary variable of size n.
  * @param totalX - population total, $X$.
  * @param prob - inclusion probabilities of size n.
  * @returns the ratio estimate, $\hat\{T\}$.
+ * @category Estimators
  */
 export function ratioEstimator(
   y: number[] | Vector,
@@ -65,18 +71,18 @@ export function ratioEstimator(
   const xs = new Vector(x, false);
   const ps = new Vector(prob, true);
 
-  if (ys.nrow !== xs.nrow) throw new RangeError('y and x must have same size');
+  if (ys.nrow !== xs.nrow) throw new RangeError("y and x must have same size");
 
   return totalX * (ys.divide(ps, true).sum() / xs.divide(ps, true).sum());
 }
 
 /**
- * $$ \hat\{Y\} = \sum_\{i=1\}^n \frac\{y_i\}\{n p_i\} $$
- * @category Estimator
+ * $$\hat\{Y\} = \sum_\{i=1\}^n \frac\{y_i\}\{n p_i\}$$
  *
  * @param y - variable of interest of size n, $y_i$.
  * @param prob - drawing probabilities of size n, $p_i$.
  * @returns the wr estimate, $\hat\{Y\}$.
+ * @category Estimators
  */
 export function wrEstimator(y: number[] | Vector, prob: number[] | Vector): number {
   const ys = new Vector(y, false);
@@ -86,15 +92,16 @@ export function wrEstimator(y: number[] | Vector, prob: number[] | Vector): numb
 }
 
 /**
- * $$ \hat\{Y\} = \sum_\{i \in S\} y_i n_i , $$
+ * $$\hat\{Y\} = \sum_\{i \in S\} y_i n_i ,$$
+ *
  * where $n_i$ is the number of units in the population closer to unit $i$
  * than to any other unit.
- * @category Estimator
  *
  * @param y - variable of interest of size n.
  * @param xm - auxilliary variables of size N*p.
  * @param sample - sample indices, in the same order as the y-values.
  * @returns the nearest neighbour estimate
+ * @category Estimators
  */
 export function nearestNeighbourEstimator(
   y: number[] | Vector,
@@ -105,7 +112,7 @@ export function nearestNeighbourEstimator(
   checkSampleArray(sample, N);
   const n = sample.length;
 
-  if (y.length !== n) throw new RangeError('y and sample must have the same length');
+  if (y.length !== n) throw new RangeError("y and sample must have the same length");
 
   const ni = new Array<number>(n).fill(0.0);
   const nn = new NearestNeighbour(xm.extractRows(sample), 10);

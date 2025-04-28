@@ -20,30 +20,21 @@ import { type FeatureProperties, PropertyRecord } from "../property-record.js";
 import { centroidFromMultipleCentroids } from "../utils/centroid.js";
 import { type CirclesToPolygonsOptions } from "../utils/circles-to-polygons.js";
 
-type ForEachCallback<T> = (obj: T, index: number) => void;
-interface FeatureCollectionExtras {
-  primitive: GeometricPrimitiveUnion;
-  propertyRecord: PropertyRecord;
-  id?: string;
-  title?: string;
-  color?: [number, number, number];
-}
-interface FeatureCollectionExtrasJson {
+export type ForEachCallback<T> = (obj: T, index: number) => void;
+export interface FeatureCollectionExtrasJson {
   primitive: GeometricPrimitiveUnion;
   propertyRecord: { record: PropertyRecord["record"] };
   id?: string;
   title?: string;
   color?: [number, number, number];
 }
-type StrippedFeatureCollectionJson = OptionalParam<
+export type StrippedFeatureCollectionJson = OptionalParam<
   GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.BaseGeometry, unknown>> & FeatureCollectionExtrasJson,
   "type" | "primitive" | "propertyRecord"
 >;
 
 export class FeatureCollection<T extends PureObject, PID extends string = string>
-  implements
-    GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>>,
-    FeatureCollectionExtras
+  implements GJ.BaseFeatureCollection<GJ.BaseFeature<GJ.SingleTypeObject, number | string>>
 {
   static isArea<P extends string>(
     obj: FeatureCollection<PureObject, P>,
@@ -246,15 +237,15 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
   features: Feature<T, PID>[] = [];
   bbox?: GJ.BBox;
 
-  /** Foreign member, the id of the collection */
+  /** Foreign GeoJSON member, the id of the collection */
   id?: string;
-  /** Foreign member, the human readable name of the collection */
+  /** Foreign GeoJSON member, the human readable name of the collection */
   title?: string;
-  /** Foreign member, an RGB value associated with the collection */
+  /** Foreign GeoJSON member, an RGB value associated with the collection */
   color?: [number, number, number];
-  /** Foreign member, geometric primitive of the collection */
+  /** Foreign GeoJSON member, geometric primitive of the collection */
   readonly primitive: GeometricPrimitiveUnion;
-  /** Foreign member, the allowed properties of the collection */
+  /** Foreign GeoJSON member, the allowed properties of the collection */
   propertyRecord: PropertyRecord<PID>;
 
   private constructor(
@@ -269,8 +260,9 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
   /**
    * Transforms the categorical properties back to strings, and returns the json
-   * @param options if `options.convertCircles` is `true` (default), then circles will be converted
-   * to polygons.
+   * @param shallow - if `true`, creates shallow copies of the features
+   * @param options -
+   * @param options.convertCircles - if `true`, circles will be converted to polygons.
    */
   copy(
     shallow: boolean = true,

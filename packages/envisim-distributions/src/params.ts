@@ -6,7 +6,12 @@ export { LocationScaleParams } from "./abstract-location-scale.js";
 export { ShapeScaleParams } from "./abstract-shape-scale.js";
 
 export class BenfordMantissaParams {
-  static DEFAULTS = { base: 10 } as const;
+  static DEFAULTS = {
+    /**
+     * The
+     */
+    base: 10,
+  } as const;
   #base: number;
 
   #logBase: number;

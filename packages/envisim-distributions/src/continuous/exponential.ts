@@ -7,12 +7,15 @@ import {
 } from "../abstract-distribution.js";
 import { RateParams } from "../params.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class Exponential extends Distribution {
+  /** @internal */
   #params!: RateParams;
 
   /**
    * The Exponential distribution
-   * @see {@link ParamsRate}
    *
    * @example
    * const x = new Exponential(1);
@@ -27,6 +30,7 @@ export class Exponential extends Distribution {
     this.support = new Interval(0, Infinity, false, true);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }

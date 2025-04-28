@@ -9,6 +9,9 @@ import {
   throwRangeError,
 } from "./options.js";
 
+/**
+ * @interface
+ */
 export type SamplePointsOnLinesOptions = OptionsBase;
 
 export function samplePointsOnLinesCheck(options: SamplePointsOnLinesOptions): SampleError {
@@ -18,8 +21,8 @@ export function samplePointsOnLinesCheck(options: SamplePointsOnLinesOptions): S
 /**
  * Selects points according to method and sampleSize on a line layer.
  *
- * @param collection
- * @param opts
+ * @param collection -
+ * @param options -
  */
 export function samplePointsOnLines(
   collection: FeatureCollection<LineObject>,

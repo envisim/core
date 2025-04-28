@@ -3,13 +3,13 @@ import { type AreaObject, FeatureCollection, type Point } from "@envisim/geojson
 import { Random } from "@envisim/random";
 import { uniformBinomialPointProcess } from "./uniform-binomial.js";
 
-interface UniformPoissonProcessOptions {
+export interface UniformPoissonPointProcessOptions {
   /**
    * The intensity as mean number of points per square meters.
    */
   intensity: number;
   /**
-   * An instance of {@link random.Random}
+   * An RNG
    * @defaultValue `new Random()`
    */
   rand?: Random;
@@ -27,7 +27,7 @@ interface UniformPoissonProcessOptions {
  */
 export function uniformPoissonPointProcess(
   collection: FeatureCollection<AreaObject>,
-  { intensity, rand = new Random() }: UniformPoissonProcessOptions,
+  { intensity, rand = new Random() }: UniformPoissonPointProcessOptions,
 ): FeatureCollection<Point, never> {
   const A = collection.measure();
   const mu = intensity * A;

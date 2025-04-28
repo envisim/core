@@ -1,3 +1,6 @@
+/**
+ * @module @envisim/geosampling/collect-properties
+ */
 import { v4 as uuid } from "uuid";
 import {
   type AreaObject,

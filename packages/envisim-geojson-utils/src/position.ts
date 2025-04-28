@@ -38,7 +38,7 @@ export function longitudeInClosedInterval(
  * @param a the smallest longitude
  * @param b the largest longitude
  * @param norm the normalizing factor
- * @returnsthe distance in normalized longitudes on range [a, b]
+ * @returns the distance in normalized longitudes on range [a, b]
  */
 export function longitudeDistance(a: number, b: number, norm: number = 360.0): number {
   a = normalizeLongitude(a);

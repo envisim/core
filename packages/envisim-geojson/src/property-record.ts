@@ -27,7 +27,8 @@ export type Property<ID extends string = string> = NumericalProperty<ID> | Categ
 
 export type PropertyList<IDS extends string = string> = Record<IDS, Property<IDS>>;
 
-const SPECIAL_KEYS = [
+/** Special keys (reserved names) of properties */
+export const SPECIAL_KEYS = [
   "_designWeight",
   "_distance",
   "_parent",
@@ -37,7 +38,8 @@ const SPECIAL_KEYS = [
 ] as const;
 export type SpecialPropertyNames = (typeof SPECIAL_KEYS)[number];
 
-type SpecialFeatureProperties = Partial<Record<SpecialPropertyNames, number>>;
+/** Record of special properties */
+export type SpecialFeatureProperties = Partial<Record<SpecialPropertyNames, number>>;
 export type FeatureProperties<IDS extends string = string> = SpecialFeatureProperties &
   Record<IDS, number | string>;
 

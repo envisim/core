@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "doc": "typedoc",
     "lint": "eslint src/",
     "test": "vitest run"
   },
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@envisim/config-eslint": "workspace:*",
     "@envisim/config-ts": "workspace:*",
+    "@envisim/config-typedoc": "workspace:*",
     "eslint": "^9.24.0",
     "typescript": "^5.8.3",
     "vitest": "^3.1.1"

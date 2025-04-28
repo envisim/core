@@ -2,6 +2,9 @@ import { Interval } from "../abstract-distribution.js";
 import { ShapeScale } from "../abstract-shape-scale.js";
 import { gammaFunction } from "../gamma-utils.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class Weibull extends ShapeScale {
   /**
    * The Weibull distribution

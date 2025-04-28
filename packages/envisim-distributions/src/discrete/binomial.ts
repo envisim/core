@@ -13,7 +13,11 @@ import { assertPositiveInteger, logBinomialCoefficient } from "../utils.js";
 import { randomBinomial } from "./binomial-random.js";
 import { randomPoisson } from "./poisson-random.js";
 
+/**
+ * @category Discrete distributions
+ */
 export class Binomial extends Distribution {
+  /** @internal */
   #params!: BinomialParams;
 
   /**
@@ -33,6 +37,7 @@ export class Binomial extends Distribution {
     this.support = new Interval(0, this.params.n, false, false);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }
@@ -93,7 +98,11 @@ export class Binomial extends Distribution {
   }
 }
 
+/**
+ * @category Discrete distributions
+ */
 export class NegativeBinomial extends Distribution {
+  /** @internal */
   #params!: BinomialParams;
 
   /**
@@ -112,6 +121,7 @@ export class NegativeBinomial extends Distribution {
     this.support = new Interval(0, Infinity, false, true);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }

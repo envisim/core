@@ -9,13 +9,23 @@ const geodDirectOpts = geodesic.Geodesic.LONGITUDE | geodesic.Geodesic.LATITUDE;
 const TO_DEG = 180 / Math.PI;
 const TO_RAD = Math.PI / 180;
 
-export type ProjectionFunction = (coord: GJ.Position) => GJ.Position2;
-export type NestedPosition = GJ.Position | NestedPosition[];
+/**
+ * @inline
+ */
+type NestedPosition = GJ.Position | NestedPosition[];
+/**
+ * @inline
+ */
+type ProjectionFunction = (coord: GJ.Position) => GJ.Position2;
+export interface Projection {
+  project: ProjectionFunction;
+  unproject: ProjectionFunction;
+}
 
 /**
  * Helper function to project/unproject coords
- * @param coords
- * @param proj
+ * @param coords -
+ * @param proj -
  * @returns
  */
 export function projectCoords<T extends NestedPosition>(coords: T, proj: ProjectionFunction): T {
@@ -27,16 +37,11 @@ export function projectCoords<T extends NestedPosition>(coords: T, proj: Project
   return proj(coords as GJ.Position) as T;
 }
 
-export type Projection = {
-  project: ProjectionFunction;
-  unproject: ProjectionFunction;
-};
-
 /**
  * Azimuthal Equidistant projection based on the reference coordinate
  * provided as argument.
- * @param refCoord - A GeoJSON.Position
- * @returns - Azimuthal Equidistant projection.
+ * @param refCoord - the reference coordinate
+ * @returns an azimuthal equidistant projection.
  */
 export function azimuthalEquidistant(refCoord: GJ.Position): Projection {
   return {

@@ -11,6 +11,9 @@ import {
 import { inclprobsFromLayer, returnCollectionFromSample, spreadMatrixFromLayer } from "./utils.js";
 
 export const SAMPLE_SPATIALLY_BALANCED_METHODS = ["lpm1", "lpm2", "scps"] as const;
+/**
+ * @interface
+ */
 export type SampleSpatiallyBalancedOptions<P extends string = string> = OptionsBase<
   P,
   (typeof SAMPLE_SPATIALLY_BALANCED_METHODS)[number]

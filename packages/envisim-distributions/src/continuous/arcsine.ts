@@ -1,6 +1,9 @@
 import { Bounded } from "../abstract-bounded.js";
 import { HALF_PI, HALF_PI_INV } from "../math-constants.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class Arcsine extends Bounded {
   /**
    * The Arcsine distribution

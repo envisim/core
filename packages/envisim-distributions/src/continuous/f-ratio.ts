@@ -9,8 +9,13 @@ import { DegreesOfFreedomParams } from "../params.js";
 import { assertPositiveInteger } from "../utils.js";
 import { randomBeta } from "./beta-random.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class FRatio extends Distribution {
+  /** @internal */
   #params!: [DegreesOfFreedomParams, DegreesOfFreedomParams];
+  /** @internal */
   #beta!: BetaParams;
 
   /**
@@ -30,6 +35,7 @@ export class FRatio extends Distribution {
     this.support = new Interval(0, Infinity, this.#params[0].df === 1, true);
   }
 
+  /** @internal */
   get params() {
     return this.#params;
   }

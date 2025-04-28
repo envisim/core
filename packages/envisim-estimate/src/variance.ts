@@ -1,15 +1,15 @@
-import {type Matrix, Vector} from '@envisim/matrix';
-import {NearestNeighbour} from '@envisim/sampling';
+import { type Matrix, Vector } from "@envisim/matrix";
+import { NearestNeighbour } from "@envisim/sampling";
 
 /**
- * $$ \hat\{V\}(\hat\{Y\}) = \sum_\{i \in S\} \sum_\{j \in S\} \frac\{y_i y_j\}\{\pi_i \pi_j\} \frac\{\pi_\{ij\} - \pi_i \pi_j\}\{\pi_\{ij\}\} $$
- * @category Variance estimator
+ * $$\hat\{V\}(\hat\{Y\}) = \sum_\{i \in S\} \sum_\{j \in S\} \frac\{y_i y_j\}\{\pi_i \pi_j\} \frac\{\pi_\{ij\} - \pi_i \pi_j\}\{\pi_\{ij\}\}$$
  *
  * @param y - variable of interest of size n, $y_i$.
  * @param prob - inclusion probabilities of size n, $\pi_i$.
  * @param prob2m - second order inclusion probabilities of size n*n,
  *   upper triangular matrix, $\pi_\{ij\}$.
  * @returns the Horvitz-Thompson variance estimate.
+ * @category Variance estimators
  */
 export function htVariance(y: number[] | Vector, prob: number[] | Vector, prob2m: Matrix): number {
   const pi = new Vector(prob, true);
@@ -17,7 +17,7 @@ export function htVariance(y: number[] | Vector, prob: number[] | Vector, prob2m
   const n = pi.length;
 
   if (prob2m.nrow !== n || prob2m.ncol !== n)
-    throw new TypeError('prob2m must be a matrix of size n*n');
+    throw new TypeError("prob2m must be a matrix of size n*n");
 
   let variance = 0.0;
 
@@ -37,14 +37,14 @@ export function htVariance(y: number[] | Vector, prob: number[] | Vector, prob2m
 /**
  * Sen-Yates-Grundy HT-variance estimator of a fixed sample size
  *
- * $$ \hat\{V\}(\hat\{Y\}) = -\frac\{1\}\{2\} \sum_\{i \in S\} \sum_\{j \in S\} (y_i / \pi_i - y_j / \pi_j)^2 \frac\{\pi_\{ij\} - \pi_i \pi_j\}\{\pi_\{ij\}\} $$
- * @category Variance estimator
+ * $$\hat\{V\}(\hat\{Y\}) = -\frac\{1\}\{2\} \sum_\{i \in S\} \sum_\{j \in S\} (y_i / \pi_i - y_j / \pi_j)^2 \frac\{\pi_\{ij\} - \pi_i \pi_j\}\{\pi_\{ij\}\}$$
  *
- * @param y variable of interest of size n, $y_i$.
- * @param prob inclusion probabilities of size n, $\pi_i$.
- * @param prob2m second order inclusion probabilities of size n*n,
+ * @param y - variable of interest of size n, $y_i$.
+ * @param prob - inclusion probabilities of size n, $\pi_i$.
+ * @param prob2m - second order inclusion probabilities of size n*n,
  *   upper triangular matrix, $\pi_\{ij\}$.
  * @returns the Horvitz-Thompson variance estimate.
+ * @category Variance estimators
  */
 export function htVarianceSYG(
   y: number[] | Vector,
@@ -56,7 +56,7 @@ export function htVarianceSYG(
   const n = pi.length;
 
   if (prob2m.nrow !== n || prob2m.ncol !== n)
-    throw new TypeError('prob2m must be a matrix of size n*n');
+    throw new TypeError("prob2m must be a matrix of size n*n");
 
   let variance = 0.0;
 
@@ -74,10 +74,10 @@ export function htVarianceSYG(
 }
 
 /**
- * @category Variance estimator
  * @param y variable of interest of size n, $y_i$.
  * @param prob inclusion probabilities of size n, $\pi_i$.
  * @returns Deville's HT variance estimate.
+ * @category Variance estimators
  */
 export function htVarianceD(y: number[] | Vector, prob: number[] | Vector): number {
   const ps = new Vector(prob, true);
@@ -102,11 +102,11 @@ export function htVarianceD(y: number[] | Vector, prob: number[] | Vector): numb
 }
 
 /**
- * @category Variance estimator
- * @param y variable of interest of size n, $y_i$.
- * @param prob inclusion probabilities of size n, $\pi_i$.
- * @param xm auxilliary variables of size n*p.
+ * @param y - variable of interest of size n, $y_i$.
+ * @param prob - inclusion probabilities of size n, $\pi_i$.
+ * @param xm - auxilliary variables of size n*p.
  * @returns GS's HT variance estimate.
+ * @category Variance estimators
  */
 export function htVarianceGS(y: number[] | Vector, prob: number[] | Vector, xm: Matrix): number {
   const ps = new Vector(prob, true);
@@ -128,8 +128,7 @@ export function htVarianceGS(y: number[] | Vector, prob: number[] | Vector, xm: 
 }
 
 /**
- * $$ \hat\{V\}(\hat\{Y\}) = \sum_\{i \in S\} \sum_\{j \in S\} \frac\{y_i y_j\}\{\mu_i \mu_j\} S_i S_j \frac\{\mu_\{ij\} - \mu_i \mu_j\}\{\mu_\{ij\}\} $$
- * @category Variance estimator
+ * $$\hat\{V\}(\hat\{Y\}) = \sum_\{i \in S\} \sum_\{j \in S\} \frac\{y_i y_j\}\{\mu_i \mu_j\} S_i S_j \frac\{\mu_\{ij\} - \mu_i \mu_j\}\{\mu_\{ij\}\}$$
  *
  * @param y - variable of interest of size n, $y_i$.
  * @param expected - expected number of inclusions of size n, $\mu_i$.
@@ -137,6 +136,7 @@ export function htVarianceGS(y: number[] | Vector, prob: number[] | Vector, xm: 
  * @param mu2m - second order expected number of inclusions of size n*n,
  *   upper triangular matrix, $\mu_\{ij\}$.
  * @returns the Hansen-Hurwitz variance estimate.
+ * @category Variance estimators
  */
 export function hhVariance(
   y: number[] | Vector,
@@ -149,7 +149,7 @@ export function hhVariance(
   const n = mu.length;
 
   if (mu2m.nrow !== n || mu2m.ncol !== n)
-    throw new TypeError('prob2m must be a matrix of size n*n');
+    throw new TypeError("prob2m must be a matrix of size n*n");
 
   let variance = 0.0;
 
@@ -167,10 +167,10 @@ export function hhVariance(
 }
 
 /**
- * @category Variance estimator
  * @param y - variable of interest of size n, $y_i$.
  * @param prob - inclusion probabilities of size n, $\pi_i$.
  * @returns the wr variance estimate.
+ * @category Variance estimators
  */
 export function wrVariance(y: number[] | Vector, prob: number[] | Vector): number {
   const ps = new Vector(prob, true);

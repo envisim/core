@@ -21,7 +21,7 @@ function randomPositionInCluster(center: GJ.Position, radius: number, rand: Rand
   return destination(center, dist, azimuth);
 }
 
-interface MaternClusterProcessOptions {
+export interface MaternClusterProcessOptions {
   /**
    * The mean number of parent points per square meters.
    */
@@ -35,7 +35,7 @@ interface MaternClusterProcessOptions {
    */
   radiusOfCluster: number;
   /**
-   * An instance of {@link random.Random}
+   * An RNG
    * @defaultValue `new Random()`
    */
   rand?: Random;

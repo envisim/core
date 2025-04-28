@@ -1,14 +1,13 @@
-import {type Matrix, type Vector} from '@envisim/matrix';
-import {NearestNeighbour} from '@envisim/sampling';
-
-import {checkSampleArray} from './utils.js';
+import { type Matrix, type Vector } from "@envisim/matrix";
+import { NearestNeighbour } from "@envisim/sampling";
+import { checkSampleArray } from "./utils.js";
 
 /**
- * @category Spatial balance measure
  * @param sample - sample indices.
  * @param xm - Matrix of auxilliary variables of size N*p.
  * @param prob - inclusion probabilities of size N.
  * @returns spatial balance based on the voronoi balance measure.
+ * @category Spatial balance measures
  */
 export function spatialBalanceVO(
   sample: number[] | Vector,
@@ -18,7 +17,7 @@ export function spatialBalanceVO(
   const N = xm.nrow;
   checkSampleArray(sample, N);
 
-  if (prob.length !== N) throw new RangeError('xm and prob must have same number of rows');
+  if (prob.length !== N) throw new RangeError("xm and prob must have same number of rows");
 
   const incl = new Array<number>(sample.length).fill(0.0);
   const nn = new NearestNeighbour(xm.extractRows(sample), 10);
@@ -44,11 +43,11 @@ export function spatialBalanceVO(
 }
 
 /**
- * @category Spatial balance measure
  * @param sample - sample indices.
  * @param xm - Matrix of auxilliary variables of size N*p.
  * @param prob - inclusion probabilities of size N.
  * @returns spatial balance based on the sum of squares balance measure.
+ * @category Spatial balance measures
  */
 export function spatialBalanceSS(
   sample: number[] | Vector,
@@ -61,7 +60,7 @@ export function spatialBalanceSS(
 
   let mat = xm;
   if (prob !== undefined) {
-    if (prob.length !== N) throw new RangeError('xm and prob must have same number of rows');
+    if (prob.length !== N) throw new RangeError("xm and prob must have same number of rows");
     mat = xm.clone();
 
     mat.map((e: number, i: number): number => {

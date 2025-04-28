@@ -1,3 +1,7 @@
+/**
+ * @module @envisim/geojson
+ */
+
 // Objects
 export {
   // Areas
@@ -30,7 +34,15 @@ export {
 export { Feature } from "./class-feature.js";
 
 // FeatureCollections
-export { FeatureCollection, perimeter, convexHull, union } from "./collection/index.js";
+export {
+  FeatureCollection,
+  type FeatureCollectionExtrasJson,
+  type ForEachCallback,
+  type StrippedFeatureCollectionJson,
+  perimeter,
+  convexHull,
+  union,
+} from "./collection/index.js";
 
 // PropertyRecord
 export {
@@ -38,13 +50,16 @@ export {
   type NumericalProperty,
   type Property,
   type PropertyList,
+  SPECIAL_KEYS,
   type SpecialPropertyNames,
+  type SpecialFeatureProperties,
   type FeatureProperties,
   PropertyRecord,
 } from "./property-record.js";
 
 // Utils
 export { type CirclesToPolygonsOptions } from "./utils/circles-to-polygons.js";
+export { type BufferOptions } from "./buffer/index.js";
 
 export {
   intersectAreaAreaGeometries,

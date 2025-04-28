@@ -33,8 +33,8 @@ export function sampleSystematicLinesOnAreasCheck(
 /**
  * Selects a sample of lines systematically over all areas.
  *
- * @param collection
- * @param opts
+ * @param collection -
+ * @param options -
  */
 export function sampleSystematicLinesOnAreas(
   collection: FeatureCollection<AreaObject>,

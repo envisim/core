@@ -1,5 +1,8 @@
 import { Bounded } from "../abstract-bounded.js";
 
+/**
+ * @category Continuous distributions
+ */
 export class UQuadratic extends Bounded {
   #alpha!: number;
   #beta!: number;

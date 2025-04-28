@@ -1,3 +1,6 @@
+/**
+ * @module @envisim/geosampling/model-geometry
+ */
 import {
   type AreaObject,
   Circle,
@@ -29,24 +32,21 @@ function placePoint(point: GJ.Position, position: GJ.Position, rotation: number)
   return destination(position, dist, angle);
 }
 
-interface PlaceOptions<G extends GJ.SingleTypeObject> {
+export interface PlaceOptions<G extends GJ.SingleTypeObject> {
+  /** Model geometry with coordinates in meters relative to (0,0) */
   modelGeometry: G;
+  /** Angel of rotation in degrees (from north), or `random` for random rotation */
   rotationOfGeometry: number | "random";
+  /** Optional RNG */
   rand: RandomGenerator;
+  /** Buffer */
   buffer: number;
 }
 
 /**
  * Positions a modelGeometry at position and optionally rotates the coordinates around position.
  *
- * @param modelGeometry a model Geometry with coordinates in meters relative to (0,0). Same structure as GeoJSON Feature.
- * @param position a position [lon,lat].
- * @param opts an object containing rotation in degrees (optional) and boolean randomRotation (default false).
- * @param opts.rotation angel of rotation in degrees from north.
- * @param opts.randomRotation boolean true/false for a random rotation (default false).
- * @param opts.rand optional instance of Random.
- * @param opts.radius optional radius of modelFeature.
- * @param opts.type optional type of modelFeature ('point','line','area').
+ * @param position - a position [lon,lat].
  * @returns a GeoJSON Point/Line/AreaObject.
  */
 export function placeAreaGeometry(

@@ -1,0 +1,16 @@
+{
+  "name": "@envisim/config-typedoc",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./config.js"
+  },
+  "scripts": {},
+  "dependencies": {
+    "typedoc": "^0.28.2"
+  },
+  "devDependencies": {
+    "@envisim/config-eslint": "workspace:*"
+  }
+}

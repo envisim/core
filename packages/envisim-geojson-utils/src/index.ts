@@ -1,3 +1,7 @@
+/**
+ * @module @envisim/geojson-utils
+ */
+
 export { areaOfPolygonLonLat } from "./area.js";
 export {
   cutAreaGeometry,
@@ -34,4 +38,4 @@ export {
   midpointRaw,
   normalizeLongitude,
 } from "./position.js";
-export { azimuthalEquidistant } from "./projections.js";
+export { azimuthalEquidistant, type Projection } from "./projections.js";

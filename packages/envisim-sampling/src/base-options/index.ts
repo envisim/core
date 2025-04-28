@@ -1,6 +1,10 @@
-import {type Matrix, type Vector} from '@envisim/matrix';
-import {Random, type RandomGenerator} from '@envisim/random';
+import { type Matrix, type Vector } from "@envisim/matrix";
+import { Random, type RandomGenerator } from "@envisim/random";
 
+/**
+ * @inline
+ * @expand
+ */
 export interface BaseOptions {
   /**
    * Epsilon, used during comparisons of floats
@@ -24,6 +28,10 @@ export const BASE_OPTIONS: Readonly<Required<BaseOptions>> = {
   treeBucketSize: 40,
 };
 
+/**
+ * @inline
+ * @expand
+ */
 export interface PipsOptions extends BaseOptions {
   /**
    * Inclusion probabilities of size N
@@ -31,6 +39,10 @@ export interface PipsOptions extends BaseOptions {
   probabilities: number[] | Vector;
 }
 
+/**
+ * @inline
+ * @expand
+ */
 export interface FixedSizedOptions extends BaseOptions {
   /**
    * Sample size
@@ -38,6 +50,10 @@ export interface FixedSizedOptions extends BaseOptions {
   n: number;
 }
 
+/**
+ * @inline
+ * @expand
+ */
 export interface AuxiliaryOptions extends PipsOptions {
   /**
    * Matrix of auxiliary variables
@@ -45,6 +61,10 @@ export interface AuxiliaryOptions extends PipsOptions {
   auxiliaries: Matrix;
 }
 
+/**
+ * @inline
+ * @expand
+ */
 export interface AuxiliaryFixedSizedOptions extends FixedSizedOptions {
   /**
    * Matrix of auxiliary variables

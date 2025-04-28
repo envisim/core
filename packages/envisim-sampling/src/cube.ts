@@ -2,7 +2,7 @@ import { type Matrix, Vector } from "@envisim/matrix";
 import { type AuxiliaryOptions, BASE_OPTIONS, type PipsOptions } from "./base-options/index.js";
 import { Cube } from "./sampling-classes/index.js";
 
-interface CubeOptions extends PipsOptions {
+export interface CubeOptions extends PipsOptions {
   /**
    * Matrix of balancing auxiliary variables
    */
@@ -12,7 +12,7 @@ interface CubeOptions extends PipsOptions {
 /**
  * Selects a balanced (pips) sample using the cube method.
  *
- * @param options
+ * @param options -
  * @returns sample indices.
  */
 export function cube({
@@ -34,12 +34,15 @@ export function cube({
   return cb.sample;
 }
 
-type LocalCubeOptions = CubeOptions & AuxiliaryOptions;
+/**
+ * @interface
+ */
+export type LocalCubeOptions = CubeOptions & AuxiliaryOptions;
 
 /**
  * Selects a doubly balanced sample using the local cube method.
  *
- * @param options
+ * @param options -
  * @returns sample indices.
  */
 export function localCube({

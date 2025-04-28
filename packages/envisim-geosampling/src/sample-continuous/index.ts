@@ -1,3 +1,6 @@
+/**
+ * @module @envisim/geosampling/sample-continuous
+ */
 export { type SampleError, SAMPLE_ERROR_LIST } from "../errors/index.js";
 
 // Sampling methods
@@ -58,6 +61,8 @@ export {
   effectiveHalfWidth,
   uniformDetectionFunction,
   halfNormalDetectionFunction,
+  type DetectionFunction,
+  type IntegrateFunction,
 } from "./distance-utils.js";
 
 // Points in bbox

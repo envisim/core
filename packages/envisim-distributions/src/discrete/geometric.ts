@@ -1,6 +1,9 @@
 import { Interval } from "../abstract-distribution.js";
 import { Bernoulli } from "./bernoulli.js";
 
+/**
+ * @category Discrete distributions
+ */
 export class Geometric extends Bernoulli {
   /**
    * The Geometric distribution

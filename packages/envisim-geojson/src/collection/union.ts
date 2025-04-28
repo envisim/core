@@ -5,8 +5,8 @@ import { unionOfPolygons } from "../utils/union.js";
 import { FeatureCollection } from "./class-feature-collection.js";
 
 /**
- * @param collection The AreaCollection to compute the union from
- * @param pointsPerCircle number of points per circle
+ * @param collection - the collection to compute the union from
+ * @param options -
  * @returns the union of the polygons in the areaCollection
  */
 export function union(

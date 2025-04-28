@@ -5,7 +5,7 @@ import { distance, intermediate } from "@envisim/geojson-utils/plate-carree";
 import { Random, type RandomGenerator } from "@envisim/random";
 import { SAMPLE_ERROR_LIST, type SampleError, throwRangeError } from "./options.js";
 
-export type SampleSystematicLinesOnLines = {
+export interface SampleSystematicLinesOnLines {
   /**
    * An random number generator
    * @defaultValue `new Random()`
@@ -19,7 +19,7 @@ export type SampleSystematicLinesOnLines = {
    * The void length
    */
   voidLength: number;
-};
+}
 
 export function sampleSystematicLinesOnLinesCheck(
   options: SampleSystematicLinesOnLines,
@@ -37,8 +37,8 @@ export function sampleSystematicLinesOnLinesCheck(
  * Selects systematic line dashes along a line layer. Each LineString recieves its
  * own random starting position of the dashes.
  *
- * @param collection
- * @param opts
+ * @param collection -
+ * @param options -
  */
 export function sampleSystematicLinesOnLines(
   collection: FeatureCollection<LineObject>,

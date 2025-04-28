@@ -1,10 +1,14 @@
+/**
+ * @module @envisim/estimate
+ */
+
 export {
   hansenHurwitz,
   horvitzThompson,
   ratioEstimator,
   wrEstimator,
   nearestNeighbourEstimator,
-} from './estimate.js';
+} from "./estimate.js";
 export {
   hhVariance,
   htVariance,
@@ -12,5 +16,5 @@ export {
   htVarianceD,
   htVarianceGS,
   wrVariance,
-} from './variance.js';
-export {spatialBalanceSS, spatialBalanceVO} from './balance.js';
+} from "./variance.js";
+export { spatialBalanceSS, spatialBalanceVO } from "./balance.js";

@@ -48,7 +48,7 @@ export function pointInSinglePolygonPosition(
  * Note: Not for Polygon.
  *
  * @param point Coordinates [lon,lat] of a point.
- * @param polygon Coordinates of a MultiPolygon, not Polygon.
+ * @param polygons Coordinates of a MultiPolygon, not Polygon.
  * @returns `true` if point is in polygon.
  */
 export function pointInMultiPolygonPosition(
