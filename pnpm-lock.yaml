@@ -76,7 +76,7 @@ importers:
         version: 8.29.1(eslint@9.24.0)(typescript@5.8.3)
 
   packages/config-ts:
-    devDependencies:
+    dependencies:
       '@tsconfig/strictest':
         specifier: ^2.0.5
         version: 2.0.5

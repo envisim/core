@@ -13,7 +13,7 @@
     "Wilmer Prentius <wilmer.prentius@gmail.com>"
   ],
   "type": "module",
-  "devDependencies": {
+  "dependencies": {
     "@tsconfig/strictest": "^2.0.5"
   }
 }
