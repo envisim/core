@@ -1,6 +1,6 @@
 {
   "name": "@envisim/matrix",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "AGPL-3.0-only",
   "type": "module",
   "exports": {
@@ -16,8 +16,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/random": "workspace:^0.0.0",
-    "@envisim/utils": "workspace:^0.0.0"
+    "@envisim/random": "workspace:^0.1.0",
+    "@envisim/utils": "workspace:^0.1.0"
   },
   "devDependencies": {
     "@envisim/config-eslint": "workspace:*",

@@ -1,6 +1,6 @@
 {
   "name": "@envisim/geosampling",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "AGPL-3.0-only",
   "type": "module",
   "exports": {
@@ -23,13 +23,13 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/distributions": "workspace:^0.0.0",
-    "@envisim/geojson": "workspace:^0.0.0",
-    "@envisim/geojson-utils": "workspace:^0.0.0",
-    "@envisim/matrix": "workspace:^0.0.0",
-    "@envisim/random": "workspace:^0.0.0",
-    "@envisim/sampling": "workspace:^0.0.0",
-    "@envisim/utils": "workspace:^0.0.0",
+    "@envisim/distributions": "workspace:^0.1.0",
+    "@envisim/geojson": "workspace:^0.1.0",
+    "@envisim/geojson-utils": "workspace:^0.1.0",
+    "@envisim/matrix": "workspace:^0.1.0",
+    "@envisim/random": "workspace:^0.1.0",
+    "@envisim/sampling": "workspace:^0.1.0",
+    "@envisim/utils": "workspace:^0.1.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
