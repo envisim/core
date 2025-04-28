@@ -1,6 +1,11 @@
 {
   "name": "@envisim/random",
   "version": "0.1.0",
+  "keywords": [
+    "statistics",
+    "random",
+    "rng"
+  ],
   "homepage": "https://envisim.se",
   "repository": "github:envisim/core",
   "license": "AGPL-3.0-only",

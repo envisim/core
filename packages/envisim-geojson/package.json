@@ -1,6 +1,10 @@
 {
   "name": "@envisim/geojson",
   "version": "0.1.0",
+  "keywords": [
+    "geojson",
+    "spatial"
+  ],
   "homepage": "https://envisim.se",
   "repository": "github:envisim/core",
   "license": "AGPL-3.0-only",

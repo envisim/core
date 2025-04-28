@@ -1,6 +1,13 @@
 {
   "name": "@envisim/geosampling",
   "version": "0.1.0",
+  "keywords": [
+    "geojson",
+    "statistics",
+    "spatial statistics",
+    "design-based inference",
+    "sampling"
+  ],
   "homepage": "https://envisim.se",
   "repository": "github:envisim/core",
   "license": "AGPL-3.0-only",

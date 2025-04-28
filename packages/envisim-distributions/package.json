@@ -1,6 +1,11 @@
 {
   "name": "@envisim/distributions",
   "version": "0.1.0",
+  "keywords": [
+    "statistics",
+    "random",
+    "distributions"
+  ],
   "homepage": "https://envisim.se",
   "repository": "github:envisim/core",
   "license": "AGPL-3.0-only",

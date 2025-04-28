@@ -1,6 +1,11 @@
 {
   "name": "@envisim/estimate",
   "version": "0.1.0",
+  "keywords": [
+    "statistics",
+    "estimators",
+    "design-based inference"
+  ],
   "homepage": "https://envisim.se",
   "repository": "github:envisim/core",
   "license": "AGPL-3.0-only",
