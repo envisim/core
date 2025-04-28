@@ -4,6 +4,7 @@
   "private": true,
   "description": "",
   "keywords": [],
+  "homepage": "https://envisim.se",
   "repository": "github:envisim/core",
   "license": "AGPL-3.0-only",
   "contributors": [

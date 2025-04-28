@@ -1,6 +1,8 @@
 {
   "name": "@envisim/config-eslint",
   "version": "0.1.0",
+  "homepage": "https://envisim.se",
+  "repository": "github:envisim/core",
   "license": "MIT",
   "contributors": [
     "Anton Grafström <anton.grafstrom@gmail.com>",

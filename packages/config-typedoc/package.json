@@ -2,6 +2,12 @@
   "name": "@envisim/config-typedoc",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://envisim.se",
+  "repository": "github:envisim/core",
+  "contributors": [
+    "Anton Grafström <anton.grafstrom@gmail.com>",
+    "Wilmer Prentius <wilmer.prentius@gmail.com>"
+  ],
   "type": "module",
   "exports": {
     ".": "./config.js"
