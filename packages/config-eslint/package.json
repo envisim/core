@@ -1,6 +1,10 @@
 {
   "name": "@envisim/config-eslint",
   "version": "0.1.0",
+  "keywords": [
+    "eslint",
+    "config"
+  ],
   "homepage": "https://envisim.se",
   "repository": "github:envisim/core",
   "license": "MIT",

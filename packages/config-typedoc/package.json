@@ -2,6 +2,10 @@
   "name": "@envisim/config-typedoc",
   "version": "0.1.0",
   "private": true,
+  "keywords": [
+    "typedoc",
+    "config"
+  ],
   "homepage": "https://envisim.se",
   "repository": "github:envisim/core",
   "contributors": [

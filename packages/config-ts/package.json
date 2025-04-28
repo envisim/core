@@ -1,6 +1,10 @@
 {
   "name": "@envisim/config-ts",
   "version": "0.1.0",
+  "keywords": [
+    "typescript",
+    "config"
+  ],
   "homepage": "https://envisim.se",
   "repository": "github:envisim/core",
   "license": "MIT",
