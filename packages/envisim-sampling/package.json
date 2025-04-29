@@ -1,7 +1,18 @@
 {
   "name": "@envisim/sampling",
   "version": "0.1.0",
+  "keywords": [
+    "statistics",
+    "design-based inference",
+    "sampling"
+  ],
+  "homepage": "https://envisim.se",
+  "repository": "github:envisim/core",
   "license": "AGPL-3.0-only",
+  "contributors": [
+    "Anton Grafström <anton.grafstrom@gmail.com>",
+    "Wilmer Prentius <wilmer.prentius@gmail.com>"
+  ],
   "type": "module",
   "exports": {
     ".": "./dist/index.js"
