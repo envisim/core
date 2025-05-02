@@ -1,6 +1,7 @@
 {
   "name": "@envisim/utils",
   "version": "0.1.0",
+  "description": "Utilities for @envisim",
   "homepage": "https://envisim.se",
   "repository": "github:envisim/core",
   "license": "AGPL-3.0-only",
@@ -9,23 +10,30 @@
     "Wilmer Prentius <wilmer.prentius@gmail.com>"
   ],
   "type": "module",
-  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "files": [
-    "dist"
+    "dist",
+    "!dist/**/*.d.ts.map"
   ],
   "scripts": {
+    "prebuild": "pnpm run clean",
     "build": "tsc",
+    "check": "pnpm run lint && pnpm run test",
+    "clean": "rimraf dist temp",
     "doc": "typedoc",
-    "lint": "eslint src/",
-    "prepack": "tsc",
+    "lint": "eslint src",
+    "prepack": "pnpm run build",
     "test": "vitest run"
   },
   "devDependencies": {
     "@envisim/config-eslint": "workspace:*",
     "@envisim/config-ts": "workspace:*",
     "@envisim/config-typedoc": "workspace:*",
-    "eslint": "^9.24.0",
+    "eslint": "^9.25.1",
+    "rimraf": "^6.0.1",
     "typescript": "^5.8.3",
-    "vitest": "^3.1.1"
+    "vitest": "^3.1.2"
   }
 }

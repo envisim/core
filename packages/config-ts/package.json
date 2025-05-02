@@ -1,6 +1,7 @@
 {
   "name": "@envisim/config-ts",
   "version": "0.1.0",
+  "description": "Typescript configs for @envisim",
   "keywords": [
     "typescript",
     "config"
