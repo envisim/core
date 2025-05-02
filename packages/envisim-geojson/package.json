@@ -23,6 +23,7 @@
     "build": "tsc",
     "doc": "typedoc",
     "lint": "eslint src/",
+    "prepack": "tsc",
     "test": "vitest run"
   },
   "dependencies": {
