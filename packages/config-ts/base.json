@@ -12,7 +12,7 @@
     "moduleResolution": "nodenext",
     "rootDir": "${configDir}/src",
     "declaration": true,
-    "declarationMap": false,
+    "declarationMap": true,
     "outDir": "${configDir}/dist",
     "allowJs": true,
     "checkJs": true,
