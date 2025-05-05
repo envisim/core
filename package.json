@@ -13,12 +13,13 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "turbo build --log-order=grouped --output-logs=errors-only",
-    "check": "turbo check --log-order=grouped",
-    "doc": "turbo doc --log-order=grouped && typedoc",
-    "lint": "turbo lint --log-order=grouped --output-logs=errors-only",
+    "build": "turbo run build --log-order=grouped --output-logs=errors-only",
+    "check": "turbo run check --log-order=grouped",
+    "doc": "turbo run doc --log-order=grouped && typedoc",
+    "lint": "turbo run lint --log-order=grouped --output-logs=errors-only",
     "prepare": "husky",
-    "test": "turbo test --log-order=grouped --output-logs=errors-only"
+    "test": "turbo run test --log-order=grouped --output-logs=errors-only",
+    "version-packages": "turbo run lint test build doc --output-logs=errors-only && changeset version"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.2",
