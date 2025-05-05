@@ -1,6 +1,6 @@
 {
   "name": "@envisim/geosampling",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Spatial sampling algorithms",
   "keywords": [
     "geojson",
@@ -42,13 +42,13 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/distributions": "workspace:^0.1.0",
-    "@envisim/geojson": "workspace:^0.1.0",
-    "@envisim/geojson-utils": "workspace:^0.1.0",
-    "@envisim/matrix": "workspace:^0.1.0",
-    "@envisim/random": "workspace:^0.1.0",
-    "@envisim/sampling": "workspace:^0.1.0",
-    "@envisim/utils": "workspace:^0.1.0",
+    "@envisim/distributions": "workspace:^0.1.1",
+    "@envisim/geojson": "workspace:^0.1.1",
+    "@envisim/geojson-utils": "workspace:^0.1.1",
+    "@envisim/matrix": "workspace:^0.1.1",
+    "@envisim/random": "workspace:^0.1.1",
+    "@envisim/sampling": "workspace:^0.1.1",
+    "@envisim/utils": "workspace:^0.1.1",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
