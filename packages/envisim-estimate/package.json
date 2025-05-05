@@ -1,6 +1,7 @@
 {
   "name": "@envisim/estimate",
   "version": "0.1.0",
+  "description": "Design-based estimators",
   "keywords": [
     "statistics",
     "estimators",
@@ -18,12 +19,17 @@
     ".": "./dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "!dist/**/*.d.ts.map"
   ],
   "scripts": {
+    "prebuild": "pnpm run clean",
     "build": "tsc",
+    "check": "pnpm run lint && pnpm run test",
+    "clean": "rimraf dist temp",
     "doc": "typedoc",
-    "lint": "eslint src/",
+    "lint": "eslint src",
+    "prepack": "pnpm run build",
     "test": "vitest run"
   },
   "dependencies": {
@@ -35,8 +41,9 @@
     "@envisim/config-eslint": "workspace:*",
     "@envisim/config-ts": "workspace:*",
     "@envisim/config-typedoc": "workspace:*",
-    "eslint": "^9.24.0",
+    "eslint": "^9.25.1",
+    "rimraf": "^6.0.1",
     "typescript": "^5.8.3",
-    "vitest": "^3.1.1"
+    "vitest": "^3.1.2"
   }
 }
