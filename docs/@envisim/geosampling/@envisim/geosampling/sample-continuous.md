@@ -2426,7 +2426,7 @@ Selects points according to method and sampleSize on a line layer.
 </td>
 <td>
 
-{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../../../random.md#randomgenerator); `sampleSize`: `number`; }
+{ `pointSelection?`: `"independent"` | `"systematic"`; `rand?`: [`RandomGenerator`](../../../random.md#randomgenerator); `sampleSize`: `number`; }
 
 </td>
 <td>
@@ -2516,7 +2516,7 @@ Prescribed sample size
 </td>
 <td>
 
-{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../../../random.md#randomgenerator); `sampleSize`: `number`; }
+{ `pointSelection?`: `"independent"` | `"systematic"`; `rand?`: [`RandomGenerator`](../../../random.md#randomgenerator); `sampleSize`: `number`; }
 
 </td>
 <td>
@@ -2625,7 +2625,7 @@ A GeoJSON bounding box.
 </td>
 <td>
 
-{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../../../random.md#randomgenerator); `sampleSize`: `number`; }
+{ `pointSelection?`: `"independent"` | `"systematic"`; `rand?`: [`RandomGenerator`](../../../random.md#randomgenerator); `sampleSize`: `number`; }
 
 </td>
 <td>
@@ -2717,7 +2717,7 @@ Array of GeoJSON positions.
 </td>
 <td>
 
-{ `pointSelection`: `"independent"` | `"systematic"`; `rand`: [`RandomGenerator`](../../../random.md#randomgenerator); `sampleSize`: `number`; }
+{ `pointSelection?`: `"independent"` | `"systematic"`; `rand?`: [`RandomGenerator`](../../../random.md#randomgenerator); `sampleSize`: `number`; }
 
 </td>
 <td>

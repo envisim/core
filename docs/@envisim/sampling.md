@@ -934,7 +934,7 @@ Selects a (pips) sample without replacement using Brewers method.
 </td>
 <td>
 
-{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+{ `eps?`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; }
 
 </td>
 <td>
@@ -1044,7 +1044,7 @@ Selects a conditional Poisson sample using the rejective method.
 </td>
 <td>
 
-{ `eps`: `number`; `n`: `number`; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; } & { `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+{ `eps?`: `number`; `n`: `number`; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; } & { `eps?`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; }
 
 </td>
 </tr>
@@ -1166,7 +1166,7 @@ Selects a Locally Correlated Poisson Sample (LCPS)
 </td>
 <td>
 
-{ `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+{ `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps?`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; }
 
 </td>
 <td>
@@ -1332,7 +1332,7 @@ Selects a (pips) sample using the local pivotal method 1.
 </td>
 <td>
 
-{ `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; } | { `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps`: `number`; `n`: `number`; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+{ `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps?`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; } | { `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps?`: `number`; `n`: `number`; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; }
 
 </td>
 </tr>
@@ -1371,7 +1371,7 @@ Selects a (pips) sample using the local pivotal method 2.
 </td>
 <td>
 
-{ `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; } | { `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps`: `number`; `n`: `number`; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+{ `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps?`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; } | { `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps?`: `number`; `n`: `number`; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; }
 
 </td>
 </tr>
@@ -1411,7 +1411,7 @@ Selects a Pareto (pips) sample without replacement.
 </td>
 <td>
 
-{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+{ `eps?`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; }
 
 </td>
 <td>
@@ -1522,7 +1522,7 @@ Selects a Poisson sample.
 </td>
 <td>
 
-{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+{ `eps?`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; }
 
 </td>
 <td>
@@ -1632,7 +1632,7 @@ Selects a pps sample with replacement.
 </td>
 <td>
 
-{ `eps`: `number`; `n`: `number`; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; } & { `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+{ `eps?`: `number`; `n`: `number`; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; } & { `eps?`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; }
 
 </td>
 </tr>
@@ -1672,7 +1672,7 @@ Selects a systematic (pips) sample with initial randomization of order of the un
 </td>
 <td>
 
-{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+{ `eps?`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; }
 
 </td>
 <td>
@@ -1783,7 +1783,7 @@ Selects a (pips) sample using the random pivotal method.
 </td>
 <td>
 
-{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+{ `eps?`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; }
 
 </td>
 <td>
@@ -1894,7 +1894,7 @@ Selects a Sampford (pips) sample using the rejective method.
 </td>
 <td>
 
-{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+{ `eps?`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; }
 
 </td>
 <td>
@@ -2005,7 +2005,7 @@ Selects a Spatially Correlated Poisson Sample (SCPS)
 </td>
 <td>
 
-{ `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+{ `auxiliaries`: [`Matrix`](matrix.md#matrix); `eps?`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; }
 
 </td>
 <td>
@@ -2172,7 +2172,7 @@ Selects a (pips) sample using the sequential pivotal method.
 </td>
 <td>
 
-{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+{ `eps?`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; }
 
 </td>
 <td>
@@ -2361,7 +2361,7 @@ Selects a systematic (pips) sample.
 </td>
 <td>
 
-{ `eps`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize`: `number`; }
+{ `eps?`: `number`; `probabilities`: [`Vector`](matrix.md#vector) | `number`\[]; `rand?`: [`RandomGenerator`](random.md#randomgenerator); `treeBucketSize?`: `number`; }
 
 </td>
 <td>

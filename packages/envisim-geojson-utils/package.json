@@ -1,6 +1,6 @@
 {
   "name": "@envisim/geojson-utils",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Utility functions for GeoJSON data",
   "keywords": [
     "geojson",
@@ -37,7 +37,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/utils": "workspace:^0.1.0",
+    "@envisim/utils": "workspace:^0.1.1",
     "geographiclib-geodesic": "^2.1.1"
   },
   "devDependencies": {
