@@ -28,7 +28,6 @@
     "clean": "rimraf dist temp",
     "doc": "typedoc",
     "lint": "eslint src",
-    "prepack": "pnpm run build",
     "test": "vitest run"
   },
   "dependencies": {
