@@ -2641,7 +2641,7 @@ if `true`, creates shallow copies of the features
 </td>
 <td>
 
-[`CirclesToPolygonsOptions`](#circlestopolygonsoptions) & { `convertCircles`: `boolean`; }
+[`CirclesToPolygonsOptions`](#circlestopolygonsoptions) & { `convertCircles?`: `boolean`; }
 
 </td>
 <td>
