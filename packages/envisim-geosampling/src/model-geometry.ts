@@ -15,10 +15,10 @@ import {
   type PointObject,
   Polygon,
 } from "@envisim/geojson";
-import { cutAreaGeometry, cutLineGeometry } from "@envisim/geojson-utils";
+import { copyCoordinates, cutAreaGeometry, cutLineGeometry } from "@envisim/geojson-utils";
 import { destination, distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
-import { isCircle, isMultiCircle } from "@envisim/geojson-utils/type-guards";
+import { isCircle, isCircleish, isMultiCircle } from "@envisim/geojson-utils/type-guards";
 import { type RandomGenerator } from "@envisim/random";
 
 // This file has a set of functions to deal with a model
@@ -41,6 +41,23 @@ export interface PlaceOptions<G extends GJ.SingleTypeObject> {
   rand: RandomGenerator;
   /** Buffer */
   buffer: number;
+}
+
+/**
+ * @param modelGeometry -
+ * @returns a deep copy of the model geometry
+ */
+export function copyModelGeometry<G extends GJ.SingleTypeObject>(modelGeometry: G): G {
+  const mg = {
+    type: modelGeometry.type,
+    coordinates: copyCoordinates(modelGeometry.coordinates),
+  };
+
+  if (isCircleish(modelGeometry)) {
+    (mg as GJ.Circle | GJ.MultiCircle).radius = modelGeometry.radius;
+  }
+
+  return mg as G;
 }
 
 /**

@@ -44,7 +44,7 @@ function createProperties<G1 extends PureObject, G2 extends PureObject, P extend
  * @param frame
  * @param base
  */
-export function selectAreaintersectsArea<P extends string>(
+export function selectAreaIntersectsArea<P extends string>(
   frame: FeatureCollection<AreaObject>,
   base: FeatureCollection<AreaObject, P>,
 ): FeatureCollection<AreaObject, P> {
@@ -58,7 +58,7 @@ export function selectAreaintersectsArea<P extends string>(
   );
   return collection;
 }
-export function selectAreaintersectsLine<P extends string>(
+export function selectAreaIntersectsLine<P extends string>(
   frame: FeatureCollection<LineObject>,
   base: FeatureCollection<AreaObject, P>,
 ): FeatureCollection<LineObject, P> {
@@ -72,7 +72,7 @@ export function selectAreaintersectsLine<P extends string>(
   );
   return collection;
 }
-export function selectAreaintersectsPoint<P extends string>(
+export function selectAreaIntersectsPoint<P extends string>(
   frame: FeatureCollection<PointObject>,
   base: FeatureCollection<AreaObject, P>,
 ): FeatureCollection<PointObject, P> {
@@ -86,7 +86,7 @@ export function selectAreaintersectsPoint<P extends string>(
   );
   return collection;
 }
-export function selectLineintersectsArea<P extends string>(
+export function selectLineIntersectsArea<P extends string>(
   frame: FeatureCollection<AreaObject>,
   base: FeatureCollection<LineObject, P>,
 ): FeatureCollection<LineObject, P> {
@@ -105,7 +105,7 @@ export function selectLineintersectsArea<P extends string>(
   return collection;
 }
 
-export function selectPointintersectsArea<P extends string>(
+export function selectPointIntersectsArea<P extends string>(
   frame: FeatureCollection<AreaObject>,
   base: FeatureCollection<PointObject, P>,
 ): FeatureCollection<PointObject, P> {
