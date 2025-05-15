@@ -13,6 +13,7 @@
 - [Functions](#functions)
   - [circleAreaGeometry()](#circleareageometry)
   - [circleLineGeometry()](#circlelinegeometry)
+  - [copyModelGeometry()](#copymodelgeometry)
   - [ellLineGeometry()](#elllinegeometry)
   - [placeAreaGeometry()](#placeareageometry)
   - [placeLineGeometry()](#placelinegeometry)
@@ -254,6 +255,62 @@ the diameter of the circle in meters.
 [`LineString`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#linestring)
 
 a circle-shaped line model geometry.
+
+---
+
+### copyModelGeometry()
+
+> **copyModelGeometry**<`G`>(`modelGeometry`): `G`
+
+#### Type Parameters
+
+<table>
+<thead>
+<tr>
+<th>Type Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`G` _extends_ [`SingleTypeObject`](../../../geojson-utils/@envisim/geojson-utils/geojson.md#singletypeobject)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Parameters
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+`modelGeometry`
+
+</td>
+<td>
+
+`G`
+
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Returns
+
+`G`
+
+a deep copy of the model geometry
 
 ---
 

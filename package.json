@@ -19,7 +19,7 @@
     "lint": "turbo run lint --log-order=grouped --output-logs=errors-only",
     "prepare": "husky",
     "test": "turbo run test --log-order=grouped --output-logs=errors-only",
-    "version-packages": "turbo run lint test build doc --output-logs=errors-only && changeset version"
+    "version-packages": "turbo run lint test build doc --output-logs=errors-only && typedoc && changeset version"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.2",

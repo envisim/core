@@ -1,5 +1,15 @@
 # @envisim/geosampling
 
+## 0.2.0
+
+### Minor Changes
+
+- ff28afb: fix: typo in selectXIntersectsX function name
+
+### Patch Changes
+
+- ff28afb: feature: copyModelGeometry
+
 ## 0.1.1
 
 ### Patch Changes
