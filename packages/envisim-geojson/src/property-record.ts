@@ -65,6 +65,8 @@ export class PropertyRecord<IDS extends string = string> {
     const pr = new PropertyRecord<string>({}, true);
 
     for (const [id, prop] of Object.entries(properties ?? {})) {
+      if (PropertyRecord.isSpecial(id)) continue;
+
       switch (typeof prop) {
         case "number":
           pr.addNumerical({ id });
@@ -88,6 +90,8 @@ export class PropertyRecord<IDS extends string = string> {
     }
 
     for (const [id, prop] of Object.entries(feature.properties)) {
+      if (PropertyRecord.isSpecial(id)) continue;
+
       switch (typeof prop) {
         case "number":
           pr.addNumerical({ id });
@@ -119,6 +123,8 @@ export class PropertyRecord<IDS extends string = string> {
     const o: PropertyList<string> = {};
 
     for (const k in record) {
+      if (PropertyRecord.isSpecial(k)) continue;
+
       const c = { ...record[k] };
 
       if (c.type === "numerical") {
@@ -146,7 +152,15 @@ export class PropertyRecord<IDS extends string = string> {
   record: PropertyList<IDS>;
 
   constructor(record: PropertyList<IDS>, shallow: boolean = true) {
-    this.record = shallow === true ? record : PropertyRecord.copyRecord(record);
+    if (shallow === false) {
+      this.record = PropertyRecord.copyRecord(record);
+      return;
+    }
+
+    this.record = { ...record };
+
+    // Remove special keys
+    for (const k in this.record) if (PropertyRecord.isSpecial(k)) delete this.record[k];
   }
 
   copy(shallow: boolean = true): PropertyRecord<IDS> {
@@ -183,6 +197,8 @@ export class PropertyRecord<IDS extends string = string> {
     this: PropertyRecord<string>,
     { id = uuid(), name = id, parent }: Partial<NumericalProperty<string>>,
   ): string {
+    if (PropertyRecord.isSpecial(id)) throw new RangeError("cannot att special key to record");
+
     this.record[id] = {
       type: "numerical",
       id,
@@ -201,6 +217,8 @@ export class PropertyRecord<IDS extends string = string> {
     this: PropertyRecord<string>,
     { id = uuid(), name = id, values = [] }: Partial<CategoricalProperty<string>>,
   ): string {
+    if (PropertyRecord.isSpecial(id)) throw new RangeError("cannot att special key to record");
+
     this.record[id] = {
       type: "categorical",
       id,
