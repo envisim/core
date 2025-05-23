@@ -197,7 +197,7 @@ export class PropertyRecord<IDS extends string = string> {
     this: PropertyRecord<string>,
     { id = uuid(), name = id, parent }: Partial<NumericalProperty<string>>,
   ): string {
-    if (PropertyRecord.isSpecial(id)) throw new RangeError("cannot att special key to record");
+    if (PropertyRecord.isSpecial(id)) throw new RangeError("cannot add special key to record");
 
     this.record[id] = {
       type: "numerical",
@@ -217,7 +217,7 @@ export class PropertyRecord<IDS extends string = string> {
     this: PropertyRecord<string>,
     { id = uuid(), name = id, values = [] }: Partial<CategoricalProperty<string>>,
   ): string {
-    if (PropertyRecord.isSpecial(id)) throw new RangeError("cannot att special key to record");
+    if (PropertyRecord.isSpecial(id)) throw new RangeError("cannot add special key to record");
 
     this.record[id] = {
       type: "categorical",
