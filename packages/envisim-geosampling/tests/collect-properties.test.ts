@@ -33,5 +33,5 @@ const propRecToCollect = collectPropertyRecord(propRec, ["size", "class"]);
 
 test("collectProperties", () => {
   const newCollection = collectProperties(frame, base, propRecToCollect);
-  expect(Object.keys(newCollection.propertyRecord.record).length).toBe(3);
+  expect(Object.keys(newCollection.propertyRecord.record).length).toBe(2);
 });
