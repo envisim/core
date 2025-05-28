@@ -32,6 +32,9 @@ test("ValidationError", () => {
   expect(() => VE.checkNumber("number-not-in-unit-interval", "", 0.2)?.cast()).not.toThrowError();
   expect(() => VE.checkNumber("number-not-in-unit-interval", "", 1.0)?.cast()).not.toThrowError();
   expect(() => VE.checkNumber("number-not-in-unit-interval", "", 1.2)?.cast()).toThrowError();
+  expect(() => VE.checkNumber("number-not-positive-i32", "", -10)?.cast()).toThrowError();
+  expect(() => VE.checkNumber("number-not-positive-i32", "", 10)?.cast()).not.toThrowError();
+  expect(() => VE.checkNumber("number-not-positive-i32", "", 0x8fffffff)?.cast()).toThrowError();
 });
 
 test("EnvisimError", () => {

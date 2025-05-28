@@ -110,6 +110,7 @@ export class ValidationError<C extends ValidationErrorCodes> extends Error {
     "number-not-finite",
     "number-not-in-unit-interval",
     "number-not-in-interval",
+    "number-not-positive-i32",
   ] as const;
   static createNumber<C extends (typeof this.NUMBER_CODES)[number]>(
     code: C,
@@ -137,6 +138,8 @@ export class ValidationError<C extends ValidationErrorCodes> extends Error {
         return new ValidationError(`${specifyOption(arg)}must be in the interval [0, 1]`, cause);
       case "number-not-in-interval":
         return new ValidationError(`${specifyOption(arg)}must be in the interval: ${msg}`, cause);
+      case "number-not-positive-i32":
+        return new ValidationError(`${specifyOption(arg)}must be a positive i32`, cause);
     }
   }
   static checkNumber<C extends (typeof this.NUMBER_CODES)[number]>(
@@ -168,6 +171,9 @@ export class ValidationError<C extends ValidationErrorCodes> extends Error {
         break;
       case "number-not-in-unit-interval":
         if (0.0 <= value && value <= 1.0) return;
+        break;
+      case "number-not-positive-i32":
+        if (0 <= value && value <= 0x7fffffff) return;
         break;
       default:
         throw new RangeError(`cannot check: ${code}`);
