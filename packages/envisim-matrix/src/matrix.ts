@@ -109,7 +109,7 @@ export class Matrix extends BaseMatrix {
   }
 
   extractRow(row: number): number[] {
-    row = this.checkCol(row);
+    row = this.checkRow(row);
 
     const s = Array.from<number>({ length: this.cols });
 

@@ -3,7 +3,7 @@ import { BoundingBox, longitudeDistance, normalizeLongitude } from "@envisim/geo
 import { destination, distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { Random } from "@envisim/random";
-import { EnvisimError, ValidationError } from "@envisim/utils";
+import { type EnvisimError, ValidationError } from "@envisim/utils";
 import { type OptionsPointsOnAreas, optionsPointsOnAreasCheck } from "./options.js";
 
 const TO_RAD = Math.PI / 180.0;

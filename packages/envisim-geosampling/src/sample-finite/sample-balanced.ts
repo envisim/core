@@ -1,6 +1,6 @@
 import { type FeatureCollection, type PropertyRecord, type PureObject } from "@envisim/geojson";
 import { cube } from "@envisim/sampling";
-import { EnvisimError } from "@envisim/utils";
+import { type EnvisimError } from "@envisim/utils";
 import {
   type OptionsBalanced,
   type OptionsBase,
@@ -35,10 +35,6 @@ export function sampleBalanced<T extends PureObject, P extends string>(
   options: SampleBalancedOptions<NoInfer<P>>,
 ): FeatureCollection<T, P> {
   sampleBalancedCheck(options, collection.propertyRecord).throwErrors();
-  const optionsError = optionsBalancedCheck(options, collection.propertyRecord);
-  if (optionsError !== null) {
-    throw new RangeError(`sampleBalanced error: ${optionsError}`);
-  }
 
   // Compute inclusion probabilities
   const probabilities = inclprobsFromLayer(collection, options);
