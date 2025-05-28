@@ -21,9 +21,13 @@ export class EnvisimError extends AggregateError {
     return this.errors.length > 0;
   }
 
-  add(error?: Error): this {
-    if (error !== undefined) this.errors.push(error);
-    return this;
+  add(error?: Error): boolean {
+    if (error !== undefined) {
+      this.errors.push(error);
+      return true;
+    }
+
+    return false;
   }
   append(errors?: EnvisimError | Error[]): this {
     if (errors === undefined) return this;
