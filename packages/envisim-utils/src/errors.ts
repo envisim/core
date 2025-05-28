@@ -173,6 +173,7 @@ export class ValidationError<C extends ValidationErrorCodes> extends Error {
   }
 
   static GEOJSON_CODES = [
+    "geojson-incorrect",
     "geojson-not-area",
     "geojson-not-line",
     "geojson-not-point",
@@ -187,6 +188,8 @@ export class ValidationError<C extends ValidationErrorCodes> extends Error {
     type: "collection" | "feature" | "geometry" | "primitive" = "collection",
   ): ValidationError<C> {
     switch (code) {
+      case "geojson-incorrect":
+        return new ValidationError(`${arg ?? type} is incorrect`, { code, arg: arg ?? type });
       case "geojson-not-area":
         return new ValidationError(`${arg ?? type} must be an area primitive`, {
           code,
