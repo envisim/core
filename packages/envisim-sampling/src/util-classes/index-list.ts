@@ -1,5 +1,5 @@
-import {type RandomGenerator, randomInt} from '@envisim/random';
-import {swap} from '@envisim/utils';
+import { type RandomGenerator, randomInt } from "@envisim/random";
+import { swap, ValidationError } from "@envisim/utils";
 
 export class IndexList {
   protected list: number[];
@@ -52,7 +52,8 @@ export class IndexList {
   }
 
   resize(len: number): void {
-    if (len > this.capacity) throw new RangeError('Inadmissable value of len');
+    if (len > this.capacity)
+      throw ValidationError.createNumber("number-not-in-interval", "len", "len <= this.capactiy");
 
     this.len = len;
   }
@@ -72,7 +73,8 @@ export class IndexList {
   }
 
   setId(id: number): void {
-    if (id >= this.capacity) throw new RangeError('Inadmissible value of id');
+    if (id >= this.capacity)
+      throw ValidationError.createNumber("number-not-in-interval", "id", "id < this.capactiy");
 
     this.list[id] = id;
     this.reverse[id] = id;
@@ -80,13 +82,15 @@ export class IndexList {
 
   // get
   getId(k: number): number {
-    if (k >= this.len) throw new RangeError('Inadmissible value of k');
+    if (k >= this.len)
+      throw ValidationError.createNumber("number-not-in-interval", "k", "k < this.capactiy");
 
     return this.list[k];
   }
 
   getK(id: number): number {
-    if (id >= this.capacity) throw new RangeError('Inadmissable value of id');
+    if (id >= this.capacity)
+      throw ValidationError.createNumber("number-not-in-interval", "id", "id < this.capactiy");
 
     return this.reverse[id];
   }
@@ -103,12 +107,20 @@ export class IndexList {
 
   erase(id: number): void {
     if (id >= this.capacity)
-      throw new RangeError(`Inadmissible value of id: ${id}, len: ${this.len}`);
+      throw ValidationError.createNumber(
+        "number-not-in-interval",
+        "id",
+        `${id} = id < this.capactiy = ${this.capacity}`,
+      );
 
     const k = this.reverse[id];
 
     if (k >= this.len)
-      throw new RangeError(`Inadmissible value of id: ${id}, k: ${k}, len: ${this.len}`);
+      throw ValidationError.createNumber(
+        "number-not-in-interval",
+        "k",
+        `${k} = k < this.len = ${this.len}`,
+      );
 
     this.len -= 1;
     this.reverse[id] = this.capacity;

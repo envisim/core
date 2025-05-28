@@ -1,3 +1,4 @@
+import { ValidationError } from "@envisim/utils";
 import {
   Distribution,
   Interval,
@@ -6,7 +7,6 @@ import {
 } from "../abstract-distribution.js";
 import { BetaParams } from "../beta-utils.js";
 import { RadiusParams } from "../params.js";
-import { assertPositiveInteger } from "../utils.js";
 import { randomBeta } from "./beta-random.js";
 
 /**
@@ -61,7 +61,8 @@ export class Semicircle extends Distribution {
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    assertPositiveInteger(n);
+    n |= 0;
+    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
 
     const { radius } = this.params;
     const c = radius * 2.0;

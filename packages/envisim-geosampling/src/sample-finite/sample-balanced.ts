@@ -1,12 +1,11 @@
 import { type FeatureCollection, type PropertyRecord, type PureObject } from "@envisim/geojson";
 import { cube } from "@envisim/sampling";
+import { EnvisimError } from "@envisim/utils";
 import {
   type OptionsBalanced,
   type OptionsBase,
-  type SampleError,
   optionsBalancedCheck,
   optionsBaseCheck,
-  throwRangeError,
 } from "./options.js";
 import {
   balancingMatrixFromLayer,
@@ -27,15 +26,15 @@ export type SampleBalancedOptions<P extends string = string> = OptionsBase<
 export function sampleBalancedCheck<P extends string>(
   options: SampleBalancedOptions<P>,
   record: PropertyRecord<P>,
-): SampleError {
-  return optionsBaseCheck(options, record) || optionsBalancedCheck(options, record);
+): EnvisimError {
+  return optionsBaseCheck(options, record).append(optionsBalancedCheck(options, record));
 }
 
 export function sampleBalanced<T extends PureObject, P extends string>(
   collection: FeatureCollection<T, P>,
   options: SampleBalancedOptions<NoInfer<P>>,
 ): FeatureCollection<T, P> {
-  throwRangeError(sampleBalancedCheck(options, collection.propertyRecord));
+  sampleBalancedCheck(options, collection.propertyRecord).throwErrors();
   const optionsError = optionsBalancedCheck(options, collection.propertyRecord);
   if (optionsError !== null) {
     throw new RangeError(`sampleBalanced error: ${optionsError}`);

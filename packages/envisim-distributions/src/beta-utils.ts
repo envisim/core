@@ -1,3 +1,4 @@
+import { ValidationError } from "@envisim/utils";
 import { logGammaFunction } from "./gamma-utils.js";
 
 const SAE = -20; //9;
@@ -12,10 +13,12 @@ export class BetaParams {
    * @category Parameters
    */
   constructor(alpha: number = BetaParams.DEFAULTS.alpha, beta: number = BetaParams.DEFAULTS.beta) {
-    if (alpha < 0.0) throw new RangeError("alpha must be >= 0");
-    this.#alpha = alpha;
+    (
+      ValidationError.checkNumber("number-not-nonnegative", "alpha", alpha) ??
+      ValidationError.checkNumber("number-not-nonnegative", "beta", beta)
+    )?.cast();
 
-    if (beta < 0.0) throw new RangeError("beta must be >= 0");
+    this.#alpha = alpha;
     this.#beta = beta;
   }
 
@@ -153,7 +156,7 @@ export class BetaParams {
      * AS 109
      * beta = logbetafn
      */
-    if (p < 0.0 || p > 1.0) throw new RangeError("p must be in [0,1]");
+    ValidationError.checkNumber("number-not-in-unit-interval", "p", p)?.cast();
     if (p === 0.0) return 0.0;
     if (p === 1.0) return 1.0;
 

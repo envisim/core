@@ -10,7 +10,7 @@ import {
   moveCoordsAroundEarth,
 } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
-import { type OptionalParam } from "@envisim/utils";
+import { ValidationError, type OptionalParam } from "@envisim/utils";
 import { type BufferOptions, bufferPolygons, defaultBufferOptions } from "../buffer/index.js";
 import { centroidFromMultipleCentroids, centroidOfPolygon } from "../utils/centroid.js";
 import { AbstractAreaObject } from "./abstract-area-object.js";
@@ -21,8 +21,9 @@ export class MultiPolygon extends AbstractAreaObject<GJ.MultiPolygon> implements
     return obj instanceof MultiPolygon;
   }
 
-  static assert(obj: unknown, msg: string = "Expected MultiPolygon"): asserts obj is MultiPolygon {
-    if (!(obj instanceof MultiPolygon)) throw new TypeError(msg);
+  static assert(obj: unknown): asserts obj is MultiPolygon {
+    if (!this.isObject(obj))
+      throw ValidationError.createGeometry("geometry-incorrect", "obj", "MultiPolygon");
   }
 
   static create(

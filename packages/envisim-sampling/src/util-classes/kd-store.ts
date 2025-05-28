@@ -1,3 +1,5 @@
+import { ValidationError } from "@envisim/utils";
+
 export class KdStore {
   N: number = 0;
   maxSize: number = 0;
@@ -18,14 +20,13 @@ export class KdStore {
   }
 
   init(N: number, maxSize: number): void {
-    N = Math.trunc(N);
-    maxSize = Math.trunc(maxSize);
+    this.N = N | 0;
+    this.maxSize = maxSize | 0;
 
-    if (N <= 0) throw new RangeError("N must be > 0");
-    if (maxSize <= 0) throw new RangeError("maxSize must be > 0");
-
-    this.N = N;
-    this.maxSize = maxSize;
+    (
+      ValidationError.checkNumber("number-not-positive", "N", this.N) ??
+      ValidationError.checkNumber("number-not-positive", "maxSize", this.maxSize)
+    )?.cast();
 
     this.distances = new Array<number>(this.N);
   }
@@ -90,7 +91,12 @@ export class KdStore {
   }
 
   sortNeighboursByDistance(fr: number = 0, to: number = this.neighbours.length): void {
-    if (to <= fr || this.neighbours.length < to) throw new RangeError("bad input");
+    if (to <= fr || this.neighbours.length < to)
+      throw ValidationError.createNumber(
+        "number-not-in-interval",
+        "to",
+        "fr < to <= neighbours.length",
+      );
     if (fr === 0 && to === this.neighbours.length) {
       this.fullSortNeighboursByDistance();
       return;
@@ -109,7 +115,12 @@ export class KdStore {
   }
 
   sortNeighboursByWeight(fr: number, to: number): void {
-    if (to <= fr || this.neighbours.length < to) throw new RangeError("bad input");
+    if (to <= fr || this.neighbours.length < to)
+      throw ValidationError.createNumber(
+        "number-not-in-interval",
+        "to",
+        "fr < to <= neighbours.length",
+      );
     if (fr === 0 && to === this.neighbours.length) {
       this.fullSortNeighboursByWeight();
       return;

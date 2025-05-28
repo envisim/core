@@ -3,7 +3,7 @@ import { lengthOfLineString } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { distance, intermediate } from "@envisim/geojson-utils/plate-carree";
 import { Random, type RandomGenerator } from "@envisim/random";
-import { SAMPLE_ERROR_LIST, type SampleError, throwRangeError } from "./options.js";
+import { EnvisimError, ValidationError } from "@envisim/utils";
 
 export interface SampleSystematicLinesOnLines {
   /**
@@ -23,14 +23,15 @@ export interface SampleSystematicLinesOnLines {
 
 export function sampleSystematicLinesOnLinesCheck(
   options: SampleSystematicLinesOnLines,
-): SampleError {
-  if (typeof options.dashLength !== "number" || options.dashLength <= 0) {
-    return SAMPLE_ERROR_LIST.DASH_LENGTH_NOT_POSITIVE;
-  }
-  if (typeof options.voidLength !== "number" || options.voidLength < 0) {
-    return SAMPLE_ERROR_LIST.SEPARATION_NOT_POSITIVE;
-  }
-  return null;
+): EnvisimError {
+  const errors = new EnvisimError();
+
+  errors.add(ValidationError.checkNumber("number-not-positive", "dashLength", options.dashLength));
+  errors.add(
+    ValidationError.checkNumber("number-not-nonnegative", "voidLength", options.voidLength),
+  );
+
+  return errors;
 }
 
 /**
@@ -44,7 +45,7 @@ export function sampleSystematicLinesOnLines(
   collection: FeatureCollection<LineObject>,
   options: SampleSystematicLinesOnLines,
 ): FeatureCollection<LineString, never> {
-  throwRangeError(sampleSystematicLinesOnLinesCheck(options));
+  sampleSystematicLinesOnLinesCheck(options).throwErrors();
   const { rand = new Random(), dashLength, voidLength } = options;
 
   const L = collection.measure(); // total length of input geoJSON

@@ -1,6 +1,6 @@
 import { distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
-import { type OptionalParam } from "@envisim/utils";
+import { ValidationError, type OptionalParam } from "@envisim/utils";
 import { type BufferOptions } from "../buffer/index.js";
 import { AbstractPointObject } from "./abstract-point-object.js";
 import { Circle } from "./class-circle.js";
@@ -10,8 +10,9 @@ export class Point extends AbstractPointObject<GJ.Point> implements GJ.Point {
     return obj instanceof Point;
   }
 
-  static assert(obj: unknown, msg: string = "Expected Point"): asserts obj is Point {
-    if (!(obj instanceof Point)) throw new TypeError(msg);
+  static assert(obj: unknown): asserts obj is Point {
+    if (!this.isObject(obj))
+      throw ValidationError.createGeometry("geometry-incorrect", "obj", "Point");
   }
 
   static create(coordinates: GJ.Point["coordinates"], shallow: boolean = true): Point {

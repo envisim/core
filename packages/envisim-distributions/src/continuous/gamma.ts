@@ -1,7 +1,7 @@
+import { ValidationError } from "@envisim/utils";
 import { type RandomOptions, RANDOM_OPTIONS_DEFAULT } from "../abstract-distribution.js";
 import { ShapeScale } from "../abstract-shape-scale.js";
 import { logGammaFunction, regularizedLowerGammaFunction } from "../gamma-utils.js";
-import { assertPositiveInteger } from "../utils.js";
 import { gammaQuantile } from "./gamma-quantile.js";
 import { randomShapeGamma } from "./gamma-random.js";
 
@@ -47,7 +47,8 @@ export class Gamma extends ShapeScale {
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    assertPositiveInteger(n);
+    n |= 0;
+    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
     return randomShapeGamma(n, this.params.shape, options.rand, this.params.scale);
   }
 

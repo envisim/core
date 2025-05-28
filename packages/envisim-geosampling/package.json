@@ -18,8 +18,7 @@
   ],
   "type": "module",
   "exports": {
-    ".": "./dist/errors/index.js",
-    "./errors": "./dist/errors/index.js",
+    ".": "./dist/sample-continuous/index.js",
     "./model-geometry": "./dist/model-geometry.js",
     "./sample-continuous": "./dist/sample-continuous/index.js",
     "./sample-finite": "./dist/sample-finite/index.js",

@@ -1,4 +1,5 @@
 import { Random, type RandomGenerator, randomArray, randomInt } from "@envisim/random";
+import { ValidationError } from "@envisim/utils";
 import {
   BaseMatrix,
   type MatrixCallback,
@@ -15,13 +16,12 @@ export class Vector extends BaseMatrix {
   }
 
   /**
-   * @param msg message to pass
-   * @throws TypeError if `obj` is not Vector
+   * @param obj
+   * @throws ValidationError if `obj` is not Vector
    */
-  static assert(obj: unknown, msg: string = "Expected Vector"): asserts obj is Vector {
-    if (!(obj instanceof Vector)) {
-      throw new TypeError(msg);
-    }
+  static assert(obj: unknown): asserts obj is Vector {
+    if (!(obj instanceof Vector))
+      throw ValidationError.createOther("other-incorrect-shape", "obj", "Vector");
   }
 
   /**
@@ -177,13 +177,12 @@ export class Vector extends BaseMatrix {
 
   /**
    * @returns the covariance of `this` and `vec`
-   * @throws `RangeError` if the vectors has different sizes
+   * @throws ValidationError if the vectors has different sizes
    * @group Statistics
    */
   covariance(vec: Vector): number {
-    if (!this.hasSizeOf(vec)) {
-      throw new RangeError("vec must be a vector of equal size as this");
-    }
+    if (!this.hasSizeOf(vec))
+      throw ValidationError.createOther("other-incorrect-shape", "vec", "this");
 
     return (
       this.subtract(this.mean()).multiply(vec.subtract(vec.mean()), true).sum() / (this.len - 1)
@@ -192,7 +191,6 @@ export class Vector extends BaseMatrix {
 
   /**
    * @returns the correlation between `this` and `vec`
-   * @throws `RangeError` if the vectors have different sizes
    */
   correlation(vec: Vector): number {
     return this.covariance(vec) / Math.sqrt(this.variance() * vec.variance());
@@ -200,7 +198,7 @@ export class Vector extends BaseMatrix {
 
   /**
    * @returns the values needed in order to construct a histogram
-   * @throws `RangeError` if the provided range is not finite, or in the incorrect order.
+   * @throws RangeError if the provided range is not finite, or in the incorrect order.
    */
   histogram(
     bins: number,
@@ -208,17 +206,18 @@ export class Vector extends BaseMatrix {
   ): { range: [number, number]; bins: number[]; width: number } {
     bins = Math.ceil(bins);
 
-    if (bins <= 0) {
-      throw new RangeError("bins must be positive");
-    }
+    ValidationError.checkNumber("number-not-positive", "bins", bins)?.cast();
+    if (range[1] <= range[0])
+      throw ValidationError.createNumber(
+        "number-not-in-interval",
+        "range[1]",
+        "range[0] < range[1]",
+      );
 
     const width = (range[1] - range[0]) / bins;
+    ValidationError.checkNumber("number-not-finite", "range", width)?.cast();
 
-    if (width < 0.0) {
-      throw new RangeError("range max is smaller than range min");
-    } else if (!Number.isFinite(width)) {
-      throw new RangeError("range is not finite");
-    } else if (width === 0.0) {
+    if (width === 0.0) {
       return {
         range,
         bins: [this.internal.reduce((t, v) => (t + v === range[0] ? 1 : 0))],
@@ -268,13 +267,11 @@ export function randomVector(length: number, rand: RandomGenerator = new Random(
  * @returns A vector of size needed to reach `to`, however not going over it.
  */
 export function sequence(from: number, to: number, by: number = 1.0): Vector {
-  if (by <= 0) throw new RangeError("by must be positive");
+  ValidationError.checkNumber("number-not-positive", "by", by)?.cast();
 
   const dim = Math.floor(Math.abs((to - from) / by)) + 1;
 
-  if (dim >= 4294967296) {
-    throw new RangeError("by is to small");
-  }
+  if (dim >= 4294967296) throw new RangeError("by is to small");
 
   const s = Array.from<number>({ length: dim });
   let current = from;

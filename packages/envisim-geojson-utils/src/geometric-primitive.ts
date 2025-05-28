@@ -1,3 +1,4 @@
+import { ValidationError } from "@envisim/utils";
 import type * as GJ from "./geojson.js";
 
 export type GeometricPrimitiveArea = (typeof GeometricPrimitive)["AREA"];
@@ -27,14 +28,16 @@ export class GeometricPrimitive {
   }
 
   static assertArea(obj: unknown): asserts obj is GeometricPrimitiveArea {
-    if (!GeometricPrimitive.isArea(obj)) throw new RangeError("obj is not GeometricPrimitive.AREA");
+    if (!this.isArea(obj))
+      throw ValidationError.createGeoJson("geojson-not-area", "obj", "primitive");
   }
   static assertLine(obj: unknown): asserts obj is GeometricPrimitiveLine {
-    if (!GeometricPrimitive.isLine(obj)) throw new RangeError("obj is not GeometricPrimitive.LINE");
+    if (!this.isLine(obj))
+      throw ValidationError.createGeoJson("geojson-not-line", "obj", "primitive");
   }
   static assertPoint(obj: unknown): asserts obj is GeometricPrimitivePoint {
-    if (!GeometricPrimitive.isPoint(obj))
-      throw new RangeError("obj is not GeometricPrimitive.POINT");
+    if (!this.isPoint(obj))
+      throw ValidationError.createGeoJson("geojson-not-point", "obj", "primitive");
   }
 
   static fromGeometry(obj: GJ.AreaGeometry, allowGC?: boolean): GeometricPrimitiveArea;

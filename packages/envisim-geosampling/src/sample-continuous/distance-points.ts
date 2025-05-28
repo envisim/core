@@ -7,14 +7,13 @@ import {
 } from "@envisim/geojson";
 import { distance } from "@envisim/geojson-utils/geodesic";
 import { Random } from "@envisim/random";
+import type { EnvisimError } from "@envisim/utils";
 import { effectiveRadius } from "./distance-utils.js";
 import {
   type OptionsDistancePoints,
   type OptionsPointsOnAreas,
-  type SampleError,
   optionsDistancePointsCheck,
   optionsPointsOnAreasCheck,
-  throwRangeError,
 } from "./options.js";
 import { samplePointsOnAreas } from "./points-on-areas.js";
 
@@ -23,8 +22,8 @@ import { samplePointsOnAreas } from "./points-on-areas.js";
  */
 export type SampleDistancePointsOptions = OptionsPointsOnAreas & OptionsDistancePoints;
 
-export function sampleDistancePointsCheck(options: SampleDistancePointsOptions): SampleError {
-  return optionsPointsOnAreasCheck(options) || optionsDistancePointsCheck(options);
+export function sampleDistancePointsCheck(options: SampleDistancePointsOptions): EnvisimError {
+  return optionsPointsOnAreasCheck(options).append(optionsDistancePointsCheck(options));
 }
 
 /**
@@ -39,7 +38,7 @@ export function sampleDistancePoints(
   collection: FeatureCollection<AreaObject>,
   options: SampleDistancePointsOptions,
 ): FeatureCollection<PointObject> {
-  throwRangeError(sampleDistancePointsCheck(options));
+  sampleDistancePointsCheck(options).throwErrors();
 
   const { rand = new Random(), baseCollection, detectionFunction, cutoff } = options;
 

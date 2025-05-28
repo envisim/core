@@ -1,5 +1,6 @@
-import {logGammaFunction, regularizedLowerGammaFunction} from '../gamma-utils.js';
-import {stdNormalQuantile} from './normal-utils.js';
+import { ValidationError } from "@envisim/utils";
+import { logGammaFunction, regularizedLowerGammaFunction } from "../gamma-utils.js";
+import { stdNormalQuantile } from "./normal-utils.js";
 
 const TWO_NINTHS = 2.0 / 9.0;
 
@@ -10,7 +11,7 @@ const TWO_NINTHS = 2.0 / 9.0;
  * https://doi.org/10.2307/2347113
  */
 export function chiSquaredQuantile91(p: number, df: number, eps: number = 1e-12): number {
-  if (df <= 0.0) throw new RangeError('df must be positive');
+  ValidationError.checkNumber("number-not-positive", "df", df);
 
   // FIX
   // if (p < 0.000002) return 0.0;

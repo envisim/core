@@ -1,16 +1,6 @@
 import { gammaFunction, logGammaFunction } from "./gamma-utils.js";
 import { KFAC, LOGKFAC } from "./math-constants.js";
 
-/** @internal */
-export function assertPositiveInteger(n: number): asserts n is number {
-  if (n < 1 || !Number.isInteger(n)) throw new RangeError("n must be a positive integer");
-}
-
-/** @deprecated */
-export function PQFUN(x: number, q: boolean = false): number {
-  return q === true ? 1.0 - x : x;
-}
-
 export function pqMultiplied(x: number): number {
   return x * (1.0 - x);
 }

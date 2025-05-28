@@ -1,4 +1,5 @@
 import { randomArray } from "@envisim/random";
+import { ValidationError } from "@envisim/utils";
 import {
   Distribution,
   Interval,
@@ -8,7 +9,6 @@ import {
 import { BetaParams } from "../beta-utils.js";
 import { HALF_PI } from "../math-constants.js";
 import { DegreesOfFreedomParams } from "../params.js";
-import { assertPositiveInteger } from "../utils.js";
 import { randomShapeGamma } from "./gamma-random.js";
 import { stdNormalQuantile } from "./normal-utils.js";
 
@@ -137,7 +137,8 @@ export class StudentsT extends Distribution {
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    assertPositiveInteger(n);
+    n |= 0;
+    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
 
     // Normal(0, 1)
     const x1 = randomArray(n, options.rand).map((u) => stdNormalQuantile(u));

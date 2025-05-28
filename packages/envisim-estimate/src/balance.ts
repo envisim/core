@@ -1,5 +1,6 @@
 import { type Matrix, type Vector } from "@envisim/matrix";
 import { NearestNeighbour } from "@envisim/sampling";
+import { ValidationError } from "@envisim/utils";
 import { checkSampleArray } from "./utils.js";
 
 /**
@@ -15,9 +16,9 @@ export function spatialBalanceVO(
   prob: number[] | Vector,
 ): number {
   const N = xm.nrow;
+  if (prob.length !== N)
+    throw ValidationError.createOther("other-incorrect-shape", "prob", "xm rows");
   checkSampleArray(sample, N);
-
-  if (prob.length !== N) throw new RangeError("xm and prob must have same number of rows");
 
   const incl = new Array<number>(sample.length).fill(0.0);
   const nn = new NearestNeighbour(xm.extractRows(sample), 10);
@@ -60,7 +61,8 @@ export function spatialBalanceSS(
 
   let mat = xm;
   if (prob !== undefined) {
-    if (prob.length !== N) throw new RangeError("xm and prob must have same number of rows");
+    if (prob.length !== N)
+      throw ValidationError.createOther("other-incorrect-shape", "prob", "xm rows");
     mat = xm.clone();
 
     mat.map((e: number, i: number): number => {

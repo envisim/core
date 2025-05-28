@@ -1,8 +1,8 @@
 import { randomArray } from "@envisim/random";
+import { ValidationError } from "@envisim/utils";
 import { Bounded } from "../abstract-bounded.js";
 import { BoundedMid } from "../abstract-bounded.js";
 import { type RandomOptions, RANDOM_OPTIONS_DEFAULT } from "../abstract-distribution.js";
-import { assertPositiveInteger } from "../utils.js";
 
 /**
  * @category Continuous distributions
@@ -35,7 +35,8 @@ export class Uniform extends Bounded {
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    assertPositiveInteger(n);
+    n |= 0;
+    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
     const width = this.params.width;
     return randomArray(n, options.rand).map((e) => this.params.a + width * e);
   }

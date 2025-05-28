@@ -1,7 +1,6 @@
 /**
  * @module @envisim/geosampling/sample-finite
  */
-export { type SampleError, SAMPLE_ERROR_LIST } from "../errors/index.js";
 
 export {
   sampleBalanced,

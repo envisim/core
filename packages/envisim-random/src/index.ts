@@ -1,6 +1,7 @@
 /**
  * @module @envisim/random
  */
+import { ValidationError } from "@envisim/utils";
 import { Random } from "./random.js";
 
 export { Random };
@@ -40,11 +41,11 @@ export function randomArray(n: number, generator: RandomGenerator = new Random()
 
 /**
  * @returns A pseudo-random integer on [0, `n`)
- * @throws `RangeError` if `n` is not at positive integer.
+ * @throws ValidationError if `n` is not at positive integer.
  */
 export function randomInt(n: number = 1, generator: RandomGenerator = new Random()): number {
-  n = Math.round(n);
-  if (n < 1) throw new RangeError("n must be a positive integer");
+  n |= 0;
+  ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
   if (n === 1) return 0;
   return (n * generator.random()) | 0;
 }

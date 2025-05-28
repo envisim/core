@@ -3,13 +3,8 @@ import { BoundingBox, longitudeDistance, normalizeLongitude } from "@envisim/geo
 import { destination, distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { Random } from "@envisim/random";
-import {
-  type OptionsPointsOnAreas,
-  SAMPLE_ERROR_LIST,
-  type SampleError,
-  optionsPointsOnAreasCheck,
-  throwRangeError,
-} from "./options.js";
+import { EnvisimError, ValidationError } from "@envisim/utils";
+import { type OptionsPointsOnAreas, optionsPointsOnAreasCheck } from "./options.js";
 
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;
@@ -21,12 +16,13 @@ export interface SamplePointsOnAreasOptions extends OptionsPointsOnAreas {
   buffer?: number;
 }
 
-export function samplePointsOnAreasCheck(options: SamplePointsOnAreasOptions): SampleError {
-  if (options.ratio !== undefined && options.ratio <= 0.0) {
-    return SAMPLE_ERROR_LIST.RATIO_NOT_POSITIVE;
-  }
+export function samplePointsOnAreasCheck(options: SamplePointsOnAreasOptions): EnvisimError {
+  const errors = optionsPointsOnAreasCheck(options);
 
-  return optionsPointsOnAreasCheck(options);
+  if (options.ratio !== undefined)
+    errors.add(ValidationError.checkNumber("number-not-positive", "ratio", options.ratio));
+
+  return errors;
 }
 
 /**
@@ -40,7 +36,7 @@ export function samplePointsOnAreas(
   collection: FeatureCollection<AreaObject>,
   options: SamplePointsOnAreasOptions,
 ): FeatureCollection<Point, never> {
-  throwRangeError(samplePointsOnAreasCheck(options));
+  samplePointsOnAreasCheck(options).throwErrors();
   const {
     rand = new Random(),
     sampleSize,

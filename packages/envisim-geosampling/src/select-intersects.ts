@@ -14,8 +14,6 @@ import {
   intersectPointAreaGeometries,
 } from "@envisim/geojson";
 
-export { type SelectError, SELECT_ERROR_LIST } from "./errors/index.js";
-
 /**
  * Internal function to transfer properties to the intersect from the base feature and transfer
  * _designWeight and _parent to the intersect from the frame feature.

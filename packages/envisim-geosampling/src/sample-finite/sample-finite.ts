@@ -12,12 +12,8 @@ import {
   srswr,
   systematic,
 } from "@envisim/sampling";
-import {
-  type OptionsBase,
-  type SampleError,
-  optionsBaseCheck,
-  throwRangeError,
-} from "./options.js";
+import type { EnvisimError } from "@envisim/utils";
+import { type OptionsBase, optionsBaseCheck } from "./options.js";
 import { drawprobsFromLayer, inclprobsFromLayer, returnCollectionFromSample } from "./utils.js";
 
 export const SAMPLE_FINITE_METHODS_WR = ["srs-wr", "pps-wr"] as const;
@@ -50,7 +46,7 @@ export type SampleFiniteOptionsWr<P extends string = string> = OptionsBase<
 export function sampleFiniteCheck<P extends string>(
   options: SampleFiniteOptions<NoInfer<P>> | SampleFiniteOptionsWr<NoInfer<P>>,
   record: PropertyRecord<P>,
-): SampleError {
+): EnvisimError {
   return optionsBaseCheck(options, record);
 }
 
@@ -64,7 +60,7 @@ export function sampleFinite<T extends PureObject, P extends string>(
   collection: FeatureCollection<T, P>,
   options: SampleFiniteOptions<NoInfer<P>>,
 ): FeatureCollection<T, P> {
-  throwRangeError(sampleFiniteCheck(options, collection.propertyRecord));
+  sampleFiniteCheck(options, collection.propertyRecord).throwErrors();
 
   // Compute inclusion probabilities
   const probabilities = inclprobsFromLayer(collection, options);
@@ -139,7 +135,7 @@ export function sampleFiniteWr<T extends PureObject, P extends string>(
   collection: FeatureCollection<T, P>,
   options: SampleFiniteOptionsWr<NoInfer<P>>,
 ): FeatureCollection<T, P> {
-  throwRangeError(sampleFiniteCheck(options, collection.propertyRecord));
+  sampleFiniteCheck(options, collection.propertyRecord).throwErrors();
 
   let sample: number[];
   let probabilities: number[];

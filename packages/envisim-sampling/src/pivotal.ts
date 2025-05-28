@@ -1,4 +1,5 @@
 import { Vector } from "@envisim/matrix";
+import { ValidationError } from "@envisim/utils";
 import {
   type AuxiliaryFixedSizedOptions,
   type AuxiliaryOptions,
@@ -7,10 +8,9 @@ import {
 } from "./base-options/index.js";
 import { Pivotal } from "./sampling-classes/index.js";
 
-function vectorToArrayOfLength(p: Vector | number[], size: number): number[] {
-  if (p.length !== size) {
-    throw new RangeError("size of vector does not match");
-  }
+function probToArrayOfLength(p: Vector | number[], size: number): number[] {
+  if (p.length !== size)
+    throw ValidationError.createOther("other-incorrect-shape", "probabilities", "auxiliaries rows");
 
   return Vector.borrow(p);
 }
@@ -29,7 +29,7 @@ export function lpm1({
   ...options
 }: AuxiliaryOptions | AuxiliaryFixedSizedOptions): number[] {
   const N = auxiliaries.nrow;
-  const p = "n" in options ? options.n : vectorToArrayOfLength(options.probabilities, N);
+  const p = "n" in options ? options.n : probToArrayOfLength(options.probabilities, N);
 
   const lpm = new Pivotal(Pivotal.LPM1, p, auxiliaries, N, treeBucketSize, eps, rand);
   lpm.run();
@@ -51,7 +51,7 @@ export function lpm2({
   ...options
 }: AuxiliaryOptions | AuxiliaryFixedSizedOptions): number[] {
   const N = auxiliaries.nrow;
-  const p = "n" in options ? options.n : vectorToArrayOfLength(options.probabilities, N);
+  const p = "n" in options ? options.n : probToArrayOfLength(options.probabilities, N);
 
   const lpm = new Pivotal(Pivotal.LPM2, p, auxiliaries, N, treeBucketSize, eps, rand);
   lpm.run();
@@ -76,7 +76,7 @@ export function lpm1s({
   ...options
 }: AuxiliaryOptions | AuxiliaryFixedSizedOptions): number[] {
   const N = auxiliaries.nrow;
-  const p = "n" in options ? options.n : vectorToArrayOfLength(options.probabilities, N);
+  const p = "n" in options ? options.n : probToArrayOfLength(options.probabilities, N);
 
   const lpm = new Pivotal(Pivotal.LPM1SEARCH, p, auxiliaries, N, treeBucketSize, eps, rand);
   lpm.run();

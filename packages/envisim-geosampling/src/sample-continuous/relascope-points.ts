@@ -5,13 +5,8 @@ import {
   intersectPointAreaGeometries,
 } from "@envisim/geojson";
 import { distance } from "@envisim/geojson-utils/geodesic";
-import {
-  type OptionsPointsOnAreas,
-  SAMPLE_ERROR_LIST,
-  type SampleError,
-  optionsPointsOnAreasCheck,
-  throwRangeError,
-} from "./options.js";
+import { ValidationError, type EnvisimError } from "@envisim/utils";
+import { type OptionsPointsOnAreas, optionsPointsOnAreasCheck } from "./options.js";
 import { samplePointsOnAreas } from "./points-on-areas.js";
 
 export interface SampleRelascopePointsOptions<P extends string> extends OptionsPointsOnAreas {
@@ -36,18 +31,19 @@ export interface SampleRelascopePointsOptions<P extends string> extends OptionsP
 
 export function sampleRelascopePointsOptionsCheck<P extends string>(
   options: SampleRelascopePointsOptions<P>,
-): SampleError {
-  if (options.factor <= 0.0) {
-    return SAMPLE_ERROR_LIST.FACTOR_NOT_POSITIVE;
-  } else if (FeatureCollection.isPoint(options.baseCollection) == false) {
-    return SAMPLE_ERROR_LIST.EXPECTED_POINT;
-  } else if (options.baseCollection.propertyRecord.hasId(options.sizeProperty) === false) {
-    return SAMPLE_ERROR_LIST.SIZE_PROPERTY_MISSING;
-  } else if (options.baseCollection.propertyRecord.isNumerical(options.sizeProperty) === false) {
-    return SAMPLE_ERROR_LIST.SIZE_PROPERTY_NOT_NUMERICAL;
-  }
+): EnvisimError {
+  const errors = optionsPointsOnAreasCheck(options);
 
-  return optionsPointsOnAreasCheck(options);
+  errors.add(ValidationError.checkNumber("number-not-positive", "factor", options.factor));
+
+  if (FeatureCollection.isPoint(options.baseCollection) === false)
+    errors.add(ValidationError.createGeoJson("geojson-not-point", "baseCollection", "collection"));
+  if (options.baseCollection.propertyRecord.hasId(options.sizeProperty) === false)
+    errors.add(ValidationError.createProperty("property-not-existing", "sizeProperty"));
+  if (options.baseCollection.propertyRecord.isNumerical(options.sizeProperty) === false)
+    errors.add(ValidationError.createProperty("property-not-numerical", "sizeProperty"));
+
+  return errors;
 }
 
 // TODO: Decide if we should implement correction by adding the correct buffer.
@@ -75,7 +71,7 @@ export function sampleRelascopePoints<P extends string>(
   pointSample: FeatureCollection<Point>;
   areaRatio: number;
 } {
-  throwRangeError(sampleRelascopePointsOptionsCheck(options));
+  sampleRelascopePointsOptionsCheck(options).throwErrors();
   const opts = { ...options, buffer: options.buffer ?? 0.0 };
 
   // Square root of relascope factor

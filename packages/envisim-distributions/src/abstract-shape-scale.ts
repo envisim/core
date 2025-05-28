@@ -1,3 +1,4 @@
+import { ValidationError } from "@envisim/utils";
 import { Distribution, Interval } from "./abstract-distribution.js";
 
 export class ShapeScaleParams {
@@ -12,9 +13,11 @@ export class ShapeScaleParams {
     shape: number = ShapeScaleParams.DEFAULTS.shape,
     scale: number = ShapeScaleParams.DEFAULTS.scale,
   ) {
-    if (shape <= 0.0) throw new RangeError("shape must be > 0.0");
+    (
+      ValidationError.checkNumber("number-not-positive", "shape", shape) ??
+      ValidationError.checkNumber("number-not-positive", "scale", scale)
+    )?.cast();
     this.#shape = shape;
-    if (scale <= 0.0) throw new RangeError("scale must be > 0.0");
     this.#scale = scale;
   }
 

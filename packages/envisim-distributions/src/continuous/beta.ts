@@ -1,3 +1,4 @@
+import { ValidationError } from "@envisim/utils";
 import {
   Distribution,
   Interval,
@@ -5,7 +6,6 @@ import {
   RANDOM_OPTIONS_DEFAULT,
 } from "../abstract-distribution.js";
 import { BetaParams } from "../params.js";
-import { assertPositiveInteger } from "../utils.js";
 import { randomBeta } from "./beta-random.js";
 
 /**
@@ -55,7 +55,8 @@ export class Beta extends Distribution {
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    assertPositiveInteger(n);
+    n |= 0;
+    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
     return randomBeta(n, this.params, options.rand);
   }
 
@@ -137,7 +138,8 @@ export class BetaPrime extends Distribution {
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    assertPositiveInteger(n);
+    n |= 0;
+    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
     return randomBeta(n, this.params, options.rand).map((v) => v / (1.0 - v));
   }
 

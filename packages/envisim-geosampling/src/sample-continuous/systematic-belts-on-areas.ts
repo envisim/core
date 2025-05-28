@@ -4,15 +4,13 @@ import { destination, distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { Random, type RandomGenerator } from "@envisim/random";
 import "@envisim/utils";
+import { ValidationError, type EnvisimError } from "@envisim/utils";
 import { intersectAreaSampleAreaFrame } from "../utils/index.js";
 import {
   type OptionsCircleConversion,
   type OptionsParallelLines,
-  SAMPLE_ERROR_LIST,
-  type SampleError,
   optionsCircleConversionCheck,
   optionsParallelLinesCheck,
-  throwRangeError,
 } from "./options.js";
 
 export interface SampleSystematicBeltsOnAreas
@@ -27,12 +25,12 @@ export interface SampleSystematicBeltsOnAreas
 
 export function sampleSystematicBeltsOnAreasCheck(
   options: SampleSystematicBeltsOnAreas,
-): SampleError {
-  if (options.halfWidth <= 0.0) {
-    return SAMPLE_ERROR_LIST.HALF_WIDTH_NOT_POSITIVE;
-  }
+): EnvisimError {
+  const errors = optionsCircleConversionCheck(options).append(optionsParallelLinesCheck(options));
 
-  return optionsCircleConversionCheck(options) || optionsParallelLinesCheck(options);
+  errors.add(ValidationError.checkNumber("number-not-positive", "halfWidth", options.halfWidth));
+
+  return errors;
 }
 
 /**
@@ -45,7 +43,7 @@ export function sampleSystematicBeltsOnAreas(
   collection: FeatureCollection<AreaObject>,
   options: SampleSystematicBeltsOnAreas,
 ): FeatureCollection<AreaObject> {
-  throwRangeError(sampleSystematicBeltsOnAreasCheck(options));
+  sampleSystematicBeltsOnAreasCheck(options).throwErrors();
 
   const { rand = new Random(), interspace, rotation = 0.0, halfWidth } = options;
 

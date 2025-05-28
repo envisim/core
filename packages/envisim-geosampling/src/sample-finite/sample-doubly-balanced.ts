@@ -1,14 +1,13 @@
 import { type FeatureCollection, type PropertyRecord, type PureObject } from "@envisim/geojson";
 import { localCube } from "@envisim/sampling";
+import type { EnvisimError } from "@envisim/utils";
 import {
   type OptionsBalanced,
   type OptionsBase,
   type OptionsSpatiallyBalanced,
-  type SampleError,
   optionsBalancedCheck,
   optionsBaseCheck,
   optionsSpatiallyBalancedCheck,
-  throwRangeError,
 } from "./options.js";
 import {
   balancingMatrixFromLayer,
@@ -31,19 +30,17 @@ export type SampleDoublyBalancedOptions<P extends string = string> = OptionsBase
 export function sampleDoublyBalancedCheck<P extends string>(
   options: SampleDoublyBalancedOptions<NoInfer<P>>,
   record: PropertyRecord<P>,
-): SampleError {
-  return (
-    optionsBaseCheck(options, record) ||
-    optionsBalancedCheck(options, record) ||
-    optionsSpatiallyBalancedCheck(options, record)
-  );
+): EnvisimError {
+  return optionsBaseCheck(options, record)
+    .append(optionsBalancedCheck(options, record))
+    .append(optionsSpatiallyBalancedCheck(options, record));
 }
 
 export function sampleDoublyBalanced<T extends PureObject, P extends string>(
   collection: FeatureCollection<T, P>,
   options: SampleDoublyBalancedOptions<NoInfer<P>>,
 ): FeatureCollection<T, P> {
-  throwRangeError(sampleDoublyBalancedCheck(options, collection.propertyRecord));
+  sampleDoublyBalancedCheck(options, collection.propertyRecord).throwErrors();
 
   // Compute inclusion probabilities
   const probabilities = inclprobsFromLayer(collection, options);

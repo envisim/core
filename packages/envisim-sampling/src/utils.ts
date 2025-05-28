@@ -1,5 +1,7 @@
+import { ValidationError } from "@envisim/utils";
+
 export function arrayBack<T>(arr: T[]): T {
-  if (arr.length === 0) throw new RangeError('array is empty');
+  ValidationError.checkOther("other-array-empty", "arr", arr);
   return arr[arr.length - 1];
 }
 
@@ -15,9 +17,16 @@ export function assertSizeRange(
   n: number,
   minSize: number = 0,
   maxSize: number = Number.MAX_SAFE_INTEGER,
-  argName: string = 'n',
+  argName: string = "n",
 ): void {
-  if (!Number.isInteger(n)) throw new TypeError(`${argName} must be integer`);
-  if (n < minSize || maxSize < n)
-    throw new RangeError(`${argName} must be between ${minSize} and ${maxSize}`);
+  (
+    ValidationError.checkNumber("number-not-integer", argName, n) ??
+    (minSize <= n && n <= maxSize
+      ? undefined
+      : ValidationError.createNumber(
+          "number-not-in-interval",
+          argName,
+          `${minSize} <= ${argName} <= ${maxSize}`,
+        ))
+  )?.cast();
 }

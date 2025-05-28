@@ -1,4 +1,5 @@
 import { type RandomGenerator } from "@envisim/random";
+import { ValidationError } from "@envisim/utils";
 import {
   Distribution,
   Interval,
@@ -6,7 +7,7 @@ import {
   RANDOM_OPTIONS_DEFAULT,
 } from "../abstract-distribution.js";
 import { HypergeometricParams } from "../params.js";
-import { assertPositiveInteger, binomialCoefficient, logBinomialCoefficient } from "../utils.js";
+import { binomialCoefficient, logBinomialCoefficient } from "../utils.js";
 import { logFactorial } from "../utils.js";
 
 /**
@@ -153,7 +154,8 @@ export class Hypergeometric extends Distribution {
    * https://doi.org/10.1080/00949658508810839
    */
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    assertPositiveInteger(n);
+    n |= 0;
+    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
 
     const rv = Array.from<number>({ length: n });
     // n1 = K
