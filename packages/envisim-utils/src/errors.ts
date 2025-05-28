@@ -3,7 +3,7 @@ export class EnvisimError extends AggregateError {
     return error instanceof EnvisimError;
   }
 
-  static checkErrors(errors?: EnvisimError): void {
+  static checkErrors(errors?: EnvisimError): undefined {
     if (EnvisimError.isError(errors)) errors.throwErrors();
     return;
   }
@@ -21,18 +21,18 @@ export class EnvisimError extends AggregateError {
     return this.errors.length > 0;
   }
 
-  add(error?: Error | void): this {
+  add(error?: Error): this {
     if (error !== undefined) this.errors.push(error);
     return this;
   }
-  append(errors?: EnvisimError | Error[] | void): this {
+  append(errors?: EnvisimError | Error[]): this {
     if (errors === undefined) return this;
     if (EnvisimError.isError(errors)) this.errors.push(...errors.errors);
     else this.errors.push(...errors);
     return this;
   }
 
-  throwErrors(holdIfEmpty: boolean = true): void {
+  throwErrors(holdIfEmpty: boolean = true): undefined {
     if (holdIfEmpty && !this.hasErrors()) return;
     throw this;
   }
@@ -81,10 +81,10 @@ export class ValidationError<C extends ValidationErrorCodes> extends Error {
     code: C,
     arg: string,
     value: unknown,
-  ): ValidationError<C> | void {
+  ): ValidationError<C> | undefined {
     switch (code) {
       case "other-value-not-existing":
-        if (value !== undefined || value !== null) return;
+        if (value !== undefined && value !== null) return;
         break;
       case "other-array-empty":
         if (Array.isArray(value) && value.length > 0) return;
@@ -139,7 +139,7 @@ export class ValidationError<C extends ValidationErrorCodes> extends Error {
     code: C,
     arg: string,
     value: number,
-  ): ValidationError<C> | void {
+  ): ValidationError<C> | undefined {
     switch (code) {
       case "number-not-number":
         if (typeof value === "number") return;
@@ -160,7 +160,7 @@ export class ValidationError<C extends ValidationErrorCodes> extends Error {
         if (value <= 0.0) return;
         break;
       case "number-not-finite":
-        if (!Number.isFinite(value)) return;
+        if (Number.isFinite(value)) return;
         break;
       case "number-not-in-unit-interval":
         if (0.0 <= value && value <= 1.0) return;
