@@ -107,11 +107,11 @@ export class HypergeometricParams {
 
     this.#K = K | 0;
     if (this.#K < 0 || this.#N < this.#K)
-      throw ValidationError.createNumber("number-not-in-interval", "0 <= K <= N");
+      throw ValidationError.createNumber("number-not-in-interval", "K", "0 <= K <= N");
 
     this.#n = n | 0;
     if (this.#n < 0 || this.#N < this.#n)
-      throw ValidationError.createNumber("number-not-in-interval", "0 <= n <= N");
+      throw ValidationError.createNumber("number-not-in-interval", "n", "0 <= n <= N");
   }
 
   get N() {

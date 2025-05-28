@@ -422,7 +422,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
     const fcKeys = fc.propertyRecord.getIds();
 
     if (thisKeys.length !== fcKeys.length || !thisKeys.every((id) => fcKeys.includes(id))) {
-      throw ValidationError.createProperty("property-records-not-identical");
+      throw ValidationError.createProperty("property-records-not-identical", "fc");
     }
 
     fc.forEach((feat) => this.addFeature(feat, shallow));
@@ -440,23 +440,21 @@ function setPropertiesOfFeature(
 
     // If the prop does not exist on the feature, we have a problem
     if (!Object.hasOwn(properties, id)) {
-      throw ValidationError.createProperty("property-records-not-identical");
+      throw ValidationError.createProperty("property-not-existing", "propertyRecord", id);
     }
 
     const value: unknown = properties[id];
 
     if (PropertyRecord.isNumerical(prop)) {
       // Add numerical property
-      if (typeof value !== "number") {
-        throw ValidationError.createProperty("property-records-not-identical");
-      }
+      if (typeof value !== "number")
+        throw ValidationError.createProperty("property-not-numerical", "propertyRecord", id);
     } else {
       // prop.type === 'categorical'
       // Add categorical property
       // We fill the value array, as new values are encountered.
-      if (typeof value !== "string") {
-        throw ValidationError.createProperty("property-records-not-identical");
-      }
+      if (typeof value !== "string")
+        throw ValidationError.createProperty("property-not-categorical", "propertyRecord", id);
 
       if (!prop.values.includes(value)) {
         prop.values.push(value);
