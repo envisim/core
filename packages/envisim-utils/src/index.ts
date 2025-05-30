@@ -7,8 +7,10 @@ export {
   ValidationError,
   type ValidationCause,
   type ValidationErrorCodes,
+  type ValidationErrorCreator,
+  type ValidationErrorChecker,
 } from "./errors.js";
-export { inClosedInterval, inOpenInterval } from "./numeric.js";
+export { inInterval, type Interval } from "./interval.js";
 export { reducedRowEchelonForm } from "./reducedRowEchelonForm.js";
 export { swap } from "./swap.js";
 

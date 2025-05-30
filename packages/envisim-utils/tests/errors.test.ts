@@ -2,39 +2,39 @@ import { expect, test } from "vitest";
 import { EnvisimError, ValidationError as VE } from "../src/errors.js";
 
 test("ValidationError", () => {
-  expect(() => VE.checkOther("other-value-not-existing", "", undefined)?.cast()).toThrowError();
-  expect(() => VE.checkOther("other-value-not-existing", "", void 0).cast()).toThrowError();
+  expect(() => VE.check["other-value-not-existing"]({}, undefined)?.raise()).toThrowError();
+  expect(() => VE.check["other-value-not-existing"]({}, void 0).raise()).toThrowError();
 
-  expect(() => VE.checkOther("other-value-not-existing", "", 0)?.cast()).not.toThrowError();
-  expect(() => VE.checkOther("other-array-empty", "", [])?.cast()).toThrowError();
-  expect(() => VE.checkOther("other-array-empty", "", [undefined])?.cast()).not.toThrowError();
+  expect(() => VE.check["other-value-not-existing"]({}, 0)?.raise()).not.toThrowError();
+  expect(() => VE.check["other-array-empty"]({}, [])?.raise()).toThrowError();
+  expect(() => VE.check["other-array-empty"]({}, [undefined])?.raise()).not.toThrowError();
 
-  expect(() => VE.checkNumber("number-not-number", "", undefined)?.cast()).toThrowError();
-  expect(() => VE.checkNumber("number-not-number", "", -22.2)?.cast()).not.toThrowError();
-  expect(() => VE.checkNumber("number-not-integer", "", -22.2)?.cast()).toThrowError();
-  expect(() => VE.checkNumber("number-not-integer", "", -22)?.cast()).not.toThrowError();
-  expect(() => VE.checkNumber("number-not-positive", "", 0.0)?.cast()).toThrowError();
-  expect(() => VE.checkNumber("number-not-positive", "", -0.2)?.cast()).toThrowError();
-  expect(() => VE.checkNumber("number-not-positive", "", 0.2)?.cast()).not.toThrowError();
-  expect(() => VE.checkNumber("number-not-negative", "", -0.2)?.cast()).not.toThrowError();
-  expect(() => VE.checkNumber("number-not-negative", "", 0.0)?.cast()).toThrowError();
-  expect(() => VE.checkNumber("number-not-negative", "", 0.2)?.cast()).toThrowError();
-  expect(() => VE.checkNumber("number-not-nonnegative", "", -0.2)?.cast()).toThrowError();
-  expect(() => VE.checkNumber("number-not-nonnegative", "", 0.0)?.cast()).not.toThrowError();
-  expect(() => VE.checkNumber("number-not-nonnegative", "", 0.2)?.cast()).not.toThrowError();
-  expect(() => VE.checkNumber("number-not-nonpositive", "", -0.2)?.cast()).not.toThrowError();
-  expect(() => VE.checkNumber("number-not-nonpositive", "", 0.0)?.cast()).not.toThrowError();
-  expect(() => VE.checkNumber("number-not-nonpositive", "", 0.2)?.cast()).toThrowError();
-  expect(() => VE.checkNumber("number-not-finite", "", Infinity)?.cast()).toThrowError();
-  expect(() => VE.checkNumber("number-not-finite", "", 0.2)?.cast()).not.toThrowError();
-  expect(() => VE.checkNumber("number-not-in-unit-interval", "", -0.2)?.cast()).toThrowError();
-  expect(() => VE.checkNumber("number-not-in-unit-interval", "", 0.0)?.cast()).not.toThrowError();
-  expect(() => VE.checkNumber("number-not-in-unit-interval", "", 0.2)?.cast()).not.toThrowError();
-  expect(() => VE.checkNumber("number-not-in-unit-interval", "", 1.0)?.cast()).not.toThrowError();
-  expect(() => VE.checkNumber("number-not-in-unit-interval", "", 1.2)?.cast()).toThrowError();
-  expect(() => VE.checkNumber("number-not-positive-i32", "", -10)?.cast()).toThrowError();
-  expect(() => VE.checkNumber("number-not-positive-i32", "", 10)?.cast()).not.toThrowError();
-  expect(() => VE.checkNumber("number-not-positive-i32", "", 0x8fffffff)?.cast()).toThrowError();
+  expect(() => VE.check["number-not-number"]({}, undefined)?.raise()).toThrowError();
+  expect(() => VE.check["number-not-number"]({}, -22.2)?.raise()).not.toThrowError();
+  expect(() => VE.check["number-not-integer"]({}, -22.2)?.raise()).toThrowError();
+  expect(() => VE.check["number-not-integer"]({}, -22)?.raise()).not.toThrowError();
+  expect(() => VE.check["number-not-positive"]({}, 0.0)?.raise()).toThrowError();
+  expect(() => VE.check["number-not-positive"]({}, -0.2)?.raise()).toThrowError();
+  expect(() => VE.check["number-not-positive"]({}, 0.2)?.raise()).not.toThrowError();
+  expect(() => VE.check["number-not-nonnegative"]({}, -0.2)?.raise()).toThrowError();
+  expect(() => VE.check["number-not-nonnegative"]({}, 0.0)?.raise()).not.toThrowError();
+  expect(() => VE.check["number-not-nonnegative"]({}, 0.2)?.raise()).not.toThrowError();
+  expect(() => VE.check["number-not-finite"]({}, Infinity)?.raise()).toThrowError();
+  expect(() => VE.check["number-not-finite"]({}, 0.2)?.raise()).not.toThrowError();
+  expect(() => VE.check["number-not-in-unit-interval"]({}, -0.2)?.raise()).toThrowError();
+  expect(() => VE.check["number-not-in-unit-interval"]({}, 0.0)?.raise()).not.toThrowError();
+  expect(() => VE.check["number-not-in-unit-interval"]({}, 0.2)?.raise()).not.toThrowError();
+  expect(() => VE.check["number-not-in-unit-interval"]({}, 1.0)?.raise()).not.toThrowError();
+  expect(() => VE.check["number-not-in-unit-interval"]({}, 1.2)?.raise()).toThrowError();
+  expect(() =>
+    VE.check["number-not-in-interval"]({ interval: [0, 0x7fffffff] }, -10)?.raise(),
+  ).toThrowError();
+  expect(() =>
+    VE.check["number-not-in-interval"]({ interval: [0, 0x7fffffff] }, 10)?.raise(),
+  ).not.toThrowError();
+  expect(() =>
+    VE.check["number-not-in-interval"]({ interval: [0, 0x7fffffff] }, 0x8fffffff)?.raise(),
+  ).toThrowError();
 });
 
 test("EnvisimError", () => {

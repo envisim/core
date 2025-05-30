@@ -1,3 +1,5 @@
+import { inInterval, intervalToText, type Interval } from "./interval.js";
+
 export class EnvisimError extends AggregateError {
   static isError(error: unknown): error is EnvisimError {
     return error instanceof EnvisimError;
@@ -45,287 +47,229 @@ export class EnvisimError extends AggregateError {
   }
 }
 
-export class ValidationError<C extends ValidationErrorCodes> extends Error {
-  static OTHER_CODES = [
-    "other-value-not-existing",
-    "other-array-empty",
-    "other-index-oob",
-    "other-incorrect-shape",
-  ] as const;
-  static createOther<C extends (typeof this.OTHER_CODES)[number]>(
-    code: C,
-    arg?: string,
-    msg?: string,
-  ): ValidationError<C> {
-    switch (code) {
-      case "other-value-not-existing":
-        return new ValidationError("value does not exist", { arg, code });
-      case "other-array-empty":
-        return new ValidationError(
-          arg === undefined || arg === ""
-            ? "array must not be empty"
-            : `array of '${arg}' must not be empty`,
-          { arg, code },
-        );
-      case "other-index-oob":
-        return new ValidationError(
-          arg === undefined || arg === "" ? "index out of bound" : `${arg} out of bounds`,
-          { arg, code },
-        );
-      case "other-incorrect-shape":
-        return new ValidationError(
-          arg === undefined || arg === ""
-            ? `shapes must match: '${msg}'`
-            : `shape '${arg}' must math: ${msg}`,
-          { arg, code },
-        );
-    }
-  }
-  static checkOther<C extends (typeof this.OTHER_CODES)[number]>(
-    code: C,
-    arg: string,
-    value: unknown,
-  ): ValidationError<C> | undefined {
-    switch (code) {
-      case "other-value-not-existing":
-        if (value !== undefined && value !== null) return;
-        break;
-      case "other-array-empty":
-        if (Array.isArray(value) && value.length > 0) return;
-        break;
-      default:
-        throw new RangeError(`cannot check: ${code}`);
-    }
+export class ValidationError extends Error {
+  static create: ValidationErrorCreator = {
+    // NUMBER
+    "number-not-number": ({ arg }) =>
+      new ValidationError(`'${arg}' must be number`, { code: "number-not-number", arg }),
+    "number-not-integer": ({ arg }) =>
+      new ValidationError(`'${arg}' must be integer`, { code: "number-not-integer", arg }),
+    "number-not-positive": ({ arg }) =>
+      new ValidationError(`'${arg}' must be positive`, { code: "number-not-positive", arg }),
+    "number-not-nonnegative": ({ arg }) =>
+      new ValidationError(`'${arg}' must be non-negative`, { code: "number-not-nonnegative", arg }),
+    "number-not-finite": ({ arg }) =>
+      new ValidationError(`'${arg}' must be finite`, { code: "number-not-finite", arg }),
+    "number-not-in-unit-interval": ({ arg, ends }) =>
+      new ValidationError(
+        `'${arg}' must be in the interval: ${intervalToText({ interval: [0.0, 1.0], ends }, arg)}`,
+        {
+          code: "number-not-in-unit-interval",
+          arg,
+          ends,
+        },
+      ),
+    "number-not-in-interval": ({ arg, interval, ends = "closed" }) =>
+      new ValidationError(
+        `'${arg}' must be in the interval: ${intervalToText({ interval, ends }, arg)}`,
+        {
+          code: "number-not-in-interval",
+          arg,
+          interval,
+          ends,
+        },
+      ),
 
-    return this.createOther(code, arg);
-  }
+    // GEOJSON
+    "geojson-incorrect": ({ arg, type }) =>
+      new ValidationError(`${arg} is incorrect`, { code: "geojson-incorrect", arg, type }),
+    "geojson-not-area": ({ arg, type }) =>
+      new ValidationError(`${arg} must be an area primitive`, {
+        code: "geojson-not-area",
+        arg,
+        type,
+      }),
+    "geojson-not-line": ({ arg, type }) =>
+      new ValidationError(`${arg ?? type} must be a line primitive`, {
+        code: "geojson-not-line",
+        arg,
+        type,
+      }),
+    "geojson-not-point": ({ arg, type }) =>
+      new ValidationError(`${arg ?? type} must be a point primitive`, {
+        code: "geojson-not-point",
+        arg,
+        type,
+      }),
+    "geojson-not-at-least-line": ({ arg, type }) =>
+      new ValidationError(`${arg ?? type} must be a line or area primitive`, {
+        code: "geojson-not-at-least-line",
+        arg,
+        type,
+      }),
+    "geojson-not-at-most-line": ({ arg, type }) =>
+      new ValidationError(`${arg ?? type} must be a line or point primitive`, {
+        code: "geojson-not-at-most-line",
+        arg,
+        type,
+      }),
+    "geojson-empty": ({ arg, type }) =>
+      new ValidationError(`${arg ?? type} must not be an empty ${type}`, {
+        code: "geojson-empty",
+        arg,
+        type,
+      }),
+    "geojson-zero-measure": ({ arg, type }) =>
+      new ValidationError(`${arg ?? type} must not be have zero measure`, {
+        code: "geojson-zero-measure",
+        arg,
+        type,
+      }),
 
-  static NUMBER_CODES = [
-    "number-not-number",
-    "number-not-integer",
-    "number-not-positive",
-    "number-not-negative",
-    "number-not-nonnegative",
-    "number-not-nonpositive",
-    "number-not-finite",
-    "number-not-in-unit-interval",
-    "number-not-in-interval",
-    "number-not-positive-i32",
-  ] as const;
-  static createNumber<C extends (typeof this.NUMBER_CODES)[number]>(
-    code: C,
-    arg?: string,
-    msg?: string,
-  ): ValidationError<C> {
-    const cause = { arg, code };
+    // PROPERTY
+    "property-special-key": ({ arg, key }) =>
+      new ValidationError(`in '${arg}', '${key}' must not be special key`, {
+        code: "property-special-key",
+        arg,
+        key,
+      }),
+    "property-name-conflict": ({ arg, key }) =>
+      new ValidationError(`in '${arg}', '${key}' already exist`, {
+        code: "property-name-conflict",
+        arg,
+        key,
+      }),
+    "property-not-categorical": ({ arg, key }) =>
+      new ValidationError(`in '${arg}', '${key}' must be categorical`, {
+        code: "property-not-categorical",
+        arg,
+        key,
+      }),
+    "property-not-numerical": ({ arg, key }) =>
+      new ValidationError(`in '${arg}', '${key}' must be numerical`, {
+        code: "property-not-numerical",
+        arg,
+        key,
+      }),
+    "property-not-existing": ({ arg, key }) =>
+      new ValidationError(`in '${arg}', '${key}' must exist`, {
+        code: "property-not-existing",
+        arg,
+        key,
+      }),
+    "property-records-not-identical": ({ arg, other }) =>
+      new ValidationError(`'${arg}' and '${other}' property records must match`, {
+        code: "property-records-not-identical",
+        arg,
+        other,
+      }),
 
-    switch (code) {
-      case "number-not-number":
-        return new ValidationError(`${specifyOption(arg)}must be number`, cause);
-      case "number-not-integer":
-        return new ValidationError(`"${specifyOption(arg)}must be integer`, cause);
-      case "number-not-positive":
-        return new ValidationError(`${specifyOption(arg)}must be positive`, cause);
-      case "number-not-negative":
-        return new ValidationError(`${specifyOption(arg)}must be negative`, cause);
-      case "number-not-nonnegative":
-        return new ValidationError(`${specifyOption(arg)}must be non-negative`, cause);
-      case "number-not-nonpositive":
-        return new ValidationError(`${specifyOption(arg)}must be non-positive`, cause);
-      case "number-not-finite":
-        return new ValidationError(`${specifyOption(arg)}must be finite`, cause);
-      case "number-not-in-unit-interval":
-        return new ValidationError(`${specifyOption(arg)}must be in the interval [0, 1]`, cause);
-      case "number-not-in-interval":
-        return new ValidationError(`${specifyOption(arg)}must be in the interval: ${msg}`, cause);
-      case "number-not-positive-i32":
-        return new ValidationError(`${specifyOption(arg)}must be a positive i32`, cause);
-    }
-  }
-  static checkNumber<C extends (typeof this.NUMBER_CODES)[number]>(
-    code: C,
-    arg: string,
-    value: number,
-  ): ValidationError<C> | undefined {
-    switch (code) {
-      case "number-not-number":
-        if (typeof value === "number") return;
-        break;
-      case "number-not-integer":
-        if (Number.isInteger(value)) return;
-        break;
-      case "number-not-positive":
-        if (value > 0.0) return;
-        break;
-      case "number-not-negative":
-        if (value < 0.0) return;
-        break;
-      case "number-not-nonnegative":
-        if (value >= 0.0) return;
-        break;
-      case "number-not-nonpositive":
-        if (value <= 0.0) return;
-        break;
-      case "number-not-finite":
-        if (Number.isFinite(value)) return;
-        break;
-      case "number-not-in-unit-interval":
-        if (0.0 <= value && value <= 1.0) return;
-        break;
-      case "number-not-positive-i32":
-        if (0 <= value && value <= 0x7fffffff) return;
-        break;
-      default:
-        throw new RangeError(`cannot check: ${code}`);
-    }
+    // OTHER
+    "other-value-not-existing": ({ arg }) =>
+      new ValidationError("value does not exist", { code: "other-value-not-existing", arg }),
+    "other-array-empty": ({ arg }) =>
+      new ValidationError(
+        unspecifiedArg(arg, "array must not be empty") ?? `array of '${arg}' must not be empty`,
+        { code: "other-array-empty", arg },
+      ),
+    "other-index-oob": ({ arg, index }) =>
+      new ValidationError(unspecifiedArg(arg, "index out of bounds") ?? `'${arg}' out of bounds`, {
+        code: "other-index-oob",
+        arg,
+        index,
+      }),
+    "other-incorrect-shape": ({ arg, shape }) =>
+      new ValidationError(
+        unspecifiedArg(arg, `shapes must match: '${shape}'`) ??
+          `shape '${arg}' must match '${shape}'`,
+        { code: "other-incorrect-shape", arg, shape },
+      ),
+  } as const;
 
-    return this.createNumber(code, arg);
-  }
+  static check = {
+    // NUMBER
+    "number-not-number": (arg0, value: number) =>
+      typeof value === "number" ? undefined : this.create["number-not-number"](arg0),
+    "number-not-integer": (arg0, value: number) =>
+      Number.isInteger(value) ? undefined : this.create["number-not-integer"](arg0),
+    "number-not-positive": (arg0, value: number) =>
+      value > 0.0 ? undefined : this.create["number-not-positive"](arg0),
+    "number-not-nonnegative": (arg0, value: number) =>
+      value >= 0.0 ? undefined : this.create["number-not-nonnegative"](arg0),
+    "number-not-finite": (arg0, value: number) =>
+      Number.isFinite(value) ? undefined : this.create["number-not-finite"](arg0),
+    "number-not-in-unit-interval": (arg0, value: number) =>
+      inInterval(value, { interval: [0.0, 1.0], ends: arg0.ends })
+        ? undefined
+        : this.create["number-not-finite"](arg0),
+    "number-not-in-interval": (arg0, value: number) =>
+      inInterval(value, arg0) ? undefined : this.create["number-not-finite"](arg0),
 
-  static GEOJSON_CODES = [
-    "geojson-incorrect",
-    "geojson-not-area",
-    "geojson-not-line",
-    "geojson-not-point",
-    "geojson-not-at-least-line",
-    "geojson-not-at-most-line",
-    "geojson-empty",
-    "geojson-zero-measure",
-  ] as const;
-  static createGeoJson<C extends (typeof this.GEOJSON_CODES)[number]>(
-    code: C,
-    arg?: string,
-    type: "collection" | "feature" | "geometry" | "primitive" = "collection",
-  ): ValidationError<C> {
-    switch (code) {
-      case "geojson-incorrect":
-        return new ValidationError(`${arg ?? type} is incorrect`, { code, arg: arg ?? type });
-      case "geojson-not-area":
-        return new ValidationError(`${arg ?? type} must be an area primitive`, {
-          code,
-          arg: arg ?? type,
-        });
-      case "geojson-not-line":
-        return new ValidationError(`${arg ?? type} must be a line primitive`, {
-          code,
-          arg: arg ?? type,
-        });
-      case "geojson-not-point":
-        return new ValidationError(`${arg ?? type} must be a point primitive`, {
-          code,
-          arg: arg ?? type,
-        });
-      case "geojson-not-at-least-line":
-        return new ValidationError(`${arg ?? type} must be a line or area primitive`, {
-          code,
-          arg: arg ?? type,
-        });
-      case "geojson-not-at-most-line":
-        return new ValidationError(`${arg ?? type} must be a line or point primitive`, {
-          code,
-          arg: arg ?? type,
-        });
-      case "geojson-empty":
-        return new ValidationError(`${arg ?? type} must not be an empty ${type}`, {
-          code,
-          arg: arg ?? type,
-        });
-      case "geojson-zero-measure":
-        return new ValidationError(`${arg ?? type} must not be have zero measure`, {
-          code,
-          arg: arg ?? type,
-        });
-    }
-  }
+    // OTHER
+    "other-value-not-existing": (arg0, value: unknown) =>
+      value !== undefined && value !== null
+        ? undefined
+        : this.create["other-value-not-existing"](arg0),
+    "other-array-empty": (arg0, value: unknown[]) =>
+      Array.isArray(value) && value.length > 0 ? undefined : this.create["other-array-empty"](arg0),
+  } as const satisfies ValidationErrorChecker;
 
-  static GEOMETRY_CODES = ["geometry-incorrect"] as const;
-  static createGeometry<C extends (typeof this.GEOMETRY_CODES)[number]>(
-    code: C,
-    arg: string | undefined,
-    type:
-      | "Polygon"
-      | "MultiPolygon"
-      | "Circle"
-      | "MultiCircle"
-      | "LineString"
-      | "MultiLineString"
-      | "Point"
-      | "MultiPoint",
-  ): ValidationError<C> {
-    switch (code) {
-      case "geometry-incorrect":
-        return new ValidationError(
-          arg === undefined || arg === ""
-            ? `geometry must be ${type}`
-            : `geometry '${arg}' must be ${type}`,
-          { code, arg: arg ?? type },
-        );
-    }
-  }
-
-  static PROPERTY_CODES = [
-    "property-special-key",
-    "property-name-conflict",
-    "property-not-categorical",
-    "property-not-numerical",
-    "property-records-not-identical",
-    "property-not-existing",
-  ] as const;
-  static createProperty<C extends (typeof this.PROPERTY_CODES)[number]>(
-    code: C,
-    arg?: string,
-    key?: string,
-  ): ValidationError<C> {
-    switch (code) {
-      case "property-special-key":
-        return new ValidationError(`${specifyKey(key)}must not be special key`, { code, arg, key });
-      case "property-name-conflict":
-        return new ValidationError(`${specifyKey(key)}already exist`, { code, arg, key });
-      case "property-not-categorical":
-        return new ValidationError(`${specifyKey(key)}must be categorical`, { code, arg, key });
-      case "property-not-numerical":
-        return new ValidationError(`${specifyKey(key)}must be numerical`, { code, arg, key });
-      case "property-records-not-identical":
-        return new ValidationError(`property records must match`, { code, arg, key });
-      case "property-not-existing":
-        return new ValidationError(`${specifyKey(key)}must exist`, { code, arg, key });
-    }
-  }
-
-  static CAUSE_CODES = [
-    ...this.OTHER_CODES,
-    ...this.NUMBER_CODES,
-    ...this.GEOJSON_CODES,
-    ...this.GEOMETRY_CODES,
-    ...this.PROPERTY_CODES,
-  ] as const;
-
-  declare cause?: ValidationCause<C>;
-  constructor(message: string, cause: ValidationCause<C>) {
+  declare cause?: ValidationCause;
+  constructor(message: string, cause: ValidationCause) {
     super(message, { cause });
     this.name = "ValidationError";
   }
 
-  cast() {
+  raise() {
     throw this;
   }
 }
 
-export type ValidationErrorCodes = (typeof ValidationError.CAUSE_CODES)[number];
-export interface ValidationCause<C extends string> {
+export interface ValidationCauseBase<C extends string> {
   code: C;
   arg?: string;
-  key?: string;
 }
+export type ValidationCause =
+  | ValidationCauseBase<"number-not-number">
+  | ValidationCauseBase<"number-not-integer">
+  | ValidationCauseBase<"number-not-positive">
+  | ValidationCauseBase<"number-not-nonnegative">
+  | ValidationCauseBase<"number-not-finite">
+  | (ValidationCauseBase<"number-not-in-unit-interval"> & { ends?: Interval["ends"] })
+  | (ValidationCauseBase<"number-not-in-interval"> & Interval)
+  | ValidationCauseBase<"other-value-not-existing">
+  | ValidationCauseBase<"other-array-empty">
+  | (ValidationCauseBase<"other-index-oob"> & { index?: number })
+  | (ValidationCauseBase<"other-incorrect-shape"> & { shape?: string })
+  | (ValidationCauseBase<"geojson-incorrect"> & { type?: string })
+  | (ValidationCauseBase<"geojson-not-area"> & { type?: string })
+  | (ValidationCauseBase<"geojson-not-line"> & { type?: string })
+  | (ValidationCauseBase<"geojson-not-point"> & { type?: string })
+  | (ValidationCauseBase<"geojson-not-at-least-line"> & { type?: string })
+  | (ValidationCauseBase<"geojson-not-at-most-line"> & { type?: string })
+  | (ValidationCauseBase<"geojson-empty"> & { type?: string })
+  | (ValidationCauseBase<"geojson-zero-measure"> & { type?: string })
+  | (ValidationCauseBase<"property-special-key"> & { key?: string })
+  | (ValidationCauseBase<"property-name-conflict"> & { key?: string })
+  | (ValidationCauseBase<"property-not-categorical"> & { key?: string })
+  | (ValidationCauseBase<"property-not-numerical"> & { key?: string })
+  | (ValidationCauseBase<"property-not-existing"> & { key?: string })
+  | (ValidationCauseBase<"property-records-not-identical"> & { other?: string });
 
-// function quote(msg?: string): string {
-//   return msg === undefined || msg === "" ? "" : `'${msg}'`;
-// }
+export type ValidationErrorCodes = ValidationCause["code"];
+export type ValidationErrorCreator = {
+  [C in ValidationErrorCodes]: (
+    arg0: Omit<Extract<ValidationCause, { code: C }>, "code">,
+  ) => ValidationError;
+};
+export type ValidationErrorChecker = {
+  [C in ValidationErrorCodes]?: (
+    arg0: Omit<Extract<ValidationCause, { code: C }>, "code">,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any,
+  ) => ValidationError | undefined;
+};
 
-function specifyOption(arg?: string): string {
-  return arg === undefined || arg === "" ? "" : `argument '${arg}': `;
-}
-
-function specifyKey(key?: string): string {
-  return key === undefined || key === "" ? "property " : `property id '${key}': `;
+function unspecifiedArg(arg: string | undefined, msg: string): string | undefined {
+  return arg === undefined || arg === "" ? msg : undefined;
 }
