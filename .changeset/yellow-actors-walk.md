@@ -2,4 +2,4 @@
 "@envisim/utils": patch
 ---
 
-Added: new classes ValidationError (validates input and creates errors), EnvisimError (aggregates errors)
+Added: new class ValidationError (validates input and creates errors), new classEnvisimError (aggregates errors), inInterval

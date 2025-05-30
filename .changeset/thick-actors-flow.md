@@ -2,4 +2,4 @@
 "@envisim/utils": minor
 ---
 
-Removed: throwRangeError
+Removed: throwRangeError, inClosedInterval, inOpenInterval
