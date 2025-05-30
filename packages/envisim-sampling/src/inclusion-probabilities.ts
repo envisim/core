@@ -21,7 +21,7 @@ export function inclusionProbabilities({
   eps = BASE_OPTIONS.eps,
 }: InclusionProbabilitiesOptions): number[] {
   auxiliary.forEach((e) =>
-    ValidationError.checkNumber("number-not-nonnegative", "auxiliary", e)?.cast(),
+    ValidationError.check["number-not-nonnegative"]({ arg: "auxiliary" }, e)?.raise(),
   );
 
   const prob = new Vector(auxiliary, false);

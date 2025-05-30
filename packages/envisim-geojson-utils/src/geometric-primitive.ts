@@ -29,15 +29,15 @@ export class GeometricPrimitive {
 
   static assertArea(obj: unknown): asserts obj is GeometricPrimitiveArea {
     if (!this.isArea(obj))
-      throw ValidationError.createGeoJson("geojson-not-area", "obj", "primitive");
+      ValidationError.create["geojson-not-area"]({ arg: "obj", type: "primitive" }).raise();
   }
   static assertLine(obj: unknown): asserts obj is GeometricPrimitiveLine {
     if (!this.isLine(obj))
-      throw ValidationError.createGeoJson("geojson-not-line", "obj", "primitive");
+      ValidationError.create["geojson-not-line"]({ arg: "obj", type: "primitive" }).raise();
   }
   static assertPoint(obj: unknown): asserts obj is GeometricPrimitivePoint {
     if (!this.isPoint(obj))
-      throw ValidationError.createGeoJson("geojson-not-point", "obj", "primitive");
+      ValidationError.create["geojson-not-point"]({ arg: "obj", type: "primitive" }).raise();
   }
 
   static fromGeometry(obj: GJ.AreaGeometry, allowGC?: boolean): GeometricPrimitiveArea;

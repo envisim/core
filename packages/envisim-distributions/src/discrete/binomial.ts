@@ -77,7 +77,7 @@ export class Binomial extends Distribution {
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     n |= 0;
-    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     return randomBinomial(n, this.params.n, this.params.p, options.rand);
   }
 
@@ -159,7 +159,7 @@ export class NegativeBinomial extends Distribution {
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     n |= 0;
-    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
 
     const c = this.params.p / this.params.q;
     const s = randomShapeGamma(n, this.params.n, options.rand, c);

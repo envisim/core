@@ -17,7 +17,7 @@ export class Matrix extends BaseMatrix {
    */
   static assert(obj: unknown): asserts obj is Matrix {
     if (!(obj instanceof Matrix))
-      throw ValidationError.createOther("other-incorrect-shape", "obj", "must be Matrix");
+      throw ValidationError.create["other-incorrect-shape"]({ arg: "obj", shape: "Matrix" });
   }
 
   /**
@@ -25,12 +25,12 @@ export class Matrix extends BaseMatrix {
    * @throws ValidationError if the number of rows of any matrix doesn't match
    */
   static cbind(...matrices: BaseMatrix[]): Matrix {
-    ValidationError.checkOther("other-array-empty", "args", matrices)?.cast();
+    ValidationError.check["other-array-empty"]({ arg: "args" }, matrices)?.raise();
 
     const nrow = matrices[0].nrow;
 
     if (matrices.some((m) => nrow !== m.nrow))
-      throw ValidationError.createOther("other-incorrect-shape", "args");
+      throw ValidationError.create["other-incorrect-shape"]({ arg: "args" });
 
     return new Matrix(
       matrices.flatMap((m) => m.slice()),
@@ -44,12 +44,12 @@ export class Matrix extends BaseMatrix {
    * @throws ValidationError if the number of rows of any matrix doesn't match
    */
   static rbind(...matrices: BaseMatrix[]): Matrix {
-    ValidationError.checkOther("other-array-empty", "args", matrices)?.cast();
+    ValidationError.check["other-array-empty"]({ arg: "args" }, matrices)?.raise();
 
     const ncol = matrices[0].ncol;
 
     if (matrices.some((m) => ncol !== m.ncol))
-      throw ValidationError.createOther("other-incorrect-shape", "args");
+      throw ValidationError.create["other-incorrect-shape"]({ arg: "args" });
 
     const nrow = matrices.reduce((s, m) => s + m.nrow, 0);
 
@@ -151,7 +151,10 @@ export class Matrix extends BaseMatrix {
     const ncol = end[1] - start[1] + 1;
 
     if (nrow < 1 || ncol < 1) {
-      throw ValidationError.createNumber("number-not-in-interval", "end", "start < end");
+      throw ValidationError.create["number-not-in-interval"]({
+        arg: "end",
+        interval: [nrow, ncol],
+      });
     }
 
     const s = [];
@@ -178,7 +181,7 @@ export class Matrix extends BaseMatrix {
    */
   static mmult(mat1: BaseMatrix, mat2: BaseMatrix): Matrix {
     if (mat1.ncol !== mat2.nrow)
-      throw ValidationError.createOther("other-incorrect-shape", "mat2", "mat1");
+      throw ValidationError.create["other-incorrect-shape"]({ arg: "mat2", shape: "mat1" });
 
     const s = Array.from<number>({ length: mat1.nrow * mat2.ncol });
 
@@ -408,7 +411,7 @@ export class Matrix extends BaseMatrix {
    */
   determinant(): number {
     if (!this.isSquare())
-      throw ValidationError.createOther("other-incorrect-shape", "this", "must be square");
+      throw ValidationError.create["other-incorrect-shape"]({ arg: "this", shape: "square" });
 
     return this.rightTriangular().diagonal().prodSum();
   }
@@ -419,7 +422,7 @@ export class Matrix extends BaseMatrix {
    */
   inverse(eps: number = 1e-9): Matrix | null {
     if (!this.isSquare())
-      throw ValidationError.createOther("other-incorrect-shape", "this", "must be square");
+      throw ValidationError.create["other-incorrect-shape"]({ arg: "this", shape: "square" });
 
     if (this.determinant() === 0) {
       console.warn("Determinant is 0.");

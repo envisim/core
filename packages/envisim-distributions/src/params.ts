@@ -18,8 +18,10 @@ export class BenfordMantissaParams {
   #logBase: number;
 
   constructor(base: number = BenfordMantissaParams.DEFAULTS.base) {
-    if (base <= 1.0)
-      throw ValidationError.createNumber("number-not-in-interval", "base", "1 < base");
+    ValidationError.check["number-not-in-interval"](
+      { arg: "base", interval: [1.0], ends: "open" },
+      base,
+    )?.raise();
     this.#base = base;
     this.#logBase = Math.log(base);
   }
@@ -38,8 +40,7 @@ export class BernoulliParams {
   #p: number;
 
   constructor(p: number = BernoulliParams.DEFAULTS.p) {
-    if (p <= 0.0 || 1.0 <= p)
-      throw ValidationError.createNumber("number-not-in-interval", "p", "0 < p < 1");
+    ValidationError.check["number-not-in-unit-interval"]({ arg: "p", ends: "open" }, p)?.raise();
     this.#p = p;
   }
 
@@ -64,7 +65,7 @@ export class BinomialParams extends BernoulliParams {
   constructor(n: number = BinomialParams.DEFAULTS.n, p: number = BinomialParams.DEFAULTS.p) {
     super(p);
     this.#n = n | 0;
-    ValidationError.checkNumber("number-not-positive", "n", this.#n)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "n" }, this.#n)?.raise();
   }
 
   get n() {
@@ -78,7 +79,7 @@ export class DegreesOfFreedomParams {
 
   constructor(df: number = DegreesOfFreedomParams.DEFAULTS.df) {
     this.#df = df | 0;
-    ValidationError.checkNumber("number-not-positive", "df", this.#df);
+    ValidationError.check["number-not-positive"]({ arg: "df" }, this.#df)?.raise();
   }
 
   get df() {
@@ -103,15 +104,20 @@ export class HypergeometricParams {
     n: number = HypergeometricParams.DEFAULTS.n,
   ) {
     this.#N = N | 0;
-    ValidationError.checkNumber("number-not-positive", "N", this.#N)?.cast();
-
     this.#K = K | 0;
-    if (this.#K < 0 || this.#N < this.#K)
-      throw ValidationError.createNumber("number-not-in-interval", "K", "0 <= K <= N");
-
     this.#n = n | 0;
-    if (this.#n < 0 || this.#N < this.#n)
-      throw ValidationError.createNumber("number-not-in-interval", "n", "0 <= n <= N");
+
+    (
+      ValidationError.check["number-not-positive"]({ arg: "N" }, this.#N) ??
+      ValidationError.check["number-not-in-interval"](
+        { arg: "K", interval: [0, N], ends: "closed" },
+        this.#K,
+      ) ??
+      ValidationError.check["number-not-in-interval"](
+        { arg: "n", interval: [0, N], ends: "closed" },
+        this.#n,
+      )
+    )?.raise();
   }
 
   get N() {
@@ -138,7 +144,7 @@ export class RadiusParams {
   #denom: number;
 
   constructor(radius: number = RadiusParams.DEFAULTS.radius) {
-    ValidationError.checkNumber("number-not-positive", "radius", radius)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "radius" }, radius)?.raise();
     this.#radius = radius;
 
     this.#radiusSquared = Math.pow(radius, 2);
@@ -162,7 +168,7 @@ export class RateParams {
   #rate: number;
 
   constructor(rate: number = RateParams.DEFAULTS.rate) {
-    ValidationError.checkNumber("number-not-positive", "rate", rate)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "rate" }, rate)?.raise();
     this.#rate = rate;
   }
 

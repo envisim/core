@@ -29,7 +29,7 @@ export function samplePointsOnLines(
 
   const L = collection.measure(); // total length of input geoJSON
   if (L <= 0.0)
-    throw ValidationError.createGeoJson("geojson-zero-measure", "collection", "collection");
+    throw ValidationError.create["geojson-zero-measure"]({ arg: "collection", type: "collection" });
 
   let distances: number[] = []; // Holds sample points as distances from 0 to L.
 

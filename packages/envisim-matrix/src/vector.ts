@@ -21,7 +21,7 @@ export class Vector extends BaseMatrix {
    */
   static assert(obj: unknown): asserts obj is Vector {
     if (!(obj instanceof Vector))
-      throw ValidationError.createOther("other-incorrect-shape", "obj", "Vector");
+      throw ValidationError.create["other-incorrect-shape"]({ arg: "this", shape: "Vector" });
   }
 
   /**
@@ -182,7 +182,7 @@ export class Vector extends BaseMatrix {
    */
   covariance(vec: Vector): number {
     if (!this.hasSizeOf(vec))
-      throw ValidationError.createOther("other-incorrect-shape", "vec", "this");
+      throw ValidationError.create["other-incorrect-shape"]({ arg: "this", shape: "this" });
 
     return (
       this.subtract(this.mean()).multiply(vec.subtract(vec.mean()), true).sum() / (this.len - 1)
@@ -205,17 +205,16 @@ export class Vector extends BaseMatrix {
     range: [number, number] = this.range(),
   ): { range: [number, number]; bins: number[]; width: number } {
     bins = Math.ceil(bins);
-
-    ValidationError.checkNumber("number-not-positive", "bins", bins)?.cast();
-    if (range[1] <= range[0])
-      throw ValidationError.createNumber(
-        "number-not-in-interval",
-        "range[1]",
-        "range[0] < range[1]",
-      );
-
     const width = (range[1] - range[0]) / bins;
-    ValidationError.checkNumber("number-not-finite", "range", width)?.cast();
+
+    (
+      ValidationError.check["number-not-positive"]({ arg: "bins" }, bins) ??
+      ValidationError.check["number-not-in-interval"](
+        { arg: "range[1]", interval: range, ends: "left-open" },
+        range[1],
+      ) ??
+      ValidationError.check["number-not-finite"]({ arg: "range" }, width)
+    )?.raise();
 
     if (width === 0.0) {
       return {
@@ -267,7 +266,7 @@ export function randomVector(length: number, rand: RandomGenerator = new Random(
  * @returns A vector of size needed to reach `to`, however not going over it.
  */
 export function sequence(from: number, to: number, by: number = 1.0): Vector {
-  ValidationError.checkNumber("number-not-positive", "by", by)?.cast();
+  ValidationError.check["number-not-positive"]({ arg: "by" }, by)?.raise();
 
   const dim = Math.floor(Math.abs((to - from) / by)) + 1;
 

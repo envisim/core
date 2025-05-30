@@ -15,7 +15,7 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
 
   static assert(obj: unknown): asserts obj is Circle {
     if (!this.isObject(obj))
-      throw ValidationError.createGeometry("geometry-incorrect", "obj", "Circle");
+      ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "Circle" }).raise();
   }
 
   static create(
@@ -38,7 +38,7 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
    */
   constructor(obj: OptionalParam<GJ.Circle, "type">, shallow: boolean = true) {
     super({ ...obj, type: "Point" }, shallow);
-    ValidationError.checkNumber("number-not-positive", "radius", obj.radius)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "radius" }, obj.radius)?.raise();
     this.radius = obj.radius;
   }
 

@@ -49,14 +49,18 @@ export function sampleAreaFeaturesOnAreasCheck(
     case "Point":
     case "MultiPoint":
       if (options.modelGeometry.radius <= 0.0)
-        errors.add(ValidationError.createGeoJson("geojson-not-area", "modelGeometry", "geometry"));
+        errors.add(
+          ValidationError.create["geojson-not-area"]({ arg: "modelGeometry", type: "geometry" }),
+        );
       break;
     default:
-      errors.add(ValidationError.createGeoJson("geojson-not-area", "modelGeometry", "geometry"));
+      errors.add(
+        ValidationError.create["geojson-not-area"]({ arg: "modelGeometry", type: "geometry" }),
+      );
   }
 
   if (typeof options.rotationOfGeometry === "string" && options.rotationOfGeometry !== "random")
-    errors.add(ValidationError.createOther("other-value-not-existing", "rotationOfGeometry"));
+    errors.add(ValidationError.create["other-value-not-existing"]({ arg: "rotationOfGeometry" }));
 
   return errors;
 }
@@ -110,11 +114,13 @@ export function sampleLineFeaturesOnAreasCheck(
     case "MultiLineString":
       break;
     default:
-      errors.add(ValidationError.createGeoJson("geojson-not-line", "modelGeometry", "geometry"));
+      errors.add(
+        ValidationError.create["geojson-not-line"]({ arg: "modelGeometry", type: "geometry" }),
+      );
   }
 
   if (typeof options.rotationOfGeometry === "string" && options.rotationOfGeometry !== "random")
-    errors.add(ValidationError.createOther("other-value-not-existing", "rotationOfGeometry"));
+    errors.add(ValidationError.create["other-value-not-existing"]({ arg: "rotationOfGeometry" }));
 
   return errors;
 }
@@ -162,11 +168,13 @@ export function samplePointFeaturesOnAreasCheck(
     case "MultiPoint":
       break;
     default:
-      errors.add(ValidationError.createGeoJson("geojson-not-point", "modelGeometry", "geometry"));
+      errors.add(
+        ValidationError.create["geojson-not-point"]({ arg: "modelGeometry", type: "geometry" }),
+      );
   }
 
   if (typeof options.rotationOfGeometry === "string" && options.rotationOfGeometry !== "random")
-    errors.add(ValidationError.createOther("other-value-not-existing", "rotationOfGeometry"));
+    errors.add(ValidationError.create["other-value-not-existing"]({ arg: "rotationOfGeometry" }));
 
   return errors;
 }

@@ -13,7 +13,7 @@ export class LocationScaleParams {
     location: number = LocationScaleParams.DEFAULTS.location,
     scale: number = LocationScaleParams.DEFAULTS.scale,
   ) {
-    ValidationError.checkNumber("number-not-positive", "scale", scale)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "scale" }, scale)?.raise();
     this.#location = location;
     this.#scale = scale;
   }

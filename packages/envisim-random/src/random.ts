@@ -141,7 +141,10 @@ export class Random {
    */
   intn(n: number = 1): number {
     n |= 0;
-    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+    ValidationError.check["number-not-in-interval"](
+      { arg: "n", interval: [1, 0x7fffffff], ends: "right-open" },
+      n,
+    )?.raise();
     if (n === 1) return 0;
     return (n * this.random()) | 0;
   }

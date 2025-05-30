@@ -20,7 +20,10 @@ export function scps({
   const p = Vector.borrow(probabilities);
 
   if (p.length !== N)
-    throw ValidationError.createOther("other-incorrect-shape", "probabilities", "auxiliaries rows");
+    throw ValidationError.create["other-incorrect-shape"]({
+      arg: "probabilities",
+      shape: "auxiliaries rows",
+    });
 
   const cps = new CorrelatedPoisson(
     CorrelatedPoisson.SCPS,
@@ -62,9 +65,15 @@ export function scpsCoordinated({
   const randvals = Vector.borrow(random);
 
   if (p.length !== N)
-    throw ValidationError.createOther("other-incorrect-shape", "probabilities", "auxiliaries rows");
+    throw ValidationError.create["other-incorrect-shape"]({
+      arg: "probabilities",
+      shape: "auxiliaries rows",
+    });
   if (randvals.length !== N)
-    throw ValidationError.createOther("other-incorrect-shape", "random", "auxiliaries rows");
+    throw ValidationError.create["other-incorrect-shape"]({
+      arg: "random",
+      shape: "auxiliaries rows",
+    });
 
   const cps = new CorrelatedPoisson(
     CorrelatedPoisson.LCPS,
@@ -98,7 +107,10 @@ export function lcps({
   const p = Vector.borrow(probabilities);
 
   if (p.length !== N)
-    throw ValidationError.createOther("other-incorrect-shape", "probabilities", "auxiliaries rows");
+    throw ValidationError.create["other-incorrect-shape"]({
+      arg: "probabilities",
+      shape: "auxiliaries rows",
+    });
 
   const cps = new CorrelatedPoisson(
     CorrelatedPoisson.LCPS,

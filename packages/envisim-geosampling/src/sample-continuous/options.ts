@@ -27,7 +27,7 @@ export function optionsBaseCheck({ sampleSize }: OptionsBase): EnvisimError {
   const errors = new EnvisimError();
 
   // sampleSize must positive
-  errors.add(ValidationError.checkNumber("number-not-positive", "sampleSize", sampleSize));
+  errors.add(ValidationError.check["number-not-positive"]({ arg: "sampleSize" }, sampleSize));
 
   return errors;
 }
@@ -39,12 +39,15 @@ export function optionsCircleConversionCheck({
 }: OptionsCircleConversion): EnvisimError {
   const errors = new EnvisimError();
 
-  if (pointsPerCircle !== undefined && pointsPerCircle < 3)
+  if (pointsPerCircle !== undefined)
     errors.add(
-      ValidationError.createNumber(
-        "number-not-in-interval",
-        "pointsPerCircle",
-        "3 <= pointsPerCircle",
+      ValidationError.check["number-not-in-interval"](
+        {
+          arg: "pointsPerCircle",
+          interval: [3],
+          ends: "closed",
+        },
+        pointsPerCircle,
       ),
     );
 
@@ -76,11 +79,10 @@ export function optionsPointsOnAreasCheck({
   const errors = optionsBaseCheck(options).append(optionsCircleConversionCheck(options));
 
   if (ratio !== undefined)
-    errors.add(ValidationError.checkNumber("number-not-positive", "ratio", ratio));
+    errors.add(ValidationError.check["number-not-positive"]({ arg: "ratio" }, ratio));
 
   if (typeof rotationOfGrid === "string" && rotationOfGrid !== "random")
-    errors.add(ValidationError.createOther("other-value-not-existing", rotationOfGrid));
-
+    errors.add(ValidationError.create["other-value-not-existing"]({ arg: rotationOfGrid }));
   return errors;
 }
 
@@ -102,7 +104,7 @@ export interface OptionsParallelLines {
 export function optionsParallelLinesCheck({ interspace }: OptionsParallelLines): EnvisimError {
   const errors = new EnvisimError();
 
-  errors.add(ValidationError.checkNumber("number-not-positive", "interspace", interspace));
+  errors.add(ValidationError.check["number-not-positive"]({ arg: "interspace" }, interspace));
 
   return errors;
 }
@@ -132,9 +134,11 @@ export function optionsDistancePointsCheck({
 }: OptionsDistancePoints): EnvisimError {
   const errors = new EnvisimError();
 
-  errors.add(ValidationError.checkNumber("number-not-positive", "cutoff", cutoff));
+  errors.add(ValidationError.check["number-not-positive"]({ arg: "cutoff" }, cutoff));
   if (FeatureCollection.isPoint(baseCollection) === false)
-    errors.add(ValidationError.createGeoJson("geojson-not-point", "baseCollection", "collection"));
+    errors.add(
+      ValidationError.create["geojson-not-point"]({ arg: "baseCollection", type: "collection" }),
+    );
 
   return errors;
 }

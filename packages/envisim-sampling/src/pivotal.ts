@@ -10,7 +10,10 @@ import { Pivotal } from "./sampling-classes/index.js";
 
 function probToArrayOfLength(p: Vector | number[], size: number): number[] {
   if (p.length !== size)
-    throw ValidationError.createOther("other-incorrect-shape", "probabilities", "auxiliaries rows");
+    throw ValidationError.create["other-incorrect-shape"]({
+      arg: "probabilities",
+      shape: "auxiliaries rows",
+    });
 
   return Vector.borrow(p);
 }

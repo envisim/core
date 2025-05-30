@@ -29,7 +29,7 @@ export class MultiLineString
 
   static assert(obj: unknown): asserts obj is MultiLineString {
     if (!this.isObject(obj))
-      throw ValidationError.createGeometry("geometry-incorrect", "obj", "MultiLineString");
+      ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "MultiLineString" }).raise();
   }
 
   static create(

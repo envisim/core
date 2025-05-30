@@ -14,9 +14,9 @@ export class BetaParams {
    */
   constructor(alpha: number = BetaParams.DEFAULTS.alpha, beta: number = BetaParams.DEFAULTS.beta) {
     (
-      ValidationError.checkNumber("number-not-nonnegative", "alpha", alpha) ??
-      ValidationError.checkNumber("number-not-nonnegative", "beta", beta)
-    )?.cast();
+      ValidationError.check["number-not-nonnegative"]({ arg: "alpha" }, alpha) ??
+      ValidationError.check["number-not-nonnegative"]({ arg: "beta" }, beta)
+    )?.raise();
 
     this.#alpha = alpha;
     this.#beta = beta;
@@ -156,7 +156,7 @@ export class BetaParams {
      * AS 109
      * beta = logbetafn
      */
-    ValidationError.checkNumber("number-not-in-unit-interval", "p", p)?.cast();
+    ValidationError.check["number-not-in-unit-interval"]({ arg: "p" }, p)?.raise();
     if (p === 0.0) return 0.0;
     if (p === 1.0) return 1.0;
 

@@ -95,16 +95,16 @@ export function collectProperties<PF extends string, PB extends string, GF exten
   for (const property of rec.getRecord()) {
     if (!PropertyRecord.isNumerical(property)) {
       // Categorical properties should not exist in this record
-      throw ValidationError.createProperty("property-not-numerical", "base");
+      throw ValidationError.create["property-not-numerical"]({ arg: "base" });
     }
 
     const id = property.parent ? property.parent[0] : property.id;
     if (!base.propertyRecord.hasId(id)) {
-      throw ValidationError.createProperty("property-not-existing", "base", id);
+      throw ValidationError.create["property-not-existing"]({ arg: "base", key: id });
     }
 
     if (frame.propertyRecord.hasId(property.id)) {
-      throw ValidationError.createProperty("property-name-conflict", "frame", id);
+      throw ValidationError.create["property-name-conflict"]({ arg: "frame", key: id });
     }
 
     // Add new properties to new collection and property record.
@@ -221,7 +221,7 @@ export function collectPropertyRecord<P extends string>(
   for (const id of properties) {
     const rec = propertyRecord.getId(id);
     if (rec === null)
-      throw ValidationError.createProperty("property-not-existing", "propertyRecord", id);
+      throw ValidationError.create["property-not-existing"]({ arg: "propertyRecord", key: id });
 
     if (PropertyRecord.isCategorical(rec)) {
       // Create new record for each category

@@ -35,18 +35,18 @@ export function optionsBaseCheck<P extends string, M extends string>(
   const errors = new EnvisimError();
 
   // sampleSize must positive
-  errors.add(ValidationError.checkNumber("number-not-positive", "sampleSize", sampleSize));
+  errors.add(ValidationError.check["number-not-positive"]({ arg: "sampleSize" }, sampleSize));
 
   if (probabilities !== undefined && probabilities !== "_measure") {
     const property = record.getId(probabilities);
 
     // probabilitiesFrom must exist on propertyRecord
     if (property === null)
-      errors.add(ValidationError.createProperty("property-not-existing", "probabilities"));
+      errors.add(ValidationError.create["property-not-existing"]({ arg: "probabilities" }));
 
     // probabilitiesFrom must be a numerical property
     if (!PropertyRecord.isNumerical(property))
-      errors.add(ValidationError.createProperty("property-not-numerical", "probabilities"));
+      errors.add(ValidationError.create["property-not-numerical"]({ arg: "probabilities" }));
   }
 
   return errors;
@@ -71,11 +71,11 @@ export function optionsBalancedCheck<P extends string>(
   const errors = new EnvisimError();
 
   // Must use balanceOn
-  errors.add(ValidationError.checkOther("other-array-empty", "balanceOn", balanceOn));
+  errors.add(ValidationError.check["other-array-empty"]({ arg: "balanceOn" }, balanceOn));
   // balanceOn entries must exist on propertyRecord
   balanceOn.forEach((prop) => {
     if (!record.hasId(prop))
-      errors.add(ValidationError.createProperty("property-not-existing", "balanceOn", prop));
+      errors.add(ValidationError.create["property-not-existing"]({ arg: "balanceOn", key: prop }));
   });
 
   return errors;
@@ -106,12 +106,12 @@ export function optionsSpatiallyBalancedCheck<P extends string>(
 
   // Uses nothing
   if (spreadOn.length === 0 && spreadGeo === false)
-    errors.add(ValidationError.createOther("other-array-empty", "spreadOn"));
+    errors.add(ValidationError.check["other-array-empty"]({ arg: "spreadOn" }, spreadOn));
 
   // Check so spreadOn properties exists on record
   spreadOn.forEach((prop) => {
     if (!record.hasId(prop))
-      errors.add(ValidationError.createProperty("property-not-existing", "spreadOn", prop));
+      errors.add(ValidationError.create["property-not-existing"]({ arg: "spreadOn", key: prop }));
   });
 
   return errors;

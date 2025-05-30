@@ -5,10 +5,11 @@ import { ValidationError } from "@envisim/utils";
 export function checkSampleArray(sample: number[] | Vector, N: number): void {
   sample.forEach((e) => {
     (
-      ValidationError.checkNumber("number-not-integer", "sample", e) ??
-      (0 <= e && e < N
-        ? undefined
-        : ValidationError.createNumber("number-not-in-interval", "sample", "0 <= sample < N"))
-    )?.cast();
+      ValidationError.check["number-not-integer"]({ arg: "sample" }, e) ??
+      ValidationError.check["number-not-in-interval"](
+        { arg: "sample", interval: [0, N], ends: "right-open" },
+        e,
+      )
+    )?.raise();
   });
 }

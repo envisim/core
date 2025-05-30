@@ -34,14 +34,16 @@ export function sampleRelascopePointsOptionsCheck<P extends string>(
 ): EnvisimError {
   const errors = optionsPointsOnAreasCheck(options);
 
-  errors.add(ValidationError.checkNumber("number-not-positive", "factor", options.factor));
+  errors.add(ValidationError.check["number-not-positive"]({ arg: "factor" }, options.factor));
 
   if (FeatureCollection.isPoint(options.baseCollection) === false)
-    errors.add(ValidationError.createGeoJson("geojson-not-point", "baseCollection", "collection"));
+    errors.add(
+      ValidationError.create["geojson-not-point"]({ arg: "baseCollection", type: "collection" }),
+    );
   if (options.baseCollection.propertyRecord.hasId(options.sizeProperty) === false)
-    errors.add(ValidationError.createProperty("property-not-existing", "sizeProperty"));
+    errors.add(ValidationError.create["property-not-existing"]({ arg: "sizeProperty" }));
   if (options.baseCollection.propertyRecord.isNumerical(options.sizeProperty) === false)
-    errors.add(ValidationError.createProperty("property-not-numerical", "sizeProperty"));
+    errors.add(ValidationError.create["property-not-numerical"]({ arg: "sizeProperty" }));
 
   return errors;
 }

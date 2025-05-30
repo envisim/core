@@ -17,12 +17,15 @@ export abstract class BaseMatrix {
     this.internal = arr;
 
     (
-      ValidationError.checkNumber("number-not-positive", "nrow", this.nrow) ??
-      ValidationError.checkNumber("number-not-positive", "ncol", this.ncol) ??
+      ValidationError.check["number-not-positive"]({ arg: "nrow" }, this.nrow) ??
+      ValidationError.check["number-not-positive"]({ arg: "ncol" }, this.nrow) ??
       (this.len === arr.length
         ? undefined
-        : ValidationError.createOther("other-incorrect-shape", "arr", "arr.length and nrow*ncol"))
-    )?.cast();
+        : ValidationError.create["other-incorrect-shape"]({
+            arg: "arr.length",
+            shape: "nrow*ncol",
+          }))
+    )?.raise();
   }
 
   /**
@@ -63,10 +66,11 @@ export abstract class BaseMatrix {
     row |= 0;
 
     if (row < 0) {
-      if (row < -this.rows) throw ValidationError.createOther("other-index-oob", "row");
+      if (row < -this.rows)
+        throw ValidationError.create["other-index-oob"]({ arg: "row", index: row });
       row += this.rows;
     } else if (row >= this.rows) {
-      throw ValidationError.createOther("other-index-oob", "row");
+      throw ValidationError.create["other-index-oob"]({ arg: "row", index: row });
     }
 
     return row;
@@ -78,10 +82,11 @@ export abstract class BaseMatrix {
     col |= 0;
 
     if (col < 0) {
-      if (col < -this.cols) throw ValidationError.createOther("other-index-oob", "col");
+      if (col < -this.cols)
+        throw ValidationError.create["other-index-oob"]({ arg: "col", index: col });
       col += this.cols;
     } else if (col >= this.cols) {
-      throw ValidationError.createOther("other-index-oob", "col");
+      throw ValidationError.create["other-index-oob"]({ arg: "col", index: col });
     }
 
     return col;
@@ -115,9 +120,11 @@ export abstract class BaseMatrix {
   protected checkIndex(index: number): number {
     index |= 0;
 
-    if (index >= this.len) throw ValidationError.createOther("other-index-oob", "index");
+    if (index >= this.len) throw ValidationError.create["other-index-oob"]({ arg: "index", index });
+
     if (index < 0) {
-      if (index < -this.len) throw ValidationError.createOther("other-index-oob", "index");
+      if (index < -this.len)
+        throw ValidationError.create["other-index-oob"]({ arg: "index", index });
       index += this.len;
     }
 
@@ -472,7 +479,7 @@ export abstract class BaseMatrix {
 
     for (let i = 0; i < p.length; i++) {
       const pq = p[i];
-      ValidationError.checkNumber("number-not-in-unit-interval", "probs", pq)?.cast();
+      ValidationError.check["number-not-in-unit-interval"]({ arg: "probs" }, pq)?.raise();
 
       unit = pq * n - 1.0;
       low = Math.floor(unit);
@@ -514,7 +521,7 @@ export abstract class BaseMatrix {
     let fn: MatrixCallback<number>;
     if (typeof mat === "number") fn = (e: number) => e + mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e + mat.at(i);
-    else throw ValidationError.createOther("other-incorrect-shape", "mat", "this");
+    else throw ValidationError.create["other-incorrect-shape"]({ arg: "mat", shape: "this" });
 
     return this.map(fn, inPlace);
   }
@@ -529,7 +536,7 @@ export abstract class BaseMatrix {
     let fn: MatrixCallback<number>;
     if (typeof mat === "number") fn = (e: number) => e - mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e - mat.at(i);
-    else throw ValidationError.createOther("other-incorrect-shape", "mat", "this");
+    else throw ValidationError.create["other-incorrect-shape"]({ arg: "mat", shape: "this" });
 
     return this.map(fn, inPlace);
   }
@@ -544,7 +551,7 @@ export abstract class BaseMatrix {
     let fn: MatrixCallback<number>;
     if (typeof mat === "number") fn = (e: number) => e / mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e / mat.at(i);
-    else throw ValidationError.createOther("other-incorrect-shape", "mat", "this");
+    else throw ValidationError.create["other-incorrect-shape"]({ arg: "mat", shape: "this" });
 
     return this.map(fn, inPlace);
   }
@@ -559,7 +566,7 @@ export abstract class BaseMatrix {
     let fn: MatrixCallback<number>;
     if (typeof mat === "number") fn = (e: number) => e * mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e * mat.at(i);
-    else throw ValidationError.createOther("other-incorrect-shape", "mat", "this");
+    else throw ValidationError.create["other-incorrect-shape"]({ arg: "mat", shape: "this" });
 
     return this.map(fn, inPlace);
   }
@@ -574,7 +581,7 @@ export abstract class BaseMatrix {
     let fn: MatrixCallback<number>;
     if (typeof mat === "number") fn = (e: number) => e % mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e % mat.at(i);
-    else throw ValidationError.createOther("other-incorrect-shape", "mat", "this");
+    else throw ValidationError.create["other-incorrect-shape"]({ arg: "mat", shape: "this" });
 
     return this.map(fn, inPlace);
   }

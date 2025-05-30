@@ -24,9 +24,9 @@ export class KdStore {
     this.maxSize = maxSize | 0;
 
     (
-      ValidationError.checkNumber("number-not-positive", "N", this.N) ??
-      ValidationError.checkNumber("number-not-positive", "maxSize", this.maxSize)
-    )?.cast();
+      ValidationError.check["number-not-positive"]({ arg: "N" }, this.N) ??
+      ValidationError.check["number-not-positive"]({ arg: "maxSize" }, this.maxSize)
+    )?.raise();
 
     this.distances = new Array<number>(this.N);
   }
@@ -91,12 +91,10 @@ export class KdStore {
   }
 
   sortNeighboursByDistance(fr: number = 0, to: number = this.neighbours.length): void {
-    if (to <= fr || this.neighbours.length < to)
-      throw ValidationError.createNumber(
-        "number-not-in-interval",
-        "to",
-        "fr < to <= neighbours.length",
-      );
+    ValidationError.check["number-not-in-interval"](
+      { arg: "to", interval: [fr, this.neighbours.length], ends: "left-open" },
+      to,
+    )?.raise();
     if (fr === 0 && to === this.neighbours.length) {
       this.fullSortNeighboursByDistance();
       return;
@@ -115,12 +113,10 @@ export class KdStore {
   }
 
   sortNeighboursByWeight(fr: number, to: number): void {
-    if (to <= fr || this.neighbours.length < to)
-      throw ValidationError.createNumber(
-        "number-not-in-interval",
-        "to",
-        "fr < to <= neighbours.length",
-      );
+    ValidationError.check["number-not-in-interval"](
+      { arg: "to", interval: [fr, this.neighbours.length], ends: "left-open" },
+      to,
+    )?.raise();
     if (fr === 0 && to === this.neighbours.length) {
       this.fullSortNeighboursByWeight();
       return;

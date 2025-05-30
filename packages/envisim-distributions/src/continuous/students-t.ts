@@ -138,7 +138,7 @@ export class StudentsT extends Distribution {
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     n |= 0;
-    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
 
     // Normal(0, 1)
     const x1 = randomArray(n, options.rand).map((u) => stdNormalQuantile(u));

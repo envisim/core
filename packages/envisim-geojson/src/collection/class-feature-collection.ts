@@ -56,19 +56,19 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
     obj: FeatureCollection<PureObject, P>,
   ): asserts obj is FeatureCollection<AreaObject, P> {
     if (!this.isArea(obj))
-      throw ValidationError.createGeoJson("geojson-not-area", "obj", "collection");
+      ValidationError.create["geojson-not-area"]({ arg: "obj", type: "collection" }).raise();
   }
   static assertLine<P extends string>(
     obj: FeatureCollection<PureObject, P>,
   ): asserts obj is FeatureCollection<LineObject, P> {
     if (!this.isLine(obj))
-      throw ValidationError.createGeoJson("geojson-not-line", "obj", "collection");
+      ValidationError.create["geojson-not-line"]({ arg: "obj", type: "collection" }).raise();
   }
   static assertPoint<P extends string>(
     obj: FeatureCollection<PureObject, P>,
   ): asserts obj is FeatureCollection<PointObject, P> {
     if (!this.isPoint(obj))
-      throw ValidationError.createGeoJson("geojson-not-point", "obj", "collection");
+      ValidationError.create["geojson-not-point"]({ arg: "obj", type: "collection" }).raise();
   }
 
   static createAreaFromJson(
@@ -422,7 +422,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
     const fcKeys = fc.propertyRecord.getIds();
 
     if (thisKeys.length !== fcKeys.length || !thisKeys.every((id) => fcKeys.includes(id))) {
-      throw ValidationError.createProperty("property-records-not-identical", "fc");
+      throw ValidationError.create["property-records-not-identical"]({ arg: "fc" });
     }
 
     fc.forEach((feat) => this.addFeature(feat, shallow));
@@ -439,22 +439,24 @@ function setPropertiesOfFeature(
     const id = prop.id;
 
     // If the prop does not exist on the feature, we have a problem
-    if (!Object.hasOwn(properties, id)) {
-      throw ValidationError.createProperty("property-not-existing", "propertyRecord", id);
-    }
+    if (!Object.hasOwn(properties, id))
+      throw ValidationError.create["property-not-existing"]({ arg: "propertyRecord", key: id });
 
     const value: unknown = properties[id];
 
     if (PropertyRecord.isNumerical(prop)) {
       // Add numerical property
       if (typeof value !== "number")
-        throw ValidationError.createProperty("property-not-numerical", "propertyRecord", id);
+        throw ValidationError.create["property-not-numerical"]({ arg: "propertyRecord", key: id });
     } else {
       // prop.type === 'categorical'
       // Add categorical property
       // We fill the value array, as new values are encountered.
       if (typeof value !== "string")
-        throw ValidationError.createProperty("property-not-categorical", "propertyRecord", id);
+        throw ValidationError.create["property-not-categorical"]({
+          arg: "propertyRecord",
+          key: id,
+        });
 
       if (!prop.values.includes(value)) {
         prop.values.push(value);

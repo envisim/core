@@ -20,7 +20,7 @@ export function samplePointsOnAreasCheck(options: SamplePointsOnAreasOptions): E
   const errors = optionsPointsOnAreasCheck(options);
 
   if (options.ratio !== undefined)
-    errors.add(ValidationError.checkNumber("number-not-positive", "ratio", options.ratio));
+    errors.add(ValidationError.check["number-not-positive"]({ arg: "ratio" }, options.ratio));
 
   return errors;
 }

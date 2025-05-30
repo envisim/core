@@ -28,7 +28,7 @@ export function sampleSystematicBeltsOnAreasCheck(
 ): EnvisimError {
   const errors = optionsCircleConversionCheck(options).append(optionsParallelLinesCheck(options));
 
-  errors.add(ValidationError.checkNumber("number-not-positive", "halfWidth", options.halfWidth));
+  errors.add(ValidationError.check["number-not-positive"]({ arg: "halfWidth" }, options.halfWidth));
 
   return errors;
 }

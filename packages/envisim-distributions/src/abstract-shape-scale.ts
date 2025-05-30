@@ -14,9 +14,9 @@ export class ShapeScaleParams {
     scale: number = ShapeScaleParams.DEFAULTS.scale,
   ) {
     (
-      ValidationError.checkNumber("number-not-positive", "shape", shape) ??
-      ValidationError.checkNumber("number-not-positive", "scale", scale)
-    )?.cast();
+      ValidationError.check["number-not-positive"]({ arg: "shape" }, shape) ??
+      ValidationError.check["number-not-positive"]({ arg: "scale" }, scale)
+    )?.raise();
     this.#shape = shape;
     this.#scale = scale;
   }

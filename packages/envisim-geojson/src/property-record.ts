@@ -113,7 +113,7 @@ export class PropertyRecord<IDS extends string = string> {
     const keys1 = record1.getIds();
     record2.getIds().forEach((k) => {
       if (keys1.includes(k))
-        throw ValidationError.createProperty("property-name-conflict", "record2", k);
+        ValidationError.create["property-name-conflict"]({ arg: "record2", key: k }).raise();
     });
 
     return new PropertyRecord({ ...record1.record, ...record2.record });
@@ -198,7 +198,7 @@ export class PropertyRecord<IDS extends string = string> {
     { id = uuid(), name = id, parent }: Partial<NumericalProperty<string>>,
   ): string {
     if (PropertyRecord.isSpecial(id))
-      throw ValidationError.createProperty("property-special-key", id);
+      throw ValidationError.create["property-special-key"]({ arg: "this", key: id });
 
     this.record[id] = {
       type: "numerical",
@@ -219,7 +219,7 @@ export class PropertyRecord<IDS extends string = string> {
     { id = uuid(), name = id, values = [] }: Partial<CategoricalProperty<string>>,
   ): string {
     if (PropertyRecord.isSpecial(id))
-      throw ValidationError.createProperty("property-special-key", id);
+      throw ValidationError.create["property-special-key"]({ arg: "this", key: id });
 
     this.record[id] = {
       type: "categorical",
@@ -232,9 +232,8 @@ export class PropertyRecord<IDS extends string = string> {
   }
 
   addValueToCategory(id: IDS, value: string): number {
-    if (PropertyRecord.isCategorical(this.record?.[id]) === false) {
-      throw ValidationError.createProperty("property-not-categorical", id);
-    }
+    if (PropertyRecord.isCategorical(this.record?.[id]) === false)
+      throw ValidationError.create["property-not-categorical"]({ arg: "this", key: id });
 
     const index = this.record[id].values.indexOf(value);
     if (index >= 0) {
@@ -245,9 +244,8 @@ export class PropertyRecord<IDS extends string = string> {
   }
 
   categoryHasValue(id: IDS, value: string): boolean {
-    if (PropertyRecord.isCategorical(this.record?.[id]) === false) {
-      throw ValidationError.createProperty("property-not-categorical", id);
-    }
+    if (PropertyRecord.isCategorical(this.record?.[id]) === false)
+      throw ValidationError.create["property-not-categorical"]({ arg: "this", key: id });
 
     return this.record?.[id].values.includes(value) === true;
   }

@@ -19,7 +19,7 @@ export class LineString extends AbstractLineObject<GJ.LineString> implements GJ.
 
   static assert(obj: unknown): asserts obj is LineString {
     if (!this.isObject(obj))
-      throw ValidationError.createGeometry("geometry-incorrect", "obj", "LineString");
+      ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "LineString" }).raise();
   }
 
   static create(coordinates: GJ.LineString["coordinates"], shallow: boolean = true): LineString {

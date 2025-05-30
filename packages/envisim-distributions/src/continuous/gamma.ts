@@ -48,7 +48,7 @@ export class Gamma extends ShapeScale {
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     n |= 0;
-    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     return randomShapeGamma(n, this.params.shape, options.rand, this.params.scale);
   }
 

@@ -17,7 +17,7 @@ export class MultiPoint extends AbstractPointObject<GJ.MultiPoint> implements GJ
 
   static assert(obj: unknown): asserts obj is MultiPoint {
     if (!this.isObject(obj))
-      throw ValidationError.createGeometry("geometry-incorrect", "obj", "MultiPoint");
+      ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "MultiPoint" }).raise();
   }
 
   static create(coordinates: GJ.MultiPoint["coordinates"], shallow: boolean = true): MultiPoint {

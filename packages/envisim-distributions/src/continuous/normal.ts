@@ -1,6 +1,6 @@
 import { randomArray } from "@envisim/random";
 import { ValidationError } from "@envisim/utils";
-import { Interval, type RandomOptions, RANDOM_OPTIONS_DEFAULT } from "../abstract-distribution.js";
+import { type RandomOptions, Interval, RANDOM_OPTIONS_DEFAULT } from "../abstract-distribution.js";
 import { LocationScale } from "../abstract-location-scale.js";
 import { SQRT_PI } from "../math-constants.js";
 import { errorFunction, stdNormalCDF, stdNormalQuantile } from "./normal-utils.js";
@@ -69,7 +69,7 @@ export class Normal extends LocationScale {
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     const method = options.method ?? "inverse";
     n |= 0;
-    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
 
     switch (method) {
       case "box-muller":
@@ -138,7 +138,7 @@ export class LogNormal extends LocationScale {
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     const method = options.method ?? "inverse";
     n |= 0;
-    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
 
     switch (method) {
       case "box-muller":
@@ -247,7 +247,7 @@ export class FoldedNormal extends LocationScale {
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     const method = options.method ?? "inverse";
     n |= 0;
-    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
 
     switch (method) {
       case "box-muller":

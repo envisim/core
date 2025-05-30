@@ -52,8 +52,10 @@ export class IndexList {
   }
 
   resize(len: number): void {
-    if (len > this.capacity)
-      throw ValidationError.createNumber("number-not-in-interval", "len", "len <= this.capactiy");
+    ValidationError.check["number-not-in-interval"](
+      { arg: "len", interval: [0, this.capacity], ends: "closed" },
+      len,
+    )?.raise();
 
     this.len = len;
   }
@@ -73,8 +75,10 @@ export class IndexList {
   }
 
   setId(id: number): void {
-    if (id >= this.capacity)
-      throw ValidationError.createNumber("number-not-in-interval", "id", "id < this.capactiy");
+    ValidationError.check["number-not-in-interval"](
+      { arg: "id", interval: [0, this.capacity], ends: "right-open" },
+      id,
+    )?.raise();
 
     this.list[id] = id;
     this.reverse[id] = id;
@@ -82,15 +86,19 @@ export class IndexList {
 
   // get
   getId(k: number): number {
-    if (k >= this.len)
-      throw ValidationError.createNumber("number-not-in-interval", "k", "k < this.capactiy");
+    ValidationError.check["number-not-in-interval"](
+      { arg: "k", interval: [0, this.len], ends: "right-open" },
+      k,
+    )?.raise();
 
     return this.list[k];
   }
 
   getK(id: number): number {
-    if (id >= this.capacity)
-      throw ValidationError.createNumber("number-not-in-interval", "id", "id < this.capactiy");
+    ValidationError.check["number-not-in-interval"](
+      { arg: "id", interval: [0, this.capacity], ends: "right-open" },
+      id,
+    )?.raise();
 
     return this.reverse[id];
   }
@@ -106,21 +114,17 @@ export class IndexList {
   }
 
   erase(id: number): void {
-    if (id >= this.capacity)
-      throw ValidationError.createNumber(
-        "number-not-in-interval",
-        "id",
-        `${id} = id < this.capactiy = ${this.capacity}`,
-      );
+    ValidationError.check["number-not-in-interval"](
+      { arg: "id", interval: [0, this.capacity], ends: "right-open" },
+      id,
+    )?.raise();
 
     const k = this.reverse[id];
 
-    if (k >= this.len)
-      throw ValidationError.createNumber(
-        "number-not-in-interval",
-        "k",
-        `${k} = k < this.len = ${this.len}`,
-      );
+    ValidationError.check["number-not-in-interval"](
+      { arg: "k", interval: [0, this.len], ends: "right-open" },
+      k,
+    )?.raise();
 
     this.len -= 1;
     this.reverse[id] = this.capacity;

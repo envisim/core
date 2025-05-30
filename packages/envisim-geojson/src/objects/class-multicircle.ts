@@ -17,7 +17,7 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
 
   static assert(obj: unknown): asserts obj is MultiCircle {
     if (!this.isObject(obj))
-      throw ValidationError.createGeometry("geometry-incorrect", "obj", "MultiCircle");
+      ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "MultiCircle" }).raise();
   }
 
   static create(
@@ -42,7 +42,7 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
    */
   constructor(obj: OptionalParam<GJ.MultiCircle, "type">, shallow: boolean = true) {
     super({ ...obj, type: "MultiPoint" }, shallow);
-    ValidationError.checkNumber("number-not-positive", "radius", obj.radius)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "radius" }, obj.radius)?.raise();
     this.radius = obj.radius;
   }
 

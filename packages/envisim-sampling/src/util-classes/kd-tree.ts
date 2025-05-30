@@ -17,10 +17,10 @@ export class KdTree {
   }
 
   constructor(dt: Matrix, bucketSize: number = 40) {
-    if (dt.length <= 0) throw ValidationError.createOther("other-array-empty", "dt");
+    if (dt.length <= 0) throw ValidationError.create["other-array-empty"]({ arg: "dt" });
 
     bucketSize |= 0;
-    ValidationError.checkNumber("number-not-positive", "bucketSize", bucketSize)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "bucketSize" }, bucketSize)?.raise();
 
     this.dt = dt;
     this.bucketSize = Math.trunc(bucketSize);

@@ -18,11 +18,10 @@ export function htVariance(y: number[] | Vector, prob: number[] | Vector, prob2m
   const n = pi.length;
 
   if (prob2m.nrow !== n || prob2m.ncol !== n)
-    throw ValidationError.createOther(
-      "other-incorrect-shape",
-      "prob2m",
-      "must be square, and of size prob",
-    );
+    ValidationError.create["other-incorrect-shape"]({
+      arg: "prob2m",
+      shape: "square, size of prob",
+    }).raise();
 
   let variance = 0.0;
 
@@ -61,11 +60,10 @@ export function htVarianceSYG(
   const n = pi.length;
 
   if (prob2m.nrow !== n || prob2m.ncol !== n)
-    throw ValidationError.createOther(
-      "other-incorrect-shape",
-      "prob2m",
-      "must be square, and of size prob",
-    );
+    ValidationError.create["other-incorrect-shape"]({
+      arg: "prob2m",
+      shape: "square, size of prob",
+    }).raise();
 
   let variance = 0.0;
 
@@ -158,11 +156,10 @@ export function hhVariance(
   const n = mu.length;
 
   if (mu2m.nrow !== n || mu2m.ncol !== n)
-    throw ValidationError.createOther(
-      "other-incorrect-shape",
-      "mu2m",
-      "must be square, and of size prob",
-    );
+    ValidationError.create["other-incorrect-shape"]({
+      arg: "mu2m",
+      shape: "square, size of prob",
+    }).raise();
 
   let variance = 0.0;
 

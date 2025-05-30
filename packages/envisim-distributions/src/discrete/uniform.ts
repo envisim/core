@@ -44,7 +44,7 @@ export class UniformDiscrete extends Uniform {
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     n |= 0;
-    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     const c = this.params.width + 1;
     return randomArray(n, options.rand).map((e) => this.params.a + Math.floor(c * e));
   }

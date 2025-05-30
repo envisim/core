@@ -296,7 +296,7 @@ export function pointGeometry(): GJ.Point {
  * @returns a north-south straight line model geometry.
  */
 export function straightLineGeometry(sideLength: number = 10.0): GJ.LineString {
-  ValidationError.checkNumber("number-not-positive", "sideLength", sideLength)?.cast();
+  ValidationError.check["number-not-positive"]({ arg: "sideLength" }, sideLength)?.raise();
 
   const halfSide = sideLength * 0.5;
   return {
@@ -313,7 +313,7 @@ export function straightLineGeometry(sideLength: number = 10.0): GJ.LineString {
  * @returns an ell-shaped line model geometry.
  */
 export function ellLineGeometry(sideLength: number = 10.0): GJ.LineString {
-  ValidationError.checkNumber("number-not-positive", "sideLength", sideLength)?.cast();
+  ValidationError.check["number-not-positive"]({ arg: "sideLength" }, sideLength)?.raise();
 
   const halfSide = sideLength * 0.5;
   return {
@@ -337,15 +337,12 @@ export function circleLineGeometry(
   const pointsPerCircle = (options?.pointsPerCircle ?? 16) | 0;
 
   (
-    ValidationError.checkNumber("number-not-positive", "diameter", diameter) ??
-    (3 <= pointsPerCircle
-      ? undefined
-      : ValidationError.createNumber(
-          "number-not-in-interval",
-          "pointsPerCircle",
-          "3 <= pointsPerCircle",
-        ))
-  )?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "diameter" }, diameter) ??
+    ValidationError.check["number-not-in-interval"](
+      { arg: "pointsPerCircle", interval: [3], ends: "closed" },
+      diameter,
+    )
+  )?.raise();
 
   // use the radius that gives equal area to the polygon for best approximation
   const v = Math.PI / pointsPerCircle;
@@ -362,16 +359,16 @@ export function circleLineGeometry(
  * @returns a circle model geometry.
  */
 export function circleAreaGeometry(diameter: number = 10.0): GJ.Circle {
-  ValidationError.checkNumber("number-not-positive", "diameter", diameter)?.cast();
+  ValidationError.check["number-not-positive"]({ arg: "diameter" }, diameter)?.raise();
 
   return { ...pointGeometry(), radius: diameter * 0.5 };
 }
 
 function rectangularCoordinates(width: number = 10.0, height: number = width): GJ.Position2[] {
   (
-    ValidationError.checkNumber("number-not-positive", "width", width) ??
-    ValidationError.checkNumber("number-not-positive", "height", height)
-  )?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "width" }, width) ??
+    ValidationError.check["number-not-positive"]({ arg: "height" }, height)
+  )?.raise();
 
   const halfWidth = width * 0.5;
   const halfHeight = height * 0.5;
@@ -433,7 +430,7 @@ export function rectangularCircleGeometry(
   height: number = width,
   diameter: number = 1.0,
 ): GJ.MultiCircle {
-  ValidationError.checkNumber("number-not-positive", "diameter", diameter)?.cast();
+  ValidationError.check["number-not-positive"]({ arg: "diameter" }, diameter)?.raise();
 
   return { ...rectangularPointGeometry(width, height), radius: Math.min(diameter, width) * 0.5 };
 }
@@ -444,11 +441,12 @@ function regularPolygonCoordinates(
 ): GJ.Position2[] {
   sides |= 0;
   (
-    ValidationError.checkNumber("number-not-positive", "polygonDiameter", polygonDiameter) ??
-    (3 <= sides
-      ? undefined
-      : ValidationError.createNumber("number-not-in-interval", "sides", "3 <= sides"))
-  )?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "polygonDiameter" }, polygonDiameter) ??
+    ValidationError.check["number-not-in-interval"](
+      { arg: "sides", interval: [3], ends: "closed" },
+      sides,
+    )
+  )?.raise();
 
   const r = polygonDiameter * 0.5;
   const coordinates = Array.from<GJ.Position2>({ length: sides });
@@ -516,7 +514,7 @@ export function regularPolygonCircleGeometry(
   polygonDiameter: number = 10.0,
   diameter: number = 1.0,
 ): GJ.MultiCircle {
-  ValidationError.checkNumber("number-not-positive", "diameter", diameter)?.cast();
+  ValidationError.check["number-not-positive"]({ arg: "diameter" }, diameter)?.raise();
 
   const coordinates = regularPolygonCoordinates(sides, polygonDiameter);
   const d =

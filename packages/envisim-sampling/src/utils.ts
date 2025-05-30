@@ -1,7 +1,7 @@
 import { ValidationError } from "@envisim/utils";
 
 export function arrayBack<T>(arr: T[]): T {
-  ValidationError.checkOther("other-array-empty", "arr", arr);
+  ValidationError.check["other-array-empty"]({ arg: "arr" }, arr)?.raise();
   return arr[arr.length - 1];
 }
 
@@ -20,13 +20,10 @@ export function assertSizeRange(
   argName: string = "n",
 ): void {
   (
-    ValidationError.checkNumber("number-not-integer", argName, n) ??
-    (minSize <= n && n <= maxSize
-      ? undefined
-      : ValidationError.createNumber(
-          "number-not-in-interval",
-          argName,
-          `${minSize} <= ${argName} <= ${maxSize}`,
-        ))
-  )?.cast();
+    ValidationError.check["number-not-integer"]({ arg: argName }, n) ??
+    ValidationError.check["number-not-in-interval"](
+      { arg: argName, interval: [minSize, maxSize], ends: "closed" },
+      n,
+    )
+  )?.raise();
 }

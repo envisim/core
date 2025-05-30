@@ -68,7 +68,7 @@ export function distance(p1: GJ.Position, p2: GJ.Position): number {
  * @throws ValidationError if number is not in the interval [0,1]
  */
 export function intermediate(p1: GJ.Position, p2: GJ.Position, fraction: number): GJ.Position2 {
-  ValidationError.checkNumber("number-not-in-unit-interval", "fraction", fraction)?.cast();
+  ValidationError.check["number-not-in-unit-interval"]({ arg: "fraction" }, fraction)?.raise();
   const delta = [p2[0] - p1[0], p2[1] - p1[1]];
   const degrees = (delta[0] ** 2 + delta[1] ** 2) ** 0.5;
   // Numerical integration of the length

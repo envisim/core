@@ -26,9 +26,11 @@ export function sampleSystematicLinesOnLinesCheck(
 ): EnvisimError {
   const errors = new EnvisimError();
 
-  errors.add(ValidationError.checkNumber("number-not-positive", "dashLength", options.dashLength));
   errors.add(
-    ValidationError.checkNumber("number-not-nonnegative", "voidLength", options.voidLength),
+    ValidationError.check["number-not-positive"]({ arg: "dashLength" }, options.dashLength),
+  );
+  errors.add(
+    ValidationError.check["number-not-positive"]({ arg: "voidLength" }, options.voidLength),
   );
 
   return errors;

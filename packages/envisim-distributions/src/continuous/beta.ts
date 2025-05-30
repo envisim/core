@@ -56,7 +56,7 @@ export class Beta extends Distribution {
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     n |= 0;
-    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     return randomBeta(n, this.params, options.rand);
   }
 
@@ -139,7 +139,7 @@ export class BetaPrime extends Distribution {
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     n |= 0;
-    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     return randomBeta(n, this.params, options.rand).map((v) => v / (1.0 - v));
   }
 

@@ -12,7 +12,10 @@ export class BoundedParams {
    * @category Parameters
    */
   constructor(a: number = BoundedParams.DEFAULTS.a, b: number = BoundedParams.DEFAULTS.b) {
-    if (b < a) throw ValidationError.createNumber("number-not-in-interval", "b", "a < b");
+    ValidationError.check["number-not-in-interval"](
+      { arg: "b", interval: [a], ends: "open" },
+      b,
+    )?.raise();
     this.#a = a;
     this.#b = b;
 
@@ -43,8 +46,10 @@ export class BoundedMidParams extends BoundedParams {
     mid: number = (a + b) * 0.5,
   ) {
     super(a, b);
-    if (mid <= a || b <= mid)
-      throw ValidationError.createNumber("number-not-in-interval", "mid", "a < mid < b");
+    ValidationError.check["number-not-in-interval"](
+      { arg: "mid", interval: [a, b], ends: "open" },
+      mid,
+    )?.raise();
     this.#mid = mid;
   }
 

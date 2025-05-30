@@ -46,7 +46,7 @@ export abstract class Distribution {
    */
   random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     n |= 0;
-    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     const u = randomArray(n, options.rand);
     return u.map((v) => this.quantile(v));
   }
@@ -117,7 +117,12 @@ export class Interval {
   ro: boolean = true;
 
   constructor(l: number, r: number, lo: boolean = true, ro: boolean = true) {
-    if (l > r) throw ValidationError.createNumber("number-not-in-interval", "r", "l <= r");
+    if (l > r)
+      throw ValidationError.create["number-not-in-interval"]({
+        arg: "r",
+        interval: [l],
+        ends: "open",
+      });
     this.l = l;
     this.r = r;
     this.lo = Number.isFinite(l) ? lo : true;

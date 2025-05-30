@@ -45,7 +45,10 @@ export function randomArray(n: number, generator: RandomGenerator = new Random()
  */
 export function randomInt(n: number = 1, generator: RandomGenerator = new Random()): number {
   n |= 0;
-  ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+  ValidationError.check["number-not-in-interval"](
+    { arg: "n", interval: [1, 0x7fffffff], ends: "right-open" },
+    n,
+  )?.raise();
   if (n === 1) return 0;
   return (n * generator.random()) | 0;
 }

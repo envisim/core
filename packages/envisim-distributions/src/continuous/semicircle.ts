@@ -62,7 +62,7 @@ export class Semicircle extends Distribution {
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     n |= 0;
-    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
 
     const { radius } = this.params;
     const c = radius * 2.0;

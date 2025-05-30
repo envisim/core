@@ -48,15 +48,14 @@ export function halfNormalDetectionFunction(sigma: number): DetectionFunction {
  * @returns the detection function.
  */
 export function detectionFunction(breakValues: number[], cutoff: number): DetectionFunction {
-  ValidationError.checkNumber("number-not-positive", "cutoff", cutoff)?.cast();
+  ValidationError.check["number-not-positive"]({ arg: "cutoff" }, cutoff)?.raise();
   if (breakValues.length < 2)
-    throw ValidationError.createOther(
-      "other-incorrect-shape",
-      "breakValues",
-      "2 <= breakvalues.length",
-    );
+    throw ValidationError.create["other-incorrect-shape"]({
+      arg: "breakValues",
+      shape: "2 <= breakvalues.length",
+    });
   breakValues.forEach((v) =>
-    ValidationError.checkNumber("number-not-in-unit-interval", "breakValues", v)?.cast(),
+    ValidationError.check["number-not-in-unit-interval"]({ arg: "breakValues" }, v)?.raise(),
   );
 
   const n = breakValues.length;

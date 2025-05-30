@@ -36,7 +36,7 @@ export class Uniform extends Bounded {
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     n |= 0;
-    ValidationError.checkNumber("number-not-positive", "n", n)?.cast();
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     const width = this.params.width;
     return randomArray(n, options.rand).map((e) => this.params.a + width * e);
   }
