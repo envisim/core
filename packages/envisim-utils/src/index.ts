@@ -5,7 +5,8 @@ export { copy } from "./copy.js";
 export {
   EnvisimError,
   ValidationError,
-  type ValidationErrorCause as ValidationCause,
+  type ValidationErrorCause,
+  type ValidationErrorCauseBase,
   type ValidationErrorCodes,
   type ValidationErrorCreator,
   type ValidationErrorChecker,
