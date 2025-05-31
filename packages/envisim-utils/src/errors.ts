@@ -214,8 +214,8 @@ export class ValidationError extends Error {
       Array.isArray(value) && value.length > 0 ? undefined : this.create["other-array-empty"](arg0),
   } as const satisfies ValidationErrorChecker;
 
-  declare cause?: ValidationCause;
-  constructor(message: string, cause: ValidationCause) {
+  declare cause?: ValidationErrorCause;
+  constructor(message: string, cause: ValidationErrorCause) {
     super(message, { cause });
     this.name = "ValidationError";
   }
@@ -225,46 +225,46 @@ export class ValidationError extends Error {
   }
 }
 
-export interface ValidationCauseBase<C extends string> {
+export interface ValidationErrorCauseBase<C extends string> {
   code: C;
   arg?: string;
 }
-export type ValidationCause =
-  | ValidationCauseBase<"number-not-number">
-  | ValidationCauseBase<"number-not-integer">
-  | ValidationCauseBase<"number-not-positive">
-  | ValidationCauseBase<"number-not-nonnegative">
-  | ValidationCauseBase<"number-not-finite">
-  | (ValidationCauseBase<"number-not-in-unit-interval"> & { ends?: Interval["ends"] })
-  | (ValidationCauseBase<"number-not-in-interval"> & Interval)
-  | ValidationCauseBase<"other-value-not-existing">
-  | ValidationCauseBase<"other-array-empty">
-  | (ValidationCauseBase<"other-index-oob"> & { index?: number })
-  | (ValidationCauseBase<"other-incorrect-shape"> & { shape?: string })
-  | (ValidationCauseBase<"geojson-incorrect"> & { type?: string })
-  | (ValidationCauseBase<"geojson-not-area"> & { type?: string })
-  | (ValidationCauseBase<"geojson-not-line"> & { type?: string })
-  | (ValidationCauseBase<"geojson-not-point"> & { type?: string })
-  | (ValidationCauseBase<"geojson-not-at-least-line"> & { type?: string })
-  | (ValidationCauseBase<"geojson-not-at-most-line"> & { type?: string })
-  | (ValidationCauseBase<"geojson-empty"> & { type?: string })
-  | (ValidationCauseBase<"geojson-zero-measure"> & { type?: string })
-  | (ValidationCauseBase<"property-special-key"> & { key?: string })
-  | (ValidationCauseBase<"property-name-conflict"> & { key?: string })
-  | (ValidationCauseBase<"property-not-categorical"> & { key?: string })
-  | (ValidationCauseBase<"property-not-numerical"> & { key?: string })
-  | (ValidationCauseBase<"property-not-existing"> & { key?: string })
-  | (ValidationCauseBase<"property-records-not-identical"> & { other?: string });
+export type ValidationErrorCause =
+  | ValidationErrorCauseBase<"number-not-number">
+  | ValidationErrorCauseBase<"number-not-integer">
+  | ValidationErrorCauseBase<"number-not-positive">
+  | ValidationErrorCauseBase<"number-not-nonnegative">
+  | ValidationErrorCauseBase<"number-not-finite">
+  | (ValidationErrorCauseBase<"number-not-in-unit-interval"> & { ends?: Interval["ends"] })
+  | (ValidationErrorCauseBase<"number-not-in-interval"> & Interval)
+  | ValidationErrorCauseBase<"other-value-not-existing">
+  | ValidationErrorCauseBase<"other-array-empty">
+  | (ValidationErrorCauseBase<"other-index-oob"> & { index?: number })
+  | (ValidationErrorCauseBase<"other-incorrect-shape"> & { shape?: string })
+  | (ValidationErrorCauseBase<"geojson-incorrect"> & { type?: string })
+  | (ValidationErrorCauseBase<"geojson-not-area"> & { type?: string })
+  | (ValidationErrorCauseBase<"geojson-not-line"> & { type?: string })
+  | (ValidationErrorCauseBase<"geojson-not-point"> & { type?: string })
+  | (ValidationErrorCauseBase<"geojson-not-at-least-line"> & { type?: string })
+  | (ValidationErrorCauseBase<"geojson-not-at-most-line"> & { type?: string })
+  | (ValidationErrorCauseBase<"geojson-empty"> & { type?: string })
+  | (ValidationErrorCauseBase<"geojson-zero-measure"> & { type?: string })
+  | (ValidationErrorCauseBase<"property-special-key"> & { key?: string })
+  | (ValidationErrorCauseBase<"property-name-conflict"> & { key?: string })
+  | (ValidationErrorCauseBase<"property-not-categorical"> & { key?: string })
+  | (ValidationErrorCauseBase<"property-not-numerical"> & { key?: string })
+  | (ValidationErrorCauseBase<"property-not-existing"> & { key?: string })
+  | (ValidationErrorCauseBase<"property-records-not-identical"> & { other?: string });
 
-export type ValidationErrorCodes = ValidationCause["code"];
+export type ValidationErrorCodes = ValidationErrorCause["code"];
 export type ValidationErrorCreator = {
   [C in ValidationErrorCodes]: (
-    arg0: Omit<Extract<ValidationCause, { code: C }>, "code">,
+    arg0: Omit<Extract<ValidationErrorCause, { code: C }>, "code">,
   ) => ValidationError;
 };
 export type ValidationErrorChecker = {
   [C in ValidationErrorCodes]?: (
-    arg0: Omit<Extract<ValidationCause, { code: C }>, "code">,
+    arg0: Omit<Extract<ValidationErrorCause, { code: C }>, "code">,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any,
   ) => ValidationError | undefined;
