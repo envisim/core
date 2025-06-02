@@ -1,5 +1,11 @@
 # @envisim/utils
 
+## 0.2.1
+
+### Patch Changes
+
+- fd79a02: Fixed: bug in ValidationError for 'number-not-in-interval' check
+
 ## 0.2.0
 
 ### Minor Changes

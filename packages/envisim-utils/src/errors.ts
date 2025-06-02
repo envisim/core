@@ -213,7 +213,9 @@ export class ValidationError extends Error {
         ? undefined
         : this.create["number-not-in-unit-interval"]({ ...arg0, value }),
     "number-not-in-interval": (arg0, value: number) =>
-      inInterval(value, arg0) ? undefined : this.create["number-not-finite"]({ ...arg0, value }),
+      inInterval(value, arg0)
+        ? undefined
+        : this.create["number-not-in-interval"]({ ...arg0, value }),
     // ARRAY
     "array-empty": (arg0, arr: unknown[]) =>
       Array.isArray(arr) && arr.length > 0 ? undefined : this.create["array-empty"](arg0),
