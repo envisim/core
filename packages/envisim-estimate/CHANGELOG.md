@@ -1,5 +1,20 @@
 # @envisim/estimate
 
+## 0.2.0
+
+### Minor Changes
+
+- 33bc7fd: Added: new dependency @envisim/utils
+
+### Patch Changes
+
+- 33bc7fd: Changed: use ValidationError or EnvisimError, if possible
+- Updated dependencies [33bc7fd]
+  - @envisim/random@0.2.0
+  - @envisim/matrix@0.1.2
+  - @envisim/sampling@0.1.2
+  - @envisim/utils@0.2.0
+
 ## 0.1.1
 
 ### Patch Changes

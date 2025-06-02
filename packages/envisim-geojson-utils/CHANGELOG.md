@@ -1,5 +1,13 @@
 # @envisim/geojson-utils
 
+## 0.1.2
+
+### Patch Changes
+
+- 33bc7fd: Changed: use ValidationError or EnvisimError, if possible
+- Updated dependencies [33bc7fd]
+  - @envisim/utils@0.2.0
+
 ## 0.1.1
 
 ### Patch Changes
