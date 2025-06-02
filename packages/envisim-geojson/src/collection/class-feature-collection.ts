@@ -56,19 +56,19 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
     obj: FeatureCollection<PureObject, P>,
   ): asserts obj is FeatureCollection<AreaObject, P> {
     if (!this.isArea(obj))
-      ValidationError.create["geojson-not-area"]({ arg: "obj", type: "collection" }).raise();
+      throw ValidationError.create["geojson-not-area"]({ arg: "obj", type: "collection" });
   }
   static assertLine<P extends string>(
     obj: FeatureCollection<PureObject, P>,
   ): asserts obj is FeatureCollection<LineObject, P> {
     if (!this.isLine(obj))
-      ValidationError.create["geojson-not-line"]({ arg: "obj", type: "collection" }).raise();
+      throw ValidationError.create["geojson-not-line"]({ arg: "obj", type: "collection" });
   }
   static assertPoint<P extends string>(
     obj: FeatureCollection<PureObject, P>,
   ): asserts obj is FeatureCollection<PointObject, P> {
     if (!this.isPoint(obj))
-      ValidationError.create["geojson-not-point"]({ arg: "obj", type: "collection" }).raise();
+      throw ValidationError.create["geojson-not-point"]({ arg: "obj", type: "collection" });
   }
 
   static createAreaFromJson(

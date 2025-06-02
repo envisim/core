@@ -68,7 +68,7 @@ export class Normal extends LocationScale {
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     const method = options.method ?? "inverse";
-    n |= 0;
+    n = Math.trunc(n);
     ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
 
     switch (method) {
@@ -137,7 +137,7 @@ export class LogNormal extends LocationScale {
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     const method = options.method ?? "inverse";
-    n |= 0;
+    n = Math.trunc(n);
     ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
 
     switch (method) {
@@ -246,7 +246,7 @@ export class FoldedNormal extends LocationScale {
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
     const method = options.method ?? "inverse";
-    n |= 0;
+    n = Math.trunc(n);
     ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
 
     switch (method) {

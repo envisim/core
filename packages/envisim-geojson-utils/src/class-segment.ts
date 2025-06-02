@@ -1,9 +1,7 @@
-import { inInterval, type Interval } from "@envisim/utils";
+import { inInterval, inUnitInterval } from "@envisim/utils";
 import type * as GJ from "./geojson.js";
 import { azimuthalEquidistant } from "./projections.js";
 import { destinationUnrolled, forwardAzimuth } from "./segments/geodesic.js";
-
-const UNIT_INTERVAL_CLOSED: Interval = { interval: [0.0, 1.0], ends: "closed" };
 
 export class Segment {
   static checkParameter(param: number): boolean {
@@ -68,7 +66,8 @@ export class Segment {
     } else if (t.length === 1) {
       if (
         includeInvalid === false &&
-        (!inInterval(t[0][0], UNIT_INTERVAL_CLOSED) || !inInterval(t[0][1], UNIT_INTERVAL_CLOSED))
+        (!inUnitInterval(t[0][0], { ends: "closed" }) ||
+          !inUnitInterval(t[0][1], { ends: "closed" }))
       ) {
         return null;
       }

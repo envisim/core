@@ -20,8 +20,8 @@ export class KdStore {
   }
 
   init(N: number, maxSize: number): void {
-    this.N = N | 0;
-    this.maxSize = maxSize | 0;
+    this.N = Math.trunc(N);
+    this.maxSize = Math.trunc(maxSize);
 
     (
       ValidationError.check["number-not-positive"]({ arg: "N" }, this.N) ??

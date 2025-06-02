@@ -334,7 +334,7 @@ export function circleLineGeometry(
   diameter: number = 1.0,
   options?: CirclesToPolygonsOptions,
 ): GJ.LineString {
-  const pointsPerCircle = (options?.pointsPerCircle ?? 16) | 0;
+  const pointsPerCircle = Math.trunc(options?.pointsPerCircle ?? 16);
 
   (
     ValidationError.check["number-not-positive"]({ arg: "diameter" }, diameter) ??
@@ -439,7 +439,7 @@ function regularPolygonCoordinates(
   sides: number = 3,
   polygonDiameter: number = 1.0,
 ): GJ.Position2[] {
-  sides |= 0;
+  sides = Math.trunc(sides);
   (
     ValidationError.check["number-not-positive"]({ arg: "polygonDiameter" }, polygonDiameter) ??
     ValidationError.check["number-not-in-interval"](

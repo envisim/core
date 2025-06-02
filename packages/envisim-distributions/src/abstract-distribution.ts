@@ -45,7 +45,7 @@ export abstract class Distribution {
    * @param n - the number of observations to be generated
    */
   random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    n |= 0;
+    n = Math.trunc(n);
     ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     const u = randomArray(n, options.rand);
     return u.map((v) => this.quantile(v));

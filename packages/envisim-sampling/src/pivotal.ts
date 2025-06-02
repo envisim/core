@@ -9,13 +9,12 @@ import {
 import { Pivotal } from "./sampling-classes/index.js";
 
 function probToArrayOfLength(p: Vector | number[], size: number): number[] {
-  if (p.length !== size)
-    throw ValidationError.create["other-incorrect-shape"]({
-      arg: "probabilities",
-      shape: "auxiliaries rows",
-    });
-
-  return Vector.borrow(p);
+  const prob = Vector.borrow(p);
+  ValidationError.check["array-incorrect-length"](
+    { arg: "probabilities", shape: "auxiliaries.nrow", length: size },
+    prob,
+  )?.raise();
+  return prob;
 }
 
 /**

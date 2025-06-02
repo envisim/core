@@ -17,7 +17,11 @@ export function spatialBalanceVO(
 ): number {
   const N = xm.nrow;
   if (prob.length !== N)
-    ValidationError.create["other-incorrect-shape"]({ arg: "prob", shape: "xm rows" }).raise();
+    throw ValidationError.create["array-incorrect-length"]({
+      arg: "prob",
+      length: N,
+      shape: "xm rows",
+    });
   checkSampleArray(sample, N);
 
   const incl = new Array<number>(sample.length).fill(0.0);
@@ -62,7 +66,11 @@ export function spatialBalanceSS(
   let mat = xm;
   if (prob !== undefined) {
     if (prob.length !== N)
-      ValidationError.create["other-incorrect-shape"]({ arg: "prob", shape: "xm rows" }).raise();
+      throw ValidationError.create["array-incorrect-length"]({
+        arg: "prob",
+        length: N,
+        shape: "xm rows",
+      });
     mat = xm.clone();
 
     mat.map((e: number, i: number): number => {

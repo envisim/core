@@ -44,11 +44,8 @@ export function randomArray(n: number, generator: RandomGenerator = new Random()
  * @throws ValidationError if `n` is not at positive integer.
  */
 export function randomInt(n: number = 1, generator: RandomGenerator = new Random()): number {
-  n |= 0;
-  ValidationError.check["number-not-in-interval"](
-    { arg: "n", interval: [1, 0x7fffffff], ends: "right-open" },
-    n,
-  )?.raise();
+  n = Math.trunc(n);
+  ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
   if (n === 1) return 0;
   return (n * generator.random()) | 0;
 }

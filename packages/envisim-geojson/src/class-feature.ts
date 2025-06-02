@@ -32,15 +32,15 @@ export class Feature<T extends PureObject, PID extends string = string>
 
   static assertArea(obj: unknown): asserts obj is Feature<AreaObject> {
     if (!Feature.isArea(obj))
-      ValidationError.create["geojson-not-area"]({ arg: "obj", type: "feature" }).raise();
+      throw ValidationError.create["geojson-not-area"]({ arg: "obj", type: "feature" });
   }
   static assertLine(obj: unknown): asserts obj is Feature<LineObject> {
     if (!Feature.isLine(obj))
-      ValidationError.create["geojson-not-line"]({ arg: "obj", type: "feature" }).raise();
+      throw ValidationError.create["geojson-not-line"]({ arg: "obj", type: "feature" });
   }
   static assertPoint(obj: unknown): asserts obj is Feature<PointObject> {
     if (!Feature.isPoint(obj))
-      ValidationError.create["geojson-not-point"]({ arg: "obj", type: "feature" }).raise();
+      throw ValidationError.create["geojson-not-point"]({ arg: "obj", type: "feature" });
   }
 
   static createAreaFromJson(

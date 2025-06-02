@@ -1,7 +1,6 @@
-import {Vector, sequence} from '@envisim/matrix';
-import type {RandomGenerator} from '@envisim/random';
-
-import {BASE_OPTIONS, type PipsOptions} from './base-options/index.js';
+import { Vector, sequence } from "@envisim/matrix";
+import type { RandomGenerator } from "@envisim/random";
+import { BASE_OPTIONS, type PipsOptions } from "./base-options/index.js";
 
 /**
  * Selects A systematic (pips) sample.
@@ -35,7 +34,7 @@ const _systematic = (p: number[], fun: (i: number) => number, rand: RandomGenera
  * @param options
  * @returns sample indices.
  */
-export function systematic({probabilities, rand = BASE_OPTIONS.rand}: PipsOptions): number[] {
+export function systematic({ probabilities, rand = BASE_OPTIONS.rand }: PipsOptions): number[] {
   const p = Vector.borrow(probabilities);
   return _systematic(p, (i) => i, rand);
 }
@@ -46,7 +45,11 @@ export function systematic({probabilities, rand = BASE_OPTIONS.rand}: PipsOption
  * @param options
  * @returns sample indices.
  */
-export function randomSystematic({probabilities, rand = BASE_OPTIONS.rand}: PipsOptions): number[] {
+export function randomSystematic({
+  probabilities,
+  rand = BASE_OPTIONS.rand,
+}: PipsOptions): number[] {
+  console.log("start");
   const p = Vector.borrow(probabilities);
   const N = p.length;
   const index = sequence(0, N - 1, 1)

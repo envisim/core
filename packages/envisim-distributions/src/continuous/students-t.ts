@@ -137,7 +137,7 @@ export class StudentsT extends Distribution {
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    n |= 0;
+    n = Math.trunc(n);
     ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
 
     // Normal(0, 1)

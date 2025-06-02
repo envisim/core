@@ -18,6 +18,22 @@ export function inInterval(x: number, { interval, ends = "closed" }: Interval): 
   }
 }
 
+export function inUnitInterval(
+  x: number,
+  { ends = "closed" }: Omit<Interval, "interval"> = {},
+): boolean {
+  switch (ends) {
+    case "closed":
+      return 0.0 <= x && x <= 1.0;
+    case "open":
+      return 0.0 < x && x < 1.0;
+    case "left-open":
+      return 0.0 < x && x <= 1.0;
+    case "right-open":
+      return 0.0 <= x && x < 1.0;
+  }
+}
+
 export function intervalToText({ interval, ends = "closed" }: Interval, arg: string = "x"): string {
   const left = Number.isFinite(interval[0])
     ? `${interval[0]} ${ends === "closed" || ends === "right-open" ? "<=" : "<"} `

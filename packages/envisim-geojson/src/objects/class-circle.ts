@@ -15,7 +15,7 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
 
   static assert(obj: unknown): asserts obj is Circle {
     if (!this.isObject(obj))
-      ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "Circle" }).raise();
+      throw ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "Circle" });
   }
 
   static create(

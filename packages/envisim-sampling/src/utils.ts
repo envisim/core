@@ -1,7 +1,7 @@
 import { ValidationError } from "@envisim/utils";
 
 export function arrayBack<T>(arr: T[]): T {
-  ValidationError.check["other-array-empty"]({ arg: "arr" }, arr)?.raise();
+  ValidationError.check["array-empty"]({ arg: "arr" }, arr)?.raise();
   return arr[arr.length - 1];
 }
 

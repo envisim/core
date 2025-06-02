@@ -11,20 +11,18 @@ export type MatrixCallbackCompare = (a: number, b: number) => number;
 
 export abstract class BaseMatrix {
   constructor(arr: number[], [nrow, ncol]: MatrixDim) {
-    this.rows = nrow | 0;
-    this.cols = ncol | 0;
-    this.len = this.nrow * this.ncol;
+    this.rows = Math.trunc(nrow);
+    this.cols = Math.trunc(ncol);
+    this.len = this.rows * this.cols;
     this.internal = arr;
 
     (
-      ValidationError.check["number-not-positive"]({ arg: "nrow" }, this.nrow) ??
-      ValidationError.check["number-not-positive"]({ arg: "ncol" }, this.nrow) ??
-      (this.len === arr.length
-        ? undefined
-        : ValidationError.create["other-incorrect-shape"]({
-            arg: "arr.length",
-            shape: "nrow*ncol",
-          }))
+      ValidationError.check["number-not-positive"]({ arg: "nrow" }, this.rows) ??
+      ValidationError.check["number-not-positive"]({ arg: "ncol" }, this.rows) ??
+      ValidationError.check["array-incorrect-length"](
+        { arg: "arr", shape: "nrow*ncol", length: this.len },
+        arr,
+      )
     )?.raise();
   }
 
@@ -63,7 +61,7 @@ export abstract class BaseMatrix {
    * @internal
    */
   protected checkRow(row: number): number {
-    row |= 0;
+    row = Math.trunc(row);
 
     if (row < 0) {
       if (row < -this.rows)
@@ -79,7 +77,7 @@ export abstract class BaseMatrix {
    * @internal
    */
   protected checkCol(col: number): number {
-    col |= 0;
+    col = Math.trunc(col);
 
     if (col < 0) {
       if (col < -this.cols)
@@ -118,7 +116,7 @@ export abstract class BaseMatrix {
    * @internal
    */
   protected checkIndex(index: number): number {
-    index |= 0;
+    index = Math.trunc(index);
 
     if (index >= this.len) throw ValidationError.create["other-index-oob"]({ arg: "index", index });
 

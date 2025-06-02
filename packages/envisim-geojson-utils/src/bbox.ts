@@ -158,7 +158,7 @@ export function bboxFromPositionsUnwrapped(positions: GJ.Position2[]): GJ.BBox2;
 export function bboxFromPositionsUnwrapped(positions: GJ.Position3[]): GJ.BBox3;
 export function bboxFromPositionsUnwrapped(positions: GJ.Position[]): GJ.BBox;
 export function bboxFromPositionsUnwrapped(positions: GJ.Position[]): GJ.BBox {
-  ValidationError.check["other-array-empty"]({ arg: "positions" }, positions)?.raise();
+  ValidationError.check["array-empty"]({ arg: "positions" }, positions)?.raise();
   if (positions.length === 1) {
     return [...positions[0], ...positions[0]] as GJ.BBox;
   }
@@ -193,7 +193,7 @@ export function bboxFromPositions(positions: GJ.Position2[]): GJ.BBox2;
 export function bboxFromPositions(positions: GJ.Position3[]): GJ.BBox3;
 export function bboxFromPositions(positions: GJ.Position[]): GJ.BBox;
 export function bboxFromPositions(positions: GJ.Position[]): GJ.BBox {
-  ValidationError.check["other-array-empty"]({ arg: "positions" }, positions)?.raise();
+  ValidationError.check["array-empty"]({ arg: "positions" }, positions)?.raise();
   if (positions.length === 1) {
     return [...positions[0], ...positions[0]] as GJ.BBox;
   }
@@ -231,7 +231,7 @@ export function bboxFromPositions(positions: GJ.Position[]): GJ.BBox {
  * @throws ValidationError when bboxes.length === 0
  */
 export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox {
-  ValidationError.check["other-array-empty"]({ arg: "bboxes" }, bboxes)?.raise();
+  ValidationError.check["array-empty"]({ arg: "bboxes" }, bboxes)?.raise();
 
   bboxes.sort((a, b) => a[0] - b[0]);
   const box: GJ.BBox = bboxes.every((a) => a.length === 4)

@@ -4,10 +4,14 @@ import { EnvisimError, ValidationError as VE } from "../src/errors.js";
 test("ValidationError", () => {
   expect(() => VE.check["other-value-not-existing"]({}, undefined)?.raise()).toThrowError();
   expect(() => VE.check["other-value-not-existing"]({}, void 0).raise()).toThrowError();
-
   expect(() => VE.check["other-value-not-existing"]({}, 0)?.raise()).not.toThrowError();
-  expect(() => VE.check["other-array-empty"]({}, [])?.raise()).toThrowError();
-  expect(() => VE.check["other-array-empty"]({}, [undefined])?.raise()).not.toThrowError();
+
+  expect(() => VE.check["array-empty"]({}, [])?.raise()).toThrowError();
+  expect(() => VE.check["array-empty"]({}, [undefined])?.raise()).not.toThrowError();
+  expect(() => VE.check["array-incorrect-length"]({ length: 3 }, [1, 2])?.raise()).toThrowError();
+  expect(() =>
+    VE.check["array-incorrect-length"]({ length: 2 }, [1, 2])?.raise(),
+  ).not.toThrowError();
 
   expect(() => VE.check["number-not-number"]({}, undefined)?.raise()).toThrowError();
   expect(() => VE.check["number-not-number"]({}, -22.2)?.raise()).not.toThrowError();

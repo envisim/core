@@ -71,7 +71,7 @@ export function optionsBalancedCheck<P extends string>(
   const errors = new EnvisimError();
 
   // Must use balanceOn
-  errors.add(ValidationError.check["other-array-empty"]({ arg: "balanceOn" }, balanceOn));
+  errors.add(ValidationError.check["array-empty"]({ arg: "balanceOn" }, balanceOn));
   // balanceOn entries must exist on propertyRecord
   balanceOn.forEach((prop) => {
     if (!record.hasId(prop))
@@ -106,7 +106,7 @@ export function optionsSpatiallyBalancedCheck<P extends string>(
 
   // Uses nothing
   if (spreadOn.length === 0 && spreadGeo === false)
-    errors.add(ValidationError.check["other-array-empty"]({ arg: "spreadOn" }, spreadOn));
+    errors.add(ValidationError.check["array-empty"]({ arg: "spreadOn" }, spreadOn));
 
   // Check so spreadOn properties exists on record
   spreadOn.forEach((prop) => {

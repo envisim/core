@@ -64,7 +64,7 @@ export class BinomialParams extends BernoulliParams {
 
   constructor(n: number = BinomialParams.DEFAULTS.n, p: number = BinomialParams.DEFAULTS.p) {
     super(p);
-    this.#n = n | 0;
+    this.#n = Math.trunc(n);
     ValidationError.check["number-not-positive"]({ arg: "n" }, this.#n)?.raise();
   }
 
@@ -78,7 +78,7 @@ export class DegreesOfFreedomParams {
   #df: number;
 
   constructor(df: number = DegreesOfFreedomParams.DEFAULTS.df) {
-    this.#df = df | 0;
+    this.#df = Math.trunc(df);
     ValidationError.check["number-not-positive"]({ arg: "df" }, this.#df)?.raise();
   }
 
@@ -103,9 +103,9 @@ export class HypergeometricParams {
     K: number = HypergeometricParams.DEFAULTS.K,
     n: number = HypergeometricParams.DEFAULTS.n,
   ) {
-    this.#N = N | 0;
-    this.#K = K | 0;
-    this.#n = n | 0;
+    this.#N = Math.trunc(N);
+    this.#K = Math.trunc(K);
+    this.#n = Math.trunc(n);
 
     (
       ValidationError.check["number-not-positive"]({ arg: "N" }, this.#N) ??

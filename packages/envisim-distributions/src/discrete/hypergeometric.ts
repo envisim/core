@@ -154,7 +154,7 @@ export class Hypergeometric extends Distribution {
    * https://doi.org/10.1080/00949658508810839
    */
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    n |= 0;
+    n = Math.trunc(n);
     ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
 
     const rv = Array.from<number>({ length: n });

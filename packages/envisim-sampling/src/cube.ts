@@ -25,11 +25,10 @@ export function cube({
   const N = balancing.nrow;
   const p = Vector.borrow(probabilities);
 
-  if (p.length !== N)
-    throw ValidationError.create["other-incorrect-shape"]({
-      arg: "probabilities",
-      shape: "balancing rows",
-    });
+  ValidationError.check["array-incorrect-length"](
+    { arg: "probabilities", shape: "balancing.nrow", length: N },
+    p,
+  )?.raise();
 
   const cb = new Cube(Cube.CUBE, p, balancing, N, undefined, 40, eps, rand);
   cb.run();
@@ -59,11 +58,10 @@ export function localCube({
   const N = balancing.nrow;
   const p = Vector.borrow(probabilities);
 
-  if (p.length !== N)
-    throw ValidationError.create["other-incorrect-shape"]({
-      arg: "probabilities",
-      shape: "balancing rows",
-    });
+  ValidationError.check["array-incorrect-length"](
+    { arg: "probabilities", shape: "balancing.nrow", length: N },
+    p,
+  )?.raise();
   if (auxiliaries.nrow !== N)
     throw ValidationError.create["other-incorrect-shape"]({
       arg: "auxiliaries",

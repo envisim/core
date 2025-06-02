@@ -17,7 +17,7 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
 
   static assert(obj: unknown): asserts obj is MultiCircle {
     if (!this.isObject(obj))
-      ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "MultiCircle" }).raise();
+      throw ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "MultiCircle" });
   }
 
   static create(

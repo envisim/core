@@ -72,8 +72,12 @@ export function ratioEstimator(
   const xs = new Vector(x, false);
   const ps = new Vector(prob, true);
 
-  if (ys.nrow !== xs.nrow)
-    ValidationError.create["other-incorrect-shape"]({ arg: "x", shape: "y" }).raise();
+  if (ys.length !== xs.length)
+    throw ValidationError.create["array-incorrect-length"]({
+      arg: "x",
+      length: ys.length,
+      shape: "y",
+    });
 
   return totalX * (ys.divide(ps, true).sum() / xs.divide(ps, true).sum());
 }
@@ -115,7 +119,11 @@ export function nearestNeighbourEstimator(
   const n = sample.length;
 
   if (y.length !== n)
-    ValidationError.create["other-incorrect-shape"]({ arg: "sample", shape: "y" }).raise();
+    throw ValidationError.create["array-incorrect-length"]({
+      arg: "y",
+      length: n,
+      shape: "sample",
+    });
 
   const ni = new Array<number>(n).fill(0.0);
   const nn = new NearestNeighbour(xm.extractRows(sample), 10);

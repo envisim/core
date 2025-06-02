@@ -18,9 +18,7 @@ export class UniformDiscrete extends Uniform {
    * x.random(10);
    */
   constructor(a: number, b: number) {
-    a |= 0;
-    b |= 0;
-    super(a, b);
+    super(Math.trunc(a), Math.trunc(b));
   }
 
   override pdf(x: number): number {
@@ -43,7 +41,7 @@ export class UniformDiscrete extends Uniform {
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    n |= 0;
+    n = Math.trunc(n);
     ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     const c = this.params.width + 1;
     return randomArray(n, options.rand).map((e) => this.params.a + Math.floor(c * e));

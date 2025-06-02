@@ -113,7 +113,7 @@ export class PropertyRecord<IDS extends string = string> {
     const keys1 = record1.getIds();
     record2.getIds().forEach((k) => {
       if (keys1.includes(k))
-        ValidationError.create["property-name-conflict"]({ arg: "record2", key: k }).raise();
+        throw ValidationError.create["property-name-conflict"]({ arg: "record2", key: k });
     });
 
     return new PropertyRecord({ ...record1.record, ...record2.record });

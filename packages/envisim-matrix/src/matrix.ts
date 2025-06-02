@@ -25,7 +25,7 @@ export class Matrix extends BaseMatrix {
    * @throws ValidationError if the number of rows of any matrix doesn't match
    */
   static cbind(...matrices: BaseMatrix[]): Matrix {
-    ValidationError.check["other-array-empty"]({ arg: "args" }, matrices)?.raise();
+    ValidationError.check["array-empty"]({ arg: "args" }, matrices)?.raise();
 
     const nrow = matrices[0].nrow;
 
@@ -44,7 +44,7 @@ export class Matrix extends BaseMatrix {
    * @throws ValidationError if the number of rows of any matrix doesn't match
    */
   static rbind(...matrices: BaseMatrix[]): Matrix {
-    ValidationError.check["other-array-empty"]({ arg: "args" }, matrices)?.raise();
+    ValidationError.check["array-empty"]({ arg: "args" }, matrices)?.raise();
 
     const ncol = matrices[0].ncol;
 

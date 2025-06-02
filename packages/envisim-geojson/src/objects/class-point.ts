@@ -12,7 +12,7 @@ export class Point extends AbstractPointObject<GJ.Point> implements GJ.Point {
 
   static assert(obj: unknown): asserts obj is Point {
     if (!this.isObject(obj))
-      ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "Point" }).raise();
+      throw ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "Point" });
   }
 
   static create(coordinates: GJ.Point["coordinates"], shallow: boolean = true): Point {

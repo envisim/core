@@ -1,4 +1,4 @@
-import { inInterval, intervalToText, type Interval } from "./interval.js";
+import { inInterval, intervalToText, inUnitInterval, type Interval } from "./interval.js";
 
 export class EnvisimError extends AggregateError {
   static isError(error: unknown): error is EnvisimError {
@@ -50,33 +50,35 @@ export class EnvisimError extends AggregateError {
 export class ValidationError extends Error {
   static create: ValidationErrorCreator = {
     // NUMBER
-    "number-not-number": ({ arg }) =>
-      new ValidationError(`'${arg}' must be number`, { code: "number-not-number", arg }),
-    "number-not-integer": ({ arg }) =>
-      new ValidationError(`'${arg}' must be integer`, { code: "number-not-integer", arg }),
-    "number-not-positive": ({ arg }) =>
-      new ValidationError(`'${arg}' must be positive`, { code: "number-not-positive", arg }),
-    "number-not-nonnegative": ({ arg }) =>
-      new ValidationError(`'${arg}' must be non-negative`, { code: "number-not-nonnegative", arg }),
-    "number-not-finite": ({ arg }) =>
-      new ValidationError(`'${arg}' must be finite`, { code: "number-not-finite", arg }),
-    "number-not-in-unit-interval": ({ arg, ends }) =>
+    "number-not-number": (a0) =>
+      new ValidationError(`'${a0.arg}' must be number`, { code: "number-not-number", ...a0 }),
+    "number-not-integer": (a0) =>
+      new ValidationError(`'${a0.arg}' must be integer`, { code: "number-not-integer", ...a0 }),
+    "number-not-positive": (a0) =>
+      new ValidationError(`'${a0.arg}' must be positive`, { code: "number-not-positive", ...a0 }),
+    "number-not-nonnegative": (a0) =>
+      new ValidationError(`'${a0.arg}' must be non-negative`, {
+        code: "number-not-nonnegative",
+        ...a0,
+      }),
+    "number-not-finite": (a0) =>
+      new ValidationError(`'${a0.arg}' must be finite`, { code: "number-not-finite", ...a0 }),
+    "number-not-in-unit-interval": ({ ends = "closed", ...a0 }) =>
       new ValidationError(
-        `'${arg}' must be in the interval: ${intervalToText({ interval: [0.0, 1.0], ends }, arg)}`,
+        `'${a0.arg}' must be in the interval: ${intervalToText({ interval: [0.0, 1.0], ends }, a0.arg)}`,
         {
           code: "number-not-in-unit-interval",
-          arg,
           ends,
+          ...a0,
         },
       ),
-    "number-not-in-interval": ({ arg, interval, ends = "closed" }) =>
+    "number-not-in-interval": ({ ends = "closed", ...a0 }) =>
       new ValidationError(
-        `'${arg}' must be in the interval: ${intervalToText({ interval, ends }, arg)}`,
+        `'${a0.arg}' must be in the interval: ${intervalToText({ ends, ...a0 }, a0.arg)}`,
         {
           code: "number-not-in-interval",
-          arg,
-          interval,
           ends,
+          ...a0,
         },
       ),
 
@@ -164,14 +166,22 @@ export class ValidationError extends Error {
         other,
       }),
 
+    // ARRAY
+    "array-empty": ({ arg }) =>
+      new ValidationError(
+        unspecifiedArg(arg, "array must not be empty") ?? `array of '${arg}' must not be empty`,
+        { code: "array-empty", arg },
+      ),
+    "array-incorrect-length": ({ arg, length, shape }) =>
+      new ValidationError(
+        unspecifiedArg(arg, `array must have length '${length}'`) ??
+          `array of '${arg}' must have length '${length}'`,
+        { code: "array-incorrect-length", arg, length, shape },
+      ),
+
     // OTHER
     "other-value-not-existing": ({ arg }) =>
       new ValidationError("value does not exist", { code: "other-value-not-existing", arg }),
-    "other-array-empty": ({ arg }) =>
-      new ValidationError(
-        unspecifiedArg(arg, "array must not be empty") ?? `array of '${arg}' must not be empty`,
-        { code: "other-array-empty", arg },
-      ),
     "other-index-oob": ({ arg, index }) =>
       new ValidationError(unspecifiedArg(arg, "index out of bounds") ?? `'${arg}' out of bounds`, {
         code: "other-index-oob",
@@ -189,29 +199,34 @@ export class ValidationError extends Error {
   static check = {
     // NUMBER
     "number-not-number": (arg0, value: number) =>
-      typeof value === "number" ? undefined : this.create["number-not-number"](arg0),
+      typeof value === "number" ? undefined : this.create["number-not-number"]({ ...arg0, value }),
     "number-not-integer": (arg0, value: number) =>
-      Number.isInteger(value) ? undefined : this.create["number-not-integer"](arg0),
+      Number.isInteger(value) ? undefined : this.create["number-not-integer"]({ ...arg0, value }),
     "number-not-positive": (arg0, value: number) =>
-      value > 0.0 ? undefined : this.create["number-not-positive"](arg0),
+      value > 0.0 ? undefined : this.create["number-not-positive"]({ ...arg0, value }),
     "number-not-nonnegative": (arg0, value: number) =>
-      value >= 0.0 ? undefined : this.create["number-not-nonnegative"](arg0),
+      value >= 0.0 ? undefined : this.create["number-not-nonnegative"]({ ...arg0, value }),
     "number-not-finite": (arg0, value: number) =>
-      Number.isFinite(value) ? undefined : this.create["number-not-finite"](arg0),
+      Number.isFinite(value) ? undefined : this.create["number-not-finite"]({ ...arg0, value }),
     "number-not-in-unit-interval": (arg0, value: number) =>
-      inInterval(value, { interval: [0.0, 1.0], ends: arg0.ends })
+      inUnitInterval(value, arg0)
         ? undefined
-        : this.create["number-not-finite"](arg0),
+        : this.create["number-not-in-unit-interval"]({ ...arg0, value }),
     "number-not-in-interval": (arg0, value: number) =>
-      inInterval(value, arg0) ? undefined : this.create["number-not-finite"](arg0),
+      inInterval(value, arg0) ? undefined : this.create["number-not-finite"]({ ...arg0, value }),
+    // ARRAY
+    "array-empty": (arg0, arr: unknown[]) =>
+      Array.isArray(arr) && arr.length > 0 ? undefined : this.create["array-empty"](arg0),
+    "array-incorrect-length": (arg0, arr) =>
+      Array.isArray(arr) && arr.length === arg0.length
+        ? undefined
+        : this.create["array-incorrect-length"](arg0),
 
     // OTHER
     "other-value-not-existing": (arg0, value: unknown) =>
       value !== undefined && value !== null
         ? undefined
         : this.create["other-value-not-existing"](arg0),
-    "other-array-empty": (arg0, value: unknown[]) =>
-      Array.isArray(value) && value.length > 0 ? undefined : this.create["other-array-empty"](arg0),
   } as const satisfies ValidationErrorChecker;
 
   declare cause?: ValidationErrorCause;
@@ -230,17 +245,16 @@ export interface ValidationErrorCauseBase<C extends string> {
   arg?: string;
 }
 export type ValidationErrorCause =
-  | ValidationErrorCauseBase<"number-not-number">
-  | ValidationErrorCauseBase<"number-not-integer">
-  | ValidationErrorCauseBase<"number-not-positive">
-  | ValidationErrorCauseBase<"number-not-nonnegative">
-  | ValidationErrorCauseBase<"number-not-finite">
-  | (ValidationErrorCauseBase<"number-not-in-unit-interval"> & { ends?: Interval["ends"] })
-  | (ValidationErrorCauseBase<"number-not-in-interval"> & Interval)
-  | ValidationErrorCauseBase<"other-value-not-existing">
-  | ValidationErrorCauseBase<"other-array-empty">
-  | (ValidationErrorCauseBase<"other-index-oob"> & { index?: number })
-  | (ValidationErrorCauseBase<"other-incorrect-shape"> & { shape?: string })
+  | (ValidationErrorCauseBase<"number-not-number"> & { value?: number })
+  | (ValidationErrorCauseBase<"number-not-integer"> & { value?: number })
+  | (ValidationErrorCauseBase<"number-not-positive"> & { value?: number })
+  | (ValidationErrorCauseBase<"number-not-nonnegative"> & { value?: number })
+  | (ValidationErrorCauseBase<"number-not-finite"> & { value?: number })
+  | (ValidationErrorCauseBase<"number-not-in-unit-interval"> & {
+      value?: number;
+      ends?: Interval["ends"];
+    })
+  | (ValidationErrorCauseBase<"number-not-in-interval"> & { value?: number } & Interval)
   | (ValidationErrorCauseBase<"geojson-incorrect"> & { type?: string })
   | (ValidationErrorCauseBase<"geojson-not-area"> & { type?: string })
   | (ValidationErrorCauseBase<"geojson-not-line"> & { type?: string })
@@ -254,7 +268,12 @@ export type ValidationErrorCause =
   | (ValidationErrorCauseBase<"property-not-categorical"> & { key?: string })
   | (ValidationErrorCauseBase<"property-not-numerical"> & { key?: string })
   | (ValidationErrorCauseBase<"property-not-existing"> & { key?: string })
-  | (ValidationErrorCauseBase<"property-records-not-identical"> & { other?: string });
+  | (ValidationErrorCauseBase<"property-records-not-identical"> & { other?: string })
+  | ValidationErrorCauseBase<"array-empty">
+  | (ValidationErrorCauseBase<"array-incorrect-length"> & { length: number; shape?: string })
+  | ValidationErrorCauseBase<"other-value-not-existing">
+  | (ValidationErrorCauseBase<"other-index-oob"> & { index?: number })
+  | (ValidationErrorCauseBase<"other-incorrect-shape"> & { shape?: string });
 
 export type ValidationErrorCodes = ValidationErrorCause["code"];
 export type ValidationErrorCreator = {

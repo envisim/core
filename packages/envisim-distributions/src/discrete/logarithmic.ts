@@ -57,7 +57,7 @@ export class Logarithmic extends Bernoulli {
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    n |= 0;
+    n = Math.trunc(n);
     ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     const s = Array.from<number>({ length: n });
     for (let i = 0; i < n; i++) {

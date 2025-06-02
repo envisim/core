@@ -23,7 +23,7 @@ export class MultiPolygon extends AbstractAreaObject<GJ.MultiPolygon> implements
 
   static assert(obj: unknown): asserts obj is MultiPolygon {
     if (!this.isObject(obj))
-      ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "MultiPolygon" }).raise();
+      throw ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "MultiPolygon" });
   }
 
   static create(

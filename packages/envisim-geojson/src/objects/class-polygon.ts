@@ -19,7 +19,7 @@ export class Polygon extends AbstractAreaObject<GJ.Polygon> implements GJ.Polygo
 
   static assert(obj: unknown): asserts obj is Polygon {
     if (!this.isObject(obj))
-      ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "Polygon" }).raise();
+      throw ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "Polygon" });
   }
 
   static create(coordinates: GJ.Polygon["coordinates"], shallow: boolean = true): Polygon {
