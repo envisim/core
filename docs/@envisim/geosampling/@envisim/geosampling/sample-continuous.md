@@ -2016,7 +2016,7 @@ Select a sample of features/tracts on areas.
 
 ### sampleAreaFeaturesOnAreasCheck()
 
-> **sampleAreaFeaturesOnAreasCheck**(`options`): [`SampleError`](errors.md#sampleerror)
+> **sampleAreaFeaturesOnAreasCheck**(`options`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Parameters
 
@@ -2045,7 +2045,7 @@ Select a sample of features/tracts on areas.
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 
@@ -2102,7 +2102,7 @@ to (randomly) determine inclusion.
 
 ### sampleDistancePointsCheck()
 
-> **sampleDistancePointsCheck**(`options`): [`SampleError`](errors.md#sampleerror)
+> **sampleDistancePointsCheck**(`options`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Parameters
 
@@ -2131,7 +2131,7 @@ to (randomly) determine inclusion.
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 
@@ -2184,7 +2184,7 @@ to (randomly) determine inclusion.
 
 ### sampleLineFeaturesOnAreasCheck()
 
-> **sampleLineFeaturesOnAreasCheck**(`options`): [`SampleError`](errors.md#sampleerror)
+> **sampleLineFeaturesOnAreasCheck**(`options`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Parameters
 
@@ -2213,7 +2213,7 @@ to (randomly) determine inclusion.
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 
@@ -2266,7 +2266,7 @@ to (randomly) determine inclusion.
 
 ### samplePointFeaturesOnAreasCheck()
 
-> **samplePointFeaturesOnAreasCheck**(`options`): [`SampleError`](errors.md#sampleerror)
+> **samplePointFeaturesOnAreasCheck**(`options`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Parameters
 
@@ -2295,7 +2295,7 @@ to (randomly) determine inclusion.
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 
@@ -2351,7 +2351,7 @@ to reject point outside bbox if buffer is zero).
 
 ### samplePointsOnAreasCheck()
 
-> **samplePointsOnAreasCheck**(`options`): [`SampleError`](errors.md#sampleerror)
+> **samplePointsOnAreasCheck**(`options`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Parameters
 
@@ -2380,7 +2380,7 @@ to reject point outside bbox if buffer is zero).
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 
@@ -2495,7 +2495,7 @@ Prescribed sample size
 
 ### samplePointsOnLinesCheck()
 
-> **samplePointsOnLinesCheck**(`options`): [`SampleError`](errors.md#sampleerror)
+> **samplePointsOnLinesCheck**(`options`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Parameters
 
@@ -2579,7 +2579,7 @@ Prescribed sample size
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 
@@ -2696,7 +2696,7 @@ Array of GeoJSON positions.
 
 ### samplePositionsInBboxCheck()
 
-> **samplePositionsInBboxCheck**(`options`): [`SampleError`](errors.md#sampleerror)
+> **samplePositionsInBboxCheck**(`options`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Parameters
 
@@ -2780,7 +2780,7 @@ Prescribed sample size
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 
@@ -2909,7 +2909,7 @@ an object containing the resulting sample, the relascope points and the area rat
 
 ### sampleRelascopePointsOptionsCheck()
 
-> **sampleRelascopePointsOptionsCheck**<`P`>(`options`): [`SampleError`](errors.md#sampleerror)
+> **sampleRelascopePointsOptionsCheck**<`P`>(`options`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Type Parameters
 
@@ -2957,7 +2957,7 @@ an object containing the resulting sample, the relascope points and the area rat
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 
@@ -3012,7 +3012,7 @@ Selects a systematic sample of belts on areas.
 
 ### sampleSystematicBeltsOnAreasCheck()
 
-> **sampleSystematicBeltsOnAreasCheck**(`options`): [`SampleError`](errors.md#sampleerror)
+> **sampleSystematicBeltsOnAreasCheck**(`options`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Parameters
 
@@ -3041,7 +3041,7 @@ Selects a systematic sample of belts on areas.
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 
@@ -3098,7 +3098,7 @@ layer using a detection function to (randomly) determine inclusion.
 
 ### sampleSystematicDistanceLinesCheck()
 
-> **sampleSystematicDistanceLinesCheck**(`options`): [`SampleError`](errors.md#sampleerror)
+> **sampleSystematicDistanceLinesCheck**(`options`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Parameters
 
@@ -3127,7 +3127,7 @@ layer using a detection function to (randomly) determine inclusion.
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 
@@ -3182,7 +3182,7 @@ Selects a sample of lines systematically over all areas.
 
 ### sampleSystematicLinesOnAreasCheck()
 
-> **sampleSystematicLinesOnAreasCheck**(`options`): [`SampleError`](errors.md#sampleerror)
+> **sampleSystematicLinesOnAreasCheck**(`options`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Parameters
 
@@ -3211,7 +3211,7 @@ Selects a sample of lines systematically over all areas.
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 
@@ -3267,7 +3267,7 @@ own random starting position of the dashes.
 
 ### sampleSystematicLinesOnLinesCheck()
 
-> **sampleSystematicLinesOnLinesCheck**(`options`): [`SampleError`](errors.md#sampleerror)
+> **sampleSystematicLinesOnLinesCheck**(`options`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Parameters
 
@@ -3296,7 +3296,7 @@ own random starting position of the dashes.
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 

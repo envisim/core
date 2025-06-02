@@ -2114,7 +2114,7 @@ the bounding box around the array of positions
 
 ##### Throws
 
-Error when positions.length === 0
+ValidationError when positions.length === 0
 
 #### Call Signature
 
@@ -2159,7 +2159,7 @@ the bounding box around the array of positions
 
 ##### Throws
 
-Error when positions.length === 0
+ValidationError when positions.length === 0
 
 #### Call Signature
 
@@ -2204,7 +2204,7 @@ the bounding box around the array of positions
 
 ##### Throws
 
-Error when positions.length === 0
+ValidationError when positions.length === 0
 
 ---
 
@@ -2243,6 +2243,10 @@ Error when positions.length === 0
 
 [`BBox2`](geojson-utils/geojson.md#bbox2)
 
+##### Throws
+
+ValidationError when positions.length === 0
+
 #### Call Signature
 
 > **bboxFromPositionsUnwrapped**(`positions`): [`BBox3`](geojson-utils/geojson.md#bbox3)
@@ -2276,6 +2280,10 @@ Error when positions.length === 0
 
 [`BBox3`](geojson-utils/geojson.md#bbox3)
 
+##### Throws
+
+ValidationError when positions.length === 0
+
 #### Call Signature
 
 > **bboxFromPositionsUnwrapped**(`positions`): [`BBox`](geojson-utils/geojson.md#bbox-7)
@@ -2308,6 +2316,10 @@ Error when positions.length === 0
 ##### Returns
 
 [`BBox`](geojson-utils/geojson.md#bbox-7)
+
+##### Throws
+
+ValidationError when positions.length === 0
 
 ---
 
@@ -3437,4 +3449,4 @@ the bounding box around the array of bboxes
 
 #### Throws
 
-Error when bboxes.length === 0
+ValidationError when bboxes.length === 0

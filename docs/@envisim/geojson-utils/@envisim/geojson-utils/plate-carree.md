@@ -195,3 +195,7 @@ the fraction of the length
 [`Position2`](geojson.md#position2)
 
 the position on the segment
+
+#### Throws
+
+ValidationError if number is not in the interval \[0,1]

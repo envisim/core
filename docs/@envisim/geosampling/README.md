@@ -35,18 +35,6 @@
 <tr>
 <td>
 
-[@envisim/geosampling/errors](@envisim/geosampling/errors.md)
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
 [@envisim/geosampling/model-geometry](@envisim/geosampling/model-geometry.md)
 
 </td>

@@ -257,7 +257,7 @@ A pseudo-random integer on \[0, `n`)
 
 ###### Throws
 
-`RangeError` if `n` is not at positive integer.
+ValidationError if `n` is not at positive integer.
 
 ##### random()
 
@@ -552,4 +552,4 @@ A pseudo-random integer on \[0, `n`)
 
 #### Throws
 
-`RangeError` if `n` is not at positive integer.
+ValidationError if `n` is not at positive integer.

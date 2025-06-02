@@ -94,10 +94,10 @@ importers:
   packages/envisim-distributions:
     dependencies:
       '@envisim/random':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.2.0
         version: link:../envisim-random
       '@envisim/utils':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.2.0
         version: link:../envisim-utils
     devDependencies:
       '@envisim/config-eslint':
@@ -125,16 +125,16 @@ importers:
   packages/envisim-estimate:
     dependencies:
       '@envisim/matrix':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.1.2
         version: link:../envisim-matrix
       '@envisim/random':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.2.0
         version: link:../envisim-random
       '@envisim/sampling':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.1.2
         version: link:../envisim-sampling
       '@envisim/utils':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.2.0
         version: link:../envisim-utils
     devDependencies:
       '@envisim/config-eslint':
@@ -162,10 +162,10 @@ importers:
   packages/envisim-geojson:
     dependencies:
       '@envisim/geojson-utils':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.1.2
         version: link:../envisim-geojson-utils
       '@envisim/utils':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.2.0
         version: link:../envisim-utils
       uuid:
         specifier: ^11.1.0
@@ -196,7 +196,7 @@ importers:
   packages/envisim-geojson-utils:
     dependencies:
       '@envisim/utils':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.2.0
         version: link:../envisim-utils
       geographiclib-geodesic:
         specifier: ^2.1.1
@@ -227,25 +227,25 @@ importers:
   packages/envisim-geosampling:
     dependencies:
       '@envisim/distributions':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.2.0
         version: link:../envisim-distributions
       '@envisim/geojson':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.1.2
         version: link:../envisim-geojson
       '@envisim/geojson-utils':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.1.2
         version: link:../envisim-geojson-utils
       '@envisim/matrix':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.1.2
         version: link:../envisim-matrix
       '@envisim/random':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.2.0
         version: link:../envisim-random
       '@envisim/sampling':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.1.2
         version: link:../envisim-sampling
       '@envisim/utils':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.2.0
         version: link:../envisim-utils
       uuid:
         specifier: ^11.1.0
@@ -276,10 +276,10 @@ importers:
   packages/envisim-matrix:
     dependencies:
       '@envisim/random':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.2.0
         version: link:../envisim-random
       '@envisim/utils':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.2.0
         version: link:../envisim-utils
     devDependencies:
       '@envisim/config-eslint':
@@ -307,7 +307,7 @@ importers:
   packages/envisim-random:
     dependencies:
       '@envisim/utils':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.2.0
         version: link:../envisim-utils
     devDependencies:
       '@envisim/config-eslint':
@@ -335,13 +335,13 @@ importers:
   packages/envisim-sampling:
     dependencies:
       '@envisim/matrix':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.1.2
         version: link:../envisim-matrix
       '@envisim/random':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.2.0
         version: link:../envisim-random
       '@envisim/utils':
-        specifier: workspace:^0.1.1
+        specifier: workspace:^0.2.0
         version: link:../envisim-utils
     devDependencies:
       '@envisim/config-eslint':
