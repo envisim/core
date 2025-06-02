@@ -1,7 +1,7 @@
 import { randomArray } from "@envisim/random";
+import { ValidationError } from "@envisim/utils";
 import { type RandomOptions, RANDOM_OPTIONS_DEFAULT } from "../abstract-distribution.js";
 import { Uniform } from "../continuous/uniform.js";
-import { assertPositiveInteger } from "../utils.js";
 
 /**
  * @category Discrete distributions
@@ -17,9 +17,8 @@ export class UniformDiscrete extends Uniform {
    * x.quantile(0.5);
    * x.random(10);
    */
-  constructor(a?: number, b?: number) {
-    if (!Number.isInteger(a) || !Number.isInteger(b)) throw new RangeError("a,b must be integer");
-    super(a, b);
+  constructor(a: number, b: number) {
+    super(Math.trunc(a), Math.trunc(b));
   }
 
   override pdf(x: number): number {
@@ -42,7 +41,8 @@ export class UniformDiscrete extends Uniform {
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    assertPositiveInteger(n);
+    n = Math.trunc(n);
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     const c = this.params.width + 1;
     return randomArray(n, options.rand).map((e) => this.params.a + Math.floor(c * e));
   }

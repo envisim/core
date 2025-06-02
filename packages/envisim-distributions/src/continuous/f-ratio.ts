@@ -1,3 +1,4 @@
+import { ValidationError } from "@envisim/utils";
 import {
   Distribution,
   Interval,
@@ -6,7 +7,6 @@ import {
 } from "../abstract-distribution.js";
 import { BetaParams } from "../beta-utils.js";
 import { DegreesOfFreedomParams } from "../params.js";
-import { assertPositiveInteger } from "../utils.js";
 import { randomBeta } from "./beta-random.js";
 
 /**
@@ -72,7 +72,8 @@ export class FRatio extends Distribution {
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    assertPositiveInteger(n);
+    n |= 0;
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     const dfFrac = this.params[1].df / this.params[0].df;
     return randomBeta(n, this.#beta, options.rand).map((x) => (x / (1.0 - x)) * dfFrac);
   }

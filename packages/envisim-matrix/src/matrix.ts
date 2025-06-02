@@ -1,5 +1,5 @@
 import { Random, type RandomGenerator, randomArray } from "@envisim/random";
-import { reducedRowEchelonForm } from "@envisim/utils";
+import { reducedRowEchelonForm, ValidationError } from "@envisim/utils";
 import { BaseMatrix, type MatrixCallback, type MatrixDim } from "./base-matrix.js";
 import { Vector } from "./vector.js";
 
@@ -12,29 +12,25 @@ export class Matrix extends BaseMatrix {
   }
 
   /**
-   * @param msg message to pass
-   * @throws TypeError if `obj` is not Matrix
+   * @param obj
+   * @throws ValidationError if `obj` is not Matrix
    */
-  static assert(obj: unknown, msg: string = "Expected Matrix"): asserts obj is Matrix {
-    if (!(obj instanceof Matrix)) {
-      throw new TypeError(msg);
-    }
+  static assert(obj: unknown): asserts obj is Matrix {
+    if (!(obj instanceof Matrix))
+      throw ValidationError.create["other-incorrect-shape"]({ arg: "obj", shape: "Matrix" });
   }
 
   /**
    * Bind multiple matrices together by columns
-   * @throws `RangeError` if the number of rows of any matrix doesn't match
+   * @throws ValidationError if the number of rows of any matrix doesn't match
    */
   static cbind(...matrices: BaseMatrix[]): Matrix {
-    if (matrices.length === 0) {
-      throw new Error("Nothing to cbind");
-    }
+    ValidationError.check["array-empty"]({ arg: "args" }, matrices)?.raise();
 
     const nrow = matrices[0].nrow;
 
-    if (!matrices.every((m) => nrow === m.nrow)) {
-      throw new RangeError("Dimensions of matrices does not match");
-    }
+    if (matrices.some((m) => nrow !== m.nrow))
+      throw ValidationError.create["other-incorrect-shape"]({ arg: "args" });
 
     return new Matrix(
       matrices.flatMap((m) => m.slice()),
@@ -45,18 +41,15 @@ export class Matrix extends BaseMatrix {
 
   /**
    * Bind multiple matrices together by rows
-   * @throws `RangeError` if the number of columns of any matrix doesn't match
+   * @throws ValidationError if the number of rows of any matrix doesn't match
    */
   static rbind(...matrices: BaseMatrix[]): Matrix {
-    if (matrices.length === 0) {
-      throw new Error("Nothing to rbind");
-    }
+    ValidationError.check["array-empty"]({ arg: "args" }, matrices)?.raise();
 
     const ncol = matrices[0].ncol;
 
-    if (!matrices.every((m) => ncol === m.ncol)) {
-      throw new RangeError("Dimensions of matrices does not match");
-    }
+    if (matrices.some((m) => ncol !== m.ncol))
+      throw ValidationError.create["other-incorrect-shape"]({ arg: "args" });
 
     const nrow = matrices.reduce((s, m) => s + m.nrow, 0);
 
@@ -111,16 +104,12 @@ export class Matrix extends BaseMatrix {
   }
 
   extractColumn(col: number): Vector {
-    if (!Number.isInteger(col) || col < 0 || col >= this.cols) {
-      throw new RangeError("columnIndex out of bounds");
-    }
-
+    col = this.checkCol(col);
     return new Vector(this.internal.slice(col * this.rows, (col + 1) * this.rows));
   }
 
   extractRow(row: number): number[] {
-    if (!Number.isInteger(row) || row < 0 || row >= this.rows)
-      throw new RangeError("columnIndex out of bounds");
+    row = this.checkRow(row);
 
     const s = Array.from<number>({ length: this.cols });
 
@@ -130,12 +119,9 @@ export class Matrix extends BaseMatrix {
   }
 
   extractColumns(cols: number[] | Vector): Matrix {
-    if (!cols.every((e) => Number.isInteger(e) && 0 <= e && e < this.cols)) {
-      throw new RangeError("columns must be in valid range");
-    }
-
     const s: number[] = [];
     cols.forEach((c) => {
+      c = this.checkCol(c);
       s.push(...this.internal.slice(c * this.rows, (c + 1) * this.rows));
     });
 
@@ -143,10 +129,6 @@ export class Matrix extends BaseMatrix {
   }
 
   extractRows(rows: number[] | Vector): Matrix {
-    if (!rows.every((e) => Number.isInteger(e) && 0 <= e && e < this.rows)) {
-      throw new RangeError("rows must be in valid range");
-    }
-
     const s = Matrix.create(0.0, [rows.length, this.cols]);
 
     for (let r = 0; r < rows.length; r++) {
@@ -162,24 +144,17 @@ export class Matrix extends BaseMatrix {
    * @returns a sub-matrix defined by the parameters.
    */
   extractSubMatrix(start: MatrixDim, end: MatrixDim = [this.rows - 1, this.cols - 1]): Matrix {
-    if (!Number.isInteger(start[0]) || !Number.isInteger(end[0])) {
-      throw new RangeError("rows must be integer");
-    }
-    if (!Number.isInteger(start[0]) || !Number.isInteger(end[1])) {
-      throw new RangeError("cols must be integer");
-    }
-    if (start[0] < 0 || this.rows <= end[0]) {
-      throw new RangeError("rows out of bounds");
-    }
-    if (start[0] < 0 || this.cols <= end[1]) {
-      throw new RangeError("cols out of bounds");
-    }
+    start = this.checkDim(start);
+    end = this.checkDim(end);
 
     const nrow = end[0] - start[0] + 1;
     const ncol = end[1] - start[1] + 1;
 
     if (nrow < 1 || ncol < 1) {
-      throw new RangeError("end must be at least as large as start");
+      throw ValidationError.create["number-not-in-interval"]({
+        arg: "end",
+        interval: [nrow, ncol],
+      });
     }
 
     const s = [];
@@ -205,9 +180,8 @@ export class Matrix extends BaseMatrix {
    * Performs matrix multiplication this * mat
    */
   static mmult(mat1: BaseMatrix, mat2: BaseMatrix): Matrix {
-    if (mat1.ncol !== mat2.nrow) {
-      throw new RangeError("Dimensions of matrices does not match");
-    }
+    if (mat1.ncol !== mat2.nrow)
+      throw ValidationError.create["other-incorrect-shape"]({ arg: "mat2", shape: "mat1" });
 
     const s = Array.from<number>({ length: mat1.nrow * mat2.ncol });
 
@@ -432,11 +406,12 @@ export class Matrix extends BaseMatrix {
 
   /**
    * @returns the determinant of the matrix
-   * @throws `Error` if matrix is not square
+   * @throws ValidationError if matrix is not square
    * @group Linear algebra
    */
   determinant(): number {
-    if (!this.isSquare()) throw new Error("Matrix must be square");
+    if (!this.isSquare())
+      throw ValidationError.create["other-incorrect-shape"]({ arg: "this", shape: "square" });
 
     return this.rightTriangular().diagonal().prodSum();
   }
@@ -446,7 +421,8 @@ export class Matrix extends BaseMatrix {
    * @group Linear algebra
    */
   inverse(eps: number = 1e-9): Matrix | null {
-    if (!this.isSquare()) throw new Error("Matrix is not square.");
+    if (!this.isSquare())
+      throw ValidationError.create["other-incorrect-shape"]({ arg: "this", shape: "square" });
 
     if (this.determinant() === 0) {
       console.warn("Determinant is 0.");

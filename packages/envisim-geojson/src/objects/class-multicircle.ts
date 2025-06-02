@@ -1,7 +1,7 @@
 import { bboxFromPositions, BoundingBox, moveCoordsAroundEarth } from "@envisim/geojson-utils";
 import { destination, distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
-import { type OptionalParam } from "@envisim/utils";
+import { ValidationError, type OptionalParam } from "@envisim/utils";
 import { type BufferOptions, bufferPolygons, defaultBufferOptions } from "../buffer/index.js";
 import { centroidFromMultipleCentroids } from "../utils/centroid.js";
 import { type CirclesToPolygonsOptions, circlesToPolygons } from "../utils/circles-to-polygons.js";
@@ -15,8 +15,9 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
     return obj instanceof MultiCircle;
   }
 
-  static assert(obj: unknown, msg: string = "Expected MultiCircle"): asserts obj is MultiCircle {
-    if (!(obj instanceof MultiCircle)) throw new TypeError(msg);
+  static assert(obj: unknown): asserts obj is MultiCircle {
+    if (!this.isObject(obj))
+      throw ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "MultiCircle" });
   }
 
   static create(
@@ -41,6 +42,7 @@ export class MultiCircle extends AbstractAreaObject<GJ.MultiCircle> implements G
    */
   constructor(obj: OptionalParam<GJ.MultiCircle, "type">, shallow: boolean = true) {
     super({ ...obj, type: "MultiPoint" }, shallow);
+    ValidationError.check["number-not-positive"]({ arg: "radius" }, obj.radius)?.raise();
     this.radius = obj.radius;
   }
 

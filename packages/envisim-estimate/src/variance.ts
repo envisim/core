@@ -1,5 +1,6 @@
 import { type Matrix, Vector } from "@envisim/matrix";
 import { NearestNeighbour } from "@envisim/sampling";
+import { ValidationError } from "@envisim/utils";
 
 /**
  * $$\hat\{V\}(\hat\{Y\}) = \sum_\{i \in S\} \sum_\{j \in S\} \frac\{y_i y_j\}\{\pi_i \pi_j\} \frac\{\pi_\{ij\} - \pi_i \pi_j\}\{\pi_\{ij\}\}$$
@@ -17,7 +18,10 @@ export function htVariance(y: number[] | Vector, prob: number[] | Vector, prob2m
   const n = pi.length;
 
   if (prob2m.nrow !== n || prob2m.ncol !== n)
-    throw new TypeError("prob2m must be a matrix of size n*n");
+    throw ValidationError.create["other-incorrect-shape"]({
+      arg: "prob2m",
+      shape: "square, size of prob",
+    });
 
   let variance = 0.0;
 
@@ -56,7 +60,10 @@ export function htVarianceSYG(
   const n = pi.length;
 
   if (prob2m.nrow !== n || prob2m.ncol !== n)
-    throw new TypeError("prob2m must be a matrix of size n*n");
+    throw ValidationError.create["other-incorrect-shape"]({
+      arg: "prob2m",
+      shape: "square, size of prob",
+    });
 
   let variance = 0.0;
 
@@ -149,7 +156,10 @@ export function hhVariance(
   const n = mu.length;
 
   if (mu2m.nrow !== n || mu2m.ncol !== n)
-    throw new TypeError("prob2m must be a matrix of size n*n");
+    throw ValidationError.create["other-incorrect-shape"]({
+      arg: "mu2m",
+      shape: "square, size of prob",
+    });
 
   let variance = 0.0;
 

@@ -1,3 +1,4 @@
+import { ValidationError } from "@envisim/utils";
 import { Distribution, Interval } from "./abstract-distribution.js";
 
 export class BoundedParams {
@@ -11,8 +12,11 @@ export class BoundedParams {
    * @category Parameters
    */
   constructor(a: number = BoundedParams.DEFAULTS.a, b: number = BoundedParams.DEFAULTS.b) {
+    ValidationError.check["number-not-in-interval"](
+      { arg: "b", interval: [a], ends: "open" },
+      b,
+    )?.raise();
     this.#a = a;
-    if (b < a) throw new RangeError("b must be > a");
     this.#b = b;
 
     this.#range = b - a;
@@ -42,7 +46,10 @@ export class BoundedMidParams extends BoundedParams {
     mid: number = (a + b) * 0.5,
   ) {
     super(a, b);
-    if (mid <= a || b <= mid) throw new RangeError("mid must be in (a, b)");
+    ValidationError.check["number-not-in-interval"](
+      { arg: "mid", interval: [a, b], ends: "open" },
+      mid,
+    )?.raise();
     this.#mid = mid;
   }
 

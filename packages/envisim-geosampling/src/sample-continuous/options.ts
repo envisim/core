@@ -1,10 +1,7 @@
 import { type CirclesToPolygonsOptions, FeatureCollection, type Point } from "@envisim/geojson";
 import { type RandomGenerator } from "@envisim/random";
-import { throwRangeError } from "@envisim/utils";
-import { SAMPLE_ERROR_LIST, type SampleError } from "../errors/index.js";
+import { EnvisimError, ValidationError } from "@envisim/utils";
 import { type DetectionFunction } from "./distance-utils.js";
-
-export { SAMPLE_ERROR_LIST, type SampleError, throwRangeError };
 
 /**
  * @inline
@@ -26,27 +23,35 @@ export interface OptionsBase {
   pointSelection?: "independent" | "systematic";
 }
 
-export function optionsBaseCheck({ sampleSize }: OptionsBase) {
-  if (!Number.isInteger(sampleSize) || sampleSize < 0) {
-    return SAMPLE_ERROR_LIST.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER;
-  }
+export function optionsBaseCheck({ sampleSize }: OptionsBase): EnvisimError {
+  const errors = new EnvisimError();
 
-  return null;
+  // sampleSize must positive
+  errors.add(ValidationError.check["number-not-positive"]({ arg: "sampleSize" }, sampleSize));
+
+  return errors;
 }
 
 export type OptionsCircleConversion = CirclesToPolygonsOptions;
 
 export function optionsCircleConversionCheck({
   pointsPerCircle,
-}: OptionsCircleConversion): SampleError {
-  if (
-    pointsPerCircle !== undefined &&
-    (!Number.isInteger(pointsPerCircle) || pointsPerCircle <= 0)
-  ) {
-    return SAMPLE_ERROR_LIST.POINTS_PER_CIRCLE_NOT_POSITIVE_INTEGER;
-  }
+}: OptionsCircleConversion): EnvisimError {
+  const errors = new EnvisimError();
 
-  return null;
+  if (pointsPerCircle !== undefined)
+    errors.add(
+      ValidationError.check["number-not-in-interval"](
+        {
+          arg: "pointsPerCircle",
+          interval: [3],
+          ends: "closed",
+        },
+        pointsPerCircle,
+      ),
+    );
+
+  return errors;
 }
 
 /**
@@ -70,14 +75,15 @@ export function optionsPointsOnAreasCheck({
   ratio,
   rotationOfGrid,
   ...options
-}: OptionsPointsOnAreas): SampleError {
-  if (ratio !== undefined && ratio <= 0.0) {
-    return SAMPLE_ERROR_LIST.RATIO_NOT_POSITIVE;
-  } else if (typeof rotationOfGrid === "string" && rotationOfGrid !== "random") {
-    return SAMPLE_ERROR_LIST.ROTATION_OF_GRID_ERROR;
-  }
+}: OptionsPointsOnAreas): EnvisimError {
+  const errors = optionsBaseCheck(options).append(optionsCircleConversionCheck(options));
 
-  return optionsBaseCheck(options) || optionsCircleConversionCheck(options);
+  if (ratio !== undefined)
+    errors.add(ValidationError.check["number-not-positive"]({ arg: "ratio" }, ratio));
+
+  if (typeof rotationOfGrid === "string" && rotationOfGrid !== "random")
+    errors.add(ValidationError.create["other-value-not-existing"]({ arg: rotationOfGrid }));
+  return errors;
 }
 
 /**
@@ -95,12 +101,12 @@ export interface OptionsParallelLines {
   rotation?: number;
 }
 
-export function optionsParallelLinesCheck({ interspace }: OptionsParallelLines): SampleError {
-  if (interspace <= 0.0) {
-    return SAMPLE_ERROR_LIST.SEPARATION_NOT_POSITIVE;
-  }
+export function optionsParallelLinesCheck({ interspace }: OptionsParallelLines): EnvisimError {
+  const errors = new EnvisimError();
 
-  return null;
+  errors.add(ValidationError.check["number-not-positive"]({ arg: "interspace" }, interspace));
+
+  return errors;
 }
 
 /**
@@ -125,12 +131,14 @@ export interface OptionsDistancePoints {
 export function optionsDistancePointsCheck({
   baseCollection,
   cutoff,
-}: OptionsDistancePoints): SampleError {
-  if (cutoff <= 0.0) {
-    return SAMPLE_ERROR_LIST.CUTOFF_NOT_POSITIVE;
-  } else if (FeatureCollection.isPoint(baseCollection) === false) {
-    return SAMPLE_ERROR_LIST.EXPECTED_POINT;
-  }
+}: OptionsDistancePoints): EnvisimError {
+  const errors = new EnvisimError();
 
-  return null;
+  errors.add(ValidationError.check["number-not-positive"]({ arg: "cutoff" }, cutoff));
+  if (FeatureCollection.isPoint(baseCollection) === false)
+    errors.add(
+      ValidationError.create["geojson-not-point"]({ arg: "baseCollection", type: "collection" }),
+    );
+
+  return errors;
 }

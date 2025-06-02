@@ -1,4 +1,5 @@
 import { type RandomGenerator } from "@envisim/random";
+import { ValidationError } from "@envisim/utils";
 import {
   Interval,
   type RandomOptions,
@@ -8,7 +9,6 @@ import {
 } from "../abstract-distribution.js";
 import { stdNormalQuantile } from "../continuous/normal-utils.js";
 import { BetaParams } from "../params.js";
-import { assertPositiveInteger } from "../utils.js";
 import { Bernoulli } from "./bernoulli.js";
 
 /**
@@ -57,7 +57,8 @@ export class Logarithmic extends Bernoulli {
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    assertPositiveInteger(n);
+    n = Math.trunc(n);
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     const s = Array.from<number>({ length: n });
     for (let i = 0; i < n; i++) {
       s[i] = randomLogarithmic(this.params.p, options.rand);

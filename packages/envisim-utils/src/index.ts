@@ -2,10 +2,18 @@
  * @module @envisim/utils
  */
 export { copy } from "./copy.js";
+export {
+  EnvisimError,
+  ValidationError,
+  type ValidationErrorCause,
+  type ValidationErrorCauseBase,
+  type ValidationErrorCodes,
+  type ValidationErrorCreator,
+  type ValidationErrorChecker,
+} from "./errors.js";
+export { inInterval, inUnitInterval, type Interval } from "./interval.js";
 export { reducedRowEchelonForm } from "./reducedRowEchelonForm.js";
 export { swap } from "./swap.js";
-export { throwRangeError } from "./throw.js";
-export { inClosedInterval, inOpenInterval } from "./numeric.js";
 
 // Types
 export type { OptionalParam } from "./types.js";

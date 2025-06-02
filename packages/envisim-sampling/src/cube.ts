@@ -1,4 +1,5 @@
 import { type Matrix, Vector } from "@envisim/matrix";
+import { ValidationError } from "@envisim/utils";
 import { type AuxiliaryOptions, BASE_OPTIONS, type PipsOptions } from "./base-options/index.js";
 import { Cube } from "./sampling-classes/index.js";
 
@@ -24,9 +25,10 @@ export function cube({
   const N = balancing.nrow;
   const p = Vector.borrow(probabilities);
 
-  if (p.length !== N) {
-    throw new RangeError("size of probabilities does not match size of balancing");
-  }
+  ValidationError.check["array-incorrect-length"](
+    { arg: "probabilities", shape: "balancing.nrow", length: N },
+    p,
+  )?.raise();
 
   const cb = new Cube(Cube.CUBE, p, balancing, N, undefined, 40, eps, rand);
   cb.run();
@@ -56,11 +58,15 @@ export function localCube({
   const N = balancing.nrow;
   const p = Vector.borrow(probabilities);
 
-  if (p.length !== N) {
-    throw new RangeError("size of probabilities does not match size of balancing");
-  } else if (auxiliaries.nrow !== N) {
-    throw new RangeError("Rows in xb must match rows in xs");
-  }
+  ValidationError.check["array-incorrect-length"](
+    { arg: "probabilities", shape: "balancing.nrow", length: N },
+    p,
+  )?.raise();
+  if (auxiliaries.nrow !== N)
+    throw ValidationError.create["other-incorrect-shape"]({
+      arg: "auxiliaries",
+      shape: "balancing rows",
+    });
 
   const cb = new Cube(Cube.LCUBE, p, balancing, N, auxiliaries, treeBucketSize, eps, rand);
   cb.run();

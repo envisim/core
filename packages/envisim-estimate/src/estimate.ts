@@ -1,5 +1,6 @@
 import { type Matrix, Vector } from "@envisim/matrix";
 import { NearestNeighbour } from "@envisim/sampling";
+import { ValidationError } from "@envisim/utils";
 import { checkSampleArray } from "./utils.js";
 
 /**
@@ -71,7 +72,12 @@ export function ratioEstimator(
   const xs = new Vector(x, false);
   const ps = new Vector(prob, true);
 
-  if (ys.nrow !== xs.nrow) throw new RangeError("y and x must have same size");
+  if (ys.length !== xs.length)
+    throw ValidationError.create["array-incorrect-length"]({
+      arg: "x",
+      length: ys.length,
+      shape: "y",
+    });
 
   return totalX * (ys.divide(ps, true).sum() / xs.divide(ps, true).sum());
 }
@@ -112,7 +118,12 @@ export function nearestNeighbourEstimator(
   checkSampleArray(sample, N);
   const n = sample.length;
 
-  if (y.length !== n) throw new RangeError("y and sample must have the same length");
+  if (y.length !== n)
+    throw ValidationError.create["array-incorrect-length"]({
+      arg: "y",
+      length: n,
+      shape: "sample",
+    });
 
   const ni = new Array<number>(n).fill(0.0);
   const nn = new NearestNeighbour(xm.extractRows(sample), 10);

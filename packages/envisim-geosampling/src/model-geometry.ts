@@ -20,6 +20,7 @@ import { destination, distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { isCircle, isCircleish, isMultiCircle } from "@envisim/geojson-utils/type-guards";
 import { type RandomGenerator } from "@envisim/random";
+import { ValidationError } from "@envisim/utils";
 
 // This file has a set of functions to deal with a model
 // geometry (tract), which is a GeoJSON geometry with cartesian
@@ -295,9 +296,7 @@ export function pointGeometry(): GJ.Point {
  * @returns a north-south straight line model geometry.
  */
 export function straightLineGeometry(sideLength: number = 10.0): GJ.LineString {
-  if (sideLength <= 0.0) {
-    throw new RangeError("sideLength must be positive");
-  }
+  ValidationError.check["number-not-positive"]({ arg: "sideLength" }, sideLength)?.raise();
 
   const halfSide = sideLength * 0.5;
   return {
@@ -314,9 +313,7 @@ export function straightLineGeometry(sideLength: number = 10.0): GJ.LineString {
  * @returns an ell-shaped line model geometry.
  */
 export function ellLineGeometry(sideLength: number = 10.0): GJ.LineString {
-  if (sideLength <= 0.0) {
-    throw new RangeError("sideLength must be positive");
-  }
+  ValidationError.check["number-not-positive"]({ arg: "sideLength" }, sideLength)?.raise();
 
   const halfSide = sideLength * 0.5;
   return {
@@ -337,13 +334,15 @@ export function circleLineGeometry(
   diameter: number = 1.0,
   options?: CirclesToPolygonsOptions,
 ): GJ.LineString {
-  const pointsPerCircle = options?.pointsPerCircle ?? 16;
+  const pointsPerCircle = Math.trunc(options?.pointsPerCircle ?? 16);
 
-  if (pointsPerCircle < 3 || !Number.isInteger(pointsPerCircle)) {
-    throw new RangeError("sides must be an integer larger than 3");
-  } else if (diameter <= 0.0) {
-    throw new RangeError("diameter must be positive");
-  }
+  (
+    ValidationError.check["number-not-positive"]({ arg: "diameter" }, diameter) ??
+    ValidationError.check["number-not-in-interval"](
+      { arg: "pointsPerCircle", interval: [3], ends: "closed" },
+      diameter,
+    )
+  )?.raise();
 
   // use the radius that gives equal area to the polygon for best approximation
   const v = Math.PI / pointsPerCircle;
@@ -360,17 +359,16 @@ export function circleLineGeometry(
  * @returns a circle model geometry.
  */
 export function circleAreaGeometry(diameter: number = 10.0): GJ.Circle {
-  if (diameter <= 0.0) {
-    throw new RangeError("diameter must be positive");
-  }
+  ValidationError.check["number-not-positive"]({ arg: "diameter" }, diameter)?.raise();
 
   return { ...pointGeometry(), radius: diameter * 0.5 };
 }
 
 function rectangularCoordinates(width: number = 10.0, height: number = width): GJ.Position2[] {
-  if (width <= 0.0 || height <= 0.0) {
-    throw new RangeError("width and height must be positive");
-  }
+  (
+    ValidationError.check["number-not-positive"]({ arg: "width" }, width) ??
+    ValidationError.check["number-not-positive"]({ arg: "height" }, height)
+  )?.raise();
 
   const halfWidth = width * 0.5;
   const halfHeight = height * 0.5;
@@ -432,9 +430,7 @@ export function rectangularCircleGeometry(
   height: number = width,
   diameter: number = 1.0,
 ): GJ.MultiCircle {
-  if (diameter <= 0.0) {
-    throw new RangeError("diameter must be positive");
-  }
+  ValidationError.check["number-not-positive"]({ arg: "diameter" }, diameter)?.raise();
 
   return { ...rectangularPointGeometry(width, height), radius: Math.min(diameter, width) * 0.5 };
 }
@@ -443,11 +439,14 @@ function regularPolygonCoordinates(
   sides: number = 3,
   polygonDiameter: number = 1.0,
 ): GJ.Position2[] {
-  if (sides < 3 || !Number.isInteger(sides)) {
-    throw new RangeError("sides must be an integer larger than 3");
-  } else if (polygonDiameter <= 0.0) {
-    throw new RangeError("diameter must be positive");
-  }
+  sides = Math.trunc(sides);
+  (
+    ValidationError.check["number-not-positive"]({ arg: "polygonDiameter" }, polygonDiameter) ??
+    ValidationError.check["number-not-in-interval"](
+      { arg: "sides", interval: [3], ends: "closed" },
+      sides,
+    )
+  )?.raise();
 
   const r = polygonDiameter * 0.5;
   const coordinates = Array.from<GJ.Position2>({ length: sides });
@@ -515,9 +514,7 @@ export function regularPolygonCircleGeometry(
   polygonDiameter: number = 10.0,
   diameter: number = 1.0,
 ): GJ.MultiCircle {
-  if (diameter <= 0.0) {
-    throw new RangeError("diameter must be positive");
-  }
+  ValidationError.check["number-not-positive"]({ arg: "diameter" }, diameter)?.raise();
 
   const coordinates = regularPolygonCoordinates(sides, polygonDiameter);
   const d =

@@ -28,4 +28,11 @@ test("sampleFinite", () => {
     spreadOn: [],
   });
   expect(s2.size()).toBe(10);
+
+  expect(() =>
+    sampleFinite(layer, {
+      method: "srs",
+      sampleSize: -1,
+    }),
+  ).toThrowError();
 });

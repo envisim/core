@@ -96,6 +96,9 @@ importers:
       '@envisim/random':
         specifier: workspace:^0.1.1
         version: link:../envisim-random
+      '@envisim/utils':
+        specifier: workspace:^0.1.1
+        version: link:../envisim-utils
     devDependencies:
       '@envisim/config-eslint':
         specifier: workspace:*
@@ -130,6 +133,9 @@ importers:
       '@envisim/sampling':
         specifier: workspace:^0.1.1
         version: link:../envisim-sampling
+      '@envisim/utils':
+        specifier: workspace:^0.1.1
+        version: link:../envisim-utils
     devDependencies:
       '@envisim/config-eslint':
         specifier: workspace:*
@@ -299,6 +305,10 @@ importers:
         version: 3.1.2(@types/debug@4.1.12)(@types/node@22.14.1)(yaml@2.7.1)
 
   packages/envisim-random:
+    dependencies:
+      '@envisim/utils':
+        specifier: workspace:^0.1.1
+        version: link:../envisim-utils
     devDependencies:
       '@envisim/config-eslint':
         specifier: workspace:*

@@ -1,4 +1,4 @@
-import { inClosedInterval, inOpenInterval } from "@envisim/utils";
+import { inInterval, inUnitInterval } from "@envisim/utils";
 import type * as GJ from "./geojson.js";
 import { azimuthalEquidistant } from "./projections.js";
 import { destinationUnrolled, forwardAzimuth } from "./segments/geodesic.js";
@@ -66,7 +66,8 @@ export class Segment {
     } else if (t.length === 1) {
       if (
         includeInvalid === false &&
-        (!inClosedInterval(t[0][0], 0.0, 1.0) || !inClosedInterval(t[0][1], 0.0, 1.0))
+        (!inUnitInterval(t[0][0], { ends: "closed" }) ||
+          !inUnitInterval(t[0][1], { ends: "closed" }))
       ) {
         return null;
       }
@@ -115,9 +116,13 @@ export class Segment {
   rightDistanceOfPoint(point: GJ.Position): number | null {
     if (this.delta[1] === 0.0) {
       if (this.delta[0] > 0.0) {
-        return inOpenInterval(point[0], this.p1[0], this.p2[0]) ? 0.0 : null;
+        return inInterval(point[0], { interval: [this.p1[0], this.p2[0]], ends: "open" })
+          ? 0.0
+          : null;
       } else {
-        return inOpenInterval(point[0], this.p2[0], this.p1[0]) ? 0.0 : null;
+        return inInterval(point[0], { interval: [this.p2[0], this.p1[0]], ends: "open" })
+          ? 0.0
+          : null;
       }
     } else if (Math.max(this.p1[0], this.p2[0]) < point[0]) {
       return null; // Segment completely to the left of the point -- can't intersect ray

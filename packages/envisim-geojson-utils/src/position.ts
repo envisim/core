@@ -1,4 +1,4 @@
-import { inClosedInterval } from "@envisim/utils";
+import { inInterval } from "@envisim/utils";
 import type * as GJ from "./geojson.js";
 
 /**
@@ -30,8 +30,9 @@ export function longitudeInClosedInterval(
   norm = norm * 0.5;
   // b >= a implies that [a,b] does not cross the antimeridean
   return a <= b
-    ? inClosedInterval(x, a, b)
-    : inClosedInterval(x, a, norm) || inClosedInterval(x, -norm, b);
+    ? inInterval(x, { interval: [a, b], ends: "closed" })
+    : inInterval(x, { interval: [a, norm], ends: "closed" }) ||
+        inInterval(x, { interval: [-norm, b], ends: "closed" });
 }
 
 /**

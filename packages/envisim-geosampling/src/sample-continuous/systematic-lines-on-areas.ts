@@ -8,14 +8,13 @@ import { BoundingBox, cutLineGeometry } from "@envisim/geojson-utils";
 import { destination, distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { Random, type RandomGenerator } from "@envisim/random";
+import type { EnvisimError } from "@envisim/utils";
 import { intersectLineSampleAreaFrame } from "../utils/index.js";
 import {
   type OptionsCircleConversion,
   type OptionsParallelLines,
-  type SampleError,
   optionsCircleConversionCheck,
   optionsParallelLinesCheck,
-  throwRangeError,
 } from "./options.js";
 
 export interface SampleSystematicLinesOnAreas
@@ -26,8 +25,8 @@ export interface SampleSystematicLinesOnAreas
 
 export function sampleSystematicLinesOnAreasCheck(
   options: SampleSystematicLinesOnAreas,
-): SampleError {
-  return optionsCircleConversionCheck(options) || optionsParallelLinesCheck(options);
+): EnvisimError {
+  return optionsCircleConversionCheck(options).append(optionsParallelLinesCheck(options));
 }
 
 /**
@@ -40,7 +39,7 @@ export function sampleSystematicLinesOnAreas(
   collection: FeatureCollection<AreaObject>,
   options: SampleSystematicLinesOnAreas,
 ): FeatureCollection<LineObject> {
-  throwRangeError(sampleSystematicLinesOnAreasCheck(options));
+  sampleSystematicLinesOnAreasCheck(options).throwErrors();
 
   const { rand = new Random(), interspace, rotation = 0.0 } = options;
 

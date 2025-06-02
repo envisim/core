@@ -1,9 +1,6 @@
 import { PropertyRecord } from "@envisim/geojson";
 import { type RandomGenerator } from "@envisim/random";
-import { throwRangeError } from "@envisim/utils";
-import { SAMPLE_ERROR_LIST, type SampleError } from "../errors/index.js";
-
-export { SAMPLE_ERROR_LIST, type SampleError, throwRangeError };
+import { EnvisimError, ValidationError } from "@envisim/utils";
 
 /**
  * @inline
@@ -34,26 +31,25 @@ export interface OptionsBase<P extends string = string, M extends string = strin
 export function optionsBaseCheck<P extends string, M extends string>(
   { sampleSize, probabilities }: OptionsBase<NoInfer<P>, M>,
   record: PropertyRecord<P>,
-): SampleError {
-  if (!Number.isInteger(sampleSize) || sampleSize < 0) {
-    // sampleSize must be a non negative integer
-    return SAMPLE_ERROR_LIST.SAMPLE_SIZE_NOT_NON_NEGATIVE_INTEGER;
-  }
+): EnvisimError {
+  const errors = new EnvisimError();
+
+  // sampleSize must positive
+  errors.add(ValidationError.check["number-not-positive"]({ arg: "sampleSize" }, sampleSize));
 
   if (probabilities !== undefined && probabilities !== "_measure") {
     const property = record.getId(probabilities);
-    if (property === null) {
-      // probabilitiesFrom must exist on propertyRecord
-      return SAMPLE_ERROR_LIST.PROBABILITIES_FROM_MISSING;
-    }
 
-    if (!PropertyRecord.isNumerical(property)) {
-      // probabilitiesFrom must be a numerical property
-      return SAMPLE_ERROR_LIST.PROBABILITIES_FROM_NOT_NUMERICAL;
-    }
+    // probabilitiesFrom must exist on propertyRecord
+    if (property === null)
+      errors.add(ValidationError.create["property-not-existing"]({ arg: "probabilities" }));
+
+    // probabilitiesFrom must be a numerical property
+    if (!PropertyRecord.isNumerical(property))
+      errors.add(ValidationError.create["property-not-numerical"]({ arg: "probabilities" }));
   }
 
-  return null;
+  return errors;
 }
 
 /**
@@ -71,14 +67,18 @@ export interface OptionsBalanced<P extends string = string> {
 export function optionsBalancedCheck<P extends string>(
   { balanceOn }: OptionsBalanced<NoInfer<P>>,
   record: PropertyRecord<P>,
-): SampleError {
-  if (balanceOn.length === 0 || balanceOn.some((prop) => !record.hasId(prop))) {
-    // Must use balanceOn
-    // balanceOn entries must exist on propertyRecord
-    return SAMPLE_ERROR_LIST.BALANCE_ON_MISSING;
-  }
+): EnvisimError {
+  const errors = new EnvisimError();
 
-  return null;
+  // Must use balanceOn
+  errors.add(ValidationError.check["array-empty"]({ arg: "balanceOn" }, balanceOn));
+  // balanceOn entries must exist on propertyRecord
+  balanceOn.forEach((prop) => {
+    if (!record.hasId(prop))
+      errors.add(ValidationError.create["property-not-existing"]({ arg: "balanceOn", key: prop }));
+  });
+
+  return errors;
 }
 
 /**
@@ -101,16 +101,18 @@ export interface OptionsSpatiallyBalanced<P extends string = string> {
 export function optionsSpatiallyBalancedCheck<P extends string>(
   { spreadOn, spreadGeo }: OptionsSpatiallyBalanced<NoInfer<P>>,
   record: PropertyRecord<P>,
-): SampleError {
+): EnvisimError {
+  const errors = new EnvisimError();
+
   // Uses nothing
-  if (spreadOn.length === 0 && spreadGeo === false) {
-    return SAMPLE_ERROR_LIST.SPREAD_ON_MISSING;
-  }
+  if (spreadOn.length === 0 && spreadGeo === false)
+    errors.add(ValidationError.check["array-empty"]({ arg: "spreadOn" }, spreadOn));
 
   // Check so spreadOn properties exists on record
-  if (spreadOn.length > 0 && spreadOn.some((prop) => !record.hasId(prop))) {
-    return SAMPLE_ERROR_LIST.SPREAD_ON_MISSING;
-  }
+  spreadOn.forEach((prop) => {
+    if (!record.hasId(prop))
+      errors.add(ValidationError.create["property-not-existing"]({ arg: "spreadOn", key: prop }));
+  });
 
-  return null;
+  return errors;
 }

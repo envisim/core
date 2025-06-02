@@ -44,6 +44,13 @@ export {
   union,
 } from "./collection/index.js";
 
+export {
+  intersectAreaAreaGeometries,
+  intersectLineAreaGeometries,
+  intersectLineLineGeometries,
+  intersectPointAreaGeometries,
+} from "./intersect/index.js";
+
 // PropertyRecord
 export {
   type CategoricalProperty,
@@ -60,10 +67,3 @@ export {
 // Utils
 export { type CirclesToPolygonsOptions } from "./utils/circles-to-polygons.js";
 export { type BufferOptions } from "./buffer/index.js";
-
-export {
-  intersectAreaAreaGeometries,
-  intersectLineAreaGeometries,
-  intersectLineLineGeometries,
-  intersectPointAreaGeometries,
-} from "./intersect/index.js";

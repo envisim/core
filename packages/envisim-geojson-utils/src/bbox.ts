@@ -1,4 +1,4 @@
-import { inClosedInterval } from "@envisim/utils";
+import { inInterval, ValidationError } from "@envisim/utils";
 import type * as GJ from "./geojson.js";
 import { longitudeInClosedInterval, longitudeDistance, midpoint } from "./position.js";
 import { destination } from "./segments/geodesic.js";
@@ -79,9 +79,11 @@ export class BoundingBox {
       // Check lon
       longitudeInClosedInterval(point[0], bbox[0], BoundingBox.maxLongitude(bbox)) &&
       // Check lat
-      inClosedInterval(point[1], bbox[1], BoundingBox.maxLatitude(bbox)) &&
+      inInterval(point[1], { interval: BoundingBox.latitudeRange(bbox), ends: "closed" }) &&
       // Check z, only if both have it, otherwise they are considered all-covering
-      (point.length === 2 || bbox.length === 4 || inClosedInterval(point[2], bbox[2], bbox[5]))
+      (point.length === 2 ||
+        bbox.length === 4 ||
+        inInterval(point[2], { interval: BoundingBox.altitudeRange(bbox), ends: "closed" }))
     );
   }
 }
@@ -126,9 +128,9 @@ export function bboxInBBox(b1: GJ.BBox, b2: GJ.BBox): boolean {
 
   if (
     !(
-      inClosedInterval(b1[1], b2[1], b2latb) ||
-      inClosedInterval(b1latb, b2[1], b2latb) ||
-      inClosedInterval(b2[1], b1[1], b1latb)
+      inInterval(b1[1], { interval: [b2[1], b2latb], ends: "closed" }) ||
+      inInterval(b1latb, { interval: [b2[1], b2latb], ends: "closed" }) ||
+      inInterval(b2[1], { interval: [b1[1], b1latb], ends: "closed" })
     )
   ) {
     return false;
@@ -138,9 +140,9 @@ export function bboxInBBox(b1: GJ.BBox, b2: GJ.BBox): boolean {
 
   if (
     !(
-      inClosedInterval(b1[2], b2[2], b2[5]) ||
-      inClosedInterval(b1[5], b2[2], b2[5]) ||
-      inClosedInterval(b2[2], b1[2], b1[5])
+      inInterval(b1[2], { interval: [b2[2], b2[5]], ends: "closed" }) ||
+      inInterval(b1[5], { interval: [b2[2], b2[5]], ends: "closed" }) ||
+      inInterval(b2[2], { interval: [b1[2], b1[5]], ends: "closed" })
     )
   ) {
     return false;
@@ -149,13 +151,15 @@ export function bboxInBBox(b1: GJ.BBox, b2: GJ.BBox): boolean {
   return true;
 }
 
+/**
+ * @throws ValidationError when positions.length === 0
+ */
 export function bboxFromPositionsUnwrapped(positions: GJ.Position2[]): GJ.BBox2;
 export function bboxFromPositionsUnwrapped(positions: GJ.Position3[]): GJ.BBox3;
 export function bboxFromPositionsUnwrapped(positions: GJ.Position[]): GJ.BBox;
 export function bboxFromPositionsUnwrapped(positions: GJ.Position[]): GJ.BBox {
-  if (positions.length === 0) {
-    throw new Error("positions must not be empty");
-  } else if (positions.length === 1) {
+  ValidationError.check["array-empty"]({ arg: "positions" }, positions)?.raise();
+  if (positions.length === 1) {
     return [...positions[0], ...positions[0]] as GJ.BBox;
   }
 
@@ -183,13 +187,13 @@ export function bboxFromPositionsUnwrapped(positions: GJ.Position[]): GJ.BBox {
 /**
  * @param positions - an array of positions
  * @returns the bounding box around the array of positions
- * @throws Error when positions.length === 0
+ * @throws ValidationError when positions.length === 0
  */
 export function bboxFromPositions(positions: GJ.Position2[]): GJ.BBox2;
 export function bboxFromPositions(positions: GJ.Position3[]): GJ.BBox3;
 export function bboxFromPositions(positions: GJ.Position[]): GJ.BBox;
 export function bboxFromPositions(positions: GJ.Position[]): GJ.BBox {
-  if (positions.length === 0) throw new Error("positions must not be empty");
+  ValidationError.check["array-empty"]({ arg: "positions" }, positions)?.raise();
   if (positions.length === 1) {
     return [...positions[0], ...positions[0]] as GJ.BBox;
   }
@@ -224,10 +228,10 @@ export function bboxFromPositions(positions: GJ.Position[]): GJ.BBox {
 /**
  * @param bboxes - an array of bboxes
  * @returns the bounding box around the array of bboxes
- * @throws Error when bboxes.length === 0
+ * @throws ValidationError when bboxes.length === 0
  */
 export function unionOfBBoxes(bboxes: GJ.BBox[]): GJ.BBox {
-  if (bboxes.length === 0) throw new Error("bboxes must not be empty");
+  ValidationError.check["array-empty"]({ arg: "bboxes" }, bboxes)?.raise();
 
   bboxes.sort((a, b) => a[0] - b[0]);
   const box: GJ.BBox = bboxes.every((a) => a.length === 4)

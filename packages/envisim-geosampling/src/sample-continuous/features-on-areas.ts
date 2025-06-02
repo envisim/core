@@ -7,6 +7,7 @@ import {
 } from "@envisim/geojson";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { Random } from "@envisim/random";
+import { ValidationError, type EnvisimError } from "@envisim/utils";
 import {
   placeAreaGeometry,
   placeLineGeometry,
@@ -19,13 +20,7 @@ import {
   intersectLineSampleAreaFrame,
   intersectPointSampleAreaFrame,
 } from "../utils/index.js";
-import {
-  type OptionsPointsOnAreas,
-  SAMPLE_ERROR_LIST,
-  type SampleError,
-  optionsPointsOnAreasCheck,
-  throwRangeError,
-} from "./options.js";
+import { type OptionsPointsOnAreas, optionsPointsOnAreasCheck } from "./options.js";
 import { samplePointsOnAreas } from "./points-on-areas.js";
 
 export interface SampleFeaturesOnAreasOptions<G extends GJ.SingleTypeObject>
@@ -44,24 +39,30 @@ export interface SampleFeaturesOnAreasOptions<G extends GJ.SingleTypeObject>
 
 export function sampleAreaFeaturesOnAreasCheck(
   options: SampleFeaturesOnAreasOptions<GJ.AreaObject>,
-): SampleError {
+): EnvisimError {
+  const errors = optionsPointsOnAreasCheck(options);
+
   switch (options.modelGeometry.type) {
     case "Polygon":
     case "MultiPolygon":
       break;
     case "Point":
     case "MultiPoint":
-      if (options.modelGeometry.radius <= 0.0) return SAMPLE_ERROR_LIST.MODEL_FEATURE_NOT_AREA;
+      if (options.modelGeometry.radius <= 0.0)
+        errors.add(
+          ValidationError.create["geojson-not-area"]({ arg: "modelGeometry", type: "geometry" }),
+        );
       break;
     default:
-      return SAMPLE_ERROR_LIST.MODEL_FEATURE_NOT_AREA;
+      errors.add(
+        ValidationError.create["geojson-not-area"]({ arg: "modelGeometry", type: "geometry" }),
+      );
   }
 
-  if (typeof options.rotationOfGeometry === "string" && options.rotationOfGeometry !== "random") {
-    return SAMPLE_ERROR_LIST.ROTATION_OF_MODEL_FEATURE_ERROR;
-  }
+  if (typeof options.rotationOfGeometry === "string" && options.rotationOfGeometry !== "random")
+    errors.add(ValidationError.create["other-value-not-existing"]({ arg: "rotationOfGeometry" }));
 
-  return optionsPointsOnAreasCheck(options);
+  return errors;
 }
 
 /**
@@ -74,7 +75,7 @@ export function sampleAreaFeaturesOnAreas(
   collection: FeatureCollection<AreaObject>,
   options: SampleFeaturesOnAreasOptions<GJ.AreaObject>,
 ): FeatureCollection<AreaObject, never> {
-  throwRangeError(sampleAreaFeaturesOnAreasCheck(options));
+  sampleAreaFeaturesOnAreasCheck(options).throwErrors();
 
   const opts = {
     ...options,
@@ -105,27 +106,30 @@ export function sampleAreaFeaturesOnAreas(
 
 export function sampleLineFeaturesOnAreasCheck(
   options: SampleFeaturesOnAreasOptions<GJ.LineObject>,
-): SampleError {
+): EnvisimError {
+  const errors = optionsPointsOnAreasCheck(options);
+
   switch (options.modelGeometry.type) {
     case "LineString":
     case "MultiLineString":
       break;
     default:
-      return SAMPLE_ERROR_LIST.MODEL_FEATURE_NOT_LINE;
+      errors.add(
+        ValidationError.create["geojson-not-line"]({ arg: "modelGeometry", type: "geometry" }),
+      );
   }
 
-  if (typeof options.rotationOfGeometry === "string" && options.rotationOfGeometry !== "random") {
-    return SAMPLE_ERROR_LIST.ROTATION_OF_MODEL_FEATURE_ERROR;
-  }
+  if (typeof options.rotationOfGeometry === "string" && options.rotationOfGeometry !== "random")
+    errors.add(ValidationError.create["other-value-not-existing"]({ arg: "rotationOfGeometry" }));
 
-  return optionsPointsOnAreasCheck(options);
+  return errors;
 }
 
 export function sampleLineFeaturesOnAreas(
   collection: FeatureCollection<AreaObject>,
   options: SampleFeaturesOnAreasOptions<GJ.LineObject>,
 ): FeatureCollection<LineObject, never> {
-  throwRangeError(sampleLineFeaturesOnAreasCheck(options));
+  sampleLineFeaturesOnAreasCheck(options).throwErrors();
 
   const opts = {
     ...options,
@@ -156,27 +160,30 @@ export function sampleLineFeaturesOnAreas(
 
 export function samplePointFeaturesOnAreasCheck(
   options: SampleFeaturesOnAreasOptions<GJ.PointObject>,
-): SampleError {
+): EnvisimError {
+  const errors = optionsPointsOnAreasCheck(options);
+
   switch (options.modelGeometry.type) {
     case "Point":
     case "MultiPoint":
       break;
     default:
-      return SAMPLE_ERROR_LIST.MODEL_FEATURE_NOT_POINT;
+      errors.add(
+        ValidationError.create["geojson-not-point"]({ arg: "modelGeometry", type: "geometry" }),
+      );
   }
 
-  if (typeof options.rotationOfGeometry === "string" && options.rotationOfGeometry !== "random") {
-    return SAMPLE_ERROR_LIST.ROTATION_OF_MODEL_FEATURE_ERROR;
-  }
+  if (typeof options.rotationOfGeometry === "string" && options.rotationOfGeometry !== "random")
+    errors.add(ValidationError.create["other-value-not-existing"]({ arg: "rotationOfGeometry" }));
 
-  return optionsPointsOnAreasCheck(options);
+  return errors;
 }
 
 export function samplePointFeaturesOnAreas(
   collection: FeatureCollection<AreaObject>,
   options: SampleFeaturesOnAreasOptions<GJ.PointObject>,
 ): FeatureCollection<PointObject, never> {
-  throwRangeError(samplePointFeaturesOnAreasCheck(options));
+  samplePointFeaturesOnAreasCheck(options).throwErrors();
 
   const opts = {
     ...options,

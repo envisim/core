@@ -1,4 +1,5 @@
 import { Vector } from "@envisim/matrix";
+import { ValidationError } from "@envisim/utils";
 import { type AuxiliaryOptions, BASE_OPTIONS } from "./base-options/index.js";
 import { CorrelatedPoisson } from "./sampling-classes/index.js";
 
@@ -18,9 +19,11 @@ export function scps({
   const N = auxiliaries.nrow;
   const p = Vector.borrow(probabilities);
 
-  if (p.length !== N) {
-    throw new RangeError("length of probabilities does not match size of auxiliaries");
-  }
+  if (p.length !== N)
+    throw ValidationError.create["other-incorrect-shape"]({
+      arg: "probabilities",
+      shape: "auxiliaries rows",
+    });
 
   const cps = new CorrelatedPoisson(
     CorrelatedPoisson.SCPS,
@@ -61,11 +64,16 @@ export function scpsCoordinated({
   const p = Vector.borrow(probabilities);
   const randvals = Vector.borrow(random);
 
-  if (p.length !== N) {
-    throw new RangeError("length of probabilities does not match size of auxiliaries");
-  } else if (randvals.length !== N) {
-    throw new RangeError("length of randvals does not match size of auxiliaries");
-  }
+  (
+    ValidationError.check["array-incorrect-length"](
+      { arg: "probabilities", shape: "auxiliaries.nrow", length: N },
+      p,
+    ) ??
+    ValidationError.check["array-incorrect-length"](
+      { arg: "random", shape: "auxiliaries.nrow", length: N },
+      randvals,
+    )
+  )?.raise();
 
   const cps = new CorrelatedPoisson(
     CorrelatedPoisson.LCPS,
@@ -98,9 +106,10 @@ export function lcps({
   const N = auxiliaries.nrow;
   const p = Vector.borrow(probabilities);
 
-  if (p.length !== N) {
-    throw new RangeError("length of probabilities does not match size of auxiliaries");
-  }
+  ValidationError.check["array-incorrect-length"](
+    { arg: "probabilities", shape: "auxiliaries.nrow", length: N },
+    p,
+  )?.raise();
 
   const cps = new CorrelatedPoisson(
     CorrelatedPoisson.LCPS,

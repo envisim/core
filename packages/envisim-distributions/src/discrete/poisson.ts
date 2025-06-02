@@ -1,3 +1,4 @@
+import { ValidationError } from "@envisim/utils";
 import {
   Distribution,
   Interval,
@@ -9,7 +10,7 @@ import {
 import { stdNormalQuantile } from "../continuous/normal-utils.js";
 import { regularizedUpperGammaFunction } from "../gamma-utils.js";
 import { RateParams } from "../params.js";
-import { assertPositiveInteger, logFactorial } from "../utils.js";
+import { logFactorial } from "../utils.js";
 import { randomPoisson } from "./poisson-random.js";
 
 /**
@@ -61,7 +62,8 @@ export class Poisson extends Distribution {
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    assertPositiveInteger(n);
+    n |= 0;
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     return randomPoisson(n, this.params.rate, options.rand);
   }
 

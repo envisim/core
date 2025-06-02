@@ -1,7 +1,7 @@
 import { bboxFromPositions, getPositionsForCircle } from "@envisim/geojson-utils";
 import { distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
-import { type OptionalParam } from "@envisim/utils";
+import { ValidationError, type OptionalParam } from "@envisim/utils";
 import { type BufferOptions, defaultBufferOptions } from "../buffer/index.js";
 import { type CirclesToPolygonsOptions, circlesToPolygons } from "../utils/circles-to-polygons.js";
 import { AbstractAreaObject } from "./abstract-area-object.js";
@@ -13,8 +13,9 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
     return obj instanceof Circle;
   }
 
-  static assert(obj: unknown, msg: string = "Expected Circle"): asserts obj is Circle {
-    if (!(obj instanceof Circle)) throw new TypeError(msg);
+  static assert(obj: unknown): asserts obj is Circle {
+    if (!this.isObject(obj))
+      throw ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "Circle" });
   }
 
   static create(
@@ -37,6 +38,7 @@ export class Circle extends AbstractAreaObject<GJ.Circle> implements GJ.Circle {
    */
   constructor(obj: OptionalParam<GJ.Circle, "type">, shallow: boolean = true) {
     super({ ...obj, type: "Point" }, shallow);
+    ValidationError.check["number-not-positive"]({ arg: "radius" }, obj.radius)?.raise();
     this.radius = obj.radius;
   }
 

@@ -1,3 +1,4 @@
+import { ValidationError } from "@envisim/utils";
 import {
   Distribution,
   Interval,
@@ -6,7 +7,6 @@ import {
 } from "../abstract-distribution.js";
 import { logGammaFunction, regularizedLowerGammaFunction } from "../gamma-utils.js";
 import { DegreesOfFreedomParams, ShapeScaleParams } from "../params.js";
-import { assertPositiveInteger } from "../utils.js";
 import { gammaQuantile } from "./gamma-quantile.js";
 import { randomShapeGamma } from "./gamma-random.js";
 
@@ -61,7 +61,8 @@ export class ChiSquared extends Distribution {
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    assertPositiveInteger(n);
+    n = Math.trunc(n);
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     return randomShapeGamma(n, this.#gamma.shape, options.rand, this.#gamma.scale);
   }
 

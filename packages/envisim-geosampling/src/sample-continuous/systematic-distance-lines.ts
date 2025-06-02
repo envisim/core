@@ -5,16 +5,15 @@ import {
   intersectPointAreaGeometries,
 } from "@envisim/geojson";
 import { Random, type RandomGenerator } from "@envisim/random";
+import type { EnvisimError } from "@envisim/utils";
 import { effectiveHalfWidth } from "./distance-utils.js";
 import {
   type OptionsCircleConversion,
   type OptionsDistancePoints,
   type OptionsParallelLines,
-  type SampleError,
   optionsCircleConversionCheck,
   optionsDistancePointsCheck,
   optionsParallelLinesCheck,
-  throwRangeError,
 } from "./options.js";
 import { sampleSystematicLinesOnAreas } from "./systematic-lines-on-areas.js";
 
@@ -27,12 +26,10 @@ export interface SampleSystematicDistanceLinesOptions
 
 export function sampleSystematicDistanceLinesCheck(
   options: SampleSystematicDistanceLinesOptions,
-): SampleError {
-  return (
-    optionsCircleConversionCheck(options) ||
-    optionsParallelLinesCheck(options) ||
-    optionsDistancePointsCheck(options)
-  );
+): EnvisimError {
+  return optionsCircleConversionCheck(options)
+    .append(optionsParallelLinesCheck(options))
+    .append(optionsDistancePointsCheck(options));
 }
 
 /**
@@ -47,7 +44,7 @@ export function sampleSystematicDistanceLines(
   collection: FeatureCollection<AreaObject>,
   options: SampleSystematicDistanceLinesOptions,
 ): FeatureCollection<Point> {
-  throwRangeError(sampleSystematicDistanceLinesCheck(options));
+  sampleSystematicDistanceLinesCheck(options).throwErrors();
 
   const { rand = new Random(), interspace, detectionFunction, cutoff } = options;
 

@@ -1,6 +1,6 @@
 import { GeometricPrimitive } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
-import { type OptionalParam, copy } from "@envisim/utils";
+import { type OptionalParam, ValidationError, copy } from "@envisim/utils";
 import {
   type AreaObject,
   type LineObject,
@@ -30,23 +30,17 @@ export class Feature<T extends PureObject, PID extends string = string>
     return obj instanceof Feature && GeometricPrimitive.isPoint(obj.geometricPrimitive());
   }
 
-  static assertArea(
-    obj: unknown,
-    msg: string = "Expected area",
-  ): asserts obj is Feature<AreaObject> {
-    if (!Feature.isArea(obj)) throw new TypeError(msg);
+  static assertArea(obj: unknown): asserts obj is Feature<AreaObject> {
+    if (!Feature.isArea(obj))
+      throw ValidationError.create["geojson-not-area"]({ arg: "obj", type: "feature" });
   }
-  static assertLine(
-    obj: unknown,
-    msg: string = "Expected line",
-  ): asserts obj is Feature<LineObject> {
-    if (!Feature.isLine(obj)) throw new TypeError(msg);
+  static assertLine(obj: unknown): asserts obj is Feature<LineObject> {
+    if (!Feature.isLine(obj))
+      throw ValidationError.create["geojson-not-line"]({ arg: "obj", type: "feature" });
   }
-  static assertPoint(
-    obj: unknown,
-    msg: string = "Expected point",
-  ): asserts obj is Feature<PointObject> {
-    if (!Feature.isPoint(obj)) throw new TypeError(msg);
+  static assertPoint(obj: unknown): asserts obj is Feature<PointObject> {
+    if (!Feature.isPoint(obj))
+      throw ValidationError.create["geojson-not-point"]({ arg: "obj", type: "feature" });
   }
 
   static createAreaFromJson(

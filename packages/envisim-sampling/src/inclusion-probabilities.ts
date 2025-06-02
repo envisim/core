@@ -1,4 +1,5 @@
 import { Vector } from "@envisim/matrix";
+import { ValidationError } from "@envisim/utils";
 import { BASE_OPTIONS, type FixedSizedOptions } from "./base-options/index.js";
 
 export interface InclusionProbabilitiesOptions extends FixedSizedOptions {
@@ -19,9 +20,9 @@ export function inclusionProbabilities({
   n,
   eps = BASE_OPTIONS.eps,
 }: InclusionProbabilitiesOptions): number[] {
-  if (!auxiliary.every((e) => e >= 0.0)) {
-    throw new RangeError("Every element in arr must be positive");
-  }
+  auxiliary.forEach((e) =>
+    ValidationError.check["number-not-nonnegative"]({ arg: "auxiliary" }, e)?.raise(),
+  );
 
   const prob = new Vector(auxiliary, false);
   const psum = prob.sum();

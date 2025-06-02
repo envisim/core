@@ -2,19 +2,15 @@ import { Feature, FeatureCollection, type LineObject, LineString, Point } from "
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { distance, intermediate } from "@envisim/geojson-utils/plate-carree";
 import { Random } from "@envisim/random";
-import {
-  type OptionsBase,
-  type SampleError,
-  optionsBaseCheck,
-  throwRangeError,
-} from "./options.js";
+import { ValidationError, type EnvisimError } from "@envisim/utils";
+import { type OptionsBase, optionsBaseCheck } from "./options.js";
 
 /**
  * @interface
  */
 export type SamplePointsOnLinesOptions = OptionsBase;
 
-export function samplePointsOnLinesCheck(options: SamplePointsOnLinesOptions): SampleError {
+export function samplePointsOnLinesCheck(options: SamplePointsOnLinesOptions): EnvisimError {
   return optionsBaseCheck(options);
 }
 
@@ -28,13 +24,12 @@ export function samplePointsOnLines(
   collection: FeatureCollection<LineObject>,
   options: SamplePointsOnLinesOptions,
 ): FeatureCollection<Point, never> {
-  throwRangeError(samplePointsOnLinesCheck(options));
+  samplePointsOnLinesCheck(options).throwErrors();
   const { rand = new Random(), pointSelection, sampleSize } = options;
 
   const L = collection.measure(); // total length of input geoJSON
-  if (L === 0) {
-    throw new Error("Input layer has zero length.");
-  }
+  if (L <= 0.0)
+    throw ValidationError.create["geojson-zero-measure"]({ arg: "collection", type: "collection" });
 
   let distances: number[] = []; // Holds sample points as distances from 0 to L.
 

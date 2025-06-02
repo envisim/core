@@ -4,7 +4,7 @@ import {
   type GeometricPrimitiveUnion,
 } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
-import { type OptionalParam } from "@envisim/utils";
+import { ValidationError, type OptionalParam } from "@envisim/utils";
 import { type BufferOptions } from "../buffer/index.js";
 import { Feature } from "../class-feature.js";
 import {
@@ -54,21 +54,21 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
 
   static assertArea<P extends string>(
     obj: FeatureCollection<PureObject, P>,
-    msg: string = "Expected area",
   ): asserts obj is FeatureCollection<AreaObject, P> {
-    if (!FeatureCollection.isArea(obj)) throw new TypeError(msg);
+    if (!this.isArea(obj))
+      throw ValidationError.create["geojson-not-area"]({ arg: "obj", type: "collection" });
   }
   static assertLine<P extends string>(
     obj: FeatureCollection<PureObject, P>,
-    msg: string = "Expected line",
   ): asserts obj is FeatureCollection<LineObject, P> {
-    if (!FeatureCollection.isLine(obj)) throw new TypeError(msg);
+    if (!this.isLine(obj))
+      throw ValidationError.create["geojson-not-line"]({ arg: "obj", type: "collection" });
   }
   static assertPoint<P extends string>(
     obj: FeatureCollection<PureObject, P>,
-    msg: string = "Expected point",
   ): asserts obj is FeatureCollection<PointObject, P> {
-    if (!FeatureCollection.isPoint(obj)) throw new TypeError(msg);
+    if (!this.isPoint(obj))
+      throw ValidationError.create["geojson-not-point"]({ arg: "obj", type: "collection" });
   }
 
   static createAreaFromJson(
@@ -413,7 +413,6 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
   }
 
   setProperty(id: PID, index: number, value: number | string): void {
-    if (index < 0 || index >= this.size()) throw new Error("no feature with this index exists");
     this.features[index].setProperty(id, value);
   }
 
@@ -423,7 +422,7 @@ export class FeatureCollection<T extends PureObject, PID extends string = string
     const fcKeys = fc.propertyRecord.getIds();
 
     if (thisKeys.length !== fcKeys.length || !thisKeys.every((id) => fcKeys.includes(id))) {
-      throw new RangeError("propertyRecords does not match");
+      throw ValidationError.create["property-records-not-identical"]({ arg: "fc" });
     }
 
     fc.forEach((feat) => this.addFeature(feat, shallow));
@@ -440,24 +439,24 @@ function setPropertiesOfFeature(
     const id = prop.id;
 
     // If the prop does not exist on the feature, we have a problem
-    if (!Object.hasOwn(properties, id)) {
-      throw new Error("All features must have the same properties.");
-    }
+    if (!Object.hasOwn(properties, id))
+      throw ValidationError.create["property-not-existing"]({ arg: "propertyRecord", key: id });
 
     const value: unknown = properties[id];
 
     if (PropertyRecord.isNumerical(prop)) {
       // Add numerical property
-      if (typeof value !== "number") {
-        throw new Error("All features must have the same types on the properties.");
-      }
+      if (typeof value !== "number")
+        throw ValidationError.create["property-not-numerical"]({ arg: "propertyRecord", key: id });
     } else {
       // prop.type === 'categorical'
       // Add categorical property
       // We fill the value array, as new values are encountered.
-      if (typeof value !== "string") {
-        throw new Error("All features must have the same types on the properties.");
-      }
+      if (typeof value !== "string")
+        throw ValidationError.create["property-not-categorical"]({
+          arg: "propertyRecord",
+          key: id,
+        });
 
       if (!prop.values.includes(value)) {
         prop.values.push(value);

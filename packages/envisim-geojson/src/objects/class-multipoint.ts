@@ -1,7 +1,7 @@
 import { bboxFromPositions } from "@envisim/geojson-utils";
 import { distance } from "@envisim/geojson-utils/geodesic";
 import type * as GJ from "@envisim/geojson-utils/geojson";
-import { type OptionalParam } from "@envisim/utils";
+import { ValidationError, type OptionalParam } from "@envisim/utils";
 import { type BufferOptions } from "../buffer/index.js";
 import { centroidFromMultipleCentroids } from "../utils/centroid.js";
 import { AbstractPointObject } from "./abstract-point-object.js";
@@ -15,8 +15,9 @@ export class MultiPoint extends AbstractPointObject<GJ.MultiPoint> implements GJ
     return obj instanceof MultiPoint;
   }
 
-  static assert(obj: unknown, msg: string = "Expected MultiPoint"): asserts obj is MultiPoint {
-    if (!(obj instanceof MultiPoint)) throw new TypeError(msg);
+  static assert(obj: unknown): asserts obj is MultiPoint {
+    if (!this.isObject(obj))
+      throw ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "MultiPoint" });
   }
 
   static create(coordinates: GJ.MultiPoint["coordinates"], shallow: boolean = true): MultiPoint {

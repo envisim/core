@@ -1,3 +1,5 @@
+import { ValidationError } from "@envisim/utils";
+
 function equalsApprox(a: number, b: number, eps: number): boolean {
   return a - eps <= b && b <= a + eps;
 }
@@ -9,21 +11,19 @@ export type MatrixCallbackCompare = (a: number, b: number) => number;
 
 export abstract class BaseMatrix {
   constructor(arr: number[], [nrow, ncol]: MatrixDim) {
-    if (!Number.isInteger(nrow) || nrow <= 0) {
-      throw new TypeError("nrow must be positive integer");
-    }
-    if (!Number.isInteger(ncol) || ncol <= 0) {
-      throw new TypeError("ncol must be positive integer");
-    }
-
+    this.rows = Math.trunc(nrow);
+    this.cols = Math.trunc(ncol);
+    this.len = this.rows * this.cols;
     this.internal = arr;
-    this.rows = nrow;
-    this.cols = ncol;
-    this.len = nrow * ncol;
 
-    if (this.len !== arr.length) {
-      throw new TypeError("the dimensions and arr does not match");
-    }
+    (
+      ValidationError.check["number-not-positive"]({ arg: "nrow" }, this.rows) ??
+      ValidationError.check["number-not-positive"]({ arg: "ncol" }, this.rows) ??
+      ValidationError.check["array-incorrect-length"](
+        { arg: "arr", shape: "nrow*ncol", length: this.len },
+        arr,
+      )
+    )?.raise();
   }
 
   /**
@@ -58,17 +58,50 @@ export abstract class BaseMatrix {
   }
 
   /**
-   * @returns the matrix index at `row`, `column`
-   * @throws `RangeError` if `row` or `column` is not in range
+   * @internal
    */
-  indexOfDim([row, col]: MatrixDim): number {
-    if (row < 0 || row >= this.rows) {
-      throw new RangeError("row is not in range");
-    }
-    if (col < 0 || col >= this.cols) {
-      throw new RangeError("column is not in range");
+  protected checkRow(row: number): number {
+    row = Math.trunc(row);
+
+    if (row < 0) {
+      if (row < -this.rows)
+        throw ValidationError.create["other-index-oob"]({ arg: "row", index: row });
+      row += this.rows;
+    } else if (row >= this.rows) {
+      throw ValidationError.create["other-index-oob"]({ arg: "row", index: row });
     }
 
+    return row;
+  }
+  /**
+   * @internal
+   */
+  protected checkCol(col: number): number {
+    col = Math.trunc(col);
+
+    if (col < 0) {
+      if (col < -this.cols)
+        throw ValidationError.create["other-index-oob"]({ arg: "col", index: col });
+      col += this.cols;
+    } else if (col >= this.cols) {
+      throw ValidationError.create["other-index-oob"]({ arg: "col", index: col });
+    }
+
+    return col;
+  }
+  /**
+   * @internal
+   */
+  protected checkDim([row, col]: MatrixDim): MatrixDim {
+    return [this.checkRow(row), this.checkCol(col)];
+  }
+
+  /**
+   * @returns the matrix index at `row`, `column`
+   * @throws ValidationError if `row` or `column` is out of bounds
+   */
+  indexOfDim(dim: MatrixDim): number {
+    const [row, col] = this.checkDim(dim);
     return row + col * this.rows;
   }
 
@@ -80,41 +113,36 @@ export abstract class BaseMatrix {
   }
 
   /**
-   * @returns the row index of the matrix `index`
-   * @throws `RangeError` if `index` is not in range
+   * @internal
    */
-  rowOfIndex(index: number): MatrixDim[0] {
-    if (index >= this.len) {
-      throw new RangeError("index is not in range");
-    }
+  protected checkIndex(index: number): number {
+    index = Math.trunc(index);
+
+    if (index >= this.len) throw ValidationError.create["other-index-oob"]({ arg: "index", index });
 
     if (index < 0) {
-      if (index < -this.len) {
-        throw new RangeError("index is not in range");
-      }
+      if (index < -this.len)
+        throw ValidationError.create["other-index-oob"]({ arg: "index", index });
       index += this.len;
     }
 
-    return this.rows === 1 ? 0 : index % this.rows;
+    return index;
+  }
+
+  /**
+   * @returns the row index of the matrix `index`
+   * @throws ValidationError if `index` is out of bounds
+   */
+  rowOfIndex(index: number): MatrixDim[0] {
+    return this.rows === 1 ? 0 : this.checkIndex(index) % this.rows;
   }
 
   /**
    * @returns the column index of the matrix `index`
-   * @throws `RangeError` if `index` is not in range
+   * @throws ValidationError if `index` is out of bounds
    */
   colOfIndex(index: number): MatrixDim[1] {
-    if (index >= this.len) {
-      throw new RangeError("index is not in range");
-    }
-
-    if (index < 0) {
-      if (index < -this.len) {
-        throw new RangeError("index is not in range");
-      }
-      index += this.len;
-    }
-
-    return this.cols === 1 ? 0 : (index / this.rows) | 0;
+    return this.cols === 1 ? 0 : this.checkIndex(index) / this.rows;
   }
 
   /**
@@ -127,35 +155,20 @@ export abstract class BaseMatrix {
   /**
    * @param index if `index < 0`, `index + .length` is accessed.
    * @returns the element at matrix `index`
-   * @throws `RangeError` if `index` is not in range
+   * @throws ValidationError if `index` is out of bounds
    */
   at(index: number): number {
-    if (index < -this.len || index >= this.len) {
-      throw new RangeError("index is not in range");
-    }
-    return this.internal.at(index) as number;
+    return this.internal[this.checkIndex(index)];
   }
 
   /**
    * Changes the element at matrix `index` to `value`
    * @param index if `index < 0`, `index + .length` is accessed.
    * @returns `value`
-   * @throws `RangeError` if `index` is not in range
+   * @throws ValidationError if `index` is out of bounds
    */
   ed(index: number, value: number): number {
-    if (index >= this.len) {
-      throw new RangeError("index is not in range");
-    }
-
-    if (index < 0) {
-      if (index < -this.len) {
-        throw new RangeError("index is not in range");
-      }
-      index += this.len;
-    }
-
-    this.internal[index] = value;
-    return value;
+    return (this.internal[this.checkIndex(index)] = value);
   }
 
   /**
@@ -170,23 +183,11 @@ export abstract class BaseMatrix {
    * //   0, 3 ]
    *
    * @returns the result of `callback`
-   * @throws `RangeError` if `index` is not in range
+   * @throws ValidationError if `index` is out of bounds
    */
   fn(index: number, callback: MatrixCallback<number>): number {
-    if (index >= this.len) {
-      throw new RangeError("index is not in range");
-    }
-
-    if (index < 0) {
-      if (index < -this.len) {
-        throw new RangeError("index is not in range");
-      }
-      index += this.len;
-    }
-
-    const value = callback(this.internal[index], index);
-    this.internal[index] = value;
-    return value;
+    index = this.checkIndex(index);
+    return (this.internal[index] = callback(this.internal[index], index));
   }
 
   /**
@@ -214,11 +215,12 @@ export abstract class BaseMatrix {
 
   /**
    * Swaps the elements at the provided indexes
-   * @throws `RangeError` if `index` is not in range
+   * @throws ValidationError if `index` is out of bounds
    */
   swap(index1: number, index2: number): void {
+    index1 = this.checkIndex(index1);
+    index2 = this.checkIndex(index2);
     if (index1 === index2) return;
-
     [this.internal[index1], this.internal[index2]] = [this.internal[index2], this.internal[index1]];
   }
 
@@ -475,9 +477,7 @@ export abstract class BaseMatrix {
 
     for (let i = 0; i < p.length; i++) {
       const pq = p[i];
-      if (pq < 0.0 || 1.0 < pq) {
-        throw new RangeError("probs must be in [0.0, 1.0]");
-      }
+      ValidationError.check["number-not-in-unit-interval"]({ arg: "probs" }, pq)?.raise();
 
       unit = pq * n - 1.0;
       low = Math.floor(unit);
@@ -519,7 +519,7 @@ export abstract class BaseMatrix {
     let fn: MatrixCallback<number>;
     if (typeof mat === "number") fn = (e: number) => e + mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e + mat.at(i);
-    else throw new TypeError("mat must be of same size as this");
+    else throw ValidationError.create["other-incorrect-shape"]({ arg: "mat", shape: "this" });
 
     return this.map(fn, inPlace);
   }
@@ -534,7 +534,7 @@ export abstract class BaseMatrix {
     let fn: MatrixCallback<number>;
     if (typeof mat === "number") fn = (e: number) => e - mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e - mat.at(i);
-    else throw new TypeError("mat must be of same size as this");
+    else throw ValidationError.create["other-incorrect-shape"]({ arg: "mat", shape: "this" });
 
     return this.map(fn, inPlace);
   }
@@ -549,7 +549,7 @@ export abstract class BaseMatrix {
     let fn: MatrixCallback<number>;
     if (typeof mat === "number") fn = (e: number) => e / mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e / mat.at(i);
-    else throw new TypeError("mat must be of same size as this");
+    else throw ValidationError.create["other-incorrect-shape"]({ arg: "mat", shape: "this" });
 
     return this.map(fn, inPlace);
   }
@@ -564,7 +564,7 @@ export abstract class BaseMatrix {
     let fn: MatrixCallback<number>;
     if (typeof mat === "number") fn = (e: number) => e * mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e * mat.at(i);
-    else throw new TypeError("mat must be of same size as this");
+    else throw ValidationError.create["other-incorrect-shape"]({ arg: "mat", shape: "this" });
 
     return this.map(fn, inPlace);
   }
@@ -579,7 +579,7 @@ export abstract class BaseMatrix {
     let fn: MatrixCallback<number>;
     if (typeof mat === "number") fn = (e: number) => e % mat;
     else if (this.hasSizeOf(mat)) fn = (e: number, i: number) => e % mat.at(i);
-    else throw new TypeError("mat must be of same size as this");
+    else throw ValidationError.create["other-incorrect-shape"]({ arg: "mat", shape: "this" });
 
     return this.map(fn, inPlace);
   }

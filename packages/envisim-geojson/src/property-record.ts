@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
 import type * as GJ from "@envisim/geojson-utils/geojson";
+import { ValidationError } from "@envisim/utils";
 import { type Feature } from "./class-feature.js";
 import { type PureObject } from "./objects/index.js";
 
@@ -111,9 +112,8 @@ export class PropertyRecord<IDS extends string = string> {
   ): PropertyRecord<IDS1 | IDS2> {
     const keys1 = record1.getIds();
     record2.getIds().forEach((k) => {
-      if (keys1.includes(k)) {
-        throw new Error("Record contain duplicate identifier " + k);
-      }
+      if (keys1.includes(k))
+        throw ValidationError.create["property-name-conflict"]({ arg: "record2", key: k });
     });
 
     return new PropertyRecord({ ...record1.record, ...record2.record });
@@ -197,7 +197,8 @@ export class PropertyRecord<IDS extends string = string> {
     this: PropertyRecord<string>,
     { id = uuid(), name = id, parent }: Partial<NumericalProperty<string>>,
   ): string {
-    if (PropertyRecord.isSpecial(id)) throw new RangeError("cannot add special key to record");
+    if (PropertyRecord.isSpecial(id))
+      throw ValidationError.create["property-special-key"]({ arg: "this", key: id });
 
     this.record[id] = {
       type: "numerical",
@@ -217,7 +218,8 @@ export class PropertyRecord<IDS extends string = string> {
     this: PropertyRecord<string>,
     { id = uuid(), name = id, values = [] }: Partial<CategoricalProperty<string>>,
   ): string {
-    if (PropertyRecord.isSpecial(id)) throw new RangeError("cannot add special key to record");
+    if (PropertyRecord.isSpecial(id))
+      throw ValidationError.create["property-special-key"]({ arg: "this", key: id });
 
     this.record[id] = {
       type: "categorical",
@@ -230,9 +232,8 @@ export class PropertyRecord<IDS extends string = string> {
   }
 
   addValueToCategory(id: IDS, value: string): number {
-    if (PropertyRecord.isCategorical(this.record?.[id]) === false) {
-      throw new TypeError(`${id} is not categorical.`);
-    }
+    if (PropertyRecord.isCategorical(this.record?.[id]) === false)
+      throw ValidationError.create["property-not-categorical"]({ arg: "this", key: id });
 
     const index = this.record[id].values.indexOf(value);
     if (index >= 0) {
@@ -243,9 +244,8 @@ export class PropertyRecord<IDS extends string = string> {
   }
 
   categoryHasValue(id: IDS, value: string): boolean {
-    if (PropertyRecord.isCategorical(this.record?.[id]) === false) {
-      throw new TypeError(`${id} is not categorical.`);
-    }
+    if (PropertyRecord.isCategorical(this.record?.[id]) === false)
+      throw ValidationError.create["property-not-categorical"]({ arg: "this", key: id });
 
     return this.record?.[id].values.includes(value) === true;
   }

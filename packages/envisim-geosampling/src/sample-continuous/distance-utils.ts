@@ -1,3 +1,5 @@
+import { ValidationError } from "@envisim/utils";
+
 export type DetectionFunction = (dist: number) => number;
 export type IntegrateFunction = (x: number) => number;
 
@@ -46,18 +48,18 @@ export function halfNormalDetectionFunction(sigma: number): DetectionFunction {
  * @returns the detection function.
  */
 export function detectionFunction(breakValues: number[], cutoff: number): DetectionFunction {
+  ValidationError.check["number-not-positive"]({ arg: "cutoff" }, cutoff)?.raise();
+  if (breakValues.length < 2)
+    throw ValidationError.create["other-incorrect-shape"]({
+      arg: "breakValues",
+      shape: "2 <= breakvalues.length",
+    });
+  breakValues.forEach((v) =>
+    ValidationError.check["number-not-in-unit-interval"]({ arg: "breakValues" }, v)?.raise(),
+  );
+
   const n = breakValues.length;
-  if (cutoff <= 0) {
-    throw new Error('cutoff must be a positive number.');
-  }
-  if (breakValues.length < 2) {
-    throw new Error('breakValues must contain at least two elements.');
-  }
-  for (let i = 0; i < breakValues.length; i++) {
-    if (breakValues[i] < 0 || breakValues[i] > 1) {
-      throw new Error('breakValues must contain numbers between 0 and 1.');
-    }
-  }
+
   const g = (x: number): number => {
     if (x < 0 || x > cutoff) {
       return 0;

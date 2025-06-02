@@ -7,7 +7,7 @@ import {
   lengthOfLineString,
 } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
-import { type OptionalParam } from "@envisim/utils";
+import { ValidationError, type OptionalParam } from "@envisim/utils";
 import {
   type BufferOptions,
   bufferPolygons,
@@ -27,11 +27,9 @@ export class MultiLineString
     return obj instanceof MultiLineString;
   }
 
-  static assert(
-    obj: unknown,
-    msg: string = "Expected MultiLineString",
-  ): asserts obj is MultiLineString {
-    if (!(obj instanceof MultiLineString)) throw new TypeError(msg);
+  static assert(obj: unknown): asserts obj is MultiLineString {
+    if (!this.isObject(obj))
+      throw ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "MultiLineString" });
   }
 
   static create(

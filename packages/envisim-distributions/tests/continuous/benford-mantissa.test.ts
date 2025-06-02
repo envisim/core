@@ -1,9 +1,8 @@
-import {describe} from 'vitest';
+import { describe } from "vitest";
+import { BenfordMantissa } from "../../src/index.js";
+import { distributionTests, fromTo } from "../_distributions.testf.js";
 
-import {BenfordMantissa} from '../../src/index.js';
-import {distributionTests, fromTo} from '../_distributions.testf.js';
-
-describe('BenfordMantissa(10)', () => {
+describe("BenfordMantissa(10)", () => {
   const pdf = [
     4.34294481903251750055, 2.17147240951625875027, 1.44764827301083931488, 1.08573620475812937514,
     0.86858896380650352231, 0.72382413650541965744, 0.62042068843321696026, 0.54286810237906468757,
@@ -21,5 +20,5 @@ describe('BenfordMantissa(10)', () => {
   ];
   const x = fromTo(1, 9, 1).map((e) => e / 10);
 
-  distributionTests(new BenfordMantissa(10.0), {x, pdf, cdf, quantile});
+  distributionTests(new BenfordMantissa(10.0), { x, pdf, cdf, quantile });
 });

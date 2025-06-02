@@ -1,6 +1,7 @@
 /**
  * @module @envisim/geojson-utils/plate-carree
  */
+import { ValidationError } from "@envisim/utils";
 import type * as GJ from "../geojson.js";
 import { plateCarreeAreaOfRing } from "./rhumb.js";
 
@@ -64,11 +65,10 @@ export function distance(p1: GJ.Position, p2: GJ.Position): number {
  * @param p2 end point [lon,lat]
  * @param fraction the fraction of the length
  * @returns the position on the segment
+ * @throws ValidationError if number is not in the interval [0,1]
  */
 export function intermediate(p1: GJ.Position, p2: GJ.Position, fraction: number): GJ.Position2 {
-  if (fraction < 0 || fraction > 1) {
-    throw new Error("fraction must be between 0 and 1");
-  }
+  ValidationError.check["number-not-in-unit-interval"]({ arg: "fraction" }, fraction)?.raise();
   const delta = [p2[0] - p1[0], p2[1] - p1[1]];
   const degrees = (delta[0] ** 2 + delta[1] ** 2) ** 0.5;
   // Numerical integration of the length

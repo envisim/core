@@ -1,3 +1,4 @@
+import { ValidationError } from "@envisim/utils";
 import { Distribution, Interval } from "./abstract-distribution.js";
 
 export class LocationScaleParams {
@@ -12,8 +13,8 @@ export class LocationScaleParams {
     location: number = LocationScaleParams.DEFAULTS.location,
     scale: number = LocationScaleParams.DEFAULTS.scale,
   ) {
+    ValidationError.check["number-not-positive"]({ arg: "scale" }, scale)?.raise();
     this.#location = location;
-    if (scale <= 0.0) throw new RangeError("scale must be > 0.0");
     this.#scale = scale;
   }
 

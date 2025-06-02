@@ -39,6 +39,7 @@
 // Qualifying MWC multipliers are: 187884, 686118, 898134, 1104375, 1250205,
 // 1460910 and 1768863. (We use the largest one that's < 2^21)
 // ============================================================================
+import { ValidationError } from "@envisim/utils";
 
 export class Random {
   // set the 'order' number of ENTROPY-holding 32-bit values
@@ -136,10 +137,11 @@ export class Random {
   // "range" param and take the "floor" to return a equally probable integer.
   /**
    * @returns A pseudo-random integer on [0, `n`)
-   * @throws `RangeError` if `n` is not at positive integer.
+   * @throws ValidationError if `n` is not at positive integer.
    */
   intn(n: number = 1): number {
-    if (!Number.isInteger(n) || n < 1) throw new RangeError("n must be a positive integer");
+    n = Math.trunc(n);
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     if (n === 1) return 0;
     return (n * this.random()) | 0;
   }

@@ -1,5 +1,5 @@
 import { Random, type RandomGenerator, randomArray } from "@envisim/random";
-import { assertPositiveInteger } from "./utils.js";
+import { ValidationError } from "@envisim/utils";
 
 /**
  * @category Interfaces
@@ -45,7 +45,8 @@ export abstract class Distribution {
    * @param n - the number of observations to be generated
    */
   random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
-    assertPositiveInteger(n);
+    n = Math.trunc(n);
+    ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     const u = randomArray(n, options.rand);
     return u.map((v) => this.quantile(v));
   }
@@ -116,12 +117,16 @@ export class Interval {
   ro: boolean = true;
 
   constructor(l: number, r: number, lo: boolean = true, ro: boolean = true) {
-    if (l > r) throw new RangeError("l must not be larger than r");
+    if (l > r)
+      throw ValidationError.create["number-not-in-interval"]({
+        arg: "r",
+        interval: [l],
+        ends: "open",
+      });
     this.l = l;
     this.r = r;
     this.lo = Number.isFinite(l) ? lo : true;
     this.ro = Number.isFinite(r) ? ro : true;
-    return this;
   }
 
   isIn(x: number) {

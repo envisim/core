@@ -6,7 +6,7 @@ import {
   pointInSinglePolygonPosition,
 } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
-import { type OptionalParam } from "@envisim/utils";
+import { ValidationError, type OptionalParam } from "@envisim/utils";
 import { type BufferOptions, bufferPolygons, defaultBufferOptions } from "../buffer/index.js";
 import { centroidOfPolygon } from "../utils/centroid.js";
 import { AbstractAreaObject } from "./abstract-area-object.js";
@@ -17,8 +17,9 @@ export class Polygon extends AbstractAreaObject<GJ.Polygon> implements GJ.Polygo
     return obj instanceof Polygon;
   }
 
-  static assert(obj: unknown, msg: string = "Expected Polygon"): asserts obj is Polygon {
-    if (!(obj instanceof Polygon)) throw new TypeError(msg);
+  static assert(obj: unknown): asserts obj is Polygon {
+    if (!this.isObject(obj))
+      throw ValidationError.create["geojson-incorrect"]({ arg: "obj", type: "Polygon" });
   }
 
   static create(coordinates: GJ.Polygon["coordinates"], shallow: boolean = true): Polygon {

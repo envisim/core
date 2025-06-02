@@ -1,5 +1,5 @@
 import { type Matrix } from "@envisim/matrix";
-import { swap } from "@envisim/utils";
+import { swap, ValidationError } from "@envisim/utils";
 import { KdNode } from "./kd-node.js";
 import { type KdStore } from "./kd-store.js";
 
@@ -17,9 +17,10 @@ export class KdTree {
   }
 
   constructor(dt: Matrix, bucketSize: number = 40) {
-    if (dt.length <= 0) throw new TypeError("dt must have elements");
+    if (dt.length <= 0) throw ValidationError.create["array-empty"]({ arg: "dt" });
 
-    if (bucketSize < 1) throw new TypeError("bucketSize must be >= 1");
+    bucketSize = Math.trunc(bucketSize);
+    ValidationError.check["number-not-positive"]({ arg: "bucketSize" }, bucketSize)?.raise();
 
     this.dt = dt;
     this.bucketSize = Math.trunc(bucketSize);

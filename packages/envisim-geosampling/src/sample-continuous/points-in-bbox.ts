@@ -1,12 +1,8 @@
 import { BoundingBox, longitudeDistance, normalizeLongitude } from "@envisim/geojson-utils";
 import type * as GJ from "@envisim/geojson-utils/geojson";
 import { Random } from "@envisim/random";
-import {
-  type OptionsBase,
-  type SampleError,
-  optionsBaseCheck,
-  throwRangeError,
-} from "./options.js";
+import type { EnvisimError } from "@envisim/utils";
+import { type OptionsBase, optionsBaseCheck } from "./options.js";
 
 const TO_RAD = Math.PI / 180.0;
 const TO_DEG = 180.0 / Math.PI;
@@ -16,7 +12,7 @@ const TO_DEG = 180.0 / Math.PI;
  */
 export type SamplePositionsInBbox = OptionsBase;
 
-export function samplePositionsInBboxCheck(options: SamplePositionsInBbox): SampleError {
+export function samplePositionsInBboxCheck(options: SamplePositionsInBbox): EnvisimError {
   return optionsBaseCheck(options);
 }
 
@@ -26,7 +22,7 @@ export function samplePositionsInBboxCheck(options: SamplePositionsInBbox): Samp
  * @returns Array of GeoJSON positions.
  */
 export function samplePositionsInBbox(box: GJ.BBox, options: SamplePositionsInBbox): GJ.Position[] {
-  throwRangeError(samplePositionsInBboxCheck(options));
+  samplePositionsInBboxCheck(options).throwErrors();
   const { rand = new Random(), sampleSize } = options;
 
   const bbox = BoundingBox.removeAltitude(box);
