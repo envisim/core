@@ -1,6 +1,6 @@
 {
   "name": "@envisim/geojson",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Classes for handling GeoJSON objects",
   "keywords": [
     "geojson",
@@ -31,8 +31,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/geojson-utils": "workspace:^0.1.1",
-    "@envisim/utils": "workspace:^0.1.1",
+    "@envisim/geojson-utils": "workspace:^0.1.2",
+    "@envisim/utils": "workspace:^0.2.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

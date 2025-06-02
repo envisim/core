@@ -596,7 +596,7 @@ if `true`, copys by reference when possible.
 
 ##### assert()
 
-> `static` **assert**(`obj`, `msg`): `asserts obj is Circle`
+> `static` **assert**(`obj`): `asserts obj is Circle`
 
 ###### Parameters
 
@@ -605,7 +605,6 @@ if `true`, copys by reference when possible.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -618,28 +617,6 @@ if `true`, copys by reference when possible.
 <td>
 
 `unknown`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected Circle"`
 
 </td>
 </tr>
@@ -1305,7 +1282,7 @@ if `true`, copys by reference when possible.
 
 ##### assertArea()
 
-> `static` **assertArea**(`obj`, `msg`): `asserts obj is Feature<AreaObject, string>`
+> `static` **assertArea**(`obj`): `asserts obj is Feature<AreaObject, string>`
 
 ###### Parameters
 
@@ -1314,7 +1291,6 @@ if `true`, copys by reference when possible.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -1327,28 +1303,6 @@ if `true`, copys by reference when possible.
 <td>
 
 `unknown`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected area"`
 
 </td>
 </tr>
@@ -1361,7 +1315,7 @@ if `true`, copys by reference when possible.
 
 ##### assertLine()
 
-> `static` **assertLine**(`obj`, `msg`): `asserts obj is Feature<LineObject, string>`
+> `static` **assertLine**(`obj`): `asserts obj is Feature<LineObject, string>`
 
 ###### Parameters
 
@@ -1370,7 +1324,6 @@ if `true`, copys by reference when possible.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -1383,28 +1336,6 @@ if `true`, copys by reference when possible.
 <td>
 
 `unknown`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected line"`
 
 </td>
 </tr>
@@ -1417,7 +1348,7 @@ if `true`, copys by reference when possible.
 
 ##### assertPoint()
 
-> `static` **assertPoint**(`obj`, `msg`): `asserts obj is Feature<PointObject, string>`
+> `static` **assertPoint**(`obj`): `asserts obj is Feature<PointObject, string>`
 
 ###### Parameters
 
@@ -1426,7 +1357,6 @@ if `true`, copys by reference when possible.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -1439,28 +1369,6 @@ if `true`, copys by reference when possible.
 <td>
 
 `unknown`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected point"`
 
 </td>
 </tr>
@@ -2966,7 +2874,7 @@ of a line collection, and the total count of a point collection
 
 ##### assertArea()
 
-> `static` **assertArea**<`P`>(`obj`, `msg`): `asserts obj is FeatureCollection<AreaObject, P>`
+> `static` **assertArea**<`P`>(`obj`): `asserts obj is FeatureCollection<AreaObject, P>`
 
 ###### Type Parameters
 
@@ -2994,7 +2902,6 @@ of a line collection, and the total count of a point collection
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -3007,28 +2914,6 @@ of a line collection, and the total count of a point collection
 <td>
 
 [`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`>
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected area"`
 
 </td>
 </tr>
@@ -3041,7 +2926,7 @@ of a line collection, and the total count of a point collection
 
 ##### assertLine()
 
-> `static` **assertLine**<`P`>(`obj`, `msg`): `asserts obj is FeatureCollection<LineObject, P>`
+> `static` **assertLine**<`P`>(`obj`): `asserts obj is FeatureCollection<LineObject, P>`
 
 ###### Type Parameters
 
@@ -3069,7 +2954,6 @@ of a line collection, and the total count of a point collection
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -3082,28 +2966,6 @@ of a line collection, and the total count of a point collection
 <td>
 
 [`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`>
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected line"`
 
 </td>
 </tr>
@@ -3116,7 +2978,7 @@ of a line collection, and the total count of a point collection
 
 ##### assertPoint()
 
-> `static` **assertPoint**<`P`>(`obj`, `msg`): `asserts obj is FeatureCollection<PointObject, P>`
+> `static` **assertPoint**<`P`>(`obj`): `asserts obj is FeatureCollection<PointObject, P>`
 
 ###### Type Parameters
 
@@ -3144,7 +3006,6 @@ of a line collection, and the total count of a point collection
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -3157,28 +3018,6 @@ of a line collection, and the total count of a point collection
 <td>
 
 [`FeatureCollection`](#featurecollection)<[`PureObject`](#pureobject), `P`>
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected point"`
 
 </td>
 </tr>
@@ -4316,7 +4155,7 @@ of a line collection, and the total count of a point collection
 
 ##### assert()
 
-> `static` **assert**(`obj`, `msg`): `asserts obj is LineString`
+> `static` **assert**(`obj`): `asserts obj is LineString`
 
 ###### Parameters
 
@@ -4325,7 +4164,6 @@ of a line collection, and the total count of a point collection
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -4338,28 +4176,6 @@ of a line collection, and the total count of a point collection
 <td>
 
 `unknown`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected LineString"`
 
 </td>
 </tr>
@@ -5034,7 +4850,7 @@ overlap as well.
 
 ##### assert()
 
-> `static` **assert**(`obj`, `msg`): `asserts obj is MultiCircle`
+> `static` **assert**(`obj`): `asserts obj is MultiCircle`
 
 ###### Parameters
 
@@ -5043,7 +4859,6 @@ overlap as well.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -5056,28 +4871,6 @@ overlap as well.
 <td>
 
 `unknown`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected MultiCircle"`
 
 </td>
 </tr>
@@ -5650,7 +5443,7 @@ overlap as well.
 
 ##### assert()
 
-> `static` **assert**(`obj`, `msg`): `asserts obj is MultiLineString`
+> `static` **assert**(`obj`): `asserts obj is MultiLineString`
 
 ###### Parameters
 
@@ -5659,7 +5452,6 @@ overlap as well.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -5672,28 +5464,6 @@ overlap as well.
 <td>
 
 `unknown`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected MultiLineString"`
 
 </td>
 </tr>
@@ -6249,7 +6019,7 @@ overlap as well.
 
 ##### assert()
 
-> `static` **assert**(`obj`, `msg`): `asserts obj is MultiPoint`
+> `static` **assert**(`obj`): `asserts obj is MultiPoint`
 
 ###### Parameters
 
@@ -6258,7 +6028,6 @@ overlap as well.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -6271,28 +6040,6 @@ overlap as well.
 <td>
 
 `unknown`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected MultiPoint"`
 
 </td>
 </tr>
@@ -6905,7 +6652,7 @@ overlap as well.
 
 ##### assert()
 
-> `static` **assert**(`obj`, `msg`): `asserts obj is MultiPolygon`
+> `static` **assert**(`obj`): `asserts obj is MultiPolygon`
 
 ###### Parameters
 
@@ -6914,7 +6661,6 @@ overlap as well.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -6927,28 +6673,6 @@ overlap as well.
 <td>
 
 `unknown`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected MultiPolygon"`
 
 </td>
 </tr>
@@ -7473,7 +7197,7 @@ overlap as well.
 
 ##### assert()
 
-> `static` **assert**(`obj`, `msg`): `asserts obj is Point`
+> `static` **assert**(`obj`): `asserts obj is Point`
 
 ###### Parameters
 
@@ -7482,7 +7206,6 @@ overlap as well.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -7495,28 +7218,6 @@ overlap as well.
 <td>
 
 `unknown`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected Point"`
 
 </td>
 </tr>
@@ -8129,7 +7830,7 @@ overlap as well.
 
 ##### assert()
 
-> `static` **assert**(`obj`, `msg`): `asserts obj is Polygon`
+> `static` **assert**(`obj`): `asserts obj is Polygon`
 
 ###### Parameters
 
@@ -8138,7 +7839,6 @@ overlap as well.
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -8151,28 +7851,6 @@ overlap as well.
 <td>
 
 `unknown`
-
-</td>
-<td>
-
-`undefined`
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected Polygon"`
 
 </td>
 </tr>

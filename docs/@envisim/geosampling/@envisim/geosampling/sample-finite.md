@@ -941,7 +941,7 @@ This apply to lpm1, lpm2, scps, localCube.
 
 ### sampleBalancedCheck()
 
-> **sampleBalancedCheck**<`P`>(`options`, `record`): [`SampleError`](errors.md#sampleerror)
+> **sampleBalancedCheck**<`P`>(`options`, `record`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Type Parameters
 
@@ -1001,7 +1001,7 @@ This apply to lpm1, lpm2, scps, localCube.
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 
@@ -1080,7 +1080,7 @@ This apply to lpm1, lpm2, scps, localCube.
 
 ### sampleDoublyBalancedCheck()
 
-> **sampleDoublyBalancedCheck**<`P`>(`options`, `record`): [`SampleError`](errors.md#sampleerror)
+> **sampleDoublyBalancedCheck**<`P`>(`options`, `record`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Type Parameters
 
@@ -1140,7 +1140,7 @@ This apply to lpm1, lpm2, scps, localCube.
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 
@@ -1221,7 +1221,7 @@ Select a sample from a layer using sampling methods for a finite population.
 
 ### sampleFiniteCheck()
 
-> **sampleFiniteCheck**<`P`>(`options`, `record`): [`SampleError`](errors.md#sampleerror)
+> **sampleFiniteCheck**<`P`>(`options`, `record`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Type Parameters
 
@@ -1281,7 +1281,7 @@ Select a sample from a layer using sampling methods for a finite population.
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)
 
 ---
 
@@ -1435,7 +1435,7 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 
 ### sampleSpatiallyBalancedCheck()
 
-> **sampleSpatiallyBalancedCheck**<`P`>(`options`, `record`): [`SampleError`](errors.md#sampleerror)
+> **sampleSpatiallyBalancedCheck**<`P`>(`options`, `record`): [`EnvisimError`](../../../utils.md#envisimerror)
 
 #### Type Parameters
 
@@ -1495,4 +1495,4 @@ Select a w/o replacement sample from a layer using sampling methods for a finite
 
 #### Returns
 
-[`SampleError`](errors.md#sampleerror)
+[`EnvisimError`](../../../utils.md#envisimerror)

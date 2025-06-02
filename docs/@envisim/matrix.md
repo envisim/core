@@ -163,7 +163,7 @@ the element at matrix `index`
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ##### atDim()
 
@@ -313,7 +313,7 @@ the column index of the matrix `index`
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ##### dim()
 
@@ -422,7 +422,7 @@ if `index < 0`, `index + .length` is accessed.
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ##### edDim()
 
@@ -704,7 +704,7 @@ mat.edRC(3, (el, in) => el + in);
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ##### fnDim()
 
@@ -906,7 +906,7 @@ the index of the first occurance of `searchElement`
 
 ##### indexOfDim()
 
-> **indexOfDim**(`__namedParameters`): `number`
+> **indexOfDim**(`dim`): `number`
 
 ###### Parameters
 
@@ -921,7 +921,7 @@ the index of the first occurance of `searchElement`
 <tr>
 <td>
 
-`__namedParameters`
+`dim`
 
 </td>
 <td>
@@ -941,7 +941,7 @@ the matrix index at `row`, `column`
 
 ###### Throws
 
-`RangeError` if `row` or `column` is not in range
+ValidationError if `row` or `column` is out of bounds
 
 ##### isSquare()
 
@@ -1258,7 +1258,7 @@ the row index of the matrix `index`
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ##### sd()
 
@@ -1480,7 +1480,7 @@ Swaps the elements at the provided indexes
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ##### variance()
 
@@ -2037,7 +2037,7 @@ the element at matrix `index`
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ###### Inherited from
 
@@ -2237,7 +2237,7 @@ the column index of the matrix `index`
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ###### Inherited from
 
@@ -2398,7 +2398,7 @@ if `index < 0`, `index + .length` is accessed.
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ###### Inherited from
 
@@ -2883,7 +2883,7 @@ mat.edRC(3, (el, in) => el + in);
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ###### Inherited from
 
@@ -3109,7 +3109,7 @@ the index of the first occurance of `searchElement`
 
 ##### indexOfDim()
 
-> **indexOfDim**(`__namedParameters`): `number`
+> **indexOfDim**(`dim`): `number`
 
 ###### Parameters
 
@@ -3124,7 +3124,7 @@ the index of the first occurance of `searchElement`
 <tr>
 <td>
 
-`__namedParameters`
+`dim`
 
 </td>
 <td>
@@ -3144,7 +3144,7 @@ the matrix index at `row`, `column`
 
 ###### Throws
 
-`RangeError` if `row` or `column` is not in range
+ValidationError if `row` or `column` is out of bounds
 
 ###### Inherited from
 
@@ -3570,7 +3570,7 @@ the row index of the matrix `index`
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ###### Inherited from
 
@@ -3820,7 +3820,7 @@ Swaps the elements at the provided indexes
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ###### Inherited from
 
@@ -3850,7 +3850,7 @@ Variance of all elements
 
 ##### assert()
 
-> `static` **assert**(`obj`, `msg`): `asserts obj is Matrix`
+> `static` **assert**(`obj`): `asserts obj is Matrix`
 
 ###### Parameters
 
@@ -3859,8 +3859,6 @@ Variance of all elements
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -3875,38 +3873,6 @@ Variance of all elements
 `unknown`
 
 </td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected Matrix"`
-
-</td>
-<td>
-
-message to pass
-
-</td>
 </tr>
 </tbody>
 </table>
@@ -3917,7 +3883,7 @@ message to pass
 
 ###### Throws
 
-TypeError if `obj` is not Matrix
+ValidationError if `obj` is not Matrix
 
 ##### cbind()
 
@@ -3956,7 +3922,7 @@ Bind multiple matrices together by columns
 
 ###### Throws
 
-`RangeError` if the number of rows of any matrix doesn't match
+ValidationError if the number of rows of any matrix doesn't match
 
 ##### create()
 
@@ -4124,7 +4090,7 @@ Bind multiple matrices together by rows
 
 ###### Throws
 
-`RangeError` if the number of columns of any matrix doesn't match
+ValidationError if the number of rows of any matrix doesn't match
 
 #### Basic operators
 
@@ -4555,7 +4521,7 @@ the determinant of the matrix
 
 ###### Throws
 
-`Error` if matrix is not square
+ValidationError if matrix is not square
 
 ##### inverse()
 
@@ -4992,7 +4958,7 @@ the element at matrix `index`
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ###### Inherited from
 
@@ -5162,7 +5128,7 @@ the column index of the matrix `index`
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ###### Inherited from
 
@@ -5202,10 +5168,6 @@ the column index of the matrix `index`
 `number`
 
 the correlation between `this` and `vec`
-
-###### Throws
-
-`RangeError` if the vectors have different sizes
 
 ##### dim()
 
@@ -5322,7 +5284,7 @@ if `index < 0`, `index + .length` is accessed.
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ###### Inherited from
 
@@ -5669,7 +5631,7 @@ mat.edRC(3, (el, in) => el + in);
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ###### Inherited from
 
@@ -5916,7 +5878,7 @@ the values needed in order to construct a histogram
 
 ###### Throws
 
-`RangeError` if the provided range is not finite, or in the incorrect order.
+RangeError if the provided range is not finite, or in the incorrect order.
 
 ##### indexOf()
 
@@ -5993,7 +5955,7 @@ the index of the first occurance of `searchElement`
 
 ##### indexOfDim()
 
-> **indexOfDim**(`__namedParameters`): `number`
+> **indexOfDim**(`dim`): `number`
 
 ###### Parameters
 
@@ -6008,7 +5970,7 @@ the index of the first occurance of `searchElement`
 <tr>
 <td>
 
-`__namedParameters`
+`dim`
 
 </td>
 <td>
@@ -6028,7 +5990,7 @@ the matrix index at `row`, `column`
 
 ###### Throws
 
-`RangeError` if `row` or `column` is not in range
+ValidationError if `row` or `column` is out of bounds
 
 ###### Inherited from
 
@@ -6421,7 +6383,7 @@ the row index of the matrix `index`
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ###### Inherited from
 
@@ -6769,7 +6731,7 @@ Swaps the elements at the provided indexes
 
 ###### Throws
 
-`RangeError` if `index` is not in range
+ValidationError if `index` is out of bounds
 
 ###### Inherited from
 
@@ -6801,7 +6763,7 @@ Variance of all elements
 
 ##### assert()
 
-> `static` **assert**(`obj`, `msg`): `asserts obj is Vector`
+> `static` **assert**(`obj`): `asserts obj is Vector`
 
 ###### Parameters
 
@@ -6810,8 +6772,6 @@ Variance of all elements
 <tr>
 <th>Parameter</th>
 <th>Type</th>
-<th>Default value</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -6826,38 +6786,6 @@ Variance of all elements
 `unknown`
 
 </td>
-<td>
-
-`undefined`
-
-</td>
-<td>
-
-‐
-
-</td>
-</tr>
-<tr>
-<td>
-
-`msg`
-
-</td>
-<td>
-
-`string`
-
-</td>
-<td>
-
-`"Expected Vector"`
-
-</td>
-<td>
-
-message to pass
-
-</td>
 </tr>
 </tbody>
 </table>
@@ -6868,7 +6796,7 @@ message to pass
 
 ###### Throws
 
-TypeError if `obj` is not Vector
+ValidationError if `obj` is not Vector
 
 ##### borrow()
 
@@ -7603,7 +7531,7 @@ the covariance of `this` and `vec`
 
 ###### Throws
 
-`RangeError` if the vectors has different sizes
+ValidationError if the vectors has different sizes
 
 ##### cumulativeSum()
 

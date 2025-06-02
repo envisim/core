@@ -1,5 +1,15 @@
 # @envisim/geojson
 
+## 0.1.2
+
+### Patch Changes
+
+- 69f82f6: Fixed: PropertyRecord should not register special keys as properties
+- 33bc7fd: Changed: use ValidationError or EnvisimError, if possible
+- Updated dependencies [33bc7fd]
+  - @envisim/geojson-utils@0.1.2
+  - @envisim/utils@0.2.0
+
 ## 0.1.1
 
 ### Patch Changes

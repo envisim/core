@@ -1,6 +1,6 @@
 {
   "name": "@envisim/sampling",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Finite population sampling algorithms",
   "keywords": [
     "statistics",
@@ -32,9 +32,9 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/matrix": "workspace:^0.1.1",
-    "@envisim/random": "workspace:^0.1.1",
-    "@envisim/utils": "workspace:^0.1.1"
+    "@envisim/matrix": "workspace:^0.1.2",
+    "@envisim/random": "workspace:^0.2.0",
+    "@envisim/utils": "workspace:^0.2.0"
   },
   "devDependencies": {
     "@envisim/config-eslint": "workspace:*",

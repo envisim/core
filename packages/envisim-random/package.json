@@ -1,6 +1,6 @@
 {
   "name": "@envisim/random",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Random number generation utilties",
   "keywords": [
     "statistics",
@@ -32,7 +32,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/utils": "workspace:^0.1.1"
+    "@envisim/utils": "workspace:^0.2.0"
   },
   "devDependencies": {
     "@envisim/config-eslint": "workspace:*",

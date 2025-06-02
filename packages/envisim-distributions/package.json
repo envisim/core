@@ -1,6 +1,6 @@
 {
   "name": "@envisim/distributions",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A collection of probability distributions",
   "keywords": [
     "statistics",
@@ -32,8 +32,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@envisim/random": "workspace:^0.1.1",
-    "@envisim/utils": "workspace:^0.1.1"
+    "@envisim/random": "workspace:^0.2.0",
+    "@envisim/utils": "workspace:^0.2.0"
   },
   "devDependencies": {
     "@envisim/config-eslint": "workspace:*",

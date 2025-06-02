@@ -12053,7 +12053,7 @@ the variance
 
 ##### Constructor
 
-> **new UniformDiscrete**(`a?`, `b?`): [`UniformDiscrete`](#uniformdiscrete)
+> **new UniformDiscrete**(`a`, `b`): [`UniformDiscrete`](#uniformdiscrete)
 
 The Uniform (discrete) distribution
 
@@ -12070,7 +12070,7 @@ The Uniform (discrete) distribution
 <tr>
 <td>
 
-`a?`
+`a`
 
 </td>
 <td>
@@ -12082,7 +12082,7 @@ The Uniform (discrete) distribution
 <tr>
 <td>
 
-`b?`
+`b`
 
 </td>
 <td>
