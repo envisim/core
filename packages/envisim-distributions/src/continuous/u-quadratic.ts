@@ -27,19 +27,19 @@ export class UQuadratic extends Bounded {
     return super.params;
   }
 
-  pdf(x: number): number {
-    return this.support.checkPDF(x) ?? this.#alpha * Math.pow(x - this.#beta, 2);
+  override pdf(x: number): number {
+    return super.pdf(x) ?? this.#alpha * Math.pow(x - this.#beta, 2);
   }
 
-  cdf(x: number): number {
+  override cdf(x: number): number {
     const c1 = this.#alpha / 3.0;
     const c2 = Math.pow(this.#beta - this.params.a, 3);
 
-    return this.support.checkCDF(x) ?? c1 * (c2 + Math.pow(x - this.#beta, 3));
+    return super.cdf(x) ?? c1 * (c2 + Math.pow(x - this.#beta, 3));
   }
 
-  quantile(q: number): number {
-    const check = this.support.checkQuantile(q);
+  override quantile(q: number): number {
+    const check = super.quantile(q);
     if (check !== null) return check;
 
     const c1 = Math.pow(this.params.b - this.params.a, 3) * 0.25;

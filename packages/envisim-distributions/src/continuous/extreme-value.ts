@@ -20,20 +20,17 @@ export class ExtremeValue extends LocationScale {
     super(location, scale);
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     const exp = Math.exp(-this.params.normalize(x));
-    return this.support.checkPDF(x) ?? (exp * Math.exp(-exp)) / this.params.scale;
+    return (exp * Math.exp(-exp)) / this.params.scale;
   }
 
-  cdf(x: number): number {
-    return this.support.checkCDF(x) ?? Math.exp(-Math.exp(-this.params.normalize(x)));
+  override cdf(x: number): number {
+    return Math.exp(-Math.exp(-this.params.normalize(x)));
   }
 
-  quantile(q: number): number {
-    return (
-      this.support.checkQuantile(q) ??
-      this.params.location - Math.log(-Math.log(q)) * this.params.scale
-    );
+  override quantile(q: number): number {
+    return super.quantile(q) ?? this.params.location - Math.log(-Math.log(q)) * this.params.scale;
   }
 
   mean(): number {

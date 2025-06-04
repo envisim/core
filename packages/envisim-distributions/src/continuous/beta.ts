@@ -1,7 +1,6 @@
 import { ValidationError } from "@envisim/utils";
 import {
   Distribution,
-  Interval,
   type RandomOptions,
   RANDOM_OPTIONS_DEFAULT,
 } from "../abstract-distribution.js";
@@ -28,7 +27,7 @@ export class Beta extends Distribution {
   constructor(alpha?: number, beta?: number) {
     super();
     this.#params = new BetaParams(alpha, beta);
-    this.support = new Interval(0.0, 1.0, false, false);
+    this.support = { interval: [0.0, 1.0], ends: "closed" };
   }
 
   /** @internal */
@@ -36,22 +35,22 @@ export class Beta extends Distribution {
     return this.#params;
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     const alpha = this.params.alpha - 1.0;
     const beta = this.params.beta - 1.0;
 
     return (
-      this.support.checkPDF(x) ??
+      super.pdf(x) ??
       Math.exp(alpha * Math.log(x) + beta * Math.log(1.0 - x) - this.params.logBetaFunction())
     );
   }
 
-  cdf(x: number, eps: number = 1e-20): number {
-    return this.support.checkCDF(x) ?? this.params.regularizedBetaFunction(x, eps);
+  override cdf(x: number, eps: number = 1e-20): number {
+    return super.cdf(x) ?? this.params.regularizedBetaFunction(x, eps);
   }
 
-  quantile(q: number, eps: number = 1e-20): number {
-    return this.support.checkQuantile(q) ?? this.params.inverseRegularizedBetaFunction(q, eps);
+  override quantile(q: number, eps: number = 1e-20): number {
+    return super.quantile(q) ?? this.params.inverseRegularizedBetaFunction(q, eps);
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
@@ -105,7 +104,7 @@ export class BetaPrime extends Distribution {
   constructor(alpha?: number, beta?: number) {
     super();
     this.#params = new BetaParams(alpha, beta);
-    this.support = new Interval(0.0, Infinity, false, true);
+    this.support = { interval: [0.0, Infinity], ends: "right-open" };
   }
 
   /** @internal */
@@ -113,8 +112,8 @@ export class BetaPrime extends Distribution {
     return this.#params;
   }
 
-  pdf(x: number): number {
-    const check = this.support.checkPDF(x);
+  override pdf(x: number): number {
+    const check = super.pdf(x);
     if (check !== null) return check;
 
     const beta = this.params.alpha + this.params.beta;
@@ -126,12 +125,12 @@ export class BetaPrime extends Distribution {
     return Math.exp(alpha * Math.log(x) - beta * Math.log1p(x) - this.params.logBetaFunction());
   }
 
-  cdf(x: number, eps: number = 1e-20): number {
-    return this.support.checkCDF(x) ?? this.params.regularizedBetaFunction(x / (1 + x), eps);
+  override cdf(x: number, eps: number = 1e-20): number {
+    return super.cdf(x) ?? this.params.regularizedBetaFunction(x / (1 + x), eps);
   }
 
-  quantile(q: number, eps: number = 1e-20): number {
-    const check = this.support.checkQuantile(q);
+  override quantile(q: number, eps: number = 1e-20): number {
+    const check = super.quantile(q);
     if (check !== null) return check;
     const inv = this.params.inverseRegularizedBetaFunction(q, eps);
     return inv / (1.0 - inv);

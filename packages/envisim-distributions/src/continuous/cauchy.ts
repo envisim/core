@@ -18,20 +18,18 @@ export class Cauchy extends LocationScale {
     super(location, scale);
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     const c = Math.PI * this.params.scale;
-
-    return this.support.checkPDF(x) ?? 1.0 / (c * (1.0 + Math.pow(this.params.normalize(x), 2)));
+    return 1.0 / (c * (1.0 + Math.pow(this.params.normalize(x), 2)));
   }
 
-  cdf(x: number): number {
-    return this.support.checkCDF(x) ?? 0.5 + Math.atan(this.params.normalize(x)) / Math.PI;
+  override cdf(x: number): number {
+    return 0.5 + Math.atan(this.params.normalize(x)) / Math.PI;
   }
 
-  quantile(q: number): number {
+  override quantile(q: number): number {
     return (
-      this.support.checkQuantile(q) ??
-      this.params.location + this.params.scale * Math.tan(Math.PI * (q - 0.5))
+      super.quantile(q) ?? this.params.location + this.params.scale * Math.tan(Math.PI * (q - 0.5))
     );
   }
 

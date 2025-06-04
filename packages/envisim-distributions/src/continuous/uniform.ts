@@ -22,16 +22,16 @@ export class Uniform extends Bounded {
     super(a, b);
   }
 
-  pdf(x: number): number {
-    return this.support.checkPDF(x) ?? 1.0 / this.params.width;
+  override pdf(x: number): number {
+    return super.pdf(x) ?? 1.0 / this.params.width;
   }
 
-  cdf(x: number): number {
-    return this.support.checkCDF(x) ?? (x - this.params.a) / this.params.width;
+  override cdf(x: number): number {
+    return super.cdf(x) ?? (x - this.params.a) / this.params.width;
   }
 
-  quantile(q: number): number {
-    return this.support.checkQuantile(q) ?? this.params.a + q * this.params.width;
+  override quantile(q: number): number {
+    return super.quantile(q) ?? this.params.a + q * this.params.width;
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
@@ -78,8 +78,8 @@ export class Triangular extends BoundedMid {
     super(a, b, mid);
   }
 
-  pdf(x: number): number {
-    const check = this.support.checkPDF(x);
+  override pdf(x: number): number {
+    const check = super.pdf(x);
     if (check !== null) return check;
 
     const c1 = 2.0 / this.params.width;
@@ -91,8 +91,8 @@ export class Triangular extends BoundedMid {
     return c3 * (this.params.b - x);
   }
 
-  cdf(x: number): number {
-    const check = this.support.checkCDF(x);
+  override cdf(x: number): number {
+    const check = super.cdf(x);
     if (check !== null) return check;
 
     const c1 = 1.0 / (this.params.awidth * this.params.width);
@@ -102,8 +102,8 @@ export class Triangular extends BoundedMid {
     return 1.0 - Math.pow(this.params.b - x, 2) * c2;
   }
 
-  quantile(q: number): number {
-    const check = this.support.checkQuantile(q);
+  override quantile(q: number): number {
+    const check = super.quantile(q);
     if (check !== null) return check;
 
     const c1 = this.params.width;

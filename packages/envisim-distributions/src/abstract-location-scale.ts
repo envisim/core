@@ -1,5 +1,5 @@
 import { ValidationError } from "@envisim/utils";
-import { Distribution, Interval } from "./abstract-distribution.js";
+import { Distribution } from "./abstract-distribution.js";
 
 export class LocationScaleParams {
   static DEFAULTS = { location: 0.0, scale: 1.0 } as const;
@@ -34,10 +34,9 @@ export abstract class LocationScale extends Distribution {
   /** @internal */
   #params!: LocationScaleParams;
 
-  constructor(location?: number, scale?: number) {
-    super();
+  constructor(location?: number, scale?: number, isContinuous: boolean = true) {
+    super(isContinuous);
     this.#params = new LocationScaleParams(location, scale);
-    this.support = new Interval(-Infinity, Infinity, true, true);
   }
 
   /** @internal */

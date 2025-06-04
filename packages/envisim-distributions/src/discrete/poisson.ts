@@ -1,7 +1,6 @@
 import { ValidationError } from "@envisim/utils";
 import {
   Distribution,
-  Interval,
   type RandomOptions,
   RANDOM_OPTIONS_DEFAULT,
   quantileCF,
@@ -31,9 +30,9 @@ export class Poisson extends Distribution {
    * x.random(10);
    */
   constructor(rate?: number) {
-    super();
+    super(false);
     this.#params = new RateParams(rate);
-    this.support = new Interval(0, Infinity, false, true);
+    this.support = { interval: [0, Infinity], ends: "right-open" };
   }
 
   /** @internal */
@@ -41,18 +40,18 @@ export class Poisson extends Distribution {
     return this.#params;
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     const lrate = Math.log(this.params.rate);
-    return this.support.checkPDFInt(x) ?? Math.exp(x * lrate - this.params.rate - logFactorial(x));
+    return super.pdf(x) ?? Math.exp(x * lrate - this.params.rate - logFactorial(x));
   }
 
-  cdf(x: number, eps: number = 1e-12): number {
-    const xl = (x | 0) + 1;
-    return this.support.checkCDFInt(x) ?? regularizedUpperGammaFunction(xl, this.params.rate, eps);
+  override cdf(x: number, eps: number = 1e-12): number {
+    const xl = Math.trunc(x) + 1;
+    return super.cdf(x) ?? regularizedUpperGammaFunction(xl, this.params.rate, eps);
   }
 
-  quantile(q: number, eps: number = 1e-12): number {
-    const check = this.support.checkQuantile(q);
+  override quantile(q: number, eps: number = 1e-12): number {
+    const check = super.quantile(q);
     if (check !== null) return check;
 
     const z = stdNormalQuantile(q);

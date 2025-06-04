@@ -1,7 +1,6 @@
 import { randomArray } from "@envisim/random";
 import {
   Distribution,
-  Interval,
   type RandomOptions,
   RANDOM_OPTIONS_DEFAULT,
 } from "../abstract-distribution.js";
@@ -27,7 +26,7 @@ export class Exponential extends Distribution {
   constructor(rate?: number) {
     super();
     this.#params = new RateParams(rate);
-    this.support = new Interval(0, Infinity, false, true);
+    this.support = { interval: [0, Infinity], ends: "right-open" };
   }
 
   /** @internal */
@@ -35,16 +34,16 @@ export class Exponential extends Distribution {
     return this.#params;
   }
 
-  pdf(x: number): number {
-    return this.support.checkPDF(x) ?? this.params.rate * Math.exp(-this.params.rate * x);
+  override pdf(x: number): number {
+    return super.pdf(x) ?? this.params.rate * Math.exp(-this.params.rate * x);
   }
 
-  cdf(x: number): number {
-    return this.support.checkCDF(x) ?? 1.0 - Math.exp(-this.params.rate * x);
+  override cdf(x: number): number {
+    return super.cdf(x) ?? 1.0 - Math.exp(-this.params.rate * x);
   }
 
-  quantile(q: number): number {
-    return this.support.checkQuantile(q) ?? -Math.log(1.0 - q) / this.params.rate;
+  override quantile(q: number): number {
+    return super.quantile(q) ?? -Math.log(1.0 - q) / this.params.rate;
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {

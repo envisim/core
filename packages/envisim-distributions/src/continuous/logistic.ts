@@ -1,4 +1,3 @@
-import { Interval } from "../abstract-distribution.js";
 import { LocationScale } from "../abstract-location-scale.js";
 import { ShapeScale } from "../abstract-shape-scale.js";
 
@@ -20,22 +19,17 @@ export class Logistic extends LocationScale {
     super(location, scale);
   }
 
-  pdf(x: number): number {
-    const check = this.support.checkPDF(x);
-    if (check !== null) return check;
+  override pdf(x: number): number {
     const exp = Math.exp(-this.params.normalize(x));
     return exp / (this.params.scale * Math.pow(exp + 1.0, 2));
   }
 
-  cdf(x: number): number {
-    return this.support.checkCDF(x) ?? 1.0 / (1.0 + Math.exp(-this.params.normalize(x)));
+  override cdf(x: number): number {
+    return 1.0 / (1.0 + Math.exp(-this.params.normalize(x)));
   }
 
-  quantile(q: number): number {
-    return (
-      this.support.checkQuantile(q) ??
-      this.params.location - this.params.scale * Math.log(1.0 / q - 1.0)
-    );
+  override quantile(q: number): number {
+    return super.quantile(q) ?? this.params.location - this.params.scale * Math.log(1.0 / q - 1.0);
   }
 
   mean(): number {
@@ -72,28 +66,25 @@ export class LogLogistic extends ShapeScale {
    */
   constructor(shape?: number, scale?: number) {
     super(shape, scale);
-    this.support = new Interval(0.0, Infinity, false, true);
+    this.support = { interval: [0.0, Infinity], ends: "right-open" };
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     const c = this.params.shape / this.params.scale;
     const shapem1 = this.params.shape - 1.0;
     const frac = x / this.params.scale;
     const pow = Math.pow(frac, shapem1);
 
-    return this.support.checkPDF(x) ?? (c * pow) / Math.pow(1.0 + pow * frac, 2);
+    return super.pdf(x) ?? (c * pow) / Math.pow(1.0 + pow * frac, 2);
   }
 
-  cdf(x: number): number {
-    return (
-      this.support.checkCDF(x) ?? 1.0 / (1.0 + Math.pow(x / this.params.scale, -this.params.shape))
-    );
+  override cdf(x: number): number {
+    return super.cdf(x) ?? 1.0 / (1.0 + Math.pow(x / this.params.scale, -this.params.shape));
   }
 
-  quantile(q: number): number {
+  override quantile(q: number): number {
     const c = 1.0 / this.params.shape;
-
-    return this.support.checkQuantile(q) ?? this.params.scale * Math.pow(q / (1.0 - q), c);
+    return super.quantile(q) ?? this.params.scale * Math.pow(q / (1.0 - q), c);
   }
 
   mean(): number {

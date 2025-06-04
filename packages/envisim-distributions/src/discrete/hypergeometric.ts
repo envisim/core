@@ -2,7 +2,6 @@ import { type RandomGenerator } from "@envisim/random";
 import { ValidationError } from "@envisim/utils";
 import {
   Distribution,
-  Interval,
   type RandomOptions,
   RANDOM_OPTIONS_DEFAULT,
 } from "../abstract-distribution.js";
@@ -28,14 +27,15 @@ export class Hypergeometric extends Distribution {
    * x.random(10);
    */
   constructor(N?: number, K?: number, n?: number) {
-    super();
+    super(false);
     this.#params = new HypergeometricParams(N, K, n);
-    this.support = new Interval(
-      Math.max(0, this.#params.n + this.#params.K - this.#params.N),
-      Math.min(this.#params.n, this.#params.K),
-      false,
-      true,
-    );
+    this.support = {
+      interval: [
+        Math.max(0, this.#params.n + this.#params.K - this.#params.N),
+        Math.min(this.#params.n, this.#params.K),
+      ],
+      ends: "right-open",
+    };
   }
 
   /** @internal */
@@ -43,8 +43,8 @@ export class Hypergeometric extends Distribution {
     return this.#params;
   }
 
-  pdf(x: number): number {
-    const check = this.support.checkPDFInt(x);
+  override pdf(x: number): number {
+    const check = super.pdf(x);
     if (check !== null) {
       return check;
     } else if (this.params.n === 0 || this.params.K === 0) {
@@ -79,7 +79,7 @@ export class Hypergeometric extends Distribution {
    * R-project.
    * https://bugs.r-project.org/show_bug.cgi?id=6772
    */
-  cdf(x: number, eps: number = 1e-12): number {
+  override cdf(x: number, eps: number = 1e-12): number {
     let NK = this.params.K;
     let KN = this.params.N - this.params.K;
 
@@ -117,7 +117,7 @@ export class Hypergeometric extends Distribution {
     return flip ? 1.0 - s * pdf : s * pdf;
   }
 
-  quantile(q: number): number {
+  override quantile(q: number): number {
     if (q < 0.0 || q > 1.0) return NaN;
     let NK = this.params.K;
     let KN = this.params.N - this.params.K;

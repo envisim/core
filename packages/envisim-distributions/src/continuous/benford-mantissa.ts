@@ -1,6 +1,5 @@
 /** @group Parameter interfaces */
 import { Distribution } from "../abstract-distribution.js";
-import { Interval } from "../abstract-distribution.js";
 import { BenfordMantissaParams } from "../params.js";
 
 /**
@@ -23,7 +22,7 @@ export class BenfordMantissa extends Distribution {
   constructor(base?: number) {
     super();
     this.#params = new BenfordMantissaParams(base);
-    this.support = new Interval(1.0 / this.params.base, 1.0, false, true);
+    this.support = { interval: [1.0 / this.params.base, 1.0], ends: "right-open" };
   }
 
   /** @internal */
@@ -31,19 +30,19 @@ export class BenfordMantissa extends Distribution {
     return this.#params;
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     const { logBase } = this.params;
-    return this.support.checkPDF(x) ?? 1.0 / (x * logBase);
+    return super.pdf(x) ?? 1.0 / (x * logBase);
   }
 
-  cdf(x: number): number {
+  override cdf(x: number): number {
     const { logBase } = this.params;
-    return this.support.checkCDF(x) ?? 1 + Math.log(x) / logBase;
+    return super.cdf(x) ?? 1 + Math.log(x) / logBase;
   }
 
-  quantile(q: number): number {
+  override quantile(q: number): number {
     const { base } = this.params;
-    return this.support.checkQuantile(q) ?? Math.pow(base, q - 1.0);
+    return super.quantile(q) ?? Math.pow(base, q - 1.0);
   }
 
   mean(): number {

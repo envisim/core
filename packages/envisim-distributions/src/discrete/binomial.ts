@@ -1,7 +1,6 @@
 import { ValidationError } from "@envisim/utils";
 import {
   Distribution,
-  Interval,
   type RandomOptions,
   RANDOM_OPTIONS_DEFAULT,
   cornishFisherExpansion,
@@ -33,9 +32,9 @@ export class Binomial extends Distribution {
    * x.random(10);
    */
   constructor(n?: number, p?: number) {
-    super();
+    super(false);
     this.#params = new BinomialParams(n, p);
-    this.support = new Interval(0, this.params.n, false, false);
+    this.support = { interval: [0, this.params.n], ends: "closed" };
   }
 
   /** @internal */
@@ -43,26 +42,26 @@ export class Binomial extends Distribution {
     return this.#params;
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     const p = Math.log(this.params.p);
     const q = this.params.logq;
 
     return (
-      this.support.checkPDFInt(x) ??
+      super.pdf(x) ??
       Math.exp(logBinomialCoefficient(this.params.n, x) + x * p + (this.params.n - x) * q)
     );
   }
 
-  cdf(x: number, eps: number = 1e-20): number {
+  override cdf(x: number, eps: number = 1e-20): number {
     const xl = x | 0;
     return (
-      this.support.checkCDFInt(x) ??
+      super.cdf(x) ??
       new BetaParams(this.params.n - xl, xl + 1).regularizedBetaFunction(this.params.q, eps)
     );
   }
 
-  quantile(q: number, eps: number = 1e-20): number {
-    const check = this.support.checkQuantile(q);
+  override quantile(q: number, eps: number = 1e-20): number {
+    const check = super.quantile(q);
     if (check !== null) return check;
 
     const z = stdNormalQuantile(q);
@@ -118,9 +117,9 @@ export class NegativeBinomial extends Distribution {
    * x.random(10);
    */
   constructor(n?: number, p?: number) {
-    super();
+    super(false);
     this.#params = new BinomialParams(n, p);
-    this.support = new Interval(0, Infinity, false, true);
+    this.support = { interval: [0, Infinity], ends: "right-open" };
   }
 
   /** @internal */
@@ -128,25 +127,25 @@ export class NegativeBinomial extends Distribution {
     return this.#params;
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     const p = Math.log(this.params.p);
     const q = this.params.logq;
 
     return (
-      this.support.checkPDFInt(x) ??
+      super.pdf(x) ??
       Math.exp(logBinomialCoefficient(x + this.params.n - 1, x) + x * p + this.params.n * q)
     );
   }
 
-  cdf(x: number, eps: number = 1e-20): number {
+  override cdf(x: number, eps: number = 1e-20): number {
     return (
-      this.support.checkCDFInt(x) ??
+      super.cdf(x) ??
       1.0 - new BetaParams((x | 0) + 1, this.params.n).regularizedBetaFunction(this.params.p, eps)
     );
   }
 
-  quantile(q: number, eps: number = 1e-20): number {
-    const check = this.support.checkQuantile(q);
+  override quantile(q: number, eps: number = 1e-20): number {
+    const check = super.quantile(q);
     if (check !== null) return check;
 
     const z = stdNormalQuantile(q);

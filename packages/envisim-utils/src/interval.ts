@@ -1,23 +1,69 @@
 export interface Interval {
+  /** The [left, right] bounds of the interval */
   interval: [number] | [number, number];
+  /** The openness of the interval */
   ends?: "closed" | "open" | "left-open" | "right-open";
 }
 
-export function inInterval(x: number, { interval, ends = "closed" }: Interval): boolean {
+/**
+ * @param x -
+ * @returns `true` if `x` is within the interval
+ */
+export function inInterval(
+  x: number,
+  { interval: [a, b = Infinity], ends = "closed" }: Interval,
+): boolean {
   if (!Number.isFinite(x)) return false;
 
   switch (ends) {
     case "closed":
-      return interval[0] <= x && (interval[1] === undefined || x <= interval[1]);
+      return a <= x && x <= b;
     case "open":
-      return interval[0] < x && (interval[1] === undefined || x < interval[1]);
+      return a < x && x < b;
     case "left-open":
-      return interval[0] < x && (interval[1] === undefined || x <= interval[1]);
+      return a < x && x <= b;
     case "right-open":
-      return interval[0] <= x && (interval[1] === undefined || x < interval[1]);
+      return a <= x && x < b;
   }
 }
 
+/**
+ * @param x -
+ * @returns `true` if `x` is to the left of the interval
+ */
+export function isLeftOfInterval(x: number, { interval: [a], ends = "closed" }: Interval): boolean {
+  switch (ends) {
+    case "open":
+    case "left-open":
+      return x <= a;
+    case "closed":
+    case "right-open":
+      return x < a;
+  }
+}
+
+/**
+ * @param x -
+ * @returns `true` if `x` is to the right of the interval
+ */
+export function isRightOfInterval(
+  x: number,
+  { interval: [_, b = Infinity], ends = "closed" }: Interval,
+): boolean {
+  switch (ends) {
+    case "open":
+    case "right-open":
+      return b <= x;
+    case "closed":
+    case "left-open":
+      return b < x;
+  }
+}
+
+/**
+ * @param x -
+ * @returns `true` if `x` is within the unit interval
+ */
 export function inUnitInterval(
   x: number,
   { ends = "closed" }: Omit<Interval, "interval"> = {},
@@ -34,6 +80,9 @@ export function inUnitInterval(
   }
 }
 
+/**
+ * @returns a string representation of the interval
+ */
 export function intervalToText({ interval, ends = "closed" }: Interval, arg: string = "x"): string {
   const left = Number.isFinite(interval[0])
     ? `${interval[0]} ${ends === "closed" || ends === "right-open" ? "<=" : "<"} `

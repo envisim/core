@@ -1,4 +1,4 @@
-import { Distribution, Interval } from "../abstract-distribution.js";
+import { Distribution } from "../abstract-distribution.js";
 import { HALF_PI } from "../math-constants.js";
 import { sech } from "../utils.js";
 
@@ -18,19 +18,18 @@ export class HyperbolicSecant extends Distribution {
    */
   constructor() {
     super();
-    this.support = new Interval(-Infinity, Infinity, true, true);
   }
 
-  pdf(x: number): number {
-    return this.support.checkPDF(x) ?? sech(HALF_PI * x) * 0.5;
+  override pdf(x: number): number {
+    return sech(HALF_PI * x) * 0.5;
   }
 
-  cdf(x: number): number {
-    return this.support.checkCDF(x) ?? Math.atan(Math.exp(HALF_PI * x)) / HALF_PI;
+  override cdf(x: number): number {
+    return Math.atan(Math.exp(HALF_PI * x)) / HALF_PI;
   }
 
-  quantile(q: number): number {
-    return this.support.checkQuantile(q) ?? Math.log(Math.tan(q * HALF_PI)) / HALF_PI;
+  override quantile(q: number): number {
+    return super.quantile(q) ?? Math.log(Math.tan(q * HALF_PI)) / HALF_PI;
   }
 
   mean(): number {

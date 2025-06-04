@@ -11,7 +11,13 @@ export {
   type ValidationErrorCreator,
   type ValidationErrorChecker,
 } from "./errors.js";
-export { inInterval, inUnitInterval, type Interval } from "./interval.js";
+export {
+  inInterval,
+  isLeftOfInterval,
+  isRightOfInterval,
+  inUnitInterval,
+  type Interval,
+} from "./interval.js";
 export { reducedRowEchelonForm } from "./reducedRowEchelonForm.js";
 export { swap } from "./swap.js";
 

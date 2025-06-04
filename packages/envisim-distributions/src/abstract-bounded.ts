@@ -1,5 +1,5 @@
-import { ValidationError } from "@envisim/utils";
-import { Distribution, Interval } from "./abstract-distribution.js";
+import { ValidationError, type Interval } from "@envisim/utils";
+import { Distribution } from "./abstract-distribution.js";
 
 export class BoundedParams {
   static DEFAULTS = { a: 0.0, b: 1.0 } as const;
@@ -66,13 +66,14 @@ export class BoundedMidParams extends BoundedParams {
 }
 
 export abstract class Bounded extends Distribution {
+  declare support: Interval;
   /** @internal */
   #params!: BoundedParams;
 
-  constructor(a?: number, b?: number) {
-    super();
+  constructor(a?: number, b?: number, isContinuous: boolean = true) {
+    super(isContinuous);
     this.#params = new BoundedParams(a, b);
-    this.support = new Interval(this.#params.a, this.#params.b, false, false);
+    this.support = { interval: [this.#params.a, this.#params.b], ends: "closed" };
   }
 
   /** @internal */
@@ -85,10 +86,10 @@ export abstract class BoundedMid extends Distribution {
   /** @internal */
   #params!: BoundedMidParams;
 
-  constructor(a?: number, b?: number, mid?: number) {
-    super();
+  constructor(a?: number, b?: number, mid?: number, isContinuous: boolean = true) {
+    super(isContinuous);
     this.#params = new BoundedMidParams(a, b, mid);
-    this.support = new Interval(this.#params.a, this.#params.b, false, false);
+    this.support = { interval: [this.#params.a, this.#params.b], ends: "closed" };
   }
 
   /** @internal */

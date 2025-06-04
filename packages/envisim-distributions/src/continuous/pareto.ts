@@ -1,4 +1,3 @@
-import { Interval } from "../abstract-distribution.js";
 import { ShapeScale } from "../abstract-shape-scale.js";
 
 /**
@@ -17,22 +16,22 @@ export class Pareto extends ShapeScale {
    */
   constructor(shape?: number, scale?: number) {
     super(shape, scale);
-    this.support = new Interval(this.params.scale, Infinity, false, true);
+    this.support = { interval: [this.params.scale, Infinity], ends: "right-open" };
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     const c = Math.log(this.params.shape) + this.params.shape * Math.log(this.params.scale);
     const shape = this.params.shape + 1.0;
-    return this.support.checkPDF(x) ?? Math.exp(c - shape * Math.log(x));
+    return super.pdf(x) ?? Math.exp(c - shape * Math.log(x));
   }
 
-  cdf(x: number): number {
-    return this.support.checkCDF(x) ?? 1.0 - Math.pow(this.params.scale / x, this.params.shape);
+  override cdf(x: number): number {
+    return super.cdf(x) ?? 1.0 - Math.pow(this.params.scale / x, this.params.shape);
   }
 
-  quantile(q: number): number {
+  override quantile(q: number): number {
     const c = 1.0 / this.params.shape;
-    return this.support.checkQuantile(q) ?? this.params.scale / Math.pow(1.0 - q, c);
+    return super.quantile(q) ?? this.params.scale / Math.pow(1.0 - q, c);
   }
 
   mean(): number {

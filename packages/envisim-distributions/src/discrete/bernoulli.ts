@@ -1,4 +1,4 @@
-import { Distribution, Interval } from "../abstract-distribution.js";
+import { Distribution } from "../abstract-distribution.js";
 import { BernoulliParams } from "../params.js";
 
 /**
@@ -17,9 +17,9 @@ export class Bernoulli extends Distribution {
    * x.quantile(0.5)
    */
   constructor(p?: number) {
-    super();
+    super(false);
     this.#params = new BernoulliParams(p);
-    this.support = new Interval(0, Infinity, false, true);
+    this.support = { interval: [0, 1], ends: "closed" };
   }
 
   /** @internal */
@@ -27,7 +27,7 @@ export class Bernoulli extends Distribution {
     return this.#params;
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     if (x === 0) {
       return this.params.q;
     } else if (x === 1) {
@@ -37,7 +37,7 @@ export class Bernoulli extends Distribution {
     }
   }
 
-  cdf(x: number): number {
+  override cdf(x: number): number {
     if (x < 0) {
       return 0.0;
     } else if (x < 1) {
@@ -47,7 +47,7 @@ export class Bernoulli extends Distribution {
     }
   }
 
-  quantile(q: number): number {
+  override quantile(q: number): number {
     if (q < 0.0 || q > 1.0) {
       return NaN;
     } else if (q <= this.params.q) {

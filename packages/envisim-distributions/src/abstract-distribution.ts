@@ -1,5 +1,11 @@
 import { Random, type RandomGenerator, randomArray } from "@envisim/random";
-import { ValidationError } from "@envisim/utils";
+import {
+  inInterval,
+  type Interval,
+  isLeftOfInterval,
+  isRightOfInterval,
+  ValidationError,
+} from "@envisim/utils";
 
 /**
  * @category Interfaces
@@ -24,22 +30,39 @@ export const RANDOM_OPTIONS_DEFAULT: RandomOptions = {
 } as const;
 
 export abstract class Distribution {
-  support!: Interval;
+  support: Interval | undefined = undefined;
+  /** @internal */
+  #continuous: boolean = true;
 
-  constructor() {}
+  constructor(isContinuous: boolean = true) {
+    this.#continuous = isContinuous;
+  }
 
   /**
    * The probability density/mass function evaluated at `x`.
    */
-  abstract pdf(x: number, eps?: number): number;
+  pdf(x: number, _eps?: number): number | null {
+    return this.support === undefined || inInterval(x, this.support) ? null : 0.0;
+  }
   /**
    * The cumulative distribution function evaluated at `x`.
    */
-  abstract cdf(x: number, eps?: number): number;
+  cdf(x: number, _eps?: number): number | null {
+    if (this.support === undefined) return null;
+    if (isLeftOfInterval(x, this.support)) return 0.0;
+    if (isRightOfInterval(x, this.support)) return 1.0;
+    if (this.#continuous && this.support?.interval[0] === x) return 0.0;
+    return null;
+  }
   /**
    * The quantile function evaluated at `q`.
    */
-  abstract quantile(q: number, eps?: number): number;
+  quantile(q: number, _eps?: number): number | null {
+    if (q < 0.0 || q > 1.0) return NaN;
+    if (q === 0.0) return this.support?.interval[0] ?? -Infinity;
+    if (q === 1.0) return this.support?.interval[1] ?? Infinity;
+    return null;
+  }
   /**
    * Generate random numbers from the distribution.
    * @param n - the number of observations to be generated
@@ -48,7 +71,7 @@ export abstract class Distribution {
     n = Math.trunc(n);
     ValidationError.check["number-not-positive"]({ arg: "n" }, n)?.raise();
     const u = randomArray(n, options.rand);
-    return u.map((v) => this.quantile(v));
+    return u.map((v) => this.quantile(v) as number);
   }
 
   /** the mean value */
@@ -83,100 +106,28 @@ export function quantileCF(
   let k = startK;
   let run = 0;
   if (cdf > q) {
+    const excludesLeft = (x: number): boolean =>
+      this.support !== undefined && isLeftOfInterval(x, this.support);
+
     while (run++ <= 1e5) {
-      cdf -= this.pdf(k);
+      cdf -= this.pdf(k) as number;
       // cdf -= pmf(k - 1);
       if (cdf === q) return k - 1;
-      if (cdf < q || !this.support.isL(k)) return k;
+      if (cdf < q || excludesLeft(k)) return k;
       k--;
     }
   } else {
+    const excludesRight = (x: number): boolean =>
+      this.support !== undefined && isRightOfInterval(x, this.support);
+
     while (run++ <= 1e5) {
-      cdf += this.pdf(k + 1);
+      cdf += this.pdf(k + 1) as number;
       if (cdf >= q) return k + 1;
-      if (!this.support.isR(k)) return k;
+      if (excludesRight(k)) return k;
       k++;
     }
   }
 
   console.warn("quantile not found in 1e5 iterations");
   return k;
-}
-
-/**
- * @category Classes
- */
-export class Interval {
-  /** Left endpoint */
-  l: number = -Infinity;
-  /** Right endpoint */
-  r: number = Infinity; // Right
-  /** Left endpoint is open */
-  lo: boolean = true;
-  /** Right endpoint is open */
-  ro: boolean = true;
-
-  constructor(l: number, r: number, lo: boolean = true, ro: boolean = true) {
-    if (l > r)
-      throw ValidationError.create["number-not-in-interval"]({
-        arg: "r",
-        interval: [l],
-        ends: "open",
-      });
-    this.l = l;
-    this.r = r;
-    this.lo = Number.isFinite(l) ? lo : true;
-    this.ro = Number.isFinite(r) ? ro : true;
-  }
-
-  isIn(x: number) {
-    return this.isL(x) && this.isR(x);
-  }
-
-  isL(x: number) {
-    return this.lo ? this.l < x : this.l <= x;
-  }
-
-  isR(x: number) {
-    return this.ro ? this.r > x : this.r >= x;
-  }
-
-  isInInt(x: number) {
-    return Number.isInteger(x) && this.isIn(x);
-  }
-
-  isLInt(x: number) {
-    return Number.isInteger(x) && this.isL(x);
-  }
-
-  isRInt(x: number) {
-    return Number.isInteger(x) && this.isR(x);
-  }
-
-  checkPDF(x: number): number | null {
-    return !this.isIn(x) ? 0.0 : null;
-  }
-
-  checkPDFInt(x: number): number | null {
-    return !this.isInInt(x) ? 0.0 : null;
-  }
-
-  checkCDF(x: number): number | null {
-    if (x <= this.l) return 0.0;
-    if (this.r <= x) return 1.0;
-    return null;
-  }
-
-  checkCDFInt(x: number): number | null {
-    if (x < this.l || (this.lo && x === this.l)) return 0.0;
-    if (this.r <= x) return 1.0;
-    return null;
-  }
-
-  checkQuantile(q: number): number | null {
-    if (q < 0.0 || q > 1.0) return NaN;
-    if (q === 0.0) return this.l;
-    if (q === 1.0) return this.r;
-    return null;
-  }
 }
