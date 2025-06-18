@@ -1,6 +1,6 @@
 import { randomArray } from "@envisim/random";
 import { ValidationError } from "@envisim/utils";
-import { type RandomOptions, Interval, RANDOM_OPTIONS_DEFAULT } from "../abstract-distribution.js";
+import { type RandomOptions, RANDOM_OPTIONS_DEFAULT } from "../abstract-distribution.js";
 import { LocationScale } from "../abstract-location-scale.js";
 import { SQRT_PI } from "../math-constants.js";
 import { errorFunction, stdNormalCDF, stdNormalQuantile } from "./normal-utils.js";
@@ -48,22 +48,16 @@ export class Normal extends LocationScale {
     super(mu, sigma);
   }
 
-  pdf(x: number): number {
-    return (
-      this.support.checkPDF(x) ??
-      Math.exp(-0.5 * Math.pow(this.params.normalize(x), 2)) / (SQRT_2_PI * this.params.scale)
-    );
+  override pdf(x: number): number {
+    return Math.exp(-0.5 * Math.pow(this.params.normalize(x), 2)) / (SQRT_2_PI * this.params.scale);
   }
 
-  cdf(x: number): number {
-    return this.support.checkCDF(x) ?? stdNormalCDF(this.params.normalize(x));
+  override cdf(x: number): number {
+    return stdNormalCDF(this.params.normalize(x));
   }
 
-  quantile(q: number): number {
-    return (
-      this.support.checkQuantile(q) ??
-      this.params.location + stdNormalQuantile(q) * this.params.scale
-    );
+  override quantile(q: number): number {
+    return super.quantile(q) ?? this.params.location + stdNormalQuantile(q) * this.params.scale;
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {
@@ -113,25 +107,24 @@ export class LogNormal extends LocationScale {
    */
   constructor(mu?: number, sigma?: number) {
     super(mu, sigma);
-    this.support = new Interval(0, Infinity, true, true);
+    this.support = { interval: [0.0, Infinity], ends: "open" };
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     return (
-      this.support.checkPDF(x) ??
+      super.pdf(x) ??
       Math.exp(-0.5 * Math.pow(this.params.normalize(Math.log(x)), 2)) /
         (x * SQRT_2_PI * this.params.scale)
     );
   }
 
-  cdf(x: number): number {
-    return this.support.checkCDF(x) ?? stdNormalCDF(this.params.normalize(Math.log(x)));
+  override cdf(x: number): number {
+    return super.cdf(x) ?? stdNormalCDF(this.params.normalize(Math.log(x)));
   }
 
-  quantile(q: number): number {
+  override quantile(q: number): number {
     return (
-      this.support.checkQuantile(q) ??
-      Math.exp(this.params.location + stdNormalQuantile(q) * this.params.scale)
+      super.quantile(q) ?? Math.exp(this.params.location + stdNormalQuantile(q) * this.params.scale)
     );
   }
 
@@ -188,34 +181,32 @@ export class FoldedNormal extends LocationScale {
    */
   constructor(mu?: number, sigma?: number) {
     super(mu, sigma);
-    this.support = new Interval(0, Infinity, false, true);
+    this.support = { interval: [0.0, Infinity], ends: "right-open" };
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     const { location: mu, scale: sigma } = this.params;
     return (
-      this.support.checkPDF(x) ??
+      super.pdf(x) ??
       (Math.exp(-Math.pow((x - mu) / sigma, 2) * 0.5) +
         Math.exp(-Math.pow((x + mu) / sigma, 2) * 0.5)) /
         (sigma * SQRT_2_PI)
     );
   }
 
-  cdf(x: number): number {
+  override cdf(x: number): number {
     const { location: mu, scale: sigma } = this.params;
     const c = sigma * Math.SQRT2;
-    return (
-      this.support.checkCDF(x) ?? (errorFunction((x + mu) / c) + errorFunction((x - mu) / c)) * 0.5
-    );
+    return super.cdf(x) ?? (errorFunction((x + mu) / c) + errorFunction((x - mu) / c)) * 0.5;
   }
 
-  quantile(q: number, eps: number = 1e-12): number {
+  override quantile(q: number, eps: number = 1e-12): number {
     const { location: mu, scale: sigma } = this.params;
     const c = sigma * SQRT_2_PI;
     const c2 = 2.0 * Math.pow(sigma, 2);
     const denom = sigma * Math.SQRT2;
 
-    const check = this.support.checkQuantile(q);
+    const check = super.quantile(q);
     if (check !== null) return check;
 
     let x0 = stdNormalQuantile(q);

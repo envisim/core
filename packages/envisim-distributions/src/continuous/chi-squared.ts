@@ -1,7 +1,6 @@
 import { ValidationError } from "@envisim/utils";
 import {
   Distribution,
-  Interval,
   type RandomOptions,
   RANDOM_OPTIONS_DEFAULT,
 } from "../abstract-distribution.js";
@@ -33,7 +32,10 @@ export class ChiSquared extends Distribution {
     super();
     this.#params = new DegreesOfFreedomParams(df);
     this.#gamma = new ShapeScaleParams(this.#params.df * 0.5, 2.0);
-    this.support = new Interval(0, Infinity, this.#params.df === 1, true);
+    this.support = {
+      interval: [0.0, Infinity],
+      ends: this.#params.df === 1 ? "open" : "right-open",
+    };
   }
 
   /** @internal */
@@ -41,23 +43,20 @@ export class ChiSquared extends Distribution {
     return this.#params;
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     const dfHalf = this.params.df * 0.5;
     const c = dfHalf * Math.LN2 + logGammaFunction(dfHalf);
-    return this.support.checkPDF(x) ?? Math.exp((dfHalf - 1.0) * Math.log(x) - x * 0.5 - c);
+    return super.pdf(x) ?? Math.exp((dfHalf - 1.0) * Math.log(x) - x * 0.5 - c);
   }
 
-  cdf(x: number, eps: number = 1e-12): number {
+  override cdf(x: number, eps: number = 1e-12): number {
     const dfHalf = this.params.df * 0.5;
-    return this.support.checkCDF(x) ?? regularizedLowerGammaFunction(dfHalf, x * 0.5, eps);
+    return super.cdf(x) ?? regularizedLowerGammaFunction(dfHalf, x * 0.5, eps);
   }
 
-  quantile(q: number, eps: 1e-12): number {
+  override quantile(q: number, eps: 1e-12): number {
     const dfHalf = this.params.df * 0.5;
-    return (
-      this.support.checkQuantile(q) ??
-      gammaQuantile.call(this.#gamma, q, eps, logGammaFunction(dfHalf))
-    );
+    return super.quantile(q) ?? gammaQuantile.call(this.#gamma, q, eps, logGammaFunction(dfHalf));
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {

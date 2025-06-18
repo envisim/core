@@ -2,7 +2,6 @@ import { randomArray } from "@envisim/random";
 import { ValidationError } from "@envisim/utils";
 import {
   Distribution,
-  Interval,
   type RandomOptions,
   RANDOM_OPTIONS_DEFAULT,
 } from "../abstract-distribution.js";
@@ -35,7 +34,6 @@ export class StudentsT extends Distribution {
     super();
     this.#params = new DegreesOfFreedomParams(df);
     this.#beta = new BetaParams(this.#params.df * 0.5, 0.5);
-    this.support = new Interval(-Infinity, Infinity, true, true);
   }
 
   /** @internal */
@@ -43,29 +41,25 @@ export class StudentsT extends Distribution {
     return this.#params;
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     if (this.params.df === 1) {
       // Cauchy(0, 1)
-      return this.support.checkPDF(x) ?? 1.0 / (Math.PI * (1.0 + Math.pow(x, 2)));
+      return 1.0 / (Math.PI * (1.0 + Math.pow(x, 2)));
     }
 
     const halfDf = this.params.df * 0.5;
     const c = -0.5 * Math.log(this.params.df) - this.#beta.logBetaFunction();
     const df = halfDf + 0.5;
 
-    return (
-      this.support.checkPDF(x) ?? Math.exp(c - df * Math.log1p(Math.pow(x, 2) / this.params.df))
-    );
+    return Math.exp(c - df * Math.log1p(Math.pow(x, 2) / this.params.df));
   }
 
-  cdf(x: number, eps: number = 1e-20): number {
+  override cdf(x: number, eps: number = 1e-20): number {
     if (this.params.df === 1) {
       // Cauchy(0, 1)
-      return this.support.checkCDF(x) ?? 0.5 + Math.atan(x) / Math.PI;
+      return 0.5 + Math.atan(x) / Math.PI;
     }
 
-    const check = this.support.checkCDF(x);
-    if (check !== null) return check;
     if (x === 0.0) return 0.5;
     const xt = this.params.df / (this.params.df + Math.pow(x, 2));
     const f = this.#beta.regularizedBetaFunction(xt, eps) * 0.5;
@@ -78,8 +72,8 @@ export class StudentsT extends Distribution {
    * Communications of the ACM, 13(10), 619-620.
    * https://doi.org/10.1145/355598.355600
    */
-  quantile(q: number): number {
-    const check = this.support.checkQuantile(q);
+  override quantile(q: number): number {
+    const check = super.quantile(q);
     if (check !== null) return check;
     const { df } = this.params;
 

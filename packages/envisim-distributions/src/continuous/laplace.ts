@@ -18,23 +18,18 @@ export class Laplace extends LocationScale {
     super(location, scale);
   }
 
-  pdf(x: number): number {
-    return (
-      this.support.checkPDF(x) ??
-      (Math.exp(-Math.abs(this.params.normalize(x))) * 0.5) / this.params.scale
-    );
+  override pdf(x: number): number {
+    return (Math.exp(-Math.abs(this.params.normalize(x))) * 0.5) / this.params.scale;
   }
 
-  cdf(x: number): number {
-    const check = this.support.checkCDF(x);
-    if (check !== null) return check;
+  override cdf(x: number): number {
     const z = this.params.normalize(x);
     if (x <= this.params.location) return Math.exp(z) * 0.5;
     return 1 - Math.exp(-z) * 0.5;
   }
 
-  quantile(q: number): number {
-    const check = this.support.checkQuantile(q);
+  override quantile(q: number): number {
+    const check = super.quantile(q);
     if (check !== null) return check;
     if (q <= 0.5) return this.params.location + this.params.scale * Math.log(2.0 * q);
     return this.params.location - this.params.scale * Math.log(2.0 * (1.0 - q));

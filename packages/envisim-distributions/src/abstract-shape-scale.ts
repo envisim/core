@@ -1,5 +1,5 @@
-import { ValidationError } from "@envisim/utils";
-import { Distribution, Interval } from "./abstract-distribution.js";
+import { type Interval, ValidationError } from "@envisim/utils";
+import { Distribution } from "./abstract-distribution.js";
 
 export class ShapeScaleParams {
   static DEFAULTS = { shape: 0.0, scale: 1.0 } as const;
@@ -30,13 +30,14 @@ export class ShapeScaleParams {
 }
 
 export abstract class ShapeScale extends Distribution {
+  declare support: Interval;
   /** @internal */
   #params!: ShapeScaleParams;
 
-  constructor(shape?: number, scale?: number) {
-    super();
+  constructor(shape?: number, scale?: number, isContinuous: boolean = true) {
+    super(isContinuous);
     this.#params = new ShapeScaleParams(shape, scale);
-    this.support = new Interval(0, Infinity, true, true);
+    this.support = { interval: [0.0, Infinity], ends: "open" };
   }
 
   /** @internal */

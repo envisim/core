@@ -1,20 +1,22 @@
 import { type RandomGenerator } from "@envisim/random";
 import { ValidationError } from "@envisim/utils";
 import {
-  Interval,
   type RandomOptions,
   RANDOM_OPTIONS_DEFAULT,
   cornishFisherExpansion,
   quantileCF,
+  Distribution,
 } from "../abstract-distribution.js";
 import { stdNormalQuantile } from "../continuous/normal-utils.js";
-import { BetaParams } from "../params.js";
-import { Bernoulli } from "./bernoulli.js";
+import { BernoulliParams, BetaParams } from "../params.js";
 
 /**
  * @category Discrete distributions
  */
-export class Logarithmic extends Bernoulli {
+export class Logarithmic extends Distribution {
+  /** @internal */
+  #params!: BernoulliParams;
+
   /**
    * The Logarithmic distribution
    *
@@ -26,12 +28,18 @@ export class Logarithmic extends Bernoulli {
    * x.random(10);
    */
   constructor(p?: number) {
-    super(p);
-    this.support = new Interval(1, Infinity, false, true);
+    super(false);
+    this.#params = new BernoulliParams(p);
+    this.support = { interval: [1, Infinity], ends: "right-open" };
+  }
+
+  /** @internal */
+  get params() {
+    return this.#params;
   }
 
   override pdf(x: number): number {
-    return this.support.checkPDFInt(x) ?? -Math.pow(this.params.p, x) / (x * this.params.logq);
+    return super.pdf(x) ?? -Math.pow(this.params.p, x) / (x * this.params.logq);
   }
 
   override cdf(x: number, eps: number = 1e-20): number {
@@ -39,7 +47,7 @@ export class Logarithmic extends Bernoulli {
     const xl = (x | 0) + 1;
 
     return (
-      this.support.checkCDFInt(x) ??
+      super.cdf(x) ??
       1.0 +
         ((new BetaParams(xl, 0).betaContinuedFraction(this.params.p, eps) / this.params.logq) *
           Math.exp(xl * c)) /
@@ -48,7 +56,7 @@ export class Logarithmic extends Bernoulli {
   }
 
   override quantile(q: number): number {
-    const check = this.support.checkQuantile(q);
+    const check = super.quantile(q);
     if (check !== null) return check;
 
     const z = stdNormalQuantile(q);
@@ -66,21 +74,21 @@ export class Logarithmic extends Bernoulli {
     return s;
   }
 
-  override mean(): number {
+  mean(): number {
     const { p, q, logq } = this.params;
     return -p / (q * logq);
   }
 
-  override variance(): number {
+  variance(): number {
     const { p, q, logq } = this.params;
     return (-p * (p + logq)) / Math.pow(q * logq, 2);
   }
 
-  override mode(): number {
+  mode(): number {
     return 1;
   }
 
-  override skewness(): number {
+  skewness(): number {
     const { p, logq } = this.params;
     const plnp = p + logq;
     return (

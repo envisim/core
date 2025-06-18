@@ -27,23 +27,20 @@ export class Gamma extends ShapeScale {
     this.#lgf = logGammaFunction(this.params.shape);
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     const scale = this.params.scale;
     const c = this.#lgf + this.params.shape * Math.log(scale);
     const shape = this.params.shape - 1.0;
 
-    return this.support.checkPDF(x) ?? Math.exp(shape * Math.log(x) - x / scale - c);
+    return Math.exp(shape * Math.log(x) - x / scale - c);
   }
 
-  cdf(x: number, eps: number = 1e-12): number {
-    return (
-      this.support.checkCDF(x) ??
-      regularizedLowerGammaFunction(this.params.shape, x / this.params.scale, eps, this.#lgf)
-    );
+  override cdf(x: number, eps: number = 1e-12): number {
+    return regularizedLowerGammaFunction(this.params.shape, x / this.params.scale, eps, this.#lgf);
   }
 
-  quantile(q: number, eps: number = 1e-12): number {
-    return this.support.checkQuantile(q) ?? gammaQuantile.call(this.params, q, eps, this.#lgf);
+  override quantile(q: number, eps: number = 1e-12): number {
+    return super.quantile(q) ?? gammaQuantile.call(this.params, q, eps, this.#lgf);
   }
 
   override random(n: number = 1, options: RandomOptions = RANDOM_OPTIONS_DEFAULT): number[] {

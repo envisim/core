@@ -15,27 +15,22 @@ export class Arcsine extends Bounded {
    */
   constructor(a?: number, b?: number) {
     super(a, b);
+    this.support.ends = "open";
   }
 
-  pdf(x: number): number {
-    const check = this.support.checkPDF(x);
-    if (check !== null) return check;
-    if (x === this.params.a || x === this.params.b) return Infinity;
-
-    return 1.0 / (Math.PI * Math.sqrt((x - this.params.a) * (this.params.b - x)));
+  override pdf(x: number): number {
+    return super.pdf(x) ?? 1.0 / (Math.PI * Math.sqrt((x - this.params.a) * (this.params.b - x)));
   }
 
-  cdf(x: number): number {
+  override cdf(x: number): number {
     return (
-      this.support.checkCDF(x) ??
-      HALF_PI_INV * Math.asin(Math.sqrt((x - this.params.a) / this.params.width))
+      super.cdf(x) ?? HALF_PI_INV * Math.asin(Math.sqrt((x - this.params.a) / this.params.width))
     );
   }
 
-  quantile(q: number): number {
+  override quantile(q: number): number {
     return (
-      this.support.checkQuantile(q) ??
-      Math.pow(Math.sin(q * HALF_PI), 2) * this.params.width + this.params.a
+      super.quantile(q) ?? Math.pow(Math.sin(q * HALF_PI), 2) * this.params.width + this.params.a
     );
   }
 

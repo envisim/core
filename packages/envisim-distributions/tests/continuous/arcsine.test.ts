@@ -1,21 +1,12 @@
-import {describe} from 'vitest';
+import { describe } from "vitest";
+import { Arcsine } from "../../src/index.js";
+import { distributionTests, fromTo } from "../_distributions.testf.js";
 
-import {Arcsine} from '../../src/index.js';
-import {distributionTests, fromTo} from '../_distributions.testf.js';
-
-describe('Arcsine(-1, 1)', () => {
+describe("Arcsine(-1, 1)", () => {
   const pdf = [
-    Infinity,
-    0.53051647697298442985,
-    0.3978873577297383779,
-    0.34730455902142837177,
-    0.3248736671806984333,
-    0.31830988618379069122,
-    0.3248736671806984333,
-    0.34730455902142837177,
-    0.3978873577297383779,
-    0.53051647697298442985,
-    Infinity,
+    0.0, 0.53051647697298442985, 0.3978873577297383779, 0.34730455902142837177,
+    0.3248736671806984333, 0.31830988618379069122, 0.3248736671806984333, 0.34730455902142837177,
+    0.3978873577297383779, 0.53051647697298442985, 0.0,
   ];
   const cdf = [
     0.0, 0.20483276469913341833, 0.29516723530086652616, 0.36901011956554535809,
@@ -29,5 +20,5 @@ describe('Arcsine(-1, 1)', () => {
   ];
   const x = fromTo(-1, 1.01, 0.2);
 
-  distributionTests(new Arcsine(-1.0, 1.0), {x, pdf, cdf, quantile});
+  distributionTests(new Arcsine(-1.0, 1.0), { x, pdf, cdf, quantile });
 });

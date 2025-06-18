@@ -1,4 +1,3 @@
-import { Interval } from "../abstract-distribution.js";
 import { ShapeScale } from "../abstract-shape-scale.js";
 import { gammaFunction } from "../gamma-utils.js";
 
@@ -18,11 +17,11 @@ export class Weibull extends ShapeScale {
    */
   constructor(shape?: number, scale?: number) {
     super(shape, scale);
-    this.support = new Interval(0, Infinity, false, true);
+    this.support = { interval: [0, Infinity], ends: "right-open" };
   }
 
-  pdf(x: number): number {
-    const check = this.support.checkPDF(x);
+  override pdf(x: number): number {
+    const check = super.pdf(x);
     if (check !== null) return check;
 
     const c1 = Math.log(this.params.shape);
@@ -35,15 +34,12 @@ export class Weibull extends ShapeScale {
     return Math.exp(c1 - c2 + ly * shapem1 - Math.exp(this.params.shape * ly - c2));
   }
 
-  cdf(x: number): number {
-    return (
-      this.support.checkCDF(x) ??
-      1.0 - Math.exp(-Math.pow(x / this.params.scale, this.params.shape))
-    );
+  override cdf(x: number): number {
+    return super.cdf(x) ?? 1.0 - Math.exp(-Math.pow(x / this.params.scale, this.params.shape));
   }
 
-  quantile(q: number): number {
-    const check = this.support.checkQuantile(q);
+  override quantile(q: number): number {
+    const check = super.quantile(q);
     if (check !== null) return check;
 
     const c1 = 1.0 / this.params.shape;

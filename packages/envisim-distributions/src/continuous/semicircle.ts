@@ -1,7 +1,6 @@
 import { ValidationError } from "@envisim/utils";
 import {
   Distribution,
-  Interval,
   type RandomOptions,
   RANDOM_OPTIONS_DEFAULT,
 } from "../abstract-distribution.js";
@@ -31,7 +30,7 @@ export class Semicircle extends Distribution {
   constructor(radius?: number) {
     super();
     this.#params = new RadiusParams(radius);
-    this.support = new Interval(-this.#params.radius, this.#params.radius, false, false);
+    this.support = { interval: [-this.#params.radius, this.#params.radius], ends: "closed" };
   }
 
   /** @internal */
@@ -39,24 +38,23 @@ export class Semicircle extends Distribution {
     return this.#params;
   }
 
-  pdf(x: number): number {
+  override pdf(x: number): number {
     const { radiusSquared, denom } = this.params;
-    return this.support.checkPDF(x) ?? Math.sqrt(radiusSquared - Math.pow(x, 2)) * denom * 2.0;
+    return super.pdf(x) ?? Math.sqrt(radiusSquared - Math.pow(x, 2)) * denom * 2.0;
   }
 
-  cdf(x: number): number {
+  override cdf(x: number): number {
     const { radius, radiusSquared, denom } = this.params;
     return (
-      this.support.checkCDF(x) ??
+      super.cdf(x) ??
       0.5 + x * Math.sqrt(radiusSquared - Math.pow(x, 2)) * denom + Math.asin(x / radius) / Math.PI
     );
   }
 
-  quantile(q: number, eps: number = 1e-20): number {
+  override quantile(q: number, eps: number = 1e-20): number {
     const { radius } = this.params;
     return (
-      this.support.checkQuantile(q) ??
-      (this.#beta.inverseRegularizedBetaFunction(q, eps) - 0.5) * 2.0 * radius
+      super.quantile(q) ?? (this.#beta.inverseRegularizedBetaFunction(q, eps) - 0.5) * 2.0 * radius
     );
   }
 
